@@ -5,7 +5,7 @@ import { isDemoMode } from '@/config/env';
 import { SignInForm } from './SignInForm';
 
 /** Bố cục "thẻ khớp khung tranh" chỉ cho máy tính có chuột — phải giống hệt điều kiện @media trong globals.css (.login-*). */
-const DESKTOP_LOGIN_MEDIA = '(min-width: 1100px) and (max-aspect-ratio: 2/1) and (hover: hover) and (pointer: fine)';
+const DESKTOP_LOGIN_MEDIA = '(min-width: 1100px) and (hover: hover) and (pointer: fine)';
 
 /**
  * SC-02 · Đăng nhập / Đăng ký.

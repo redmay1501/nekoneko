@@ -9,7 +9,7 @@ export function Sidebar() {
   return (
     <aside className="sidebar">
       <Link href="/" className="brand" aria-label={`${APP_NAME} — về trang chủ`}>
-        <Image src="/brand/logotest.png" alt={APP_NAME} width={600} height={200} className="brand-logo sidebar-logo" priority />
+        <Image src="/brand/logotest.PNG" alt={APP_NAME} width={600} height={200} className="brand-logo sidebar-logo" priority />
       </Link>
       <NavigationList />
       <div className="sidebar-art-wrap" aria-hidden="true">

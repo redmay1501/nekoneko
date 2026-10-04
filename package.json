@@ -1,0 +1,50 @@
+{
+  "name": "neko-neko",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Neko Neko — Học hôm nay. Ở lại mãi. Japanese learning + long-term memory (JLPT N5).",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:db": "node scripts/verify-database.mjs",
+    "verify": "npm run lint && npm run typecheck && npm test && npm run build",
+    "seed:content": "tsx scripts/seed-content.ts",
+    "seed:demo-memory": "tsx scripts/seed-demo-memory.ts",
+    "icons:fetch": "tsx scripts/fetch-icons.ts"
+  },
+  "dependencies": {
+    "@supabase/ssr": "0.7.0",
+    "@supabase/supabase-js": "2.58.0",
+    "@tanstack/react-query": "5.90.2",
+    "next": "15.5.27",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "server-only": "0.0.1",
+    "zod": "3.25.76",
+    "zustand": "5.0.8"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.3.10",
+    "@eslint/eslintrc": "3.3.1",
+    "@types/node": "22.18.6",
+    "@types/react": "19.1.13",
+    "@types/react-dom": "19.1.9",
+    "autoprefixer": "10.4.21",
+    "eslint": "9.39.5",
+    "eslint-config-next": "15.5.27",
+    "postcss": "8.5.6",
+    "sharp": "0.34.5",
+    "tailwindcss": "3.4.17",
+    "tsx": "4.20.6",
+    "typescript": "5.9.2",
+    "vitest": "3.2.4"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

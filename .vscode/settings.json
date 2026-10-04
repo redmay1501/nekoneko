@@ -1,0 +1,6 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.codeActionsOnSave": { "source.fixAll.eslint": "explicit" },
+  "files.associations": { "*.css": "tailwindcss" },
+  "search.exclude": { "content/seed/n5-content.json": true, ".next": true }
+}

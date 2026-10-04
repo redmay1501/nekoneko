@@ -1,0 +1,108 @@
+'use client';
+
+import { useState } from 'react';
+import { AudioButton } from '@/components/common/AudioButton';
+import { KANA_GROUPS } from '@/features/learning/knowledge-filters';
+import type { KanaCell, KanaPracticeData } from '@/features/learning/kana-practice';
+import { STATUS_PRESENTATION } from '@/features/memory/memory-rules';
+import { GuessOption } from './GuessOption';
+import { KnowledgeChipButton } from './KnowledgeChipButton';
+import { WritingPad } from './WritingPad';
+
+const TABS = [
+  { id: 'learn', label: 'Học' },
+  { id: 'write', label: 'Luyện viết' },
+  { id: 'listen', label: 'Luyện nghe' },
+  { id: 'quiz', label: 'Kiểm tra' },
+] as const;
+type TabId = (typeof TABS)[number]['id'];
+
+function cellClass(cell: KanaCell): string {
+  if (cell.status === 'new') return 's-new';
+  if (cell.status === 'fading' || cell.status === 'weak') return 's-weak';
+  return 's-strong';
+}
+
+function KanaBoard({ cells }: { cells: KanaCell[] }) {
+  return (
+    <>
+      {KANA_GROUPS.map((group) => {
+        const groupCells = cells.slice(group.from, group.to);
+        return (
+          <div key={group.label}>
+            <div className="sec-h"><h2>{group.label}</h2><span className="tiny muted">{groupCells.length} chữ</span></div>
+            <div className="kana-grid">
+              {groupCells.map((cell) => (
+                <KnowledgeChipButton key={cell.contentKey} contentKey={cell.contentKey} className={`kana-c ${cellClass(cell)}`}
+                  label={`${cell.character} (${cell.romaji}) — ${STATUS_PRESENTATION[cell.status].label}`}>
+                  <span className="dot" style={{ background: STATUS_PRESENTATION[cell.status].color }} />
+                  <span className="ch">{cell.character}</span>
+                  <span className="ro">{cell.romaji}</span>
+                </KnowledgeChipButton>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </>
+  );
+}
+
+/** Màn Hiragana / Katakana với bốn thẻ — chuyển thẻ là trạng thái giao diện cục bộ. */
+export function KanaPractice({ data }: { data: KanaPracticeData }) {
+  const [tab, setTab] = useState<TabId>('learn');
+  return (
+    <>
+      <div className="pill-tabs" role="tablist" aria-label="Cách học">
+        {TABS.map((option) => (
+          <button key={option.id} type="button" role="tab" aria-selected={tab === option.id}
+            className={`tab ${tab === option.id ? 'on' : ''}`} onClick={() => setTab(option.id)}>{option.label}</button>
+        ))}
+      </div>
+      <div className="mt-3.5">
+        {tab === 'learn' ? <KanaBoard cells={data.cells} /> : null}
+        {tab === 'write' ? <WritingPad character={data.writing.character} reading={data.writing.romaji} note={`Mẹo nhớ: ${data.writing.tip}`} /> : null}
+        {tab === 'listen' ? (
+          <div className="card">
+            <h3>Nghe và chọn chữ đúng</h3>
+            <p className="sm soft" style={{ margin: '5px 0 14px' }}>Bấm loa, nghe âm rồi chọn chữ bạn nghe được.</p>
+            <div className="stack">
+              {data.listening.map((question, index) => (
+                <div key={index} className="card tight">
+                  <div className="row">
+                    <AudioButton text={question.character} label="Nghe" />
+                    <div className="row wrap" style={{ gap: 6, flex: 1 }}>
+                      {question.options.map((option) => (
+                        <GuessOption key={option} label={option} isCorrect={option === question.answer} className="tab jp" style={{ fontSize: 17 }} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
+        {tab === 'quiz' ? (
+          <div className="card">
+            <h3>Kiểm tra nhanh · {data.quiz.length} chữ</h3>
+            <p className="sm soft" style={{ margin: '5px 0 14px' }}>Nhìn chữ, chọn cách đọc. Sai cũng không sao — Neko Neko sẽ đưa nó quay lại.</p>
+            <div className="stack">
+              {data.quiz.map((question, index) => (
+                <div key={index} className="card tight">
+                  <div className="row">
+                    <span className="jp" style={{ fontSize: 30, minWidth: 42, textAlign: 'center' }}>{question.character}</span>
+                    <div className="row wrap" style={{ gap: 6, flex: 1 }}>
+                      {question.options.map((option) => (
+                        <GuessOption key={option} label={option} isCorrect={option === question.answer} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
+      </div>
+    </>
+  );
+}

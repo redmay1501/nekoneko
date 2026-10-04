@@ -29,7 +29,7 @@ interface StepInteraction {
 const LONG_FACE_LENGTH = 3;
 const faceSize = (face: string, short: number, long: number) => ({ fontSize: face.length > LONG_FACE_LENGTH ? long : short });
 
-export function SurpriseStepView({ step, feedback, chosenAnswer, isBusy, onAnswer, onContinue }: StepInteraction & { step: SurpriseStep }) {
+export function SurpriseStepView({ step, feedback, chosenAnswer, isBusy, onAnswer, onContinue, isDaily = false }: StepInteraction & { step: SurpriseStep; isDaily?: boolean }) {
   const openKnowledge = useSheetStore((store) => store.openKnowledge);
   const wasRemembered = feedback?.isCorrect === true;
   const isSending = (answer: string) => isBusy && !feedback && chosenAnswer === answer;
@@ -46,15 +46,18 @@ export function SurpriseStepView({ step, feedback, chosenAnswer, isBusy, onAnswe
       </div>
       {feedback ? (
         <>
+          {isDaily ? <button type="button" className="btn block mt-2" onClick={onContinue} disabled={isBusy} aria-busy={isBusy}>Tiếp tục</button> : null}
           <div className={`reveal ${wasRemembered ? 'ok' : 'no'}`} aria-live="polite">
             <div className="row" style={{ gap: 12, alignItems: 'flex-start' }}>
               <div style={{ flex: 1 }}>
                 <p className="jp" style={{ fontSize: 19 }}>{step.reading}</p>
                 <b>{step.meaning}</b>
                 <p className="sm mt-2">
-                  {wasRemembered ? '✨ Bạn vẫn nhớ!' : 'Không sao. Neko Neko sẽ đưa nó quay lại sớm hơn.'}
+                  {isDaily
+                    ? (wasRemembered ? 'Bạn nhớ tốt lắm!' : 'Không sao, mình ôn tiếp nhé.')
+                    : (wasRemembered ? '✨ Bạn vẫn nhớ!' : 'Không sao. Neko Neko sẽ đưa nó quay lại sớm hơn.')}
                   {/* Chi tiết từ trí nhớ chỉ có khi server ghi xong — hiện thêm vào, không chặn người học. */}
-                  {feedback.memory ? (
+                  {!isDaily && feedback.memory ? (
                     <span className="fade-in">
                       {wasRemembered
                         ? ` Bạn đã gặp nó ${feedback.memory.lastEncounterText}.`
@@ -65,18 +68,18 @@ export function SurpriseStepView({ step, feedback, chosenAnswer, isBusy, onAnswe
               </div>
               <AudioButton text={step.audioText} />
             </div>
-            <div className="row mt-3" style={{ gap: 8 }}>
+            {!isDaily ? <div className="row mt-3" style={{ gap: 8 }}>
               <button type="button" className="btn sm" onClick={() => openKnowledge(step.contentKey)}>Xem kỹ hơn</button>
-            </div>
+            </div> : null}
           </div>
-          <button type="button" className="btn block mt-2.5" onClick={onContinue} disabled={isBusy} aria-busy={isBusy}>Tiếp tục</button>
+          {!isDaily ? <button type="button" className="btn block mt-2.5" onClick={onContinue} disabled={isBusy} aria-busy={isBusy}>Tiếp tục</button> : null}
         </>
       ) : null}
     </section>
   );
 }
 
-export function RecallStepView({ step, ...interaction }: StepInteraction & { step: RecallStep }) {
+export function RecallStepView({ step, isDaily = false, ...interaction }: StepInteraction & { step: RecallStep; isDaily?: boolean }) {
   return (
     <div className="s-card pop">
       {step.isPractice
@@ -84,9 +87,10 @@ export function RecallStepView({ step, ...interaction }: StepInteraction & { ste
         : <p className="sm muted">Bạn còn nhớ cái này không? 🌸</p>}
       <div className="s-big" style={{ margin: '16px 0 10px' }}>{step.face}</div>
       <p className="sm soft">{step.question}</p>
+      {interaction.feedback && isDaily ? <StepFeedback kind={step.isPractice ? 'practice' : 'recall'} feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} compact /> : null}
       <AnswerOptions options={step.options} chosenAnswer={interaction.chosenAnswer} feedback={interaction.feedback}
         isDisabled={interaction.isBusy} isJapanese onChoose={interaction.onAnswer} />
-      {interaction.feedback ? <StepFeedback kind={step.isPractice ? 'practice' : 'recall'} feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} /> : null}
+      {interaction.feedback && !isDaily ? <StepFeedback kind={step.isPractice ? 'practice' : 'recall'} feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} /> : null}
     </div>
   );
 }
@@ -122,7 +126,7 @@ export function DiscoverStepView({ step, isBusy, onAcknowledge }: { step: Discov
   );
 }
 
-export function UseStepView({ step, ...interaction }: StepInteraction & { step: UseChooseSentenceStep | UseFillBlankStep }) {
+export function UseStepView({ step, isDaily = false, ...interaction }: StepInteraction & { step: UseChooseSentenceStep | UseFillBlankStep; isDaily?: boolean }) {
   return (
     <div className="s-card pop">
       {step.variant === 'choose-sentence' ? (
@@ -143,9 +147,10 @@ export function UseStepView({ step, ...interaction }: StepInteraction & { step: 
           <p className="sm soft mt-2.5">{step.promptVi}</p>
         </>
       )}
+      {interaction.feedback && isDaily ? <StepFeedback kind="use" feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} compact /> : null}
       <AnswerOptions options={step.options} chosenAnswer={interaction.chosenAnswer} feedback={interaction.feedback}
         isDisabled={interaction.isBusy} isJapanese onChoose={interaction.onAnswer} />
-      {interaction.feedback ? <StepFeedback kind="use" feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} /> : null}
+      {interaction.feedback && !isDaily ? <StepFeedback kind="use" feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} /> : null}
     </div>
   );
 }

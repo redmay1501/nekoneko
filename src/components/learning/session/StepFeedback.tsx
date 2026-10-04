@@ -7,15 +7,27 @@ interface StepFeedbackProps {
   feedback: StepAnswerFeedback;
   isBusy: boolean;
   onContinue: () => void;
+  compact?: boolean;
 }
 
 /**
  * Phản hồi sau một câu trả lời — đúng thì vui, sai thì không phạt.
  * Hiện ngay khi bấm (trình duyệt tự chấm); dòng "lần tới gặp lại" chỉ hiện khi server ghi xong và trả về.
  */
-export function StepFeedback({ kind, feedback, isBusy, onContinue }: StepFeedbackProps) {
+export function StepFeedback({ kind, feedback, isBusy, onContinue, compact = false }: StepFeedbackProps) {
   const isCorrect = feedback.isCorrect === true;
   const memory = feedback.memory;
+  if (compact) {
+    return (
+      <div className={`feedback daily-feedback ${isCorrect ? '' : 'miss'}`} aria-live="polite">
+        <button type="button" className="btn block" onClick={onContinue} disabled={isBusy} aria-busy={isBusy}>Tiếp tục</button>
+        <p className="sm mt-2">
+          {isCorrect ? 'Đúng rồi, bạn nhớ tốt lắm!' : 'Không sao, mình nhớ dần nhé.'}
+          {feedback.correctAnswer ? <> Đáp án: <b className="jp">{feedback.correctAnswer}</b>.</> : null}
+        </p>
+      </div>
+    );
+  }
   return (
     <div className={`feedback ${isCorrect ? '' : 'miss'}`} aria-live="polite">
       {isCorrect && kind === 'recall' ? (

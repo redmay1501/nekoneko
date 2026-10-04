@@ -71,12 +71,12 @@ export function LearningSession({ mode }: { mode: SessionMode }) {
           isBusy={learning.isFinishing} onContinue={learning.continueAfterCheckpoint} onStop={learning.stopAtCheckpoint} />
       ) : (
       <div key={stepIndex}>
-        {currentStep.type === 'surprise' ? <SurpriseStepView step={currentStep} {...interaction} /> : null}
-        {currentStep.type === 'recall' ? <RecallStepView step={currentStep} {...interaction} /> : null}
+        {currentStep.type === 'surprise' ? <SurpriseStepView step={currentStep} isDaily={mode === SESSION_MODES.DAILY} {...interaction} /> : null}
+        {currentStep.type === 'recall' ? <RecallStepView step={currentStep} isDaily={mode === SESSION_MODES.DAILY} {...interaction} /> : null}
         {currentStep.type === 'discover' ? (
           <DiscoverStepView step={currentStep} isBusy={interaction.isBusy} onAcknowledge={learning.acknowledgeAndContinue} />
         ) : null}
-        {currentStep.type === 'use' ? <UseStepView step={currentStep} {...interaction} /> : null}
+        {currentStep.type === 'use' ? <UseStepView step={currentStep} isDaily={mode === SESSION_MODES.DAILY} {...interaction} /> : null}
       </div>
       )}
       {learning.error ? <p className="sm center mt-3" role="alert">{learning.error.message}</p> : null}

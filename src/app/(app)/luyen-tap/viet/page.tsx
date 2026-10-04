@@ -25,7 +25,8 @@ export default async function WritingPage() {
               <AudioButton text={practice.focus.character} />
             </div>
           </div>
-          <WritingPad character={practice.focus.character} reading={practice.focus.kunReading || practice.focus.onReading} note={practice.focus.tip} />
+          <WritingPad character={practice.focus.character} reading={practice.focus.kunReading || practice.focus.onReading}
+            expectedStrokes={practice.focus.strokes ?? undefined} note={practice.focus.tip} />
           <div className="row wrap mt-3.5" style={{ gap: 7 }}>
             {practice.others.map((kanji) => (
               <KnowledgeChipButton key={kanji.contentKey} contentKey={kanji.contentKey} className="chip jp" style={{ fontSize: 18, padding: '9px 13px' }}>

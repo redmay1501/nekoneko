@@ -1,11 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { AudioButton } from '@/components/common/AudioButton';
 import { KANA_GROUPS } from '@/features/learning/knowledge-filters';
 import type { KanaCell, KanaPracticeData } from '@/features/learning/kana-practice';
 import { STATUS_PRESENTATION } from '@/features/memory/memory-rules';
-import { GuessOption } from './GuessOption';
+import { AssessmentQuiz } from './AssessmentQuiz';
 import { KnowledgeChipButton } from './KnowledgeChipButton';
 import { WritingPad } from './WritingPad';
 
@@ -61,46 +60,16 @@ export function KanaPractice({ data }: { data: KanaPracticeData }) {
       </div>
       <div className="mt-3.5">
         {tab === 'learn' ? <KanaBoard cells={data.cells} /> : null}
-        {tab === 'write' ? <WritingPad character={data.writing.character} reading={data.writing.romaji} note={`Mẹo nhớ: ${data.writing.tip}`} /> : null}
+        {tab === 'write' ? <WritingPad character={data.writing.character} reading={data.writing.romaji} expectedStrokes={data.writing.strokes} note={`Mẹo nhớ: ${data.writing.tip}`} /> : null}
         {tab === 'listen' ? (
-          <div className="card">
-            <h3>Nghe và chọn chữ đúng</h3>
-            <p className="sm soft" style={{ margin: '5px 0 14px' }}>Bấm loa, nghe âm rồi chọn chữ bạn nghe được.</p>
-            <div className="stack">
-              {data.listening.map((question, index) => (
-                <div key={index} className="card tight">
-                  <div className="row">
-                    <AudioButton text={question.character} label="Nghe" />
-                    <div className="row wrap" style={{ gap: 6, flex: 1 }}>
-                      {question.options.map((option) => (
-                        <GuessOption key={option} label={option} isCorrect={option === question.answer} className="tab jp" style={{ fontSize: 17 }} />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <AssessmentQuiz title="Luyện nghe" description="Nghe âm, chọn chữ bạn nghe được. Cuối bài sẽ có điểm và nút làm lại."
+            questions={data.listening.map((question) => ({ audioText: question.character, answer: question.answer, options: question.options }))}
+            emptyMessage="Học ít nhất hai chữ trong bảng trước, rồi Neko sẽ tạo bài nghe từ những chữ đó." audioLabel="Nghe chữ Nhật" />
         ) : null}
         {tab === 'quiz' ? (
-          <div className="card">
-            <h3>Kiểm tra nhanh · {data.quiz.length} chữ</h3>
-            <p className="sm soft" style={{ margin: '5px 0 14px' }}>Nhìn chữ, chọn cách đọc. Sai cũng không sao — Neko Neko sẽ đưa nó quay lại.</p>
-            <div className="stack">
-              {data.quiz.map((question, index) => (
-                <div key={index} className="card tight">
-                  <div className="row">
-                    <span className="jp" style={{ fontSize: 30, minWidth: 42, textAlign: 'center' }}>{question.character}</span>
-                    <div className="row wrap" style={{ gap: 6, flex: 1 }}>
-                      {question.options.map((option) => (
-                        <GuessOption key={option} label={option} isCorrect={option === question.answer} />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <AssessmentQuiz title="Kiểm tra" description="Nhìn chữ đã học và chọn cách đọc. Làm xong xem kết quả hoặc thử lại."
+            questions={data.quiz.map((question) => ({ prompt: question.character, promptIsJapanese: true, answer: question.answer, options: question.options }))}
+            emptyMessage="Học ít nhất hai chữ trong bảng trước; bài kiểm tra sẽ chỉ lấy chữ bạn đã học." />
         ) : null}
       </div>
     </>

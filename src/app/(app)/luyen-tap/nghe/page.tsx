@@ -1,6 +1,6 @@
 import { AudioButton } from '@/components/common/AudioButton';
 import { EmptyState } from '@/components/common/StateViews';
-import { GuessOption } from '@/components/learning/GuessOption';
+import { AssessmentQuiz } from '@/components/learning/AssessmentQuiz';
 import { buildListeningPractice } from '@/features/learning/skill-practice';
 import { getLearnerContext } from '@/features/learning/learner-context';
 
@@ -12,25 +12,11 @@ export default async function ListeningPage() {
     <>
       <h1>Luyện nghe</h1>
       <p className="soft sm" style={{ margin: '4px 0 14px' }}>
-        Nghe trước, hiểu sau. Mỗi câu nghe ba lượt: không nhìn chữ → nhìn chữ → nói đuổi theo.
+        Nghe từ vựng đã học, chọn nghĩa rồi xem điểm sau khi hoàn thành.
       </p>
-      <div className="card">
-        <h3>Nghe và chọn nghĩa</h3>
-        {practice.questions.length ? (
-          <div className="stack mt-3">
-            {practice.questions.map((question, index) => (
-              <div key={index} className="card tight">
-                <AudioButton text={question.audioText} label="Nghe" className="btn ghost sm" />
-                <div className="row wrap mt-2" style={{ gap: 6 }}>
-                  {question.options.map((option) => <GuessOption key={option} label={option} isCorrect={option === question.answer} />)}
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="sm soft mt-2">Từ vựng sẽ xuất hiện ở đây khi bạn bước vào chặng Nền tảng (ngày 15).</p>
-        )}
-      </div>
+      <AssessmentQuiz title="Nghe và chọn nghĩa" description="Nghe từng từ, chọn nghĩa rồi bấm câu tiếp theo. Cuối bài có kết quả và nút làm lại."
+        questions={practice.questions.map((question) => ({ audioText: question.audioText, answer: question.answer, options: question.options }))}
+        emptyMessage="Từ vựng sẽ có ở đây khi bạn học đến chặng Nền tảng (ngày 15)." />
       <div className="sec-h"><h2>Shadowing — nói đuổi theo</h2></div>
       {practice.shadowing.length ? (
         <div className="stack">

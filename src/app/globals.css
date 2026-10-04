@@ -220,6 +220,8 @@ ul{margin:0;padding:0;list-style:none}
 .tab:hover{border-color:#FFD3DB;color:#C95A6C}
 .tab.on{color:#fff;border-color:transparent;background:linear-gradient(180deg,#FFA9B5,#F2798C);
   box-shadow:0 6px 14px rgba(239,116,135,.28),inset 0 1px 0 rgba(255,255,255,.55),inset 0 -2px 4px rgba(200,70,95,.18)}
+.tab.quiz-correct{color:#2F6B3C;border-color:#9FD3A8;background:linear-gradient(180deg,#F4FCF6,#E6F6EA)}
+.tab.quiz-wrong{color:#A9475A;border-color:#FFC4CE;background:linear-gradient(180deg,#FFF8F9,#FFEDF0)}
 
 /* ============ TODAY ============ */
 .steps{display:flex;flex-direction:column;gap:9px;margin:14px 0 16px}
@@ -294,6 +296,11 @@ ul{margin:0;padding:0;list-style:none}
 .daily-session .opt{padding:12px 14px}
 .daily-session .feedback{margin-top:12px;padding:12px}
 .daily-session .feedback .noko-row{padding:9px 12px}
+.daily-session .daily-feedback{margin:9px 0 0;padding:0;background:none;text-align:center}
+.daily-session .daily-feedback .btn{min-height:44px;margin:0}
+.daily-session .daily-feedback p{margin:7px 0 0}
+.daily-session .daily-feedback.miss{background:none}
+.daily-session .daily-feedback+.s-opt{margin-top:9px}
 .daily-session .surprise{padding:16px}
 .daily-session .surprise .face{font-size:40px;margin:8px 0 2px}
 .daily-session .surprise .reveal{padding:12px}

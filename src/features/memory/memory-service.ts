@@ -1,5 +1,5 @@
 import 'server-only';
-import type { LearningDataSource } from '@/lib/data/data-source';
+import { StaleMemoryRecordError, type LearningDataSource } from '@/lib/data/data-source';
 import { type KnowledgeCatalog, itemsScheduledUpTo } from '@/features/learning/knowledge-catalog';
 import { type ContentKey, type KnowledgeItem, toContentKey } from '@/features/learning/knowledge-types';
 import { calculateMemoryUpdate, createInitialMemoryRecord, toMemoryView } from './memory-engine';
@@ -68,40 +68,54 @@ export interface RecordedMemoryEvent {
   view: MemoryView;
 }
 
-/** Tính (Memory Engine) rồi lưu (atomic) một lần gặp lại. */
+/** Xung đột ghi liên tiếp quá chừng này lần (rất hiếm) → báo lỗi để người học thử lại, không lặp vô hạn. */
+const MAX_WRITE_ATTEMPTS = 3;
+
+/**
+ * Tính (Memory Engine) rồi lưu (atomic) một lần gặp lại.
+ * Khoá lạc quan: request khác (tab khác, gửi lại) vừa ghi cùng kiến thức → đọc lại bản ghi mới nhất, tính lại
+ * trên bản đó rồi thử lại — không bao giờ ghi đè làm mất một lần gặp.
+ */
 export async function recordMemoryEvent(input: RecordMemoryEventInput): Promise<RecordedMemoryEvent> {
   const { item, now } = input;
-  const update = calculateMemoryUpdate({
-    record: input.existingRecord, contentType: item.type, contentId: item.id,
-    eventType: input.eventType, isCorrect: input.isCorrect, now,
-  });
   // Cứu kiến thức luôn được tính như nhớ đúng (sheet 5, mục B).
   const isCorrect = input.eventType === 'rescue' ? true : input.isCorrect;
-  const stepResult: StoredStepResult | null = input.session
-    ? { answer: input.answer ?? '', isCorrect, face: item.face, daysSinceSeenBefore: update.daysSinceSeenBefore }
-    : null;
+  let record = input.existingRecord;
 
-  const { isDuplicate } = await input.source.applyMemoryUpdate({
-    userId: input.userId,
-    requestId: input.requestId,
-    contentType: item.type,
-    contentId: item.id,
-    eventType: input.eventType,
-    answer: input.answer,
-    isCorrect,
-    scoreBefore: update.scoreBefore,
-    scoreAfter: update.scoreAfter,
-    nextRecord: update.nextRecord,
-    session: input.session && stepResult ? { ...input.session, stepResult } : null,
-  });
-
-  // Gửi trùng: trạng thái không đổi, trả về như trước khi bấm.
-  const effectiveRecord = isDuplicate ? input.existingRecord : update.nextRecord;
-  return {
-    isDuplicate,
-    scoreBefore: update.scoreBefore,
-    scoreAfter: isDuplicate ? update.scoreBefore : update.scoreAfter,
-    daysSinceSeenBefore: update.daysSinceSeenBefore,
-    view: toMemoryView(item.key, item.type, effectiveRecord, now),
-  };
+  for (let attempt = 1; ; attempt++) {
+    const update = calculateMemoryUpdate({
+      record, contentType: item.type, contentId: item.id, eventType: input.eventType, isCorrect: input.isCorrect, now,
+    });
+    const stepResult: StoredStepResult | null = input.session
+      ? { answer: input.answer ?? '', isCorrect, face: item.face, daysSinceSeenBefore: update.daysSinceSeenBefore }
+      : null;
+    try {
+      const { isDuplicate } = await input.source.applyMemoryUpdate({
+        userId: input.userId,
+        requestId: input.requestId,
+        contentType: item.type,
+        contentId: item.id,
+        eventType: input.eventType,
+        answer: input.answer,
+        isCorrect,
+        scoreBefore: update.scoreBefore,
+        scoreAfter: update.scoreAfter,
+        nextRecord: update.nextRecord,
+        session: input.session && stepResult ? { ...input.session, stepResult } : null,
+        expectedEncounterCount: record ? record.encounterCount : null,
+      });
+      // Gửi trùng: trạng thái không đổi, trả về như trước khi bấm.
+      const effectiveRecord = isDuplicate ? record : update.nextRecord;
+      return {
+        isDuplicate,
+        scoreBefore: update.scoreBefore,
+        scoreAfter: isDuplicate ? update.scoreBefore : update.scoreAfter,
+        daysSinceSeenBefore: update.daysSinceSeenBefore,
+        view: toMemoryView(item.key, item.type, effectiveRecord, now),
+      };
+    } catch (error) {
+      if (!(error instanceof StaleMemoryRecordError) || attempt >= MAX_WRITE_ATTEMPTS) throw error;
+      record = await input.source.getMemoryRecord(input.userId, item.type, item.id);
+    }
+  }
 }

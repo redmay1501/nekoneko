@@ -6,13 +6,13 @@ const LOCKED_OPACITY = 0.45;
 
 /** SC-36 · Thành tích — cột mốc nhỏ, không phải bảng xếp hạng. */
 export default async function AchievementsPage() {
-  const { catalog, memoryViews, journey, recallDays } = await getLearnerContext();
+  const { catalog, memoryViews, journey, streak } = await getLearnerContext();
   return (
     <>
       <h1>Thành tích</h1>
       <p className="soft sm" style={{ margin: '4px 0 14px' }}>Những cột mốc nhỏ trên đường đi.</p>
       <div className="grid two">
-        {buildAchievements(catalog, memoryViews, journey, recallDays).map((achievement) => (
+        {buildAchievements(catalog, memoryViews, journey, streak.longestStreak).map((achievement) => (
           <div key={achievement.title} className="card tight" style={{ opacity: achievement.isUnlocked ? 1 : LOCKED_OPACITY }}>
             <div className="row">
               <EmojiIcon emoji={achievement.icon} size={achievement.icon.startsWith('neko:') ? 48 : 36} />

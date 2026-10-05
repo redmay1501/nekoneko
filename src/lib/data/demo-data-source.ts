@@ -1,8 +1,10 @@
 import 'server-only';
+import { appDateKey } from '@/features/progress/recall-streak';
 import { randomUUID } from 'node:crypto';
 import { DEMO_LEARNER } from '@/config/demo';
 import { buildKnowledgeCatalog } from '@/features/learning/knowledge-catalog';
-import { toContentKey } from '@/features/learning/knowledge-types';
+import { type ContentType, toContentKey } from '@/features/learning/knowledge-types';
+import type { SessionMode } from '@/features/learning/session-modes';
 import type { LearningSessionPlan, SessionSummary } from '@/features/learning/session-types';
 import { generateDemoMemoryRecords } from '@/features/memory/demo-memory-seed';
 import type { MemoryRecord, ReviewEventType } from '@/features/memory/memory-types';
@@ -10,6 +12,7 @@ import { JOURNEY_TOTAL_DAYS } from '@/features/roadmap/journey';
 import type { JourneyAdvanceResult } from '@/features/roadmap/journey-progress';
 import { addDays, toIsoDate } from '@/lib/utils/dates';
 import { summarizeEventTypes } from './activity-summary';
+import { StaleMemoryRecordError } from './data-source';
 import type {
   ActivitySummary,
   LearnerProfile,
@@ -160,6 +163,9 @@ export class DemoDataSource implements LearningDataSource {
   async applyMemoryUpdate(input: PersistMemoryUpdateInput): Promise<{ isDuplicate: boolean }> {
     const store = demoStore();
     if (store.reviewEvents.some((event) => event.requestId === input.requestId)) return { isDuplicate: true };
+    const current = memoryOf(input.userId).get(toContentKey(input.contentType, input.contentId));
+    // Cùng luật khoá lạc quan như hàm SQL apply_memory_update.
+    if ((current?.encounterCount ?? null) !== input.expectedEncounterCount) throw new StaleMemoryRecordError();
 
     memoryOf(input.userId).set(toContentKey(input.contentType, input.contentId), { ...input.nextRecord });
     store.reviewEvents.push({
@@ -176,16 +182,21 @@ export class DemoDataSource implements LearningDataSource {
     return { isDuplicate: false };
   }
 
+  async getMemoryRecord(userId: string, contentType: ContentType, contentId: number): Promise<MemoryRecord | null> {
+    const record = memoryOf(userId).get(toContentKey(contentType, contentId));
+    return record ? { ...record } : null;
+  }
+
   async summarizeActivity(userId: string, sinceIso: string): Promise<ActivitySummary> {
     const events = demoStore().reviewEvents.filter((event) => event.userId === userId && event.createdAt >= sinceIso);
     return summarizeEventTypes(events.map((event) => event.eventType));
   }
 
-  async countRecallDays(userId: string, sinceIso: string): Promise<number> {
+  async listRecallDates(userId: string): Promise<string[]> {
     const days = demoStore().reviewEvents
-      .filter((event) => event.userId === userId && event.isCorrect === true && event.createdAt >= sinceIso)
-      .map((event) => event.createdAt.slice(0, 10));
-    return new Set(days).size;
+      .filter((event) => event.userId === userId && event.isCorrect === true)
+      .map((event) => appDateKey(new Date(event.createdAt)));
+    return [...new Set(days)].sort();
   }
 
   async createSession(userId: string, plan: LearningSessionPlan, journeyDay: number): Promise<string> {
@@ -200,6 +211,13 @@ export class DemoDataSource implements LearningDataSource {
   async getSession(userId: string, sessionId: string): Promise<StoredSession | null> {
     const session = demoStore().sessions.get(sessionId);
     return session && session.userId === userId ? session : null;
+  }
+
+  async findLatestOpenSession(userId: string, mode: SessionMode, sinceIso: string): Promise<StoredSession | null> {
+    const open = [...demoStore().sessions.values()]
+      .filter((session) => session.userId === userId && session.mode === mode && session.endedAt === null && session.startedAt >= sinceIso)
+      .sort((left, right) => right.startedAt.localeCompare(left.startedAt));
+    return open[0] ?? null;
   }
 
   async finishSession(userId: string, sessionId: string, summary: SessionSummary): Promise<void> {

@@ -146,6 +146,11 @@ Coding Standards §35 yêu cầu giải thích các quyết định lớn. Đây
     trang `/chao`, `/bat-dau`: Noko giới thiệu → cách Neko Neko hoạt động → chọn mục tiêu mỗi ngày. Hiện khi
     `user_settings.welcomed_at` còn trống; lưu ở database nên đổi máy không chào lại. Chưa hỏi ngày thi (`exam_date`).
     Người chưa nhớ được gì thấy thêm thẻ "Bắt đầu từ đây" (`FirstStepsCard`).
+13. **Ghi trí nhớ dùng khoá lạc quan.** Memory Engine tính bản ghi mới từ bản ghi server đọc lúc đầu request; hai
+    request cùng kiến thức (hai tab, gửi lại) từng ghi đè nhau. Nay `apply_memory_update` nhận `p_expected_encounter_count`
+    (số lần gặp lúc đọc) và chỉ ghi khi bản ghi chưa đổi; đổi rồi → lỗi `stale_memory_record` (SQLSTATE **P0001** —
+    KHÔNG dùng 40001: PostgREST tự thử lại cả giao dịch với mã đó, xung đột lặp tới khi hết giờ). `recordMemoryEvent`
+    đọc lại, tính lại, thử lại tối đa 3 lần. Kiểm chứng: `npm run test:db` (kịch bản 2 request) + `memory-service.test.ts`.
 12. **Tốc độ — database ở xa nên đếm số lượt chờ.** Mỗi lượt gọi Supabase ~100ms, nên:
     (a) xác thực bằng `auth.getClaims()` (kiểm chữ ký JWT ES256 tại server, không gọi mạng) thay vì `getUser()`,
     ở cả middleware lẫn `getCurrentLearner`; (b) `getLearnerContext` đọc hồ sơ, cài đặt, nội dung, trí nhớ, ngày nhớ lại

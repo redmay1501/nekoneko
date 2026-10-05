@@ -35,6 +35,10 @@ Vào <https://supabase.com> → **New project**. Đợi project khởi tạo xon
 3. `20261004000002_welcome.sql`
 4. `20261004000003_voice_gender.sql`
 5. `20261004000004_session_mode_day.sql`
+6. `20261005000001_memory_optimistic_lock.sql`
+7. `20261005000002_session_mode_backlog.sql`
+8. `20261005000003_example_sentences.sql`
+9. `20261005000004_recall_dates.sql`
 (Nếu dùng Supabase CLI: `supabase link` rồi `supabase db push`.)
 
 ### Bước 3 — Điền biến môi trường
@@ -97,6 +101,7 @@ npm run seed:demo-memory -- --email email-cua-ban@vidu.com --day 23
 | `npm run seed:demo-memory -- --email … --day 23` | Đưa một tài khoản QA tới ngày 23, kèm trí nhớ mẫu |
 | `npx tsx scripts/import-brand-assets.ts` | Xử lý logo + bộ icon mèo từ `design/icons-moi/recraft-assets/` (cắt viền, thu nhỏ, WebP) → `public/brand/`, `public/icons/neko/`, favicon |
 | `npm run icons:fetch` | Tải icon 3D (Microsoft Fluent Emoji, MIT) và emoji động (Google Noto, CC BY 4.0) vào `public/icons/` — chỉ khi thêm icon mới vào `src/components/common/emoji-icons.ts` |
+| `npx tsx scripts/fetch-examples.ts` | Lấy lại câu ví dụ Nhật–Việt từ [Tatoeba](https://tatoeba.org) (CC BY 2.0 FR) → `content/seed/examples.json`, rồi `npm run seed:content` |
 | `python3 scripts/convert-roadmap.py` | Chuyển lại file Excel lộ trình → JSON (chỉ khi Excel thay đổi) |
 
 ## 4. Đọc code từ đâu?
@@ -113,11 +118,11 @@ Quy ước code: `docs/coding-standards.md`. Database: `docs/database.md`.
 
 | Khu vực | Đường dẫn |
 |---|---|
-| Trang chủ | `/` |
+| Trang chủ — Học hôm nay (kèm kế hoạch Gặp lại · Học bù · Mới · Dùng thử), Gặp lại kiến thức, Lộ trình 90 ngày, Vườn | `/` |
 | Lộ trình 90 ngày · Một ngày học | `/lo-trinh` · `/lo-trinh/ngay/[n]` |
 | Học tập | `/hoc-tap`, `/hoc-tap/{hiragana, katakana, bo-thu, kanji, tu-vung, ngu-phap}`, `/hoc-tap/{bo-thu, kanji, tu-vung, ngu-phap}/[id]` |
 | Luyện tập · kỹ năng | `/luyen-tap`, `/luyen-tap/{nghe, noi, doc, viet}` |
-| Phiên học | `/hoc/[mode]` (`daily`, `day`, `quick5`, `random`, `more`, `rescue`, `flow`, `recall`, `discover`, `use`), `/gap-lai`, `/kham-pha`, `/thuc-hanh` |
+| Phiên học | `/hoc/[mode]` (`daily`, `day`, `quick5`, `random`, `more`, `rescue`, `flow`, `recall`, `discover`, `use`, `backlog`); `/gap-lai`, `/kham-pha`, `/thuc-hanh` là đường dẫn cũ, tự chuyển sang `/hoc/…` |
 | Sau phiên | `/khoanh-khac`, `/nghi` |
 | Trí nhớ | `/tri-nho`, `/tri-nho/sap-quen`, `/tri-nho/chua-vung`, `/tri-nho/cuu/[contentKey]` |
 | Vườn tri thức | `/vuon` |

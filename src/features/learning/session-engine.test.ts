@@ -5,9 +5,9 @@ import { createInitialMemoryRecord, toMemoryView } from '@/features/memory/memor
 import type { MemoryView } from '@/features/memory/memory-types';
 import { buildKnowledgeCatalog } from './knowledge-catalog';
 import { type ContentKey, toContentKey } from './knowledge-types';
-import { buildLearningSession, evaluateStepAnswer, summarizeSession, unmetKnowledgeOfDay } from './session-engine';
-import { DAY_CHUNK_SIZE, SESSION_MODE_CONFIG, type SessionMode, totalSteps } from './session-modes';
-import { gradeAnswer } from './session-types';
+import { backlogKnowledge, buildLearningSession, previewSessionPlan, evaluateStepAnswer, summarizeSession, unmetKnowledgeOfDay } from './session-engine';
+import { BACKLOG_PER_DAILY_SESSION, DAY_CHUNK_SIZE, SESSION_MODE_CONFIG, type SessionMode, totalSteps } from './session-modes';
+import { SESSION_PHASES, gradeAnswer, phaseOfStep } from './session-types';
 
 const NOW = new Date('2026-10-03T08:00:00.000Z');
 const catalog = buildKnowledgeCatalog(loadSeedContent());
@@ -194,5 +194,117 @@ describe('summarizeSession — Khoảnh khắc tiến bộ', () => {
 
   it('phiên chưa trả lời gì vẫn tổng kết được', () => {
     expect(summarizeSession([])).toEqual({ recalled: 0, learnedNew: 0, usedInContext: 0, missed: 0, highlight: null });
+  });
+});
+
+describe('Học bù (BACKLOG) — kiến thức ngày cũ bị bỏ sót không bao giờ mất', () => {
+  // Người học đang ở ngày 3: ngày 1 mới học 7/10 chữ rồi bấm "Hoàn thành", ngày 2 bỏ qua hẳn.
+  const dayOne = catalog.items.filter((item) => item.day === 1);
+  const metOnDayOne = new Set(dayOne.slice(0, 7).map((item) => item.key));
+  const views = new Map(catalog.items.map((item) => {
+    const record = item.day !== null && item.day <= 3
+      ? { ...createInitialMemoryRecord(item.type, item.id, NOW), encounterCount: metOnDayOne.has(item.key) ? 1 : 0, lastSeenAt: NOW.toISOString() }
+      : null;
+    return [item.key, toMemoryView(item.key, item.type, record, NOW)];
+  }));
+
+  it('chữ còn sót của ngày 1 và cả ngày 2 đều nằm trong Học bù, ngày cũ nhất trước', () => {
+    const backlog = backlogKnowledge(catalog, views, 3);
+    const dayTwo = catalog.items.filter((item) => item.day === 2);
+    expect(backlog).toHaveLength(3 + dayTwo.length);
+    expect(backlog.slice(0, 3).every((item) => item.day === 1)).toBe(true);
+    expect(backlog.some((item) => item.day === 3)).toBe(false);
+  });
+
+  it('phiên Học hôm nay học bù tối đa vài thứ TRƯỚC, rồi mới tới chặng mới của hôm nay', () => {
+    const discovered = build('daily', 'backlog-user', 3, views).steps.filter((step) => step.type === 'discover').map((step) => step.contentKey);
+    const backlogKeys = new Set(backlogKnowledge(catalog, views, 3).map((item) => item.key));
+    expect(discovered.slice(0, BACKLOG_PER_DAILY_SESSION).every((key) => backlogKeys.has(key))).toBe(true);
+    expect(discovered.slice(BACKLOG_PER_DAILY_SESSION).every((key) => catalog.byKey.get(key)?.day === 3)).toBe(true);
+    expect(discovered).toHaveLength(BACKLOG_PER_DAILY_SESSION + DAY_CHUNK_SIZE);
+  });
+
+  it('mỗi nhóm (học bù / hôm nay) giới thiệu xong mới luyện — không trộn lẫn', () => {
+    const types = build('daily', 'backlog-user', 3, views).steps.filter((step) => step.type === 'discover' || (step.type === 'recall' && step.isPractice))
+      .map((step) => (step.type === 'discover' ? 'D' : 'P')).join('');
+    expect(types).toBe('D'.repeat(BACKLOG_PER_DAILY_SESSION) + 'P'.repeat(BACKLOG_PER_DAILY_SESSION) + 'D'.repeat(DAY_CHUNK_SIZE) + 'P'.repeat(DAY_CHUNK_SIZE));
+  });
+
+  it('chế độ Học bù chỉ lấy kiến thức ngày cũ (5 thứ cũ nhất), không lấy của hôm nay', () => {
+    const plan = build('backlog', 'backlog-user', 3, views);
+    const discovered = plan.steps.filter((step) => step.type === 'discover').map((step) => step.contentKey);
+    expect(discovered).toEqual(backlogKnowledge(catalog, views, 3).slice(0, DAY_CHUNK_SIZE).map((item) => item.key));
+    // Thẻ học bù ghi rõ "Học bù · từ ngày X".
+    expect(plan.steps.filter((step) => step.type === 'discover').every((step) => step.type === 'discover' && step.fromDay === catalog.byKey.get(step.contentKey)?.day)).toBe(true);
+  });
+
+  it('học xong thì rời Học bù; không còn gì thì Học bù trống', () => {
+    expect(backlogKnowledge(catalog, viewsDay23, 23)).toEqual([]);
+  });
+});
+
+describe('Chặng của một ngày học: Gặp lại → Học bù → Mới → Dùng thử', () => {
+  const order = (phase: string) => SESSION_PHASES.indexOf(phase as (typeof SESSION_PHASES)[number]);
+
+  it('mọi bước đều có chặng, và chặng chỉ đi tới — không quay lại', () => {
+    for (const mode of ['daily', 'flow', 'random', 'more'] as const) {
+      const phases = build(mode).steps.map((step) => step.phase);
+      expect(phases.every(Boolean)).toBe(true);
+      expect(phases.map((phase) => order(phase!))).toEqual([...phases.map((phase) => order(phase!))].sort((a, b) => a - b));
+    }
+  });
+
+  it('Học hôm nay của người học giữa lộ trình có đủ chặng ôn, mới và dùng thử', () => {
+    const phases = new Set(build('daily').steps.map((step) => step.phase));
+    expect([...phases]).toEqual(['review', 'new', 'use']);
+  });
+
+  it('kiến thức học bù được gắn chặng "backlog", kể cả câu luyện ngay của nó', () => {
+    const dayOne = catalog.items.filter((item) => item.day === 1);
+    const views = new Map(catalog.items.map((item) => [item.key, toMemoryView(item.key, item.type,
+      item.day !== null && item.day <= 2 ? { ...createInitialMemoryRecord(item.type, item.id, NOW), encounterCount: dayOne.indexOf(item) >= 0 && dayOne.indexOf(item) < 5 ? 1 : 0 } : null, NOW)]));
+    const steps = build('daily', 'p', 2, views).steps;
+    const backlogKeys = new Set(steps.filter((step) => step.phase === 'backlog').map((step) => step.contentKey));
+    expect(backlogKeys.size).toBeGreaterThan(0);
+    expect([...backlogKeys].every((key) => catalog.byKey.get(key)?.day === 1)).toBe(true);
+    expect(steps.filter((step) => step.phase === 'new').every((step) => catalog.byKey.get(step.contentKey)?.day === 2)).toBe(true);
+  });
+});
+
+describe('Tổng kết nói đúng sự thật', () => {
+  type Answered = Parameters<typeof summarizeSession>[0][number];
+  const step = (overrides: Partial<Answered>): Answered => ({
+    stepType: 'recall', contentKey: 'hiragana-1', face: 'あ', isCorrect: true, daysSinceSeenBefore: 3, ...overrides,
+  });
+
+  it('câu luyện ngay của thứ vừa học không tính là "nhớ lại"', () => {
+    const summary = summarizeSession([step({}), step({ contentKey: 'hiragana-2' as Answered['contentKey'], isPractice: true, daysSinceSeenBefore: 0 })]);
+    expect(summary.recalled).toBe(1);
+  });
+
+  it('không có câu "nhớ lại sau 0 ngày" — chỉ nổi bật khi đã cách ít nhất một ngày', () => {
+    expect(summarizeSession([step({ daysSinceSeenBefore: 0 })]).highlight).toBeNull();
+    expect(summarizeSession([step({ daysSinceSeenBefore: 2 })]).highlight?.daysSinceSeen).toBe(2);
+  });
+});
+
+describe('previewSessionPlan (kế hoạch trên Trang chủ)', () => {
+  it.each([1, 15, 26, 60])('ngày %i: số kiến thức mỗi chặng khớp phiên thật, với seed nào cũng vậy', (journeyDay) => {
+    const memoryViews = memoryViewsAtDay(journeyDay);
+    const plan = previewSessionPlan({ mode: 'daily', catalog, memoryViews, journeyDay });
+    for (const seed of ['a', 'b', 'c']) {
+      const { steps } = buildLearningSession({ mode: 'daily', seed, catalog, memoryViews, journeyDay });
+      for (const phase of SESSION_PHASES) {
+        const keys = new Set(steps.filter((step) => phaseOfStep(step) === phase).map((step) => step.contentKey));
+        expect(keys.size, `${phase} @ seed ${seed}`).toBe(plan[phase]);
+      }
+    }
+  });
+
+  it('người mới (ngày 1, chưa học gì): chỉ có chặng Mới', () => {
+    const fresh = new Map(catalog.items.map((item) => [item.key, toMemoryView(item.key, item.type, null, NOW)]));
+    const plan = previewSessionPlan({ mode: 'daily', catalog, memoryViews: fresh, journeyDay: 1 });
+    expect(plan).toEqual({ review: 0, backlog: 0, new: plan.new, use: 0 });
+    expect(plan.new).toBeGreaterThan(0);
   });
 });

@@ -1,4 +1,5 @@
 import { pickDeterministic, shuffleDeterministic } from '@/lib/utils/deterministic-random';
+import { realSentenceBlank } from './context-index';
 import {
   getForgettingRadar,
   getReviewPriority,
@@ -6,7 +7,7 @@ import {
 } from '@/features/memory/memory-engine';
 import { REVIEW_EVENT_TYPES, type ReviewEventType } from '@/features/memory/memory-types';
 import type { MemoryView } from '@/features/memory/memory-types';
-import { type KnowledgeCatalog, itemsScheduledOn } from './knowledge-catalog';
+import { type KnowledgeCatalog, itemsScheduledOn, itemsScheduledUpTo } from './knowledge-catalog';
 import { buildDiscoverCard } from './knowledge-presenter';
 import { speechTextFor } from './speech-text';
 import { MIN_ENCOUNTERS_TO_COUNT_AS_MET } from '@/features/roadmap/journey-progress';
@@ -14,8 +15,11 @@ import type { ContentKey, ContentType, KnowledgeItem } from './knowledge-types';
 import { toContentKey } from './knowledge-types';
 import { DAY_CHUNK_SIZE, SESSION_MODE_CONFIG, type SessionMode } from './session-modes';
 import {
+  SESSION_PHASES,
   gradeAnswer,
+  phaseOfStep,
   type AnsweredStep,
+  type SessionPhase,
   type LearningSessionPlan,
   type SessionStepWithAnswer,
   type SessionSummary,
@@ -99,13 +103,34 @@ export function unmetKnowledgeOfDay(
 }
 
 /**
- * Kiến thức mới của phiên: luôn là phần KẾ TIẾP của ngày đang học, không chọn ngẫu nhiên —
- * dừng ở đâu thì lần sau học tiếp đúng chỗ đó. Không lấn sang ngày sau khi ngày này chưa xong.
+ * HỌC BÙ (BACKLOG): kiến thức của các ngày TRƯỚC ngày đang học mà người học chưa gặp lần nào — ví dụ bấm
+ * "Hoàn thành ngày" khi còn sót, hoặc bỏ dở. Suy ra từ trí nhớ (không có bảng riêng) nên không bao giờ mất:
+ * còn chưa gặp thì vẫn nằm đây. Ngày cũ nhất trước, trong ngày theo thứ tự cố định.
  */
-function selectDiscoverItems(input: BuildLearningSessionInput, count: number, excluded: Set<ContentKey>): KnowledgeItem[] {
+export function backlogKnowledge(
+  catalog: KnowledgeCatalog,
+  memoryViews: ReadonlyMap<ContentKey, MemoryView>,
+  journeyDay: number,
+): KnowledgeItem[] {
+  return itemsScheduledUpTo(catalog, journeyDay - 1)
+    .filter((item) => (memoryViews.get(item.key)?.encounterCount ?? 0) < MIN_ENCOUNTERS_TO_COUNT_AS_MET)
+    .sort((left, right) => (left.day ?? 0) - (right.day ?? 0)
+      || NEW_KNOWLEDGE_ORDER.indexOf(left.type) - NEW_KNOWLEDGE_ORDER.indexOf(right.type) || left.id - right.id);
+}
+
+/**
+ * Kiến thức mới của phiên, theo hai nhóm học riêng (mỗi nhóm giới thiệu xong mới luyện):
+ *  1. học bù — tối đa backlogPerSession thứ của ngày cũ;
+ *  2. hôm nay — phần KẾ TIẾP của ngày đang học, không chọn ngẫu nhiên (dừng ở đâu lần sau học tiếp đúng chỗ đó).
+ */
+function selectDiscoverGroups(input: BuildLearningSessionInput, count: number, excluded: Set<ContentKey>): { phase: SessionPhase; items: KnowledgeItem[] }[] {
   const { catalog, memoryViews, journeyDay, mode } = input;
+  const config = SESSION_MODE_CONFIG[mode];
+  const backlog = backlogKnowledge(catalog, memoryViews, journeyDay).filter((item) => !excluded.has(item.key)).slice(0, config.backlogPerSession);
+  if (config.newKnowledgeScope === 'backlog-only') return [{ phase: 'backlog', items: backlog }];
   const unmet = unmetKnowledgeOfDay(catalog, memoryViews, journeyDay).filter((item) => !excluded.has(item.key));
-  return SESSION_MODE_CONFIG[mode].newKnowledgeScope === 'rest-of-day' ? unmet : unmet.slice(0, Math.max(0, count));
+  const today = config.newKnowledgeScope === 'rest-of-day' ? unmet : unmet.slice(0, Math.max(0, count));
+  return [{ phase: 'backlog' as const, items: backlog }, { phase: 'new' as const, items: today }].filter((group) => group.items.length > 0);
 }
 
 function buildRecallStep(item: KnowledgeItem, catalog: KnowledgeCatalog, stepIndex: number, seed: string): SessionStepWithAnswer {
@@ -141,19 +166,20 @@ function buildPracticeStep(item: KnowledgeItem, catalog: KnowledgeCatalog, stepI
 }
 
 /** Giới thiệu từng chặng (tối đa DAY_CHUNK_SIZE thứ), mỗi chặng xong thì luyện ngay đúng những thứ vừa học. */
-function buildDiscoverAndPracticeSteps(items: KnowledgeItem[], input: BuildLearningSessionInput, firstIndex: number): SessionStepWithAnswer[] {
+function buildDiscoverAndPracticeSteps(items: KnowledgeItem[], input: BuildLearningSessionInput, firstIndex: number, phase: SessionPhase): SessionStepWithAnswer[] {
   const steps: SessionStepWithAnswer[] = [];
   for (let start = 0; start < items.length; start += DAY_CHUNK_SIZE) {
     const chunk = items.slice(start, start + DAY_CHUNK_SIZE);
     for (const item of chunk) {
       steps.push({
-        type: 'discover', stepIndex: firstIndex + steps.length, contentKey: item.key,
-        card: buildDiscoverCard(item, input.catalog, input.journeyDay), correctAnswer: null,
+        type: 'discover', stepIndex: firstIndex + steps.length, contentKey: item.key, phase,
+        card: buildDiscoverCard(item, input.catalog, input.journeyDay, input.memoryViews), correctAnswer: null,
+        ...(phase === 'backlog' && item.day !== null ? { fromDay: item.day } : {}),
       });
     }
     // Đảo thứ tự để luyện thật sự là nhớ lại, không phải đọc lại theo đúng thứ tự vừa xem.
     for (const item of shuffleDeterministic(chunk, `${input.seed}:practice-order:${start}`)) {
-      steps.push(buildPracticeStep(item, input.catalog, firstIndex + steps.length, input.seed));
+      steps.push({ ...buildPracticeStep(item, input.catalog, firstIndex + steps.length, input.seed), phase });
     }
   }
   return steps;
@@ -178,13 +204,28 @@ function buildUseSteps(input: BuildLearningSessionInput, count: number, firstInd
     const stepIndex = firstIndex + steps.length;
     const shouldFillBlank = offset % 2 === 1 && template && learnedVocabulary.length > 0;
     if (shouldFillBlank) {
-      const word = pickDeterministic(
-        learnedVocabulary.filter((candidate) => !excluded.has(toContentKey('vocabulary', candidate.id))),
-        1, `${seed}:fill:${pattern.id}`,
-      )[0];
+      const available = learnedVocabulary.filter((candidate) => !excluded.has(toContentKey('vocabulary', candidate.id)));
+      // Ưu tiên từ có câu thật (Tatoeba) — câu mẫu chung "わたしは ＿＿ です" chỉ hợp với danh từ chỉ người.
+      const withRealSentence = available.filter((candidate) => {
+        const candidateItem = catalog.byKey.get(toContentKey('vocabulary', candidate.id));
+        return candidateItem ? realSentenceBlank(catalog, candidateItem) !== null : false;
+      });
+      const word = pickDeterministic(withRealSentence.length ? withRealSentence : available, 1, `${seed}:fill:${pattern.id}`)[0];
       if (word) {
         const key = toContentKey('vocabulary', word.id);
         excluded.add(key);
+        // Ưu tiên câu thật có từ này (Tatoeba); chưa có thì dùng câu mẫu chung.
+        const item = catalog.byKey.get(key);
+        const blank = item ? realSentenceBlank(catalog, item) : null;
+        if (blank) {
+          steps.push({
+            type: 'use', variant: 'fill-blank', stepIndex, contentKey: key,
+            contextJp: '', sentenceJp: blank.sentenceJp, promptVi: blank.vi,
+            options: buildOptions(blank.answer, blank.distractorPool, `${seed}:real:${word.id}`),
+            correctAnswer: blank.answer,
+          });
+          return;
+        }
         steps.push({
           type: 'use', variant: 'fill-blank', stepIndex, contentKey: key,
           contextJp: template.contextJp, sentenceJp: template.sentenceJp,
@@ -201,7 +242,8 @@ function buildUseSteps(input: BuildLearningSessionInput, count: number, firstInd
     excluded.add(key);
     steps.push({
       type: 'use', variant: 'choose-sentence', stepIndex, contentKey: key, promptVi: pattern.exampleVi,
-      options: buildOptions(pattern.exampleJp, catalog.content.grammar.map((candidate) => candidate.exampleJp), `${seed}:choose:${pattern.id}`),
+      options: buildOptions(pattern.exampleJp, catalog.content.grammar.map((candidate) => candidate.exampleJp)
+        .filter((sentence) => !/[→/／]/.test(sentence)), `${seed}:choose:${pattern.id}`),
       correctAnswer: pattern.exampleJp,
     });
   });
@@ -232,13 +274,15 @@ export function buildLearningSession(input: BuildLearningSessionInput): Learning
     steps.push(buildRecallStep(item, catalog, steps.length, seed));
   }
 
-  const discoverItems = selectDiscoverItems(input, composition.discover, used);
-  for (const item of discoverItems) used.add(item.key);
-  steps.push(...buildDiscoverAndPracticeSteps(discoverItems, input, steps.length));
+  for (const group of selectDiscoverGroups(input, composition.discover, used)) {
+    for (const item of group.items) used.add(item.key);
+    steps.push(...buildDiscoverAndPracticeSteps(group.items, input, steps.length, group.phase));
+  }
 
   steps.push(...buildUseSteps(input, composition.use, steps.length, used));
 
-  return { mode, steps: steps.map((step, index) => ({ ...step, stepIndex: index })) };
+  // Gặp lại & bất ngờ → chặng review; Dùng trong câu → use (học bù / mới đã gắn chặng ở trên).
+  return { mode, steps: steps.map((step, index) => ({ ...step, stepIndex: index, phase: step.phase ?? phaseOfStep(step) })) };
 }
 
 /** Chấm một câu trả lời. null = bước không có đúng/sai (Khám phá). */
@@ -261,11 +305,13 @@ export function reviewEventTypeForStep(step: SessionStepWithAnswer): ReviewEvent
 
 /** Tổng kết cho Khoảnh khắc tiến bộ. */
 export function summarizeSession(answeredSteps: readonly AnsweredStep[]): SessionSummary {
+  // "Nhớ lại" = gặp lại thứ đã học từ trước; câu luyện ngay của thứ vừa học không tính.
   const recalledSteps = answeredSteps.filter(
-    (step) => (step.stepType === 'surprise' || step.stepType === 'recall') && step.isCorrect === true,
+    (step) => (step.stepType === 'surprise' || step.stepType === 'recall') && step.isCorrect === true && !step.isPractice,
   );
+  // Câu nổi bật "Bạn vừa nhớ lại X sau N ngày" chỉ có ý nghĩa khi đã cách ít nhất một ngày.
   const highlightSource = [...recalledSteps]
-    .filter((step) => step.daysSinceSeenBefore !== null)
+    .filter((step) => (step.daysSinceSeenBefore ?? 0) >= 1)
     .sort((left, right) => (right.daysSinceSeenBefore ?? 0) - (left.daysSinceSeenBefore ?? 0))[0];
   return {
     recalled: recalledSteps.length,
@@ -276,4 +322,17 @@ export function summarizeSession(answeredSteps: readonly AnsweredStep[]): Sessio
       ? { contentKey: highlightSource.contentKey, face: highlightSource.face, daysSinceSeen: highlightSource.daysSinceSeenBefore ?? 0 }
       : null,
   };
+}
+
+export type SessionPlanPreview = Record<SessionPhase, number>;
+
+/**
+ * Kế hoạch phiên sắp tới cho Trang chủ: mỗi chặng có bao nhiêu kiến thức (đếm kiến thức, không đếm bước).
+ * Dựng thử đúng phiên mà Session Engine sẽ dựng — số lượng không phụ thuộc seed, chỉ món cụ thể là khác.
+ */
+export function previewSessionPlan(input: Omit<BuildLearningSessionInput, 'seed'>): SessionPlanPreview {
+  const { steps } = buildLearningSession({ ...input, seed: 'preview' });
+  const keysByPhase = new Map<SessionPhase, Set<ContentKey>>(SESSION_PHASES.map((phase) => [phase, new Set()]));
+  for (const step of steps) keysByPhase.get(phaseOfStep(step))?.add(step.contentKey);
+  return Object.fromEntries(SESSION_PHASES.map((phase) => [phase, keysByPhase.get(phase)?.size ?? 0])) as SessionPlanPreview;
 }

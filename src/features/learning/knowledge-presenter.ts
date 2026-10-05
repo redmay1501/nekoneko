@@ -1,4 +1,6 @@
 import { firstMeaning } from '@/lib/utils/text';
+import { type ContextExample, type KanaExampleWord, kanaExampleWords, pickContextExample } from './context-index';
+import type { MemoryView } from '@/features/memory/memory-types';
 import { speechTextFor } from './speech-text';
 import { pickDeterministic } from '@/lib/utils/deterministic-random';
 import { type KnowledgeCatalog, primaryRadicalGlyph } from './knowledge-catalog';
@@ -9,7 +11,7 @@ import {
   radicalsOfKanji,
   vocabularyContainingKanji,
 } from './knowledge-relations';
-import type { KnowledgeItem } from './knowledge-types';
+import type { ContentKey, KnowledgeItem } from './knowledge-types';
 
 /**
  * Chuyển một KnowledgeItem thành dữ liệu sẵn hiển thị cho các khoảnh khắc học:
@@ -33,6 +35,10 @@ export interface DiscoverCard {
   /** Câu nối kiến thức mới vào thứ đã học — "Nó mang bộ 日 bạn đã học ngày 17". */
   bridgeText: string | null;
   audioText: string;
+  /** Câu ví dụ có kiến thức này — kèm thứ người học ĐÃ GẶP trong câu (kiến thức cũ quay lại). */
+  example?: ContextExample | null;
+  /** Chữ cái: vài từ bắt đầu bằng chữ này ("あ trong あなた — bạn"). */
+  exampleWords?: KanaExampleWord[];
 }
 
 export interface ChainNode {
@@ -50,7 +56,24 @@ export interface ContextSentence {
   translationVi: string;
 }
 
-export function buildDiscoverCard(item: KnowledgeItem, catalog: KnowledgeCatalog, journeyDay: number): DiscoverCard {
+/**
+ * Thẻ Khám phá: mặt chữ, cách đọc, nghĩa, mẹo — và NGỮ CẢNH: một câu ví dụ (ưu tiên câu có nhiều thứ người học đã
+ * biết, kèm "Bạn đã từng gặp: …"), hoặc với chữ cái là vài từ dùng chữ đó.
+ */
+export function buildDiscoverCard(
+  item: KnowledgeItem,
+  catalog: KnowledgeCatalog,
+  journeyDay: number,
+  memoryViews: ReadonlyMap<ContentKey, MemoryView> = new Map(),
+): DiscoverCard {
+  const card = buildBaseDiscoverCard(item, catalog, journeyDay);
+  if (item.type === 'hiragana' || item.type === 'katakana') return { ...card, exampleWords: kanaExampleWords(catalog, item) };
+  // Ngữ pháp đã có câu mẫu riêng trong thẻ → chỉ thêm ngữ cảnh cho từ vựng / kanji.
+  if (item.type === 'vocabulary' || item.type === 'kanji') return { ...card, example: pickContextExample(catalog, item, memoryViews) };
+  return card;
+}
+
+function buildBaseDiscoverCard(item: KnowledgeItem, catalog: KnowledgeCatalog, journeyDay: number): DiscoverCard {
   const base = { face: item.face, reading: item.reading, meaning: item.meaning, audioText: speechTextFor(item) };
   switch (item.type) {
     case 'kanji': {

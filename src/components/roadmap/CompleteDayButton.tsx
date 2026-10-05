@@ -48,7 +48,7 @@ export function CompleteDayButton({ day, remainingCount = 0, isPrimary = false }
         {isLastDay
           ? 'Bạn đã học xong ngày cuối cùng? Bấm xác nhận để khép lại lộ trình 90 ngày.'
           : remainingCount > 0
-            ? `Ngày ${day} còn ${remainingCount} kiến thức bạn chưa học trong app. Vẫn sang ngày ${day + 1}? (Xem lại lúc nào cũng được trong Lộ trình.)`
+            ? `Ngày ${day} còn ${remainingCount} kiến thức bạn chưa học. Sang ngày ${day + 1} thì chúng chuyển vào phần Học bù — Neko sẽ đưa lại từng chút, không mất đâu.`
             : `Bạn thấy đã thuộc ngày ${day}? Ngày ${day + 1} sẽ mở ngay.`}
       </p>
       <div className="row mt-2.5" style={{ gap: 8 }}>

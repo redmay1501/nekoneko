@@ -19,6 +19,7 @@ await db.exec(`
   create table auth.users (id uuid primary key, email text, raw_user_meta_data jsonb default '{}'::jsonb);
   create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid $$;
   grant usage on schema public to anon, authenticated, service_role;
+  grant usage on schema auth to anon, authenticated, service_role; -- như Supabase: ai cũng gọi được auth.uid()
   alter default privileges in schema public grant select, insert, update, delete on tables to anon, authenticated, service_role;
   alter default privileges in schema public grant execute on functions to anon, authenticated, service_role;
 `);
@@ -37,12 +38,24 @@ await db.exec(`insert into auth.users (id, email, raw_user_meta_data) values ('$
 console.log('✓ trigger tạo hồ sơ:', (await db.query(`select display_name, start_date = current_date as today from profiles order by display_name`)).rows);
 console.log('✓ cài đặt mặc định:', (await db.query(`select daily_minutes from user_settings where user_id='${uid}'`)).rows);
 
-const call = (req) => db.query(`select apply_memory_update('${uid}','${req}','kanji',1,'recall','x',true,50,64,'learning',1,1,0,0,now(),now(),now()+interval '4 day',now(),null,null,null) as r`);
+// Tham số cuối = số lần gặp server đã đọc trước khi tính (NULL = lúc đọc chưa có bản ghi) — khoá lạc quan.
+const call = (req, encounters = 1, expected = 'null') => db.query(`select apply_memory_update('${uid}','${req}','kanji',1,'recall','x',true,50,64,'learning',${encounters},1,0,0,now(),now(),now()+interval '4 day',now(),null,null,null,${expected}) as r`);
 await db.exec(`insert into journey_days (day, stage, title) values (1,'Kana','x'); insert into kanji (id, character, meaning, day) values (1,'日','Ngày',15);`);
 await db.exec('set role service_role');
 console.log('✓ lần 1:', (await call('req-1')).rows[0].r);
 console.log('✓ gửi trùng:', (await call('req-1')).rows[0].r);
+// Ghi đồng thời: hai request cùng đọc encounter_count = 1. Request đầu ghi (→ 2); request sau tính trên
+// bản cũ → phải bị TỪ CHỐI (không ghi đè mất lần gặp của request đầu).
+console.log('✓ request A (đọc được 1 lần gặp):', (await call('req-a', 2, 1)).rows[0].r);
+try { await call('req-b', 2, 1); expectBlocked(false, 'request B ghi đè lên bản đã đổi: KHÔNG bị chặn'); }
+catch (e) { console.log(`  ✓ request B tính trên bản cũ: bị từ chối — ${e.message.split('\n')[0]}`); }
+console.log('✓ request B thử lại sau khi đọc lại (2 lần gặp):', (await call('req-b', 3, 2)).rows[0].r);
+try { await call('req-c', 1, 'null'); expectBlocked(false, 'ghi như bản ghi mới khi đã có bản ghi: KHÔNG bị chặn'); }
+catch (e) { console.log(`  ✓ tưởng chưa có bản ghi nhưng đã có: bị từ chối — ${e.message.split('\n')[0]}`); }
 await db.exec('reset role');
+const encounters = (await db.query(`select encounter_count from memory_items`)).rows[0].encounter_count;
+expectBlocked(encounters === 3, `encounter_count phải là 3 (không mất lần nào), đang là ${encounters}`);
+console.log('✓ không mất lần gặp nào — encounter_count:', encounters);
 console.log('✓ memory_items:', (await db.query(`select memory_score, status, encounter_count from memory_items`)).rows,
   'review_events:', (await db.query(`select count(*)::int c from review_events`)).rows[0].c);
 
@@ -54,7 +67,7 @@ console.log('✓ RLS đọc của mình:', (await db.query(`select count(*)::int
 for (const [label, q] of [
   ['ghi memory_score', `update memory_items set memory_score = 99`],
   ['chèn memory_items', `insert into memory_items (user_id, content_type, content_id, memory_score, status) values ('${uid}','kanji',2,99,'mastered')`],
-  ['gọi apply_memory_update', `select apply_memory_update('${uid}','hack','kanji',1,'recall','x',true,0,99,'mastered',1,1,0,0,now(),now(),now(),now(),null,null,null)`],
+  ['gọi apply_memory_update', `select apply_memory_update('${uid}','hack','kanji',1,'recall','x',true,0,99,'mastered',1,1,0,0,now(),now(),now(),now(),null,null,null,null)`],
   ['đọc session_items (đáp án)', `select * from session_items`],
   ['đổi start_date', `update profiles set start_date = '2020-01-01'`],
 ]) {
@@ -88,7 +101,20 @@ for (const [label, q] of [
 }
 console.log('✓ nhật ký các ngày đã xong của mình:', (await db.query(`select day, method from journey_day_completions order by day`)).rows);
 
+// Ngày ôn theo giờ Việt Nam: 00:30 sáng 6/10 ở VN (17:30 UTC 5/10) phải tính là ngày 6/10.
+await db.exec(`reset role; insert into review_events (user_id, memory_item_id, event_type, is_correct, memory_score_before, memory_score_after, request_id, created_at)
+  select '${uid}', id, 'recall', true, 50, 60, 'tz-late', '2026-10-05T17:30:00Z' from memory_items limit 1;
+  insert into review_events (user_id, memory_item_id, event_type, is_correct, memory_score_before, memory_score_after, request_id, created_at)
+  select '${uid}', id, 'recall', false, 50, 40, 'tz-wrong', '2026-10-07T03:00:00Z' from memory_items limit 1;
+  set role authenticated; select set_config('request.jwt.claim.sub','${uid}',false);`);
+const myDates = (await db.query(`select d::text from recall_dates() d`)).rows.map((row) => row.d);
+expectBlocked(myDates.includes('2026-10-06') && !myDates.includes('2026-10-07'), `recall_dates phải theo giờ VN và chỉ đếm câu đúng: ${myDates}`);
+console.log('✓ ngày ôn của mình (giờ VN, chỉ câu đúng):', myDates);
+
 await db.exec(`select set_config('request.jwt.claim.sub','${other}',false);`);
+const otherDates = (await db.query(`select count(*)::int c from recall_dates()`)).rows[0].c;
+expectBlocked(otherDates === 0, `người khác đọc được ngày ôn của Hiền: ${otherDates}`);
+console.log('✓ người khác thấy ngày ôn của Hiền:', otherDates);
 console.log('✓ người khác thấy trí nhớ của Hiền:', (await db.query(`select count(*)::int c from memory_items`)).rows[0].c);
 
 if (failures) { console.log(`\n✗ ${failures} kiểm tra bảo mật thất bại`); process.exit(1); }

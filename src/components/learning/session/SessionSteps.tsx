@@ -99,7 +99,11 @@ export function DiscoverStepView({ step, isBusy, onAcknowledge }: { step: Discov
   const { card } = step;
   return (
     <div className="s-card pop">
-      <span className="chip mint"><EmojiIcon emoji="🌱" size={16} /> Một thứ mới, nhỏ thôi</span>
+      {step.fromDay ? (
+        <span className="chip" style={{ background: 'var(--cream)' }}><EmojiIcon emoji="📦" size={16} /> Học bù · từ ngày {step.fromDay}</span>
+      ) : (
+        <span className="chip mint"><EmojiIcon emoji="🌱" size={16} /> Một thứ mới, nhỏ thôi</span>
+      )}
       <div className="s-big" style={{ margin: '16px 0 6px', ...faceSize(card.face, 58, 38) }}>{card.face}</div>
       <p className="jp soft">{card.reading}</p>
       <h3 style={{ margin: '8px 0 10px' }}>{card.meaning}</h3>
@@ -116,6 +120,26 @@ export function DiscoverStepView({ step, isBusy, onAcknowledge }: { step: Discov
       {card.bridgeText ? (
         <div className="card tight mt-3" style={{ background: 'var(--lav)', borderColor: 'transparent' }}>
           <p className="sm">🔗 {card.bridgeText}</p>
+        </div>
+      ) : null}
+      {card.example ? (
+        <div className="card tight mt-3" style={{ background: 'var(--cream)', borderColor: 'transparent', textAlign: 'left' }}>
+          <p className="tiny muted">📖 Trong câu</p>
+          <div className="row" style={{ gap: 8, alignItems: 'center', marginTop: 4 }}>
+            <p className="jp" style={{ fontSize: 17, flex: 1 }}>{card.example.jp}</p>
+            <AudioButton text={card.example.jp} label="🔊" className="btn ghost sm" />
+          </div>
+          <p className="sm soft">{card.example.vi}</p>
+          {card.example.knownFaces.length ? (
+            <p className="tiny mt-2" style={{ color: 'var(--sakura)' }}>✨ Bạn đã từng gặp: <span className="jp">{card.example.knownFaces.join('、')}</span></p>
+          ) : null}
+        </div>
+      ) : null}
+      {card.exampleWords?.length ? (
+        <div className="row wrap mt-3" style={{ justifyContent: 'center', gap: 7 }}>
+          {card.exampleWords.map((word) => (
+            <span key={word.face} className="chip"><span className="jp">{word.face}</span>&nbsp;— {word.meaning}</span>
+          ))}
         </div>
       ) : null}
       <AudioButton text={card.audioText} label="🔊 Nghe" className="btn ghost sm mt-3.5" />
@@ -138,7 +162,9 @@ export function UseStepView({ step, isDaily = false, ...interaction }: StepInter
       ) : (
         <>
           <span className="chip sky"><EmojiIcon emoji="💬" size={16} /> Điền vào chỗ trống</span>
-          <p className="jp" style={{ fontSize: 17, margin: '16px 0 4px' }}>{step.contextJp}</p>
+          {step.contextJp
+            ? <p className="jp" style={{ fontSize: 17, margin: '16px 0 4px' }}>{step.contextJp}</p>
+            : <div style={{ height: 14 }} />}
           <p className="jp" style={{ fontSize: 22 }}>
             {step.sentenceJp.split('＿＿').map((part, index, parts) => (
               <span key={index}>{part}{index < parts.length - 1 ? <span style={{ color: 'var(--sakura)' }}>______</span> : null}</span>

@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { CompleteDayButton } from '@/components/roadmap/CompleteDayButton';
+import { EmojiIcon } from '@/components/common/EmojiIcon';
+import type { SessionPlanPreview } from '@/features/learning/session-engine';
+import { SESSION_PHASES, SESSION_PHASE_INFO } from '@/features/learning/session-types';
 
 interface TodayLearnCardProps {
   journeyDay: number;
@@ -15,11 +18,14 @@ interface TodayLearnCardProps {
   isReadyToComplete: boolean;
   minutesToFinishDay: number;
   canFinishDayInOneGo: boolean;
+  /** Phiên "Bắt đầu học" kế tiếp gồm gì: Gặp lại → Học bù → Mới → Dùng thử (đếm kiến thức thật). */
+  plan: SessionPlanPreview;
 }
 
 /** Thẻ chính của Trang chủ: hôm nay học gì + MỘT nút lớn để bắt đầu. */
 export function TodayLearnCard(props: TodayLearnCardProps) {
-  const { journeyDay, dayTitle, dailyMinutes, nextFaces, pendingCount, hasNewKnowledge, isReadyToComplete, minutesToFinishDay, canFinishDayInOneGo } = props;
+  const { journeyDay, dayTitle, dailyMinutes, nextFaces, pendingCount, hasNewKnowledge, isReadyToComplete, minutesToFinishDay, canFinishDayInOneGo, plan } = props;
+  const planParts = SESSION_PHASES.filter((phase) => plan[phase] > 0);
   return (
     <section className="dash-card dash-today" aria-labelledby="dash-today-title">
       <Image src="/illustrations/home-study.webp" alt="" width={420} height={350} className="dash-today-mascot" />
@@ -27,6 +33,15 @@ export function TodayLearnCard(props: TodayLearnCardProps) {
         <h2 id="dash-today-title">{isReadyToComplete ? `Đã học hết ngày ${journeyDay} 🎉` : 'Học hôm nay'}</h2>
         <p className="dash-meta">Ngày {journeyDay} · {hasNewKnowledge ? dayTitle : 'Ngày ôn tập'}</p>
         <p className="dash-meta">{dailyMinutes} phút · Nhẹ nhàng · Hiệu quả lâu dài</p>
+        {planParts.length && !isReadyToComplete ? (
+          <ul className="dash-plan" aria-label="Phiên học kế tiếp gồm">
+            {planParts.map((phase) => (
+              <li key={phase}>
+                <EmojiIcon emoji={SESSION_PHASE_INFO[phase].emoji} size={16} /> {SESSION_PHASE_INFO[phase].label} <b>{plan[phase]}</b>
+              </li>
+            ))}
+          </ul>
+        ) : null}
         {nextFaces.length && !isReadyToComplete ? (
           <ul className="dash-glyphs" aria-label="Chữ sẽ học ngay">
             {nextFaces.map((face) => <li key={face} className="jp">{face}</li>)}

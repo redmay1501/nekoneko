@@ -5,7 +5,8 @@ import { type KnowledgeCatalog, itemsOfType } from './knowledge-catalog';
 import { type ContentKey, toContentKey } from './knowledge-types';
 
 /**
- * Dữ liệu cho 4 màn kỹ năng (SC-24…27). Luyện tập tự do — không ghi vào trí nhớ (giống prototype).
+ * Dữ liệu cho 4 màn kỹ năng (SC-24…27). Bài nghe từ vựng được ghi vào trí nhớ (server chấm — /api/memory/practice);
+ * nói / đọc / viết là luyện tự do, không có đáp án gắn với một kiến thức nên không ghi.
  * Chỉ dùng kiến thức đã học tới ngày hiện tại để không đổ ập thứ chưa gặp.
  */
 
@@ -23,6 +24,7 @@ function learnedGrammar(catalog: KnowledgeCatalog, journeyDay: number): GrammarC
 }
 
 export interface ListeningQuestion {
+  contentKey: ContentKey;
   audioText: string;
   answer: string;
   options: string[];
@@ -39,6 +41,7 @@ export function buildListeningPractice(catalog: KnowledgeCatalog, views: Views, 
   const learned = vocabulary.filter((item) => views.get(item.key)?.isLearned);
   return {
     questions: pickDeterministic(learned, LISTENING_WORDS, 'listening').map((item) => ({
+      contentKey: item.key,
       audioText: item.content.kana,
       answer: item.meaning,
       options: shuffleDeterministic(

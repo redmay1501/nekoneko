@@ -9,8 +9,10 @@ const MIGRATIONS_DIR = path.resolve(__dirname, '../../../supabase/migrations');
 const MIGRATION = readdirSync(MIGRATIONS_DIR).filter((name) => name.endsWith('.sql')).sort()
   .map((name) => readFileSync(path.join(MIGRATIONS_DIR, name), 'utf8')).join('\n');
 
+/** Chữ ký MỚI NHẤT của hàm (migration sau thay thế migration trước) — đúng với hàm đang chạy trên database. */
 function sqlParameterNames(functionName: string): string[] {
-  const signature = new RegExp(`create or replace function public\\.${functionName}\\(([\\s\\S]*?)\\)\\s*returns`).exec(MIGRATION);
+  const signatures = [...MIGRATION.matchAll(new RegExp(`create or replace function public\\.${functionName}\\(([\\s\\S]*?)\\)\\s*returns`, 'g'))];
+  const signature = signatures.at(-1);
   if (!signature) throw new Error(`Không thấy hàm ${functionName} trong migration`);
   return signature[1].split(',').map((parameter) => parameter.trim().split(/\s+/)[0]).filter(Boolean);
 }
@@ -31,6 +33,7 @@ describe('SupabaseDataSource ⇄ migration', () => {
     await source.applyMemoryUpdate({
       userId: 'u', requestId: 'r-1', contentType: 'kanji', contentId: 1, eventType: 'recall', answer: 'ひ',
       isCorrect: true, scoreBefore: 50, scoreAfter: 64, nextRecord: createInitialMemoryRecord('kanji', 1, new Date()), session: null,
+      expectedEncounterCount: null,
     });
 
     expect(sentName).toBe('apply_memory_update');

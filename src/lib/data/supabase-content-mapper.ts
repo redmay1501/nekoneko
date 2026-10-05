@@ -1,7 +1,7 @@
 import type { N5Content } from '@/types/content';
 import type {
   DayTaskRow, GrammarRow, JlptGrammarRow, JourneyDayRow, KanaRow, KanjiRow, LessonRow,
-  PracticeTemplateRow, RadicalRow, ReadingPassageRow, StudyResourceRow, VocabularyRow,
+  ExampleSentenceRow, PracticeTemplateRow, RadicalRow, ReadingPassageRow, StudyResourceRow, VocabularyRow,
 } from '@/lib/supabase/database-rows';
 
 /**
@@ -13,7 +13,7 @@ export interface ContentRows {
   journeyDays: JourneyDayRow[]; dayTasks: DayTaskRow[]; kana: KanaRow[]; radicals: RadicalRow[];
   kanji: KanjiRow[]; vocabulary: VocabularyRow[]; grammar: GrammarRow[]; lessons: LessonRow[];
   jlptGrammar: JlptGrammarRow[]; studyResources: StudyResourceRow[]; readingPassages: ReadingPassageRow[];
-  practiceTemplates: PracticeTemplateRow[];
+  practiceTemplates: PracticeTemplateRow[]; exampleSentences: ExampleSentenceRow[];
 }
 
 export function contentFromRows(rows: ContentRows): N5Content {
@@ -48,6 +48,9 @@ export function contentFromRows(rows: ContentRows): N5Content {
     })),
     practiceTemplates: rows.practiceTemplates.map((row) => ({
       id: row.id, kind: row.kind, contextJp: row.context_jp, sentenceJp: row.sentence_jp, promptVi: row.prompt_vi,
+    })),
+    exampleSentences: rows.exampleSentences.map((row) => ({
+      id: row.id, jp: row.text_jp, vi: row.text_vi, viId: row.vi_id, owner: row.owner, viOwner: row.vi_owner,
     })),
   };
 }
@@ -88,6 +91,9 @@ export function rowsFromContent(content: N5Content): ContentRows {
     practiceTemplates: content.practiceTemplates.map((template) => ({
       id: template.id, kind: template.kind, context_jp: template.contextJp, sentence_jp: template.sentenceJp, prompt_vi: template.promptVi,
     })),
+    exampleSentences: content.exampleSentences.map((sentence) => ({
+      id: sentence.id, text_jp: sentence.jp, text_vi: sentence.vi, vi_id: sentence.viId, owner: sentence.owner, vi_owner: sentence.viOwner,
+    })),
   };
 }
 
@@ -105,4 +111,5 @@ export const CONTENT_TABLES: ReadonlyArray<{ key: keyof ContentRows; table: stri
   { key: 'studyResources', table: 'study_resources', conflictKey: 'id', orderBy: 'id' },
   { key: 'readingPassages', table: 'reading_passages', conflictKey: 'id', orderBy: 'id' },
   { key: 'practiceTemplates', table: 'practice_templates', conflictKey: 'id', orderBy: 'id' },
+  { key: 'exampleSentences', table: 'example_sentences', conflictKey: 'id', orderBy: 'id' },
 ];

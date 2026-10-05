@@ -64,6 +64,19 @@ export interface PersistMemoryUpdateInput {
   scoreAfter: number;
   nextRecord: MemoryRecord;
   session: { sessionId: string; stepIndex: number; stepResult: StoredStepResult } | null;
+  /**
+   * Khoá lạc quan: số lần gặp của bản ghi lúc server ĐỌC để tính (null = lúc đọc chưa có bản ghi).
+   * Bản ghi đã đổi từ lúc đó (request khác ghi trước) → applyMemoryUpdate ném StaleMemoryRecordError, không ghi đè.
+   */
+  expectedEncounterCount: number | null;
+}
+
+/** Bản ghi trí nhớ đã bị request khác cập nhật kể từ lúc đọc — đọc lại, tính lại rồi thử lại (memory-service). */
+export class StaleMemoryRecordError extends Error {
+  constructor() {
+    super('Bản ghi trí nhớ vừa được cập nhật ở nơi khác');
+    this.name = 'StaleMemoryRecordError';
+  }
 }
 
 export interface ActivitySummary {
@@ -106,6 +119,8 @@ export interface LearningDataSource {
   advanceJourneyDay(userId: string, fromDay: number, method: JourneyCompletionMethod): Promise<JourneyAdvanceResult>;
 
   listMemoryRecords(userId: string): Promise<MemoryRecord[]>;
+  /** Một bản ghi — đọc lại khi ghi bị từ chối vì xung đột. */
+  getMemoryRecord(userId: string, contentType: ContentType, contentId: number): Promise<MemoryRecord | null>;
   /** Thêm bản ghi cho kiến thức lộ trình vừa gieo. Bỏ qua nếu đã tồn tại. */
   insertMissingMemoryRecords(userId: string, records: MemoryRecord[]): Promise<void>;
   /**
@@ -115,10 +130,12 @@ export interface LearningDataSource {
   applyMemoryUpdate(input: PersistMemoryUpdateInput): Promise<{ isDuplicate: boolean }>;
   /** Đếm hoạt động kể từ `sinceIso` — cho màn Nghỉ ngơi ("hôm nay bạn đã gặp lại… và gieo thêm…"). */
   summarizeActivity(userId: string, sinceIso: string): Promise<ActivitySummary>;
-  /** Số ngày khác nhau có ít nhất một lần nhớ đúng, kể từ `sinceIso`. */
-  countRecallDays(userId: string, sinceIso: string): Promise<number>;
+  /** Các ngày (yyyy-mm-dd, giờ Việt Nam) có ít nhất một lần nhớ đúng — toàn bộ lịch sử, tăng dần. */
+  listRecallDates(userId: string): Promise<string[]>;
 
   createSession(userId: string, plan: LearningSessionPlan, journeyDay: number): Promise<string>;
   getSession(userId: string, sessionId: string): Promise<StoredSession | null>;
+  /** Phiên CHƯA kết thúc mới nhất của chế độ này, bắt đầu từ sinceIso — để học tiếp sau khi tải lại trang / đóng tab. */
+  findLatestOpenSession(userId: string, mode: SessionMode, sinceIso: string): Promise<StoredSession | null>;
   finishSession(userId: string, sessionId: string, summary: SessionSummary): Promise<void>;
 }

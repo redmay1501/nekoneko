@@ -1,4 +1,5 @@
 import rawSeedContent from '@content/seed/n5-content.json';
+import rawExamples from '@content/seed/examples.json';
 import type { N5Content } from '@/types/content';
 
 /**
@@ -11,5 +12,6 @@ import type { N5Content } from '@/types/content';
  * Khi chạy với Supabase, app đọc nội dung từ database, không đọc file này.
  */
 export function loadSeedContent(): N5Content {
-  return rawSeedContent as N5Content;
+  // Câu ví dụ (Tatoeba) nằm file riêng vì sinh bằng script riêng (scripts/fetch-examples.ts), không từ Excel lộ trình.
+  return { ...(rawSeedContent as Omit<N5Content, 'exampleSentences'>), exampleSentences: rawExamples.sentences } as N5Content;
 }

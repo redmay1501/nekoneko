@@ -28,6 +28,7 @@ export interface ReadingPassageRow {
   id: number; day: number; lesson: string; text_jp: string;
   questions: Array<{ question: string; options: string[]; correctIndex: number }>;
 }
+export interface ExampleSentenceRow { id: number; text_jp: string; text_vi: string; vi_id: number | null; owner: string | null; vi_owner: string | null }
 export interface PracticeTemplateRow { id: number; kind: string; context_jp: string; sentence_jp: string; prompt_vi: string }
 
 export interface ProfileRow {

@@ -13,6 +13,7 @@ import type {
 } from '@/lib/supabase/database-rows';
 import { toIsoDate } from '@/lib/utils/dates';
 import { summarizeEventTypes } from './activity-summary';
+import { StaleMemoryRecordError } from './data-source';
 import type {
   ActivitySummary,
   LearnerProfile, LearnerSettings, LearningDataSource, PersistMemoryUpdateInput, StoredSession, StoredStepResult,
@@ -147,6 +148,13 @@ export class SupabaseDataSource implements LearningDataSource {
     return toSettings(data as UserSettingsRow);
   }
 
+  async getMemoryRecord(userId: string, contentType: ContentType, contentId: number): Promise<MemoryRecord | null> {
+    const { data, error } = await this.userClient.from('memory_items').select('*')
+      .eq('user_id', userId).eq('content_type', contentType).eq('content_id', contentId).maybeSingle();
+    throwIfError(error, 'đọc lại một bản ghi trí nhớ');
+    return data ? toMemoryRecord(data as MemoryItemRow) : null;
+  }
+
   async listMemoryRecords(userId: string): Promise<MemoryRecord[]> {
     const rows = await selectAllPages<MemoryItemRow>(
       (from, to) => this.userClient.from('memory_items').select('*').eq('user_id', userId).order('created_at').range(from, to),
@@ -195,7 +203,10 @@ export class SupabaseDataSource implements LearningDataSource {
       p_session_id: input.session?.sessionId ?? null,
       p_step_index: input.session?.stepIndex ?? null,
       p_step_result: input.session?.stepResult ?? null,
+      p_expected_encounter_count: input.expectedEncounterCount,
     });
+    // apply_memory_update báo 'stale_memory_record': bản ghi đã đổi kể từ lúc đọc (khoá lạc quan).
+    if (error?.message.includes('stale_memory_record')) throw new StaleMemoryRecordError();
     throwIfError(error, 'ghi một lần gặp lại');
     return { isDuplicate: Boolean((data as { duplicate?: boolean } | null)?.duplicate) };
   }
@@ -208,13 +219,11 @@ export class SupabaseDataSource implements LearningDataSource {
     return summarizeEventTypes(rows.map((row) => row.event_type));
   }
 
-  async countRecallDays(userId: string, sinceIso: string): Promise<number> {
-    const rows = await selectAllPages<{ created_at: string }>(
-      (from, to) => this.userClient.from('review_events').select('created_at').eq('user_id', userId).eq('is_correct', true)
-        .gte('created_at', sinceIso).order('id').range(from, to),
-      'đếm ngày nhớ lại',
-    );
-    return new Set(rows.map((row) => row.created_at.slice(0, 10))).size;
+  async listRecallDates(_userId: string): Promise<string[]> {
+    // Hàm SQL gom theo ngày giờ Việt Nam, chạy với quyền người học (RLS) — mỗi ngày một dòng.
+    const { data, error } = await this.userClient.rpc('recall_dates');
+    throwIfError(error, 'đọc các ngày nhớ lại');
+    return ((data ?? []) as string[]).map((day) => String(day).slice(0, 10));
   }
 
   async createSession(userId: string, plan: LearningSessionPlan, journeyDay: number): Promise<string> {
@@ -256,6 +265,14 @@ export class SupabaseDataSource implements LearningDataSource {
         result: (item.result as StoredStepResult | null) ?? null,
       })),
     };
+  }
+
+  async findLatestOpenSession(userId: string, mode: SessionMode, sinceIso: string): Promise<StoredSession | null> {
+    const { data, error } = await this.getAdminClient().from('learning_sessions').select('id')
+      .eq('user_id', userId).eq('mode', mode).is('ended_at', null).gte('started_at', sinceIso)
+      .order('started_at', { ascending: false }).limit(1).maybeSingle();
+    throwIfError(error, 'tìm phiên học dở dang');
+    return data ? this.getSession(userId, (data as { id: string }).id) : null;
   }
 
   async finishSession(userId: string, sessionId: string, summary: SessionSummary): Promise<void> {

@@ -30,12 +30,9 @@ export function HomeSkeleton() {
           <Skeleton height={190} radius={26} />
           <Skeleton height={190} radius={26} />
         </div>
-        <div className="dash-modes">
-          {repeat(5).map((index) => <Skeleton key={index} height={68} radius={20} />)}
-        </div>
         <div className="dash-lower">
-          <div className="dash-col"><Skeleton height={230} radius={26} /><Skeleton height={170} radius={26} /></div>
-          <div className="dash-col"><Skeleton height={260} radius={26} /><Skeleton height={120} radius={26} /></div>
+          <Skeleton height={230} radius={26} />
+          <Skeleton height={230} radius={26} />
         </div>
       </div>
     </SkeletonScreen>

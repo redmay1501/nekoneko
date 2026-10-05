@@ -2,12 +2,12 @@
 
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { QUERY_KEYS } from '@/lib/api/query-keys';
 import { startNavigation } from '@/stores/navigation-progress-store';
 import { answerSessionStep, finishSession, startSession } from '../session-api';
 import { SESSION_MODE_CONFIG, type SessionMode } from '../session-modes';
-import { gradeAnswer, type StepAnswerFeedback } from '../session-types';
+import { gradeAnswer, phaseOfStep, type SessionPhase, type StepAnswerFeedback } from '../session-types';
 
 /**
  * Vòng đời một phiên học ở trình duyệt:
@@ -25,12 +25,14 @@ export function useLearningSession(mode: SessionMode) {
   const [chosenAnswer, setChosenAnswer] = useState<string | null>(null);
   /** Đang đứng ở điểm dừng giữa hai chặng ("Học tiếp hay nghỉ?"). */
   const [isAtCheckpoint, setIsAtCheckpoint] = useState(false);
+  /** Vừa xong một chặng (Gặp lại → Học bù → Mới → Dùng thử): chặng vừa xong, để hiện màn chuyển chặng. */
+  const [finishedPhase, setFinishedPhase] = useState<SessionPhase | null>(null);
   const checkpointEvery = SESSION_MODE_CONFIG[mode].checkpointEvery;
 
   const sessionQuery = useQuery({
     queryKey: QUERY_KEYS.learningSession(mode, attempt),
     queryFn: () => startSession(mode),
-    // Mỗi lần mở là một phiên mới; không tự tải lại giữa chừng.
+    // Mỗi lần mở: phiên mới, hoặc phiên dở dang cùng chế độ (server quyết định). Không tự tải lại giữa chừng.
     staleTime: Infinity,
     gcTime: 0,
     refetchOnWindowFocus: false,
@@ -39,6 +41,13 @@ export function useLearningSession(mode: SessionMode) {
 
   const session = sessionQuery.data;
   const currentStep = session?.steps[stepIndex] ?? null;
+
+  // Học tiếp phiên dở dang (tải lại trang / đóng tab): nhảy tới bước đầu tiên chưa làm — bước trước đã được lưu.
+  const sessionId = session?.sessionId;
+  const resumeFromStep = session?.resumeFromStep ?? 0;
+  useEffect(() => {
+    if (sessionId) setStepIndex(resumeFromStep);
+  }, [sessionId, resumeFromStep]);
 
   /**
    * Hàng đợi ghi lên server. NỐI TIẾP (không song song) để Memory Engine luôn cộng trên bản ghi mới nhất
@@ -99,6 +108,12 @@ export function useLearningSession(mode: SessionMode) {
       return;
     }
     setStepIndex(nextIndex);
+    const previousPhase = phaseOfStep(session.steps[stepIndex]);
+    if (phaseOfStep(session.steps[nextIndex]) !== previousPhase) {
+      setFinishedPhase(previousPhase);
+      window.scrollTo({ top: 0 });
+      return;
+    }
     // Xong một chặng (giới thiệu + luyện ngay) và chặng sau vẫn là kiến thức mới → để người học tự chọn học tiếp hay nghỉ.
     const startsNewChunk = session.steps[nextIndex].type === 'discover' && session.steps[nextIndex - 1].type !== 'discover'
       && session.steps.slice(0, nextIndex).some((step) => step.type === 'discover');
@@ -112,6 +127,10 @@ export function useLearningSession(mode: SessionMode) {
   function acknowledgeAndContinue(answer: string) {
     recordInBackground(stepIndex, answer);
     goToNextStep();
+  }
+
+  function startNextPhase() {
+    setFinishedPhase(null);
   }
 
   function continueAfterCheckpoint() {
@@ -129,6 +148,7 @@ export function useLearningSession(mode: SessionMode) {
     setFeedback(null);
     setChosenAnswer(null);
     setAttempt((value) => value + 1);
+    setFinishedPhase(null);
   }
 
   return {
@@ -147,6 +167,8 @@ export function useLearningSession(mode: SessionMode) {
     restart,
     isAtCheckpoint,
     checkpointEvery,
+    finishedPhase,
+    startNextPhase,
     continueAfterCheckpoint,
     stopAtCheckpoint,
   };

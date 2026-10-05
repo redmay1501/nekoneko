@@ -14,11 +14,11 @@ const SHORTCUTS = [
 
 /** SC-37 · Hồ sơ. */
 export default async function ProfilePage() {
-  const { profile, journeyDay, journey, recallDays, catalog, memoryViews } = await getLearnerContext();
+  const { profile, journeyDay, journey, streak, catalog, memoryViews } = await getLearnerContext();
   const overview = buildMemoryOverview(memoryViews);
   const stats = [
     { label: 'Ngày học', value: journeyDay },
-    { label: 'Ngày nhớ lại', value: recallDays },
+    { label: 'Chuỗi ngày liên tiếp', value: streak.currentStreak },
     { label: 'Cây trong vườn', value: overview.learnedCount },
   ];
   return (

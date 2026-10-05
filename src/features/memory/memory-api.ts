@@ -17,3 +17,8 @@ export function fetchAnotherSurprise(excludedKeys: readonly string[], seed: numb
   const params = new URLSearchParams({ exclude: excludedKeys.join(','), seed: String(seed) });
   return requestJson(`/api/memory/surprise?${params.toString()}`);
 }
+
+/** Một câu Luyện nghe — server chấm và ghi vào trí nhớ. */
+export function answerListeningPractice(contentKey: string, answer: string): Promise<{ memory: MemoryView; counted: boolean }> {
+  return postJson('/api/memory/practice', { contentKey, answer, requestId: createRequestId() });
+}

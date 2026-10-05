@@ -9,7 +9,8 @@ import { ErrorState } from '@/components/common/StateViews';
 import { useLearningSession } from '@/features/learning/hooks/useLearningSession';
 import { SESSION_MODES, type SessionMode } from '@/features/learning/session-modes';
 import { SessionCheckpoint } from './session/SessionCheckpoint';
-import { SessionHeader, SessionProgress } from './session/SessionHeader';
+import { PhaseIntro } from './session/PhaseIntro';
+import { SessionHeader, SessionPhaseBar, SessionProgress } from './session/SessionHeader';
 import { DiscoverStepView, RecallStepView, SurpriseStepView, UseStepView } from './session/SessionSteps';
 
 /**
@@ -20,19 +21,20 @@ export function LearningSession({ mode }: { mode: SessionMode }) {
   const learning = useLearningSession(mode);
   const { sessionQuery, session, currentStep, stepIndex } = learning;
 
-  // Enter advances after an answer. Ignore text-entry contexts and key repeats.
+  // Enter sang câu tiếp sau khi đã trả lời. Bỏ qua khi đang gõ chữ và khi giữ phím.
+  const { feedback, isFinishing, isAtCheckpoint, goToNextStep } = learning;
   useEffect(() => {
-    if (mode !== SESSION_MODES.DAILY || !learning.feedback || learning.isFinishing || learning.isAtCheckpoint) return;
+    if (mode !== SESSION_MODES.DAILY || !feedback || isFinishing || isAtCheckpoint) return;
     function handleKeyDown(event: KeyboardEvent) {
       const target = event.target;
       if (event.key !== 'Enter' || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
       if (target instanceof HTMLElement && (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName))) return;
       event.preventDefault();
-      learning.goToNextStep();
+      goToNextStep();
     }
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [mode, learning.feedback, learning.isFinishing, learning.isAtCheckpoint, learning.goToNextStep]);
+  }, [mode, feedback, isFinishing, isAtCheckpoint, goToNextStep]);
 
   if (sessionQuery.isLoading) {
     return <div className="session"><SessionHeader mode={mode} /><SkeletonScreen label="Noko đang chọn bài cho bạn…"><SessionCardSkeleton /></SkeletonScreen></div>;
@@ -62,11 +64,17 @@ export function LearningSession({ mode }: { mode: SessionMode }) {
   return (
     <div className={`session${mode === SESSION_MODES.DAILY ? ' daily-session' : ''}`}>
       <SessionHeader mode={mode} />
+      <SessionPhaseBar steps={session.steps} currentIndex={stepIndex} />
       <SessionProgress total={session.steps.length} currentIndex={stepIndex} />
+      {session.resumeFromStep > 0 && stepIndex === session.resumeFromStep && !learning.feedback ? (
+        <NokoMessage state="comeback" text="Học tiếp từ chỗ bạn dừng lại 🐾 Những câu trước đã được lưu rồi." className="mb-3" />
+      ) : null}
       {stepIndex === 0 && mode === SESSION_MODES.RESCUE ? (
         <NokoMessage state="comeback" text="Bạn quay lại rồi 🌸 Không cần học bù. Mình chọn một điểm bắt đầu nhẹ nhàng nhé." className="mb-3" />
       ) : null}
-      {learning.isAtCheckpoint && learning.checkpointEvery ? (
+      {learning.finishedPhase ? (
+        <PhaseIntro steps={session.steps} nextStepIndex={stepIndex} previousPhase={learning.finishedPhase} onStart={learning.startNextPhase} />
+      ) : learning.isAtCheckpoint && learning.checkpointEvery ? (
         <SessionCheckpoint steps={session.steps} nextStepIndex={stepIndex} chunkSize={learning.checkpointEvery}
           isBusy={learning.isFinishing} onContinue={learning.continueAfterCheckpoint} onStop={learning.stopAtCheckpoint} />
       ) : (

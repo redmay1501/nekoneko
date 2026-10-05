@@ -1,4 +1,4 @@
-/** Điều hướng chính — giữ đúng thứ tự và tên của prototype; biểu tượng là bộ icon mèo Neko Neko ("neko:<slug>"). */
+/** Điều hướng chính — tên giữ như prototype, gom thành 3 nhóm; biểu tượng là bộ icon mèo Neko Neko ("neko:<slug>"). */
 export interface NavigationItem {
   href: string;
   icon: string;
@@ -19,15 +19,36 @@ export const LEARNING_LINKS: NavigationItem[] = [
   { href: '/luyen-tap/viet', icon: 'neko:writing', label: 'Luyện viết' },
 ];
 
-export const MAIN_NAVIGATION: NavigationItem[] = [
-  { href: '/', icon: 'neko:home', label: 'Trang chủ' },
-  { href: '/lo-trinh', icon: 'neko:roadmap', label: 'Lộ trình' },
-  { href: '/hoc-tap', icon: 'neko:study', label: 'Học tập', children: LEARNING_LINKS },
-  { href: '/tri-nho', icon: 'neko:memory', label: 'Trí nhớ' },
-  { href: '/luyen-tap', icon: 'neko:practice', label: 'Luyện tập' },
-  { href: '/vuon', icon: 'neko:garden', label: 'Vườn tri thức' },
-  { href: '/tien-do', icon: 'neko:progress', label: 'Tiến độ' },
-  { href: '/thanh-tich', icon: 'neko:achievements', label: 'Thành tích' },
+export interface NavigationGroup {
+  label: string;
+  items: NavigationItem[];
+}
+
+/** Ba nhóm: HỌC (việc mỗi ngày) · KHÁM PHÁ (tự xem thêm) · THEO DÕI (nhìn lại mình). */
+export const NAVIGATION_GROUPS: NavigationGroup[] = [
+  {
+    label: 'Học',
+    items: [
+      { href: '/', icon: 'neko:home', label: 'Trang chủ' },
+      { href: '/lo-trinh', icon: 'neko:roadmap', label: 'Lộ trình' },
+      { href: '/luyen-tap', icon: 'neko:practice', label: 'Luyện tập' },
+    ],
+  },
+  {
+    label: 'Khám phá',
+    items: [
+      { href: '/hoc-tap', icon: 'neko:study', label: 'Học tập', children: LEARNING_LINKS },
+      { href: '/vuon', icon: 'neko:garden', label: 'Vườn tri thức' },
+    ],
+  },
+  {
+    label: 'Theo dõi',
+    items: [
+      { href: '/tri-nho', icon: 'neko:memory', label: 'Trí nhớ' },
+      { href: '/tien-do', icon: 'neko:progress', label: 'Tiến độ' },
+      { href: '/thanh-tich', icon: 'neko:achievements', label: 'Thành tích' },
+    ],
+  },
 ];
 
 export const FOOTER_NAVIGATION: NavigationItem[] = [

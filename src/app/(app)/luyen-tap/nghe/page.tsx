@@ -1,6 +1,6 @@
 import { AudioButton } from '@/components/common/AudioButton';
 import { EmptyState } from '@/components/common/StateViews';
-import { AssessmentQuiz } from '@/components/learning/AssessmentQuiz';
+import { ListeningQuiz } from '@/components/learning/ListeningQuiz';
 import { buildListeningPractice } from '@/features/learning/skill-practice';
 import { getLearnerContext } from '@/features/learning/learner-context';
 
@@ -12,10 +12,10 @@ export default async function ListeningPage() {
     <>
       <h1>Luyện nghe</h1>
       <p className="soft sm" style={{ margin: '4px 0 14px' }}>
-        Nghe từ vựng đã học, chọn nghĩa rồi xem điểm sau khi hoàn thành.
+        Nghe từ vựng đã học, chọn nghĩa rồi xem điểm sau khi hoàn thành. Mỗi câu cũng được tính là một lần gặp lại trong trí nhớ.
       </p>
-      <AssessmentQuiz title="Nghe và chọn nghĩa" description="Nghe từng từ, chọn nghĩa rồi bấm câu tiếp theo. Cuối bài có kết quả và nút làm lại."
-        questions={practice.questions.map((question) => ({ audioText: question.audioText, answer: question.answer, options: question.options }))}
+      <ListeningQuiz title="Nghe và chọn nghĩa" description="Nghe từng từ, chọn nghĩa rồi bấm câu tiếp theo. Cuối bài có kết quả và nút làm lại."
+        questions={practice.questions.map((question) => ({ contentKey: question.contentKey, audioText: question.audioText, answer: question.answer, options: question.options }))}
         emptyMessage="Từ vựng sẽ có ở đây khi bạn học đến chặng Nền tảng (ngày 15)." />
       <div className="sec-h"><h2>Shadowing — nói đuổi theo</h2></div>
       {practice.shadowing.length ? (

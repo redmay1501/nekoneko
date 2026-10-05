@@ -21,6 +21,10 @@ export default async function SettingsPage() {
         {' · '}Emoji động: <a className="link" href="https://googlefonts.github.io/noto-emoji-animation/" target="_blank" rel="noreferrer">Google Noto Animated Emoji</a>
         {' '}(<a className="link" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">CC BY 4.0</a>)
       </p>
+      <p className="tiny muted center mt-1.5">
+        Câu ví dụ: <a className="link" href="https://tatoeba.org" target="_blank" rel="noreferrer">Tatoeba</a> và những người đóng góp
+        {' '}(<a className="link" href="https://creativecommons.org/licenses/by/2.0/fr/" target="_blank" rel="noreferrer">CC BY 2.0 FR</a>)
+      </p>
     </>
   );
 }

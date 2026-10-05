@@ -1,7 +1,7 @@
-import { LearningSession } from '@/components/learning/LearningSession';
+import { redirect } from 'next/navigation';
 import { SESSION_MODES } from '@/features/learning/session-modes';
 
-/** SC-05 · Gặp lại kiến thức — cùng Session Engine, chỉ khác chế độ. */
+/** SC-05 · Gặp lại kiến thức — đường dẫn cũ, giữ để link/bookmark cũ vẫn chạy: mọi phiên học nay ở /hoc/<chế độ>. */
 export default function Page() {
-  return <LearningSession mode={SESSION_MODES.RECALL} />;
+  redirect(`/hoc/${SESSION_MODES.RECALL}`);
 }

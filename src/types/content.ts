@@ -125,6 +125,16 @@ export interface PracticeTemplate {
   promptVi: string;
 }
 
+/** Câu ví dụ tiếng Nhật ↔ tiếng Việt (Tatoeba, CC BY 2.0 FR) — mã câu + người đóng góp để ghi nguồn. */
+export interface ExampleSentence {
+  id: number;
+  jp: string;
+  vi: string;
+  viId: number | null;
+  owner: string | null;
+  viOwner: string | null;
+}
+
 export interface N5Content {
   journeyDays: JourneyDay[];
   dayTasks: DayTask[];
@@ -138,4 +148,5 @@ export interface N5Content {
   studyResources: StudyResource[];
   readingPassages: ReadingPassage[];
   practiceTemplates: PracticeTemplate[];
+  exampleSentences: ExampleSentence[];
 }

@@ -61,6 +61,7 @@ export const EMOJI_ICONS: Record<string, EmojiIconSource> = {
   '🧭': { slug: 'compass', fluentPath: 'Compass/3D/compass_3d.png' },
   '🎯': { slug: 'bullseye', fluentPath: 'Bullseye/3D/bullseye_3d.png' },
   '✅': { slug: 'check', fluentPath: 'Check mark button/3D/check_mark_button_3d.png' },
+  '📦': { slug: 'package', fluentPath: 'Package/3D/package_3d.png' },
 };
 
 /**

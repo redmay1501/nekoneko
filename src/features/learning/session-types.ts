@@ -19,9 +19,25 @@ export const SELF_REPORT_ANSWERS = {
 export type SelfReportAnswer = (typeof SELF_REPORT_ANSWERS)[keyof typeof SELF_REPORT_ANSWERS];
 export const DISCOVER_ACKNOWLEDGED = 'acknowledged';
 
+/**
+ * Chặng của một ngày học — thứ tự cố định: Gặp lại → Học bù → Mới → Dùng thử (docs/session-engine.md).
+ * Người học thấy mình đang ở chặng nào, nên biết "phần ôn" và "phần mới" là hai việc khác nhau.
+ */
+export const SESSION_PHASES = ['review', 'backlog', 'new', 'use'] as const;
+export type SessionPhase = (typeof SESSION_PHASES)[number];
+
+export const SESSION_PHASE_INFO: Record<SessionPhase, { emoji: string; label: string; intro: string }> = {
+  review: { emoji: '🔄', label: 'Gặp lại', intro: 'Gặp lại vài thứ bạn đã học — xem bạn còn nhớ không nhé.' },
+  backlog: { emoji: '📦', label: 'Học bù', intro: 'Vài kiến thức của ngày trước bạn chưa kịp học. Mình học bù một chút thôi.' },
+  new: { emoji: '🌱', label: 'Mới', intro: 'Giờ học vài thứ mới của hôm nay.' },
+  use: { emoji: '✨', label: 'Dùng thử', intro: 'Thử dùng những gì đã học trong một câu thật.' },
+};
+
 interface StepBase {
   stepIndex: number;
   contentKey: ContentKey;
+  /** Chặng của bước. Phiên lưu trước khi có trường này → suy ra bằng phaseOfStep(). */
+  phase?: SessionPhase;
 }
 
 export interface SurpriseStep extends StepBase {
@@ -45,6 +61,8 @@ export interface RecallStep extends StepBase {
 export interface DiscoverStep extends StepBase {
   type: 'discover';
   card: DiscoverCard;
+  /** Học bù: ngày lộ trình của kiến thức (để thẻ ghi "Học bù · từ ngày X"). */
+  fromDay?: number;
 }
 
 export interface UseChooseSentenceStep extends StepBase {
@@ -81,6 +99,8 @@ export interface AnsweredStep {
   face: string;
   isCorrect: boolean | null;
   daysSinceSeenBefore: number | null;
+  /** Câu luyện ngay của thứ VỪA học trong phiên — không tính là "nhớ lại" (chưa có khoảng cách thời gian). */
+  isPractice?: boolean;
 }
 
 export interface SessionSummary {
@@ -131,4 +151,14 @@ export interface StartedSession {
   mode: SessionMode;
   targetMinutes: number;
   steps: SessionStepWithAnswer[];
+  /** Học tiếp phiên dở dang: bắt đầu từ bước này (bước trước đó đã trả lời và đã lưu). 0 = phiên mới. */
+  resumeFromStep: number;
+}
+
+/** Chặng của một bước — dùng trường phase nếu có, nếu không (phiên cũ) suy ra từ loại bước. */
+export function phaseOfStep(step: PublicSessionStep): SessionPhase {
+  if (step.phase) return step.phase;
+  if (step.type === 'surprise' || (step.type === 'recall' && !step.isPractice)) return 'review';
+  if (step.type === 'use') return 'use';
+  return 'new';
 }

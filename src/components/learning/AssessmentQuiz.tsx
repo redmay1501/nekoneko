@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { AudioButton } from '@/components/common/AudioButton';
 
 export interface AssessmentQuestion {
+  /** Có thì mỗi câu trả lời được báo lên `onAnswer` (để ghi vào trí nhớ). */
+  contentKey?: string;
   prompt?: string;
   promptIsJapanese?: boolean;
   audioText?: string;
@@ -18,12 +20,14 @@ export function AssessmentQuiz({
   questions,
   emptyMessage,
   audioLabel = 'Nghe câu hỏi',
+  onAnswer,
 }: {
   title: string;
   description: string;
   questions: AssessmentQuestion[];
   emptyMessage: string;
   audioLabel?: string;
+  onAnswer?: (question: AssessmentQuestion, answer: string) => void;
 }) {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [chosenAnswer, setChosenAnswer] = useState<string | null>(null);
@@ -35,6 +39,7 @@ export function AssessmentQuiz({
     if (!question || chosenAnswer !== null) return;
     setChosenAnswer(answer);
     if (answer === question.answer) setCorrectCount((count) => count + 1);
+    onAnswer?.(question, answer);
   }
 
   function continueQuiz() {

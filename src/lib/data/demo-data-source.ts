@@ -11,7 +11,7 @@ import type { MemoryRecord, ReviewEventType } from '@/features/memory/memory-typ
 import { JOURNEY_TOTAL_DAYS } from '@/features/roadmap/journey';
 import type { JourneyAdvanceResult } from '@/features/roadmap/journey-progress';
 import { addDays, toIsoDate } from '@/lib/utils/dates';
-import { summarizeEventTypes } from './activity-summary';
+import { summarizeActivityEvents } from './activity-summary';
 import { StaleMemoryRecordError } from './data-source';
 import type {
   ActivitySummary,
@@ -36,6 +36,7 @@ interface DemoReviewEvent {
   requestId: string;
   userId: string;
   eventType: ReviewEventType;
+  contentKey: string;
   isCorrect: boolean | null;
   createdAt: string;
 }
@@ -70,6 +71,7 @@ function createDemoStore(): DemoStore {
     requestId: `demo-history-${index}`,
     userId: DEMO_LEARNER.userId,
     eventType: 'recall' as const,
+    contentKey: records[index] ? toContentKey(records[index].contentType, records[index].contentId) : `demo-${index}`,
     isCorrect: true,
     createdAt: addDays(now, -(index + 1)).toISOString(),
   }));
@@ -169,7 +171,7 @@ export class DemoDataSource implements LearningDataSource {
 
     memoryOf(input.userId).set(toContentKey(input.contentType, input.contentId), { ...input.nextRecord });
     store.reviewEvents.push({
-      requestId: input.requestId, userId: input.userId, eventType: input.eventType, isCorrect: input.isCorrect, createdAt: new Date().toISOString(),
+      requestId: input.requestId, userId: input.userId, eventType: input.eventType, contentKey: toContentKey(input.contentType, input.contentId), isCorrect: input.isCorrect, createdAt: new Date().toISOString(),
     });
     if (input.session) {
       const session = store.sessions.get(input.session.sessionId);
@@ -189,7 +191,7 @@ export class DemoDataSource implements LearningDataSource {
 
   async summarizeActivity(userId: string, sinceIso: string): Promise<ActivitySummary> {
     const events = demoStore().reviewEvents.filter((event) => event.userId === userId && event.createdAt >= sinceIso);
-    return summarizeEventTypes(events.map((event) => event.eventType));
+    return summarizeActivityEvents(events.map((event) => ({ eventType: event.eventType, itemId: event.contentKey })));
   }
 
   async listRecallDates(userId: string): Promise<string[]> {

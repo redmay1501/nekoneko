@@ -42,6 +42,9 @@ import {
  */
 
 const OPTION_COUNT = 4;
+/** Có ít nhất chừng này thứ đã biết cùng loại thì chỉ dùng chúng làm phương án (câu có thể chỉ 2–3 lựa chọn). */
+const MIN_KNOWN_DISTRACTORS = 2;
+const MEANING_TYPES: readonly ContentType[] = ['radical', 'kanji', 'vocabulary'];
 /** Lấy rộng gấp 3 lần số cần rồi mới chọn — để mỗi phiên có chút khác nhau mà vẫn ưu tiên đúng. */
 const CANDIDATE_POOL_MULTIPLIER = 3;
 const MIN_CANDIDATE_POOL = 12;
@@ -61,6 +64,25 @@ function buildOptions(correct: string, distractorPool: readonly string[], seed: 
     `${seed}:distractors`,
   );
   return shuffleDeterministic([correct, ...distractors], `${seed}:order`);
+}
+
+/**
+ * Phương án nhiễu CHỈ lấy từ thứ người học đã biết (đã học + đã được giới thiệu trong phiên này):
+ * có chữ lạ chưa học thì người học đoán được đáp án bằng cách loại trừ, không phải nhớ.
+ * Ưu tiên cùng ngày (あ/お, い/こ… phải phân biệt thật). Chưa đủ thứ đã biết (rất hiếm, ví dụ từ vựng đầu tiên)
+ * thì mới mượn thứ cùng ngày, rồi cùng loại.
+ */
+function knownDistractors(item: KnowledgeItem, catalog: KnowledgeCatalog, known: ReadonlySet<ContentKey>): KnowledgeItem[] {
+  const sameType = catalog.items.filter((candidate) => candidate.type === item.type && candidate.key !== item.key);
+  const knownSameType = sameType.filter((candidate) => known.has(candidate.key));
+  if (knownSameType.length >= MIN_KNOWN_DISTRACTORS) return knownSameType;
+  // Thứ có NGHĨA (bộ thủ, kanji, từ) dùng chung được: kanji đầu tiên thì nhiễu bằng nghĩa của bộ thủ / từ đã biết.
+  if (MEANING_TYPES.includes(item.type)) {
+    const knownWithMeaning = catalog.items.filter((candidate) => candidate.key !== item.key && known.has(candidate.key) && MEANING_TYPES.includes(candidate.type));
+    if (knownWithMeaning.length >= MIN_KNOWN_DISTRACTORS) return knownWithMeaning;
+  }
+  const sameDay = sameType.filter((candidate) => candidate.day === item.day);
+  return [...knownSameType, ...(sameDay.length >= OPTION_COUNT - 1 ? sameDay : sameType)];
 }
 
 function selectRecallItems(input: BuildLearningSessionInput, count: number, excluded: Set<ContentKey>): KnowledgeItem[] {
@@ -133,8 +155,8 @@ function selectDiscoverGroups(input: BuildLearningSessionInput, count: number, e
   return [{ phase: 'backlog' as const, items: backlog }, { phase: 'new' as const, items: today }].filter((group) => group.items.length > 0);
 }
 
-function buildRecallStep(item: KnowledgeItem, catalog: KnowledgeCatalog, stepIndex: number, seed: string): SessionStepWithAnswer {
-  const sameType = catalog.items.filter((candidate) => candidate.type === item.type && candidate.key !== item.key);
+function buildRecallStep(item: KnowledgeItem, catalog: KnowledgeCatalog, stepIndex: number, seed: string, known: ReadonlySet<ContentKey>): SessionStepWithAnswer {
+  const sameType = knownDistractors(item, catalog, known);
   return {
     type: 'recall', stepIndex, contentKey: item.key, face: item.face,
     question: item.type === 'vocabulary' || item.type === 'kanji' ? 'Từ này đọc là gì?' : 'Chữ này đọc là gì?',
@@ -150,11 +172,8 @@ const PRACTICE_BY_READING: readonly ContentType[] = ['hiragana', 'katakana'];
  * Câu luyện ngay sau khi vừa giới thiệu: chữ cái → đọc là gì; bộ thủ/kanji/từ → nghĩa là gì.
  * Hỏi nghĩa (không hỏi cách đọc) vì từ viết bằng kana thì "cách đọc" chính là mặt chữ — hỏi vậy vô nghĩa.
  */
-function buildPracticeStep(item: KnowledgeItem, catalog: KnowledgeCatalog, stepIndex: number, seed: string): SessionStepWithAnswer {
-  const sameType = catalog.items.filter((candidate) => candidate.type === item.type && candidate.key !== item.key);
-  // Phương án nhiễu ưu tiên những thứ học cùng ngày (あ/お, い/こ…): phải thật sự phân biệt, không đoán bằng cách loại chữ lạ.
-  const sameDay = sameType.filter((candidate) => candidate.day === item.day);
-  const distractorItems = sameDay.length >= OPTION_COUNT - 1 ? sameDay : sameType;
+function buildPracticeStep(item: KnowledgeItem, catalog: KnowledgeCatalog, stepIndex: number, seed: string, known: ReadonlySet<ContentKey>): SessionStepWithAnswer {
+  const distractorItems = knownDistractors(item, catalog, known);
   const byReading = PRACTICE_BY_READING.includes(item.type);
   const correctAnswer = byReading ? item.reading : item.meaning;
   return {
@@ -166,10 +185,14 @@ function buildPracticeStep(item: KnowledgeItem, catalog: KnowledgeCatalog, stepI
 }
 
 /** Giới thiệu từng chặng (tối đa DAY_CHUNK_SIZE thứ), mỗi chặng xong thì luyện ngay đúng những thứ vừa học. */
-function buildDiscoverAndPracticeSteps(items: KnowledgeItem[], input: BuildLearningSessionInput, firstIndex: number, phase: SessionPhase): SessionStepWithAnswer[] {
+function buildDiscoverAndPracticeSteps(
+  items: KnowledgeItem[], input: BuildLearningSessionInput, firstIndex: number, phase: SessionPhase, known: Set<ContentKey>,
+): SessionStepWithAnswer[] {
   const steps: SessionStepWithAnswer[] = [];
   for (let start = 0; start < items.length; start += DAY_CHUNK_SIZE) {
     const chunk = items.slice(start, start + DAY_CHUNK_SIZE);
+    // Giới thiệu xong chặng này thì nó thành "đã biết" — phương án luyện ngay lấy từ chính chặng + thứ đã học.
+    for (const item of chunk) known.add(item.key);
     for (const item of chunk) {
       steps.push({
         type: 'discover', stepIndex: firstIndex + steps.length, contentKey: item.key, phase,
@@ -179,13 +202,15 @@ function buildDiscoverAndPracticeSteps(items: KnowledgeItem[], input: BuildLearn
     }
     // Đảo thứ tự để luyện thật sự là nhớ lại, không phải đọc lại theo đúng thứ tự vừa xem.
     for (const item of shuffleDeterministic(chunk, `${input.seed}:practice-order:${start}`)) {
-      steps.push({ ...buildPracticeStep(item, input.catalog, firstIndex + steps.length, input.seed), phase });
+      steps.push({ ...buildPracticeStep(item, input.catalog, firstIndex + steps.length, input.seed, known), phase });
     }
   }
   return steps;
 }
 
-function buildUseSteps(input: BuildLearningSessionInput, count: number, firstIndex: number, excluded: Set<ContentKey>): SessionStepWithAnswer[] {
+function buildUseSteps(
+  input: BuildLearningSessionInput, count: number, firstIndex: number, excluded: Set<ContentKey>, known: ReadonlySet<ContentKey>,
+): SessionStepWithAnswer[] {
   if (count <= 0) return [];
   const { catalog, memoryViews, journeyDay, seed } = input;
   const learnedGrammar = catalog.content.grammar.filter((pattern) => pattern.day !== null && pattern.day <= journeyDay);
@@ -199,6 +224,10 @@ function buildUseSteps(input: BuildLearningSessionInput, count: number, firstInd
   const grammarPicks = [...todaysGrammar, ...pickDeterministic(learnedGrammar.filter((pattern) => !todaysGrammar.includes(pattern)), count, `${seed}:use`)]
     .slice(0, count);
   const steps: SessionStepWithAnswer[] = [];
+  // Câu nhiễu: câu mẫu của ngữ pháp đã biết (bỏ câu dạng bảng chia "書きます → 書いて").
+  const isSentence = (sentence: string) => Boolean(sentence) && !/[→/／]/.test(sentence);
+  const knownSentences = learnedGrammar.filter((pattern) => known.has(toContentKey('grammar', pattern.id))).map((pattern) => pattern.exampleJp).filter(isSentence);
+  const sentencePool = knownSentences.length >= MIN_KNOWN_DISTRACTORS ? knownSentences : learnedGrammar.map((pattern) => pattern.exampleJp).filter(isSentence);
 
   grammarPicks.forEach((pattern, offset) => {
     const stepIndex = firstIndex + steps.length;
@@ -216,7 +245,7 @@ function buildUseSteps(input: BuildLearningSessionInput, count: number, firstInd
         excluded.add(key);
         // Ưu tiên câu thật có từ này (Tatoeba); chưa có thì dùng câu mẫu chung.
         const item = catalog.byKey.get(key);
-        const blank = item ? realSentenceBlank(catalog, item) : null;
+        const blank = item ? realSentenceBlank(catalog, item, known) : null;
         if (blank) {
           steps.push({
             type: 'use', variant: 'fill-blank', stepIndex, contentKey: key,
@@ -230,7 +259,7 @@ function buildUseSteps(input: BuildLearningSessionInput, count: number, firstInd
           type: 'use', variant: 'fill-blank', stepIndex, contentKey: key,
           contextJp: template.contextJp, sentenceJp: template.sentenceJp,
           promptVi: template.promptVi.replace('{meaning}', word.meaning.toLowerCase()),
-          options: buildOptions(word.kana, catalog.content.vocabulary.map((candidate) => candidate.kana), `${seed}:fill:${word.id}`),
+          options: buildOptions(word.kana, knownDistractors(catalog.byKey.get(key)!, catalog, known).map((candidate) => candidate.reading), `${seed}:fill:${word.id}`),
           correctAnswer: word.kana,
         });
         return;
@@ -242,8 +271,7 @@ function buildUseSteps(input: BuildLearningSessionInput, count: number, firstInd
     excluded.add(key);
     steps.push({
       type: 'use', variant: 'choose-sentence', stepIndex, contentKey: key, promptVi: pattern.exampleVi,
-      options: buildOptions(pattern.exampleJp, catalog.content.grammar.map((candidate) => candidate.exampleJp)
-        .filter((sentence) => !/[→/／]/.test(sentence)), `${seed}:choose:${pattern.id}`),
+      options: buildOptions(pattern.exampleJp, sentencePool, `${seed}:choose:${pattern.id}`),
       correctAnswer: pattern.exampleJp,
     });
   });
@@ -256,6 +284,8 @@ export function buildLearningSession(input: BuildLearningSessionInput): Learning
   const { composition } = SESSION_MODE_CONFIG[mode];
   const used = new Set<ContentKey>();
   const steps: SessionStepWithAnswer[] = [];
+  // Thứ người học đã biết — nguồn duy nhất cho phương án nhiễu; lớn dần khi phiên giới thiệu thứ mới.
+  const known = new Set([...memoryViews.values()].filter((view) => view.isLearned).map((view) => view.contentKey));
 
   if (composition.surprise > 0) {
     const surprise = pickMemorySurprise([...memoryViews.values()], `${seed}:${mode}`);
@@ -271,15 +301,15 @@ export function buildLearningSession(input: BuildLearningSessionInput): Learning
 
   for (const item of selectRecallItems(input, composition.recall, used)) {
     used.add(item.key);
-    steps.push(buildRecallStep(item, catalog, steps.length, seed));
+    steps.push(buildRecallStep(item, catalog, steps.length, seed, known));
   }
 
   for (const group of selectDiscoverGroups(input, composition.discover, used)) {
     for (const item of group.items) used.add(item.key);
-    steps.push(...buildDiscoverAndPracticeSteps(group.items, input, steps.length, group.phase));
+    steps.push(...buildDiscoverAndPracticeSteps(group.items, input, steps.length, group.phase, known));
   }
 
-  steps.push(...buildUseSteps(input, composition.use, steps.length, used));
+  steps.push(...buildUseSteps(input, composition.use, steps.length, used, known));
 
   // Gặp lại & bất ngờ → chặng review; Dùng trong câu → use (học bù / mới đã gắn chặng ở trên).
   return { mode, steps: steps.map((step, index) => ({ ...step, stepIndex: index, phase: step.phase ?? phaseOfStep(step) })) };

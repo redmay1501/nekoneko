@@ -17,8 +17,13 @@ export function appDateKey(date: Date): string {
   return DATE_KEY_FORMAT.format(date);
 }
 
+/** 0 giờ hôm nay theo giờ Việt Nam (UTC+7, không có giờ mùa hè) — mốc "hôm nay" cho các con số trong ngày. */
+export function startOfAppDay(now: Date): Date {
+  return new Date(`${appDateKey(now)}T00:00:00+07:00`);
+}
+
 /** Lùi/tiến một số ngày trên lịch (không phụ thuộc giờ). */
-function shiftDateKey(dateKey: string, days: number): string {
+export function shiftDateKey(dateKey: string, days: number): string {
   const date = new Date(`${dateKey}T00:00:00Z`);
   date.setUTCDate(date.getUTCDate() + days);
   return date.toISOString().slice(0, 10);
@@ -28,6 +33,8 @@ export interface RecallStreak {
   recallDays: number;
   currentStreak: number;
   longestStreak: number;
+  /** Ngày gần nhất có nhớ đúng (yyyy-mm-dd, giờ VN) — để biết người học quay lại sau mấy ngày. */
+  lastRecallDay: string | null;
 }
 
 export function summarizeRecallDates(dateKeys: readonly string[], now: Date): RecallStreak {
@@ -50,5 +57,5 @@ export function summarizeRecallDates(dateKeys: readonly string[], now: Date): Re
     currentStreak++;
     cursor = shiftDateKey(cursor, -1);
   }
-  return { recallDays, currentStreak, longestStreak };
+  return { recallDays, currentStreak, longestStreak, lastRecallDay: days.at(-1) ?? null };
 }

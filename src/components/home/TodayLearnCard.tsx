@@ -3,7 +3,8 @@ import Image from 'next/image';
 import { CompleteDayButton } from '@/components/roadmap/CompleteDayButton';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
 import type { SessionPlanPreview } from '@/features/learning/session-engine';
-import { SESSION_PHASES, SESSION_PHASE_INFO } from '@/features/learning/session-types';
+import { SESSION_PHASES, SESSION_PHASE_INFO, type SessionPhase } from '@/features/learning/session-types';
+import type { ReactNode } from 'react';
 
 interface TodayLearnCardProps {
   journeyDay: number;
@@ -16,15 +17,21 @@ interface TodayLearnCardProps {
   hasNewKnowledge: boolean;
   /** Đã học hết kiến thức của ngày → mời người học tự xác nhận hoàn thành (app không tự chuyển ngày). */
   isReadyToComplete: boolean;
-  minutesToFinishDay: number;
-  canFinishDayInOneGo: boolean;
   /** Phiên "Bắt đầu học" kế tiếp gồm gì: Gặp lại → Học bù → Mới → Dùng thử (đếm kiến thức thật). */
   plan: SessionPlanPreview;
 }
 
+/** Nhãn kế hoạch — nói rõ mỗi con số là gì (số KIẾN THỨC, không phải số câu hỏi). */
+const PLAN_TEXT: Record<SessionPhase, (count: number) => ReactNode> = {
+  review: (count) => <>Ôn <b>{count}</b> thứ đã học</>,
+  backlog: (count) => <>Học bù <b>{count}</b> thứ ngày trước</>,
+  new: (count) => <><b>{count}</b> thứ mới hôm nay</>,
+  use: (count) => <>Dùng thử <b>{count}</b> câu</>,
+};
+
 /** Thẻ chính của Trang chủ: hôm nay học gì + MỘT nút lớn để bắt đầu. */
 export function TodayLearnCard(props: TodayLearnCardProps) {
-  const { journeyDay, dayTitle, dailyMinutes, nextFaces, pendingCount, hasNewKnowledge, isReadyToComplete, minutesToFinishDay, canFinishDayInOneGo, plan } = props;
+  const { journeyDay, dayTitle, dailyMinutes, nextFaces, pendingCount, hasNewKnowledge, isReadyToComplete, plan } = props;
   const planParts = SESSION_PHASES.filter((phase) => plan[phase] > 0);
   return (
     <section className="dash-card dash-today" aria-labelledby="dash-today-title">
@@ -37,7 +44,7 @@ export function TodayLearnCard(props: TodayLearnCardProps) {
           <ul className="dash-plan" aria-label="Phiên học kế tiếp gồm">
             {planParts.map((phase) => (
               <li key={phase}>
-                <EmojiIcon emoji={SESSION_PHASE_INFO[phase].emoji} size={16} /> {SESSION_PHASE_INFO[phase].label} <b>{plan[phase]}</b>
+                <EmojiIcon emoji={SESSION_PHASE_INFO[phase].emoji} size={16} /> {PLAN_TEXT[phase](plan[phase])}
               </li>
             ))}
           </ul>
@@ -66,9 +73,6 @@ export function TodayLearnCard(props: TodayLearnCardProps) {
                 <span>{pendingCount > 0 ? `Hôm nay có ${pendingCount} mục đang chờ bạn ✨` : `Giữ nhịp ${dailyMinutes} phút ✨`}</span>
               </span>
             </Link>
-            {canFinishDayInOneGo ? (
-              <Link href="/hoc/day" className="dash-action-secondary">Học hết ngày {journeyDay} · ~{minutesToFinishDay} phút</Link>
-            ) : null}
           </div>
         )}
         {/* Ngày ôn tập không có kiến thức mới để "học hết" → ôn xong thì tự hoàn thành. */}

@@ -146,7 +146,8 @@ export interface SentenceBlank {
 }
 
 /** Câu THẬT (Tatoeba) có từ vựng này → đục lỗ đúng chỗ từ đó, để bước "Dùng thử" là câu người Nhật thật sự nói. */
-export function realSentenceBlank(catalog: KnowledgeCatalog, item: KnowledgeItem): SentenceBlank | null {
+/** `known`: chỉ lấy phương án nhiễu từ những từ người học đã biết (không truyền = mọi từ). */
+export function realSentenceBlank(catalog: KnowledgeCatalog, item: KnowledgeItem, known?: ReadonlySet<ContentKey>): SentenceBlank | null {
   if (item.type !== 'vocabulary') return null;
   const stems = stemsOf(item);
   const sentence = getContextIndex(catalog).sentencesFor(item.key)
@@ -158,7 +159,7 @@ export function realSentenceBlank(catalog: KnowledgeCatalog, item: KnowledgeItem
   // Nhiễu cùng kiểu chữ và cùng loại: từ trọn vẹn (テレビ, 国) ↔ từ trọn vẹn; phần gốc động/tính từ (食べ) ↔ phần gốc.
   const isWhole = (word: KnowledgeItem, stem: string) => word.type === 'vocabulary' && [word.content.kanji, word.content.kana].includes(stem);
   const answerIsWhole = isWhole(item, answer);
-  const distractorPool = [...new Set(catalog.items.flatMap((other) => (other.key === item.key || other.type !== 'vocabulary' ? []
+  const distractorPool = [...new Set(catalog.items.flatMap((other) => (other.key === item.key || other.type !== 'vocabulary' || (known && !known.has(other.key)) ? []
     : stemsOf(other).filter((stem) => isWhole(other, stem) === answerIsWhole))))]
     .filter((stem) => stem !== answer && !answer.includes(stem) && !stem.includes(answer)
       && HAS_KANJI.test(stem) === HAS_KANJI.test(answer) && !sentence.jp.includes(stem));

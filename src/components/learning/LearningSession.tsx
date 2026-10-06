@@ -8,6 +8,7 @@ import { SkeletonScreen } from '@/components/common/Skeleton';
 import { ErrorState } from '@/components/common/StateViews';
 import { useLearningSession } from '@/features/learning/hooks/useLearningSession';
 import { SESSION_MODES, type SessionMode } from '@/features/learning/session-modes';
+import type { PublicSessionStep } from '@/features/learning/session-types';
 import { SessionCheckpoint } from './session/SessionCheckpoint';
 import { PhaseIntro } from './session/PhaseIntro';
 import { SessionHeader, SessionPhaseBar, SessionProgress } from './session/SessionHeader';
@@ -72,7 +73,9 @@ export function LearningSession({ mode }: { mode: SessionMode }) {
       {stepIndex === 0 && mode === SESSION_MODES.RESCUE ? (
         <NokoMessage state="comeback" text="Bạn quay lại rồi 🌸 Không cần học bù. Mình chọn một điểm bắt đầu nhẹ nhàng nhé." className="mb-3" />
       ) : null}
-      {learning.finishedPhase ? (
+      {learning.isFinishing || learning.finishError ? (
+        <SessionWrapUp steps={session.steps} upToIndex={stepIndex} hasError={Boolean(learning.finishError)} onRetry={learning.retryFinish} />
+      ) : learning.finishedPhase ? (
         <PhaseIntro steps={session.steps} nextStepIndex={stepIndex} previousPhase={learning.finishedPhase} onStart={learning.startNextPhase} />
       ) : learning.isAtCheckpoint && learning.checkpointEvery ? (
         <SessionCheckpoint steps={session.steps} nextStepIndex={stepIndex} chunkSize={learning.checkpointEvery}
@@ -88,6 +91,31 @@ export function LearningSession({ mode }: { mode: SessionMode }) {
       </div>
       )}
       {learning.error ? <p className="sm center mt-3" role="alert">{learning.error.message}</p> : null}
+    </div>
+  );
+}
+
+/** Màn kết thúc hiện NGAY khi xong câu cuối (hoặc bấm nghỉ ở điểm dừng) — phần lưu & tổng kết chạy phía sau. */
+function SessionWrapUp({ steps, upToIndex, hasError, onRetry }: {
+  steps: PublicSessionStep[]; upToIndex: number; hasError: boolean; onRetry: () => void;
+}) {
+  const done = steps.slice(0, upToIndex + 1);
+  const newCount = new Set(done.filter((step) => step.type === 'discover').map((step) => step.contentKey)).size;
+  const reviewedCount = new Set(done.filter((step) => step.type !== 'discover' && !(step.type === 'recall' && step.isPractice)).map((step) => step.contentKey)).size;
+  const parts = [newCount ? `học ${newCount} thứ mới` : '', reviewedCount ? `ôn ${reviewedCount} thứ` : ''].filter(Boolean);
+  return (
+    <div className="s-card pop center" role="status" aria-live="polite">
+      <div style={{ fontSize: 46 }}>🎉</div>
+      <h2 className="mt-2">Xong rồi!</h2>
+      <p className="soft mt-1.5">{parts.length ? `Hôm nay bạn đã ${parts.join(' và ')}.` : 'Bạn đã hoàn thành phiên học.'}</p>
+      {hasError ? (
+        <>
+          <p className="sm mt-3" role="alert">Chưa lưu xong tổng kết — mạng hơi chập chờn. Các câu trả lời vẫn được giữ.</p>
+          <button type="button" className="btn block mt-3" onClick={onRetry}>Thử lại</button>
+        </>
+      ) : (
+        <p className="sm muted mt-3" aria-busy="true">Noko đang lưu và tổng kết cho bạn… 🐾</p>
+      )}
     </div>
   );
 }

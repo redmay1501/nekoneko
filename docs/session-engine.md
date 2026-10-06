@@ -24,7 +24,7 @@ Người mới ở ngày 1 vì vậy chỉ thấy: 5 thẻ giới thiệu Hiraga
 
 | Hằng số | Tên hiển thị | Bất ngờ | Gặp lại | Mới | Ngữ cảnh | Nguồn gặp lại | Phút |
 |---|---|---|---|---|---|---|---|
-| `daily` | Học hôm nay (một ngày trọn vẹn, theo chặng) | 1 | 4 | **≤3 học bù + 5 = một chặng** (+ câu luyện ngay) | 2 | ưu tiên | 8 |
+| `daily` | Học hôm nay (một ngày trọn vẹn, theo chặng) | 1 | 4 | **≤3 học bù + toàn bộ kiến thức còn lại của ngày**, từng chặng 5 (+ câu luyện ngay) | 2 | ưu tiên | 8 |
 | `day` | Học hết ngày | 0 | 0 | **tất cả còn lại của ngày**, dừng sau mỗi 5 | 2 | — | ~1 phút/kiến thức |
 | `quick5` | Học nhanh 5 phút | 1 | 3 | 0 | 0 | ưu tiên | 5 |
 | `random` | Học ngẫu nhiên | 1 | 2 | 1 | 1 | ưu tiên | 6 |
@@ -41,7 +41,8 @@ Thêm một chế độ mới = thêm một dòng vào `SESSION_MODE_CONFIG`. **
 
 8 phút là **mức tối thiểu để giữ nhịp**, không phải độ dài một ngày học. Một ngày lộ trình có 13–24 kiến thức.
 
-- **Học hôm nay** = ôn trí nhớ + đúng **một chặng** (5 kiến thức mới kế tiếp của ngày đang học).
+- **Học hôm nay** = ôn trí nhớ + **toàn bộ** kiến thức còn lại của ngày đang học, từng chặng 5 thứ; hết mỗi chặng hỏi
+  "Học tiếp hay nghỉ?" (nghỉ thì lần sau học tiếp đúng chỗ đó).
 - **Học hết ngày** = MỘT phiên đi hết phần còn lại của ngày; sau mỗi chặng có **điểm dừng**
   ("Học tiếp chặng 3 · 5 kiến thức" / "Dừng ở đây") — không phải quay ra menu bấm lại.
 - Kiến thức mới luôn lấy theo **thứ tự cố định** (chữ cái → bộ thủ → kanji → từ vựng → ngữ pháp), không ngẫu nhiên,
@@ -118,7 +119,7 @@ Ba con số của Khoảnh khắc tiến bộ (nhớ lại · mới · dùng tro
 
 Bước **Khám phá** lấy kiến thức của ngày đang học. Phiên học **không bao giờ tự chuyển ngày**: học hết kiến thức của
 ngày (`isDayReadyToComplete`) thì Trang chủ và Khoảnh khắc tiến bộ mời người học bấm "Hoàn thành ngày X" và xác nhận.
-"Học hôm nay" đi một chặng; "Học hết ngày" đi hết ngày trong một phiên.
+"Học hôm nay" đi hết ngày, có điểm dừng sau mỗi chặng ("Học hết ngày" giữ lại cho link cũ, cùng phạm vi).
 
 ## Vòng đời ở trình duyệt — `useLearningSession`
 
@@ -136,3 +137,15 @@ bước cuối gọi `finish` rồi chuyển tới `/khoanh-khac?phien=<id>`.
   chuỗi tới hôm qua); chuỗi dài nhất — thành tích "Chuỗi 7 ngày" dựa vào chuỗi dài nhất nên đạt rồi không mất.
 - **Ngữ pháp JLPT** (`features/progress/jlpt-coverage.ts`): danh sách JLPT không có bài riêng; một mẫu tính là đã gặp khi
   một mẫu Minna người học đã học chứa nó. Vài mẫu chỉ có tên tiếng Việt / không có trong Minna nên không tự tính được.
+
+## Phương án trả lời — chỉ từ thứ đã biết
+
+Mọi câu trắc nghiệm (Gặp lại, Luyện ngay, Dùng thử, Cứu kiến thức, Luyện nghe) lấy phương án nhiễu từ thứ người học
+đã học + thứ vừa được giới thiệu trong phiên (`knownDistractors`). Ví dụ ngày 1, chặng あいうえお chỉ có a/i/u/e/o — có
+"ki", "ko" (chưa học) thì người học đoán được bằng cách loại chữ lạ. Chưa đủ thứ cùng loại (kanji đầu tiên) thì dùng
+nghĩa của bộ thủ / từ đã biết; chỉ khi vẫn thiếu mới mượn thứ cùng ngày.
+
+## Trạng thái hiển thị
+
+"Sắp quên" 🍂 nghĩa là đang phai vì lâu không gặp. Thứ vừa học (điểm còn thấp nhưng mới gặp chưa tới 2 ngày) hiện là
+🌱 (`getViewStatus`), không phải lá úa.

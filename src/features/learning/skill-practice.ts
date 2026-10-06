@@ -45,7 +45,7 @@ export function buildListeningPractice(catalog: KnowledgeCatalog, views: Views, 
       audioText: item.content.kana,
       answer: item.meaning,
       options: shuffleDeterministic(
-        [item.meaning, ...pickDeterministic(vocabulary.filter((other) => other.key !== item.key && other.meaning !== item.meaning).map((other) => other.meaning), DISTRACTORS, `listening-options:${item.id}`)],
+        [item.meaning, ...pickDeterministic(learned.filter((other) => other.key !== item.key && other.meaning !== item.meaning).map((other) => other.meaning), DISTRACTORS, `listening-options:${item.id}`)],
         `listening-order:${item.id}`,
       ),
     })),

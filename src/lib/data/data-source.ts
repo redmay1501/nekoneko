@@ -80,9 +80,9 @@ export class StaleMemoryRecordError extends Error {
 }
 
 export interface ActivitySummary {
-  /** Lần gặp lại kiến thức cũ (bất ngờ, nhớ lại, cứu) — đúng hay sai đều tính là đã gặp. */
+  /** Số kiến thức CŨ đã gặp lại (đúng hay sai đều tính) — không tính thứ vừa khám phá trong cùng khoảng thời gian. */
   revisitedCount: number;
-  /** Lần khám phá kiến thức mới. */
+  /** Số kiến thức mới đã khám phá. */
   discoveredCount: number;
 }
 

@@ -14,7 +14,7 @@ import { gradeAnswer, phaseOfStep, type SessionPhase, type StepAnswerFeedback } 
  *   tải phiên (server dựng các bước) → trả lời từng bước → sang bước sau → kết thúc → Khoảnh khắc tiến bộ.
  *
  * Phản hồi hiện NGAY khi bấm: trình duyệt tự chấm (gradeAnswer) bằng đáp án đi kèm phiên học.
- * Việc ghi lên server (server chấm lại + Memory Engine cập nhật trí nhớ) chạy ngầm phía sau, nối tiếp nhau;
+ * Việc ghi lên server (server chấm lại + Memory Engine cập nhật trí nhớ) chạy ngầm phía sau;
  * khi server trả về, phần "sức nhớ / lần gặp tới" được điền thêm vào phản hồi đang hiện.
  */
 export function useLearningSession(mode: SessionMode) {
@@ -50,10 +50,12 @@ export function useLearningSession(mode: SessionMode) {
   }, [sessionId, resumeFromStep]);
 
   /**
-   * Hàng đợi ghi lên server. NỐI TIẾP (không song song) để Memory Engine luôn cộng trên bản ghi mới nhất
-   * và server tính tiến độ ngày trên dữ liệu đầy đủ (câu luyện ngay ghi sau thẻ giới thiệu cùng chữ).
+   * Hàng đợi ghi lên server: NỐI TIẾP trong cùng một kiến thức (thẻ giới thiệu ghi trước câu luyện ngay của chính nó,
+   * để Memory Engine cộng trên bản ghi mới nhất), SONG SONG giữa các kiến thức khác nhau — trước đây nối tiếp tất cả
+   * nên học nhanh thì hàng đợi dồn lại, tới cuối phiên phải chờ ghi hết mới tổng kết được (màn hình như bị đơ).
    */
-  const pendingWrites = useRef<Promise<unknown>>(Promise.resolve());
+  const writesByKnowledge = useRef(new Map<string, Promise<unknown>>());
+  const allWrites = useRef(new Set<Promise<unknown>>());
   /** Bước đang hiện — để phản hồi từ server về muộn không ghi đè lên bước sau. */
   const visibleStepIndex = useRef(0);
   visibleStepIndex.current = stepIndex;
@@ -68,20 +70,24 @@ export function useLearningSession(mode: SessionMode) {
   function recordInBackground(index: number, answer: string) {
     if (!session) return;
     const request = { sessionId: session.sessionId, index, answer };
-    pendingWrites.current = pendingWrites.current
+    const key = session.steps[index]?.contentKey ?? `step-${index}`;
+    const write = (writesByKnowledge.current.get(key) ?? Promise.resolve())
       .then(() => recordMutation.mutateAsync(request))
       .then((result) => {
         // Server là nguồn đúng: điền sức nhớ, và sửa kết quả nếu (hiếm khi) hai bên chấm khác nhau.
         if (visibleStepIndex.current === index) setFeedback((shown) => (shown ? { ...result, correctAnswer: shown.correctAnswer } : shown));
       })
       .catch(() => undefined); // Lỗi hiện qua recordMutation.error; không chặn các lần ghi sau.
+    writesByKnowledge.current.set(key, write);
+    allWrites.current.add(write);
+    void write.finally(() => allWrites.current.delete(write));
   }
 
   const finishMutation = useMutation({
     mutationFn: async () => {
       if (!session) throw new Error('Phiên học chưa sẵn sàng');
       // Tổng kết sau khi mọi câu trả lời đã được ghi.
-      await pendingWrites.current;
+      await Promise.all([...allWrites.current]);
       return finishSession(session.sessionId);
     },
     onSuccess: () => {
@@ -90,6 +96,12 @@ export function useLearningSession(mode: SessionMode) {
       router.push(`/khoanh-khac?phien=${session.sessionId}`);
     },
   });
+
+  // Mỗi khi sang bước / chặng / điểm dừng / màn kết thúc: đưa về đầu trang SAU khi giao diện mới đã vẽ
+  // (gọi trước khi vẽ thì trình duyệt giữ chỗ cuộn cũ — người học thấy mình đang ở cuối trang).
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [stepIndex, finishedPhase, isAtCheckpoint, finishMutation.isPending]);
 
   function submitAnswer(answer: string) {
     if (!currentStep || feedback) return;
@@ -104,6 +116,7 @@ export function useLearningSession(mode: SessionMode) {
     setChosenAnswer(null);
     const nextIndex = stepIndex + 1;
     if (nextIndex >= session.steps.length) {
+      // Hiện ngay màn "Xong rồi!" (isFinishing) — phần lưu & tổng kết chạy phía sau.
       finishMutation.mutate();
       return;
     }
@@ -111,7 +124,6 @@ export function useLearningSession(mode: SessionMode) {
     const previousPhase = phaseOfStep(session.steps[stepIndex]);
     if (phaseOfStep(session.steps[nextIndex]) !== previousPhase) {
       setFinishedPhase(previousPhase);
-      window.scrollTo({ top: 0 });
       return;
     }
     // Xong một chặng (giới thiệu + luyện ngay) và chặng sau vẫn là kiến thức mới → để người học tự chọn học tiếp hay nghỉ.
@@ -120,7 +132,6 @@ export function useLearningSession(mode: SessionMode) {
     if (checkpointEvery && startsNewChunk) {
       setIsAtCheckpoint(true);
     }
-    window.scrollTo({ top: 0 });
   }
 
   /** Bước Khám phá không có đúng/sai: đi tiếp ngay, việc ghi nhận "đã gặp" chạy ngầm phía sau. */
@@ -161,6 +172,9 @@ export function useLearningSession(mode: SessionMode) {
     // Kết thúc xong vẫn tính là bận cho tới khi màn Khoảnh khắc mở ra — tránh bấm lại lần nữa.
     isFinishing: finishMutation.isPending || finishMutation.isSuccess,
     error: recordMutation.error ?? finishMutation.error,
+    /** Tổng kết lỗi (mất mạng…) — màn kết thúc hiện nút thử lại, không bắt làm lại câu cuối. */
+    finishError: finishMutation.error,
+    retryFinish: () => finishMutation.mutate(),
     submitAnswer,
     goToNextStep,
     acknowledgeAndContinue,

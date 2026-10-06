@@ -2,7 +2,8 @@
 
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
+import { ModalPortal } from '@/components/common/ModalPortal';
 import { BrandLogo } from '@/components/common/BrandLogo';
 import { SpriteIcon } from '@/components/common/SpriteIcon';
 import { updateSettings, type SettingsPatch } from '@/features/progress/settings-api';
@@ -30,7 +31,6 @@ interface WelcomeDialogProps {
  */
 export function WelcomeDialog({ displayName, journeyDay, initialDailyMinutes }: WelcomeDialogProps) {
   const router = useRouter();
-  const dialogRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(true);
   const [step, setStep] = useState(0);
   const [dailyMinutes, setDailyMinutes] = useState(initialDailyMinutes);
@@ -59,26 +59,13 @@ export function WelcomeDialog({ displayName, journeyDay, initialDailyMinutes }: 
     }
   }
 
-  useEffect(() => {
-    if (!isOpen) return;
-    dialogRef.current?.focus();
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [isOpen]);
-
   if (!isOpen) return null;
 
   const isBusy = mutation.isPending;
   const isLastStep = step === STEP_COUNT - 1;
 
   return (
-    <>
-      <div className="scrim on" aria-hidden="true" />
-      <div ref={dialogRef} className="welcome" role="dialog" aria-modal="true" aria-labelledby="welcome-title" tabIndex={-1}
-        onKeyDown={(event) => { if (event.key === 'Escape' && !isBusy) void finish('skip'); }}>
+    <ModalPortal className="welcome" labelledBy="welcome-title" onEscape={() => { if (!isBusy) void finish('skip'); }}>
         <div className="between welcome-top">
           <div className="welcome-dots" aria-label={`Bước ${step + 1} trên ${STEP_COUNT}`}>
             {Array.from({ length: STEP_COUNT }, (_, index) => <i key={index} className={index <= step ? 'on' : ''} />)}
@@ -161,7 +148,6 @@ export function WelcomeDialog({ displayName, journeyDay, initialDailyMinutes }: 
             </div>
           )}
         </div>
-      </div>
-    </>
+    </ModalPortal>
   );
 }

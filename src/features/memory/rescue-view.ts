@@ -40,9 +40,10 @@ export function buildRescueView(
   views: ReadonlyMap<ContentKey, MemoryView>,
   journeyDay: number,
 ): RescueView {
-  const sameTypeMeanings = catalog.items
-    .filter((other) => other.type === item.type && other.key !== item.key && other.meaning !== item.meaning)
-    .map((other) => other.meaning);
+  // Phương án nhiễu chỉ từ thứ đã học (chưa đủ 2 thì mới mượn thứ cùng loại) — không đoán được bằng cách loại chữ lạ.
+  const sameType = catalog.items.filter((other) => other.type === item.type && other.key !== item.key && other.meaning !== item.meaning);
+  const learnedSameType = sameType.filter((other) => views.get(other.key)?.isLearned);
+  const sameTypeMeanings = (learnedSameType.length >= 2 ? learnedSameType : sameType).map((other) => other.meaning);
   const nextView = getForgettingRadar([...views.values()]).find((view) => view.contentKey !== item.key);
   const nextItem = nextView ? catalog.byKey.get(nextView.contentKey) : undefined;
 

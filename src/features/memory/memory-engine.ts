@@ -51,6 +51,16 @@ export function daysSinceLastEncounter(record: MemoryRecord, now: Date): number 
   return wholeDaysBetween(new Date(record.lastSeenAt ?? record.createdAt), now);
 }
 
+/**
+ * Trạng thái để HIỂN THỊ: như điểm, trừ một ngoại lệ — "Sắp quên" nghĩa là đang phai vì lâu không gặp.
+ * Thứ vừa học (điểm còn thấp nhưng mới gặp chưa tới FORGETTING_RADAR.MIN_DAYS_SINCE_SEEN ngày) là "mới học" 🌱,
+ * không phải lá úa 🍂 — vừa học xong mà vườn báo sắp quên là sai.
+ */
+export function getViewStatus(score: number, daysSinceSeen: number): MemoryStatus {
+  const status = getMemoryStatus(score);
+  return status === 'fading' && daysSinceSeen < FORGETTING_RADAR.MIN_DAYS_SINCE_SEEN ? 'weak' : status;
+}
+
 /** Quy đổi điểm thành trạng thái. Trạng thái không bao giờ được lưu rời — luôn suy ra từ điểm. */
 export function getMemoryStatus(score: number): MemoryStatus {
   if (score >= STATUS_THRESHOLDS.MASTERED) return 'mastered';
@@ -198,8 +208,8 @@ export function toMemoryView(
     };
   }
   const memoryScore = getEffectiveMemoryScore(record, now);
-  const status = getMemoryStatus(memoryScore);
   const daysSinceSeen = daysSinceLastEncounter(record, now);
+  const status = getViewStatus(memoryScore, daysSinceSeen);
   const daysUntilReview = record.nextReviewAt
     ? Math.max(0, Math.ceil((new Date(record.nextReviewAt).getTime() - now.getTime()) / 86_400_000))
     : 0;

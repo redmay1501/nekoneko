@@ -72,12 +72,13 @@ export interface SessionModeConfig {
 }
 
 export const SESSION_MODE_CONFIG: Record<SessionMode, SessionModeConfig> = {
-  // Một ngày học trọn vẹn, theo chặng: Gặp lại (≤5) → Học bù (≤3) → Mới (một chặng 5 thứ) → Dùng thử (2).
+  // Một ngày học trọn vẹn, theo chặng: Gặp lại (≤5) → Học bù (≤3) → Mới (TOÀN BỘ kiến thức còn lại của ngày, từng chặng 5 thứ,
+  // hết mỗi chặng hỏi "Học tiếp hay nghỉ?") → Dùng thử (2). Nghỉ giữa chừng thì lần sau học tiếp đúng chỗ đó.
   daily: {
     label: 'Học hôm nay', emoji: '🌱', description: 'Ôn lại · khám phá · dùng trong ngữ cảnh', cardBackground: '#FFEFF2',
     targetMinutes: 8, composition: { surprise: 1, recall: 4, discover: DAY_CHUNK_SIZE, use: 2 }, recallSource: 'priority', isPickable: false,
     backlogPerSession: BACKLOG_PER_DAILY_SESSION,
-    newKnowledgeScope: 'next-chunk', checkpointEvery: null,
+    newKnowledgeScope: 'rest-of-day', checkpointEvery: DAY_CHUNK_SIZE,
   },
   // Học bù: chỉ kiến thức các ngày trước còn chưa gặp (bấm "Hoàn thành ngày" khi còn sót, bỏ dở…), cũ nhất trước.
   backlog: {

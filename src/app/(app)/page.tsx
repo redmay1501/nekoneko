@@ -5,12 +5,15 @@ import { RoadmapStages } from '@/components/home/RoadmapStages';
 import { TimeOfDayGreeting } from '@/components/home/TimeOfDayGreeting';
 import { TodayLearnCard } from '@/components/home/TodayLearnCard';
 import { WelcomeDialog } from '@/components/home/WelcomeDialog';
+import { DailyGreetingDialog } from '@/components/home/DailyGreetingDialog';
+import { buildDailyGreeting } from '@/features/home/daily-greeting';
+import { appDateKey } from '@/features/progress/recall-streak';
 import { getLearnerContext } from '@/features/learning/learner-context';
 import { previewSessionPlan, unmetKnowledgeOfDay } from '@/features/learning/session-engine';
-import { DAY_CHUNK_SIZE, SESSION_MODES, SESSION_MODE_CONFIG } from '@/features/learning/session-modes';
+import { SESSION_MODES, SESSION_MODE_CONFIG } from '@/features/learning/session-modes';
 import { buildMemoryOverview, forgettingRadarList } from '@/features/memory/memory-overview';
 import { displayedDailyMinutes } from '@/features/progress/settings-options';
-import { estimateMinutesToFinishDay, getDayCompletionProgress, isDayReadyToComplete, remainingKnowledgeCount } from '@/features/roadmap/journey-progress';
+import { getDayCompletionProgress, isDayReadyToComplete, remainingKnowledgeCount } from '@/features/roadmap/journey-progress';
 
 
 /**
@@ -19,12 +22,13 @@ import { estimateMinutesToFinishDay, getDayCompletionProgress, isDayReadyToCompl
  * Mọi con số đều là dữ liệu thật của người học.
  */
 export default async function HomePage() {
-  const { catalog, memoryViews, journeyDay, journey, profile, settings } = await getLearnerContext();
+  const { catalog, memoryViews, journeyDay, journey, profile, settings, streak, learner, now } = await getLearnerContext();
   const dayCompletion = getDayCompletionProgress(catalog, memoryViews, journeyDay);
   const dailyMinutes = displayedDailyMinutes(settings.dailyMinutes, SESSION_MODE_CONFIG.daily.targetMinutes);
   const overview = buildMemoryOverview(memoryViews);
   // Đếm giống trang Sắp quên: vừa học hôm nay thì chưa tính là sắp quên (FORGETTING_RADAR.MIN_DAYS_SINCE_SEEN).
   const atRiskCount = forgettingRadarList(memoryViews, Number.MAX_SAFE_INTEGER).length;
+  const dayTitle = catalog.content.journeyDays[journeyDay - 1]?.title ?? `Ngày ${journeyDay}`;
   const plan = previewSessionPlan({ mode: SESSION_MODES.DAILY, catalog, memoryViews, journeyDay });
 
   return (
@@ -46,14 +50,12 @@ export default async function HomePage() {
       <div className="dash-top">
         <TodayLearnCard
           journeyDay={journeyDay}
-          dayTitle={catalog.content.journeyDays[journeyDay - 1]?.title ?? `Ngày ${journeyDay}`}
+          dayTitle={dayTitle}
           dailyMinutes={dailyMinutes}
-          nextFaces={unmetKnowledgeOfDay(catalog, memoryViews, journeyDay).slice(0, DAY_CHUNK_SIZE).map((item) => item.face)}
+          nextFaces={unmetKnowledgeOfDay(catalog, memoryViews, journeyDay).map((item) => item.face)}
           pendingCount={remainingKnowledgeCount(dayCompletion)}
           hasNewKnowledge={dayCompletion.hasNewKnowledge}
           isReadyToComplete={isDayReadyToComplete(journey, dayCompletion)}
-          minutesToFinishDay={estimateMinutesToFinishDay(dayCompletion)}
-          canFinishDayInOneGo={remainingKnowledgeCount(dayCompletion) > DAY_CHUNK_SIZE}
           plan={plan}
         />
         <ReviewCard atRiskCount={atRiskCount} learnedCount={overview.learnedCount} />
@@ -64,7 +66,13 @@ export default async function HomePage() {
         <GardenSummaryCard learnedCount={overview.learnedCount} />
       </div>
 
-      {settings.welcomedAt ? null : (
+      {/* Lần đầu: lời chào 3 bước. Từ đó: lời chào ngắn đầu mỗi ngày, nội dung theo ngày. */}
+      {settings.welcomedAt ? (appDateKey(new Date(settings.welcomedAt)) === appDateKey(now) ? null : (
+        <DailyGreetingDialog userId={learner.userId} displayName={profile.displayName} greeting={buildDailyGreeting({
+          now, journeyDay, dayTitle, plan, streak,
+          hasNewKnowledge: dayCompletion.hasNewKnowledge, isReadyToComplete: isDayReadyToComplete(journey, dayCompletion),
+        })} />
+      )) : (
         <WelcomeDialog displayName={profile.displayName} journeyDay={journeyDay} initialDailyMinutes={settings.dailyMinutes} />
       )}
     </div>

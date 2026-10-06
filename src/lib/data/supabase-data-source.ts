@@ -12,7 +12,7 @@ import type {
   LearningSessionRow, MemoryItemRow, ProfileRow, SessionItemRow, UserSettingsRow,
 } from '@/lib/supabase/database-rows';
 import { toIsoDate } from '@/lib/utils/dates';
-import { summarizeEventTypes } from './activity-summary';
+import { summarizeActivityEvents } from './activity-summary';
 import { StaleMemoryRecordError } from './data-source';
 import type {
   ActivitySummary,
@@ -212,11 +212,12 @@ export class SupabaseDataSource implements LearningDataSource {
   }
 
   async summarizeActivity(userId: string, sinceIso: string): Promise<ActivitySummary> {
-    const rows = await selectAllPages<{ event_type: ReviewEventType }>(
-      (from, to) => this.userClient.from('review_events').select('event_type').eq('user_id', userId).gte('created_at', sinceIso).order('id').range(from, to),
+    const rows = await selectAllPages<{ event_type: ReviewEventType; memory_item_id: string }>(
+      (from, to) => this.userClient.from('review_events').select('event_type, memory_item_id').eq('user_id', userId)
+        .gte('created_at', sinceIso).order('id').range(from, to),
       'tóm tắt hoạt động',
     );
-    return summarizeEventTypes(rows.map((row) => row.event_type));
+    return summarizeActivityEvents(rows.map((row) => ({ eventType: row.event_type, itemId: row.memory_item_id })));
   }
 
   async listRecallDates(_userId: string): Promise<string[]> {

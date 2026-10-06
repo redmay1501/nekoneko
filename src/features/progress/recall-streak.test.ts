@@ -14,7 +14,7 @@ describe('appDateKey', () => {
 describe('summarizeRecallDates', () => {
   it('7 ngày rải rác KHÔNG phải chuỗi 7 ngày', () => {
     const scattered = ['2026-09-10', '2026-09-12', '2026-09-14', '2026-09-16', '2026-09-18', '2026-09-20', '2026-09-22'];
-    expect(summarizeRecallDates(scattered, NOW)).toEqual({ recallDays: 7, currentStreak: 0, longestStreak: 1 });
+    expect(summarizeRecallDates(scattered, NOW)).toEqual({ recallDays: 7, currentStreak: 0, longestStreak: 1, lastRecallDay: '2026-09-22' });
   });
 
   it('chuỗi liên tiếp tới hôm nay; hôm nay chưa ôn thì vẫn giữ chuỗi tới hôm qua', () => {
@@ -26,7 +26,7 @@ describe('summarizeRecallDates', () => {
   it('nghỉ một ngày là đứt chuỗi hiện tại, nhưng chuỗi dài nhất vẫn được giữ', () => {
     const old = Array.from({ length: 8 }, (_, index) => `2026-08-${String(index + 1).padStart(2, '0')}`);
     const result = summarizeRecallDates([...old, '2026-10-03'], NOW);
-    expect(result).toEqual({ recallDays: 1, currentStreak: 0, longestStreak: 8 });
+    expect(result).toEqual({ recallDays: 1, currentStreak: 0, longestStreak: 8, lastRecallDay: '2026-10-03' });
   });
 
   it('chuỗi qua ranh giới tháng và ngày trùng lặp', () => {
@@ -34,6 +34,14 @@ describe('summarizeRecallDates', () => {
   });
 
   it('chưa ôn ngày nào', () => {
-    expect(summarizeRecallDates([], NOW)).toEqual({ recallDays: 0, currentStreak: 0, longestStreak: 0 });
+    expect(summarizeRecallDates([], NOW)).toEqual({ recallDays: 0, currentStreak: 0, longestStreak: 0, lastRecallDay: null });
+  });
+});
+
+describe('startOfAppDay', () => {
+  it('0 giờ giờ Việt Nam', async () => {
+    const { startOfAppDay } = await import('./recall-streak');
+    expect(startOfAppDay(new Date('2026-10-05T17:30:00.000Z')).toISOString()).toBe('2026-10-05T17:00:00.000Z');
+    expect(startOfAppDay(new Date('2026-10-05T13:00:00.000Z')).toISOString()).toBe('2026-10-04T17:00:00.000Z');
   });
 });

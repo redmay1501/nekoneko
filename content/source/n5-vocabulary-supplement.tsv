@@ -1,0 +1,403 @@
+# Từ vựng N5 bổ sung — ngoài 350 từ của lộ trình Excel.
+# Danh sách từ & cách đọc: OpenJLPT (https://github.com/evanclan/OpenJLPT, CC BY-SA 4.0), cấp độ theo danh sách JLPT của
+# Jonathan Waller (tanos.co.uk, CC BY). Nghĩa tiếng Việt và bài Minna (theo chủ đề) do Neko Neko soạn — CẦN DUYỆT THỦ CÔNG.
+# Cột: từ | cách đọc | nghĩa tiếng Việt | bài (1–25)
+# Đã sửa so với nguồn: せっけん = xà phòng (nguồn ghi "economy"); 半分 = một nửa (nguồn ghi "half minute");
+# 毎月 đọc まいつき, 毎年 đọc まいとし (cách đọc thường dùng; nguồn ghi まいげつ / まいねん).
+# Không lặp lại 25 từ của giai đoạn chữ cái (ngày 6–13: はい, テレビ, パン, コーヒー…) — các từ đó lấy từ đầu việc của lộ trình.
+# Không đưa vào (đồ vật đã lỗi thời, ít giá trị cho người học hôm nay): テープレコーダー, ラジカセ, フィルム, マッチ, 灰皿, 字引.
+ありがとう|ありがとう|Cảm ơn (thân mật)|1
+ええ|ええ|Vâng, ừ (thân mật)|1
+おはよう|おはよう|Chào buổi sáng (thân mật)|1
+お願いします|おねがいします|Làm ơn, nhờ bạn|1
+外国人|がいこくじん|Người nước ngoài|1
+留学生|りゅうがくせい|Du học sinh|1
+皆さん|みなさん|Mọi người (lịch sự)|1
+みんな|みんな|Mọi người|1
+生徒|せいと|Học sinh (phổ thông)|1
+これ|これ|Cái này|2
+それ|それ|Cái đó|2
+あれ|あれ|Cái kia|2
+この|この|~ này|2
+その|その|~ đó|2
+あの|あの|~ kia|2
+いす|いす|Cái ghế|2
+机|つくえ|Cái bàn (học, làm việc)|2
+カレンダー|カレンダー|Lịch (treo tường)|2
+手紙|てがみ|Lá thư|2
+封筒|ふうとう|Phong bì|2
+ボタン|ボタン|Cái nút, cúc áo|2
+箱|はこ|Cái hộp|2
+万年筆|まんねんひつ|Bút máy|2
+英語|えいご|Tiếng Anh|2
+物|もの|Đồ vật, thứ|2
+ここ|ここ|Chỗ này|3
+そこ|そこ|Chỗ đó|3
+あそこ|あそこ|Chỗ kia|3
+どこ|どこ|Ở đâu|3
+こちら|こちら|Phía này, đằng này (lịch sự)|3
+そちら|そちら|Phía đó (lịch sự)|3
+あちら|あちら|Phía kia (lịch sự)|3
+こっち|こっち|Phía này (thân mật)|3
+そっち|そっち|Phía đó (thân mật)|3
+あっち|あっち|Phía kia (thân mật)|3
+どっち|どっち|Phía nào, cái nào (trong hai)|3
+デパート|デパート|Cửa hàng bách hoá|3
+建物|たてもの|Toà nhà|3
+入口|いりぐち|Lối vào|3
+出口|でぐち|Lối ra|3
+玄関|げんかん|Lối vào nhà (chỗ cởi giày)|3
+台所|だいどころ|Nhà bếp|3
+廊下|ろうか|Hành lang|3
+大使館|たいしかん|Đại sứ quán|3
+所|ところ|Nơi, chỗ|3
+今日|きょう|Hôm nay|4
+明日|あした|Ngày mai|4
+昨日|きのう|Hôm qua|4
+あさって|あさって|Ngày kia|4
+一昨日|おととい|Hôm kia|4
+今朝|けさ|Sáng nay|4
+今晩|こんばん|Tối nay|4
+昨夜|ゆうべ|Tối qua|4
+午前|ごぜん|Buổi sáng (trước 12 giờ)|4
+午後|ごご|Buổi chiều (sau 12 giờ)|4
+夕方|ゆうがた|Chiều tối|4
+毎朝|まいあさ|Mỗi sáng|4
+毎晩|まいばん|Mỗi tối|4
+月曜日|げつようび|Thứ Hai|4
+火曜日|かようび|Thứ Ba|4
+水曜日|すいようび|Thứ Tư|4
+木曜日|もくようび|Thứ Năm|4
+金曜日|きんようび|Thứ Sáu|4
+土曜日|どようび|Thứ Bảy|4
+日曜日|にちようび|Chủ Nhật|4
+休み|やすみ|Ngày nghỉ, sự nghỉ ngơi|4
+仕事|しごと|Công việc|4
+番号|ばんごう|Số (điện thoại, phòng…)|4
+電話|でんわ|Điện thoại|4
+ゼロ|ゼロ|Số không|4
+零|れい|Số không (Hán tự)|4
+自動車|じどうしゃ|Ô tô|5
+切符|きっぷ|Vé (tàu, xe)|5
+一日|ついたち|Ngày mùng 1|5
+二日|ふつか|Ngày mùng 2; hai ngày|5
+三日|みっか|Ngày mùng 3; ba ngày|5
+四日|よっか|Ngày mùng 4; bốn ngày|5
+五日|いつか|Ngày mùng 5; năm ngày|5
+六日|むいか|Ngày mùng 6; sáu ngày|5
+七日|なのか|Ngày mùng 7; bảy ngày|5
+八日|ようか|Ngày mùng 8; tám ngày|5
+九日|ここのか|Ngày mùng 9; chín ngày|5
+十日|とおか|Ngày mùng 10; mười ngày|5
+二十日|はつか|Ngày 20; hai mươi ngày|5
+先週|せんしゅう|Tuần trước|5
+今週|こんしゅう|Tuần này|5
+毎週|まいしゅう|Mỗi tuần|5
+今月|こんげつ|Tháng này|5
+来月|らいげつ|Tháng sau|5
+毎月|まいつき|Mỗi tháng|5
+去年|きょねん|Năm ngoái|5
+今年|ことし|Năm nay|5
+来年|らいねん|Năm sau|5
+毎年|まいとし|Mỗi năm|5
+一昨年|おととし|Năm kia|5
+再来年|さらいねん|Năm sau nữa|5
+いつ|いつ|Khi nào|5
+一緒|いっしょ|Cùng nhau|5
+朝ごはん|あさごはん|Bữa sáng|6
+昼御飯|ひるごはん|Bữa trưa|6
+晩御飯|ばんごはん|Bữa tối|6
+夕飯|ゆうはん|Bữa tối|6
+食べ物|たべもの|Đồ ăn|6
+飲み物|のみもの|Đồ uống|6
+紅茶|こうちゃ|Trà đen|6
+牛乳|ぎゅうにゅう|Sữa bò|6
+お酒|おさけ|Rượu (rượu sake)|6
+果物|くだもの|Hoa quả|6
+野菜|やさい|Rau|6
+牛肉|ぎゅうにく|Thịt bò|6
+豚肉|ぶたにく|Thịt lợn|6
+鶏肉|とりにく|Thịt gà|6
+カレー|カレー|Cà ri|6
+いただきます|いただきます|Mời cả nhà (nói trước khi ăn)|6
+ごちそうさま|ごちそうさま|Cảm ơn vì bữa ăn (nói sau khi ăn)|6
+喫茶店|きっさてん|Quán cà phê|6
+宿題|しゅくだい|Bài tập về nhà|6
+ナイフ|ナイフ|Con dao|7
+フォーク|フォーク|Cái nĩa|7
+お皿|おさら|Cái đĩa|7
+ちゃわん|ちゃわん|Bát (ăn cơm)|7
+カップ|カップ|Cái cốc (có quai)|7
+コップ|コップ|Cái cốc, ly|7
+ハンカチ|ハンカチ|Khăn tay|7
+テープ|テープ|Băng dính, băng ghi âm|7
+お母さん|おかあさん|Mẹ (người khác, hoặc gọi mẹ mình)|7
+お父さん|おとうさん|Bố (người khác, hoặc gọi bố mình)|7
+両親|りょうしん|Bố mẹ|7
+奥さん|おくさん|Vợ (của người khác)|7
+いい|いい|Tốt|8
+おいしい|おいしい|Ngon|8
+まずい|まずい|Dở, không ngon|8
+甘い|あまい|Ngọt|8
+辛い|からい|Cay|8
+重い|おもい|Nặng|8
+軽い|かるい|Nhẹ|8
+長い|ながい|Dài|8
+短い|みじかい|Ngắn|8
+近い|ちかい|Gần|8
+遠い|とおい|Xa|8
+早い|はやい|Sớm|8
+速い|はやい|Nhanh|8
+遅い|おそい|Muộn; chậm|8
+低い|ひくい|Thấp|8
+太い|ふとい|To, mập, dày|8
+細い|ほそい|Mảnh, gầy|8
+丸い|まるい|Tròn|8
+薄い|うすい|Mỏng; nhạt|8
+冷たい|つめたい|Lạnh (khi chạm vào)|8
+温い|ぬるい|Âm ấm, nguội|8
+危ない|あぶない|Nguy hiểm|8
+汚い|きたない|Bẩn|8
+煩い|うるさい|Ồn ào|8
+つまらない|つまらない|Chán, nhạt nhẽo|8
+かわいい|かわいい|Dễ thương|8
+難しい|むずかしい|Khó|8
+易しい|やさしい|Dễ|8
+きれい|きれい|Đẹp; sạch|8
+静か|しずか|Yên tĩnh|8
+賑やか|にぎやか|Náo nhiệt|8
+有名|ゆうめい|Nổi tiếng|8
+便利|べんり|Tiện lợi|8
+元気|げんき|Khoẻ mạnh|8
+丈夫|じょうぶ|Bền, chắc khoẻ|8
+りっぱ|りっぱ|Tuyệt vời, nguy nga|8
+結構|けっこう|Đủ rồi; khá|8
+大きな|おおきな|To lớn (đứng trước danh từ)|8
+小さな|ちいさな|Nhỏ bé (đứng trước danh từ)|8
+こんな|こんな|Như thế này|8
+とても|とても|Rất|8
+どう|どう|Như thế nào|8
+いかが|いかが|Thế nào (lịch sự)|8
+色|いろ|Màu sắc|9
+青|あお|Màu xanh dương|9
+青い|あおい|Xanh dương|9
+赤|あか|Màu đỏ|9
+赤い|あかい|Đỏ|9
+黒|くろ|Màu đen|9
+黒い|くろい|Đen|9
+白い|しろい|Trắng|9
+黄色|きいろ|Màu vàng|9
+黄色い|きいろい|Vàng|9
+茶色|ちゃいろ|Màu nâu|9
+緑|みどり|Màu xanh lá|9
+好き|すき|Thích|9
+大好き|だいすき|Rất thích|9
+嫌い|きらい|Ghét, không thích|9
+嫌|いや|Khó chịu, không muốn|9
+上手|じょうず|Giỏi|9
+下手|へた|Kém|9
+歌|うた|Bài hát|9
+絵|え|Bức tranh|9
+ギター|ギター|Đàn ghi-ta|9
+漢字|かんじ|Chữ Hán|9
+意味|いみ|Ý nghĩa|9
+言葉|ことば|Từ ngữ, ngôn ngữ|9
+なぜ|なぜ|Tại sao|9
+たくさん|たくさん|Nhiều|9
+少し|すこし|Một chút|9
+ちょっと|ちょっと|Một chút; hơi|9
+犬|いぬ|Con chó|10
+猫|ねこ|Con mèo|10
+鳥|とり|Con chim|10
+動物|どうぶつ|Động vật|10
+ペット|ペット|Thú cưng|10
+池|いけ|Cái ao|10
+海|うみ|Biển|10
+公園|こうえん|Công viên|10
+交番|こうばん|Đồn cảnh sát nhỏ|10
+おまわりさん|おまわりさん|Chú cảnh sát (thân mật)|10
+警官|けいかん|Cảnh sát|10
+図書館|としょかん|Thư viện|10
+本棚|ほんだな|Giá sách|10
+冷蔵庫|れいぞうこ|Tủ lạnh|10
+ベッド|ベッド|Cái giường|10
+テーブル|テーブル|Cái bàn|10
+ドア|ドア|Cửa (kiểu Tây)|10
+戸|と|Cửa (kiểu Nhật)|10
+窓|まど|Cửa sổ|10
+ポスト|ポスト|Hòm thư|10
+横|よこ|Bên cạnh|10
+そば|そば|Gần, bên cạnh|10
+向こう|むこう|Phía bên kia|10
+辺|へん|Vùng, quanh đây|10
+いろいろ|いろいろ|Nhiều loại, đủ thứ|10
+一つ|ひとつ|Một cái|11
+二つ|ふたつ|Hai cái|11
+三つ|みっつ|Ba cái|11
+四つ|よっつ|Bốn cái|11
+五つ|いつつ|Năm cái|11
+六つ|むっつ|Sáu cái|11
+七つ|ななつ|Bảy cái|11
+八つ|やっつ|Tám cái|11
+九つ|ここのつ|Chín cái|11
+いくつ|いくつ|Bao nhiêu cái; mấy tuổi|11
+二十歳|はたち|Hai mươi tuổi|11
+兄弟|きょうだい|Anh chị em|11
+兄|あに|Anh trai (của mình)|11
+姉|あね|Chị gái (của mình)|11
+弟|おとうと|Em trai|11
+妹|いもうと|Em gái|11
+お兄さん|おにいさん|Anh trai (người khác)|11
+お姉さん|おねえさん|Chị gái (người khác)|11
+伯母さん|おばさん|Cô, dì, bác gái|11
+大人|おとな|Người lớn|11
+男の子|おとこのこ|Bé trai|11
+女の子|おんなのこ|Bé gái|11
+外国|がいこく|Nước ngoài|11
+キロ|キロ|Ki-lô (gam, mét)|11
+グラム|グラム|Gam|11
+メートル|メートル|Mét|11
+ページ|ページ|Trang (sách)|11
+半分|はんぶん|Một nửa|11
+全部|ぜんぶ|Toàn bộ|11
+大勢|おおぜい|Đông người|11
+多い|おおい|Nhiều|12
+少ない|すくない|Ít|12
+同じ|おなじ|Giống nhau|12
+より|より|Hơn (dùng khi so sánh)|12
+もっと|もっと|Hơn nữa|12
+風|かぜ|Gió|12
+晴れます|はれます|Trời nắng, quang đãng|12
+曇ります|くもります|Trời nhiều mây|12
+降ります|ふります|Rơi (mưa, tuyết)|12
+吹きます|ふきます|Thổi|12
+咲きます|さきます|Nở (hoa)|12
+夏休み|なつやすみ|Kỳ nghỉ hè|12
+旅行|りょこう|Du lịch|12
+パーティー|パーティー|Bữa tiệc|12
+暇|ひま|Rảnh rỗi|13
+遊びます|あそびます|Chơi|13
+泳ぎます|およぎます|Bơi|13
+映画館|えいがかん|Rạp chiếu phim|13
+出かけます|でかけます|Ra ngoài, đi chơi|13
+ホテル|ホテル|Khách sạn|13
+町|まち|Thị trấn, phố|13
+村|むら|Làng|13
+お菓子|おかし|Bánh kẹo|13
+砂糖|さとう|Đường|13
+塩|しお|Muối|13
+しょうゆ|しょうゆ|Nước tương|13
+バター|バター|Bơ|13
+立ちます|たちます|Đứng|14
+座ります|すわります|Ngồi|14
+答えます|こたえます|Trả lời|14
+話します|はなします|Nói chuyện|14
+頼みます|たのみます|Nhờ, yêu cầu|14
+渡します|わたします|Đưa, trao|14
+並びます|ならびます|Xếp hàng|14
+並べます|ならべます|Xếp, bày ra|14
+まっすぐ|まっすぐ|Thẳng|14
+ゆっくりと|ゆっくりと|Chậm rãi|14
+すぐに|すぐに|Ngay lập tức|14
+もう一度|もういちど|Một lần nữa|14
+ください|ください|Hãy cho tôi; xin hãy…|14
+どうぞ|どうぞ|Xin mời|14
+どうも|どうも|Cảm ơn; rất|14
+さあ|さあ|Nào; ừm (khi lưỡng lự)|14
+閉まります|しまります|Đóng (cửa tự đóng)|15
+開きます|あきます|Mở (cửa tự mở)|15
+着きます|つきます|Đến nơi|15
+乗ります|のります|Lên (xe), đi (xe)|15
+降ります|おります|Xuống (xe)|15
+勤めます|つとめます|Làm việc (cho công ty)|15
+家庭|かてい|Gia đình, hộ gia đình|15
+質問|しつもん|Câu hỏi|15
+問題|もんだい|Vấn đề; câu hỏi (bài thi)|15
+テスト|テスト|Bài kiểm tra|15
+授業|じゅぎょう|Giờ học|15
+作文|さくぶん|Bài văn|15
+文章|ぶんしょう|Đoạn văn|15
+クラス|クラス|Lớp học|15
+体|からだ|Cơ thể|16
+背|せ|Chiều cao (người)|16
+歯|は|Răng|16
+声|こえ|Giọng nói|16
+磨きます|みがきます|Đánh (răng), lau bóng|16
+洗います|あらいます|Rửa|16
+お風呂|おふろ|Bồn tắm; việc tắm|16
+シャワー|シャワー|Vòi sen|16
+せっけん|せっけん|Xà phòng|16
+初め|はじめ|Lúc đầu|16
+それから|それから|Sau đó|16
+そうして|そうして|Và rồi|16
+痛い|いたい|Đau|17
+風邪|かぜ|Cảm (bệnh)|17
+困ります|こまります|Khó xử, gặp rắc rối|17
+忘れます|わすれます|Quên|17
+覚えます|おぼえます|Nhớ, thuộc|17
+無くします|なくします|Làm mất|17
+返します|かえします|Trả lại|17
+次|つぎ|Tiếp theo|17
+まだ|まだ|Vẫn còn; chưa|17
+もう|もう|Đã… rồi|17
+練習|れんしゅう|Luyện tập|18
+勉強|べんきょう|Học tập|18
+掃除|そうじ|Dọn dẹp|18
+洗濯|せんたく|Giặt giũ|18
+走ります|はしります|Chạy|18
+飛びます|とびます|Bay|18
+鳴きます|なきます|Kêu, hót (động vật)|18
+やります|やります|Làm (thân mật)|18
+初めて|はじめて|Lần đầu tiên|19
+時々|ときどき|Thỉnh thoảng|19
+いつも|いつも|Luôn luôn|19
+ちょうど|ちょうど|Vừa đúng|19
+また|また|Lại; và|19
+ほか|ほか|Khác, ngoài ra|19
+では|では|Vậy thì|20
+じゃ|じゃ|Vậy thì (thân mật)|20
+でも|でも|Nhưng|20
+しかし|しかし|Tuy nhiên|20
+それでは|それでは|Vậy thì (trang trọng)|20
+など|など|Vân vân|20
+違います|ちがいます|Khác; sai|21
+大切|たいせつ|Quan trọng|21
+悪い|わるい|Xấu, tệ|21
+死にます|しにます|Chết|21
+消えます|きえます|Tắt; biến mất|21
+上着|うわぎ|Áo khoác|22
+コート|コート|Áo khoác dài|22
+セーター|セーター|Áo len|22
+シャツ|シャツ|Áo sơ mi|22
+ワイシャツ|ワイシャツ|Áo sơ mi trắng (công sở)|22
+背広|せびろ|Bộ com-lê|22
+スカート|スカート|Váy|22
+ズボン|ズボン|Quần dài|22
+靴|くつ|Giày|22
+靴下|くつした|Tất|22
+スリッパ|スリッパ|Dép đi trong nhà|22
+ネクタイ|ネクタイ|Cà vạt|22
+ポケット|ポケット|Túi (áo, quần)|22
+服|ふく|Quần áo|22
+差します|さします|Che (ô), giương|22
+花瓶|かびん|Lọ hoa|22
+財布|さいふ|Cái ví|22
+ストーブ|ストーブ|Lò sưởi|23
+電気|でんき|Điện; đèn điện|23
+門|もん|Cổng|23
+かかります|かかります|Mất (thời gian, tiền)|23
+切ります|きります|Cắt|23
+たて|たて|Chiều dọc|23
+八百屋|やおや|Cửa hàng rau quả|23
+出ます|でます|Ra, rời khỏi|23
+レコード|レコード|Đĩa than|24
+コピーします|コピーします|Sao chép, photo|24
+方|かた|Người (lịch sự); cách làm|25
+どの|どの|~ nào|2
+どれ|どれ|Cái nào (trong nhiều cái)|2
+お金|おかね|Tiền|3
+学校|がっこう|Trường học|3
+アパート|アパート|Căn hộ chung cư|10
+始まります|はじまります|Bắt đầu (tự bắt đầu)|4
+一月|ひとつき|Một tháng (khoảng thời gian)|11
+

@@ -81,8 +81,9 @@ function knownDistractors(item: KnowledgeItem, catalog: KnowledgeCatalog, known:
     const knownWithMeaning = catalog.items.filter((candidate) => candidate.key !== item.key && known.has(candidate.key) && MEANING_TYPES.includes(candidate.type));
     if (knownWithMeaning.length >= MIN_KNOWN_DISTRACTORS) return knownWithMeaning;
   }
-  const sameDay = sameType.filter((candidate) => candidate.day === item.day);
-  return [...knownSameType, ...(sameDay.length >= OPTION_COUNT - 1 ? sameDay : sameType)];
+  // Dự phòng: thêm thứ CÙNG NGÀY (cũng được dạy trong phiên này) — câu có thể chỉ còn 3 lựa chọn, vẫn hơn dùng thứ chưa học.
+  const knownOrToday = [...new Set([...knownSameType, ...sameType.filter((candidate) => candidate.day === item.day)])];
+  return knownOrToday.length >= MIN_KNOWN_DISTRACTORS ? knownOrToday : [...knownOrToday, ...sameType];
 }
 
 function selectRecallItems(input: BuildLearningSessionInput, count: number, excluded: Set<ContentKey>): KnowledgeItem[] {

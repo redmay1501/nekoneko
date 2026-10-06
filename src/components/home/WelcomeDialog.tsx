@@ -108,17 +108,15 @@ export function WelcomeDialog({ displayName, journeyDay, initialDailyMinutes }: 
               <div className="center"><SpriteIcon name="noko" size={84} className="mx-auto" /></div>
               <h2 id="welcome-title" className="center mt-2">Mỗi ngày bạn muốn dành bao lâu?</h2>
               <p className="sm soft center mt-1.5">Ít mà đều thì ở lại lâu hơn. Đổi lại lúc nào cũng được trong Cài đặt.</p>
-              <div className="welcome-goals mt-4" role="radiogroup" aria-label="Mục tiêu mỗi ngày">
-                {DAILY_GOAL_OPTIONS.map((option) => {
-                  const isSelected = dailyMinutes === option.minutes;
-                  return (
-                    <button key={option.minutes} type="button" role="radio" aria-checked={isSelected} disabled={isBusy}
-                      className={`welcome-goal ${isSelected ? 'on' : ''}`} onClick={() => setDailyMinutes(option.minutes)}>
-                      {option.label}
-                    </button>
-                  );
-                })}
-              </div>
+              <fieldset className="radio-group welcome-radios mt-4" disabled={isBusy}>
+                <legend className="sr-only">Mục tiêu mỗi ngày</legend>
+                {DAILY_GOAL_OPTIONS.map((option) => (
+                  <label key={option.minutes}>
+                    <input type="radio" name="welcome-goal" checked={dailyMinutes === option.minutes} onChange={() => setDailyMinutes(option.minutes)} />
+                    {option.label}
+                  </label>
+                ))}
+              </fieldset>
             </>
           ) : null}
         </div>

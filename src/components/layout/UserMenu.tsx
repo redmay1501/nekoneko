@@ -65,8 +65,8 @@ export function UserMenu({ displayName, level, isDemo }: UserMenuProps) {
             <EmojiIcon emoji="neko:profile" size={40} />
             <span><b>{displayName}</b><span className="tiny muted">Cấp {level}{isDemo ? ' · chế độ demo' : ''}</span></span>
           </div>
-          <Link href="/ho-so" role="menuitem" className="user-menu-item"><EmojiIcon emoji="neko:profile" size={24} /> Hồ sơ</Link>
-          <Link href="/cai-dat" role="menuitem" className="user-menu-item"><EmojiIcon emoji="neko:settings" size={24} /> Cài đặt</Link>
+          <Link href="/theo-doi" role="menuitem" className="user-menu-item"><EmojiIcon emoji="neko:progress" size={24} /> Theo dõi</Link>
+          <Link href="/cai-dat" role="menuitem" className="user-menu-item"><EmojiIcon emoji="neko:settings" size={24} /> Hồ sơ & cài đặt</Link>
           {isDemo ? null : (
             <form action="/auth/dang-xuat" method="post" onSubmit={() => setIsSigningOut(true)}>
               <button type="submit" role="menuitem" className="user-menu-item danger" disabled={isSigningOut} aria-busy={isSigningOut}>

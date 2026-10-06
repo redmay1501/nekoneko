@@ -4,6 +4,7 @@ import { publicEnv } from '@/config/env';
 import type { VoiceGender } from '@/lib/speech/japanese-voices';
 import { BottomNavigation } from './BottomNavigation';
 import { SakuraFall } from './SakuraFall';
+import { ScrollScenes } from './ScrollScenes';
 import { SheetHost } from './SheetHost';
 import { Sidebar } from './Sidebar';
 import { TopBar } from './TopBar';
@@ -31,6 +32,7 @@ export function AppShell({ displayName, level, recallDays, dailyMinutes, isGentl
     <div className="app-root">
       <SpeechPreferenceSync voiceGender={voiceGender} />
       <SakuraFall />
+      <ScrollScenes />
       <Sidebar />
       <div className="main">
         <TopBar displayName={displayName} level={level} recallDays={recallDays} isGentleMode={isGentleMode} isDemo={isDemo} />

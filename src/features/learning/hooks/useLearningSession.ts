@@ -4,6 +4,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { QUERY_KEYS } from '@/lib/api/query-keys';
+import { scrollToTop } from '@/lib/ui/motion';
 import { startNavigation } from '@/stores/navigation-progress-store';
 import { answerSessionStep, finishSession, startSession } from '../session-api';
 import { SESSION_MODE_CONFIG, type SessionMode } from '../session-modes';
@@ -100,7 +101,7 @@ export function useLearningSession(mode: SessionMode) {
   // Mỗi khi sang bước / chặng / điểm dừng / màn kết thúc: đưa về đầu trang SAU khi giao diện mới đã vẽ
   // (gọi trước khi vẽ thì trình duyệt giữ chỗ cuộn cũ — người học thấy mình đang ở cuối trang).
   useEffect(() => {
-    window.scrollTo({ top: 0 });
+    scrollToTop();
   }, [stepIndex, finishedPhase, isAtCheckpoint, finishMutation.isPending]);
 
   function submitAnswer(answer: string) {

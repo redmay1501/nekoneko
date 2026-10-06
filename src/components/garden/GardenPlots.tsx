@@ -11,9 +11,10 @@ export function GardenPlots({ entries }: { entries: KnowledgeListEntry[] }) {
     <div className="plots">
       {entries.map((entry) => (
         <KnowledgeChipButton key={entry.contentKey} contentKey={entry.contentKey} className="plot"
-          label={`${entry.meaning} — ${STATUS_PRESENTATION[entry.status].label}`}>
+          label={`${entry.face} — ${entry.meaning} — ${STATUS_PRESENTATION[entry.status].label}`}>
           <span className="e"><EmojiIcon emoji={STATUS_PRESENTATION[entry.status].plant} size={30} /></span>
-          <span className="w jp">{entry.face.slice(0, PLOT_FACE_MAX_CHARS)}</span>
+          {/* Chữ dài: rút gọn bằng "…" (không cắt giữa từ trông như lỗi); tên đầy đủ ở tooltip / nhãn đọc màn hình. */}
+          <span className="w jp" title={entry.face}>{[...entry.face].length > PLOT_FACE_MAX_CHARS ? `${[...entry.face].slice(0, PLOT_FACE_MAX_CHARS - 1).join('')}…` : entry.face}</span>
         </KnowledgeChipButton>
       ))}
     </div>

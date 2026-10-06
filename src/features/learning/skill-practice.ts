@@ -81,3 +81,49 @@ export function buildWritingPractice(catalog: KnowledgeCatalog, journeyDay: numb
     })),
   };
 }
+
+export interface DictationItem {
+  /** Kiến thức của câu (từ vựng / mẫu câu) — để ghi trí nhớ khi là từ vựng đã học. */
+  contentKey: ContentKey;
+  /** Câu / từ phát âm cho người học nghe. */
+  audioText: string;
+  /** Gợi ý nghĩa tiếng Việt. */
+  hint: string;
+  /** Các đáp án chấp nhận được (chữ Hán + cách đọc kana). */
+  accepted: string[];
+  /** Đáp án hiển thị khi xem kết quả. */
+  display: string;
+}
+
+const DICTATION_WORDS = 10;
+const DICTATION_SENTENCES = 6;
+
+/**
+ * Nghe – gõ (kiểu dictation): chỉ dùng thứ ĐÃ HỌC.
+ *  - Từ: từ vựng đã học (nghe cách đọc + gợi ý nghĩa → gõ chữ Hán hoặc kana đều đúng).
+ *  - Câu: câu ví dụ của các mẫu câu đã tới lịch (có cách đọc để chấp nhận khi gõ toàn kana).
+ * Tất định theo `seed` (đổi mỗi ngày) để cùng một ngày làm lại vẫn là cùng bài.
+ */
+export function buildDictationPractice(catalog: KnowledgeCatalog, views: Views, journeyDay: number, seed: string): { words: DictationItem[]; sentences: DictationItem[] } {
+  const learnedWords = itemsOfType(catalog, 'vocabulary').filter((item) => views.get(item.key)?.isLearned);
+  const words = pickDeterministic(learnedWords, DICTATION_WORDS, `dictation-words:${seed}`).map((item) => ({
+    contentKey: item.key,
+    audioText: item.content.kana,
+    hint: item.meaning,
+    accepted: [item.content.kana, item.content.kanji].filter(Boolean),
+    display: item.content.kanji ? `${item.content.kanji}（${item.content.kana}）` : item.content.kana,
+  }));
+  const isSentence = (text: string) => text && !/[→/／]/.test(text);
+  const sentencePool = learnedGrammar(catalog, journeyDay).flatMap((pattern) => [
+    { pattern, jp: pattern.exampleJp, reading: pattern.exampleReading, vi: pattern.exampleVi },
+    { pattern, jp: pattern.example2Jp, reading: pattern.example2Reading, vi: pattern.example2Vi },
+  ]).filter((sentence) => isSentence(sentence.jp));
+  const sentences = pickDeterministic(sentencePool, DICTATION_SENTENCES, `dictation-sentences:${seed}`).map((sentence) => ({
+    contentKey: toContentKey('grammar', sentence.pattern.id),
+    audioText: sentence.jp,
+    hint: sentence.vi,
+    accepted: [sentence.jp, sentence.reading].filter(Boolean),
+    display: sentence.jp,
+  }));
+  return { words, sentences };
+}

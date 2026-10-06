@@ -27,15 +27,15 @@ export default async function GardenPage() {
         Mỗi thứ bạn giữ lại được là một cái cây. Vườn này không phải trang trí — nó chính là trí nhớ của bạn.
       </p>
       <div className="garden">
-        <div className="plots mb-3.5">
+        {/* Chú giải: hàng nhãn co giãn theo chữ (trước đây ép vào ô cây 58px → chữ vỡ 3 dòng, ô cao thấp lệch nhau). */}
+        <ul className="garden-legend mb-3.5" aria-label="Các giai đoạn của cây">
           {GARDEN_STAGES.map((stage) => (
-            <div key={stage.status} className="plot" style={{ aspectRatio: 'auto', padding: '10px 6px' }} title={stage.description}>
-              <span className="e"><EmojiIcon emoji={STATUS_PRESENTATION[stage.status].plant} size={30} /></span>
-              <span className="tiny" style={{ fontWeight: 600 }}>{stage.label}</span>
-              <span className="tiny muted" style={{ fontSize: 9.5 }}>{overview.counts[stage.status]} cây</span>
-            </div>
+            <li key={stage.status} title={stage.description}>
+              <EmojiIcon emoji={STATUS_PRESENTATION[stage.status].plant} size={22} />
+              <span><b>{stage.label}</b> · {overview.counts[stage.status]} cây</span>
+            </li>
           ))}
-        </div>
+        </ul>
         {learned.length ? <GardenPlots entries={pickGardenPlants(learned, GARDEN_VISIBLE_PLANTS, 'garden')} /> : (
           <p className="sm soft center">Vườn đang chờ hạt đầu tiên 🌱</p>
         )}

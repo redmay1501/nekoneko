@@ -27,8 +27,12 @@ export async function requestJson<T>(url: string, init?: RequestInit): Promise<T
   return body as T;
 }
 
+/**
+ * `keepalive`: yêu cầu vẫn chạy hết dù người học chuyển trang ngay sau khi bấm (ghi kết quả luyện tập chạy nền).
+ * Mọi POST của app đều nhỏ (dưới giới hạn 64 KB của keepalive) nên bật luôn.
+ */
 export function postJson<T>(url: string, payload: unknown): Promise<T> {
-  return requestJson<T>(url, { method: 'POST', body: JSON.stringify(payload) });
+  return requestJson<T>(url, { method: 'POST', body: JSON.stringify(payload), keepalive: true });
 }
 
 /** Khoá chống ghi trùng cho mỗi lần bấm — server bỏ qua nếu nhận lại cùng khoá. */

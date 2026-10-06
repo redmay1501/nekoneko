@@ -2,17 +2,23 @@ import { AudioButton } from '@/components/common/AudioButton';
 import { EmptyState } from '@/components/common/StateViews';
 import { KnowledgeChipButton } from '@/components/learning/KnowledgeChipButton';
 import { WritingPad } from '@/components/learning/WritingPad';
-import { buildWritingPractice } from '@/features/learning/skill-practice';
+import { DictationPractice } from '@/components/learning/DictationPractice';
+import { buildDictationPractice, buildWritingPractice } from '@/features/learning/skill-practice';
+import { appDateKey } from '@/features/progress/recall-streak';
 import { getLearnerContext } from '@/features/learning/learner-context';
 
 /** SC-27 · Luyện viết — tay nhớ lâu hơn mắt. */
 export default async function WritingPage() {
-  const { catalog, journeyDay } = await getLearnerContext();
+  const { catalog, journeyDay, memoryViews, now } = await getLearnerContext();
   const practice = buildWritingPractice(catalog, journeyDay);
+  const dictation = buildDictationPractice(catalog, memoryViews, journeyDay, appDateKey(now));
   return (
     <>
       <h1>Luyện viết</h1>
-      <p className="soft sm" style={{ margin: '4px 0 14px' }}>Tay nhớ lâu hơn mắt. Viết chậm, đúng thứ tự nét.</p>
+      <p className="soft sm" style={{ margin: '4px 0 14px' }}>Nghe rồi gõ lại bằng tiếng Nhật — sau đó viết tay Kanji, chậm và đúng thứ tự nét.</p>
+      <div className="sec-h" style={{ marginTop: 0 }}><h2>🎧 Nghe – gõ</h2></div>
+      <DictationPractice words={dictation.words} sentences={dictation.sentences} />
+      <div className="sec-h"><h2>✍️ Viết tay Kanji</h2></div>
       {practice ? (
         <>
           <div className="card tight mb-3.5">

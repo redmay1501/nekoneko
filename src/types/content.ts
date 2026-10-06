@@ -78,6 +78,13 @@ export interface GrammarContent {
   exampleVi: string;
   lesson: string;
   day: number | null;
+  /** Cách đọc (kana) của câu ví dụ — chế độ học hiện, chế độ kiểm tra ẩn. */
+  exampleReading: string;
+  whenToUse: string;
+  commonMistake: string;
+  example2Jp: string;
+  example2Reading: string;
+  example2Vi: string;
 }
 
 export interface LessonContent {
@@ -135,6 +142,13 @@ export interface ExampleSentence {
   viOwner: string | null;
 }
 
+/** Kanji ↔ bộ thủ theo id (content/seed/kanji-radicals.json). position 0 = bộ chính, sau đó là bộ nhìn thấy trong chữ. */
+export interface KanjiRadicalLink {
+  kanjiId: number;
+  radicalId: number;
+  position: number;
+}
+
 export interface N5Content {
   journeyDays: JourneyDay[];
   dayTasks: DayTask[];
@@ -149,4 +163,5 @@ export interface N5Content {
   readingPassages: ReadingPassage[];
   practiceTemplates: PracticeTemplate[];
   exampleSentences: ExampleSentence[];
+  kanjiRadicals: KanjiRadicalLink[];
 }

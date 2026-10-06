@@ -104,6 +104,10 @@ export function DiscoverStepView({ step, isBusy, onAcknowledge }: { step: Discov
       ) : (
         <span className="chip mint"><EmojiIcon emoji="🌱" size={16} /> Một thứ mới, nhỏ thôi</span>
       )}
+      {card.imageSrc ? (
+        // eslint-disable-next-line @next/next/no-img-element -- icon tĩnh 128px trong public/
+        <img src={card.imageSrc} alt="" width={64} height={64} className="vocab-image mx-auto mt-3" />
+      ) : null}
       <div className="s-big" style={{ margin: '16px 0 6px', ...faceSize(card.face, 58, 38) }}>{card.face}</div>
       <p className="jp soft">{card.reading}</p>
       <h3 style={{ margin: '8px 0 10px' }}>{card.meaning}</h3>

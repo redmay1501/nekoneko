@@ -5,6 +5,7 @@ import { recordMemoryEvent } from '@/features/memory/memory-service';
 import { REVIEW_EVENT_TYPES } from '@/features/memory/memory-types';
 import { appDateKey } from '@/features/progress/recall-streak';
 import { NotFoundError } from '@/lib/api/errors';
+import { compareJapanese } from '@/lib/utils/japanese-text';
 import { handleApiRoute } from '@/lib/api/route-handler';
 
 const practiceSchema = z.object({
@@ -12,10 +13,12 @@ const practiceSchema = z.object({
   /** Nghĩa người học chọn — SERVER chấm, không tin kết quả đúng/sai từ trình duyệt. */
   answer: z.string().max(200),
   requestId: z.string().min(8).max(100),
+  /** Hỏi gì: nghĩa (chọn) hay cách đọc (gõ kana — so khớp đã chuẩn hoá, Katakana ↔ Hiragana). */
+  ask: z.enum(['meaning', 'reading']).default('meaning'),
 });
 
 /**
- * Luyện nghe (ngoài phiên học): nghe từ đã học → chọn nghĩa. Mỗi câu là một lần nhớ lại thật,
+ * Luyện nghe / Tự kiểm tra từ vựng (ngoài phiên học): mỗi câu là một lần nhớ lại thật,
  * nên ghi vào trí nhớ như bước Gặp lại. Chỉ nhận từ vựng ĐÃ học (bài nghe chỉ hỏi những từ này).
  *
  * Mỗi từ tính TỐI ĐA MỘT LẦN MỖI NGÀY: bài nghe hỏi cùng vài từ, làm lại liên tục không được "bơm" điểm trí nhớ
@@ -42,7 +45,9 @@ export async function POST(request: Request) {
       existingRecord,
       eventType: REVIEW_EVENT_TYPES.RECALL,
       answer: input.answer,
-      isCorrect: input.answer === item.meaning,
+      isCorrect: input.ask === 'reading'
+        ? compareJapanese(input.answer, [item.content.kana, item.content.kanji].filter(Boolean), { foldKatakana: true }).isCorrect
+        : input.answer === item.meaning,
       requestId: input.requestId,
       now,
     });

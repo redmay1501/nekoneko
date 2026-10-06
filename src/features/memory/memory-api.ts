@@ -22,3 +22,8 @@ export function fetchAnotherSurprise(excludedKeys: readonly string[], seed: numb
 export function answerListeningPractice(contentKey: string, answer: string): Promise<{ memory: MemoryView; counted: boolean }> {
   return postJson('/api/memory/practice', { contentKey, answer, requestId: createRequestId() });
 }
+
+/** Một câu Tự kiểm tra từ vựng — server chấm (nghĩa hoặc cách đọc) và ghi vào trí nhớ nếu từ đã học. */
+export function answerVocabularyCheck(contentKey: string, answer: string, ask: 'meaning' | 'reading'): Promise<{ memory: MemoryView; counted: boolean }> {
+  return postJson('/api/memory/practice', { contentKey, answer, ask, requestId: createRequestId() });
+}

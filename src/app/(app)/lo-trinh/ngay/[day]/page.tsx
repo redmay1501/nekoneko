@@ -26,7 +26,8 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
       <Link className="link" href="/lo-trinh">← Lộ trình</Link>
       <div className="daystrip">
         {buildDayStrip(day).map((stripDay) => (
-          <Link key={stripDay} href={`/lo-trinh/ngay/${stripDay}`} aria-label={`Ngày ${stripDay}`}
+          // Ngày kề bên tải sẵn (prefetch đầy đủ) → bấm sang là hiện ngay, không chờ server.
+          <Link key={stripDay} href={`/lo-trinh/ngay/${stripDay}`} aria-label={`Ngày ${stripDay}`} prefetch={Math.abs(stripDay - day) <= 1}
             aria-current={stripDay === day ? 'page' : undefined}
             className={`daychip ${stripDay === day ? 'on' : stripDay < journeyDay ? 'past' : ''}`}>
             <b>{stripDay}</b>
@@ -47,6 +48,7 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
         <h1>Ngày {day}</h1>
         <p className="soft sm mt-1">{dayInfo.title}</p>
         <p className="sm mt-2.5">{plan.summary}</p>
+        <p className="sm soft mt-1.5"><b>Vì sao học hôm nay?</b> {plan.purpose}</p>
       </section>
 
       <div className="daygrid mt-4">
@@ -86,8 +88,8 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
         <Link className="btn ghost block mt-4" href="/hoc/rescue">Ôn lại những gì còn mờ</Link>
       )}
       <div className="row mt-3" style={{ gap: 8, justifyContent: 'space-between' }}>
-        {day > 1 ? <Link className="btn quiet sm" href={`/lo-trinh/ngay/${day - 1}`}>← Ngày {day - 1}</Link> : <span />}
-        {day < JOURNEY_TOTAL_DAYS ? <Link className="btn quiet sm" href={`/lo-trinh/ngay/${day + 1}`}>Ngày {day + 1} →</Link> : <span />}
+        {day > 1 ? <Link className="btn quiet sm" href={`/lo-trinh/ngay/${day - 1}`} prefetch>← Ngày {day - 1}</Link> : <span />}
+        {day < JOURNEY_TOTAL_DAYS ? <Link className="btn quiet sm" href={`/lo-trinh/ngay/${day + 1}`} prefetch>Ngày {day + 1} →</Link> : <span />}
       </div>
     </>
   );

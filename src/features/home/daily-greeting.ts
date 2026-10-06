@@ -1,4 +1,5 @@
 import type { SessionPlanPreview } from '@/features/learning/session-engine';
+import type { ResumableSession } from '@/features/learning/session-service';
 import { type RecallStreak, appDateKey, shiftDateKey } from '@/features/progress/recall-streak';
 
 /**
@@ -15,6 +16,8 @@ export interface DailyGreeting {
   todayLine: string | null;
   phrase: { jp: string; reading: string; vi: string };
   ctaLabel: string;
+  /** Nút chính dẫn tới đâu — học tiếp phiên dở thì đúng chế độ của phiên đó. */
+  ctaHref: string;
 }
 
 /** Câu tiếng Nhật của ngày — câu ngắn, thân thiện, dùng được ngay. */
@@ -46,6 +49,8 @@ export interface DailyGreetingInput {
   streak: RecallStreak;
   hasNewKnowledge: boolean;
   isReadyToComplete: boolean;
+  /** Phiên học dở dang có thể học tiếp (đã làm vài câu). */
+  resumable: ResumableSession | null;
 }
 
 export function buildDailyGreeting(input: DailyGreetingInput): DailyGreeting {
@@ -55,7 +60,9 @@ export function buildDailyGreeting(input: DailyGreetingInput): DailyGreeting {
   const daysAway = streak.lastRecallDay ? daysBetweenKeys(streak.lastRecallDay, dateKey) : null;
 
   let message: string;
-  if (input.isReadyToComplete) {
+  if (input.resumable) {
+    message = `Bạn đang học dở — đã xong ${input.resumable.answered}/${input.resumable.total} bước. Học tiếp đúng chỗ dừng nhé 🐾`;
+  } else if (input.isReadyToComplete) {
     message = `Bạn đã học hết ngày ${journeyDay} rồi 🎉 Xác nhận hoàn thành là mở được ngày ${journeyDay + 1}.`;
   } else if (daysAway === null) {
     message = journeyDay === 1
@@ -83,6 +90,7 @@ export function buildDailyGreeting(input: DailyGreetingInput): DailyGreeting {
     message,
     todayLine: parts.length ? `Hôm nay: ${parts.join(' · ')}` : null,
     phrase: DAILY_PHRASES[dayNumber % DAILY_PHRASES.length],
-    ctaLabel: input.isReadyToComplete ? 'Xem ngày hôm nay' : plan.new ? 'Bắt đầu học' : 'Ôn ngay',
+    ctaLabel: input.resumable ? 'Học tiếp' : input.isReadyToComplete ? 'Xem ngày hôm nay' : plan.new ? 'Bắt đầu học' : 'Ôn ngay',
+    ctaHref: input.resumable ? `/hoc/${input.resumable.mode}` : input.isReadyToComplete ? `/lo-trinh/ngay/${journeyDay}` : '/hoc/daily',
   };
 }

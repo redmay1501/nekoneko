@@ -44,29 +44,31 @@ export const NAVIGATION_GROUPS: NavigationGroup[] = [
   {
     label: 'Theo dõi',
     items: [
-      { href: '/tri-nho', icon: 'neko:memory', label: 'Trí nhớ' },
-      { href: '/tien-do', icon: 'neko:progress', label: 'Tiến độ' },
-      { href: '/thanh-tich', icon: 'neko:achievements', label: 'Thành tích' },
+      // Tiến độ · Trí nhớ · Thành tích gộp một trang có tab.
+      { href: '/theo-doi', icon: 'neko:progress', label: 'Theo dõi' },
     ],
   },
 ];
 
 export const FOOTER_NAVIGATION: NavigationItem[] = [
-  { href: '/ho-so', icon: 'neko:profile', label: 'Hồ sơ' },
+  // Hồ sơ đã gộp vào Cài đặt.
   { href: '/cai-dat', icon: 'neko:settings', label: 'Cài đặt' },
 ];
 
 export const BOTTOM_NAVIGATION: NavigationItem[] = [
   { href: '/', icon: 'neko:home', label: 'Trang chủ' },
   { href: '/lo-trinh', icon: 'neko:roadmap', label: 'Lộ trình' },
-  { href: '/tri-nho', icon: 'neko:memory', label: 'Trí nhớ' },
-  { href: '/ho-so', icon: 'neko:profile', label: 'Hồ sơ' },
+  { href: '/theo-doi', icon: 'neko:memory', label: 'Theo dõi' },
+  { href: '/cai-dat', icon: 'neko:profile', label: 'Cài đặt' },
 ];
 
 /** Mục đang mở: trùng tuyệt đối, hoặc là trang con (trừ trang chủ). */
+/** Trang con vẫn thuộc mục gộp: /tri-nho/sap-quen… sáng mục "Theo dõi". */
+const ACTIVE_ALIASES: Record<string, string[]> = { '/theo-doi': ['/tri-nho', '/tien-do', '/thanh-tich'] };
+
 export function isActivePath(pathname: string, href: string): boolean {
   if (href === '/') return pathname === '/';
-  return pathname === href || pathname.startsWith(`${href}/`);
+  return [href, ...(ACTIVE_ALIASES[href] ?? [])].some((path) => pathname === path || pathname.startsWith(`${path}/`));
 }
 
 export function isInLearningSection(pathname: string): boolean {

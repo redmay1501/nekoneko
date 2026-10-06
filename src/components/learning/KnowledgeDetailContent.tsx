@@ -1,8 +1,9 @@
 import Link from 'next/link';
+import { RadicalExpandable } from './RadicalExpandable';
+import { vocabularyImageOf } from '@/features/learning/vocabulary-images';
 import { AudioButton } from '@/components/common/AudioButton';
 import { speechTextFor } from '@/features/learning/speech-text';
 import { MemoryStatusCard } from '@/components/memory/MemoryStatusCard';
-import { primaryRadicalGlyph } from '@/features/learning/knowledge-catalog';
 import type { KnowledgeDetailView } from '@/features/learning/knowledge-detail';
 import { toContentKey } from '@/features/learning/knowledge-types';
 import type { ChainNode } from '@/features/learning/knowledge-presenter';
@@ -84,7 +85,7 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
           </div>
           <TipCard tip={item.content.tip} />
           {statusCard}
-          <p className="tiny muted center mt-2.5">Học vào ngày {item.day} · chữ số {item.id}/104</p>
+          <p className="tiny muted center mt-2.5">{item.day ? <>Học vào <DayLink day={item.day} /> · </> : null}chữ số {item.id}/104</p>
         </>
       );
     }
@@ -96,7 +97,7 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
             <div>
               <h2>{item.content.meaning}</h2>
               <p className="jp soft">{item.content.nameJp}</p>
-              <p className="tiny muted">Bộ thủ số {item.id}/45 · học ngày {item.day}</p>
+              <p className="tiny muted">{item.day ? <>Bộ thủ của lộ trình · học <DayLink day={item.day} /></> : 'Bộ tham khảo — không có ngày học riêng, gặp khi học Kanji chứa nó'}</p>
             </div>
           </div>
           <TipCard tip={item.content.tip} background="var(--lav)" />
@@ -118,7 +119,7 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
               <p className="soft">{item.content.meaning}</p>
               <div className="row wrap" style={{ gap: 6, marginTop: 7 }}>
                 <span className="chip">{item.content.strokes} nét</span>
-                <span className="chip">Ngày {item.day}</span>
+                {item.day ? <DayLink day={item.day} className="chip" /> : null}
               </div>
             </div>
             <AudioButton text={speechTextFor(item)} />
@@ -130,8 +131,18 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
           <TipCard tip={item.content.tip} />
           <div className="sec-h" style={{ margin: '16px 2px 7px' }}><h2 style={{ fontSize: 14 }}>Từ ghép thường gặp</h2></div>
           <p className="jp sm" style={{ lineHeight: 1.9 }}>{item.content.words}</p>
-          <RelatedRow title="Bộ thủ tạo nên chữ này" chips={related.radicals.map((radical) => ({
-            contentKey: toContentKey('radical', radical.id), face: primaryRadicalGlyph(radical.radical), caption: radical.meaning }))} />
+          {related.radicalDetails.length ? (
+            <>
+              <div className="sec-h" style={{ margin: '16px 2px 4px' }}><h2 style={{ fontSize: 14 }}>Bộ thủ liên quan</h2></div>
+              <p className="jp" style={{ fontSize: 17 }}>
+                {item.face} = {related.radicalDetails.map((radical) => `${radical.face} (${radical.meaning.split(/[,;]/)[0].toLowerCase()})`).join(' + ')}
+              </p>
+              <p className="tiny muted mb-2">💡 Bấm vào bộ thủ để xem mẹo nhớ — bộ đầu tiên là bộ chính của chữ.</p>
+              <div className="stack" style={{ gap: 6 }}>
+                {related.radicalDetails.map((radical) => <RadicalExpandable key={radical.id} radical={radical} compact />)}
+              </div>
+            </>
+          ) : null}
           <RelatedRow title="Từ vựng N5 có chữ này" chips={related.vocabulary.map((word) => ({
             contentKey: toContentKey('vocabulary', word.id), face: word.kanji || word.kana, caption: word.meaning }))} />
           {statusCard}
@@ -146,11 +157,15 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
               <p className="jp soft mt-1">{item.content.kana}</p>
               <h2 className="mt-2">{item.content.meaning}</h2>
             </div>
+            {vocabularyImageOf(item.face) ? (
+              // eslint-disable-next-line @next/next/no-img-element -- icon tĩnh 128px trong public/, không cần tối ưu ảnh
+              <img src={vocabularyImageOf(item.face)!} alt="" width={72} height={72} className="vocab-image" />
+            ) : null}
             <AudioButton text={item.content.kana} />
           </div>
           <div className="row wrap mt-2.5" style={{ gap: 6 }}>
             <span className="chip lav">{item.content.lesson.split('·')[0].trim()}</span>
-            <span className="chip">Ngày {item.day}</span>
+            {item.day ? <DayLink day={item.day} className="chip" /> : null}
           </div>
           <TipCard tip={item.content.tip} />
           <RelatedRow title="Kanji trong từ này" chips={related.kanji.map((kanji) => ({
@@ -175,11 +190,18 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
           <div className="chip lav">{item.content.lesson}</div>
           <h2 className="jp" style={{ fontSize: 26, margin: '12px 0 6px' }}>{item.content.pattern}</h2>
           <p className="soft">{item.content.usage}</p>
-          <div className="card tight mt-3.5" style={{ background: 'var(--sky)', borderColor: 'transparent' }}>
-            <div className="between"><b className="sm">Ví dụ</b><AudioButton text={item.content.exampleJp} /></div>
-            <p className="jp mt-1.5" style={{ fontSize: 18 }}>{item.content.exampleJp}</p>
-            <p className="sm soft mt-1">{item.content.exampleVi}</p>
-          </div>
+          {item.content.whenToUse ? <p className="sm mt-2"><b>Khi nào dùng?</b> {item.content.whenToUse}</p> : null}
+          {[
+            { jp: item.content.exampleJp, reading: item.content.exampleReading, vi: item.content.exampleVi },
+            { jp: item.content.example2Jp, reading: item.content.example2Reading, vi: item.content.example2Vi },
+          ].filter((example) => example.jp).map((example, index) => (
+            <div key={example.jp} className="card tight mt-3" style={{ background: 'var(--sky)', borderColor: 'transparent' }}>
+              <div className="between"><b className="sm">Ví dụ {index + 1}</b><AudioButton text={example.jp} /></div>
+              <p className="jp mt-1.5" style={{ fontSize: 18 }}>{example.jp}</p>
+              {example.reading && example.reading !== example.jp ? <p className="jp sm muted">{example.reading}</p> : null}
+              <p className="sm soft mt-1">{example.vi}</p>
+            </div>
+          ))}
           <div className="card tight mt-3">
             <b className="sm">⚠️ Lỗi thường gặp</b>
             <p className="sm soft mt-1">{detail.commonMistake}</p>
@@ -201,4 +223,9 @@ export function KnowledgeDetailContent({ detail }: { detail: KnowledgeDetailView
       ) : null}
     </div>
   );
+}
+
+/** "Ngày N" bấm được → trang ngày đã học kiến thức này (khay tự đóng khi chuyển trang). */
+function DayLink({ day, className = 'link' }: { day: number; className?: string }) {
+  return <Link href={`/lo-trinh/ngay/${day}`} className={className}>ngày {day} →</Link>;
 }

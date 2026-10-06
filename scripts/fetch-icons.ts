@@ -10,12 +10,14 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { ANIMATED_EMOJI, EMOJI_ICONS } from '../src/components/common/emoji-icons';
+import { VOCABULARY_IMAGE_SOURCES, vocabularyImageFile } from '../src/features/learning/vocabulary-images';
 
 const FLUENT_BASE = 'https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/';
 const NOTO_ANIMATED_BASE = 'https://fonts.gstatic.com/s/e/notoemoji/latest/';
 const ICON_PIXELS = 128;
 const OUT_3D = join(process.cwd(), 'public', 'icons', '3d');
 const OUT_ANIMATED = join(process.cwd(), 'public', 'icons', 'animated');
+const OUT_VOCABULARY = join(process.cwd(), 'public', 'icons', 'vocab');
 
 async function download(url: string, file: string): Promise<void> {
   const response = await fetch(url);
@@ -34,6 +36,7 @@ function shrink(file: string): void {
 async function main() {
   mkdirSync(OUT_3D, { recursive: true });
   mkdirSync(OUT_ANIMATED, { recursive: true });
+  mkdirSync(OUT_VOCABULARY, { recursive: true });
   for (const { slug, fluentPath } of Object.values(EMOJI_ICONS)) {
     const file = join(OUT_3D, `${slug}.png`);
     if (existsSync(file)) continue;
@@ -46,6 +49,14 @@ async function main() {
     if (existsSync(file)) continue;
     await download(`${NOTO_ANIMATED_BASE}${codepoint}/512.webp`, file);
     console.log(`✓ động ${slug}`);
+  }
+  // Ảnh minh hoạ từ vựng (content/seed/vocabulary-images.json) — nhiều từ có thể dùng chung một icon.
+  for (const fluentPath of new Set(Object.values(VOCABULARY_IMAGE_SOURCES))) {
+    const file = join(OUT_VOCABULARY, vocabularyImageFile(fluentPath));
+    if (existsSync(file)) continue;
+    await download(FLUENT_BASE + fluentPath.split('/').map(encodeURIComponent).join('/'), file);
+    shrink(file);
+    console.log(`✓ từ vựng ${vocabularyImageFile(fluentPath)}`);
   }
   console.log('Xong — icon nằm ở public/icons/');
 }

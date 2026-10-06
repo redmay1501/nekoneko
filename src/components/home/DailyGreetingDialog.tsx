@@ -7,29 +7,11 @@ import { ModalPortal } from '@/components/common/ModalPortal';
 import { SpriteIcon } from '@/components/common/SpriteIcon';
 import type { DailyGreeting } from '@/features/home/daily-greeting';
 import { startNavigation } from '@/stores/navigation-progress-store';
+import { updateSettings } from '@/features/progress/settings-api';
 
 const MORNING_ENDS_AT_HOUR = 11;
 const AFTERNOON_ENDS_AT_HOUR = 18;
 const subscribeNothing = () => () => undefined;
-
-const storageKey = (userId: string) => `neko:daily-greeting:${userId}`;
-
-/** Đã chào hôm nay chưa — lưu ở trình duyệt; đọc/ghi hỏng (chế độ riêng tư…) thì coi như chưa chào. */
-function greetedOn(userId: string): string | null {
-  try {
-    return window.localStorage.getItem(storageKey(userId));
-  } catch {
-    return null;
-  }
-}
-
-function rememberGreeted(userId: string, dateKey: string) {
-  try {
-    window.localStorage.setItem(storageKey(userId), dateKey);
-  } catch {
-    // Không lưu được thì lần sau chào lại — không sao.
-  }
-}
 
 function partOfDay(): string {
   const hour = new Date().getHours();
@@ -38,23 +20,26 @@ function partOfDay(): string {
   return 'Chào buổi tối';
 }
 
-/** Lời chào đầu tiên trong ngày — nội dung đổi theo ngày (features/home/daily-greeting.ts). */
-export function DailyGreetingDialog({ greeting, displayName, userId }: { greeting: DailyGreeting; displayName: string; userId: string }) {
+/**
+ * Lời chào đầu tiên trong ngày — nội dung đổi theo ngày và tình hình học (features/home/daily-greeting.ts).
+ * Trang chủ chỉ hiện khi hôm nay chưa chào (user_settings.greeted_at); đóng hay bấm học đều ghi lại → không chào lặp.
+ */
+export function DailyGreetingDialog({ greeting, displayName }: { greeting: DailyGreeting; displayName: string }) {
   const router = useRouter();
-  const alreadyGreeted = useSyncExternalStore(subscribeNothing, () => greetedOn(userId) === greeting.dateKey, () => true);
   const salutation = useSyncExternalStore(subscribeNothing, partOfDay, () => 'Chào');
   const [isClosed, setIsClosed] = useState(false);
-  if (alreadyGreeted || isClosed) return null;
+  if (isClosed) return null;
 
   function close() {
-    rememberGreeted(userId, greeting.dateKey);
     setIsClosed(true);
+    // Đóng ngay; ghi "đã chào hôm nay" chạy phía sau — lỗi mạng thì lần sau chào lại, không sao.
+    updateSettings({ greeted: true }).catch(() => undefined);
   }
 
   function startLearning() {
     close();
     startNavigation();
-    router.push('/hoc/daily');
+    router.push(greeting.ctaHref);
   }
 
   return (

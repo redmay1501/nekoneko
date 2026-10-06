@@ -242,15 +242,16 @@ ul{margin:0;padding:0;list-style:none}
 
 /* ============ JOURNEY MAP ============ */
 .map-wrap{max-width:560px;margin:0 auto;position:relative;border-radius:var(--r-l);overflow:hidden;background:linear-gradient(180deg,#FFF6F8,#F4F8F1 60%,#EAF2F8);border:1px solid var(--line);box-shadow:var(--sh-1)}
-.map-wrap svg{display:block;width:100%;height:auto}
+.map-wrap > svg{display:block;width:100%;height:auto}
 .daynode{cursor:pointer}
 .daynode .touch-target{transform-box:fill-box;transform-origin:center}
 .daynode:hover circle.hit{stroke:var(--sakura);stroke-width:2}
-.daynode text{paint-order:stroke;stroke:rgba(255,255,255,.88);stroke-width:1.4px;stroke-linejoin:round}
+.daynode .day-number{font-size:15px;font-weight:800;paint-order:stroke;stroke:rgba(255,255,255,.94);stroke-width:.9px;stroke-linejoin:round}
 .daynode .today-neko{overflow:visible}
 @media (max-width:767px){
   .map-wrap{width:calc(100vw - 16px);max-width:none;margin-left:calc((100% - (100vw - 16px))/2)}
   .daynode .touch-target{transform:scale(1.32)}
+  .daynode .day-number{font-size:17px;stroke-width:.7px}
 }
 @media (max-width:1099px), (hover:none), (pointer:coarse){
   .day-vocab-desktop{display:none!important}

@@ -64,7 +64,7 @@ export function JourneyMap({ currentDay, startDateLabel, isJourneyComplete }: Jo
           const isToday = node.state === 'today';
           const isDone = node.state === 'done';
           return (
-            <g key={node.day} className="daynode" role="link" tabIndex={0} data-reveal aria-label={`Ngày ${node.day}${isToday ? ' — hôm nay' : ''}`}
+            <g key={node.day} className="daynode" role="link" tabIndex={0} aria-label={`Ngày ${node.day}${isToday ? ' — hôm nay' : ''}`}
               onClick={() => openDay(node.day)}
               onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') openDay(node.day); }}>
               {isToday ? <circle cx={node.x} cy={node.y} r="17" fill="#FF5B73" opacity=".4" className="pulse" /> : null}
@@ -73,7 +73,7 @@ export function JourneyMap({ currentDay, startDateLabel, isJourneyComplete }: Jo
               <circle className="hit" cx={node.x} cy={node.y} r={node.radius}
                 fill={isToday ? '#FF5B73' : isDone ? node.stage.color : '#FFFFFF'}
                 stroke={isDone || isToday ? 'none' : '#EADFDA'} strokeWidth="2" />
-              <text x={node.x} y={node.y + 4} textAnchor="middle" fontSize={isToday ? 14 : 12} fontWeight="800"
+              <text className="day-number" x={node.x} y={node.y + 4} textAnchor="middle" fontSize={isToday ? 14 : 12} fontWeight="800"
                 fill={isToday ? '#fff' : isDone ? '#3F3936' : '#665A55'} fontFamily={FONT}>{node.day}</text>
               {isToday ? (
                 <svg className="today-neko" x={node.x - 25} y={node.y - 53} width="50" height="50" viewBox="0 0 120 120" aria-hidden="true">

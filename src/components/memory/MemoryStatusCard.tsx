@@ -4,19 +4,13 @@ import { EmojiIcon } from '@/components/common/EmojiIcon';
 
 interface MemoryStatusCardProps {
   memory: MemoryView;
-  scheduledDay: number | null;
 }
 
-/** Trạng thái trí nhớ của một kiến thức — điểm, số lần gặp, lần cuối, lần tới và LÝ DO. */
-export function MemoryStatusCard({ memory, scheduledDay }: MemoryStatusCardProps) {
+/** Trạng thái trí nhớ của một kiến thức — điểm, số lần gặp, lần cuối và LÝ DO. */
+export function MemoryStatusCard({ memory }: MemoryStatusCardProps) {
   const presentation = STATUS_PRESENTATION[memory.status];
   if (!memory.isLearned) {
-    return (
-      <div className="card tight" style={{ background: presentation.background, borderColor: 'transparent' }}>
-        <b className="sm"><EmojiIcon emoji={presentation.emoji} size={16} style={{ verticalAlign: '-3px' }} /> Chưa học tới</b>
-        <p className="tiny muted mt-1">Theo lộ trình, bạn sẽ gặp nó vào ngày {scheduledDay ?? '—'}.</p>
-      </div>
-    );
+    return null;
   }
   return (
     <div className="card tight" style={{ background: presentation.background, borderColor: 'transparent' }}>
@@ -31,7 +25,6 @@ export function MemoryStatusCard({ memory, scheduledDay }: MemoryStatusCardProps
       <div className="between tiny" style={{ color: 'var(--ink-2)' }}>
         <span>Đã gặp {memory.encounterCount} lần</span>
         <span>Lần cuối: {memory.lastEncounterText}</span>
-        <span>Gặp lại: {memory.nextEncounterText}</span>
       </div>
       <p className="tiny mt-2" style={{ color: presentation.color }}>{memory.reason}</p>
     </div>

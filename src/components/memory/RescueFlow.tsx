@@ -126,9 +126,6 @@ export function RescueFlow({ view }: { view: RescueView }) {
                 </b>
               </div>
               <ProgressBar percent={rescue.data?.memory.memoryScore ?? view.scoreBefore} variant="thin-mint" label="Sức nhớ sau khi cứu" className="my-2" />
-              <p className="tiny muted">
-                Lần gặp lại tiếp theo: {rescue.data ? rescue.data.memory.nextEncounterText.toLowerCase() : 'đang tính…'}. Bạn không phải tự nhớ lịch — Neko Neko giữ giúp.
-              </p>
             </div>
           )}
           <NokoMessage state="recovered" className="mt-3" />

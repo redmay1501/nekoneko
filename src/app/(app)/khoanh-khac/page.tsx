@@ -9,8 +9,6 @@ import { backlogKnowledge } from '@/features/learning/session-engine';
 import { getFinishedSession } from '@/features/learning/session-service';
 import { AnimatedEmoji, EmojiIcon } from '@/components/common/EmojiIcon';
 
-const COMING_BACK_SHOWN = 6;
-
 const WIN_LINES = [
   { key: 'recalled', icon: '🧠', background: '#FFEFF2', label: 'kiến thức được nhớ lại', hint: 'Trí nhớ của chúng vừa được làm mới' },
   { key: 'learnedNew', icon: '🌱', background: 'var(--mint)', label: 'kiến thức mới', hint: 'Vừa gieo xuống vườn của bạn' },
@@ -29,15 +27,8 @@ export default async function TinyWinPage({ searchParams }: { searchParams: Prom
       </div>
     );
   }
-  const { summary, mode, encounteredKeys } = finished;
-  // "Tôi sẽ gặp lại nó ở đâu?" — Memory Engine đã xếp lịch cho từng thứ vừa gặp; nói ra cho người học yên tâm.
-  const comingBack = encounteredKeys.flatMap((key) => {
-    const item = context.catalog.byKey.get(key);
-    const memory = context.memoryViews.get(key);
-    return item && memory?.isLearned ? [{ key, face: item.face, when: memory.nextEncounterText, days: memory.daysUntilReview ?? 0 }] : [];
-  }).sort((left, right) => left.days - right.days).slice(0, COMING_BACK_SHOWN);
+  const { summary, mode } = finished;
   const backlogCount = backlogKnowledge(context.catalog, context.memoryViews, context.journeyDay).length;
-  const highlightMemory = summary.highlight ? context.memoryViews.get(summary.highlight.contentKey) : undefined;
   // Gợi ý bước tiếp theo theo ngày đang học: còn kiến thức thì học tiếp; học hết rồi thì mời hoàn thành ngày.
   const dayCompletion = getDayCompletionProgress(context.catalog, context.memoryViews, context.journeyDay);
   const remainingToday = remainingKnowledgeCount(dayCompletion);
@@ -59,9 +50,6 @@ export default async function TinyWinPage({ searchParams }: { searchParams: Prom
         {summary.highlight ? (
           <div className="card tight mt-3" style={{ background: 'var(--cream)', borderColor: '#F3E4CC' }}>
             <p className="sm">Bạn vừa nhớ lại <b className="jp">{summary.highlight.face}</b> sau {summary.highlight.daysSinceSeen} ngày.</p>
-            {highlightMemory ? (
-              <p className="tiny muted mt-1">Neko Neko sẽ đưa nó quay lại {highlightMemory.nextEncounterText.toLowerCase()}.</p>
-            ) : null}
           </div>
         ) : null}
       </div>
@@ -70,17 +58,6 @@ export default async function TinyWinPage({ searchParams }: { searchParams: Prom
           <p className="sm"><b><AnimatedEmoji name="party-popper" size={28} className="inline-emoji" /> Bạn đã học hết {dayCompletion.totalCount} kiến thức của ngày {context.journeyDay}.</b></p>
           <p className="sm soft mt-1">Thấy thuộc rồi thì hoàn thành ngày để mở ngày tiếp theo. Chưa chắc thì cứ ôn thêm — không vội.</p>
           <CompleteDayButton day={context.journeyDay} isPrimary />
-        </div>
-      ) : null}
-      {comingBack.length ? (
-        <div className="card mt-4 coming-back" style={{ textAlign: 'left' }}>
-          <b className="sm">🔄 Khi nào gặp lại?</b>
-          <p className="tiny muted mt-1">Neko đã xếp lịch cho từng thứ — bạn không cần tự nhớ.</p>
-          <ul className="coming-back-list">
-            {comingBack.map((entry) => (
-              <li key={entry.key}><span className="jp">{entry.face}</span><span>{entry.when}</span></li>
-            ))}
-          </ul>
         </div>
       ) : null}
       <NokoMessage state="achievement" className="mt-4" />

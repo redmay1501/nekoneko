@@ -43,9 +43,6 @@ export function MemorySurpriseCard({ initialCard }: { initialCard: SurpriseCardD
                 {state.wasRemembered
                   ? `✨ Bạn vẫn nhớ! Bạn đã gặp nó ${card.lastEncounterText}.`
                   : 'Không sao. Neko Neko sẽ đưa nó quay lại sớm hơn'}
-                {!state.wasRemembered && state.memory ? (
-                  <span className="fade-in"> — {state.memory.nextEncounterText.toLowerCase()}</span>
-                ) : null}
                 {state.wasRemembered ? null : '.'}
               </p>
             </div>

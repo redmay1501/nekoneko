@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { NokoMessage } from '@/components/common/NokoMessage';
 import { DayKnowledgeBlock } from '@/components/roadmap/DayKnowledgeBlock';
 import { CompleteDayButton } from '@/components/roadmap/CompleteDayButton';
 import { DayCompletionCard } from '@/components/roadmap/DayCompletionCard';
@@ -72,9 +71,7 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
         </div>
       </div>
 
-      {plan.relation === 'future' ? (
-        <NokoMessage state="idle" text="Chưa tới ngày này đâu. Cứ đi từng ngày một, mình giữ chỗ cho bạn rồi." className="mt-4" />
-      ) : plan.relation === 'today' ? (
+      {plan.relation === 'today' ? (
         <>
           <DayCompletionCard day={day} completion={completion} />
           {completion.metCount < completion.totalCount ? (
@@ -84,9 +81,9 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
           )}
           <CompleteDayButton day={day} remainingCount={completion.totalCount - completion.metCount} />
         </>
-      ) : (
+      ) : plan.relation === 'past' ? (
         <Link className="btn ghost block mt-4" href="/hoc/rescue">Ôn lại những gì còn mờ</Link>
-      )}
+      ) : null}
       <div className="row mt-3" style={{ gap: 8, justifyContent: 'space-between' }}>
         {day > 1 ? <Link className="btn quiet sm" href={`/lo-trinh/ngay/${day - 1}`} prefetch>← Ngày {day - 1}</Link> : <span />}
         {day < JOURNEY_TOTAL_DAYS ? <Link className="btn quiet sm" href={`/lo-trinh/ngay/${day + 1}`} prefetch>Ngày {day + 1} →</Link> : <span />}

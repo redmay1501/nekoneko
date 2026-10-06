@@ -1,8 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import { type FormEvent, useState } from 'react';
 import { AudioButton } from '@/components/common/AudioButton';
+import { KnowledgeChipButton } from './KnowledgeChipButton';
 import { answerVocabularyCheck } from '@/features/memory/memory-api';
 import { compareJapanese } from '@/lib/utils/japanese-text';
 import { lessonNumber } from '@/lib/utils/lesson';
@@ -12,7 +12,6 @@ type Ask = 'meaning' | 'reading';
 const OPTION_COUNT = 4;
 const QUESTION_COUNTS = [10, 20, 30] as const;
 /** Khoảng bài gợi ý — vẫn chọn tự do "từ bài … đến bài …". */
-const PRESETS: ReadonlyArray<[number, number]> = [[1, 1], [1, 2], [1, 5], [1, 10], [1, 25]];
 const KANA_PERIOD = 0;
 
 interface Question {
@@ -27,8 +26,6 @@ interface Answered {
 }
 
 const lessonOf = (row: VocabularyRowData) => (Number.isFinite(lessonNumber(row.lesson)) ? lessonNumber(row.lesson) : KANA_PERIOD);
-const idOf = (row: VocabularyRowData) => row.contentKey.split('-')[1];
-
 function shuffle<T>(items: readonly T[]): T[] {
   const copy = [...items];
   for (let index = copy.length - 1; index > 0; index--) {
@@ -43,8 +40,8 @@ function shuffle<T>(items: readonly T[]): T[] {
  * Chấm ngay trên máy (phản hồi tức thì); từ đã học thì gửi server chấm lại và ghi vào trí nhớ (tối đa 1 lần / từ / ngày).
  */
 export function VocabularySelfTest({ rows }: { rows: VocabularyRowData[] }) {
-  const [from, setFrom] = useState(1);
-  const [to, setTo] = useState(1);
+  const [isSetupOpen, setIsSetupOpen] = useState(false);
+  const [selectedLessons, setSelectedLessons] = useState<number[]>([]);
   const [ask, setAsk] = useState<Ask>('meaning');
   const [count, setCount] = useState<number>(QUESTION_COUNTS[0]);
   const [questions, setQuestions] = useState<Question[] | null>(null);
@@ -54,10 +51,11 @@ export function VocabularySelfTest({ rows }: { rows: VocabularyRowData[] }) {
   const [answered, setAnswered] = useState<Answered[]>([]);
 
   const lessons = [...new Set(rows.map(lessonOf))].sort((left, right) => left - right);
-  const inRange = rows.filter((row) => lessonOf(row) >= Math.min(from, to) && lessonOf(row) <= Math.max(from, to));
+  const inRange = rows.filter((row) => selectedLessons.includes(lessonOf(row)));
   const lessonLabel = (lesson: number) => (lesson === KANA_PERIOD ? 'Chữ cái' : `Bài ${lesson}`);
 
   function start() {
+    if (!inRange.length) return;
     const picked = shuffle(inRange).slice(0, count);
     const meanings = [...new Set(inRange.map((row) => row.title))];
     setQuestions(picked.map((row) => ({
@@ -68,6 +66,12 @@ export function VocabularySelfTest({ rows }: { rows: VocabularyRowData[] }) {
     setAnswered([]);
     setCurrent(null);
     setTyped('');
+  }
+
+  function toggleLesson(lesson: number) {
+    setSelectedLessons((selected) => selected.includes(lesson)
+      ? selected.filter((item) => item !== lesson)
+      : [...selected, lesson]);
   }
 
   function submit(answer: string) {
@@ -92,37 +96,41 @@ export function VocabularySelfTest({ rows }: { rows: VocabularyRowData[] }) {
   if (!questions) {
     return (
       <div className="card self-test">
-        <b>🧪 Tự kiểm tra từ vựng</b>
-        <p className="sm soft mt-1">Chọn bài muốn kiểm tra. Từ bạn đã học sẽ được tính vào trí nhớ.</p>
-        <div className="row wrap mt-3" style={{ gap: 6 }}>
-          {PRESETS.filter(([, last]) => lessons.includes(last)).map(([first, last]) => (
-            <button key={`${first}-${last}`} type="button" className={`tab ${from === first && to === last ? 'on' : ''}`}
-              onClick={() => { setFrom(first); setTo(last); }}>
-              {first === last ? `Bài ${first}` : `Bài ${first}–${last}`}
-            </button>
-          ))}
-        </div>
-        <div className="row wrap mt-3" style={{ gap: 10, alignItems: 'center' }}>
-          <label className="sm">Từ <select value={from} onChange={(event) => setFrom(Number(event.target.value))} className="select">
-            {lessons.map((lesson) => <option key={lesson} value={lesson}>{lessonLabel(lesson)}</option>)}
-          </select></label>
-          <label className="sm">đến <select value={to} onChange={(event) => setTo(Number(event.target.value))} className="select">
-            {lessons.map((lesson) => <option key={lesson} value={lesson}>{lessonLabel(lesson)}</option>)}
-          </select></label>
-          <span className="tiny muted">{inRange.length} từ</span>
-        </div>
-        <fieldset className="radio-group mt-3">
-          <legend className="sm">Kiểu câu hỏi</legend>
-          <label><input type="radio" name="ask" checked={ask === 'meaning'} onChange={() => setAsk('meaning')} /> Nhìn chữ → chọn nghĩa</label>
-          <label><input type="radio" name="ask" checked={ask === 'reading'} onChange={() => setAsk('reading')} /> Xem nghĩa → gõ cách đọc</label>
-        </fieldset>
-        <fieldset className="radio-group mt-2">
-          <legend className="sm">Số câu</legend>
-          {QUESTION_COUNTS.map((value) => (
-            <label key={value}><input type="radio" name="count" checked={count === value} onChange={() => setCount(value)} /> {value}</label>
-          ))}
-        </fieldset>
-        <button type="button" className="btn block mt-3" onClick={start} disabled={inRange.length < 2}>Bắt đầu kiểm tra</button>
+        <button type="button" className="btn ghost block" aria-expanded={isSetupOpen}
+          onClick={() => setIsSetupOpen((open) => !open)}>
+          🧪 {isSetupOpen ? 'Đóng chọn từ' : 'Kiểm tra từ vựng'}
+        </button>
+        {isSetupOpen ? (
+          <div className="vocab-test-setup">
+            <p className="sm soft">Chọn bài bằng ô tích. Từ bạn đã học sẽ được tính vào trí nhớ.</p>
+            <div className="row wrap mt-2" style={{ gap: 8, alignItems: 'center' }}>
+              <span className="tiny muted">Đã chọn {inRange.length} từ</span>
+              <button type="button" className="link tiny" onClick={() => setSelectedLessons(lessons)}>Chọn tất cả</button>
+              <button type="button" className="link tiny" onClick={() => setSelectedLessons([])}>Bỏ chọn</button>
+            </div>
+            <div className="vocab-test-lessons" aria-label="Chọn bài kiểm tra">
+              {lessons.map((lesson) => (
+                <label key={lesson} className="vocab-test-lesson">
+                  <input type="checkbox" checked={selectedLessons.includes(lesson)} onChange={() => toggleLesson(lesson)} />
+                  <span>{lessonLabel(lesson)}</span>
+                </label>
+              ))}
+            </div>
+            <fieldset className="radio-group mt-3">
+              <legend className="sm">Kiểu câu hỏi</legend>
+              <label><input type="radio" name="ask" checked={ask === 'meaning'} onChange={() => setAsk('meaning')} /> Nhìn chữ → chọn nghĩa</label>
+              <label><input type="radio" name="ask" checked={ask === 'reading'} onChange={() => setAsk('reading')} /> Xem nghĩa → gõ cách đọc</label>
+            </fieldset>
+            <fieldset className="radio-group mt-2">
+              <legend className="sm">Số câu (tối đa {inRange.length})</legend>
+              {QUESTION_COUNTS.map((value) => (
+                <label key={value}><input type="radio" name="count" checked={count === value} disabled={value > inRange.length}
+                  onChange={() => setCount(value)} /> {value}</label>
+              ))}
+            </fieldset>
+            <button type="button" className="btn block mt-3" onClick={start} disabled={!inRange.length}>Bắt đầu kiểm tra</button>
+          </div>
+        ) : null}
       </div>
     );
   }
@@ -134,22 +142,22 @@ export function VocabularySelfTest({ rows }: { rows: VocabularyRowData[] }) {
       <div className="card self-test center" aria-live="polite">
         <p className="chip mint">Xong bài kiểm tra</p>
         <p style={{ fontSize: 30, fontWeight: 700, margin: '10px 0 2px' }}>{Math.round((correct / answered.length) * 100)}%</p>
-        <p className="sm soft">{correct} đúng · {wrong.length} sai · {lessonLabel(Math.min(from, to))}{from !== to ? `–${Math.max(from, to)}` : ''}</p>
+        <p className="sm soft">{correct} đúng · {wrong.length} sai · {selectedLessons.map(lessonLabel).join(', ')}</p>
         {wrong.length ? (
           <div className="mt-3" style={{ textAlign: 'left' }}>
             <b className="sm">Ôn lại những từ này</b>
             <div className="stack mt-2" style={{ gap: 6 }}>
               {wrong.map(({ row }) => (
-                <Link key={row.contentKey} href={`/hoc-tap/tu-vung/${idOf(row)}`} className="list-row" style={{ padding: '8px 12px' }}>
+                <KnowledgeChipButton key={row.contentKey} contentKey={row.contentKey} className="list-row" style={{ padding: '8px 12px' }}>
                   <span className="mid"><b className="jp">{row.face}</b><span><span className="jp">{row.subtitle}</span> · {row.title}</span></span>
                   <span className="end tiny muted">→</span>
-                </Link>
+                </KnowledgeChipButton>
               ))}
             </div>
           </div>
         ) : <p className="sm mt-2">Không sai câu nào — giỏi lắm! 🌸</p>}
         <div className="row mt-3" style={{ gap: 8 }}>
-          <button type="button" className="btn quiet" style={{ flex: 1 }} onClick={() => setQuestions(null)}>Đổi bài</button>
+          <button type="button" className="btn quiet" style={{ flex: 1 }} onClick={() => { setQuestions(null); setIsSetupOpen(true); }}>Đổi bài</button>
           <button type="button" className="btn" style={{ flex: 1 }} onClick={start}>Làm lại</button>
         </div>
       </div>

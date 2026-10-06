@@ -73,10 +73,12 @@ export function JourneyMap({ currentDay, startDateLabel, isJourneyComplete }: Jo
               <circle className="hit" cx={node.x} cy={node.y} r={node.radius}
                 fill={isToday ? '#FF5B73' : isDone ? node.stage.color : '#FFFFFF'}
                 stroke={isDone || isToday ? 'none' : '#EADFDA'} strokeWidth="2" />
-              <text x={node.x} y={node.y + 4} textAnchor="middle" fontSize={isToday ? 12 : 9.5} fontWeight="700"
-                fill={isToday ? '#fff' : isDone ? '#4F4A46' : '#B5ADA8'} fontFamily={FONT}>{node.day}</text>
+              <text x={node.x} y={node.y + 4} textAnchor="middle" fontSize={isToday ? 14 : 12} fontWeight="800"
+                fill={isToday ? '#fff' : isDone ? '#3F3936' : '#665A55'} fontFamily={FONT}>{node.day}</text>
               {isToday ? (
-                <use href="#noko" className="today-neko" x={node.x + (node.x > width / 2 ? -66 : 22)} y={node.y - 46} width="44" height="44" />
+                <svg className="today-neko" x={node.x - 25} y={node.y - 53} width="50" height="50" viewBox="0 0 120 120" aria-hidden="true">
+                  <use href="#noko" x="0" y="0" width="120" height="120" />
+                </svg>
               ) : null}
             </g>
           );

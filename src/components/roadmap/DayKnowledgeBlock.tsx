@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { KnowledgeChipButton } from '@/components/learning/KnowledgeChipButton';
+import { DayVocabularyList } from './DayVocabularyList';
 import { KanaLessonTable } from './KanaLessonTable';
 import { primaryRadicalGlyph } from '@/features/learning/knowledge-catalog';
 import { toContentKey } from '@/features/learning/knowledge-types';
@@ -86,18 +86,7 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
         </div>
       ) : null}
       {knowledge.vocabulary.length ? (
-        <div className="stack mt-2.5" style={{ gap: 6 }}>
-          <span className="tiny muted">Từ vựng · bấm để xem cách đọc, ví dụ và mẹo nhớ</span>
-          {knowledge.vocabulary.map((word) => (
-            <Link key={word.id} href={`/hoc-tap/tu-vung/${word.id}`} className="list-row" style={{ padding: '9px 12px' }}>
-              <span className="mid">
-                <b className="jp" style={{ fontSize: 15 }}>{word.kanji || word.kana}</b>
-                <span>{word.kanji ? <span className="jp">{word.kana} · </span> : null}{firstMeaning(word.meaning)}</span>
-              </span>
-              <span className="end"><span className="tiny muted" aria-hidden="true">→</span></span>
-            </Link>
-          ))}
-        </div>
+        <DayVocabularyList words={knowledge.vocabulary} />
       ) : null}
     </>
   );

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { RadicalExpandable } from './RadicalExpandable';
-import { vocabularyImageOf } from '@/features/learning/vocabulary-images';
+import { kanjiVisualAssetsOf, vocabularyImageOf } from '@/features/learning/vocabulary-images';
 import { AudioButton } from '@/components/common/AudioButton';
 import { speechTextFor } from '@/features/learning/speech-text';
 import { MemoryStatusCard } from '@/components/memory/MemoryStatusCard';
@@ -57,6 +57,7 @@ function KnowledgeChain({ nodes }: { nodes: ChainNode[] }) {
 }
 
 function TipCard({ tip, background = 'var(--cream)' }: { tip: string; background?: string }) {
+  if (!tip.trim()) return null;
   return (
     <div className="card tight mt-3" style={{ background, borderColor: background === 'var(--cream)' ? '#F3E4CC' : 'transparent' }}>
       <b className="sm">💡 Mẹo nhớ</b>
@@ -67,7 +68,7 @@ function TipCard({ tip, background = 'var(--cream)' }: { tip: string; background
 
 function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
   const { item, related, memory } = detail;
-  const statusCard = <div className="mt-3.5"><MemoryStatusCard memory={memory} scheduledDay={item.day} /></div>;
+  const statusCard = memory.isLearned ? <div className="mt-3.5"><MemoryStatusCard memory={memory} /></div> : null;
 
   switch (item.type) {
     case 'hiragana':
@@ -124,6 +125,13 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
             </div>
             <AudioButton text={speechTextFor(item)} />
           </div>
+          {kanjiVisualAssetsOf(item.id).map((asset) => asset.imageUrl ? (
+            <figure className="card tight mt-3" key={`${asset.assetKind}-${asset.imageUrl}`}>
+              {/* eslint-disable-next-line @next/next/no-img-element -- local curated learning asset; supports SVG stroke sequences and raster mnemonics. */}
+              <img src={asset.imageUrl} alt={`${item.face} ${asset.assetKind.replace('_', ' ')}`} className="learning-visual-asset" />
+              <figcaption className="tiny muted center mt-1">{asset.assetKind.replace('_', ' ')}</figcaption>
+            </figure>
+          ) : null)}
           <div className="grid two mt-3.5">
             <div className="card tight"><span className="tiny muted">Âm On 音</span><p className="jp" style={{ fontSize: 17 }}>{item.content.onReading || '—'}</p></div>
             <div className="card tight"><span className="tiny muted">Âm Kun 訓</span><p className="jp" style={{ fontSize: 17 }}>{item.content.kunReading || '—'}</p></div>
@@ -157,9 +165,9 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
               <p className="jp soft mt-1">{item.content.kana}</p>
               <h2 className="mt-2">{item.content.meaning}</h2>
             </div>
-            {vocabularyImageOf(item.face) ? (
+            {vocabularyImageOf(item.id) ? (
               // eslint-disable-next-line @next/next/no-img-element -- icon tĩnh 128px trong public/, không cần tối ưu ảnh
-              <img src={vocabularyImageOf(item.face)!} alt="" width={72} height={72} className="vocab-image" />
+              <img src={vocabularyImageOf(item.id)!} alt="" width={72} height={72} className="vocab-image" />
             ) : null}
             <AudioButton text={item.content.kana} />
           </div>

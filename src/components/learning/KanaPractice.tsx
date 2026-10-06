@@ -60,7 +60,8 @@ export function KanaPractice({ data }: { data: KanaPracticeData }) {
       </div>
       <div className="mt-3.5">
         {tab === 'learn' ? <KanaBoard cells={data.cells} /> : null}
-        {tab === 'write' ? <WritingPad character={data.writing.character} reading={data.writing.romaji} expectedStrokes={data.writing.strokes} note={`Mẹo nhớ: ${data.writing.tip}`} /> : null}
+        {tab === 'write' ? <WritingPad character={data.writing.character} reading={data.writing.romaji} expectedStrokes={data.writing.strokes}
+          note={data.writing.tip?.trim() ? `Mẹo nhớ: ${data.writing.tip}` : undefined} /> : null}
         {tab === 'listen' ? (
           <AssessmentQuiz title="Luyện nghe" description="Nghe âm, chọn chữ bạn nghe được. Cuối bài sẽ có điểm và nút làm lại."
             questions={data.listening.map((question) => ({ audioText: question.character, answer: question.answer, options: question.options }))}

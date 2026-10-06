@@ -58,11 +58,7 @@ export function SurpriseStepView({ step, feedback, chosenAnswer, isBusy, onAnswe
                     : (wasRemembered ? '✨ Bạn vẫn nhớ!' : 'Không sao. Neko Neko sẽ đưa nó quay lại sớm hơn.')}
                   {/* Chi tiết từ trí nhớ chỉ có khi server ghi xong — hiện thêm vào, không chặn người học. */}
                   {!isDaily && feedback.memory ? (
-                    <span className="fade-in">
-                      {wasRemembered
-                        ? ` Bạn đã gặp nó ${feedback.memory.lastEncounterText}.`
-                        : ` Lần tới: ${feedback.memory.nextEncounterText.toLowerCase()}.`}
-                    </span>
+                    wasRemembered ? <span className="fade-in"> Bạn đã gặp nó {feedback.memory.lastEncounterText}.</span> : null
                   ) : null}
                 </p>
               </div>

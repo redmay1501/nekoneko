@@ -72,7 +72,7 @@ export function buildDiscoverCard(
   const card = buildBaseDiscoverCard(item, catalog, journeyDay);
   if (item.type === 'hiragana' || item.type === 'katakana') return { ...card, exampleWords: kanaExampleWords(catalog, item) };
   // Ngữ pháp đã có câu mẫu riêng trong thẻ → chỉ thêm ngữ cảnh cho từ vựng / kanji.
-  if (item.type === 'vocabulary') return { ...card, example: pickContextExample(catalog, item, memoryViews), imageSrc: vocabularyImageOf(item.face) };
+  if (item.type === 'vocabulary') return { ...card, example: pickContextExample(catalog, item, memoryViews), imageSrc: vocabularyImageOf(item.id) };
   if (item.type === 'kanji') return { ...card, example: pickContextExample(catalog, item, memoryViews) };
   return card;
 }

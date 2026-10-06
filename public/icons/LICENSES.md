@@ -28,6 +28,10 @@ Nguồn: https://github.com/microsoft/fluentui-emoji — ảnh đã thu nhỏ v�
     SOFTWARE
 ```
 
+## public/icons/vocab/ — Microsoft Fluent Emoji vocabulary assets
+
+The vocabulary image manifest (`content/seed/vocabulary-images.json`) maps each approved vocabulary ID to a local file in this directory and its corresponding upstream Fluent Emoji asset. These files use the same MIT license and attribution terms above. The manifest records the asset URL, license, credit, and approval status per vocabulary entry.
+
 ## public/icons/animated/ — Google Noto Animated Emoji
 
 Nguồn: https://googlefonts.github.io/noto-emoji-animation/ — giấy phép Creative Commons Attribution 4.0

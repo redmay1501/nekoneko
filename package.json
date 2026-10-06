@@ -15,7 +15,8 @@
     "verify": "npm run lint && npm run typecheck && npm test && npm run build",
     "seed:content": "tsx scripts/seed-content.ts",
     "seed:demo-memory": "tsx scripts/seed-demo-memory.ts",
-    "icons:fetch": "tsx scripts/fetch-icons.ts"
+    "icons:fetch": "tsx scripts/fetch-icons.ts",
+    "images:coverage": "node scripts/generate-image-coverage-plan.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "0.7.0",

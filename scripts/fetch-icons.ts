@@ -10,7 +10,7 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { ANIMATED_EMOJI, EMOJI_ICONS } from '../src/components/common/emoji-icons';
-import { VOCABULARY_IMAGE_SOURCES, vocabularyImageFile } from '../src/features/learning/vocabulary-images';
+import { VOCABULARY_IMAGE_ASSETS, vocabularyImageFile, vocabularyImageSourcePath } from '../src/features/learning/vocabulary-images';
 
 const FLUENT_BASE = 'https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/';
 const NOTO_ANIMATED_BASE = 'https://fonts.gstatic.com/s/e/notoemoji/latest/';
@@ -51,7 +51,10 @@ async function main() {
     console.log(`✓ động ${slug}`);
   }
   // Ảnh minh hoạ từ vựng (content/seed/vocabulary-images.json) — nhiều từ có thể dùng chung một icon.
-  for (const fluentPath of new Set(Object.values(VOCABULARY_IMAGE_SOURCES))) {
+  for (const fluentPath of new Set(VOCABULARY_IMAGE_ASSETS
+    .filter((asset) => asset.imageStatus === 'approved')
+    .map(vocabularyImageSourcePath)
+    .filter((path): path is string => Boolean(path)))) {
     const file = join(OUT_VOCABULARY, vocabularyImageFile(fluentPath));
     if (existsSync(file)) continue;
     await download(FLUENT_BASE + fluentPath.split('/').map(encodeURIComponent).join('/'), file);

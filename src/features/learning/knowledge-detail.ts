@@ -1,4 +1,5 @@
 import type { GrammarContent, KanjiContent, RadicalContent, VocabularyContent } from '@/types/content';
+import { type RadicalExpandableData, toRadicalExpandable } from './radical-view';
 import type { MemoryView } from '@/features/memory/memory-types';
 import { extractLessonNumber } from '@/lib/utils/text';
 import type { KnowledgeCatalog } from './knowledge-catalog';
@@ -22,6 +23,8 @@ export interface KnowledgeDetailView {
     kanji: KanjiContent[];
     vocabulary: VocabularyContent[];
     grammar: GrammarContent[];
+    /** Kanji: các bộ thủ tạo nên chữ, đủ dữ liệu để mở rộng tại chỗ (nghĩa, mẹo, Kanji cùng bộ). */
+    radicalDetails: RadicalExpandableData[];
   };
   /** Ngữ pháp: "Lỗi thường gặp" — mượn ghi chú của bài Minna (sheet 7, hạng mục Văn bản). */
   commonMistake: string | null;
@@ -30,12 +33,13 @@ export interface KnowledgeDetailView {
 const DEFAULT_MISTAKE_NOTE = 'Đọc kỹ ví dụ và tự đặt một câu của riêng bạn — đó là cách nhớ lâu nhất.';
 
 export function buildKnowledgeDetail(item: KnowledgeItem, memory: MemoryView, catalog: KnowledgeCatalog): KnowledgeDetailView {
-  const related: KnowledgeDetailView['related'] = { radicals: [], kanji: [], vocabulary: [], grammar: [] };
+  const related: KnowledgeDetailView['related'] = { radicals: [], kanji: [], vocabulary: [], grammar: [], radicalDetails: [] };
   let commonMistake: string | null = null;
 
   if (item.type === 'radical') related.kanji = kanjiContainingRadical(catalog, item.content);
   if (item.type === 'kanji') {
     related.radicals = radicalsOfKanji(catalog, item.content);
+    related.radicalDetails = related.radicals.map((radical) => toRadicalExpandable(catalog, radical));
     related.vocabulary = vocabularyContainingKanji(catalog, item.content);
   }
   if (item.type === 'vocabulary') {
@@ -45,7 +49,7 @@ export function buildKnowledgeDetail(item: KnowledgeItem, memory: MemoryView, ca
   if (item.type === 'grammar') {
     const lessonNumber = extractLessonNumber(item.content.lesson);
     const lesson = catalog.content.lessons.find((candidate) => extractLessonNumber(candidate.id) === lessonNumber);
-    commonMistake = lesson?.note || DEFAULT_MISTAKE_NOTE;
+    commonMistake = item.content.commonMistake || lesson?.note || DEFAULT_MISTAKE_NOTE;
   }
 
   return { item, memory, chain: buildKnowledgeChain(item, catalog), related, commonMistake };

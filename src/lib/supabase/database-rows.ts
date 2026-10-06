@@ -11,6 +11,7 @@ export interface JourneyDayRow {
 export interface DayTaskRow { day: number; order_no: number; label: string; body: string; minutes: number }
 export interface KanaRow { id: number; hiragana: string; katakana: string; romaji: string; tip: string; day: number | null }
 export interface RadicalRow { id: number; radical: string; name_jp: string; meaning: string; kanji_list: string; tip: string; day: number | null }
+export interface KanjiRadicalRow { kanji_id: number; radical_id: number; position: number }
 export interface KanjiRow {
   id: number; character: string; han_viet: string; meaning: string; on_reading: string; kun_reading: string;
   strokes: number | null; words: string; tip: string; day: number | null;
@@ -18,6 +19,7 @@ export interface KanjiRow {
 export interface VocabularyRow { id: number; kana: string; kanji: string; meaning: string; tip: string; lesson: string; day: number | null }
 export interface GrammarRow {
   id: number; pattern: string; usage: string; example_jp: string; example_vi: string; lesson: string; day: number | null;
+  example_reading: string; when_to_use: string; common_mistake: string; example2_jp: string; example2_reading: string; example2_vi: string;
 }
 export interface LessonRow {
   id: string; name: string; day_range: string; day_count: number | null; grammar_count: string; vocab_count: string; note: string;
@@ -39,6 +41,7 @@ export interface UserSettingsRow {
   user_id: string; daily_minutes: number; reminder_time: string | null;
   autoplay_audio: boolean; show_furigana: boolean; gentle_mode: boolean;
   welcomed_at: string | null;
+  greeted_at: string | null;
   voice_gender?: string;
 }
 export interface MemoryItemRow {

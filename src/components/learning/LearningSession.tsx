@@ -25,7 +25,7 @@ export function LearningSession({ mode }: { mode: SessionMode }) {
   // Enter sang câu tiếp sau khi đã trả lời. Bỏ qua khi đang gõ chữ và khi giữ phím.
   const { feedback, isFinishing, isAtCheckpoint, goToNextStep } = learning;
   useEffect(() => {
-    if (mode !== SESSION_MODES.DAILY || !feedback || isFinishing || isAtCheckpoint) return;
+    if (!feedback || isFinishing || isAtCheckpoint) return;
     function handleKeyDown(event: KeyboardEvent) {
       const target = event.target;
       if (event.key !== 'Enter' || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
@@ -35,7 +35,7 @@ export function LearningSession({ mode }: { mode: SessionMode }) {
     }
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [mode, feedback, isFinishing, isAtCheckpoint, goToNextStep]);
+  }, [feedback, isFinishing, isAtCheckpoint, goToNextStep]);
 
   if (sessionQuery.isLoading) {
     return <div className="session"><SessionHeader mode={mode} /><SkeletonScreen label="Noko đang chọn bài cho bạn…"><SessionCardSkeleton /></SkeletonScreen></div>;
@@ -63,7 +63,8 @@ export function LearningSession({ mode }: { mode: SessionMode }) {
   };
 
   return (
-    <div className={`session${mode === SESSION_MODES.DAILY ? ' daily-session' : ''}`}>
+    // Mọi chế độ dùng CÙNG một bố cục: phản hồi + nút "Tiếp tục" ngay dưới câu hỏi (trong tầm ngón cái), không ở cuối trang.
+    <div className="session daily-session">
       <SessionHeader mode={mode} />
       <SessionPhaseBar steps={session.steps} currentIndex={stepIndex} />
       <SessionProgress total={session.steps.length} currentIndex={stepIndex} />
@@ -82,12 +83,12 @@ export function LearningSession({ mode }: { mode: SessionMode }) {
           isBusy={learning.isFinishing} onContinue={learning.continueAfterCheckpoint} onStop={learning.stopAtCheckpoint} />
       ) : (
       <div key={stepIndex}>
-        {currentStep.type === 'surprise' ? <SurpriseStepView step={currentStep} isDaily={mode === SESSION_MODES.DAILY} {...interaction} /> : null}
-        {currentStep.type === 'recall' ? <RecallStepView step={currentStep} isDaily={mode === SESSION_MODES.DAILY} {...interaction} /> : null}
+        {currentStep.type === 'surprise' ? <SurpriseStepView step={currentStep} isDaily {...interaction} /> : null}
+        {currentStep.type === 'recall' ? <RecallStepView step={currentStep} isDaily {...interaction} /> : null}
         {currentStep.type === 'discover' ? (
           <DiscoverStepView step={currentStep} isBusy={interaction.isBusy} onAcknowledge={learning.acknowledgeAndContinue} />
         ) : null}
-        {currentStep.type === 'use' ? <UseStepView step={currentStep} isDaily={mode === SESSION_MODES.DAILY} {...interaction} /> : null}
+        {currentStep.type === 'use' ? <UseStepView step={currentStep} isDaily {...interaction} /> : null}
       </div>
       )}
       {learning.error ? <p className="sm center mt-3" role="alert">{learning.error.message}</p> : null}

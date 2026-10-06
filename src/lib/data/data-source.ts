@@ -40,6 +40,8 @@ export interface LearnerSettings {
   gentleMode: boolean;
   /** Lúc người học đi qua lời chào lần đầu; null = chưa thấy → Trang chủ mở hộp thoại chào. */
   welcomedAt: string | null;
+  /** Lần gần nhất thấy lời chào đầu ngày; khác ngày (giờ VN) với hôm nay → chào. */
+  greetedAt: string | null;
   /** Giọng đọc tiếng Nhật người học muốn nghe. */
   voiceGender: VoiceGender;
 }
@@ -112,6 +114,8 @@ export interface LearningDataSource {
   getProfile(userId: string): Promise<LearnerProfile>;
   getSettings(userId: string): Promise<LearnerSettings>;
   updateSettings(userId: string, patch: Partial<LearnerSettings>): Promise<LearnerSettings>;
+  /** Đổi tên hiển thị (người học tự sửa trong Cài đặt). */
+  updateDisplayName(userId: string, displayName: string): Promise<void>;
   /**
    * Xong ngày `fromDay` → mở ngày kế tiếp. Atomic, và KHÔNG làm gì nếu `fromDay` không phải ngày
    * đang học (bấm hai lần, hai tab…) — nên không bao giờ nhảy cóc.

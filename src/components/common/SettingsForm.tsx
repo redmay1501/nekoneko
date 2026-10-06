@@ -3,7 +3,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import type { LearnerSettings } from '@/lib/data/data-source';
-import { DAILY_GOAL_OPTIONS } from '@/features/progress/settings-options';
+import { DAILY_GOAL_OPTIONS, DEFAULT_REMINDER_TIME } from '@/features/progress/settings-options';
 import { type SettingsPatch, updateSettings } from '@/features/progress/settings-api';
 import { useSpeechPreferenceStore } from '@/stores/speech-preference-store';
 import { ToggleRow } from './ToggleRow';
@@ -15,6 +15,20 @@ export function SettingsForm({ initialSettings }: { initialSettings: LearnerSett
   const setVoiceGender = useSpeechPreferenceStore((store) => store.setVoiceGender);
   const mutation = useMutation({
     mutationFn: updateSettings,
+    // Lạc quan: chấm radio / công tắc đổi NGAY khi bấm (trước đây chờ server → tưởng bấm không ăn); lỗi thì trả về như cũ.
+    onMutate: (patch: SettingsPatch) => {
+      const previous = settings;
+      const { reminderEnabled, ...rest } = patch;
+      setSettings((current) => ({
+        ...current,
+        ...rest,
+        ...(reminderEnabled === undefined ? {} : { reminderTime: reminderEnabled ? DEFAULT_REMINDER_TIME : null }),
+      }));
+      return { previous };
+    },
+    onError: (_error, _patch, context) => {
+      if (context) setSettings(context.previous);
+    },
     onSuccess: (saved) => {
       setSettings(saved);
       // Mọi nút 🔊 trong app đọc bằng giọng mới ngay, không cần tải lại trang.
@@ -37,18 +51,16 @@ export function SettingsForm({ initialSettings }: { initialSettings: LearnerSett
           onToggle={() => save({ gentleMode: !settings.gentleMode })} />
       </div>
       <div className="card tight mt-3.5">
-        <b className="sm">Mục tiêu mỗi ngày</b>
-        <div className="row wrap mt-2" style={{ gap: 7 }} role="radiogroup" aria-label="Mục tiêu mỗi ngày">
-          {DAILY_GOAL_OPTIONS.map((option) => {
-            const isSelected = settings.dailyMinutes === option.minutes;
-            return (
-              <button key={option.minutes} type="button" role="radio" aria-checked={isSelected} disabled={mutation.isPending}
-                className={`chip ${isSelected ? 'pink' : ''}`} onClick={() => save({ dailyMinutes: option.minutes })}>
-                {option.label}{isSelected ? ' ✓' : ''}
-              </button>
-            );
-          })}
-        </div>
+        <fieldset className="radio-group" disabled={mutation.isPending} aria-busy={mutation.isPending}>
+          <legend className="sm">Mục tiêu mỗi ngày</legend>
+          {DAILY_GOAL_OPTIONS.map((option) => (
+            <label key={option.minutes}>
+              <input type="radio" name="daily-goal" checked={settings.dailyMinutes === option.minutes}
+                onChange={() => save({ dailyMinutes: option.minutes })} />
+              {option.label}
+            </label>
+          ))}
+        </fieldset>
         <p className="tiny muted mt-2">Mức tối thiểu được dẫn dắt. Học thêm bao nhiêu là tuỳ bạn.</p>
       </div>
       <VoiceSetting voiceGender={settings.voiceGender} isDisabled={mutation.isPending} onChange={(voiceGender) => save({ voiceGender })} />

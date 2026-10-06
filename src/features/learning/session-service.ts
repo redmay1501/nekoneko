@@ -27,6 +27,25 @@ import {
 /** Phiên dở dang quá chừng này thì không học tiếp nữa (nội dung ôn tập đã lỗi thời) — tạo phiên mới. */
 const RESUME_WINDOW_HOURS = 12;
 
+export interface ResumableSession {
+  mode: SessionMode;
+  answered: number;
+  total: number;
+}
+
+/**
+ * Phiên dở dang mà lần mở tới sẽ HỌC TIẾP (cùng luật với startLearningSession) và người học đã làm được ít nhất
+ * một bước — để lời chào đầu ngày mời "học tiếp đúng chỗ dừng". null nếu không có.
+ */
+export async function findResumableSession(mode: SessionMode): Promise<ResumableSession | null> {
+  const context = await getLearnerContext();
+  const since = new Date(context.now.getTime() - RESUME_WINDOW_HOURS * 3_600_000).toISOString();
+  const open = await context.source.findLatestOpenSession(context.learner.userId, mode, since);
+  if (!open || open.journeyDay !== context.journeyDay) return null;
+  const answered = open.steps.filter((stored) => stored.result !== null).length;
+  return answered > 0 && answered < open.steps.length ? { mode, answered, total: open.steps.length } : null;
+}
+
 /**
  * Bắt đầu một phiên — hoặc HỌC TIẾP phiên dở dang cùng chế độ (tải lại trang, đóng tab giữa chừng):
  * cùng ngày lộ trình, trong RESUME_WINDOW_HOURS giờ, còn bước chưa làm → trả lại đúng phiên đó.

@@ -30,17 +30,14 @@ export function VoiceSetting({ voiceGender, isDisabled, onChange }: VoiceSetting
         <b className="sm">Giọng đọc tiếng Nhật</b>
         <button type="button" className="btn ghost sm" onClick={() => speak(SAMPLE_TEXT)} disabled={!isSupported}><EmojiIcon emoji="🔊" size={18} /> Nghe thử</button>
       </div>
-      <div className="row wrap mt-2" style={{ gap: 7 }} role="radiogroup" aria-label="Giọng đọc tiếng Nhật">
-        {VOICE_OPTIONS.map((option) => {
-          const isSelected = voiceGender === option.gender;
-          return (
-            <button key={option.gender} type="button" role="radio" aria-checked={isSelected} disabled={isDisabled}
-              className={`chip ${isSelected ? 'pink' : ''}`} onClick={() => onChange(option.gender)}>
-              <EmojiIcon emoji={option.emoji} size={18} /> {option.label}{isSelected ? ' ✓' : ''}
-            </button>
-          );
-        })}
-      </div>
+      <fieldset className="radio-group mt-2" disabled={isDisabled} aria-label="Giọng đọc tiếng Nhật">
+        {VOICE_OPTIONS.map((option) => (
+          <label key={option.gender}>
+            <input type="radio" name="voice-gender" checked={voiceGender === option.gender} onChange={() => onChange(option.gender)} />
+            <EmojiIcon emoji={option.emoji} size={18} /> {option.label}
+          </label>
+        ))}
+      </fieldset>
       <VoiceStatus isSupported={isSupported} hasVoiceList={hasVoiceList} voiceGender={voiceGender}
         voiceName={voiceChoice?.voice.name ?? null} matchesPreference={voiceChoice?.matchesPreference ?? false} />
     </div>

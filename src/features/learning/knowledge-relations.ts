@@ -19,19 +19,24 @@ function kanjiByCharacter(catalog: KnowledgeCatalog): Map<string, KanjiContent> 
   return new Map(catalog.content.kanji.map((kanji) => [kanji.character, kanji]));
 }
 
-/** Kanji chứa bộ thủ này — theo cột "Kanji chứa bộ này" của lộ trình. */
+/** Kanji N5 có chứa bộ thủ này — theo liên kết kanji ↔ bộ thủ (content/seed/kanji-radicals.json), bộ chính trước. */
 export function kanjiContainingRadical(catalog: KnowledgeCatalog, radical: RadicalContent): KanjiContent[] {
-  const lookup = kanjiByCharacter(catalog);
-  return radical.kanjiList
-    .split(/[・,\s]+/)
-    .filter(Boolean)
-    .map((character) => lookup.get(character))
+  const kanjiById = new Map(catalog.content.kanji.map((kanji) => [kanji.id, kanji]));
+  return catalog.content.kanjiRadicals
+    .filter((link) => link.radicalId === radical.id)
+    .sort((left, right) => left.position - right.position || left.kanjiId - right.kanjiId)
+    .map((link) => kanjiById.get(link.kanjiId))
     .filter((kanji): kanji is KanjiContent => Boolean(kanji));
 }
 
-/** Bộ thủ tạo nên chữ Kanji này. */
+/** Bộ thủ tạo nên chữ Kanji này — bộ chính đứng đầu, sau đó các bộ nhìn thấy trong chữ. */
 export function radicalsOfKanji(catalog: KnowledgeCatalog, kanji: KanjiContent): RadicalContent[] {
-  return catalog.content.radicals.filter((radical) => radical.kanjiList.includes(kanji.character));
+  const radicalById = new Map(catalog.content.radicals.map((radical) => [radical.id, radical]));
+  return catalog.content.kanjiRadicals
+    .filter((link) => link.kanjiId === kanji.id)
+    .sort((left, right) => left.position - right.position)
+    .map((link) => radicalById.get(link.radicalId))
+    .filter((radical): radical is RadicalContent => Boolean(radical));
 }
 
 /** Từ vựng N5 có chứa chữ Kanji này. */

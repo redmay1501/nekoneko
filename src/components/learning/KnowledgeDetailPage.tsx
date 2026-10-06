@@ -27,7 +27,7 @@ export async function KnowledgeDetailPage({ contentType, rawId, backHref, backLa
   return (
     <div className="session">
       <Link className="link" href={backHref}>← {backLabel}</Link>
-      <div className="card mt-2"><KnowledgeDetailContent detail={buildKnowledgeDetail(item, memory, catalog)} /></div>
+      <div className="card mt-2" data-reveal="light"><KnowledgeDetailContent detail={buildKnowledgeDetail(item, memory, catalog)} /></div>
     </div>
   );
 }

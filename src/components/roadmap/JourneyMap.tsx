@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { buildJourneyMapLayout } from '@/features/roadmap/journey-map-layout';
 import { startNavigation } from '@/stores/navigation-progress-store';
 
@@ -25,6 +26,10 @@ export function JourneyMap({ currentDay, startDateLabel, isJourneyComplete }: Jo
     startNavigation();
     router.push(`/lo-trinh/ngay/${day}`);
   };
+  // Ngày đang học gần như chắc chắn được bấm tiếp → tải sẵn trang đó khi bản đồ vừa hiện.
+  useEffect(() => {
+    router.prefetch(`/lo-trinh/ngay/${currentDay}`);
+  }, [router, currentDay]);
 
   return (
     <div className="map-wrap">
@@ -59,7 +64,7 @@ export function JourneyMap({ currentDay, startDateLabel, isJourneyComplete }: Jo
           const isToday = node.state === 'today';
           const isDone = node.state === 'done';
           return (
-            <g key={node.day} className="daynode" role="link" tabIndex={0} aria-label={`Ngày ${node.day}${isToday ? ' — hôm nay' : ''}`}
+            <g key={node.day} className="daynode" role="link" tabIndex={0} data-reveal aria-label={`Ngày ${node.day}${isToday ? ' — hôm nay' : ''}`}
               onClick={() => openDay(node.day)}
               onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') openDay(node.day); }}>
               {isToday ? <circle cx={node.x} cy={node.y} r="17" fill="#FF5B73" opacity=".4" className="pulse" /> : null}
@@ -70,6 +75,9 @@ export function JourneyMap({ currentDay, startDateLabel, isJourneyComplete }: Jo
                 stroke={isDone || isToday ? 'none' : '#EADFDA'} strokeWidth="2" />
               <text x={node.x} y={node.y + 4} textAnchor="middle" fontSize={isToday ? 12 : 9.5} fontWeight="700"
                 fill={isToday ? '#fff' : isDone ? '#4F4A46' : '#B5ADA8'} fontFamily={FONT}>{node.day}</text>
+              {isToday ? (
+                <use href="#noko" className="today-neko" x={node.x + (node.x > width / 2 ? -66 : 22)} y={node.y - 46} width="44" height="44" />
+              ) : null}
             </g>
           );
         })}

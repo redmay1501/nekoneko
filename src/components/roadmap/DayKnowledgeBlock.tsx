@@ -1,10 +1,11 @@
+import Link from 'next/link';
 import { KnowledgeChipButton } from '@/components/learning/KnowledgeChipButton';
+import { KanaLessonTable } from './KanaLessonTable';
 import { primaryRadicalGlyph } from '@/features/learning/knowledge-catalog';
 import { toContentKey } from '@/features/learning/knowledge-types';
 import type { DayPlanView } from '@/features/roadmap/day-plan';
 import { firstMeaning } from '@/lib/utils/text';
 
-const MAX_KANA_CHIPS = 24;
 const CHIP_STYLE = { background: '#fff', border: '1px solid var(--line)', padding: '8px 12px' } as const;
 
 /** Kiến thức thật của một ngày, bấm được để xem kỹ. */
@@ -14,12 +15,20 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
     return (
       <>
         <div className="card tight" style={{ background: 'var(--cream)', borderColor: '#F3E4CC' }}>
-          <b className="sm">{plan.day === 90 ? '🏆 Ngày thi' : '🔁 Ngày ôn lại'}</b>
+          <b className="sm">{plan.day === 90 ? '🏆 Ngày thi' : '🔄 Ôn lại'}</b>
           <p className="sm soft mt-1">
             {plan.day === 90
               ? 'Hôm nay không học thêm gì mới. Mọi thứ bạn cần đã ở trong đầu rồi.'
               : 'Không có kiến thức mới. Hôm nay là lúc để những thứ cũ bám chắc hơn.'}
           </p>
+          {plan.reviewTopics.length && plan.day !== 90 ? (
+            <>
+              <p className="sm mt-2.5"><b>Hôm nay bạn sẽ ôn:</b></p>
+              <ul className="sm soft mt-1" style={{ paddingLeft: 18, listStyle: 'disc' }}>
+                {plan.reviewTopics.map((topic) => <li key={topic.label}>{topic.label} · {topic.count}</li>)}
+              </ul>
+            </>
+          ) : null}
         </div>
         {plan.reviewSuggestions.length ? (
           <>
@@ -59,33 +68,34 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
           ))}
         </div>
       ) : null}
-      {knowledge.kana.length ? (
-        <div className="row wrap mt-2.5" style={{ gap: 6 }}>
-          {knowledge.kana.slice(0, MAX_KANA_CHIPS).map((kana) => (
-            <KnowledgeChipButton key={kana.id} contentKey={toContentKey('hiragana', kana.id)} className="chip jp"
-              style={{ ...CHIP_STYLE, fontSize: 17 }}>
-              {kana.hiragana}<span className="tiny muted" style={{ fontWeight: 400 }}>{kana.romaji}</span>
-            </KnowledgeChipButton>
-          ))}
-        </div>
-      ) : null}
+      {plan.kanaLesson ? <div className="mt-2.5"><KanaLessonTable lesson={plan.kanaLesson} /></div> : null}
       {knowledge.grammar.length ? (
         <div className="stack mt-2.5" style={{ gap: 7 }}>
           {knowledge.grammar.map((pattern) => (
             <KnowledgeChipButton key={pattern.id} contentKey={toContentKey('grammar', pattern.id)} className="list-row" style={{ padding: '10px 12px' }}>
-              <span className="mid"><b className="jp" style={{ fontSize: 14.5 }}>{pattern.pattern}</b><span>{pattern.exampleVi}</span></span>
+              <span className="mid">
+                <b className="jp" style={{ fontSize: 14.5 }}>{pattern.pattern}</b>
+                <span>{pattern.usage}</span>
+                <span className="jp" style={{ color: 'var(--ink)' }}>{pattern.exampleJp}</span>
+                {pattern.exampleReading && pattern.exampleReading !== pattern.exampleJp ? <span className="jp tiny muted">{pattern.exampleReading}</span> : null}
+                <span>{pattern.exampleVi}</span>
+              </span>
               <span className="end"><span className="tiny muted" aria-hidden="true">→</span></span>
             </KnowledgeChipButton>
           ))}
         </div>
       ) : null}
       {knowledge.vocabulary.length ? (
-        <div className="row wrap mt-2.5" style={{ gap: 6 }}>
+        <div className="stack mt-2.5" style={{ gap: 6 }}>
+          <span className="tiny muted">Từ vựng · bấm để xem cách đọc, ví dụ và mẹo nhớ</span>
           {knowledge.vocabulary.map((word) => (
-            <KnowledgeChipButton key={word.id} contentKey={toContentKey('vocabulary', word.id)} style={CHIP_STYLE}>
-              <b className="jp" style={{ fontSize: 14 }}>{word.kanji || word.kana}</b>
-              <span className="tiny muted" style={{ fontWeight: 400 }}>{firstMeaning(word.meaning)}</span>
-            </KnowledgeChipButton>
+            <Link key={word.id} href={`/hoc-tap/tu-vung/${word.id}`} className="list-row" style={{ padding: '9px 12px' }}>
+              <span className="mid">
+                <b className="jp" style={{ fontSize: 15 }}>{word.kanji || word.kana}</b>
+                <span>{word.kanji ? <span className="jp">{word.kana} · </span> : null}{firstMeaning(word.meaning)}</span>
+              </span>
+              <span className="end"><span className="tiny muted" aria-hidden="true">→</span></span>
+            </Link>
           ))}
         </div>
       ) : null}

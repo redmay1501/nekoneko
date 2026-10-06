@@ -122,8 +122,8 @@ describe('buildLearningSession — dùng chung cho mọi chế độ', () => {
 describe('kiến thức mới đi theo chặng của ngày đang học', () => {
   const unmetDay23 = unmetKnowledgeOfDay(catalog, viewsDay23, 23);
 
-  it('ngày đang học (23) bắt đầu với 13 kiến thức chưa gặp, theo thứ tự bộ thủ → kanji → từ → ngữ pháp', () => {
-    expect(unmetDay23).toHaveLength(13);
+  it('ngày đang học (23) bắt đầu với 26 kiến thức chưa gặp (gồm từ N5 bổ sung), theo thứ tự bộ thủ → kanji → từ → ngữ pháp', () => {
+    expect(unmetDay23).toHaveLength(26);
     const order = ['radical', 'kanji', 'vocabulary', 'grammar'];
     const typeRanks = unmetDay23.map((item) => order.indexOf(item.type));
     expect(typeRanks).toEqual([...typeRanks].sort((left, right) => left - right));
@@ -328,6 +328,8 @@ describe('phương án nhiễu chỉ từ thứ đã biết', () => {
     const { steps } = buildLearningSession({ mode: 'daily', seed: 'k', catalog, memoryViews, journeyDay });
     const known = new Set([...memoryViews.values()].filter((view) => view.isLearned).map((view) => view.contentKey));
     for (const step of steps) if (step.type === 'discover') known.add(step.contentKey);
+    // Dự phòng hợp lệ: chưa đủ thứ đã biết cùng loại (mẫu câu đầu tiên) → mượn thứ CÙNG NGÀY, cũng được dạy trong phiên này.
+    for (const item of catalog.items) if (item.day === journeyDay) known.add(item.key);
     const knownAnswers = new Set([...known].flatMap((key) => { const item = catalog.byKey.get(key)!; return [item.reading, item.meaning]; }));
     for (const step of steps) {
       if (step.type !== 'recall') continue;

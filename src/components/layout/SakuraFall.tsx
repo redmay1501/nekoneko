@@ -3,7 +3,8 @@
 import { usePathname } from 'next/navigation';
 import { type CSSProperties, useEffect, useState } from 'react';
 
-const PETAL_COUNT = 16;
+/** Ít cánh hơn = ít lớp phải vẽ khi cuộn; 10 vẫn đủ cảm giác hoa rơi. */
+const PETAL_COUNT = 10;
 /** Màn cần tập trung (đang làm bài) thì không rơi hoa — tránh phân tán. */
 const FOCUS_PATH_PREFIXES = ['/hoc/', '/tri-nho/cuu/', '/gap-lai', '/kham-pha', '/thuc-hanh'];
 
@@ -46,14 +47,20 @@ export function SakuraFall() {
   const pathname = usePathname();
   const [petals, setPetals] = useState<Petal[]>([]);
 
+  const [isHidden, setIsHidden] = useState(false);
+
   useEffect(() => {
     setPetals(createPetals());
+    // Tab bị ẩn → dừng hẳn hoạt ảnh (không tốn pin / GPU khi không ai nhìn).
+    const onVisibility = () => setIsHidden(document.hidden);
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => document.removeEventListener('visibilitychange', onVisibility);
   }, []);
 
   if (FOCUS_PATH_PREFIXES.some((prefix) => pathname.startsWith(prefix))) return null;
 
   return (
-    <div className="sakura-fall" aria-hidden="true">
+    <div className={`sakura-fall${isHidden ? ' paused' : ''}`} aria-hidden="true">
       {petals.map((petal) => (
         <span key={petal.id} className="petal" style={petal.style}>
           <span className="petal-sway">

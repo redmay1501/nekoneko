@@ -1,6 +1,7 @@
 import type { N5Content } from '@/types/content';
+import { byLessonNumber } from '@/lib/utils/lesson';
 import type {
-  DayTaskRow, GrammarRow, JlptGrammarRow, JourneyDayRow, KanaRow, KanjiRow, LessonRow,
+  DayTaskRow, GrammarRow, JlptGrammarRow, JourneyDayRow, KanaRow, KanjiRadicalRow, KanjiRow, LessonRow,
   ExampleSentenceRow, PracticeTemplateRow, RadicalRow, ReadingPassageRow, StudyResourceRow, VocabularyRow,
 } from '@/lib/supabase/database-rows';
 
@@ -13,7 +14,7 @@ export interface ContentRows {
   journeyDays: JourneyDayRow[]; dayTasks: DayTaskRow[]; kana: KanaRow[]; radicals: RadicalRow[];
   kanji: KanjiRow[]; vocabulary: VocabularyRow[]; grammar: GrammarRow[]; lessons: LessonRow[];
   jlptGrammar: JlptGrammarRow[]; studyResources: StudyResourceRow[]; readingPassages: ReadingPassageRow[];
-  practiceTemplates: PracticeTemplateRow[]; exampleSentences: ExampleSentenceRow[];
+  practiceTemplates: PracticeTemplateRow[]; exampleSentences: ExampleSentenceRow[]; kanjiRadicals: KanjiRadicalRow[];
 }
 
 export function contentFromRows(rows: ContentRows): N5Content {
@@ -35,12 +36,14 @@ export function contentFromRows(rows: ContentRows): N5Content {
     vocabulary: rows.vocabulary.map((row) => ({ ...row })),
     grammar: rows.grammar.map((row) => ({
       id: row.id, pattern: row.pattern, usage: row.usage, exampleJp: row.example_jp, exampleVi: row.example_vi,
-      lesson: row.lesson, day: row.day,
+      lesson: row.lesson, day: row.day, exampleReading: row.example_reading ?? '', whenToUse: row.when_to_use ?? '',
+      commonMistake: row.common_mistake ?? '', example2Jp: row.example2_jp ?? '', example2Reading: row.example2_reading ?? '',
+      example2Vi: row.example2_vi ?? '',
     })),
     lessons: rows.lessons.map((row) => ({
       id: row.id, name: row.name, dayRange: row.day_range, dayCount: row.day_count,
       grammarCount: row.grammar_count, vocabCount: row.vocab_count, note: row.note,
-    })),
+    })).sort(byLessonNumber((lesson) => lesson.id)),
     jlptGrammar: rows.jlptGrammar.map((row) => ({ ...row })),
     studyResources: rows.studyResources.map((row) => ({ id: row.id, source: row.source, usedFor: row.used_for, howTo: row.how_to })),
     readingPassages: rows.readingPassages.map((row) => ({
@@ -52,6 +55,8 @@ export function contentFromRows(rows: ContentRows): N5Content {
     exampleSentences: rows.exampleSentences.map((row) => ({
       id: row.id, jp: row.text_jp, vi: row.text_vi, viId: row.vi_id, owner: row.owner, viOwner: row.vi_owner,
     })),
+    kanjiRadicals: rows.kanjiRadicals.map((row) => ({ kanjiId: row.kanji_id, radicalId: row.radical_id, position: row.position }))
+      .sort((left, right) => left.kanjiId - right.kanjiId || left.position - right.position),
   };
 }
 
@@ -75,7 +80,9 @@ export function rowsFromContent(content: N5Content): ContentRows {
     vocabulary: content.vocabulary.map((word) => ({ ...word })),
     grammar: content.grammar.map((pattern) => ({
       id: pattern.id, pattern: pattern.pattern, usage: pattern.usage, example_jp: pattern.exampleJp,
-      example_vi: pattern.exampleVi, lesson: pattern.lesson, day: pattern.day,
+      example_vi: pattern.exampleVi, lesson: pattern.lesson, day: pattern.day, example_reading: pattern.exampleReading,
+      when_to_use: pattern.whenToUse, common_mistake: pattern.commonMistake, example2_jp: pattern.example2Jp,
+      example2_reading: pattern.example2Reading, example2_vi: pattern.example2Vi,
     })),
     lessons: content.lessons.map((lesson) => ({
       id: lesson.id, name: lesson.name, day_range: lesson.dayRange, day_count: lesson.dayCount,
@@ -94,6 +101,7 @@ export function rowsFromContent(content: N5Content): ContentRows {
     exampleSentences: content.exampleSentences.map((sentence) => ({
       id: sentence.id, text_jp: sentence.jp, text_vi: sentence.vi, vi_id: sentence.viId, owner: sentence.owner, vi_owner: sentence.viOwner,
     })),
+    kanjiRadicals: content.kanjiRadicals.map((link) => ({ kanji_id: link.kanjiId, radical_id: link.radicalId, position: link.position })),
   };
 }
 
@@ -112,4 +120,6 @@ export const CONTENT_TABLES: ReadonlyArray<{ key: keyof ContentRows; table: stri
   { key: 'readingPassages', table: 'reading_passages', conflictKey: 'id', orderBy: 'id' },
   { key: 'practiceTemplates', table: 'practice_templates', conflictKey: 'id', orderBy: 'id' },
   { key: 'exampleSentences', table: 'example_sentences', conflictKey: 'id', orderBy: 'id' },
+  // Sau radicals và kanji (khoá ngoại).
+  { key: 'kanjiRadicals', table: 'kanji_radicals', conflictKey: 'kanji_id,radical_id', orderBy: 'kanji_id' },
 ];

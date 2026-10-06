@@ -62,7 +62,7 @@ export function TopBar({ displayName, level, recallDays, isGentleMode, isDemo }:
         <span style={{ position: 'absolute', left: 12, top: 10, fontSize: 13, opacity: 0.5 }} aria-hidden="true">🔍</span>
       </form>
       {isGentleMode ? null : (
-        <Link href="/tri-nho" className="chip recall-chip" title="Số ngày bạn đã ôn tập trong 30 ngày gần đây">
+        <Link href="/theo-doi?tab=tri-nho" className="chip recall-chip" title="Số ngày bạn đã ôn tập trong 30 ngày gần đây">
           <EmojiIcon emoji="🧠" size={16} /> Đã ôn {recallDays} ngày
         </Link>
       )}

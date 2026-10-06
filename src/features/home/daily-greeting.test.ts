@@ -3,7 +3,7 @@ import { buildDailyGreeting, type DailyGreetingInput } from './daily-greeting';
 
 const base: DailyGreetingInput = {
   now: new Date('2026-10-06T02:00:00.000Z'), // 9h sáng 6/10 giờ VN
-  journeyDay: 3, dayTitle: 'Hiragana hàng さ', hasNewKnowledge: true, isReadyToComplete: false,
+  journeyDay: 3, dayTitle: 'Hiragana hàng さ', hasNewKnowledge: true, isReadyToComplete: false, resumable: null,
   plan: { review: 4, backlog: 0, new: 10, use: 0 },
   streak: { recallDays: 2, currentStreak: 2, longestStreak: 2, lastRecallDay: '2026-10-05' },
 };
@@ -24,6 +24,17 @@ describe('buildDailyGreeting', () => {
     const fresh = { ...base, journeyDay: 1, streak: { recallDays: 0, currentStreak: 0, longestStreak: 0, lastRecallDay: null } };
     expect(buildDailyGreeting(fresh).message).toContain('ngày đầu tiên');
     expect(buildDailyGreeting({ ...base, isReadyToComplete: true }).message).toContain('học hết ngày 3');
+  });
+
+  it('đang học dở → mời học tiếp đúng phiên đó (ưu tiên hơn mọi lời chào khác)', () => {
+    const greeting = buildDailyGreeting({ ...base, resumable: { mode: 'daily', answered: 7, total: 20 } });
+    expect(greeting.message).toContain('7/20');
+    expect(greeting.ctaLabel).toBe('Học tiếp');
+    expect(greeting.ctaHref).toBe('/hoc/daily');
+  });
+
+  it('đã học hết ngày → nút dẫn tới trang ngày để xác nhận hoàn thành', () => {
+    expect(buildDailyGreeting({ ...base, isReadyToComplete: true }).ctaHref).toBe('/lo-trinh/ngay/3');
   });
 
   it('câu tiếng Nhật đổi theo ngày', () => {

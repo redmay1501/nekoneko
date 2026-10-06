@@ -79,7 +79,7 @@ function toProfile(row: ProfileRow): LearnerProfile {
 function toSettings(row: UserSettingsRow): LearnerSettings {
   return {
     dailyMinutes: row.daily_minutes, reminderTime: row.reminder_time, autoplayAudio: row.autoplay_audio,
-    showFurigana: row.show_furigana, gentleMode: row.gentle_mode, welcomedAt: row.welcomed_at ?? null,
+    showFurigana: row.show_furigana, gentleMode: row.gentle_mode, welcomedAt: row.welcomed_at ?? null, greetedAt: row.greeted_at ?? null,
     voiceGender: row.voice_gender === 'male' ? 'male' : 'female',
   };
 }
@@ -134,6 +134,12 @@ export class SupabaseDataSource implements LearningDataSource {
     return toSettings(insert.data as UserSettingsRow);
   }
 
+  async updateDisplayName(userId: string, displayName: string): Promise<void> {
+    // Quyền: người học chỉ được tự sửa display_name / exam_date của chính mình (grant cột + RLS).
+    const { error } = await this.userClient.from('profiles').update({ display_name: displayName }).eq('id', userId);
+    throwIfError(error, 'đổi tên hiển thị');
+  }
+
   async updateSettings(userId: string, patch: Partial<LearnerSettings>): Promise<LearnerSettings> {
     const update: Partial<UserSettingsRow> & { updated_at: string } = { updated_at: new Date().toISOString() };
     if (patch.dailyMinutes !== undefined) update.daily_minutes = patch.dailyMinutes;
@@ -142,6 +148,7 @@ export class SupabaseDataSource implements LearningDataSource {
     if (patch.showFurigana !== undefined) update.show_furigana = patch.showFurigana;
     if (patch.gentleMode !== undefined) update.gentle_mode = patch.gentleMode;
     if (patch.welcomedAt !== undefined) update.welcomed_at = patch.welcomedAt;
+    if (patch.greetedAt !== undefined) update.greeted_at = patch.greetedAt;
     if (patch.voiceGender !== undefined) update.voice_gender = patch.voiceGender;
     const { data, error } = await this.userClient.from('user_settings').update(update).eq('user_id', userId).select('*').single();
     throwIfError(error, 'cập nhật cài đặt');

@@ -64,7 +64,7 @@ export function TodayLearnCard(props: TodayLearnCardProps) {
           </>
         ) : (
           <div className="dash-actions">
-            <Link href="/hoc/daily" className="btn dash-cta">
+            <Link href="/hoc/daily" className="btn dash-cta" prefetch>
               <span className="dash-cta-play" aria-hidden="true">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z" /></svg>
               </span>

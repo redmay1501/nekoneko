@@ -42,6 +42,7 @@ interface DemoReviewEvent {
 }
 
 interface DemoStore {
+  displayNames: Map<string, string>;
   memory: Map<string, Map<string, MemoryRecord>>;
   reviewEvents: DemoReviewEvent[];
   sessions: Map<string, StoredSession>;
@@ -57,6 +58,7 @@ const DEFAULT_SETTINGS: LearnerSettings = {
   gentleMode: false,
   // Người học mẫu đang ở giữa lộ trình → đã qua lời chào từ lâu.
   welcomedAt: '2026-01-01T00:00:00.000Z',
+  greetedAt: null,
   voiceGender: 'female',
 };
 
@@ -76,6 +78,7 @@ function createDemoStore(): DemoStore {
     createdAt: addDays(now, -(index + 1)).toISOString(),
   }));
   return {
+    displayNames: new Map(),
     memory: new Map([[DEMO_LEARNER.userId, new Map(records.map((record) => [toContentKey(record.contentType, record.contentId), record]))]]),
     reviewEvents: pastEvents,
     sessions: new Map(),
@@ -121,7 +124,7 @@ export class DemoDataSource implements LearningDataSource {
     const journey = journeyOf(userId);
     return {
       userId,
-      displayName: DEMO_LEARNER.displayName,
+      displayName: demoStore().displayNames.get(userId) ?? DEMO_LEARNER.displayName,
       startDate: toIsoDate(startDate),
       currentDay: journey.currentDay,
       journeyCompletedAt: journey.completedAt,
@@ -142,6 +145,10 @@ export class DemoDataSource implements LearningDataSource {
 
   async getSettings(userId: string): Promise<LearnerSettings> {
     return demoStore().settings.get(userId) ?? { ...DEFAULT_SETTINGS };
+  }
+
+  async updateDisplayName(userId: string, displayName: string): Promise<void> {
+    demoStore().displayNames.set(userId, displayName);
   }
 
   async updateSettings(userId: string, patch: Partial<LearnerSettings>): Promise<LearnerSettings> {

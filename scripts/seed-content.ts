@@ -34,6 +34,7 @@ async function main() {
     console.log(`✓ ${table.padEnd(20)} ${tableRows.length} dòng`);
   }
   await removeStaleDayTasks(supabase, rows.dayTasks as unknown as { day: number; order_no: number }[]);
+  await removeStaleById(supabase, 'vocabulary', rows.vocabulary.map((word) => word.id));
   console.log('Xong. Nội dung N5 đã có trong Supabase 🌸');
 }
 
@@ -51,6 +52,18 @@ async function removeStaleDayTasks(supabase: SupabaseClient, seeded: { day: numb
     if (removal.error) throw new Error(`xoá đầu việc ngày ${task.day}: ${removal.error.message}`);
   }
   if (stale.length) console.log(`✓ đã xoá ${stale.length} đầu việc không còn trong lộ trình`);
+}
+
+/** Mục nội dung đã bị bỏ khỏi file (ví dụ từ vựng trùng — scripts/roadmap_adjustments.py) → xoá khỏi database. */
+async function removeStaleById(supabase: SupabaseClient, table: string, keepIds: number[]) {
+  const keep = new Set(keepIds);
+  const { data, error } = await supabase.from(table).select('id');
+  if (error) throw new Error(`đọc ${table}: ${error.message}`);
+  const stale = (data as { id: number }[]).map((row) => row.id).filter((id) => !keep.has(id));
+  if (!stale.length) return;
+  const removal = await supabase.from(table).delete().in('id', stale);
+  if (removal.error) throw new Error(`xoá ${table}: ${removal.error.message}`);
+  console.log(`✓ đã xoá ${stale.length} dòng ${table} không còn trong nội dung (id: ${stale.join(', ')})`);
 }
 
 main().catch((error: unknown) => {

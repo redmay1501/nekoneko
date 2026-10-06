@@ -12,7 +12,6 @@ import { getKnowledgeCatalog } from './content-service';
 import type { KnowledgeCatalog } from './knowledge-catalog';
 import type { ContentKey } from './knowledge-types';
 
-/** Số ngày nhìn lại khi đếm "ngày nhớ lại". */
 
 export interface LearnerContext {
   learner: CurrentLearner;

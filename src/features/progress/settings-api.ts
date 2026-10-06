@@ -8,6 +8,7 @@ export interface SettingsPatch {
   gentleMode?: boolean;
   reminderEnabled?: boolean;
   welcomed?: true;
+  greeted?: true;
   voiceGender?: 'female' | 'male';
 }
 

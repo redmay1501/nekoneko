@@ -39,6 +39,9 @@ Vào <https://supabase.com> → **New project**. Đợi project khởi tạo xon
 7. `20261005000002_session_mode_backlog.sql`
 8. `20261005000003_example_sentences.sql`
 9. `20261005000004_recall_dates.sql`
+10. `20261006000001_kanji_radicals.sql`
+11. `20261006000002_daily_greeting.sql`
+12. `20261006000003_grammar_notes.sql`
 (Nếu dùng Supabase CLI: `supabase link` rồi `supabase db push`.)
 
 ### Bước 3 — Điền biến môi trường
@@ -57,7 +60,7 @@ Lấy giá trị ở **Project Settings → API** (hoặc **API Keys**):
 ```bash
 npm run seed:content
 ```
-Ghi 90 ngày, 486 đầu việc, 104 kana, 45 bộ thủ, 103 kanji, 350 từ vựng, 112 mẫu ngữ pháp… Chạy lại bao nhiêu lần cũng được.
+Ghi 90 ngày, 484 đầu việc, 104 kana, 71 bộ thủ (45 của lộ trình + 26 bộ tham khảo), 103 kanji, 759 từ vựng, 112 mẫu ngữ pháp… Chạy lại bao nhiêu lần cũng được.
 
 ### Bước 5 — Cấu hình đăng nhập
 **Authentication → URL Configuration**
@@ -124,9 +127,9 @@ Quy ước code: `docs/coding-standards.md`. Database: `docs/database.md`.
 | Luyện tập · kỹ năng | `/luyen-tap`, `/luyen-tap/{nghe, noi, doc, viet}` |
 | Phiên học | `/hoc/[mode]` (`daily`, `day`, `quick5`, `random`, `more`, `rescue`, `flow`, `recall`, `discover`, `use`, `backlog`); `/gap-lai`, `/kham-pha`, `/thuc-hanh` là đường dẫn cũ, tự chuyển sang `/hoc/…` |
 | Sau phiên | `/khoanh-khac`, `/nghi` |
-| Trí nhớ | `/tri-nho`, `/tri-nho/sap-quen`, `/tri-nho/chua-vung`, `/tri-nho/cuu/[contentKey]` |
+| Theo dõi | `/theo-doi?tab=tien-do\|tri-nho\|thanh-tich`, `/tri-nho/sap-quen`, `/tri-nho/chua-vung`, `/tri-nho/cuu/[contentKey]` |
 | Vườn tri thức | `/vuon` |
-| Cá nhân | `/tien-do`, `/thanh-tich`, `/ho-so`, `/cai-dat` |
+| Cài đặt (gồm Hồ sơ) | `/cai-dat` — đường dẫn cũ `/tri-nho`, `/tien-do`, `/thanh-tich`, `/ho-so` chuyển hướng 308 (next.config.ts) |
 | Đăng nhập | `/dang-nhap` |
 | Khay trượt | ＋ Học ngay, ☰ Điều hướng, Chi tiết kiến thức, Tìm kiếm |
 

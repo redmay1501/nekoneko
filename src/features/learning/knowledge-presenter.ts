@@ -1,4 +1,5 @@
 import { firstMeaning } from '@/lib/utils/text';
+import { vocabularyImageOf } from './vocabulary-images';
 import { type ContextExample, type KanaExampleWord, kanaExampleWords, pickContextExample } from './context-index';
 import type { MemoryView } from '@/features/memory/memory-types';
 import { speechTextFor } from './speech-text';
@@ -37,6 +38,8 @@ export interface DiscoverCard {
   audioText: string;
   /** Câu ví dụ có kiến thức này — kèm thứ người học ĐÃ GẶP trong câu (kiến thức cũ quay lại). */
   example?: ContextExample | null;
+  /** Ảnh minh hoạ (chỉ danh từ cụ thể có icon khớp nghĩa). */
+  imageSrc?: string | null;
   /** Chữ cái: vài từ bắt đầu bằng chữ này ("あ trong あなた — bạn"). */
   exampleWords?: KanaExampleWord[];
 }
@@ -69,7 +72,8 @@ export function buildDiscoverCard(
   const card = buildBaseDiscoverCard(item, catalog, journeyDay);
   if (item.type === 'hiragana' || item.type === 'katakana') return { ...card, exampleWords: kanaExampleWords(catalog, item) };
   // Ngữ pháp đã có câu mẫu riêng trong thẻ → chỉ thêm ngữ cảnh cho từ vựng / kanji.
-  if (item.type === 'vocabulary' || item.type === 'kanji') return { ...card, example: pickContextExample(catalog, item, memoryViews) };
+  if (item.type === 'vocabulary') return { ...card, example: pickContextExample(catalog, item, memoryViews), imageSrc: vocabularyImageOf(item.face) };
+  if (item.type === 'kanji') return { ...card, example: pickContextExample(catalog, item, memoryViews) };
   return card;
 }
 
@@ -108,7 +112,8 @@ function buildBaseDiscoverCard(item: KnowledgeItem, catalog: KnowledgeCatalog, j
     case 'grammar':
       return {
         ...base,
-        detailLines: [item.content.usage, item.content.exampleJp, item.content.exampleVi],
+        // Chế độ HỌC: câu ví dụ kèm cách đọc. (Câu hỏi kiểm tra — Dùng thử — không hiện cách đọc.)
+        detailLines: [item.content.usage, item.content.exampleJp, item.content.exampleReading, item.content.exampleVi],
         relatedChips: [],
         bridgeText: null,
         audioText: item.content.exampleJp,

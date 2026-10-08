@@ -6,6 +6,20 @@ import { KnowledgeChipButton } from '@/components/learning/KnowledgeChipButton';
 import { toContentKey } from '@/features/learning/knowledge-types';
 import type { VocabularyContent } from '@/types/content';
 import { firstMeaning } from '@/lib/utils/text';
+import { vocabularyRomaji } from '@/lib/utils/romaji';
+
+/**
+ * Cách đọc dưới mặt chữ: từ có chữ Hán → kana + romaji (事務所 · じむしょ · jimusho);
+ * từ chỉ viết bằng kana → chỉ romaji (あちら · achira), không lặp lại kana lần nữa.
+ */
+function WordReading({ word }: { word: VocabularyContent }) {
+  return (
+    <span className="day-vocab-reading">
+      {word.kanji ? <><span className="jp">{word.kana}</span> · </> : null}
+      <span className="romaji">{vocabularyRomaji(word)}</span>
+    </span>
+  );
+}
 
 /** Desktop mở nghĩa ngay dưới từ; màn hình cảm ứng mở thẻ chi tiết dạng popup. */
 export function DayVocabularyList({ words }: { words: VocabularyContent[] }) {
@@ -26,7 +40,8 @@ export function DayVocabularyList({ words }: { words: VocabularyContent[] }) {
                 onClick={() => setOpen((current) => current === word.id ? null : word.id)}>
                 <span className="mid">
                   <b className="jp" style={{ fontSize: 15 }}>{face}</b>
-                  <span><span className="jp">{word.kana}</span> · {firstMeaning(word.meaning)}</span>
+                  <WordReading word={word} />
+                  <span>{firstMeaning(word.meaning)}</span>
                 </span>
                 <span className="end"><span className="tiny muted" aria-hidden="true">{open === word.id ? '−' : '+'}</span></span>
               </button>
@@ -34,7 +49,9 @@ export function DayVocabularyList({ words }: { words: VocabularyContent[] }) {
                 <div id={panelId} className="day-vocab-details">
                   <div className="day-vocab-details-head">
                     <b className="jp">{face}</b>
-                    <span className="day-vocab-read">Cách đọc: {word.kana}</span>
+                    <span className="day-vocab-read">
+                      {word.kanji ? <>Cách đọc: <span className="jp">{word.kana}</span> · </> : 'Phiên âm: '}{vocabularyRomaji(word)}
+                    </span>
                     <AudioButton text={word.kana} className="btn ghost sm" label="Nghe cách đọc" />
                   </div>
                   <p className="sm mt-1">{word.meaning}</p>
@@ -46,7 +63,8 @@ export function DayVocabularyList({ words }: { words: VocabularyContent[] }) {
               <KnowledgeChipButton contentKey={contentKey} className="list-row" style={{ padding: '9px 12px' }}>
                 <span className="mid">
                   <b className="jp" style={{ fontSize: 15 }}>{face}</b>
-                  <span><span className="jp">{word.kana}</span> · {firstMeaning(word.meaning)}</span>
+                  <WordReading word={word} />
+                  <span>{firstMeaning(word.meaning)}</span>
                 </span>
                 <span className="end"><span className="tiny muted" aria-hidden="true">↗</span></span>
               </KnowledgeChipButton>

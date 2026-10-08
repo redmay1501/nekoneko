@@ -28,7 +28,7 @@ export async function MemoryPanel() {
         <div className="ringwrap">
           <HealthRing value={overview.health} />
           <div style={{ flex: 1 }}>
-            <h3>Sức khoẻ trí nhớ</h3>
+            <h3>Bạn đang nhớ được bao nhiêu</h3>
             <p className="sm soft mt-1">{describeMemoryHealth(overview.health)}</p>
             <p className="sm soft mt-2">
               {overview.needsAttentionCount > 0 ? (
@@ -73,15 +73,15 @@ export async function MemoryPanel() {
       </details>
 
       <NokoMessage state="forgotten" className="mt-3.5"
-        text={`Mình đang để mắt tới ${overview.needsAttentionCount} thứ. Khi nào bạn rảnh, ghé cứu vài cái thôi cũng được.`} />
+        text={`Mình đang để mắt tới ${overview.needsAttentionCount} thứ. Khi nào bạn rảnh, ôn lại một hai cái cũng được.`} />
 
       <div className="sec-h"><h2>Theo loại kiến thức</h2></div>
       <div className="grid two">
         {overview.byType.map((summary) => (
           <div key={summary.type} className="card tight">
             <div className="between"><b className="sm">{summary.label}</b><span className="tiny muted">{summary.learned}/{summary.total}</span></div>
-            <ProgressBar percent={summary.averageScore} variant="thin-mint" label={`Sức nhớ trung bình ${summary.label}`} className="my-2" />
-            <span className="tiny muted">Sức nhớ trung bình {summary.averageScore}/100</span>
+            <ProgressBar percent={summary.averageScore} variant="thin-mint" label={`Mức nhớ trung bình ${summary.label}`} className="my-2" />
+            <span className="tiny muted">Mức nhớ trung bình {summary.averageScore}/100</span>
           </div>
         ))}
       </div>

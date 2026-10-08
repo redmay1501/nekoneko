@@ -22,7 +22,7 @@ function ModesSheet({ onClose, dailyMinutes }: { onClose: () => void; dailyMinut
   return (
     <>
       <h3>Học ngay</h3>
-      <p className="sm soft" style={{ margin: '4px 0 14px' }}>Phần tối thiểu được dẫn dắt. Phần học thêm là không giới hạn.</p>
+      <p className="sm soft" style={{ margin: '4px 0 14px' }}>Bài mỗi ngày ở nút phía trên. Phía dưới là lúc bạn muốn học thêm.</p>
       <Link className="btn block" href="/hoc/daily" onClick={onClose}>
         <EmojiIcon emoji={SESSION_MODE_CONFIG.daily.emoji} size={20} /> {SESSION_MODE_CONFIG.daily.label} · {dailyMinutes} phút
       </Link>

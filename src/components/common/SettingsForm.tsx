@@ -45,7 +45,7 @@ export function SettingsForm({ initialSettings }: { initialSettings: LearnerSett
           onToggle={() => save({ reminderEnabled: !settings.reminderTime })} />
         <ToggleRow title="Tự phát âm thanh" description="Khi mở thẻ kiến thức" isOn={settings.autoplayAudio} isDisabled={mutation.isPending}
           onToggle={() => save({ autoplayAudio: !settings.autoplayAudio })} />
-        <ToggleRow title="Hiện furigana" description="Trên mọi Kanji chưa thành thạo" isOn={settings.showFurigana} isDisabled={mutation.isPending}
+        <ToggleRow title="Hiện cách đọc phía trên chữ Hán" description="Với chữ bạn chưa thuộc" isOn={settings.showFurigana} isDisabled={mutation.isPending}
           onToggle={() => save({ showFurigana: !settings.showFurigana })} />
         <ToggleRow title="Chế độ nhẹ nhàng" description="Không đếm chuỗi ngày, không nhắc nhiều" isOn={settings.gentleMode} isDisabled={mutation.isPending}
           onToggle={() => save({ gentleMode: !settings.gentleMode })} />
@@ -61,7 +61,7 @@ export function SettingsForm({ initialSettings }: { initialSettings: LearnerSett
             </label>
           ))}
         </fieldset>
-        <p className="tiny muted mt-2">Mức tối thiểu được dẫn dắt. Học thêm bao nhiêu là tuỳ bạn.</p>
+        <p className="tiny muted mt-2">Đây là bài ngắn mỗi ngày. Học thêm bao nhiêu là tuỳ bạn.</p>
       </div>
       <VoiceSetting voiceGender={settings.voiceGender} isDisabled={mutation.isPending} onChange={(voiceGender) => save({ voiceGender })} />
       {mutation.isError ? <p className="sm center mt-3" role="alert">{mutation.error.message}</p> : null}

@@ -100,7 +100,7 @@
    "grammarSummary": "—",
    "vocabSummary": "2 từ",
    "skill": "Nghe",
-   "minutes": 95
+   "minutes": 75
   },
   {
    "day": 8,
@@ -191,7 +191,7 @@
    "grammarSummary": "—",
    "vocabSummary": "2 từ",
    "skill": "Nghe",
-   "minutes": 95
+   "minutes": 75
   },
   {
    "day": 15,
@@ -412,7 +412,7 @@
    "grammarSummary": "3 mẫu",
    "vocabSummary": "29 từ",
    "skill": "Đọc",
-   "minutes": 122
+   "minutes": 105
   },
   {
    "day": 32,
@@ -425,7 +425,7 @@
    "grammarSummary": "2 mẫu",
    "vocabSummary": "28 từ",
    "skill": "Nghe",
-   "minutes": 121
+   "minutes": 115
   },
   {
    "day": 33,
@@ -1023,7 +1023,7 @@
    "grammarSummary": "ôn",
    "vocabSummary": "ôn",
    "skill": "Ôn / Thi thử",
-   "minutes": 100
+   "minutes": 85
   },
   {
    "day": 79,
@@ -1101,7 +1101,7 @@
    "grammarSummary": "ôn",
    "vocabSummary": "ôn",
    "skill": "Ôn / Thi thử",
-   "minutes": 120
+   "minutes": 85
   },
   {
    "day": 85,
@@ -1153,7 +1153,7 @@
    "grammarSummary": "ôn",
    "vocabSummary": "ôn",
    "skill": "Ôn / Thi thử",
-   "minutes": 120
+   "minutes": 85
   },
   {
    "day": 89,
@@ -1299,7 +1299,7 @@
    "day": 5,
    "orderNo": 1,
    "label": "あ  Học chữ mới",
-   "body": "Học 8 âm — trọn hàng ら・わ・ん: ら (ra)  り (ri)  る (ru)  れ (re)  ろ (ro)  わ (wa)  を (wo)  ん (n). Xem thứ tự nét trước khi viết.",
+   "body": "Học 8 âm — trọn hàng ら・わ・ん: ら (ra)  り (ri)  る (ru)  れ (re)  ろ (ro)  わ (wa)  を (o)  ん (n). を đọc là o. ん là một nhịp riêng, không phải na. Xem thứ tự nét trước khi viết.",
    "minutes": 25
   },
   {
@@ -1348,7 +1348,7 @@
    "day": 6,
    "orderNo": 3,
    "label": "語  Từ vựng",
-   "body": "Học 3 từ mới: はい (vâng) ・ いいえ (không) ・ わかりました (tôi hiểu rồi)",
+   "body": "Học 3 từ mới: はい (vâng) ・ いいえ (không) ・ わかりました (tôi hiểu rồi — học thuộc cả cụm, chưa cần chia ました)",
    "minutes": 10
   },
   {
@@ -1362,15 +1362,15 @@
    "day": 7,
    "orderNo": 2,
    "label": "?  Kiểm tra",
-   "body": "Lấy giấy trắng, viết lại toàn bộ 104 âm Hiragana mà KHÔNG nhìn bảng. Đối chiếu, khoanh tròn âm sai.",
-   "minutes": 25
+   "body": "Viết lại các âm ghép hôm nay, không viết cả 104 âm. Bài viết cả bảng để một buổi riêng, không kèm chữ mới.",
+   "minutes": 15
   },
   {
    "day": 7,
    "orderNo": 3,
    "label": "✎  Sửa sai",
-   "body": "Mỗi âm viết sai: viết lại 10 lần và đọc to thành tiếng.",
-   "minutes": 20
+   "body": "Mỗi âm ghép viết sai: viết lại 5 lần và đọc to thành tiếng.",
+   "minutes": 10
   },
   {
    "day": 7,
@@ -1411,7 +1411,7 @@
    "day": 8,
    "orderNo": 4,
    "label": "語  Từ vựng",
-   "body": "Học 4 từ mới: テレビ (ti vi) ・ ラジオ (radio) ・ おはようございます (chào buổi sáng) ・ こんにちは (xin chào)\n(Từ chào hỏi viết bằng Hiragana — giờ bạn đã đọc được hết.)\n+ Từ N5 bổ sung (6): これ ・ それ ・ あれ ・ この ・ その ・ あの",
+   "body": "Học 4 từ mới: テレビ (ti vi) ・ ラジオ (radio) ・ おはようございます (chào buổi sáng) ・ こんにちは (xin chào)",
    "minutes": 26
   },
   {
@@ -1446,7 +1446,7 @@
    "day": 9,
    "orderNo": 4,
    "label": "語  Từ vựng",
-   "body": "Học 4 từ mới: パン (bánh mì) ・ コーヒー (cà phê) ・ こんばんは (chào buổi tối) ・ さようなら (tạm biệt)\n(Từ chào hỏi viết bằng Hiragana — giờ bạn đã đọc được hết.)",
+   "body": "Học 4 từ mới: パン (bánh mì) ・ コーヒー (cà phê) ・ こんばんは (chào buổi tối) ・ さようなら (tạm biệt)\nー kéo dài âm đứng trước. コーヒー là ko-o-hi-i, bốn nhịp.",
    "minutes": 20
   },
   {
@@ -1481,7 +1481,7 @@
    "day": 10,
    "orderNo": 4,
    "label": "語  Từ vựng",
-   "body": "Học 4 từ mới: タクシー (taxi) ・ バス (xe buýt) ・ ありがとうございます (cảm ơn) ・ どういたしまして (không có gì)\n(Từ chào hỏi viết bằng Hiragana — giờ bạn đã đọc được hết.)",
+   "body": "Học 4 từ mới: タクシー (taxi) ・ バス (xe buýt) ・ ありがとうございます (cảm ơn) ・ どういたしまして (không có gì)\nッ nhỏ làm câm phụ âm sau. タクシー đọc tak-kushi.",
    "minutes": 20
   },
   {
@@ -1516,7 +1516,7 @@
    "day": 11,
    "orderNo": 4,
    "label": "語  Từ vựng",
-   "body": "Học 4 từ mới: ノート (vở) ・ ペン (bút) ・ すみません (xin lỗi) ・ ごめんなさい (xin lỗi, thân mật)\n(Từ chào hỏi viết bằng Hiragana — giờ bạn đã đọc được hết.)",
+   "body": "Học 4 từ mới: ノート (vở) ・ ペン (bút) ・ すみません (xin lỗi) ・ ごめんなさい (xin lỗi người thân)",
    "minutes": 20
   },
   {
@@ -1530,7 +1530,7 @@
    "day": 12,
    "orderNo": 1,
    "label": "あ  Học chữ mới",
-   "body": "Học 8 âm — trọn hàng ら・わ・ん: ラ (ra)  リ (ri)  ル (ru)  レ (re)  ロ (ro)  ワ (wa)  ヲ (wo)  ン (n). Xem thứ tự nét trước khi viết.",
+   "body": "Học 8 âm — trọn hàng ら・わ・ん: ラ (ra)  リ (ri)  ル (ru)  レ (re)  ロ (ro)  ワ (wa)  ヲ (o)  ン (n). ヲ đọc là o, giống を. Xem thứ tự nét trước khi viết.",
    "minutes": 25
   },
   {
@@ -1551,7 +1551,7 @@
    "day": 12,
    "orderNo": 4,
    "label": "語  Từ vựng",
-   "body": "Học 4 từ mới: カメラ (máy ảnh) ・ パソコン (máy tính) ・ はじめまして (rất vui được gặp) ・ どうぞよろしく (mong được giúp đỡ)\n(Từ chào hỏi viết bằng Hiragana — giờ bạn đã đọc được hết.)\n+ Từ N5 bổ sung (3): ありがとう ・ ええ ・ おはよう",
+   "body": "Học 4 từ mới: カメラ (máy ảnh) ・ パソコン (máy tính) ・ はじめまして (rất vui được gặp) ・ どうぞよろしく (mong được giúp đỡ)\n+ Từ N5 bổ sung (3): ありがとう ・ ええ ・ おはよう",
    "minutes": 23
   },
   {
@@ -1600,21 +1600,21 @@
    "day": 14,
    "orderNo": 2,
    "label": "?  Kiểm tra",
-   "body": "Lấy giấy trắng, viết lại toàn bộ 104 âm Katakana mà KHÔNG nhìn bảng. Đối chiếu, khoanh tròn âm sai.",
-   "minutes": 25
+   "body": "Viết lại các âm ghép Katakana hôm nay. Không viết cả 104 âm trong ngày có chữ mới.",
+   "minutes": 15
   },
   {
    "day": 14,
    "orderNo": 3,
    "label": "✎  Sửa sai",
-   "body": "Mỗi âm viết sai: viết lại 10 lần và đọc to thành tiếng.",
-   "minutes": 20
+   "body": "Mỗi âm ghép viết sai: viết lại 5 lần và đọc to thành tiếng.",
+   "minutes": 10
   },
   {
    "day": 14,
    "orderNo": 4,
    "label": "語  Từ vựng",
-   "body": "Ôn lại toàn bộ 25 từ đã học trong hai tuần (chào hỏi + từ Katakana).",
+   "body": "Ôn 25 từ đã học hai tuần này: はい (Vâng) · いいえ (Không) · わかりました (Tôi hiểu rồi) · テレビ (Ti vi) · ラジオ (Radio) · おはようございます (Chào buổi sáng) · こんにちは (Xin chào) · パン (Bánh mì) · コーヒー (Cà phê) · こんばんは (Chào buổi tối) · さようなら (Tạm biệt) · タクシー (Taxi) · バス (Xe buýt) · ありがとうございます (Cảm ơn) · どういたしまして (Không có gì) · ノート (Vở) · ペン (Bút) · すみません (Xin lỗi) · ごめんなさい (Xin lỗi người thân) · はじめまして (Rất hân hạnh được gặp) · カメラ (Máy ảnh) · パソコン (Máy tính) · どうぞよろしく (Mong được giúp đỡ) · レストラン (Nhà hàng) · コンビニ (Cửa hàng tiện lợi)",
    "minutes": 15
   },
   {
@@ -1628,7 +1628,7 @@
    "day": 15,
    "orderNo": 1,
    "label": "◐  Khởi động",
-   "body": "Ôn nhanh nội dung hôm qua: đọc lại Kanji và mẫu ngữ pháp cũ, không nhìn đáp án.",
+   "body": "Ôn hàng Katakana hôm qua. Ngày 14 chưa có Kanji hay mẫu ngữ pháp.",
    "minutes": 5
   },
   {
@@ -1656,7 +1656,7 @@
    "day": 15,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 1:\n• わたし（私） = Tôi\n   Mẹo: Kanji 私 = 禾 (lúa) + ム (riêng) → phần lúa riêng của mình = TÔI.\n• あなた = Bạn, anh/chị\n   Mẹo: A-NA-TA nghe gần như 'anh ta' — người đối diện mình.\n• せんせい（先生） = Giáo viên\n   Mẹo: Âm Hán Việt TIÊN SINH = người sinh ra trước, đi trước ta → thầy cô.\n• がくせい（学生） = Học sinh, sinh viên\n   Mẹo: HỌC SINH — 学 (học) + 生 (sinh). Đọc thẳng âm Hán Việt là ra.\n• かいしゃいん（会社員） = Nhân viên công ty\n   Mẹo: HỘI XÃ VIÊN = 会 (hội) + 社 (xã) + 員 (viên).\n• いしゃ（医者） = Bác sĩ\n   Mẹo: Y GIẢ = người làm nghề y. 者 (giả) = người, gặp lại ở 学者, 記者.\n• ぎんこういん（銀行員） = Nhân viên ngân hàng\n   Mẹo: NGÂN HÀNH VIÊN. 銀行 = ngân hàng, thêm 員 thành người làm ở đó.\n→ Đối chiếu thêm với mục 語彙 của bài 1 trong sách để bổ sung.\n+ Từ N5 bổ sung (3): お願いします（おねがいします） ・ 外国人（がいこくじん） ・ 留学生（りゅうがくせい）",
+   "body": "Từ mới Minna bài 1:\n• わたし（私） = Tôi\n   Mẹo: Kanji 私 = 禾 (lúa) + ム (riêng) → phần lúa riêng của mình = TÔI.\n• あなた = Bạn, anh/chị\n   Mẹo: Chỉ người đối diện. Không dùng cho mình.\n• せんせい（先生） = Giáo viên\n   Mẹo: Âm Hán Việt TIÊN SINH = người sinh ra trước, đi trước ta → thầy cô.\n• がくせい（学生） = Học sinh, sinh viên\n   Mẹo: HỌC SINH — 学 (học) + 生 (sinh). Đọc thẳng âm Hán Việt là ra.\n• かいしゃいん（会社員） = Nhân viên công ty\n   Mẹo: HỘI XÃ VIÊN = 会 (hội) + 社 (xã) + 員 (viên).\n• いしゃ（医者） = Bác sĩ\n   Mẹo: Y GIẢ = người làm nghề y. 者 (giả) = người, gặp lại ở 学者, 記者.\n• ぎんこういん（銀行員） = Nhân viên ngân hàng\n   Mẹo: NGÂN HÀNH VIÊN. 銀行 = ngân hàng, thêm 員 thành người làm ở đó.\n→ Trong sách, xem thêm mục từ vựng của bài 1.\n+ Từ N5 bổ sung (3): お願いします（おねがいします） ・ 外国人（がいこくじん） ・ 留学生（りゅうがくせい）",
    "minutes": 23
   },
   {
@@ -1698,7 +1698,7 @@
    "day": 16,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 1:\n• だいがく（大学） = Đại học\n   Mẹo: ĐẠI HỌC — chuẩn âm Hán Việt, không cần mẹo gì thêm.\n• なまえ（名前） = Tên\n   Mẹo: DANH TIỀN = cái danh đặt phía trước. Nhớ 名 (danh) + 前 (tiền/trước).\n• だれ / どなた = Ai (どなた lịch sự hơn)\n   Mẹo: DA-RE: 'Đá rê' bóng cho AI? どなた dùng khi hỏi người trên.\n• 〜さん = Hậu tố lịch sự sau tên người\n   Mẹo: Không bao giờ dùng さん cho chính mình.\n• 〜じん（〜人） = Người nước ~\n   Mẹo: ベトナム人 = người Việt. 人 đọc じん khi đứng sau tên nước.\n• はじめまして = Rất hân hạnh được gặp\n   Mẹo: Chỉ nói MỘT LẦN duy nhất khi gặp lần đầu.\n• どうぞ よろしく = Mong được giúp đỡ\n   Mẹo: Câu chốt sau khi giới thiệu tên. Lịch sự hơn: よろしく おねがいします。\n→ Đối chiếu thêm với mục 語彙 của bài 1 trong sách để bổ sung.\n+ Từ N5 bổ sung (3): 皆さん（みなさん） ・ みんな ・ 生徒（せいと）",
+   "body": "Từ mới Minna bài 1:\n• だいがく（大学） = Đại học\n   Mẹo: ĐẠI HỌC — chuẩn âm Hán Việt, không cần mẹo gì thêm.\n• なまえ（名前） = Tên\n   Mẹo: DANH TIỀN = cái danh đặt phía trước. Nhớ 名 (danh) + 前 (tiền/trước).\n• だれ / どなた = Ai (どなた lịch sự hơn)\n   Mẹo: DA-RE: 'Đá rê' bóng cho AI? どなた dùng khi hỏi người trên.\n• 〜さん = Hậu tố lịch sự sau tên người\n   Mẹo: Không bao giờ dùng さん cho chính mình.\n• 〜じん（〜人） = Người nước ~\n   Mẹo: ベトナム人 = người Việt. 人 đọc じん khi đứng sau tên nước.\n• はじめまして = Rất hân hạnh được gặp — đã học ngày 12\n   Mẹo: Chỉ nói MỘT LẦN duy nhất khi gặp lần đầu.\n• どうぞ よろしく = Mong được giúp đỡ\n   Mẹo: Câu chốt sau khi giới thiệu tên. Lịch sự hơn: よろしく おねがいします。\n→ Trong sách, xem thêm mục từ vựng của bài 1.\n+ Từ N5 bổ sung (3): 皆さん（みなさん） ・ みんな ・ 生徒（せいと）",
    "minutes": 23
   },
   {
@@ -1740,7 +1740,7 @@
    "day": 17,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 2:\n• ほん（本） = Sách\n   Mẹo: 本 = gốc cây (木 thêm vạch ở rễ) → gốc tri thức → SÁCH.\n• じしょ（辞書） = Từ điển\n   Mẹo: TỪ THƯ = sách chứa từ. 書 (thư) = viết/sách.\n• ざっし（雑誌） = Tạp chí\n   Mẹo: TẠP CHÍ — âm Hán Việt gần như y hệt tiếng Việt.\n• しんぶん（新聞） = Báo\n   Mẹo: TÂN VĂN = tin mới nghe được. 新 (mới) + 聞 (nghe).\n• てちょう（手帳） = Sổ tay\n   Mẹo: THỦ TRƯỚNG = cuốn sổ cầm trên TAY (手).\n• めいし（名刺） = Danh thiếp\n   Mẹo: DANH THÍCH = tấm ghi tên. 名 (danh) đã học ở 名前.\n• かぎ（鍵） = Chìa khóa\n   Mẹo: KA-GI: 'cà ghi' — cắm chìa vào ổ nghe 'cạch'.\n→ Đối chiếu thêm với mục 語彙 của bài 2 trong sách để bổ sung.\n+ Từ N5 bổ sung (6): いす ・ 机（つくえ） ・ カレンダー ・ 手紙（てがみ） ・ 封筒（ふうとう） ・ ボタン",
+   "body": "Từ mới Minna bài 2:\n• ほん（本） = Sách\n   Mẹo: 本 = gốc cây (木 thêm vạch ở rễ) → gốc tri thức → SÁCH.\n• じしょ（辞書） = Từ điển\n   Mẹo: TỪ THƯ = sách chứa từ. 書 (thư) = viết/sách.\n• ざっし（雑誌） = Tạp chí\n   Mẹo: TẠP CHÍ — âm Hán Việt gần như y hệt tiếng Việt.\n• しんぶん（新聞） = Báo\n   Mẹo: TÂN VĂN = tin mới nghe được. 新 (mới) + 聞 (nghe).\n• てちょう（手帳） = Sổ tay\n   Mẹo: THỦ TRƯỚNG = cuốn sổ cầm trên TAY (手).\n• めいし（名刺） = Danh thiếp\n   Mẹo: DANH THÍCH = tấm ghi tên. 名 (danh) đã học ở 名前.\n• かぎ（鍵） = Chìa khóa\n   Mẹo: KA-GI: 'cà ghi' — cắm chìa vào ổ nghe 'cạch'.\n→ Trong sách, xem thêm mục từ vựng của bài 2.\n+ Từ N5 bổ sung (6): いす ・ 机（つくえ） ・ カレンダー ・ 手紙（てがみ） ・ 封筒（ふうとう） ・ ボタン",
    "minutes": 26
   },
   {
@@ -1782,7 +1782,7 @@
    "day": 18,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 2:\n• とけい（時計） = Đồng hồ\n   Mẹo: THỜI KẾ = dụng cụ đo thời gian. 時 (thời) vừa học.\n• かさ（傘） = Ô, dù\n   Mẹo: Kanji 傘 nhìn đúng như cái ô đang xòe ra có nan.\n• かばん = Cặp, túi xách\n   Mẹo: KA-BAN nghe như 'cà bần' — cái túi đeo lủng lẳng.\n• テレビ = Ti vi\n   Mẹo: Từ 'television'. Katakana rút gọn tiếng Anh.\n• ラジオ = Radio\n   Mẹo: Đọc thẳng từ 'radio'.\n• えんぴつ（鉛筆） = Bút chì\n   Mẹo: DIÊN BÚT = bút bằng chì. 筆 (bút) là bộ 竹 (tre) + 聿.\n• ボールペン = Bút bi\n   Mẹo: 'Ball pen' — bút có viên bi ở đầu.\n→ Đối chiếu thêm với mục 語彙 của bài 2 trong sách để bổ sung.\n+ Từ N5 bổ sung (6): 箱（はこ） ・ 万年筆（まんねんひつ） ・ 英語（えいご） ・ 物（もの） ・ どの ・ どれ",
+   "body": "Từ mới Minna bài 2:\n• とけい（時計） = Đồng hồ\n   Mẹo: THỜI KẾ = dụng cụ đo thời gian. 時 (thời) vừa học.\n• かさ（傘） = Ô, dù\n   Mẹo: Kanji 傘 nhìn đúng như cái ô đang xòe ra có nan.\n• かばん = Cặp, túi xách\n   Mẹo: KA-BAN nghe như 'cà bần' — cái túi đeo lủng lẳng.\n• テレビ = Ti vi — đã học ngày 8\n   Mẹo: Từ 'television'. Katakana rút gọn tiếng Anh.\n• ラジオ = Radio — đã học ngày 8\n   Mẹo: Đọc thẳng từ 'radio'.\n• えんぴつ（鉛筆） = Bút chì\n   Mẹo: DIÊN BÚT = bút bằng chì. 筆 (bút) là bộ 竹 (tre) + 聿.\n• ボールペン = Bút bi\n   Mẹo: 'Ball pen' — bút có viên bi ở đầu.\n→ Trong sách, xem thêm mục từ vựng của bài 2.\n+ Từ N5 bổ sung (6): 箱（はこ） ・ 万年筆（まんねんひつ） ・ 英語（えいご） ・ 物（もの） ・ どの ・ どれ",
    "minutes": 26
   },
   {
@@ -1824,14 +1824,14 @@
    "day": 19,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 3:\n• きょうしつ（教室） = Phòng học\n   Mẹo: GIÁO THẤT = phòng để dạy. 室 (thất) = phòng, gặp lại ở 事務室.\n• しょくどう（食堂） = Nhà ăn, căng tin\n   Mẹo: THỰC ĐƯỜNG = nơi để ăn. 食 (thực) = ăn.\n• じむしょ（事務所） = Văn phòng\n   Mẹo: SỰ VỤ SỞ = nơi xử lý công việc.\n• かいぎしつ（会議室） = Phòng họp\n   Mẹo: HỘI NGHỊ THẤT = phòng hội nghị.\n• うけつけ（受付） = Quầy lễ tân\n   Mẹo: THỤ PHÓ = nơi TIẾP NHẬN (受 = nhận) khách.\n• トイレ / おてあらい（お手洗い） = Nhà vệ sinh\n   Mẹo: お手洗い = 'chỗ RỬA TAY' (手 tay + 洗 rửa) — cách nói lịch sự.\n• かいだん（階段） = Cầu thang\n   Mẹo: GIAI ĐOẠN = từng bậc từng bậc. 階 (giai) = tầng.\n→ Đối chiếu thêm với mục 語彙 của bài 3 trong sách để bổ sung.\n+ Từ N5 bổ sung (11): ここ ・ そこ ・ あそこ ・ どこ ・ こちら ・ そちら ・ あちら ・ こっち ・ そっち ・ あっち ・ どっち",
+   "body": "Từ mới Minna bài 3:\n• きょうしつ（教室） = Phòng học\n   Mẹo: GIÁO THẤT = phòng để dạy. 室 (thất) = phòng, gặp lại ở 事務室.\n• しょくどう（食堂） = Nhà ăn, căng tin\n   Mẹo: THỰC ĐƯỜNG = nơi để ăn. 食 (thực) = ăn.\n• じむしょ（事務所） = Văn phòng\n   Mẹo: SỰ VỤ SỞ = nơi xử lý công việc.\n• かいぎしつ（会議室） = Phòng họp\n   Mẹo: HỘI NGHỊ THẤT = phòng hội nghị.\n• うけつけ（受付） = Quầy lễ tân\n   Mẹo: Quầy lễ tân, nơi nhận khách.\n• トイレ / おてあらい（お手洗い） = Nhà vệ sinh\n   Mẹo: お手洗い = 'chỗ RỬA TAY' (手 tay + 洗 rửa) — cách nói lịch sự.\n• かいだん（階段） = Cầu thang\n   Mẹo: Cầu thang. Đừng đọc thành giai đoạn. Giai đoạn là một từ khác.\n→ Trong sách, xem thêm mục từ vựng của bài 3.\n+ Từ N5 bổ sung (11): ここ ・ そこ ・ あそこ ・ どこ ・ こちら ・ そちら ・ あちら ・ こっち ・ そっち ・ あっち ・ どっち",
    "minutes": 31
   },
   {
    "day": 19,
    "orderNo": 6,
    "label": "読  Đọc",
-   "body": "Vào NHK News Web Easy đọc 1 bài. Gạch chân từ mới, chép 3 câu vào sổ.",
+   "body": "Đọc lại 5 câu đã học trong app. Gạch chân một từ còn mờ, chép câu đó vào sổ.",
    "minutes": 20
   },
   {
@@ -1866,7 +1866,7 @@
    "day": 20,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 3:\n• エレベーター = Thang máy\n   Mẹo: 'Elevator'. Chú ý trường âm ー ở giữa.\n• くに（国） = Đất nước\n   Mẹo: QUỐC — 囗 (biên giới) bao 玉 (ngọc) = lãnh thổ giữ báu vật.\n• かいしゃ（会社） = Công ty\n   Mẹo: HỘI XÃ. Đảo ngược thành 社会 (xã hội) là một từ khác — đừng nhầm.\n• うち（家） = Nhà (của mình)\n   Mẹo: U-CHI: 'ú chi' — về nhà mới thấy ấm. Kanji 家 = 宀 (mái) + 豕 (con lợn).\n• えん（円） = Yên (tiền Nhật)\n   Mẹo: VIÊN = tròn, vì đồng xu hình tròn.\n• いくら = Bao nhiêu tiền\n   Mẹo: Chỉ dùng hỏi GIÁ. Hỏi số lượng thì dùng いくつ.\n• 〜がい / 〜かい（〜階） = Tầng ~\n   Mẹo: 1階 いっかい, 3階 さんがい — chú ý biến âm.\n→ Đối chiếu thêm với mục 語彙 của bài 3 trong sách để bổ sung.\n+ Từ N5 bổ sung (11): デパート ・ 建物（たてもの） ・ 入口（いりぐち） ・ 出口（でぐち） ・ 玄関（げんかん） ・ 台所（だいどころ） ・ 廊下（ろうか） ・ 大使館（たいしかん） ・ 所（ところ） ・ お金（おかね） ・ 学校（がっこう）",
+   "body": "Từ mới Minna bài 3:\n• エレベーター = Thang máy\n   Mẹo: 'Elevator'. Chú ý trường âm ー ở giữa.\n• くに（国） = Đất nước\n   Mẹo: QUỐC — 囗 (biên giới) bao 玉 (ngọc) = lãnh thổ giữ báu vật.\n• かいしゃ（会社） = Công ty\n   Mẹo: HỘI XÃ. Đảo ngược thành 社会 (xã hội) là một từ khác — đừng nhầm.\n• うち（家） = Nhà (của mình)\n   Mẹo: U-CHI: 'ú chi' — về nhà mới thấy ấm. Kanji 家 = 宀 (mái) + 豕 (con lợn).\n• えん（円） = Yên (tiền Nhật)\n   Mẹo: VIÊN = tròn, vì đồng xu hình tròn.\n• いくら = Bao nhiêu tiền\n   Mẹo: Chỉ dùng hỏi GIÁ. Hỏi số lượng thì dùng いくつ.\n• 〜がい / 〜かい（〜階） = Tầng ~\n   Mẹo: 1階 いっかい, 3階 さんがい — chú ý biến âm.\n→ Trong sách, xem thêm mục từ vựng của bài 3.\n+ Từ N5 bổ sung (11): デパート ・ 建物（たてもの） ・ 入口（いりぐち） ・ 出口（でぐち） ・ 玄関（げんかん） ・ 台所（だいどころ） ・ 廊下（ろうか） ・ 大使館（たいしかん） ・ 所（ところ） ・ お金（おかね） ・ 学校（がっこう）",
    "minutes": 31
   },
   {
@@ -1880,7 +1880,7 @@
    "day": 21,
    "orderNo": 1,
    "label": "漢  Kanji",
-   "body": "Viết lại toàn bộ Kanji đã học trong tuần: che nghĩa → đọc chữ, che chữ → viết lại. Lọc sheet '9. Kanji 103' theo cột Ngày học để biết chính xác chữ nào.",
+   "body": "Viết lại toàn bộ Kanji đã học trong tuần: che nghĩa → đọc chữ, che chữ → viết lại. Trong app, xem chữ của tuần này và đánh dấu chữ còn mờ.",
    "minutes": 25
   },
   {
@@ -1936,14 +1936,14 @@
    "day": 22,
    "orderNo": 4,
    "label": "文  Ngữ pháp",
-   "body": "Minna bài 4 (1/2) — Giờ giấc & Thì của động từ\n• 今 〜時 〜分です  (Bây giờ là ~ giờ ~ phút.)\n   Ví dụ: 今 4時5分です。  = Bây giờ là 4 giờ 5 phút.\n• V ます / V ません  (Thể lịch sự hiện tại–tương lai, khẳng định và phủ định.)\n   Ví dụ: わたしは 毎日 6時に 起きます。  = Tôi thức dậy lúc 6 giờ mỗi ngày.\n• V ました / V ませんでした  (Thể lịch sự quá khứ, khẳng định và phủ định.)\n   Ví dụ: きのう 勉強しませんでした。  = Hôm qua tôi đã không học bài.\n→ Làm 練習A của bài 4 trong sách, mỗi mẫu tự đặt 3 câu.",
+   "body": "Minna bài 4 (1/2) — Giờ giấc & Thì của động từ\n• 今 〜時 〜分です  (Bây giờ là ~ giờ ~ phút.)\n   Ví dụ: 今 4時5分です。  = Bây giờ là 4 giờ 5 phút.\n• V ます / V ません  (Thể lịch sự hiện tại–tương lai, khẳng định và phủ định.)\n   Ví dụ: わたしは 毎日 起きます。  = Tôi thức dậy mỗi ngày.\n• V ました / V ませんでした  (Thể lịch sự quá khứ, khẳng định và phủ định.)\n   Ví dụ: きのう 勉強しませんでした。  = Hôm qua tôi đã không học bài.\n→ Làm 練習A của bài 4 trong sách, mỗi mẫu tự đặt 3 câu.",
    "minutes": 25
   },
   {
    "day": 22,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 4:\n• おきます（起きます） = Thức dậy\n   Mẹo: 起 = 走 (chạy) + 己 → bật dậy chạy đi. O-KI: 'ô kìa, dậy đi!'\n• ねます（寝ます） = Đi ngủ\n   Mẹo: 寝 có bộ 宀 (mái nhà) → chui vào nhà nằm NGỦ.\n• はたらきます（働きます） = Làm việc\n   Mẹo: 働 = 亻 (người) + 動 (động) → người chuyển động = LÀM VIỆC.\n• やすみます（休みます） = Nghỉ ngơi\n   Mẹo: 休 = 亻 (người) tựa 木 (cây) → dựa gốc cây NGHỈ.\n• べんきょうします（勉強します） = Học bài\n   Mẹo: MIỄN CƯỠNG — học là phải ép mình một chút, nhớ luôn.\n• おわります（終わります） = Kết thúc\n   Mẹo: 終 có bộ 糸 (sợi chỉ) → sợi chỉ đến đầu mút = HẾT.\n• あさ（朝） = Buổi sáng\n   Mẹo: 朝 có 日 (mặt trời) và 月 (trăng) → lúc trăng lặn mặt trời mọc.\n→ Đối chiếu thêm với mục 語彙 của bài 4 trong sách để bổ sung.\n+ Từ N5 bổ sung (14): 今日（きょう） ・ 明日（あした） ・ 昨日（きのう） ・ あさって ・ 一昨日（おととい） ・ 今朝（けさ） ・ 今晩（こんばん） ・ 昨夜（ゆうべ） ・ 午前（ごぜん） ・ 午後（ごご） ・ 夕方（ゆうがた） ・ 毎朝（まいあさ） ・ 毎晩（まいばん） ・ 月曜日（げつようび）",
+   "body": "Từ mới Minna bài 4:\n• おきます（起きます） = Thức dậy\n   Mẹo: 起 = 走 (chạy) + 己 → bật dậy chạy đi. O-KI: 'ô kìa, dậy đi!'\n• ねます（寝ます） = Đi ngủ\n   Mẹo: 寝 có bộ 宀 (mái nhà) → chui vào nhà nằm NGỦ.\n• はたらきます（働きます） = Làm việc\n   Mẹo: 働 = 亻 (người) + 動 (động) → người chuyển động = LÀM VIỆC.\n• やすみます（休みます） = Nghỉ ngơi\n   Mẹo: 休 = 亻 (người) tựa 木 (cây) → dựa gốc cây NGHỈ.\n• べんきょうします（勉強します） = Học bài\n   Mẹo: Nghĩa dùng là học bài. Chữ Hán này trong tiếng Việt là miễn cưỡng, đừng lấy nghĩa đó.\n• おわります（終わります） = Kết thúc\n   Mẹo: 終 có bộ 糸 (sợi chỉ) → sợi chỉ đến đầu mút = HẾT.\n• あさ（朝） = Buổi sáng\n   Mẹo: 朝 có 日 (mặt trời) và 月 (trăng) → lúc trăng lặn mặt trời mọc.\n→ Trong sách, xem thêm mục từ vựng của bài 4.\n+ Từ N5 bổ sung (14): 今日（きょう） ・ 明日（あした） ・ 昨日（きのう） ・ あさって ・ 一昨日（おととい） ・ 今朝（けさ） ・ 今晩（こんばん） ・ 昨夜（ゆうべ） ・ 午前（ごぜん） ・ 午後（ごご） ・ 夕方（ゆうがた） ・ 毎朝（まいあさ） ・ 毎晩（まいばん） ・ 月曜日（げつようび）",
    "minutes": 34
   },
   {
@@ -1978,14 +1978,14 @@
    "day": 23,
    "orderNo": 4,
    "label": "文  Ngữ pháp",
-   "body": "Minna bài 4 (2/2) — Giờ giấc & Thì của động từ\n• 時間 に V  (Làm gì vào lúc mấy giờ. に chỉ đi với mốc thời gian có con số.)\n   Ví dụ: 7時に 起きます。  = Tôi dậy lúc 7 giờ.\n• N1 から N2 まで  (Từ N1 đến N2 (thời gian hoặc nơi chốn).)\n   Ví dụ: 9時から 5時まで 働きます。  = Tôi làm việc từ 9 giờ đến 5 giờ.\n• N1 と N2  (N1 và N2. Chỉ nối danh từ, không nối câu.)\n   Ví dụ: 月曜日と 火曜日  = Thứ Hai và thứ Ba.\n→ Làm 練習A của bài 4 trong sách, mỗi mẫu tự đặt 3 câu.",
+   "body": "Minna bài 4 (2/2) — Giờ giấc & Thì của động từ\n• 時間 に V  (に đi với giờ, thứ, ngày tháng. Không thêm に sau 毎日, きのう, あした.)\n   Ví dụ: 7時に 起きます。  = Tôi dậy lúc 7 giờ.\n• N1 から N2 まで  (Từ N1 đến N2 (thời gian hoặc nơi chốn).)\n   Ví dụ: 9時から 5時まで 働きます。  = Tôi làm việc từ 9 giờ đến 5 giờ.\n• N1 と N2  (N1 và N2. Chỉ nối danh từ, không nối câu.)\n   Ví dụ: 月曜日と 火曜日  = Thứ Hai và thứ Ba.\n→ Làm 練習A của bài 4 trong sách, mỗi mẫu tự đặt 3 câu.",
    "minutes": 25
   },
   {
    "day": 23,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 4:\n• ひる（昼） = Buổi trưa\n   Mẹo: 昼 có 日 (mặt trời) nằm giữa → mặt trời lên đỉnh.\n• ばん / よる（晩 / 夜） = Buổi tối / ban đêm\n   Mẹo: 晩ごはん = bữa tối. 夜 nhấn mạnh khoảng thời gian ban đêm.\n• まいにち（毎日） = Hằng ngày\n   Mẹo: MỖI NHẬT = mỗi ngày. Cùng nhóm: 毎朝, 毎晩, 毎年.\n• 〜じ（〜時） = ~ giờ\n   Mẹo: 4時 よじ, 7時 しちじ, 9時 くじ — ba giờ đọc bất quy tắc.\n• 〜ふん / 〜ぷん（〜分） = ~ phút\n   Mẹo: 1分 いっぷん, 3分 さんぷん, 4分 よんぷん — luyện đọc to nhiều lần.\n• ぎんこう（銀行） = Ngân hàng\n   Mẹo: NGÂN HÀNH = 銀 (bạc) + 行 (đi lại) → nơi bạc luân chuyển.\n• ゆうびんきょく（郵便局） = Bưu điện\n   Mẹo: BƯU TIỆN CỤC — âm Hán Việt gần hệt tiếng Việt 'bưu cục'.\n→ Đối chiếu thêm với mục 語彙 của bài 4 trong sách để bổ sung.\n+ Từ N5 bổ sung (13): 火曜日（かようび） ・ 水曜日（すいようび） ・ 木曜日（もくようび） ・ 金曜日（きんようび） ・ 土曜日（どようび） ・ 日曜日（にちようび） ・ 休み（やすみ） ・ 仕事（しごと） ・ 番号（ばんごう） ・ 電話（でんわ） ・ ゼロ ・ 零（れい） ・ 始まります（はじまります）",
+   "body": "Từ mới Minna bài 4:\n• ひる（昼） = Buổi trưa\n   Mẹo: 昼 có 日 (mặt trời) nằm giữa → mặt trời lên đỉnh.\n• ばん / よる（晩 / 夜） = Buổi tối / ban đêm\n   Mẹo: 晩ごはん = bữa tối. 夜 nhấn mạnh khoảng thời gian ban đêm.\n• まいにち（毎日） = Hằng ngày\n   Mẹo: MỖI NHẬT = mỗi ngày. Cùng nhóm: 毎朝, 毎晩, 毎年.\n• 〜じ（〜時） = ~ giờ\n   Mẹo: 4時 よじ, 7時 しちじ, 9時 くじ — ba giờ đọc bất quy tắc.\n• 〜ふん / 〜ぷん（〜分） = ~ phút\n   Mẹo: 1分 いっぷん, 3分 さんぷん, 4分 よんぷん — luyện đọc to nhiều lần.\n• ぎんこう（銀行） = Ngân hàng\n   Mẹo: NGÂN HÀNH = 銀 (bạc) + 行 (đi lại) → nơi bạc luân chuyển.\n• ゆうびんきょく（郵便局） = Bưu điện\n   Mẹo: BƯU TIỆN CỤC — âm Hán Việt gần hệt tiếng Việt 'bưu cục'.\n→ Trong sách, xem thêm mục từ vựng của bài 4.\n+ Từ N5 bổ sung (13): 火曜日（かようび） ・ 水曜日（すいようび） ・ 木曜日（もくようび） ・ 金曜日（きんようび） ・ 土曜日（どようび） ・ 日曜日（にちようび） ・ 休み（やすみ） ・ 仕事（しごと） ・ 番号（ばんごう） ・ 電話（でんわ） ・ ゼロ ・ 零（れい） ・ 始まります（はじまります）",
    "minutes": 33
   },
   {
@@ -2027,7 +2027,7 @@
    "day": 24,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 5:\n• いきます（行きます） = Đi\n   Mẹo: 行 là hình ngã tư đường → đứng ngã tư phải chọn hướng ĐI.\n• きます（来ます） = Đến\n   Mẹo: 来 hình cây lúa chín → mùa gặt ĐẾN. Chia bất quy tắc: 来ない → こない.\n• かえります（帰ります） = Về\n   Mẹo: 帰 có bộ 巾 (khăn) → xách khăn gói VỀ nhà.\n• でんしゃ（電車） = Tàu điện\n   Mẹo: ĐIỆN XA = xe chạy bằng điện.\n• ちかてつ（地下鉄） = Tàu điện ngầm\n   Mẹo: ĐỊA HẠ THIẾT = đường sắt dưới lòng đất.\n• しんかんせん（新幹線） = Tàu Shinkansen\n   Mẹo: TÂN CÁN TUYẾN = tuyến đường trục mới.\n• ひこうき（飛行機） = Máy bay\n   Mẹo: PHI HÀNH CƠ = máy bay bay đi. 機 (cơ) = máy móc.\n→ Đối chiếu thêm với mục 語彙 của bài 5 trong sách để bổ sung.\n+ Từ N5 bổ sung (14): 自動車（じどうしゃ） ・ 切符（きっぷ） ・ 一日（ついたち） ・ 二日（ふつか） ・ 三日（みっか） ・ 四日（よっか） ・ 五日（いつか） ・ 六日（むいか） ・ 七日（なのか） ・ 八日（ようか） ・ 九日（ここのか） ・ 十日（とおか） ・ 二十日（はつか） ・ 先週（せんしゅう）",
+   "body": "Từ mới Minna bài 5:\n• いきます（行きます） = Đi\n   Mẹo: 行 là hình ngã tư đường → đứng ngã tư phải chọn hướng ĐI.\n• きます（来ます） = Đến\n   Mẹo: 来 hình cây lúa chín → mùa gặt ĐẾN. Chia bất quy tắc: 来ない → こない.\n• かえります（帰ります） = Về\n   Mẹo: 帰 có bộ 巾 (khăn) → xách khăn gói VỀ nhà.\n• でんしゃ（電車） = Tàu điện\n   Mẹo: ĐIỆN XA = xe chạy bằng điện.\n• ちかてつ（地下鉄） = Tàu điện ngầm\n   Mẹo: ĐỊA HẠ THIẾT = đường sắt dưới lòng đất.\n• しんかんせん（新幹線） = Tàu Shinkansen\n   Mẹo: TÂN CÁN TUYẾN = tuyến đường trục mới.\n• ひこうき（飛行機） = Máy bay\n   Mẹo: PHI HÀNH CƠ = máy bay bay đi. 機 (cơ) = máy móc.\n→ Trong sách, xem thêm mục từ vựng của bài 5.\n+ Từ N5 bổ sung (14): 自動車（じどうしゃ） ・ 切符（きっぷ） ・ 一日（ついたち） ・ 二日（ふつか） ・ 三日（みっか） ・ 四日（よっか） ・ 五日（いつか） ・ 六日（むいか） ・ 七日（なのか） ・ 八日（ようか） ・ 九日（ここのか） ・ 十日（とおか） ・ 二十日（はつか） ・ 先週（せんしゅう）",
    "minutes": 34
   },
   {
@@ -2069,14 +2069,14 @@
    "day": 25,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 5:\n• じてんしゃ（自転車） = Xe đạp\n   Mẹo: TỰ CHUYỂN XA = xe tự quay bánh. Nhớ kèm 自動車 (ô tô).\n• あるいて（歩いて） = Đi bộ\n   Mẹo: 歩 có bộ 止 (bàn chân) → dùng chân mà đi. KHÔNG dùng で với 歩いて.\n• ひと（人） = Người\n   Mẹo: Hai nét như hai chân đang bước.\n• ともだち（友だち） = Bạn bè\n   Mẹo: 友 = hai bàn tay nắm nhau → tình BẠN.\n• せんげつ（先月） = Tháng trước\n   Mẹo: 先 (TIÊN = trước) + 月 (tháng). Cùng nhóm: 先週, 先年.\n• らいしゅう（来週） = Tuần sau\n   Mẹo: 来 (LAI = đến, sắp tới) + 週 (tuần). Cùng nhóm: 来月, 来年.\n• たんじょうび（誕生日） = Sinh nhật\n   Mẹo: ĐẢN SINH NHẬT = ngày được sinh ra.\n→ Đối chiếu thêm với mục 語彙 của bài 5 trong sách để bổ sung.\n+ Từ N5 bổ sung (13): 今週（こんしゅう） ・ 毎週（まいしゅう） ・ 今月（こんげつ） ・ 来月（らいげつ） ・ 毎月（まいつき） ・ 去年（きょねん） ・ 今年（ことし） ・ 来年（らいねん） ・ 毎年（まいとし） ・ 一昨年（おととし） ・ 再来年（さらいねん） ・ いつ ・ 一緒（いっしょ）",
+   "body": "Từ mới Minna bài 5:\n• じてんしゃ（自転車） = Xe đạp\n   Mẹo: TỰ CHUYỂN XA = xe tự quay bánh. Nhớ kèm 自動車 (ô tô).\n• あるいて（歩いて） = Đi bộ\n   Mẹo: 歩 có bộ 止 (bàn chân) → dùng chân mà đi. KHÔNG dùng で với 歩いて.\n• ひと（人） = Người\n   Mẹo: Hai nét như hai chân đang bước.\n• ともだち（友だち） = Bạn bè\n   Mẹo: 友 = hai bàn tay nắm nhau → tình BẠN.\n• せんげつ（先月） = Tháng trước\n   Mẹo: 先 (TIÊN = trước) + 月 (tháng). Cùng nhóm: 先週. Năm ngoái là 去年.\n• らいしゅう（来週） = Tuần sau\n   Mẹo: 来 (LAI = đến, sắp tới) + 週 (tuần). Cùng nhóm: 来月, 来年.\n• たんじょうび（誕生日） = Sinh nhật\n   Mẹo: ĐẢN SINH NHẬT = ngày được sinh ra.\n→ Trong sách, xem thêm mục từ vựng của bài 5.\n+ Từ N5 bổ sung (13): 今週（こんしゅう） ・ 毎週（まいしゅう） ・ 今月（こんげつ） ・ 来月（らいげつ） ・ 毎月（まいつき） ・ 去年（きょねん） ・ 今年（ことし） ・ 来年（らいねん） ・ 毎年（まいとし） ・ 一昨年（おととし） ・ 再来年（さらいねん） ・ いつ ・ 一緒（いっしょ）",
    "minutes": 33
   },
   {
    "day": 25,
    "orderNo": 6,
    "label": "読  Đọc",
-   "body": "Vào NHK News Web Easy đọc 1 bài. Gạch chân từ mới, chép 3 câu vào sổ.",
+   "body": "Đọc lại 5 câu đã học trong app. Gạch chân một từ còn mờ, chép câu đó vào sổ.",
    "minutes": 20
   },
   {
@@ -2104,14 +2104,14 @@
    "day": 26,
    "orderNo": 4,
    "label": "文  Ngữ pháp",
-   "body": "Minna bài 6 (1/2) — Tân ngữ を & Rủ rê\n• N を V  (を là trợ từ đánh dấu tân ngữ — vật chịu tác động của động từ.)\n   Ví dụ: ごはんを 食べます。  = Tôi ăn cơm.\n• N を します  (Làm gì đó / chơi môn gì đó.)\n   Ví dụ: サッカーを します。  = Tôi chơi bóng đá.\n• 場所 で V  (Làm gì TẠI nơi nào. で chỉ nơi diễn ra hành động.)\n   Ví dụ: 図書館で 本を 読みます。  = Tôi đọc sách ở thư viện.\n→ Làm 練習A của bài 6 trong sách, mỗi mẫu tự đặt 3 câu.",
+   "body": "Minna bài 6 (1/2) — Tân ngữ を & Rủ rê\n• N を V  (を là trợ từ đánh dấu tân ngữ — vật chịu tác động của động từ. Đọc là o.)\n   Ví dụ: ごはんを 食べます。  = Tôi ăn cơm.\n• N を します  (Làm gì đó / chơi môn gì đó.)\n   Ví dụ: サッカーを します。  = Tôi chơi bóng đá.\n• 場所 で V  (Làm gì TẠI nơi nào. で chỉ nơi diễn ra hành động.)\n   Ví dụ: 図書館で 本を 読みます。  = Tôi đọc sách ở thư viện.\n→ Làm 練習A của bài 6 trong sách, mỗi mẫu tự đặt 3 câu.",
    "minutes": 25
   },
   {
    "day": 26,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 6:\n• たべます（食べます） = Ăn\n   Mẹo: 食 = mái che trên mâm cơm đầy.\n• のみます（飲みます） = Uống\n   Mẹo: 飲 = 食 (ăn) + 欠 (há miệng) → ngửa cổ UỐNG.\n• すいます（吸います） = Hút (thuốc)\n   Mẹo: 吸 có bộ 口 (miệng) → dùng miệng HÚT vào.\n• みます（見ます） = Xem, nhìn\n   Mẹo: 見 = 目 (mắt) trên 儿 (chân) → mắt biết đi khắp nơi.\n• ききます（聞きます） = Nghe, hỏi\n   Mẹo: 聞 = 耳 (tai) áp vào 門 (cửa) → nghe lén.\n• よみます（読みます） = Đọc\n   Mẹo: 読 = 言 (nói) + 売 (bán) → đọc to lời rao hàng.\n• かきます（書きます） = Viết, vẽ\n   Mẹo: 書 = tay cầm bút viết lên tờ giấy 日.\n→ Đối chiếu thêm với mục 語彙 của bài 6 trong sách để bổ sung.\n+ Từ N5 bổ sung (10): 朝ごはん（あさごはん） ・ 昼御飯（ひるごはん） ・ 晩御飯（ばんごはん） ・ 夕飯（ゆうはん） ・ 食べ物（たべもの） ・ 飲み物（のみもの） ・ 紅茶（こうちゃ） ・ 牛乳（ぎゅうにゅう） ・ お酒（おさけ） ・ 果物（くだもの）",
+   "body": "Từ mới Minna bài 6:\n• たべます（食べます） = Ăn\n   Mẹo: 食 = mái che trên mâm cơm đầy.\n• のみます（飲みます） = Uống\n   Mẹo: 飲 = 食 (ăn) + 欠 (há miệng) → ngửa cổ UỐNG.\n• すいます（吸います） = Hút (thuốc)\n   Mẹo: 吸 có bộ 口 (miệng) → dùng miệng HÚT vào.\n• みます（見ます） = Xem, nhìn\n   Mẹo: 見 = 目 (mắt) trên 儿 (chân) → mắt biết đi khắp nơi.\n• ききます（聞きます） = Nghe, hỏi\n   Mẹo: 聞 = 耳 (tai) áp vào 門 (cửa) → nghe lén.\n• よみます（読みます） = Đọc\n   Mẹo: 読 = 言 (nói) + 売 (bán) → đọc to lời rao hàng.\n• かきます（書きます） = Viết, vẽ\n   Mẹo: 書 = tay cầm bút viết lên tờ giấy 日.\n→ Trong sách, xem thêm mục từ vựng của bài 6.\n+ Từ N5 bổ sung (10): 朝ごはん（あさごはん） ・ 昼御飯（ひるごはん） ・ 晩御飯（ばんごはん） ・ 夕飯（ゆうはん） ・ 食べ物（たべもの） ・ 飲み物（のみもの） ・ 紅茶（こうちゃ） ・ 牛乳（ぎゅうにゅう） ・ お酒（おさけ） ・ 果物（くだもの）",
    "minutes": 30
   },
   {
@@ -2153,7 +2153,7 @@
    "day": 27,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 6:\n• かいます（買います） = Mua\n   Mẹo: 買 = lưới 罒 chụp lên 貝 (tiền vỏ sò) → gom tiền MUA.\n• します = Làm\n   Mẹo: Động từ bất quy tắc. Ghép sau danh từ: 勉強します, 電話します.\n• あいます（会います） = Gặp\n   Mẹo: 会 = mái nhà che nhiều người tụ lại. Đi với trợ từ に: 友だちに 会います。\n• ごはん（ご飯） = Cơm\n   Mẹo: 飯 (PHẠN) có bộ 食 → thứ để ăn. 朝ご飯 / 昼ご飯 / 晩ご飯.\n• たまご（卵） = Trứng\n   Mẹo: TA-MA-GO: 'ta mà gô' — quả trứng tròn gô. Kanji 卵 giống hai quả trứng có chấm.\n• にく（肉） = Thịt\n   Mẹo: NHỤC = thịt. Kanji 肉 giống miếng thịt có vân mỡ bên trong.\n• さかな（魚） = Cá\n   Mẹo: Kanji 魚: đầu, thân vảy, bốn chấm là đuôi xòe.\n→ Đối chiếu thêm với mục 語彙 của bài 6 trong sách để bổ sung.\n+ Từ N5 bổ sung (9): 野菜（やさい） ・ 牛肉（ぎゅうにく） ・ 豚肉（ぶたにく） ・ 鶏肉（とりにく） ・ カレー ・ いただきます ・ ごちそうさま ・ 喫茶店（きっさてん） ・ 宿題（しゅくだい）",
+   "body": "Từ mới Minna bài 6:\n• かいます（買います） = Mua\n   Mẹo: 買 = lưới 罒 chụp lên 貝 (tiền vỏ sò) → gom tiền MUA.\n• します = Làm\n   Mẹo: Động từ bất quy tắc. Ghép sau danh từ: 勉強します, 電話します.\n• あいます（会います） = Gặp\n   Mẹo: 会 = mái nhà che nhiều người tụ lại. Đi với trợ từ に: 友だちに 会います。\n• ごはん（ご飯） = Cơm\n   Mẹo: 飯 (PHẠN) có bộ 食 → thứ để ăn. 朝ご飯 / 昼ご飯 / 晩ご飯.\n• たまご（卵） = Trứng\n   Mẹo: TA-MA-GO: 'ta mà gô' — quả trứng tròn gô. Kanji 卵 giống hai quả trứng có chấm.\n• にく（肉） = Thịt\n   Mẹo: NHỤC = thịt. Kanji 肉 giống miếng thịt có vân mỡ bên trong.\n• さかな（魚） = Cá\n   Mẹo: Kanji 魚: đầu, thân vảy, bốn chấm là đuôi xòe.\n→ Trong sách, xem thêm mục từ vựng của bài 6.\n+ Từ N5 bổ sung (9): 野菜（やさい） ・ 牛肉（ぎゅうにく） ・ 豚肉（ぶたにく） ・ 鶏肉（とりにく） ・ カレー ・ いただきます ・ ごちそうさま ・ 喫茶店（きっさてん） ・ 宿題（しゅくだい）",
    "minutes": 29
   },
   {
@@ -2167,7 +2167,7 @@
    "day": 28,
    "orderNo": 1,
    "label": "漢  Kanji",
-   "body": "Viết lại toàn bộ Kanji đã học trong tuần: che nghĩa → đọc chữ, che chữ → viết lại. Lọc sheet '9. Kanji 103' theo cột Ngày học để biết chính xác chữ nào.",
+   "body": "Viết lại toàn bộ Kanji đã học trong tuần: che nghĩa → đọc chữ, che chữ → viết lại. Trong app, xem chữ của tuần này và đánh dấu chữ còn mờ.",
    "minutes": 25
   },
   {
@@ -2230,7 +2230,7 @@
    "day": 29,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 7:\n• あげます = Cho, tặng\n   Mẹo: A-GE: 'a, ghê' — tặng món quà ghê gớm. Hướng: TÔI → NGƯỜI KHÁC.\n• もらいます = Nhận được\n   Mẹo: MO-RA-I: 'mở ra i' — mở món quà nhận được. Hướng: NGƯỜI KHÁC → TÔI.\n• かします（貸します） = Cho mượn\n   Mẹo: 貸 có 貝 (tiền) → đưa tiền/đồ cho người khác dùng tạm.\n• かります（借ります） = Mượn\n   Mẹo: 借 = 亻 (người) + 昔 (ngày xưa) → mượn rồi hẹn ngày trả.\n• おしえます（教えます） = Dạy\n   Mẹo: 教 (GIÁO) = dạy. Cùng gốc với 教室 (phòng học) đã học.\n• ならいます（習います） = Học (từ ai đó)\n   Mẹo: 習 = 羽 (lông vũ) + 白 → chim non tập bay, lặp đi lặp lại.\n• かけます = Gọi (điện thoại)\n   Mẹo: 電話を かけます — 'treo' cuộc gọi lên đường dây.\n→ Đối chiếu thêm với mục 語彙 của bài 7 trong sách để bổ sung.\n+ Từ N5 bổ sung (6): ナイフ ・ フォーク ・ お皿（おさら） ・ ちゃわん ・ カップ ・ コップ",
+   "body": "Từ mới Minna bài 7:\n• あげます = Cho, tặng\n   Mẹo: A-GE: 'a, ghê' — tặng món quà ghê gớm. Hướng: TÔI → NGƯỜI KHÁC.\n• もらいます = Nhận được\n   Mẹo: MO-RA-I: 'mở ra i' — mở món quà nhận được. Hướng: NGƯỜI KHÁC → TÔI.\n• かします（貸します） = Cho mượn\n   Mẹo: 貸 có 貝 (tiền) → đưa tiền/đồ cho người khác dùng tạm.\n• かります（借ります） = Mượn\n   Mẹo: 借 = 亻 (người) + 昔 (ngày xưa) → mượn rồi hẹn ngày trả.\n• おしえます（教えます） = Dạy\n   Mẹo: 教 (GIÁO) = dạy. Cùng gốc với 教室 (phòng học) đã học.\n• ならいます（習います） = Học (từ ai đó)\n   Mẹo: 習 = 羽 (lông vũ) + 白 → chim non tập bay, lặp đi lặp lại.\n• かけます = Gọi (điện thoại)\n   Mẹo: 電話を かけます — 'treo' cuộc gọi lên đường dây.\n→ Trong sách, xem thêm mục từ vựng của bài 7.\n+ Từ N5 bổ sung (6): ナイフ ・ フォーク ・ お皿（おさら） ・ ちゃわん ・ カップ ・ コップ",
    "minutes": 26
   },
   {
@@ -2272,7 +2272,7 @@
    "day": 30,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 7:\n• て（手） = Tay\n   Mẹo: Hình bàn tay xòe các ngón.\n• はし（箸） = Đũa\n   Mẹo: Kanji 箸 có bộ 竹 (tre) ở trên → đũa làm bằng tre.\n• スプーン = Thìa\n   Mẹo: Từ 'spoon'.\n• かみ（紙） = Giấy\n   Mẹo: 紙 có bộ 糸 (sợi) → giấy làm từ sợi thực vật.\n• はな（花） = Hoa\n   Mẹo: 花 = 艹 (cỏ cây) + 化 (biến hóa) → cây biến thành thứ đẹp.\n• プレゼント = Quà tặng\n   Mẹo: Từ 'present'.\n• にもつ（荷物） = Hành lý\n   Mẹo: HÀ VẬT = đồ đạc mang vác. 物 (vật) gặp nhiều: 買い物, 飲み物.\n→ Đối chiếu thêm với mục 語彙 của bài 7 trong sách để bổ sung.\n+ Từ N5 bổ sung (6): ハンカチ ・ テープ ・ お母さん（おかあさん） ・ お父さん（おとうさん） ・ 両親（りょうしん） ・ 奥さん（おくさん）",
+   "body": "Từ mới Minna bài 7:\n• て（手） = Tay\n   Mẹo: Hình bàn tay xòe các ngón.\n• はし（箸） = Đũa\n   Mẹo: Kanji 箸 có bộ 竹 (tre) ở trên → đũa làm bằng tre.\n• スプーン = Thìa\n   Mẹo: Từ 'spoon'.\n• かみ（紙） = Giấy\n   Mẹo: 紙 có bộ 糸 (sợi) → giấy làm từ sợi thực vật.\n• はな（花） = Hoa\n   Mẹo: 花 = 艹 (cỏ cây) + 化 (biến hóa) → cây biến thành thứ đẹp.\n• プレゼント = Quà tặng\n   Mẹo: Từ 'present'.\n• にもつ（荷物） = Hành lý\n   Mẹo: HÀ VẬT = đồ đạc mang vác. 物 (vật) gặp nhiều: 買い物, 飲み物.\n→ Trong sách, xem thêm mục từ vựng của bài 7.\n+ Từ N5 bổ sung (6): ハンカチ ・ テープ ・ お母さん（おかあさん） ・ お父さん（おとうさん） ・ 両親（りょうしん） ・ 奥さん（おくさん）",
    "minutes": 26
   },
   {
@@ -2314,14 +2314,14 @@
    "day": 31,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 8:\n• おおきい（大きい） = To\n   Mẹo: 大 = người dang rộng hai tay khoe 'to bằng này!'\n• ちいさい（小さい） = Nhỏ\n   Mẹo: 小 = ba chấm bé xíu chụm lại.\n• あたらしい（新しい） = Mới\n   Mẹo: 新 = dùng rìu 斤 đốn cây → gỗ MỚI chặt.\n• ふるい（古い） = Cũ\n   Mẹo: 古 = 十 (mười) + 口 (miệng) → chuyện qua mười miệng thì đã cũ.\n• たかい（高い） = Cao, đắt\n   Mẹo: 高 = tòa tháp nhiều tầng. Giá vọt lên cao = ĐẮT.\n• やすい（安い） = Rẻ\n   Mẹo: 安 = 宀 (mái nhà) che 女 → yên tâm. Giá yên tâm mua = RẺ.\n• おもしろい（面白い） = Thú vị\n   Mẹo: MIÊN BẠCH = 'mặt trắng ra' vì quá bất ngờ, thú vị.\n→ Đối chiếu thêm với mục 語彙 của bài 8 trong sách để bổ sung.\n+ Từ N5 bổ sung (22): いい ・ おいしい ・ まずい ・ 甘い（あまい） ・ 辛い（からい） ・ 重い（おもい） ・ 軽い（かるい） ・ 長い（ながい） ・ 短い（みじかい） ・ 近い（ちかい） ・ 遠い（とおい） ・ 早い（はやい） ・ 速い（はやい） ・ 遅い（おそい） ・ 低い（ひくい） ・ 太い（ふとい） ・ 細い（ほそい） ・ 丸い（まるい） ・ 薄い（うすい） ・ 冷たい（つめたい） ・ 温い（ぬるい） ・ 危ない（あぶない）",
-   "minutes": 42
+   "body": "Từ mới Minna bài 8:\n• おおきい（大きい） = To\n   Mẹo: 大 = người dang rộng hai tay khoe 'to bằng này!'\n• ちいさい（小さい） = Nhỏ\n   Mẹo: 小 = ba chấm bé xíu chụm lại.\n• あたらしい（新しい） = Mới\n   Mẹo: 新 = dùng rìu 斤 đốn cây → gỗ MỚI chặt.\n• ふるい（古い） = Cũ\n   Mẹo: 古 = 十 (mười) + 口 (miệng) → chuyện qua mười miệng thì đã cũ.\n• たかい（高い） = Đắt; cũng có nghĩa cao\n   Mẹo: 高 = tòa tháp nhiều tầng. Giá vọt lên cao = ĐẮT.\n• やすい（安い） = Rẻ\n   Mẹo: 安 = 宀 (mái nhà) che 女 → yên tâm. Giá yên tâm mua = RẺ.\n• おもしろい（面白い） = Thú vị\n   Mẹo: MIÊN BẠCH = 'mặt trắng ra' vì quá bất ngờ, thú vị.\n→ Trong sách, xem thêm mục từ vựng của bài 8.\n+ Từ N5 bổ sung (7): いい ・ おいしい ・ まずい ・ 甘い（あまい） ・ 辛い（からい） ・ 重い（おもい） ・ 軽い（かるい）",
+   "minutes": 25
   },
   {
    "day": 31,
    "orderNo": 6,
    "label": "読  Đọc",
-   "body": "Vào NHK News Web Easy đọc 1 bài. Gạch chân từ mới, chép 3 câu vào sổ.",
+   "body": "Đọc lại 5 câu đã học trong app. Gạch chân một từ còn mờ, chép câu đó vào sổ.",
    "minutes": 20
   },
   {
@@ -2356,8 +2356,8 @@
    "day": 32,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 8:\n• いそがしい（忙しい） = Bận rộn\n   Mẹo: 忙 = 忄 (tim) + 亡 (mất) → bận đến mất cả trái tim.\n• たのしい（楽しい） = Vui\n   Mẹo: 楽 (LẠC) = niềm vui. Cùng chữ với 音楽 (âm nhạc).\n• きれい[な] = Đẹp, sạch\n   Mẹo: Đuôi い nhưng là な-adj — cái bẫy kinh điển. Nhớ kỹ!\n• しずか[な]（静か[な]） = Yên tĩnh\n   Mẹo: TĨNH = yên. 静かに してください = xin giữ trật tự.\n• げんき[な]（元気[な]） = Khỏe mạnh\n   Mẹo: NGUYÊN KHÍ = khí lực gốc còn đầy → khỏe.\n• ゆうめい[な]（有名[な]） = Nổi tiếng\n   Mẹo: HỮU DANH = có tên tuổi.\n• しんせつ[な]（親切[な]） = Tốt bụng\n   Mẹo: THÂN THIẾT = gần gũi, tử tế với người khác.\n→ Đối chiếu thêm với mục 語彙 của bài 8 trong sách để bổ sung.\n+ Từ N5 bổ sung (21): 汚い（きたない） ・ 煩い（うるさい） ・ つまらない ・ かわいい ・ 難しい（むずかしい） ・ 易しい（やさしい） ・ きれい ・ 静か（しずか） ・ 賑やか（にぎやか） ・ 有名（ゆうめい） ・ 便利（べんり） ・ 元気（げんき） ・ 丈夫（じょうぶ） ・ りっぱ ・ 結構（けっこう） ・ 大きな（おおきな） ・ 小さな（ちいさな） ・ こんな ・ とても ・ どう ・ いかが",
-   "minutes": 41
+   "body": "Từ mới Minna bài 8:\n• いそがしい（忙しい） = Bận rộn\n   Mẹo: 忙 = 忄 (tim) + 亡 (mất) → bận đến mất cả trái tim.\n• たのしい（楽しい） = Vui\n   Mẹo: 楽 (LẠC) = niềm vui. Cùng chữ với 音楽 (âm nhạc).\n• きれい = Đẹp; sạch. Đuôi い nhưng là tính từ な — học một lần\n   Mẹo: Đuôi い nhưng là な-adj — cái bẫy kinh điển. Nhớ kỹ!\n• しずか（静か） = Yên tĩnh\n   Mẹo: TĨNH = yên. 静かに してください = xin giữ trật tự.\n• げんき（元気） = Khỏe mạnh\n   Mẹo: NGUYÊN KHÍ = khí lực gốc còn đầy → khỏe.\n• ゆうめい（有名） = Nổi tiếng\n   Mẹo: HỮU DANH = có tên tuổi.\n• しんせつ[な]（親切[な]） = Tốt bụng\n   Mẹo: THÂN THIẾT = gần gũi, tử tế với người khác.\n→ Trong sách, xem thêm mục từ vựng của bài 8.\n+ Từ N5 bổ sung (32): 長い（ながい） ・ 短い（みじかい） ・ 近い（ちかい） ・ 遠い（とおい） ・ 早い（はやい） ・ 速い（はやい） ・ 遅い（おそい） ・ 低い（ひくい） ・ 太い（ふとい） ・ 細い（ほそい） ・ 丸い（まるい） ・ 薄い（うすい） ・ 冷たい（つめたい） ・ 温い（ぬるい） ・ 危ない（あぶない） ・ 汚い（きたない） ・ 煩い（うるさい） ・ つまらない ・ かわいい ・ 難しい（むずかしい） ・ 易しい（やさしい） ・ 賑やか（にぎやか） ・ 便利（べんり） ・ 丈夫（じょうぶ） ・ りっぱ ・ 結構（けっこう） ・ 大きな（おおきな） ・ 小さな（ちいさな） ・ こんな ・ とても ・ どう ・ いかが",
+   "minutes": 35
   },
   {
    "day": 32,
@@ -2391,14 +2391,14 @@
    "day": 33,
    "orderNo": 4,
    "label": "文  Ngữ pháp",
-   "body": "Minna bài 9 (1/2) — Thích / Giỏi / Có & Lý do から\n• N が 好き / 嫌い / 上手 / 下手 です  (Thích / ghét / giỏi / kém. Đối tượng đi với が, KHÔNG dùng を.)\n   Ví dụ: わたしは 日本語が 好きです。  = Tôi thích tiếng Nhật.\n• N が あります / わかります  (Có (sự kiện, khả năng) / hiểu. Cũng dùng が.)\n   Ví dụ: ひらがなが わかります。  = Tôi hiểu chữ Hiragana.\n• 〜から、〜  (Vì ~ nên ~. Vế lý do đứng TRƯỚC.)\n   Ví dụ: 時間が ありませんから、行きません。  = Vì không có thời gian nên tôi không đi.\n→ Làm 練習A của bài 9 trong sách, mỗi mẫu tự đặt 3 câu.",
+   "body": "Minna bài 9 (1/2) — Thích / Giỏi / Có & Lý do から\n• N が 好き / 嫌い / 上手 / 下手 です  (Thích / ghét / giỏi / kém. Đối tượng đi với が, KHÔNG dùng を.)\n   Ví dụ: わたしは 日本語が 好きです。  = Tôi thích tiếng Nhật.\n• N が わかります  (Hiểu. ひらがなが わかります. Dùng が.)\n   Ví dụ: ひらがなが わかります。  = Tôi hiểu chữ Hiragana.\n• 〜から、〜  (Vì ~ nên ~. Vế lý do đứng TRƯỚC.)\n   Ví dụ: 時間が ありませんから、行きません。  = Vì không có thời gian nên tôi không đi.\n→ Làm 練習A của bài 9 trong sách, mỗi mẫu tự đặt 3 câu.",
    "minutes": 25
   },
   {
    "day": 33,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 9:\n• すき[な]（好き[な]） = Thích\n   Mẹo: 好 = 女 (nữ) + 子 (con) → mẹ thương con = THÍCH.\n• きらい[な]（嫌い[な]） = Ghét\n   Mẹo: 嫌 có bộ 女 → 'hiềm' khích, ghét bỏ.\n• じょうず[な]（上手[な]） = Giỏi\n   Mẹo: THƯỢNG THỦ = tay nghề bậc trên → GIỎI.\n• へた[な]（下手[な]） = Kém\n   Mẹo: HẠ THỦ = tay nghề bậc dưới → KÉM. Đối lập hoàn hảo với 上手.\n• わかります（分かります） = Hiểu\n   Mẹo: 分 = lấy dao chia nhỏ vấn đề ra → HIỂU được.\n• あります = Có (đồ vật, sự kiện)\n   Mẹo: Dùng cho vật vô tri và sự kiện. Vật sống thì dùng います.\n• りょうり（料理） = Món ăn, nấu ăn\n   Mẹo: LIỆU LÝ = xử lý nguyên liệu → nấu ăn.\n→ Đối chiếu thêm với mục 語彙 của bài 9 trong sách để bổ sung.\n+ Từ N5 bổ sung (14): 色（いろ） ・ 青（あお） ・ 青い（あおい） ・ 赤（あか） ・ 赤い（あかい） ・ 黒（くろ） ・ 黒い（くろい） ・ 白い（しろい） ・ 黄色（きいろ） ・ 黄色い（きいろい） ・ 茶色（ちゃいろ） ・ 緑（みどり） ・ 好き（すき） ・ 大好き（だいすき）",
+   "body": "Từ mới Minna bài 9:\n• すき[な]（好き[な]） = Thích\n   Mẹo: 好 = 女 (nữ) + 子 (con) → mẹ thương con = THÍCH.\n• きらい[な]（嫌い[な]） = Ghét\n   Mẹo: 嫌 có bộ 女 → 'hiềm' khích, ghét bỏ.\n• じょうず[な]（上手[な]） = Giỏi\n   Mẹo: THƯỢNG THỦ = tay nghề bậc trên → GIỎI.\n• へた[な]（下手[な]） = Kém\n   Mẹo: HẠ THỦ = tay nghề bậc dưới → KÉM. Đối lập hoàn hảo với 上手.\n• わかります（分かります） = Hiểu\n   Mẹo: 分 = lấy dao chia nhỏ vấn đề ra → HIỂU được.\n• あります = Có (đồ vật, sự kiện)\n   Mẹo: Dùng cho vật vô tri và sự kiện. Vật sống thì dùng います.\n• りょうり（料理） = Món ăn, nấu ăn\n   Mẹo: LIỆU LÝ = xử lý nguyên liệu → nấu ăn.\n→ Trong sách, xem thêm mục từ vựng của bài 9.\n+ Từ N5 bổ sung (14): 色（いろ） ・ 青（あお） ・ 青い（あおい） ・ 赤（あか） ・ 赤い（あかい） ・ 黒（くろ） ・ 黒い（くろい） ・ 白い（しろい） ・ 黄色（きいろ） ・ 黄色い（きいろい） ・ 茶色（ちゃいろ） ・ 緑（みどり） ・ 好き（すき） ・ 大好き（だいすき）",
    "minutes": 34
   },
   {
@@ -2440,7 +2440,7 @@
    "day": 34,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 9:\n• おんがく（音楽） = Âm nhạc\n   Mẹo: ÂM NHẠC — 音 (âm) + 楽 (nhạc/lạc).\n• えいが（映画） = Phim\n   Mẹo: ÁNH HỌA = bức tranh chiếu sáng lên màn.\n• スポーツ = Thể thao\n   Mẹo: Từ 'sports'.\n• よく = Thường xuyên, giỏi\n   Mẹo: よく 行きます = hay đi. よく わかります = hiểu rõ.\n• あまり = Không ~ lắm\n   Mẹo: BẮT BUỘC đi với phủ định: あまり 高くないです。\n• ぜんぜん（全然） = Hoàn toàn không\n   Mẹo: Cũng BẮT BUỘC đi với phủ định. TOÀN NHIÊN = toàn bộ như vậy.\n• どうして = Tại sao\n   Mẹo: Trả lời phải kết thúc bằng 〜からです.\n→ Đối chiếu thêm với mục 語彙 của bài 9 trong sách để bổ sung.\n+ Từ N5 bổ sung (14): 嫌い（きらい） ・ 嫌（いや） ・ 上手（じょうず） ・ 下手（へた） ・ 歌（うた） ・ 絵（え） ・ ギター ・ 漢字（かんじ） ・ 意味（いみ） ・ 言葉（ことば） ・ なぜ ・ たくさん ・ 少し（すこし） ・ ちょっと",
+   "body": "Từ mới Minna bài 9:\n• おんがく（音楽） = Âm nhạc\n   Mẹo: ÂM NHẠC — 音 (âm) + 楽 (nhạc/lạc).\n• えいが（映画） = Phim\n   Mẹo: ÁNH HỌA = bức tranh chiếu sáng lên màn.\n• スポーツ = Thể thao\n   Mẹo: Từ 'sports'.\n• よく = Thường xuyên, giỏi\n   Mẹo: よく 行きます = hay đi. よく わかります = hiểu rõ.\n• あまり = Không ~ lắm\n   Mẹo: BẮT BUỘC đi với phủ định: あまり 高くないです。\n• ぜんぜん（全然） = Hoàn toàn không\n   Mẹo: Cũng BẮT BUỘC đi với phủ định. TOÀN NHIÊN = toàn bộ như vậy.\n• どうして = Tại sao\n   Mẹo: Trả lời phải kết thúc bằng 〜からです.\n→ Trong sách, xem thêm mục từ vựng của bài 9.\n+ Từ N5 bổ sung (14): 嫌い（きらい） ・ 嫌（いや） ・ 上手（じょうず） ・ 下手（へた） ・ 歌（うた） ・ 絵（え） ・ ギター ・ 漢字（かんじ） ・ 意味（いみ） ・ 言葉（ことば） ・ なぜ ・ たくさん ・ 少し（すこし） ・ ちょっと",
    "minutes": 34
   },
   {
@@ -2454,7 +2454,7 @@
    "day": 35,
    "orderNo": 1,
    "label": "漢  Kanji",
-   "body": "Viết lại toàn bộ Kanji đã học trong tuần: che nghĩa → đọc chữ, che chữ → viết lại. Lọc sheet '9. Kanji 103' theo cột Ngày học để biết chính xác chữ nào.",
+   "body": "Viết lại toàn bộ Kanji đã học trong tuần: che nghĩa → đọc chữ, che chữ → viết lại. Trong app, xem chữ của tuần này và đánh dấu chữ còn mờ.",
    "minutes": 25
   },
   {
@@ -2503,7 +2503,7 @@
    "day": 36,
    "orderNo": 3,
    "label": "漢  Kanji",
-   "body": "Học 2 chữ. Mỗi chữ viết tay 10 lần đúng thứ tự nét.\n• 高 [CAO] Cao, đắt — On: コウ / Kun: たか(い) (10 nét)\n   Từ ghép: 高い (たかい) cao/đắt ・ 高校 (こうこう) trường cấp 3 ・ 高校生 (こうこうせい) học sinh cấp 3\n   Mẹo: Hình một tòa tháp nhiều tầng chồng lên nhau = CAO. Giá cao → ĐẮT.\n• 円 [VIÊN] Đồng yên, tròn — On: エン / Kun: まる(い) (4 nét)\n   Từ ghép: 百円 (ひゃくえん) 100 yên ・ 千円 (せんえん) 1000 yên ・ 円い (まるい) tròn\n   Mẹo: Khung vuông có hai vạch = đồng xu TRÒN đặt trong khay. Tiền Nhật = ĐỒNG YÊN.",
+   "body": "Học 2 chữ. Mỗi chữ viết tay 10 lần đúng thứ tự nét.\n• 高 [CAO] Cao; đắt — On: コウ / Kun: たか(い) (10 nét)\n   Từ ghép: 高い (たかい) cao/đắt ・ 高校 (こうこう) trường cấp 3 ・ 高校生 (こうこうせい) học sinh cấp 3\n   Mẹo: Hình một tòa tháp nhiều tầng chồng lên nhau = CAO. Giá cao → ĐẮT.\n• 円 [VIÊN] Đồng yên, tròn — On: エン / Kun: まる(い) (4 nét)\n   Từ ghép: 百円 (ひゃくえん) 100 yên ・ 千円 (せんえん) 1000 yên ・ 円い (まるい) tròn\n   Mẹo: Khung vuông có hai vạch = đồng xu TRÒN đặt trong khay. Tiền Nhật = ĐỒNG YÊN.",
    "minutes": 20
   },
   {
@@ -2517,7 +2517,7 @@
    "day": 36,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 10:\n• います = Có (người, động vật)\n   Mẹo: Vật SỐNG mới dùng います. Nhớ: I-MASU cho 'I' là sinh vật.\n• うえ（上） = Bên trên\n   Mẹo: 上 = vạch mốc có nét nhô LÊN.\n• した（下） = Bên dưới\n   Mẹo: 下 = vạch mốc có nét thò XUỐNG. Lộn ngược của 上.\n• まえ（前） = Phía trước\n   Mẹo: 前 cũng có trong 名前 (tên) và 午前 (buổi sáng).\n• うしろ（後ろ） = Phía sau\n   Mẹo: 後 có bộ 彳 (bước đi) → bước chậm bị tụt lại SAU.\n• なか（中） = Bên trong\n   Mẹo: 中 = mũi tên xuyên qua tâm ô vuông.\n• そと（外） = Bên ngoài\n   Mẹo: 外 = 夕 (chiều tối) + 卜 (bói) → bói ngoài trời.\n→ Đối chiếu thêm với mục 語彙 của bài 10 trong sách để bổ sung.\n+ Từ N5 bổ sung (13): 犬（いぬ） ・ 猫（ねこ） ・ 鳥（とり） ・ 動物（どうぶつ） ・ ペット ・ 池（いけ） ・ 海（うみ） ・ 公園（こうえん） ・ 交番（こうばん） ・ おまわりさん ・ 警官（けいかん） ・ 図書館（としょかん） ・ 本棚（ほんだな）",
+   "body": "Từ mới Minna bài 10:\n• います = Có (người, động vật)\n   Mẹo: Vật SỐNG mới dùng います. Nhớ: I-MASU cho 'I' là sinh vật.\n• うえ（上） = Bên trên\n   Mẹo: 上 = vạch mốc có nét nhô LÊN.\n• した（下） = Bên dưới\n   Mẹo: 下 = vạch mốc có nét thò XUỐNG. Lộn ngược của 上.\n• まえ（前） = Phía trước\n   Mẹo: 前 cũng có trong 名前 (tên) và 午前 (buổi sáng).\n• うしろ（後ろ） = Phía sau\n   Mẹo: 後 có bộ 彳 (bước đi) → bước chậm bị tụt lại SAU.\n• なか（中） = Bên trong\n   Mẹo: 中 = mũi tên xuyên qua tâm ô vuông.\n• そと（外） = Bên ngoài\n   Mẹo: 外 = 夕 (chiều tối) + 卜 (bói) → bói ngoài trời.\n→ Trong sách, xem thêm mục từ vựng của bài 10.\n+ Từ N5 bổ sung (13): 犬（いぬ） ・ 猫（ねこ） ・ 鳥（とり） ・ 動物（どうぶつ） ・ ペット ・ 池（いけ） ・ 海（うみ） ・ 公園（こうえん） ・ 交番（こうばん） ・ おまわりさん ・ 警官（けいかん） ・ 図書館（としょかん） ・ 本棚（ほんだな）",
    "minutes": 33
   },
   {
@@ -2559,14 +2559,14 @@
    "day": 37,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 10:\n• となり（隣） = Bên cạnh (cùng loại)\n   Mẹo: 隣 dùng cho nhà cạnh nhà, người cạnh người — cùng loại.\n• ちかく（近く） = Gần đây\n   Mẹo: 近 có bộ 辶 (di chuyển) → đi một quãng ngắn là tới.\n• あいだ（間） = Ở giữa (hai vật)\n   Mẹo: 間 = ánh nắng 日 lọt qua khe cửa 門.\n• いえ / うち（家） = Nhà\n   Mẹo: 家 = 宀 (mái nhà) + 豕 (con lợn) → nhà xưa nuôi lợn dưới sàn.\n• へや（部屋） = Phòng\n   Mẹo: BỘ ỐC = một gian trong ngôi nhà.\n• にわ（庭） = Sân vườn\n   Mẹo: 庭 có bộ 广 (mái hiên) → khoảng đất trước hiên nhà.\n• ビル = Tòa nhà\n   Mẹo: Từ 'building' rút gọn. Đừng nhầm với ビール (bia)!\n→ Đối chiếu thêm với mục 語彙 của bài 10 trong sách để bổ sung.\n+ Từ N5 bổ sung (13): 冷蔵庫（れいぞうこ） ・ ベッド ・ テーブル ・ ドア ・ 戸（と） ・ 窓（まど） ・ ポスト ・ 横（よこ） ・ そば ・ 向こう（むこう） ・ 辺（へん） ・ いろいろ ・ アパート",
+   "body": "Từ mới Minna bài 10:\n• となり（隣） = Bên cạnh (cùng loại)\n   Mẹo: 隣 dùng cho nhà cạnh nhà, người cạnh người — cùng loại.\n• ちかく（近く） = Gần đây\n   Mẹo: 近 có bộ 辶 (di chuyển) → đi một quãng ngắn là tới.\n• あいだ（間） = Ở giữa (hai vật)\n   Mẹo: 間 = ánh nắng 日 lọt qua khe cửa 門.\n• いえ / うち（家） = Nhà\n   Mẹo: 家 = 宀 (mái nhà) + 豕 (con lợn) → nhà xưa nuôi lợn dưới sàn.\n• へや（部屋） = Phòng\n   Mẹo: BỘ ỐC = một gian trong ngôi nhà.\n• にわ（庭） = Sân vườn\n   Mẹo: 庭 có bộ 广 (mái hiên) → khoảng đất trước hiên nhà.\n• ビル = Tòa nhà\n   Mẹo: Từ 'building' rút gọn. Đừng nhầm với ビール (bia)!\n→ Trong sách, xem thêm mục từ vựng của bài 10.\n+ Từ N5 bổ sung (13): 冷蔵庫（れいぞうこ） ・ ベッド ・ テーブル ・ ドア ・ 戸（と） ・ 窓（まど） ・ ポスト ・ 横（よこ） ・ そば ・ 向こう（むこう） ・ 辺（へん） ・ いろいろ ・ アパート",
    "minutes": 33
   },
   {
    "day": 37,
    "orderNo": 6,
    "label": "読  Đọc",
-   "body": "Vào NHK News Web Easy đọc 1 bài. Gạch chân từ mới, chép 3 câu vào sổ.",
+   "body": "Đọc lại 5 câu đã học trong app. Gạch chân một từ còn mờ, chép câu đó vào sổ.",
    "minutes": 20
   },
   {
@@ -2601,7 +2601,7 @@
    "day": 38,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 11:\n• ひとつ〜とおつ（一つ〜十） = Một cái đến mười cái\n   Mẹo: ひとつ ふたつ みっつ よっつ いつつ むっつ ななつ やっつ ここのつ とお. Đọc to 10 lần mỗi ngày.\n• ひとり / ふたり（一人 / 二人） = Một người / hai người\n   Mẹo: Hai số này bất quy tắc. Từ 3 người trở đi: 三人 さんにん.\n• 〜だい（〜台） = Chiếc (máy móc, xe)\n   Mẹo: ĐÀI = cái bệ máy. Dùng cho 車, テレビ, パソコン.\n• 〜まい（〜枚） = Tờ, tấm (vật mỏng)\n   Mẹo: 枚 có bộ 木 → lát gỗ mỏng. Dùng cho 紙, シャツ, きっぷ.\n• 〜さつ（〜冊） = Quyển (sách vở)\n   Mẹo: 冊 nhìn như các thẻ tre buộc lại thành sách.\n• 〜かい（〜回） = Lần\n   Mẹo: HỒI = một vòng lặp lại.\n• 〜じかん（〜時間） = ~ tiếng đồng hồ\n   Mẹo: 時 (giờ) + 間 (khoảng) = khoảng thời gian, khác với 〜時 (mốc giờ).\n→ Đối chiếu thêm với mục 語彙 của bài 11 trong sách để bổ sung.\n+ Từ N5 bổ sung (16): 一つ（ひとつ） ・ 二つ（ふたつ） ・ 三つ（みっつ） ・ 四つ（よっつ） ・ 五つ（いつつ） ・ 六つ（むっつ） ・ 七つ（ななつ） ・ 八つ（やっつ） ・ 九つ（ここのつ） ・ いくつ ・ 二十歳（はたち） ・ 兄弟（きょうだい） ・ 兄（あに） ・ 姉（あね） ・ 弟（おとうと） ・ 妹（いもうと）",
+   "body": "Từ mới Minna bài 11:\n• ひとつ〜とお（一つ〜十） = Một cái đến mười cái\n   Mẹo: ひとつ ふたつ みっつ よっつ いつつ むっつ ななつ やっつ ここのつ とお. Đọc to 10 lần mỗi ngày.\n• ひとり / ふたり（一人 / 二人） = Một người / hai người\n   Mẹo: Hai số này bất quy tắc. Từ 3 người trở đi: 三人 さんにん.\n• 〜だい（〜台） = Chiếc (máy móc, xe)\n   Mẹo: ĐÀI = cái bệ máy. Dùng cho 車, テレビ, パソコン.\n• 〜まい（〜枚） = Tờ, tấm (vật mỏng)\n   Mẹo: 枚 có bộ 木 → lát gỗ mỏng. Dùng cho 紙, シャツ, きっぷ.\n• 〜さつ（〜冊） = Quyển (sách vở)\n   Mẹo: 冊 nhìn như các thẻ tre buộc lại thành sách.\n• 〜かい（〜回） = Lần\n   Mẹo: HỒI = một vòng lặp lại.\n• 〜じかん（〜時間） = ~ tiếng đồng hồ\n   Mẹo: 時 (giờ) + 間 (khoảng) = khoảng thời gian, khác với 〜時 (mốc giờ).\n→ Trong sách, xem thêm mục từ vựng của bài 11.\n+ Từ N5 bổ sung (16): 一つ（ひとつ） ・ 二つ（ふたつ） ・ 三つ（みっつ） ・ 四つ（よっつ） ・ 五つ（いつつ） ・ 六つ（むっつ） ・ 七つ（ななつ） ・ 八つ（やっつ） ・ 九つ（ここのつ） ・ いくつ ・ 二十歳（はたち） ・ 兄弟（きょうだい） ・ 兄（あに） ・ 姉（あね） ・ 弟（おとうと） ・ 妹（いもうと）",
    "minutes": 36
   },
   {
@@ -2643,7 +2643,7 @@
    "day": 39,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 11:\n• 〜しゅうかん（〜週間） = ~ tuần\n   Mẹo: 週 (tuần) + 間 (khoảng).\n• 〜かげつ（〜か月） = ~ tháng\n   Mẹo: Chú ý: 一か月 いっかげつ, 六か月 ろっかげつ.\n• 〜ねん（〜年） = ~ năm\n   Mẹo: 一年 いちねん, 四年 よねん.\n• きって（切手） = Tem thư\n   Mẹo: THIẾT THỦ = mảnh cắt cầm tay. Nhớ chung với 切符 (vé).\n• はがき = Bưu thiếp\n   Mẹo: HA-GA-KI: 'ha, ghi' — tấm thiệp để ghi lời nhắn.\n• りんご = Quả táo\n   Mẹo: RIN-GO: 'rinh gô' quả táo về.\n• ぐらい / くらい = Khoảng chừng\n   Mẹo: 三十分ぐらい = khoảng 30 phút. Khác với ごろ (dùng cho MỐC giờ).\n→ Đối chiếu thêm với mục 語彙 của bài 11 trong sách để bổ sung.\n+ Từ N5 bổ sung (15): お兄さん（おにいさん） ・ お姉さん（おねえさん） ・ 伯母さん（おばさん） ・ 大人（おとな） ・ 男の子（おとこのこ） ・ 女の子（おんなのこ） ・ 外国（がいこく） ・ キロ ・ グラム ・ メートル ・ ページ ・ 半分（はんぶん） ・ 全部（ぜんぶ） ・ 大勢（おおぜい） ・ 一月（ひとつき）",
+   "body": "Từ mới Minna bài 11:\n• 〜しゅうかん（〜週間） = ~ tuần\n   Mẹo: 週 (tuần) + 間 (khoảng).\n• 〜かげつ（〜か月） = ~ tháng\n   Mẹo: Chú ý: 一か月 いっかげつ, 六か月 ろっかげつ.\n• 〜ねん（〜年） = ~ năm\n   Mẹo: 一年 いちねん, 四年 よねん.\n• きって（切手） = Tem thư\n   Mẹo: THIẾT THỦ = mảnh cắt cầm tay. Nhớ chung với 切符 (vé).\n• はがき = Bưu thiếp\n   Mẹo: HA-GA-KI: 'ha, ghi' — tấm thiệp để ghi lời nhắn.\n• りんご = Quả táo\n   Mẹo: RIN-GO: 'rinh gô' quả táo về.\n• ぐらい / くらい = Khoảng chừng\n   Mẹo: 三十分ぐらい = khoảng 30 phút. Khác với ごろ (dùng cho MỐC giờ).\n→ Trong sách, xem thêm mục từ vựng của bài 11.\n+ Từ N5 bổ sung (15): お兄さん（おにいさん） ・ お姉さん（おねえさん） ・ 伯母さん（おばさん） ・ 大人（おとな） ・ 男の子（おとこのこ） ・ 女の子（おんなのこ） ・ 外国（がいこく） ・ キロ ・ グラム ・ メートル ・ ページ ・ 半分（はんぶん） ・ 全部（ぜんぶ） ・ 大勢（おおぜい） ・ 一月（ひとつき）",
    "minutes": 35
   },
   {
@@ -2685,7 +2685,7 @@
    "day": 40,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 12:\n• さむい（寒い） = Lạnh\n   Mẹo: 寒 có 冫 (băng) hai chấm ở dưới → đóng băng vì LẠNH.\n• あつい（暑い / 熱い） = Nóng (trời) / nóng (vật)\n   Mẹo: 暑 có 日 (mặt trời) → trời nóng. 熱 có 灬 (lửa) → vật nóng.\n• すずしい（涼しい） = Mát mẻ\n   Mẹo: 涼 có 氵 (nước) → có nước nên mát.\n• あたたかい（暖かい） = Ấm áp\n   Mẹo: 暖 có 日 (mặt trời) → nắng ấm.\n• てんき（天気） = Thời tiết\n   Mẹo: THIÊN KHÍ = khí trời.\n• あめ（雨） = Mưa\n   Mẹo: 雨 = mây bên trên, bốn giọt nước rơi bên dưới.\n• ゆき（雪） = Tuyết\n   Mẹo: 雪 có bộ 雨 (mưa) → mưa đông cứng lại thành TUYẾT.\n→ Đối chiếu thêm với mục 語彙 của bài 12 trong sách để bổ sung.\n+ Từ N5 bổ sung (7): 多い（おおい） ・ 少ない（すくない） ・ 同じ（おなじ） ・ より ・ もっと ・ 風（かぜ） ・ 晴れます（はれます）",
+   "body": "Từ mới Minna bài 12:\n• さむい（寒い） = Lạnh\n   Mẹo: 寒 có 冫 (băng) hai chấm ở dưới → đóng băng vì LẠNH.\n• あつい（暑い / 熱い） = Nóng (trời) / nóng (vật)\n   Mẹo: 暑 có 日 (mặt trời) → trời nóng. 熱 có 灬 (lửa) → vật nóng.\n• すずしい（涼しい） = Mát mẻ\n   Mẹo: 涼 có 氵 (nước) → có nước nên mát.\n• あたたかい（暖かい） = Ấm áp\n   Mẹo: 暖 có 日 (mặt trời) → nắng ấm.\n• てんき（天気） = Thời tiết\n   Mẹo: THIÊN KHÍ = khí trời.\n• あめ（雨） = Mưa\n   Mẹo: 雨 = mây bên trên, bốn giọt nước rơi bên dưới.\n• ゆき（雪） = Tuyết\n   Mẹo: 雪 có bộ 雨 (mưa) → mưa đông cứng lại thành TUYẾT.\n→ Trong sách, xem thêm mục từ vựng của bài 12.\n+ Từ N5 bổ sung (7): 多い（おおい） ・ 少ない（すくない） ・ 同じ（おなじ） ・ より ・ もっと ・ 風（かぜ） ・ 晴れます（はれます）",
    "minutes": 27
   },
   {
@@ -2727,7 +2727,7 @@
    "day": 41,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 12:\n• くもり（曇り） = Trời nhiều mây\n   Mẹo: 曇 = 日 (mặt trời) bị 雲 (mây) che.\n• はれ（晴れ） = Trời nắng\n   Mẹo: 晴 = 日 (mặt trời) + 青 (xanh) → trời xanh có nắng.\n• いちばん（一番） = Nhất\n   Mẹo: NHẤT PHIÊN = số một. 番 (phiên) = thứ tự.\n• どちら = Cái nào (trong hai)\n   Mẹo: Chỉ dùng khi so sánh ĐÚNG HAI thứ. Ba thứ trở lên dùng どれ.\n• きせつ（季節） = Mùa\n   Mẹo: QUÝ TIẾT = mùa trong năm.\n• なつ / ふゆ（夏 / 冬） = Mùa hè / mùa đông\n   Mẹo: 夏 (HẠ) và 冬 (ĐÔNG). 冬 có hai chấm băng ở dưới.\n• はる / あき（春 / 秋） = Mùa xuân / mùa thu\n   Mẹo: 春 (XUÂN) có 日 ở dưới. 秋 = 禾 (lúa) + 火 (lửa) → lúa chín vàng như lửa.\n→ Đối chiếu thêm với mục 語彙 của bài 12 trong sách để bổ sung.\n+ Từ N5 bổ sung (7): 曇ります（くもります） ・ 降ります（ふります） ・ 吹きます（ふきます） ・ 咲きます（さきます） ・ 夏休み（なつやすみ） ・ 旅行（りょこう） ・ パーティー",
+   "body": "Từ mới Minna bài 12:\n• くもり（曇り） = Trời nhiều mây\n   Mẹo: 曇 = 日 (mặt trời) bị 雲 (mây) che.\n• はれ（晴れ） = Trời nắng\n   Mẹo: 晴 = 日 (mặt trời) + 青 (xanh) → trời xanh có nắng.\n• いちばん（一番） = Nhất\n   Mẹo: NHẤT PHIÊN = số một. 番 (phiên) = thứ tự.\n• どちら = Cái nào (trong hai)\n   Mẹo: Chỉ dùng khi so sánh ĐÚNG HAI thứ. Ba thứ trở lên dùng どれ.\n• きせつ（季節） = Mùa\n   Mẹo: QUÝ TIẾT = mùa trong năm.\n• なつ / ふゆ（夏 / 冬） = Mùa hè / mùa đông\n   Mẹo: 夏 (HẠ) và 冬 (ĐÔNG). 冬 có hai chấm băng ở dưới.\n• はる / あき（春 / 秋） = Mùa xuân / mùa thu\n   Mẹo: 春 (XUÂN) có 日 ở dưới. 秋 = 禾 (lúa) + 火 (lửa) → lúa chín vàng như lửa.\n→ Trong sách, xem thêm mục từ vựng của bài 12.\n+ Từ N5 bổ sung (7): 曇ります（くもります） ・ 降ります（ふります） ・ 吹きます（ふきます） ・ 咲きます（さきます） ・ 夏休み（なつやすみ） ・ 旅行（りょこう） ・ パーティー",
    "minutes": 27
   },
   {
@@ -2741,7 +2741,7 @@
    "day": 42,
    "orderNo": 1,
    "label": "漢  Kanji",
-   "body": "Viết lại toàn bộ Kanji đã học trong tuần: che nghĩa → đọc chữ, che chữ → viết lại. Lọc sheet '9. Kanji 103' theo cột Ngày học để biết chính xác chữ nào.",
+   "body": "Viết lại toàn bộ Kanji đã học trong tuần: che nghĩa → đọc chữ, che chữ → viết lại. Trong app, xem chữ của tuần này và đánh dấu chữ còn mờ.",
    "minutes": 25
   },
   {
@@ -2804,14 +2804,14 @@
    "day": 43,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 13:\n• ほしい = Muốn có\n   Mẹo: Là TÍNH TỪ đuôi い, không phải động từ. Phủ định: ほしくないです.\n• 〜たい = Muốn làm\n   Mẹo: Bỏ ます thêm たい. Chia như tính từ い: 行きたくないです.\n• かいもの（買い物） = Việc mua sắm\n   Mẹo: MÃI VẬT = mua đồ vật. 〜物 gặp lại ở 飲み物, 食べ物.\n• しょくじ（食事） = Bữa ăn\n   Mẹo: THỰC SỰ = việc ăn uống.\n• さんぽ（散歩） = Đi dạo\n   Mẹo: TÁN BỘ = bước chân thong dong. 散歩します。\n• けっこん（結婚） = Kết hôn\n   Mẹo: KẾT HÔN — âm Hán Việt y hệt tiếng Việt.\n• つかれます（疲れます） = Mệt\n   Mẹo: 疲 có bộ 疒 (bệnh tật) → mệt gần như ốm.\n→ Đối chiếu thêm với mục 語彙 của bài 13 trong sách để bổ sung.\n+ Từ N5 bổ sung (7): 暇（ひま） ・ 遊びます（あそびます） ・ 泳ぎます（およぎます） ・ 映画館（えいがかん） ・ 出かけます（でかけます） ・ ホテル ・ 町（まち）",
+   "body": "Từ mới Minna bài 13:\n• ほしい = Muốn có\n   Mẹo: Là TÍNH TỪ đuôi い, không phải động từ. Phủ định: ほしくないです.\n• 〜たい = Muốn làm\n   Mẹo: Bỏ ます thêm たい. Chia như tính từ い: 行きたくないです.\n• かいもの（買い物） = Việc mua sắm\n   Mẹo: MÃI VẬT = mua đồ vật. 〜物 gặp lại ở 飲み物, 食べ物.\n• しょくじ（食事） = Bữa ăn\n   Mẹo: THỰC SỰ = việc ăn uống.\n• さんぽ（散歩） = Đi dạo\n   Mẹo: TÁN BỘ = bước chân thong dong. 散歩します。\n• けっこん（結婚） = Kết hôn\n   Mẹo: KẾT HÔN — âm Hán Việt y hệt tiếng Việt.\n• つかれます（疲れます） = Mệt\n   Mẹo: 疲 có bộ 疒 (bệnh tật) → mệt gần như ốm.\n→ Trong sách, xem thêm mục từ vựng của bài 13.\n+ Từ N5 bổ sung (7): 暇（ひま） ・ 遊びます（あそびます） ・ 泳ぎます（およぎます） ・ 映画館（えいがかん） ・ 出かけます（でかけます） ・ ホテル ・ 町（まち）",
    "minutes": 27
   },
   {
    "day": 43,
    "orderNo": 6,
    "label": "読  Đọc",
-   "body": "Vào NHK News Web Easy đọc 1 bài. Gạch chân từ mới, chép 3 câu vào sổ.",
+   "body": "Đọc lại 5 câu đã học trong app. Gạch chân một từ còn mờ, chép câu đó vào sổ.",
    "minutes": 20
   },
   {
@@ -2839,14 +2839,14 @@
    "day": 44,
    "orderNo": 4,
    "label": "文  Ngữ pháp",
-   "body": "Minna bài 13 (2/2) — Mong muốn — たい & ほしい\n• 場所 へ V ます-stem に 行きます / 来ます / 帰ります  (Đi/đến/về nơi nào ĐỂ làm gì.)\n   Ví dụ: デパートへ 買い物に 行きます。  = Tôi đi siêu thị để mua sắm.\n• N (danh động từ) に 行きます  (Đi để làm việc gì đó (với danh từ hành động).)\n   Ví dụ: 日本へ 勉強に 来ました。  = Tôi đến Nhật để học.\n→ Làm 練習A của bài 13 trong sách, mỗi mẫu tự đặt 3 câu.",
+   "body": "Minna bài 13 (2/2) — Mong muốn — たい & ほしい\n• 場所 へ V ます-stem に 行きます / 来ます / 帰ります  (Đi/đến/về nơi nào ĐỂ làm gì.)\n   Ví dụ: デパートへ 買い物に 行きます。  = Tôi đến cửa hàng bách hoá để mua sắm.\n• N (danh động từ) に 行きます  (Đi để làm việc gì đó (với danh từ hành động).)\n   Ví dụ: 日本へ 勉強に 来ました。  = Tôi đến Nhật để học.\n→ Làm 練習A của bài 13 trong sách, mỗi mẫu tự đặt 3 câu.",
    "minutes": 25
   },
   {
    "day": 44,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 13:\n• けっこんします（結婚します） = Kết hôn\n   Mẹo: Đi với trợ từ と: 田中さんと 結婚します。\n• おなか = Bụng\n   Mẹo: おなかが すきました = đói bụng (bụng đã rỗng).\n• のど = Cổ họng\n   Mẹo: のどが かわきました = khát nước (họng đã khô).\n• プール = Bể bơi\n   Mẹo: Từ 'pool'.\n• びじゅつかん（美術館） = Bảo tàng mỹ thuật\n   Mẹo: MỸ THUẬT QUÁN. 館 (quán) = tòa nhà lớn: 図書館, 大使館.\n• おんせん（温泉） = Suối nước nóng\n   Mẹo: ÔN TUYỀN = suối ấm. 温 có 氵 (nước) + 日 (mặt trời).\n• どこか / なにか = Đâu đó / cái gì đó\n   Mẹo: Thêm か vào từ để hỏi → thành từ bất định.\n→ Đối chiếu thêm với mục 語彙 của bài 13 trong sách để bổ sung.\n+ Từ N5 bổ sung (6): 村（むら） ・ お菓子（おかし） ・ 砂糖（さとう） ・ 塩（しお） ・ しょうゆ ・ バター",
+   "body": "Từ mới Minna bài 13:\n• けっこんします（結婚します） = Kết hôn\n   Mẹo: Đi với trợ từ と: 田中さんと 結婚します。\n• おなか = Bụng\n   Mẹo: おなかが すきました = đói bụng (bụng đã rỗng).\n• のど = Cổ họng\n   Mẹo: のどが かわきました = khát nước (họng đã khô).\n• プール = Bể bơi\n   Mẹo: Từ 'pool'.\n• びじゅつかん（美術館） = Bảo tàng mỹ thuật\n   Mẹo: MỸ THUẬT QUÁN. 館 (quán) = tòa nhà lớn: 図書館, 大使館.\n• おんせん（温泉） = Suối nước nóng\n   Mẹo: ÔN TUYỀN = suối ấm. 温 có 氵 (nước) + 日 (mặt trời).\n• どこか / なにか = Đâu đó / cái gì đó\n   Mẹo: Thêm か vào từ để hỏi → thành từ bất định.\n→ Trong sách, xem thêm mục từ vựng của bài 13.\n+ Từ N5 bổ sung (6): 村（むら） ・ お菓子（おかし） ・ 砂糖（さとう） ・ 塩（しお） ・ しょうゆ ・ バター",
    "minutes": 26
   },
   {
@@ -2881,14 +2881,14 @@
    "day": 45,
    "orderNo": 4,
    "label": "文  Ngữ pháp",
-   "body": "Minna bài 14 (1/3) — Thể て & Yêu cầu\n• Cách chia thể て  (Nhóm I: き→いて, ぎ→いで, み/び/に→んで, ち/り/い→って, し→して (行きます→行って là ngoại lệ). Nhóm II: bỏ ます thêm て. Nhóm III: します→して, 来ます→来て.)\n   Ví dụ: 書きます → 書いて / 飲みます → 飲んで  = viết → viết rồi / uống → uống rồi\n• V て ください  (Xin hãy làm ~. Lời nhờ vả hoặc chỉ dẫn.)\n   Ví dụ: ちょっと 待って ください。  = Xin hãy đợi một chút.\n→ Làm 練習A của bài 14 trong sách, mỗi mẫu tự đặt 3 câu.",
+   "body": "Minna bài 14 (1/3) — Thể て & Yêu cầu\n• Cách chia thể て  (Nhóm I đổi đuôi: 書きます → 書いて, 飲みます → 飲んで. 行きます thành 行って. Nhóm II: bỏ ます, thêm て. Nhóm III: します thành して, 来ます thành 来て.)\n   Ví dụ: 書きます → 書いて / 飲みます → 飲んで  = viết → viết rồi / uống → uống rồi\n• V て ください  (Xin hãy làm ~. Lời nhờ vả hoặc chỉ dẫn.)\n   Ví dụ: ちょっと 待って ください。  = Xin hãy đợi một chút.\n→ Làm 練習A của bài 14 trong sách, mỗi mẫu tự đặt 3 câu.",
    "minutes": 25
   },
   {
    "day": 45,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 14:\n• つけます = Bật (điện, máy)\n   Mẹo: Đối lập với 消します (tắt). エアコンを つけます。\n• けします（消します） = Tắt, xóa\n   Mẹo: 消 có 氵 (nước) → dội nước làm TẮT lửa.\n• あけます（開けます） = Mở\n   Mẹo: 開 có bộ 門 (cửa) → mở cánh cửa.\n• しめます（閉めます） = Đóng\n   Mẹo: 閉 cũng có 門, bên trong có then cài → ĐÓNG lại.\n• いそぎます（急ぎます） = Vội, gấp\n   Mẹo: 急 có bộ 心 (tim) → tim đập nhanh vì VỘI.\n→ Đối chiếu thêm với mục 語彙 của bài 14 trong sách để bổ sung.\n+ Từ N5 bổ sung (6): 立ちます（たちます） ・ 座ります（すわります） ・ 答えます（こたえます） ・ 話します（はなします） ・ 頼みます（たのみます） ・ 渡します（わたします）",
+   "body": "Từ mới Minna bài 14:\n• つけます = Bật (điện, máy)\n   Mẹo: Đối lập với 消します (tắt). エアコンを つけます。\n• けします（消します） = Tắt, xóa\n   Mẹo: 消 có 氵 (nước) → dội nước làm TẮT lửa.\n• あけます（開けます） = Mở\n   Mẹo: 開 có bộ 門 (cửa) → mở cánh cửa.\n• しめます（閉めます） = Đóng\n   Mẹo: 閉 cũng có 門, bên trong có then cài → ĐÓNG lại.\n• いそぎます（急ぎます） = Vội, gấp\n   Mẹo: 急 có bộ 心 (tim) → tim đập nhanh vì VỘI.\n→ Trong sách, xem thêm mục từ vựng của bài 14.\n+ Từ N5 bổ sung (6): 立ちます（たちます） ・ 座ります（すわります） ・ 答えます（こたえます） ・ 話します（はなします） ・ 頼みます（たのみます） ・ 渡します（わたします）",
    "minutes": 26
   },
   {
@@ -2930,7 +2930,7 @@
    "day": 46,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 14:\n• まちます（待ちます） = Đợi\n   Mẹo: 待 có bộ 彳 (bước đi) + 寺 (chùa) → đứng ở chùa mà ĐỢI.\n• とめます（止めます） = Dừng, đỗ (xe)\n   Mẹo: 止 nhìn như bàn chân đứng yên → DỪNG.\n• まがります（曲がります） = Rẽ\n   Mẹo: 曲 nhìn như con đường uốn cong → RẼ.\n• もちます（持ちます） = Cầm, mang\n   Mẹo: 持 có 扌 (tay) → dùng tay CẦM.\n• てつだいます（手伝います） = Giúp đỡ\n   Mẹo: THỦ TRUYỀN = đưa tay ra giúp.\n→ Đối chiếu thêm với mục 語彙 của bài 14 trong sách để bổ sung.\n+ Từ N5 bổ sung (5): 並びます（ならびます） ・ 並べます（ならべます） ・ まっすぐ ・ ゆっくりと ・ すぐに",
+   "body": "Từ mới Minna bài 14:\n• まちます（待ちます） = Đợi\n   Mẹo: 待 có bộ 彳 (bước đi) + 寺 (chùa) → đứng ở chùa mà ĐỢI.\n• とめます（止めます） = Dừng, đỗ (xe)\n   Mẹo: 止 nhìn như bàn chân đứng yên → DỪNG.\n• まがります（曲がります） = Rẽ\n   Mẹo: 曲 nhìn như con đường uốn cong → RẼ.\n• もちます（持ちます） = Cầm, mang\n   Mẹo: 持 có 扌 (tay) → dùng tay CẦM.\n• てつだいます（手伝います） = Giúp đỡ\n   Mẹo: THỦ TRUYỀN = đưa tay ra giúp.\n→ Trong sách, xem thêm mục từ vựng của bài 14.\n+ Từ N5 bổ sung (5): 並びます（ならびます） ・ 並べます（ならべます） ・ まっすぐ ・ ゆっくりと ・ すぐに",
    "minutes": 25
   },
   {
@@ -2972,7 +2972,7 @@
    "day": 47,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 14:\n• よびます（呼びます） = Gọi (người)\n   Mẹo: 呼 có 口 (miệng) → dùng miệng GỌI.\n• みせます（見せます） = Cho xem\n   Mẹo: 見 (nhìn) → làm cho người khác nhìn = CHO XEM.\n• ゆっくり = Từ từ, thong thả\n   Mẹo: ゆっくり 話して ください = xin nói chậm lại.\n• すぐ = Ngay lập tức\n   Mẹo: すぐ 行きます = tôi đi ngay đây.\n→ Đối chiếu thêm với mục 語彙 của bài 14 trong sách để bổ sung.\n+ Từ N5 bổ sung (5): もう一度（もういちど） ・ ください ・ どうぞ ・ どうも ・ さあ",
+   "body": "Từ mới Minna bài 14:\n• よびます（呼びます） = Gọi (người)\n   Mẹo: 呼 có 口 (miệng) → dùng miệng GỌI.\n• みせます（見せます） = Cho xem\n   Mẹo: 見 (nhìn) → làm cho người khác nhìn = CHO XEM.\n• ゆっくり = Từ từ, thong thả\n   Mẹo: ゆっくり 話して ください = xin nói chậm lại.\n• すぐ = Ngay lập tức\n   Mẹo: すぐ 行きます = tôi đi ngay đây.\n→ Trong sách, xem thêm mục từ vựng của bài 14.\n+ Từ N5 bổ sung (5): もう一度（もういちど） ・ ください ・ どうぞ ・ どうも ・ さあ",
    "minutes": 25
   },
   {
@@ -3014,7 +3014,7 @@
    "day": 48,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 15:\n• すみます（住みます） = Sống, cư trú\n   Mẹo: 住 = 亻 (người) + 主 (chủ) → người làm chủ chỗ ở. Luôn dùng thể 住んで います.\n• つかいます（使います） = Dùng, sử dụng\n   Mẹo: 使 = 亻 (người) + 吏 → sai người làm việc → SỬ DỤNG.\n• しります（知ります） = Biết\n   Mẹo: 知 = 矢 (mũi tên) + 口 → lời nói bắn thẳng như tên = BIẾT rõ.\n• つくります（作ります） = Làm, chế tạo\n   Mẹo: 作 = 亻 (người) + 乍 → người tạo ra vật.\n• うります（売ります） = Bán\n   Mẹo: 売 nhìn giống 買 lộn ngược nghĩa. 売り buôn — 買い mua.\n• しっています（知っています） = Biết\n   Mẹo: Phủ định là 知りません, KHÔNG phải 知っていません. Đây là bẫy đề thi.\n• けんきゅうしゃ（研究者） = Nhà nghiên cứu\n   Mẹo: NGHIÊN CỨU GIẢ. 者 (giả) = người, đã gặp ở 医者.\n→ Đối chiếu thêm với mục 語彙 của bài 15 trong sách để bổ sung.\n+ Từ N5 bổ sung (7): 閉まります（しまります） ・ 開きます（あきます） ・ 着きます（つきます） ・ 乗ります（のります） ・ 降ります（おります） ・ 勤めます（つとめます） ・ 家庭（かてい）",
+   "body": "Từ mới Minna bài 15:\n• すみます（住みます） = Sống, cư trú\n   Mẹo: 住 = 亻 (người) + 主 (chủ) → người làm chủ chỗ ở. Luôn dùng thể 住んで います.\n• つかいます（使います） = Dùng, sử dụng\n   Mẹo: 使 = 亻 (người) + 吏 → sai người làm việc → SỬ DỤNG.\n• しります（知ります） = Biết\n   Mẹo: 知 = 矢 (mũi tên) + 口 → lời nói bắn thẳng như tên = BIẾT rõ.\n• つくります（作ります） = Làm, chế tạo\n   Mẹo: 作 = 亻 (người) + 乍 → người tạo ra vật.\n• うります（売ります） = Bán\n   Mẹo: 売 nhìn giống 買 lộn ngược nghĩa. 売り buôn — 買い mua.\n• しっています（知っています） = Biết\n   Mẹo: Phủ định là 知りません, KHÔNG phải 知っていません. Đây là bẫy đề thi.\n• けんきゅうしゃ（研究者） = Nhà nghiên cứu\n   Mẹo: NGHIÊN CỨU GIẢ. 者 (giả) = người, đã gặp ở 医者.\n→ Trong sách, xem thêm mục từ vựng của bài 15.\n+ Từ N5 bổ sung (7): 閉まります（しまります） ・ 開きます（あきます） ・ 着きます（つきます） ・ 乗ります（のります） ・ 降ります（おります） ・ 勤めます（つとめます） ・ 家庭（かてい）",
    "minutes": 27
   },
   {
@@ -3028,7 +3028,7 @@
    "day": 49,
    "orderNo": 1,
    "label": "漢  Kanji",
-   "body": "Viết lại toàn bộ Kanji đã học trong tuần: che nghĩa → đọc chữ, che chữ → viết lại. Lọc sheet '9. Kanji 103' theo cột Ngày học để biết chính xác chữ nào.",
+   "body": "Viết lại toàn bộ Kanji đã học trong tuần: che nghĩa → đọc chữ, che chữ → viết lại. Trong app, xem chữ của tuần này và đánh dấu chữ còn mờ.",
    "minutes": 25
   },
   {
@@ -3084,14 +3084,14 @@
    "day": 50,
    "orderNo": 4,
    "label": "文  Ngữ pháp",
-   "body": "Minna bài 15 (2/2) — Cho phép & Cấm đoán\n• V て います (trạng thái)  (Diễn tả trạng thái kéo dài, nghề nghiệp, thói quen.)\n   Ví dụ: わたしは 銀行で 働いて います。  = Tôi đang làm việc tại ngân hàng.\n• 〜を 知って います / 知りません  (Biết / không biết. Chú ý: phủ định KHÔNG phải 知って いません.)\n   Ví dụ: 田中さんの 電話番号を 知って いますか。  = Bạn có biết số điện thoại của anh Tanaka không?\n→ Làm 練習A của bài 15 trong sách, mỗi mẫu tự đặt 3 câu.",
+   "body": "Minna bài 15 (2/2) — Cho phép & Cấm đoán\n• V て います (trạng thái)  (Diễn tả trạng thái kéo dài, nghề nghiệp, thói quen.)\n   Ví dụ: わたしは 銀行で 働いて います。  = Tôi làm việc tại ngân hàng.\n• 〜を 知って います / 知りません  (Biết / không biết. Chú ý: phủ định KHÔNG phải 知って いません.)\n   Ví dụ: 田中さんの 電話番号を 知って いますか。  = Bạn có biết số điện thoại của anh Tanaka không?\n→ Làm 練習A của bài 15 trong sách, mỗi mẫu tự đặt 3 câu.",
    "minutes": 25
   },
   {
    "day": 50,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 15:\n• こうこう（高校） = Trường cấp 3\n   Mẹo: CAO HIỆU = trường bậc cao. Rút gọn từ 高等学校.\n• びょういん（病院） = Bệnh viện\n   Mẹo: BỆNH VIỆN — âm Hán Việt y hệt tiếng Việt.\n• かぞく（家族） = Gia đình\n   Mẹo: GIA TỘC = người trong nhà.\n• どくしん（独身） = Độc thân\n   Mẹo: ĐỘC THÂN — âm Hán Việt y hệt.\n• しゃしん（写真） = Ảnh\n   Mẹo: TẢ CHÂN = ghi lại sự thật. 写真を 撮ります = chụp ảnh.\n• でんわばんごう（電話番号） = Số điện thoại\n   Mẹo: ĐIỆN THOẠI PHIÊN HIỆU. 番号 (phiên hiệu) = con số thứ tự.\n• たばこ = Thuốc lá\n   Mẹo: たばこを 吸います — dùng 吸います (hút vào) chứ không dùng 飲みます.\n→ Đối chiếu thêm với mục 語彙 của bài 15 trong sách để bổ sung.\n+ Từ N5 bổ sung (7): 質問（しつもん） ・ 問題（もんだい） ・ テスト ・ 授業（じゅぎょう） ・ 作文（さくぶん） ・ 文章（ぶんしょう） ・ クラス",
+   "body": "Từ mới Minna bài 15:\n• こうこう（高校） = Trường cấp 3\n   Mẹo: CAO HIỆU = trường bậc cao. Rút gọn từ 高等学校.\n• びょういん（病院） = Bệnh viện\n   Mẹo: BỆNH VIỆN — âm Hán Việt y hệt tiếng Việt.\n• かぞく（家族） = Gia đình\n   Mẹo: GIA TỘC = người trong nhà.\n• どくしん（独身） = Độc thân\n   Mẹo: ĐỘC THÂN — âm Hán Việt y hệt.\n• しゃしん（写真） = Ảnh\n   Mẹo: TẢ CHÂN = ghi lại sự thật. 写真を 撮ります = chụp ảnh.\n• でんわばんごう（電話番号） = Số điện thoại\n   Mẹo: ĐIỆN THOẠI PHIÊN HIỆU. 番号 (phiên hiệu) = con số thứ tự.\n• たばこ = Thuốc lá\n   Mẹo: たばこを 吸います — dùng 吸います (hút vào) chứ không dùng 飲みます.\n→ Trong sách, xem thêm mục từ vựng của bài 15.\n+ Từ N5 bổ sung (7): 質問（しつもん） ・ 問題（もんだい） ・ テスト ・ 授業（じゅぎょう） ・ 作文（さくぶん） ・ 文章（ぶんしょう） ・ クラス",
    "minutes": 27
   },
   {
@@ -3133,7 +3133,7 @@
    "day": 51,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 16:\n• あびます（浴びます） = Tắm (vòi sen)\n   Mẹo: シャワーを 浴びます. 浴 có 氵 (nước) → dội nước lên người.\n• いれます（入れます） = Cho vào, bỏ vào\n   Mẹo: 入 (nhập) = vào. Tha động từ của 入ります.\n• だします（出します） = Lấy ra, nộp\n   Mẹo: 出 (xuất) = ra. レポートを 出します = nộp báo cáo.\n• おします（押します） = Ấn, đẩy\n   Mẹo: 押 có 扌 (tay) → dùng tay ẤN. Trên cửa Nhật hay ghi 押/引.\n• ひきます（引きます） = Kéo\n   Mẹo: Đối lập với 押します. 引 nhìn như dây cung đang KÉO căng.\n• あるきます（歩きます） = Đi bộ\n   Mẹo: 歩 có bộ 止 (bàn chân) → dùng chân bước.\n• わたります（渡ります） = Băng qua\n   Mẹo: 渡 có 氵 (nước) → lội qua sông. 橋を 渡ります = qua cầu.\n→ Đối chiếu thêm với mục 語彙 của bài 16 trong sách để bổ sung.\n+ Từ N5 bổ sung (6): 体（からだ） ・ 背（せ） ・ 歯（は） ・ 声（こえ） ・ 磨きます（みがきます） ・ 洗います（あらいます）",
+   "body": "Từ mới Minna bài 16:\n• あびます（浴びます） = Tắm (vòi sen)\n   Mẹo: シャワーを 浴びます. 浴 có 氵 (nước) → dội nước lên người.\n• いれます（入れます） = Cho vào, bỏ vào\n   Mẹo: 入 (nhập) = vào. Tha động từ của 入ります.\n• だします（出します） = Lấy ra, nộp\n   Mẹo: 出 (xuất) = ra. レポートを 出します = nộp báo cáo.\n• おします（押します） = Ấn, đẩy\n   Mẹo: 押 có 扌 (tay) → dùng tay ẤN. Trên cửa Nhật hay ghi 押/引.\n• ひきます（引きます） = Kéo\n   Mẹo: Đối lập với 押します. 引 nhìn như dây cung đang KÉO căng.\n• あるきます（歩きます） = Đi bộ\n   Mẹo: 歩 có bộ 止 (bàn chân) → dùng chân bước.\n• わたります（渡ります） = Băng qua\n   Mẹo: 渡 có 氵 (nước) → lội qua sông. 橋を 渡ります = qua cầu.\n→ Trong sách, xem thêm mục từ vựng của bài 16.\n+ Từ N5 bổ sung (6): 体（からだ） ・ 背（せ） ・ 歯（は） ・ 声（こえ） ・ 磨きます（みがきます） ・ 洗います（あらいます）",
    "minutes": 26
   },
   {
@@ -3175,7 +3175,7 @@
    "day": 52,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 16:\n• ひろい（広い） = Rộng\n   Mẹo: 広 có bộ 广 (mái hiên) → mái che một khoảng RỘNG.\n• せまい（狭い） = Chật, hẹp\n   Mẹo: 狭 có bộ 犭 (con thú) → chuồng thú chật chội.\n• あかるい（明るい） = Sáng\n   Mẹo: 明 = 日 (mặt trời) + 月 (mặt trăng) → cả hai cùng chiếu = SÁNG.\n• くらい（暗い） = Tối\n   Mẹo: 暗 = 日 (mặt trời) + 音 (âm thanh) → chỉ nghe tiếng, không thấy gì = TỐI.\n• わかい（若い） = Trẻ\n   Mẹo: 若 có bộ 艹 (cỏ non) → mầm non = TRẺ.\n• しんごう（信号） = Đèn giao thông\n   Mẹo: TÍN HIỆU. 信号を 右へ 曲がります = rẽ phải ở đèn giao thông.\n• こうさてん（交差点） = Ngã tư\n   Mẹo: GIAO SAI ĐIỂM = điểm giao cắt.\n→ Đối chiếu thêm với mục 語彙 của bài 16 trong sách để bổ sung.\n+ Từ N5 bổ sung (6): お風呂（おふろ） ・ シャワー ・ せっけん ・ 初め（はじめ） ・ それから ・ そうして",
+   "body": "Từ mới Minna bài 16:\n• ひろい（広い） = Rộng\n   Mẹo: 広 có bộ 广 (mái hiên) → mái che một khoảng RỘNG.\n• せまい（狭い） = Chật, hẹp\n   Mẹo: 狭 có bộ 犭 (con thú) → chuồng thú chật chội.\n• あかるい（明るい） = Sáng\n   Mẹo: 明 = 日 (mặt trời) + 月 (mặt trăng) → cả hai cùng chiếu = SÁNG.\n• くらい（暗い） = Tối\n   Mẹo: 暗 = 日 (mặt trời) + 音 (âm thanh) → chỉ nghe tiếng, không thấy gì = TỐI.\n• わかい（若い） = Trẻ\n   Mẹo: 若 có bộ 艹 (cỏ non) → mầm non = TRẺ.\n• しんごう（信号） = Đèn giao thông\n   Mẹo: TÍN HIỆU. 信号を 右へ 曲がります = rẽ phải ở đèn giao thông.\n• こうさてん（交差点） = Ngã tư\n   Mẹo: GIAO SAI ĐIỂM = điểm giao cắt.\n→ Trong sách, xem thêm mục từ vựng của bài 16.\n+ Từ N5 bổ sung (6): お風呂（おふろ） ・ シャワー ・ せっけん ・ 初め（はじめ） ・ それから ・ そうして",
    "minutes": 26
   },
   {
@@ -3217,7 +3217,7 @@
    "day": 53,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 17:\n• ぬぎます（脱ぎます） = Cởi (quần áo, giày)\n   Mẹo: 脱 có bộ 月 (thân thể) → tách khỏi thân = CỞI.\n• もっていきます（持って 行きます） = Mang đi\n   Mẹo: 持つ (cầm) + 行く (đi) = cầm mà đi.\n• もってきます（持って 来ます） = Mang đến\n   Mẹo: 持つ (cầm) + 来る (đến) = cầm mà đến.\n• しんぱいします（心配します） = Lo lắng\n   Mẹo: TÂM PHỐI = lòng bị phân chia → LO. 心配しないで ください = đừng lo.\n• ざんぎょうします（残業します） = Làm thêm giờ\n   Mẹo: TÀN NGHIỆP = việc còn sót lại, làm nốt sau giờ.\n→ Đối chiếu thêm với mục 語彙 của bài 17 trong sách để bổ sung.\n+ Từ N5 bổ sung (4): 痛い（いたい） ・ 風邪（かぜ） ・ 困ります（こまります） ・ 忘れます（わすれます）",
+   "body": "Từ mới Minna bài 17:\n• ぬぎます（脱ぎます） = Cởi (quần áo, giày)\n   Mẹo: 脱 có bộ 月 (thân thể) → tách khỏi thân = CỞI.\n• もっていきます（持って 行きます） = Mang đi\n   Mẹo: 持つ (cầm) + 行く (đi) = cầm mà đi.\n• もってきます（持って 来ます） = Mang đến\n   Mẹo: 持つ (cầm) + 来る (đến) = cầm mà đến.\n• しんぱいします（心配します） = Lo lắng\n   Mẹo: TÂM PHỐI = lòng bị phân chia → LO. 心配しないで ください = đừng lo.\n• ざんぎょうします（残業します） = Làm thêm giờ\n   Mẹo: TÀN NGHIỆP = việc còn sót lại, làm nốt sau giờ.\n→ Trong sách, xem thêm mục từ vựng của bài 17.\n+ Từ N5 bổ sung (4): 痛い（いたい） ・ 風邪（かぜ） ・ 困ります（こまります） ・ 忘れます（わすれます）",
    "minutes": 24
   },
   {
@@ -3259,7 +3259,7 @@
    "day": 54,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 17:\n• しゅっちょうします（出張します） = Đi công tác\n   Mẹo: XUẤT TRƯƠNG = ra ngoài mở rộng công việc.\n• のみます（飲みます） = Uống (cả thuốc)\n   Mẹo: 薬を 飲みます = UỐNG thuốc. Tiếng Nhật uống thuốc, không 'ăn' thuốc.\n• だいじょうぶ（大丈夫） = Không sao, ổn\n   Mẹo: ĐẠI TRƯỢNG PHU = đàn ông vững vàng → không sao đâu.\n• たいへん（大変） = Vất vả, ghê gớm\n   Mẹo: ĐẠI BIẾN = biến cố lớn → vất vả.\n• パスポート = Hộ chiếu\n   Mẹo: Từ 'passport'.\n→ Đối chiếu thêm với mục 語彙 của bài 17 trong sách để bổ sung.\n+ Từ N5 bổ sung (3): 覚えます（おぼえます） ・ 無くします（なくします） ・ 返します（かえします）",
+   "body": "Từ mới Minna bài 17:\n• しゅっちょうします（出張します） = Đi công tác\n   Mẹo: XUẤT TRƯƠNG = ra ngoài mở rộng công việc.\n• のみます（飲みます） = Uống (cả thuốc)\n   Mẹo: 薬を 飲みます = UỐNG thuốc. Tiếng Nhật uống thuốc, không 'ăn' thuốc.\n• だいじょうぶ（大丈夫） = Không sao, ổn\n   Mẹo: ĐẠI TRƯỢNG PHU = đàn ông vững vàng → không sao đâu.\n• たいへん（大変） = Vất vả, ghê gớm\n   Mẹo: ĐẠI BIẾN = biến cố lớn → vất vả.\n• パスポート = Hộ chiếu\n   Mẹo: Từ 'passport'.\n→ Trong sách, xem thêm mục từ vựng của bài 17.\n+ Từ N5 bổ sung (3): 覚えます（おぼえます） ・ 無くします（なくします） ・ 返します（かえします）",
    "minutes": 23
   },
   {
@@ -3301,7 +3301,7 @@
    "day": 55,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 17:\n• びょうき（病気） = Bệnh\n   Mẹo: BỆNH KHÍ = khí bệnh trong người.\n• ねつ（熱） = Sốt\n   Mẹo: 熱 có 灬 (lửa) ở dưới → người nóng như lửa = SỐT.\n• くすり（薬） = Thuốc\n   Mẹo: 薬 có bộ 艹 (cỏ cây) + 楽 (vui) → cây cỏ làm ta khỏe vui = THUỐC.\n• たいせつ[な]（大切[な]） = Quan trọng\n   Mẹo: ĐẠI THIẾT = cắt ra phần lớn nhất → điều quan trọng nhất.\n→ Đối chiếu thêm với mục 語彙 của bài 17 trong sách để bổ sung.\n+ Từ N5 bổ sung (3): 次（つぎ） ・ まだ ・ もう",
+   "body": "Từ mới Minna bài 17:\n• びょうき（病気） = Bệnh\n   Mẹo: BỆNH KHÍ = khí bệnh trong người.\n• ねつ（熱） = Sốt\n   Mẹo: 熱 có 灬 (lửa) ở dưới → người nóng như lửa = SỐT.\n• くすり（薬） = Thuốc\n   Mẹo: 薬 có bộ 艹 (cỏ cây) + 楽 (vui) → cây cỏ làm ta khỏe vui = THUỐC.\n• たいせつ[な]（大切[な]） = Quan trọng\n   Mẹo: ĐẠI THIẾT = cắt ra phần lớn nhất → điều quan trọng nhất.\n→ Trong sách, xem thêm mục từ vựng của bài 17.\n+ Từ N5 bổ sung (3): 次（つぎ） ・ まだ ・ もう",
    "minutes": 23
   },
   {
@@ -3315,7 +3315,7 @@
    "day": 56,
    "orderNo": 1,
    "label": "漢  Kanji",
-   "body": "Viết lại toàn bộ Kanji đã học trong tuần: che nghĩa → đọc chữ, che chữ → viết lại. Lọc sheet '9. Kanji 103' theo cột Ngày học để biết chính xác chữ nào.",
+   "body": "Viết lại toàn bộ Kanji đã học trong tuần: che nghĩa → đọc chữ, che chữ → viết lại. Trong app, xem chữ của tuần này và đánh dấu chữ còn mờ.",
    "minutes": 25
   },
   {
@@ -3378,7 +3378,7 @@
    "day": 57,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 18:\n• できます = Có thể, làm được\n   Mẹo: Đối tượng dùng が: 日本語が できます.\n• ひきます（弾きます） = Chơi (nhạc cụ dây, phím)\n   Mẹo: ピアノを 弾きます. Khác với 歌います (hát).\n• うたいます（歌います） = Hát\n   Mẹo: 歌 có bộ 欠 (há miệng) → há miệng mà HÁT.\n• あつめます（集めます） = Sưu tầm, tập hợp\n   Mẹo: 集 = 隹 (con chim) trên 木 (cây) → chim TỤ TẬP trên cây.\n• すてます（捨てます） = Vứt bỏ\n   Mẹo: 捨 có 扌 (tay) → tay ném đi = VỨT.\n• うんてんします（運転します） = Lái xe\n   Mẹo: VẬN CHUYỂN = điều khiển cho di chuyển.\n• よやくします（予約します） = Đặt trước\n   Mẹo: DỰ ƯỚC = hẹn trước.\n→ Đối chiếu thêm với mục 語彙 của bài 18 trong sách để bổ sung.\n+ Từ N5 bổ sung (4): 練習（れんしゅう） ・ 勉強（べんきょう） ・ 掃除（そうじ） ・ 洗濯（せんたく）",
+   "body": "Từ mới Minna bài 18:\n• できます = Có thể, làm được\n   Mẹo: Đối tượng dùng が: 日本語が できます.\n• ひきます（弾きます） = Chơi (nhạc cụ dây, phím)\n   Mẹo: ピアノを 弾きます. Khác với 歌います (hát).\n• うたいます（歌います） = Hát\n   Mẹo: 歌 có bộ 欠 (há miệng) → há miệng mà HÁT.\n• あつめます（集めます） = Sưu tầm, tập hợp\n   Mẹo: 集 = 隹 (con chim) trên 木 (cây) → chim TỤ TẬP trên cây.\n• すてます（捨てます） = Vứt bỏ\n   Mẹo: 捨 có 扌 (tay) → tay ném đi = VỨT.\n• うんてんします（運転します） = Lái xe\n   Mẹo: VẬN CHUYỂN = điều khiển cho di chuyển.\n• よやくします（予約します） = Đặt trước\n   Mẹo: DỰ ƯỚC = hẹn trước.\n→ Trong sách, xem thêm mục từ vựng của bài 18.\n+ Từ N5 bổ sung (4): 練習（れんしゅう） ・ 勉強（べんきょう） ・ 掃除（そうじ） ・ 洗濯（せんたく）",
    "minutes": 24
   },
   {
@@ -3420,7 +3420,7 @@
    "day": 58,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 18:\n• しゅみ（趣味） = Sở thích\n   Mẹo: THÚ VỊ = điều thấy thú vị.\n• にっき（日記） = Nhật ký\n   Mẹo: NHẬT KÝ — âm Hán Việt y hệt tiếng Việt.\n• ピアノ = Đàn piano\n   Mẹo: Từ 'piano'.\n• インターネット = Internet\n   Mẹo: Từ 'internet'.\n• はいります（入ります） = Vào\n   Mẹo: お風呂に 入ります = đi tắm bồn. Dùng trợ từ に.\n• あたま（頭） = Đầu\n   Mẹo: 頭 có bộ 頁 (cái đầu người). 頭が いい = thông minh.\n• いちど（一度） = Một lần\n   Mẹo: NHẤT ĐỘ. もう一度 = một lần nữa — câu cực kỳ hay dùng.\n→ Đối chiếu thêm với mục 語彙 của bài 18 trong sách để bổ sung.\n+ Từ N5 bổ sung (4): 走ります（はしります） ・ 飛びます（とびます） ・ 鳴きます（なきます） ・ やります",
+   "body": "Từ mới Minna bài 18:\n• しゅみ（趣味） = Sở thích\n   Mẹo: THÚ VỊ = điều thấy thú vị.\n• にっき（日記） = Nhật ký\n   Mẹo: NHẬT KÝ — âm Hán Việt y hệt tiếng Việt.\n• ピアノ = Đàn piano\n   Mẹo: Từ 'piano'.\n• インターネット = Internet\n   Mẹo: Từ 'internet'.\n• はいります（入ります） = Vào\n   Mẹo: お風呂に 入ります = đi tắm bồn. Dùng trợ từ に.\n• あたま（頭） = Đầu\n   Mẹo: 頭 có bộ 頁 (cái đầu người). 頭が いい = thông minh.\n• いちど（一度） = Một lần\n   Mẹo: NHẤT ĐỘ. もう一度 = một lần nữa — câu cực kỳ hay dùng.\n→ Trong sách, xem thêm mục từ vựng của bài 18.\n+ Từ N5 bổ sung (4): 走ります（はしります） ・ 飛びます（とびます） ・ 鳴きます（なきます） ・ やります",
    "minutes": 24
   },
   {
@@ -3455,14 +3455,14 @@
    "day": 59,
    "orderNo": 4,
    "label": "文  Ngữ pháp",
-   "body": "Minna bài 19 (1/3) — Thể た — Kinh nghiệm & Liệt kê\n• Thể た (quá khứ thân mật)  (Chia giống thể て, chỉ đổi て→た, で→だ.)\n   Ví dụ: 行って → 行った  = đã đi\n• V た こと が あります  (Đã từng làm ~ (kinh nghiệm).)\n   Ví dụ: 日本へ 行った ことが あります。  = Tôi đã từng đi Nhật.\n→ Làm 練習A của bài 19 trong sách, mỗi mẫu tự đặt 3 câu.",
+   "body": "Minna bài 19 (1/3) — Thể た — Kinh nghiệm & Liệt kê\n• Thể た — nói với bạn bè về việc đã qua  (Chia giống thể て, chỉ đổi て→た, で→だ.)\n   Ví dụ: 行って → 行った  = đã đi\n• V た こと が あります  (Đã từng làm ~ (kinh nghiệm).)\n   Ví dụ: 日本へ 行った ことが あります。  = Tôi đã từng đi Nhật.\n→ Làm 練習A của bài 19 trong sách, mỗi mẫu tự đặt 3 câu.",
    "minutes": 25
   },
   {
    "day": 59,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 19:\n• のぼります（登ります） = Leo, trèo\n   Mẹo: 山に 登ります = leo núi. Dùng trợ từ に.\n• とまります（泊まります） = Nghỉ lại qua đêm\n   Mẹo: 泊 có 氵 (nước) + 白 → thuyền neo lại bến. Khác 止まります (dừng).\n• そうじします（掃除します） = Dọn dẹp\n   Mẹo: TẢO TRỪ = quét và loại bỏ.\n• せんたくします（洗濯します） = Giặt giũ\n   Mẹo: TẨY TRẠC = giặt sạch. 洗 có 氵 (nước).\n• れんしゅうします（練習します） = Luyện tập\n   Mẹo: LUYỆN TẬP — âm Hán Việt y hệt.\n→ Đối chiếu thêm với mục 語彙 của bài 19 trong sách để bổ sung.\n+ Từ N5 bổ sung (2): 初めて（はじめて） ・ 時々（ときどき）",
+   "body": "Từ mới Minna bài 19:\n• のぼります（登ります） = Leo, trèo\n   Mẹo: 山に 登ります = leo núi. Dùng trợ từ に.\n• とまります（泊まります） = Nghỉ lại qua đêm\n   Mẹo: 泊 có 氵 (nước) + 白 → thuyền neo lại bến. Khác 止まります (dừng).\n• そうじします（掃除します） = Dọn dẹp\n   Mẹo: TẢO TRỪ = quét và loại bỏ.\n• せんたくします（洗濯します） = Giặt giũ\n   Mẹo: TẨY TRẠC = giặt sạch. 洗 có 氵 (nước).\n• れんしゅうします（練習します） = Luyện tập\n   Mẹo: LUYỆN TẬP — âm Hán Việt y hệt.\n→ Trong sách, xem thêm mục từ vựng của bài 19.\n+ Từ N5 bổ sung (2): 初めて（はじめて） ・ 時々（ときどき）",
    "minutes": 22
   },
   {
@@ -3504,7 +3504,7 @@
    "day": 60,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 19:\n• なります = Trở nên\n   Mẹo: Adj い → く なります; Adj な / N → に なります.\n• つよい（強い） = Mạnh\n   Mẹo: 強 có bộ 弓 (cây cung) → cung căng mạnh.\n• よわい（弱い） = Yếu\n   Mẹo: 弱 nhìn như hai cây cung gãy → YẾU.\n• ちょうし（調子） = Tình trạng, phong độ\n   Mẹo: ĐIỀU TỬ = nhịp điệu cơ thể. 調子が いいです = trạng thái tốt.\n• だんだん = Dần dần\n   Mẹo: だんだん 寒く なります = trời dần lạnh đi.\n→ Đối chiếu thêm với mục 語彙 của bài 19 trong sách để bổ sung.\n+ Từ N5 bổ sung (2): いつも ・ ちょうど",
+   "body": "Từ mới Minna bài 19:\n• なります = Trở nên\n   Mẹo: Adj い → く なります; Adj な / N → に なります.\n• つよい（強い） = Mạnh\n   Mẹo: 強 có bộ 弓 (cây cung) → cung căng mạnh.\n• よわい（弱い） = Yếu\n   Mẹo: 弱 nhìn như hai cây cung gãy → YẾU.\n• ちょうし（調子） = Tình trạng, phong độ\n   Mẹo: ĐIỀU TỬ = nhịp điệu cơ thể. 調子が いいです = trạng thái tốt.\n• だんだん = Dần dần\n   Mẹo: だんだん 寒く なります = trời dần lạnh đi.\n→ Trong sách, xem thêm mục từ vựng của bài 19.\n+ Từ N5 bổ sung (2): いつも ・ ちょうど",
    "minutes": 22
   },
   {
@@ -3546,7 +3546,7 @@
    "day": 61,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 19:\n• もうすぐ = Sắp, sắp sửa\n   Mẹo: もうすぐ 春です = sắp đến mùa xuân rồi.\n• ゴルフ = Golf\n   Mẹo: Từ 'golf'.\n• おちゃ（お茶） = Trà\n   Mẹo: 茶 có bộ 艹 (cỏ cây) → lá cây pha nước = TRÀ.\n• さいきん（最近） = Gần đây\n   Mẹo: TỐI CẬN = gần nhất về thời gian.\n→ Đối chiếu thêm với mục 語彙 của bài 19 trong sách để bổ sung.\n+ Từ N5 bổ sung (2): また ・ ほか",
+   "body": "Từ mới Minna bài 19:\n• もうすぐ = Sắp, sắp sửa\n   Mẹo: もうすぐ 春です = sắp đến mùa xuân rồi.\n• ゴルフ = Golf\n   Mẹo: Từ 'golf'.\n• おちゃ（お茶） = Trà\n   Mẹo: 茶 có bộ 艹 (cỏ cây) → lá cây pha nước = TRÀ.\n• さいきん（最近） = Gần đây\n   Mẹo: TỐI CẬN = gần nhất về thời gian.\n→ Trong sách, xem thêm mục từ vựng của bài 19.\n+ Từ N5 bổ sung (2): また ・ ほか",
    "minutes": 22
   },
   {
@@ -3588,7 +3588,7 @@
    "day": 62,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 20:\n• いります（要ります） = Cần\n   Mẹo: ビザが 要ります = cần visa. Dùng trợ từ が.\n• しらべます（調べます） = Tra cứu, điều tra\n   Mẹo: 調 (điều) = điều tra. 辞書で 調べます = tra từ điển.\n• なおします（直します） = Sửa chữa\n   Mẹo: 直 (trực) = làm cho thẳng lại → SỬA.\n• こわれます（壊れます） = Bị hỏng\n   Mẹo: 壊 có bộ 土 (đất) → đổ vỡ thành đất cát.\n• ぼく（僕） = Tớ, tôi (nam giới)\n   Mẹo: Nam giới dùng trong hội thoại thân mật, thay cho わたし.\n→ Đối chiếu thêm với mục 語彙 của bài 20 trong sách để bổ sung.\n+ Từ N5 bổ sung (2): では ・ じゃ",
+   "body": "Từ mới Minna bài 20:\n• いります（要ります） = Cần\n   Mẹo: ビザが 要ります = cần visa. Dùng trợ từ が.\n• しらべます（調べます） = Tra cứu, điều tra\n   Mẹo: 調 (điều) = điều tra. 辞書で 調べます = tra từ điển.\n• なおします（直します） = Sửa chữa\n   Mẹo: 直 (trực) = làm cho thẳng lại → SỬA.\n• こわれます（壊れます） = Bị hỏng\n   Mẹo: 壊 có bộ 土 (đất) → đổ vỡ thành đất cát.\n• ぼく（僕） = Tớ, tôi (nam giới)\n   Mẹo: Nam giới dùng trong hội thoại thân mật, thay cho わたし.\n→ Trong sách, xem thêm mục từ vựng của bài 20.\n+ Từ N5 bổ sung (2): では ・ じゃ",
    "minutes": 22
   },
   {
@@ -3602,7 +3602,7 @@
    "day": 63,
    "orderNo": 1,
    "label": "漢  Kanji",
-   "body": "Viết lại toàn bộ Kanji đã học trong tuần: che nghĩa → đọc chữ, che chữ → viết lại. Lọc sheet '9. Kanji 103' theo cột Ngày học để biết chính xác chữ nào.",
+   "body": "Viết lại toàn bộ Kanji đã học trong tuần: che nghĩa → đọc chữ, che chữ → viết lại. Trong app, xem chữ của tuần này và đánh dấu chữ còn mờ.",
    "minutes": 25
   },
   {
@@ -3665,7 +3665,7 @@
    "day": 64,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 20:\n• きみ（君） = Cậu, bạn (thân mật)\n   Mẹo: Dùng với người ngang hàng hoặc dưới. Cẩn thận khi dùng.\n• ふつう（普通） = Thông thường\n   Mẹo: PHỔ THÔNG = bình thường. 普通形 = thể thông thường.\n• けんきゅうします（研究します） = Nghiên cứu\n   Mẹo: NGHIÊN CỨU — âm Hán Việt y hệt.\n• だいがくいん（大学院） = Cao học\n   Mẹo: ĐẠI HỌC VIỆN = viện sau đại học.\n• こくさい〜（国際〜） = Quốc tế ~\n   Mẹo: QUỐC TẾ. 国際電話 = điện thoại quốc tế.\n→ Đối chiếu thêm với mục 語彙 của bài 20 trong sách để bổ sung.\n+ Từ N5 bổ sung (2): でも ・ しかし",
+   "body": "Từ mới Minna bài 20:\n• きみ（君） = Cậu, bạn (thân mật)\n   Mẹo: Dùng với người ngang hàng hoặc dưới. Cẩn thận khi dùng.\n• ふつう（普通） = Thông thường\n   Mẹo: PHỔ THÔNG = bình thường. 普通形 = thể thông thường.\n• けんきゅうします（研究します） = Nghiên cứu\n   Mẹo: NGHIÊN CỨU — âm Hán Việt y hệt.\n• だいがくいん（大学院） = Cao học\n   Mẹo: ĐẠI HỌC VIỆN = viện sau đại học.\n• こくさい〜（国際〜） = Quốc tế ~\n   Mẹo: QUỐC TẾ. 国際電話 = điện thoại quốc tế.\n→ Trong sách, xem thêm mục từ vựng của bài 20.\n+ Từ N5 bổ sung (2): でも ・ しかし",
    "minutes": 22
   },
   {
@@ -3707,7 +3707,7 @@
    "day": 65,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 20:\n• じゃあ = Vậy thì\n   Mẹo: Rút gọn của では, dùng nhiều trong hội thoại.\n• うん / ううん = Ừ / không\n   Mẹo: Dạng thân mật của はい / いいえ.\n• すごい = Tuyệt, ghê gớm\n   Mẹo: Vừa khen vừa chê tùy ngữ cảnh — nghe rất nhiều trong đời sống.\n• 〜けど = Nhưng\n   Mẹo: Dạng thân mật của 〜が.\n→ Đối chiếu thêm với mục 語彙 của bài 20 trong sách để bổ sung.\n+ Từ N5 bổ sung (2): それでは ・ など",
+   "body": "Từ mới Minna bài 20:\n• じゃあ = Vậy thì\n   Mẹo: Rút gọn của では, dùng nhiều trong hội thoại.\n• うん / ううん = Ừ / không\n   Mẹo: Dạng thân mật của はい / いいえ.\n• すごい = Tuyệt, ghê gớm\n   Mẹo: Vừa khen vừa chê tùy ngữ cảnh — nghe rất nhiều trong đời sống.\n• 〜けど = Nhưng\n   Mẹo: Dạng thân mật của 〜が.\n→ Trong sách, xem thêm mục từ vựng của bài 20.\n+ Từ N5 bổ sung (2): それでは ・ など",
    "minutes": 22
   },
   {
@@ -3749,7 +3749,7 @@
    "day": 66,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 21:\n• おもいます（思います） = Nghĩ\n   Mẹo: 思 = 田 (ruộng/não) + 心 (tim) → đầu và tim cùng NGHĨ.\n• いいます（言います） = Nói\n   Mẹo: 言 = miệng phát ra sóng âm.\n• たります（足ります） = Đủ\n   Mẹo: 足 (chân/đủ). お金が 足りません = không đủ tiền.\n• かちます（勝ちます） = Thắng\n   Mẹo: 勝 có bộ 力 (sức mạnh) → có sức thì THẮNG.\n• まけます（負けます） = Thua\n   Mẹo: 負 có 貝 (tiền) → thua là mất tiền.\n• いけん（意見） = Ý kiến\n   Mẹo: Ý KIẾN — âm Hán Việt y hệt tiếng Việt.\n• かいぎ（会議） = Cuộc họp\n   Mẹo: HỘI NGHỊ. 会議室 = phòng họp, đã học ở bài 3.\n→ Đối chiếu thêm với mục 語彙 của bài 21 trong sách để bổ sung.\n+ Từ N5 bổ sung (3): 違います（ちがいます） ・ 大切（たいせつ） ・ 悪い（わるい）",
+   "body": "Từ mới Minna bài 21:\n• おもいます（思います） = Nghĩ\n   Mẹo: 思 = 田 (ruộng/não) + 心 (tim) → đầu và tim cùng NGHĨ.\n• いいます（言います） = Nói\n   Mẹo: 言 = miệng phát ra sóng âm.\n• たります（足ります） = Đủ\n   Mẹo: 足 (chân/đủ). お金が 足りません = không đủ tiền.\n• かちます（勝ちます） = Thắng\n   Mẹo: 勝 có bộ 力 (sức mạnh) → có sức thì THẮNG.\n• まけます（負けます） = Thua\n   Mẹo: 負 có 貝 (tiền) → thua là mất tiền.\n• いけん（意見） = Ý kiến\n   Mẹo: Ý KIẾN — âm Hán Việt y hệt tiếng Việt.\n• かいぎ（会議） = Cuộc họp\n   Mẹo: HỘI NGHỊ. 会議室 = phòng họp, đã học ở bài 3.\n→ Trong sách, xem thêm mục từ vựng của bài 21.\n+ Từ N5 bổ sung (3): 違います（ちがいます） ・ 大切（たいせつ） ・ 悪い（わるい）",
    "minutes": 23
   },
   {
@@ -3791,7 +3791,7 @@
    "day": 67,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 21:\n• ニュース = Tin tức\n   Mẹo: Từ 'news'.\n• せいじ（政治） = Chính trị\n   Mẹo: CHÍNH TRỊ — âm Hán Việt y hệt.\n• しあい（試合） = Trận đấu\n   Mẹo: THÍ HỢP = cuộc thử sức. サッカーの 試合 = trận bóng đá.\n• むだ[な] = Lãng phí, vô ích\n   Mẹo: むだな 時間 = thời gian lãng phí.\n• ほんとう（本当） = Thật, sự thật\n   Mẹo: BẢN ĐƯƠNG = đúng như bản chất. ほんとうですか = thật à?\n• たぶん（多分） = Có lẽ\n   Mẹo: ĐA PHÂN = phần nhiều khả năng là vậy.\n• きっと = Chắc chắn\n   Mẹo: Mạnh hơn たぶん. きっと 来ます = chắc chắn sẽ đến.\n→ Đối chiếu thêm với mục 語彙 của bài 21 trong sách để bổ sung.\n+ Từ N5 bổ sung (2): 死にます（しにます） ・ 消えます（きえます）",
+   "body": "Từ mới Minna bài 21:\n• ニュース = Tin tức\n   Mẹo: Từ 'news'.\n• せいじ（政治） = Chính trị\n   Mẹo: CHÍNH TRỊ — âm Hán Việt y hệt.\n• しあい（試合） = Trận đấu\n   Mẹo: THÍ HỢP = cuộc thử sức. サッカーの 試合 = trận bóng đá.\n• むだ[な] = Lãng phí, vô ích\n   Mẹo: むだな 時間 = thời gian lãng phí.\n• ほんとう（本当） = Thật, sự thật\n   Mẹo: BẢN ĐƯƠNG = đúng như bản chất. ほんとうですか = thật à?\n• たぶん（多分） = Có lẽ\n   Mẹo: ĐA PHÂN = phần nhiều khả năng là vậy.\n• きっと = Chắc chắn\n   Mẹo: Mạnh hơn たぶん. きっと 来ます = chắc chắn sẽ đến.\n→ Trong sách, xem thêm mục từ vựng của bài 21.\n+ Từ N5 bổ sung (2): 死にます（しにます） ・ 消えます（きえます）",
    "minutes": 22
   },
   {
@@ -3833,7 +3833,7 @@
    "day": 68,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 22:\n• きます（着ます） = Mặc (áo)\n   Mẹo: 着 dùng cho phần thân trên. Quần và giày dùng はきます.\n• はきます = Mang, đi (quần, giày)\n   Mẹo: Phần thân dưới: ズボン, くつ, くつした.\n• かぶります = Đội (mũ)\n   Mẹo: 帽子を かぶります = đội mũ.\n• かけます = Đeo (kính)\n   Mẹo: めがねを かけます = đeo kính.\n• うまれます（生まれます） = Được sinh ra\n   Mẹo: 生 (sinh). 1990年に 生まれました = sinh năm 1990.\n• ようじ（用事） = Việc bận\n   Mẹo: DỤNG SỰ = việc cần làm. 用事が あります = tôi có việc bận.\n• やくそく（約束） = Lời hứa, cuộc hẹn\n   Mẹo: ƯỚC THÚC = ràng buộc bằng lời hứa.\n→ Đối chiếu thêm với mục 語彙 của bài 22 trong sách để bổ sung.\n+ Từ N5 bổ sung (9): 上着（うわぎ） ・ コート ・ セーター ・ シャツ ・ ワイシャツ ・ 背広（せびろ） ・ スカート ・ ズボン ・ 靴（くつ）",
+   "body": "Từ mới Minna bài 22:\n• きます（着ます） = Mặc (áo)\n   Mẹo: 着 dùng cho phần thân trên. Quần và giày dùng はきます.\n• はきます = Mang, đi (quần, giày)\n   Mẹo: Phần thân dưới: ズボン, くつ, くつした.\n• かぶります = Đội (mũ)\n   Mẹo: 帽子を かぶります = đội mũ.\n• かけます = Đeo (kính)\n   Mẹo: めがねを かけます = đeo kính.\n• うまれます（生まれます） = Được sinh ra\n   Mẹo: 生 (sinh). 1990年に 生まれました = sinh năm 1990.\n• ようじ（用事） = Việc bận\n   Mẹo: DỤNG SỰ = việc cần làm. 用事が あります = tôi có việc bận.\n• やくそく（約束） = Lời hứa, cuộc hẹn\n   Mẹo: ƯỚC THÚC = ràng buộc bằng lời hứa.\n→ Trong sách, xem thêm mục từ vựng của bài 22.\n+ Từ N5 bổ sung (9): 上着（うわぎ） ・ コート ・ セーター ・ シャツ ・ ワイシャツ ・ 背広（せびろ） ・ スカート ・ ズボン ・ 靴（くつ）",
    "minutes": 29
   },
   {
@@ -3875,7 +3875,7 @@
    "day": 69,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 22:\n• じかん（時間） = Thời gian\n   Mẹo: THỜI GIAN — âm Hán Việt y hệt tiếng Việt.\n• ようふく（洋服） = Quần áo (kiểu Tây)\n   Mẹo: DƯƠNG PHỤC = trang phục phương Tây. Đối lại: 和服 (kimono).\n• ぼうし（帽子） = Mũ\n   Mẹo: MẠO TỬ. 子 ở đây chỉ là hậu tố, không có nghĩa 'con'.\n• めがね = Kính mắt\n   Mẹo: ME-GA-NE: 'mê ga nê' — đeo kính vào nhìn mê ly.\n• ケーキ = Bánh ngọt\n   Mẹo: Từ 'cake'.\n• にもつ（荷物） = Hành lý\n   Mẹo: HÀ VẬT = đồ mang vác.\n• しゅっしん（出身） = Quê quán\n   Mẹo: XUẤT THÂN — âm Hán Việt y hệt tiếng Việt.\n→ Đối chiếu thêm với mục 語彙 của bài 22 trong sách để bổ sung.\n+ Từ N5 bổ sung (8): 靴下（くつした） ・ スリッパ ・ ネクタイ ・ ポケット ・ 服（ふく） ・ 差します（さします） ・ 花瓶（かびん） ・ 財布（さいふ）",
+   "body": "Từ mới Minna bài 22:\n• じかん（時間） = Thời gian\n   Mẹo: THỜI GIAN — âm Hán Việt y hệt tiếng Việt.\n• ようふく（洋服） = Quần áo (kiểu Tây)\n   Mẹo: DƯƠNG PHỤC = trang phục phương Tây. Đối lại: 和服 (kimono).\n• ぼうし（帽子） = Mũ\n   Mẹo: MẠO TỬ. 子 ở đây chỉ là hậu tố, không có nghĩa 'con'.\n• めがね = Kính mắt\n   Mẹo: ME-GA-NE: 'mê ga nê' — đeo kính vào nhìn mê ly.\n• ケーキ = Bánh ngọt\n   Mẹo: Từ 'cake'.\n• にもつ（荷物） = Hành lý\n   Mẹo: HÀ VẬT = đồ mang vác.\n• しゅっしん（出身） = Quê quán\n   Mẹo: XUẤT THÂN — âm Hán Việt y hệt tiếng Việt.\n→ Trong sách, xem thêm mục từ vựng của bài 22.\n+ Từ N5 bổ sung (8): 靴下（くつした） ・ スリッパ ・ ネクタイ ・ ポケット ・ 服（ふく） ・ 差します（さします） ・ 花瓶（かびん） ・ 財布（さいふ）",
    "minutes": 28
   },
   {
@@ -3889,7 +3889,7 @@
    "day": 70,
    "orderNo": 1,
    "label": "漢  Kanji",
-   "body": "Viết lại toàn bộ Kanji đã học trong tuần: che nghĩa → đọc chữ, che chữ → viết lại. Lọc sheet '9. Kanji 103' theo cột Ngày học để biết chính xác chữ nào.",
+   "body": "Viết lại toàn bộ Kanji đã học trong tuần: che nghĩa → đọc chữ, che chữ → viết lại. Trong app, xem chữ của tuần này và đánh dấu chữ còn mờ.",
    "minutes": 25
   },
   {
@@ -3952,7 +3952,7 @@
    "day": 71,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 23:\n• まわします（回します） = Xoay, vặn\n   Mẹo: 回 nhìn như vòng tròn trong vòng tròn → XOAY.\n• ひきます（引きます） = Kéo\n   Mẹo: Đối lập với 押します (đẩy).\n• かえます（変えます） = Thay đổi\n   Mẹo: 変 (BIẾN) = biến đổi.\n• さわります（触ります） = Chạm vào\n   Mẹo: Dùng trợ từ に: ドアに 触ります.\n• こしょうします（故障します） = Bị hỏng (máy móc)\n   Mẹo: CỐ CHƯỚNG = trục trặc. Dùng cho máy móc, khác 壊れます.\n• わたります（渡ります） = Băng qua\n   Mẹo: 橋を 渡ります = qua cầu.\n• つまみ = Núm vặn\n   Mẹo: Danh từ đồ vật thường gặp trong hướng dẫn sử dụng.\n→ Đối chiếu thêm với mục 語彙 của bài 23 trong sách để bổ sung.\n+ Từ N5 bổ sung (4): ストーブ ・ 電気（でんき） ・ 門（もん） ・ かかります",
+   "body": "Từ mới Minna bài 23:\n• まわします（回します） = Xoay, vặn\n   Mẹo: 回 nhìn như vòng tròn trong vòng tròn → XOAY.\n• ひきます（引きます） = Kéo\n   Mẹo: Đối lập với 押します (đẩy).\n• かえます（変えます） = Thay đổi\n   Mẹo: 変 (BIẾN) = biến đổi.\n• さわります（触ります） = Chạm vào\n   Mẹo: Dùng trợ từ に: ドアに 触ります.\n• こしょうします（故障します） = Bị hỏng (máy móc)\n   Mẹo: CỐ CHƯỚNG = trục trặc. Dùng cho máy móc, khác 壊れます.\n• わたります（渡ります） = Băng qua\n   Mẹo: 橋を 渡ります = qua cầu.\n• つまみ = Núm vặn\n   Mẹo: Danh từ đồ vật thường gặp trong hướng dẫn sử dụng.\n→ Trong sách, xem thêm mục từ vựng của bài 23.\n+ Từ N5 bổ sung (4): ストーブ ・ 電気（でんき） ・ 門（もん） ・ かかります",
    "minutes": 24
   },
   {
@@ -3987,14 +3987,14 @@
    "day": 72,
    "orderNo": 4,
    "label": "文  Ngữ pháp",
-   "body": "Minna bài 23 (2/2) — とき & Điều kiện と\n• V る と、〜  (Cứ ~ thì ~. Diễn tả quy luật tự nhiên, kết quả tất yếu. Vế sau KHÔNG dùng ý chí, mệnh lệnh.)\n   Ví dụ: この ボタンを 押すと、切符が 出ます。  = Cứ ấn nút này thì vé sẽ ra.\n→ Làm 練習A của bài 23 trong sách, mỗi mẫu tự đặt 3 câu.",
+   "body": "Minna bài 23 (2/2) — とき & Điều kiện と\n• V る と、〜  (Cứ ~ thì ~. Dùng cho việc tự nhiên xảy ra. Vế sau không phải lời rủ hay lời nhờ.)\n   Ví dụ: この ボタンを 押すと、切符が 出ます。  = Cứ ấn nút này thì vé sẽ ra.\n→ Làm 練習A của bài 23 trong sách, mỗi mẫu tự đặt 3 câu.",
    "minutes": 25
   },
   {
    "day": 72,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 23:\n• こしょう（故障） = Sự hỏng hóc\n   Mẹo: 故障中 = đang hỏng — biển báo hay gặp ở Nhật.\n• みち（道） = Con đường\n   Mẹo: 道 = 辶 (di chuyển) + 首 (đầu) → ngẩng đầu bước đi.\n• こうさてん（交差点） = Ngã tư\n   Mẹo: GIAO SAI ĐIỂM.\n• しんごう（信号） = Đèn giao thông\n   Mẹo: TÍN HIỆU.\n• かど（角） = Góc phố\n   Mẹo: 角 (GIÁC) = góc. 角を 右へ 曲がります = rẽ phải ở góc phố.\n• はし（橋） = Cây cầu\n   Mẹo: 橋 có bộ 木 (gỗ) → cầu gỗ. Khác 箸 (đũa, bộ tre) và はし (đầu mút).\n• こども（子ども） = Trẻ con\n   Mẹo: 子 = hình em bé quấn tã dang tay.\n→ Đối chiếu thêm với mục 語彙 của bài 23 trong sách để bổ sung.\n+ Từ N5 bổ sung (4): 切ります（きります） ・ たて ・ 八百屋（やおや） ・ 出ます（でます）",
+   "body": "Từ mới Minna bài 23:\n• こしょう（故障） = Sự hỏng hóc\n   Mẹo: 故障中 = đang hỏng — biển báo hay gặp ở Nhật.\n• みち（道） = Con đường\n   Mẹo: 道 = 辶 (di chuyển) + 首 (đầu) → ngẩng đầu bước đi.\n• こうさてん（交差点） = Ngã tư\n   Mẹo: GIAO SAI ĐIỂM.\n• しんごう（信号） = Đèn giao thông\n   Mẹo: TÍN HIỆU.\n• かど（角） = Góc phố\n   Mẹo: 角 (GIÁC) = góc. 角を 右へ 曲がります = rẽ phải ở góc phố.\n• はし（橋） = Cây cầu\n   Mẹo: 橋 có bộ 木 (gỗ) → cầu gỗ. Khác 箸 (đũa, bộ tre) và はし (đầu mút).\n• こども（子ども） = Trẻ con\n   Mẹo: 子 = hình em bé quấn tã dang tay.\n→ Trong sách, xem thêm mục từ vựng của bài 23.\n+ Từ N5 bổ sung (4): 切ります（きります） ・ たて ・ 八百屋（やおや） ・ 出ます（でます）",
    "minutes": 24
   },
   {
@@ -4036,7 +4036,7 @@
    "day": 73,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 24:\n• くれます = Cho tôi\n   Mẹo: Chỉ dùng khi người nhận là TÔI hoặc người thân của tôi.\n• つれていきます（連れて 行きます） = Dẫn ai đi\n   Mẹo: 連 có bộ 辶 → dắt người cùng di chuyển.\n• つれてきます（連れて 来ます） = Dẫn ai đến\n   Mẹo: Cặp đôi với 連れて 行きます.\n• おくります（送ります） = Gửi, tiễn\n   Mẹo: 送 có bộ 辶 → cho vật/người di chuyển đi.\n• しょうかいします（紹介します） = Giới thiệu\n   Mẹo: THIỆU GIỚI = giới thiệu. Đảo thứ tự so với tiếng Việt.\n• あんないします（案内します） = Hướng dẫn, dẫn đường\n   Mẹo: ÁN NỘI = chỉ dẫn vào trong.\n• せつめいします（説明します） = Giải thích\n   Mẹo: THUYẾT MINH — âm Hán Việt y hệt tiếng Việt.\n→ Đối chiếu thêm với mục 語彙 của bài 24 trong sách để bổ sung.\n+ Từ N5 bổ sung (1): レコード",
+   "body": "Từ mới Minna bài 24:\n• くれます = Cho tôi\n   Mẹo: Chỉ dùng khi người nhận là TÔI hoặc người thân của tôi.\n• つれていきます（連れて 行きます） = Dẫn ai đi\n   Mẹo: 連 có bộ 辶 → dắt người cùng di chuyển.\n• つれてきます（連れて 来ます） = Dẫn ai đến\n   Mẹo: Cặp đôi với 連れて 行きます.\n• おくります（送ります） = Gửi, tiễn\n   Mẹo: 送 có bộ 辶 → cho vật/người di chuyển đi.\n• しょうかいします（紹介します） = Giới thiệu\n   Mẹo: THIỆU GIỚI = giới thiệu. Đảo thứ tự so với tiếng Việt.\n• あんないします（案内します） = Hướng dẫn, dẫn đường\n   Mẹo: ÁN NỘI = chỉ dẫn vào trong.\n• せつめいします（説明します） = Giải thích\n   Mẹo: THUYẾT MINH — âm Hán Việt y hệt tiếng Việt.\n→ Trong sách, xem thêm mục từ vựng của bài 24.\n+ Từ N5 bổ sung (1): レコード",
    "minutes": 21
   },
   {
@@ -4078,7 +4078,7 @@
    "day": 74,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 24:\n• なおします（直します） = Sửa\n   Mẹo: 直 (TRỰC) = làm cho thẳng lại.\n• おじいさん / おばあさん = Ông / bà\n   Mẹo: Cũng dùng để gọi người già nói chung.\n• そぼ / そふ（祖母 / 祖父） = Bà tôi / ông tôi\n   Mẹo: TỔ MẪU / TỔ PHỤ. Nói về người nhà mình thì dùng dạng này.\n• おべんとう（お弁当） = Cơm hộp\n   Mẹo: BIỆN ĐƯƠNG = suất ăn mang theo.\n• ちず（地図） = Bản đồ\n   Mẹo: ĐỊA ĐỒ = hình vẽ mặt đất.\n• じぶん（自分） = Bản thân\n   Mẹo: TỰ PHÂN = phần của chính mình.\n• ひとりで（一人で） = Một mình\n   Mẹo: Nhớ có で ở cuối: 一人で 行きます = đi một mình.\n→ Đối chiếu thêm với mục 語彙 của bài 24 trong sách để bổ sung.\n+ Từ N5 bổ sung (1): コピーします",
+   "body": "Từ mới Minna bài 24:\n• なおします（直します） = Sửa\n   Mẹo: 直 (TRỰC) = làm cho thẳng lại.\n• おじいさん / おばあさん = Ông / bà\n   Mẹo: Cũng dùng để gọi người già nói chung.\n• そぼ / そふ（祖母 / 祖父） = Bà tôi / ông tôi\n   Mẹo: TỔ MẪU / TỔ PHỤ. Nói về người nhà mình thì dùng dạng này.\n• おべんとう（お弁当） = Cơm hộp\n   Mẹo: BIỆN ĐƯƠNG = suất ăn mang theo.\n• ちず（地図） = Bản đồ\n   Mẹo: ĐỊA ĐỒ = hình vẽ mặt đất.\n• じぶん（自分） = Bản thân\n   Mẹo: TỰ PHÂN = phần của chính mình.\n• ひとりで（一人で） = Một mình\n   Mẹo: Nhớ có で ở cuối: 一人で 行きます = đi một mình.\n→ Trong sách, xem thêm mục từ vựng của bài 24.\n+ Từ N5 bổ sung (1): コピーします",
    "minutes": 21
   },
   {
@@ -4113,14 +4113,14 @@
    "day": 75,
    "orderNo": 4,
    "label": "文  Ngữ pháp",
-   "body": "Minna bài 25 (1/2) — Giả định — たら & ても\n• 普通形 た + ら、〜  (Nếu ~ thì ~. Điều kiện linh hoạt nhất, dùng được với cả ý chí, mệnh lệnh, rủ rê.)\n   Ví dụ: 雨が 降ったら、行きません。  = Nếu trời mưa thì tôi không đi.\n• V て も、〜  (Dù ~ thì vẫn ~. Vế sau đi ngược lại mong đợi.)\n   Ví dụ: 雨が 降っても、行きます。  = Dù trời mưa tôi vẫn đi.\n→ Làm 練習A của bài 25 trong sách, mỗi mẫu tự đặt 3 câu.",
+   "body": "Minna bài 25 (1/2) — Giả định — たら & ても\n• 普通形 た + ら、〜  (Nếu ~ thì ~. Dùng được khi rủ, nhờ, hoặc nói việc mình sẽ làm.)\n   Ví dụ: 雨が 降ったら、行きません。  = Nếu trời mưa thì tôi không đi.\n• V て も、〜  (Dù ~ thì vẫn ~. Vế sau đi ngược lại mong đợi.)\n   Ví dụ: 雨が 降っても、行きます。  = Dù trời mưa tôi vẫn đi.\n→ Làm 練習A của bài 25 trong sách, mỗi mẫu tự đặt 3 câu.",
    "minutes": 25
   },
   {
    "day": 75,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 25:\n• ひっこしします（引っ越しします） = Chuyển nhà\n   Mẹo: 引 (kéo) + 越 (vượt qua) → kéo đồ vượt sang chỗ mới.\n• かんがえます（考えます） = Suy nghĩ\n   Mẹo: 考 có bộ 耂 (người già) → người già suy nghĩ chín chắn.\n• とります（取ります） = Lấy, nhận\n   Mẹo: 取 = 耳 (tai) + 又 (tay) → tay túm lấy. 年を 取ります = già đi.\n• いなか（田舎） = Quê, nông thôn\n   Mẹo: ĐIỀN XÁ = nhà giữa ruộng đồng.\n• チャンス = Cơ hội\n   Mẹo: Từ 'chance'.\n• おく（億） = Trăm triệu\n   Mẹo: ỨC. 一億円 = 100 triệu yên.\n• 〜たら = Nếu ~ thì\n   Mẹo: Chia như thể た rồi thêm ら: 行った → 行ったら.\n→ Đối chiếu thêm với mục 語彙 của bài 25 trong sách để bổ sung.\n+ Từ N5 bổ sung (1): 方（かた）",
+   "body": "Từ mới Minna bài 25:\n• ひっこしします（引っ越しします） = Chuyển nhà\n   Mẹo: 引 (kéo) + 越 (vượt qua) → kéo đồ vượt sang chỗ mới.\n• かんがえます（考えます） = Suy nghĩ\n   Mẹo: 考 có bộ 耂 (người già) → người già suy nghĩ chín chắn.\n• とります（取ります） = Lấy, nhận\n   Mẹo: 取 = 耳 (tai) + 又 (tay) → tay túm lấy. 年を 取ります = già đi.\n• いなか（田舎） = Quê, nông thôn\n   Mẹo: ĐIỀN XÁ = nhà giữa ruộng đồng.\n• チャンス = Cơ hội\n   Mẹo: Từ 'chance'.\n• おく（億） = Trăm triệu\n   Mẹo: ỨC. 一億円 = 100 triệu yên.\n• 〜たら = Nếu ~ thì\n   Mẹo: Chia như thể た rồi thêm ら: 行った → 行ったら.\n→ Trong sách, xem thêm mục từ vựng của bài 25.\n+ Từ N5 bổ sung (1): 方（かた）",
    "minutes": 21
   },
   {
@@ -4162,7 +4162,7 @@
    "day": 76,
    "orderNo": 5,
    "label": "語  Từ vựng",
-   "body": "Từ mới Minna bài 25:\n• 〜ても = Dù ~ thì\n   Mẹo: Chia như thể て rồi thêm も: 行って → 行っても.\n• もし = Giả sử, nếu như\n   Mẹo: Đứng đầu câu, báo hiệu đây là giả định.\n• いくら〜ても = Dù ~ bao nhiêu đi nữa\n   Mẹo: いくら 高くても 買います = dù đắt mấy tôi cũng mua.\n• しゅうかん（習慣） = Thói quen\n   Mẹo: TẬP QUÁN — âm Hán Việt y hệt tiếng Việt.\n• じんせい（人生） = Cuộc đời\n   Mẹo: NHÂN SINH = đời người.\n• おせわに なりました（お世話に なりました） = Cảm ơn vì đã giúp đỡ\n   Mẹo: Câu chào chia tay quan trọng nhất khi rời công ty, trường học.\n• がんばります（頑張ります） = Cố gắng\n   Mẹo: NGOAN TRƯƠNG = bướng bỉnh mà căng ra → CỐ GẮNG hết sức.\n→ Đối chiếu thêm với mục 語彙 của bài 25 trong sách để bổ sung.",
+   "body": "Từ mới Minna bài 25:\n• 〜ても = Dù ~ thì\n   Mẹo: Chia như thể て rồi thêm も: 行って → 行っても.\n• もし = Giả sử, nếu như\n   Mẹo: Đứng đầu câu, báo hiệu đây là giả định.\n• いくら〜ても = Dù ~ bao nhiêu đi nữa\n   Mẹo: いくら 高くても 買います = dù đắt mấy tôi cũng mua.\n• しゅうかん（習慣） = Thói quen\n   Mẹo: TẬP QUÁN — âm Hán Việt y hệt tiếng Việt.\n• じんせい（人生） = Cuộc đời\n   Mẹo: NHÂN SINH = đời người.\n• おせわに なりました（お世話に なりました） = Cảm ơn vì đã giúp đỡ\n   Mẹo: Câu chào chia tay quan trọng nhất khi rời công ty, trường học.\n• がんばります（頑張ります） = Cố gắng\n   Mẹo: NGOAN TRƯƠNG = bướng bỉnh mà căng ra → CỐ GẮNG hết sức.\n→ Trong sách, xem thêm mục từ vựng của bài 25.",
    "minutes": 20
   },
   {
@@ -4176,7 +4176,7 @@
    "day": 77,
    "orderNo": 1,
    "label": "漢  Kanji",
-   "body": "Viết lại toàn bộ Kanji đã học trong tuần: che nghĩa → đọc chữ, che chữ → viết lại. Lọc sheet '9. Kanji 103' theo cột Ngày học để biết chính xác chữ nào.",
+   "body": "Viết lại toàn bộ Kanji đã học trong tuần: che nghĩa → đọc chữ, che chữ → viết lại. Trong app, xem chữ của tuần này và đánh dấu chữ còn mờ.",
    "minutes": 25
   },
   {
@@ -4211,8 +4211,8 @@
    "day": 78,
    "orderNo": 1,
    "label": "漢  Kanji",
-   "body": "Chạy hết 103 Kanji: chia 4 lượt × 26 chữ. Che nghĩa đọc chữ, che chữ viết lại. Chữ nào sai đánh dấu ★ ở sheet '9. Kanji 103'.",
-   "minutes": 35
+   "body": "Hôm nay ôn 26 chữ Kanji. Che nghĩa rồi đọc, che chữ rồi viết. Ba lượt còn lại để các buổi ôn sau, không làm hết 103 chữ trong một ngày. Chữ nào còn mờ thì đánh dấu trong app.",
+   "minutes": 20
   },
   {
    "day": 78,
@@ -4225,7 +4225,7 @@
    "day": 78,
    "orderNo": 3,
    "label": "語  Từ vựng",
-   "body": "Lọc sheet Từ vựng theo cột Trạng thái, ôn lại mọi từ chưa tick 'Xong'.",
+   "body": "Trong app, ôn lại những từ còn mờ.",
    "minutes": 25
   },
   {
@@ -4379,28 +4379,28 @@
    "day": 84,
    "orderNo": 1,
    "label": "📝  Luyện đề",
-   "body": "Phần 1: 文字・語彙 (Chữ Hán – Từ vựng) — 25 phút, không tra từ điển.",
+   "body": "Ôn chữ và từ đã học trong app, khoảng 25 phút.",
    "minutes": 25
   },
   {
    "day": 84,
    "orderNo": 2,
    "label": "📝  Luyện đề",
-   "body": "Phần 2: 文法・読解 (Ngữ pháp – Đọc hiểu) — 50 phút.",
-   "minutes": 50
+   "body": "Ôn mẫu câu và đoạn đọc đã học trong app.",
+   "minutes": 25
   },
   {
    "day": 84,
    "orderNo": 3,
    "label": "📝  Luyện đề",
-   "body": "Phần 3: 聴解 (Nghe hiểu) — 30 phút, chỉ nghe 1 lần đúng như thi thật.",
-   "minutes": 30
+   "body": "Nghe lại các từ và câu đã có trong app.",
+   "minutes": 20
   },
   {
    "day": 84,
    "orderNo": 4,
    "label": "✓  Chấm điểm",
-   "body": "Chấm và ghi số câu sai từng phần vào cột Ghi chú. Chuẩn đỗ: tổng ≥ 80/180 và mỗi phần ≥ 19/60.",
+   "body": "Trong app, ôn lại câu còn mờ. App không chứa đề giấy 120 phút.",
    "minutes": 15
   },
   {
@@ -4421,7 +4421,7 @@
    "day": 85,
    "orderNo": 3,
    "label": "語  Từ vựng",
-   "body": "Ghi 30 từ mới gặp trong đề vào sheet Từ vựng.",
+   "body": "Đánh dấu trong app những từ còn mờ sau buổi ôn.",
    "minutes": 20
   },
   {
@@ -4491,28 +4491,28 @@
    "day": 88,
    "orderNo": 1,
    "label": "📝  Luyện đề",
-   "body": "Phần 1: 文字・語彙 — 25 phút.",
+   "body": "Ôn lại chữ và từ còn mờ trong app.",
    "minutes": 25
   },
   {
    "day": 88,
    "orderNo": 2,
    "label": "📝  Luyện đề",
-   "body": "Phần 2: 文法・読解 — 50 phút. Phân bổ thời gian, đừng sa lầy ở một câu.",
-   "minutes": 50
+   "body": "Ôn lại mẫu câu còn mờ trong app.",
+   "minutes": 25
   },
   {
    "day": 88,
    "orderNo": 3,
    "label": "📝  Luyện đề",
-   "body": "Phần 3: 聴解 — 30 phút.",
-   "minutes": 30
+   "body": "Nghe lại câu còn mờ trong app.",
+   "minutes": 20
   },
   {
    "day": 88,
    "orderNo": 4,
    "label": "✓  Chấm điểm",
-   "body": "Chấm điểm, so với đề 1. Mục tiêu: cao hơn ít nhất 15 điểm.",
+   "body": "So với buổi ôn trước, xem câu nào đã chắc hơn. App không chấm đề giấy.",
    "minutes": 15
   },
   {
@@ -4533,7 +4533,7 @@
    "day": 89,
    "orderNo": 3,
    "label": "語  Từ vựng",
-   "body": "Lướt nhanh toàn bộ sheet Từ vựng, không dừng lâu ở từ nào.",
+   "body": "Trong app, lướt các từ còn mờ, không dừng lâu ở từ nào.",
    "minutes": 25
   },
   {
@@ -4939,7 +4939,7 @@
    "katakana": "ン",
    "romaji": "n",
    "day": 5,
-   "tip": "Nét cong đơn giản, âm mũi kết thúc từ — giống chữ 'n' viết tay."
+   "tip": "Nét cong đơn giản, âm mũi kết thúc từ — giống chữ 'n' viết tay. ん là một nhịp riêng, không đọc thành na."
   },
   {
    "id": 47,
@@ -6250,7 +6250,7 @@
    "id": 37,
    "character": "高",
    "hanViet": "CAO",
-   "meaning": "Cao, đắt",
+   "meaning": "Cao; đắt",
    "onReading": "コウ",
    "kunReading": "たか(い)",
    "strokes": 10,
@@ -7200,8 +7200,8 @@
    "id": 17,
    "pattern": "V ます / V ません",
    "usage": "Thể lịch sự hiện tại–tương lai, khẳng định và phủ định.",
-   "exampleJp": "わたしは 毎日 6時に 起きます。",
-   "exampleVi": "Tôi thức dậy lúc 6 giờ mỗi ngày.",
+   "exampleJp": "わたしは 毎日 起きます。",
+   "exampleVi": "Tôi thức dậy mỗi ngày.",
    "day": 22,
    "lesson": "BÀI 4  ·  Giờ giấc & Thì của động từ"
   },
@@ -7217,7 +7217,7 @@
   {
    "id": 19,
    "pattern": "時間 に V",
-   "usage": "Làm gì vào lúc mấy giờ. に chỉ đi với mốc thời gian có con số.",
+   "usage": "に đi với giờ, thứ, ngày tháng. Không thêm に sau 毎日, きのう, あした.",
    "exampleJp": "7時に 起きます。",
    "exampleVi": "Tôi dậy lúc 7 giờ.",
    "day": 23,
@@ -7289,7 +7289,7 @@
   {
    "id": 27,
    "pattern": "N を V",
-   "usage": "を là trợ từ đánh dấu tân ngữ — vật chịu tác động của động từ.",
+   "usage": "を là trợ từ đánh dấu tân ngữ — vật chịu tác động của động từ. Đọc là o.",
    "exampleJp": "ごはんを 食べます。",
    "exampleVi": "Tôi ăn cơm.",
    "day": 26,
@@ -7432,8 +7432,8 @@
   },
   {
    "id": 43,
-   "pattern": "N が あります / わかります",
-   "usage": "Có (sự kiện, khả năng) / hiểu. Cũng dùng が.",
+   "pattern": "N が わかります",
+   "usage": "Hiểu. ひらがなが わかります. Dùng が.",
    "exampleJp": "ひらがなが わかります。",
    "exampleVi": "Tôi hiểu chữ Hiragana.",
    "day": 33,
@@ -7606,7 +7606,7 @@
    "pattern": "場所 へ V ます-stem に 行きます / 来ます / 帰ります",
    "usage": "Đi/đến/về nơi nào ĐỂ làm gì.",
    "exampleJp": "デパートへ 買い物に 行きます。",
-   "exampleVi": "Tôi đi siêu thị để mua sắm.",
+   "exampleVi": "Tôi đến cửa hàng bách hoá để mua sắm.",
    "day": 44,
    "lesson": "BÀI 13  ·  Mong muốn — たい & ほしい"
   },
@@ -7622,7 +7622,7 @@
   {
    "id": 64,
    "pattern": "Cách chia thể て",
-   "usage": "Nhóm I: き→いて, ぎ→いで, み/び/に→んで, ち/り/い→って, し→して (行きます→行って là ngoại lệ). Nhóm II: bỏ ます thêm て. Nhóm III: します→して, 来ます→来て.",
+   "usage": "Nhóm I đổi đuôi: 書きます → 書いて, 飲みます → 飲んで. 行きます thành 行って. Nhóm II: bỏ ます, thêm て. Nhóm III: します thành して, 来ます thành 来て.",
    "exampleJp": "書きます → 書いて / 飲みます → 飲んで",
    "exampleVi": "viết → viết rồi / uống → uống rồi",
    "day": 45,
@@ -7678,7 +7678,7 @@
    "pattern": "V て います (trạng thái)",
    "usage": "Diễn tả trạng thái kéo dài, nghề nghiệp, thói quen.",
    "exampleJp": "わたしは 銀行で 働いて います。",
-   "exampleVi": "Tôi đang làm việc tại ngân hàng.",
+   "exampleVi": "Tôi làm việc tại ngân hàng.",
    "day": 50,
    "lesson": "BÀI 15  ·  Cho phép & Cấm đoán"
   },
@@ -7828,7 +7828,7 @@
   },
   {
    "id": 87,
-   "pattern": "Thể た (quá khứ thân mật)",
+   "pattern": "Thể た — nói với bạn bè về việc đã qua",
    "usage": "Chia giống thể て, chỉ đổi て→た, で→だ.",
    "exampleJp": "行って → 行った",
    "exampleVi": "đã đi",
@@ -7982,7 +7982,7 @@
   {
    "id": 104,
    "pattern": "V る と、〜",
-   "usage": "Cứ ~ thì ~. Diễn tả quy luật tự nhiên, kết quả tất yếu. Vế sau KHÔNG dùng ý chí, mệnh lệnh.",
+   "usage": "Cứ ~ thì ~. Dùng cho việc tự nhiên xảy ra. Vế sau không phải lời rủ hay lời nhờ.",
    "exampleJp": "この ボタンを 押すと、切符が 出ます。",
    "exampleVi": "Cứ ấn nút này thì vé sẽ ra.",
    "day": 72,
@@ -8027,7 +8027,7 @@
   {
    "id": 109,
    "pattern": "普通形 た + ら、〜",
-   "usage": "Nếu ~ thì ~. Điều kiện linh hoạt nhất, dùng được với cả ý chí, mệnh lệnh, rủ rê.",
+   "usage": "Nếu ~ thì ~. Dùng được khi rủ, nhờ, hoặc nói việc mình sẽ làm.",
    "exampleJp": "雨が 降ったら、行きません。",
    "exampleVi": "Nếu trời mưa thì tôi không đi.",
    "day": 75,
@@ -8076,7 +8076,7 @@
    "kana": "あなた",
    "kanji": "",
    "meaning": "Bạn, anh/chị",
-   "tip": "A-NA-TA nghe gần như 'anh ta' — người đối diện mình.",
+   "tip": "Chỉ người đối diện. Không dùng cho mình.",
    "day": 15,
    "lesson": "BÀI 1  ·  Chào hỏi & Giới thiệu bản thân  (14 từ)"
   },
@@ -8355,7 +8355,7 @@
    "kana": "うけつけ",
    "kanji": "受付",
    "meaning": "Quầy lễ tân",
-   "tip": "THỤ PHÓ = nơi TIẾP NHẬN (受 = nhận) khách.",
+   "tip": "Quầy lễ tân, nơi nhận khách.",
    "day": 19,
    "lesson": "BÀI 3  ·  ここ・そこ・あそこ — Chỉ nơi chốn  (14 từ)"
   },
@@ -8373,7 +8373,7 @@
    "kana": "かいだん",
    "kanji": "階段",
    "meaning": "Cầu thang",
-   "tip": "GIAI ĐOẠN = từng bậc từng bậc. 階 (giai) = tầng.",
+   "tip": "Cầu thang. Đừng đọc thành giai đoạn. Giai đoạn là một từ khác.",
    "day": 19,
    "lesson": "BÀI 3  ·  ここ・そこ・あそこ — Chỉ nơi chốn  (14 từ)"
   },
@@ -8481,7 +8481,7 @@
    "kana": "べんきょうします",
    "kanji": "勉強します",
    "meaning": "Học bài",
-   "tip": "MIỄN CƯỠNG — học là phải ép mình một chút, nhớ luôn.",
+   "tip": "Nghĩa dùng là học bài. Chữ Hán này trong tiếng Việt là miễn cưỡng, đừng lấy nghĩa đó.",
    "day": 22,
    "lesson": "BÀI 4  ·  Giờ giấc & Thì của động từ  (14 từ)"
   },
@@ -8670,7 +8670,7 @@
    "kana": "せんげつ",
    "kanji": "先月",
    "meaning": "Tháng trước",
-   "tip": "先 (TIÊN = trước) + 月 (tháng). Cùng nhóm: 先週, 先年.",
+   "tip": "先 (trước) + 月 (tháng). Cùng nhóm: 先週. Năm ngoái là 去年.",
    "day": 25,
    "lesson": "BÀI 5  ·  Đi lại — Phương tiện & Điểm đến  (14 từ)"
   },
@@ -8984,7 +8984,7 @@
    "id": 103,
    "kana": "たかい",
    "kanji": "高い",
-   "meaning": "Cao, đắt",
+   "meaning": "Đắt; cũng có nghĩa cao",
    "tip": "高 = tòa tháp nhiều tầng. Giá vọt lên cao = ĐẮT.",
    "day": 31,
    "lesson": "BÀI 8  ·  Tính từ  (14 từ)"
@@ -9022,42 +9022,6 @@
    "kanji": "楽しい",
    "meaning": "Vui",
    "tip": "楽 (LẠC) = niềm vui. Cùng chữ với 音楽 (âm nhạc).",
-   "day": 32,
-   "lesson": "BÀI 8  ·  Tính từ  (14 từ)"
-  },
-  {
-   "id": 108,
-   "kana": "きれい[な]",
-   "kanji": "",
-   "meaning": "Đẹp, sạch",
-   "tip": "Đuôi い nhưng là な-adj — cái bẫy kinh điển. Nhớ kỹ!",
-   "day": 32,
-   "lesson": "BÀI 8  ·  Tính từ  (14 từ)"
-  },
-  {
-   "id": 109,
-   "kana": "しずか[な]",
-   "kanji": "静か[な]",
-   "meaning": "Yên tĩnh",
-   "tip": "TĨNH = yên. 静かに してください = xin giữ trật tự.",
-   "day": 32,
-   "lesson": "BÀI 8  ·  Tính từ  (14 từ)"
-  },
-  {
-   "id": 110,
-   "kana": "げんき[な]",
-   "kanji": "元気[な]",
-   "meaning": "Khỏe mạnh",
-   "tip": "NGUYÊN KHÍ = khí lực gốc còn đầy → khỏe.",
-   "day": 32,
-   "lesson": "BÀI 8  ·  Tính từ  (14 từ)"
-  },
-  {
-   "id": 111,
-   "kana": "ゆうめい[な]",
-   "kanji": "有名[な]",
-   "meaning": "Nổi tiếng",
-   "tip": "HỮU DANH = có tên tuổi.",
    "day": 32,
    "lesson": "BÀI 8  ·  Tính từ  (14 từ)"
   },
@@ -9324,7 +9288,7 @@
   },
   {
    "id": 141,
-   "kana": "ひとつ〜とおつ",
+   "kana": "ひとつ〜とお",
    "kanji": "一つ〜十",
    "meaning": "Một cái đến mười cái",
    "tip": "ひとつ ふたつ みっつ よっつ いつつ むっつ ななつ やっつ ここのつ とお. Đọc to 10 lần mỗi ngày.",
@@ -11172,7 +11136,7 @@
    "kana": "わかりました",
    "kanji": "",
    "meaning": "Tôi hiểu rồi",
-   "tip": "",
+   "tip": "Học thuộc cả cụm: tôi hiểu rồi. Chưa cần chia ました.",
    "lesson": "Chào hỏi & từ Katakana (giai đoạn chữ cái)",
    "day": 6
   },
@@ -11297,7 +11261,7 @@
    "id": 367,
    "kana": "ごめんなさい",
    "kanji": "",
-   "meaning": "Xin lỗi, thân mật",
+   "meaning": "Xin lỗi người thân",
    "tip": "",
    "lesson": "Chào hỏi & từ Katakana (giai đoạn chữ cái)",
    "day": 11
@@ -11435,7 +11399,7 @@
    "meaning": "Cái này",
    "tip": "",
    "lesson": "BÀI 2  ·  これ・それ・あれ — Chỉ đồ vật  (14 từ)",
-   "day": 8
+   "day": 17
   },
   {
    "id": 383,
@@ -11444,7 +11408,7 @@
    "meaning": "Cái đó",
    "tip": "",
    "lesson": "BÀI 2  ·  これ・それ・あれ — Chỉ đồ vật  (14 từ)",
-   "day": 8
+   "day": 17
   },
   {
    "id": 384,
@@ -11453,7 +11417,7 @@
    "meaning": "Cái kia",
    "tip": "",
    "lesson": "BÀI 2  ·  これ・それ・あれ — Chỉ đồ vật  (14 từ)",
-   "day": 8
+   "day": 17
   },
   {
    "id": 385,
@@ -11462,7 +11426,7 @@
    "meaning": "~ này",
    "tip": "",
    "lesson": "BÀI 2  ·  これ・それ・あれ — Chỉ đồ vật  (14 từ)",
-   "day": 8
+   "day": 17
   },
   {
    "id": 386,
@@ -11471,7 +11435,7 @@
    "meaning": "~ đó",
    "tip": "",
    "lesson": "BÀI 2  ·  これ・それ・あれ — Chỉ đồ vật  (14 từ)",
-   "day": 8
+   "day": 17
   },
   {
    "id": 387,
@@ -11480,7 +11444,7 @@
    "meaning": "~ kia",
    "tip": "",
    "lesson": "BÀI 2  ·  これ・それ・あれ — Chỉ đồ vật  (14 từ)",
-   "day": 8
+   "day": 17
   },
   {
    "id": 388,
@@ -12623,7 +12587,7 @@
    "meaning": "Dài",
    "tip": "",
    "lesson": "BÀI 8  ·  Tính từ  (14 từ)",
-   "day": 31
+   "day": 32
   },
   {
    "id": 515,
@@ -12632,7 +12596,7 @@
    "meaning": "Ngắn",
    "tip": "",
    "lesson": "BÀI 8  ·  Tính từ  (14 từ)",
-   "day": 31
+   "day": 32
   },
   {
    "id": 516,
@@ -12641,7 +12605,7 @@
    "meaning": "Gần",
    "tip": "",
    "lesson": "BÀI 8  ·  Tính từ  (14 từ)",
-   "day": 31
+   "day": 32
   },
   {
    "id": 517,
@@ -12650,7 +12614,7 @@
    "meaning": "Xa",
    "tip": "",
    "lesson": "BÀI 8  ·  Tính từ  (14 từ)",
-   "day": 31
+   "day": 32
   },
   {
    "id": 518,
@@ -12659,7 +12623,7 @@
    "meaning": "Sớm",
    "tip": "",
    "lesson": "BÀI 8  ·  Tính từ  (14 từ)",
-   "day": 31
+   "day": 32
   },
   {
    "id": 519,
@@ -12668,7 +12632,7 @@
    "meaning": "Nhanh",
    "tip": "",
    "lesson": "BÀI 8  ·  Tính từ  (14 từ)",
-   "day": 31
+   "day": 32
   },
   {
    "id": 520,
@@ -12677,7 +12641,7 @@
    "meaning": "Muộn; chậm",
    "tip": "",
    "lesson": "BÀI 8  ·  Tính từ  (14 từ)",
-   "day": 31
+   "day": 32
   },
   {
    "id": 521,
@@ -12686,7 +12650,7 @@
    "meaning": "Thấp",
    "tip": "",
    "lesson": "BÀI 8  ·  Tính từ  (14 từ)",
-   "day": 31
+   "day": 32
   },
   {
    "id": 522,
@@ -12695,7 +12659,7 @@
    "meaning": "To, mập, dày",
    "tip": "",
    "lesson": "BÀI 8  ·  Tính từ  (14 từ)",
-   "day": 31
+   "day": 32
   },
   {
    "id": 523,
@@ -12704,7 +12668,7 @@
    "meaning": "Mảnh, gầy",
    "tip": "",
    "lesson": "BÀI 8  ·  Tính từ  (14 từ)",
-   "day": 31
+   "day": 32
   },
   {
    "id": 524,
@@ -12713,7 +12677,7 @@
    "meaning": "Tròn",
    "tip": "",
    "lesson": "BÀI 8  ·  Tính từ  (14 từ)",
-   "day": 31
+   "day": 32
   },
   {
    "id": 525,
@@ -12722,7 +12686,7 @@
    "meaning": "Mỏng; nhạt",
    "tip": "",
    "lesson": "BÀI 8  ·  Tính từ  (14 từ)",
-   "day": 31
+   "day": 32
   },
   {
    "id": 526,
@@ -12731,16 +12695,16 @@
    "meaning": "Lạnh (khi chạm vào)",
    "tip": "",
    "lesson": "BÀI 8  ·  Tính từ  (14 từ)",
-   "day": 31
+   "day": 32
   },
   {
    "id": 527,
    "kana": "ぬるい",
    "kanji": "温い",
-   "meaning": "Âm ấm, nguội",
+   "meaning": "Hơi nguội, chưa đủ nóng",
    "tip": "",
    "lesson": "BÀI 8  ·  Tính từ  (14 từ)",
-   "day": 31
+   "day": 32
   },
   {
    "id": 528,
@@ -12749,7 +12713,7 @@
    "meaning": "Nguy hiểm",
    "tip": "",
    "lesson": "BÀI 8  ·  Tính từ  (14 từ)",
-   "day": 31
+   "day": 32
   },
   {
    "id": 529,
@@ -15640,7 +15604,7 @@
    "id": 8,
    "source": "Đề thi thử JLPT N5 các năm",
    "usedFor": "Nghe + Đọc",
-   "howTo": "Ngày 84 và 88 làm full có bấm giờ, đúng như phòng thi thật."
+   "howTo": "Ngày 84 và 88 ôn lại trong app những câu còn mờ. App không chứa đề giấy 120 phút."
   },
   {
    "id": 9,
@@ -15654,7 +15618,7 @@
    "id": 1,
    "day": 23,
    "lesson": "Bài 4",
-   "textJp": "わたしは 学生です。毎日 学校へ 行きます。大学で 日本語を 勉強して います。友だちが たくさん います。",
+   "textJp": "わたしは 学生です。毎日 学校へ 行きます。",
    "questions": [
     {
      "question": "Người viết là ai?",
@@ -15677,12 +15641,12 @@
      "correctIndex": 0
     },
     {
-     "question": "Người viết học gì?",
+     "question": "Người viết đi học thường xuyên thế nào?",
      "options": [
-      "Tiếng Nhật",
-      "Tiếng Anh",
-      "Toán",
-      "Lịch sử"
+      "Mỗi ngày",
+      "Một tuần một lần",
+      "Không đi",
+      "Chỉ cuối tuần"
      ],
      "correctIndex": 0
     }

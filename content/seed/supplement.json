@@ -5,11 +5,11 @@
       "id": 1,
       "day": 23,
       "lesson": "Bài 4",
-      "textJp": "わたしは 学生です。毎日 学校へ 行きます。大学で 日本語を 勉強して います。友だちが たくさん います。",
+      "textJp": "わたしは 学生です。毎日 学校へ 行きます。",
       "questions": [
         { "question": "Người viết là ai?", "options": ["Học sinh, sinh viên", "Giáo viên", "Nhân viên công ty", "Bác sĩ"], "correctIndex": 0 },
         { "question": "Người viết đi đâu mỗi ngày?", "options": ["Đến trường", "Đến bệnh viện", "Về Nhật", "Đi làm"], "correctIndex": 0 },
-        { "question": "Người viết học gì?", "options": ["Tiếng Nhật", "Tiếng Anh", "Toán", "Lịch sử"], "correctIndex": 0 }
+        { "question": "Người viết đi học thường xuyên thế nào?", "options": ["Mỗi ngày", "Một tuần một lần", "Không đi", "Chỉ cuối tuần"], "correctIndex": 0 }
       ]
     }
   ],

@@ -77,7 +77,7 @@ export function buildAchievements(catalog: KnowledgeCatalog, views: Views, journ
       isUnlocked: allViews.some((view) => view.status === 'mastered'),
     },
     {
-      icon: 'neko:vocabulary', title: '100 từ vựng', description: 'Còn một đoạn nữa thôi',
+      icon: 'neko:vocabulary', title: '100 từ vựng', description: 'Bạn đã thuộc 100 từ',
       isUnlocked: countLearned(catalog, views, 'vocabulary') >= ACHIEVEMENT_RULES.VOCABULARY_MILESTONE,
     },
     { icon: 'neko:achievements', title: 'Chinh phục N5', description: 'Hoàn thành ngày 90', isUnlocked: journey.isJourneyComplete },

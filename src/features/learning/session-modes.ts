@@ -75,7 +75,7 @@ export const SESSION_MODE_CONFIG: Record<SessionMode, SessionModeConfig> = {
   // Một ngày học trọn vẹn, theo chặng: Gặp lại (≤5) → Học bù (≤3) → Mới (TOÀN BỘ kiến thức còn lại của ngày, từng chặng 5 thứ,
   // hết mỗi chặng hỏi "Học tiếp hay nghỉ?") → Dùng thử (2). Nghỉ giữa chừng thì lần sau học tiếp đúng chỗ đó.
   daily: {
-    label: 'Học hôm nay', emoji: '🌱', description: 'Ôn lại · khám phá · dùng trong ngữ cảnh', cardBackground: '#FFEFF2',
+    label: 'Học hôm nay', emoji: '🌱', description: 'Ôn bài cũ, học bài mới, rồi đặt một câu.', cardBackground: '#FFEFF2',
     targetMinutes: 8, composition: { surprise: 1, recall: 4, discover: DAY_CHUNK_SIZE, use: 2 }, recallSource: 'priority', isPickable: false,
     backlogPerSession: BACKLOG_PER_DAILY_SESSION,
     newKnowledgeScope: 'rest-of-day', checkpointEvery: DAY_CHUNK_SIZE,
@@ -99,7 +99,7 @@ export const SESSION_MODE_CONFIG: Record<SessionMode, SessionModeConfig> = {
     newKnowledgeScope: 'next-chunk', checkpointEvery: null,
   },
   random: {
-    label: 'Học ngẫu nhiên', emoji: '🪄', description: 'Một cuộc gặp bất ngờ.', cardBackground: '#EAE4F7',
+    label: 'Học ngẫu nhiên', emoji: '🪄', description: 'Neko chọn vài chữ bất kỳ để bạn ôn.', cardBackground: '#EAE4F7',
     targetMinutes: 6, composition: { surprise: 1, recall: 2, discover: 1, use: 1 }, recallSource: 'priority', isPickable: true, backlogPerSession: 0,
     newKnowledgeScope: 'next-chunk', checkpointEvery: null,
   },
@@ -109,7 +109,7 @@ export const SESSION_MODE_CONFIG: Record<SessionMode, SessionModeConfig> = {
     newKnowledgeScope: 'next-chunk', checkpointEvery: null,
   },
   rescue: {
-    label: 'Ôn lại sau khi nghỉ', emoji: '🔄', description: 'Tiếp tục từ đúng nơi bạn dừng.', cardBackground: '#E2F0F8',
+    label: 'Ôn lại sau khi nghỉ', emoji: '🔄', description: 'Ôn những thứ lâu rồi chưa gặp.', cardBackground: '#E2F0F8',
     targetMinutes: 6, composition: { surprise: 0, recall: 5, discover: 0, use: 0 }, recallSource: 'at-risk', isPickable: true, backlogPerSession: 0,
     newKnowledgeScope: 'next-chunk', checkpointEvery: null,
   },

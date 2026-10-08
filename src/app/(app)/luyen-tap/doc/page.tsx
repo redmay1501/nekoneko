@@ -14,7 +14,7 @@ export default async function ReadingPage() {
       {passage ? (
         <>
           <p className="soft sm" style={{ margin: '4px 0 14px' }}>
-            Đoạn văn ngắn dùng đúng Kanji và ngữ pháp bạn đã học tới ngày {journeyDay}.
+            Đoạn này chỉ dùng chữ và mẫu câu bạn đã học.
           </p>
           <div className="card" style={{ background: '#FFFDF8' }}>
             <p className="jp" style={{ fontSize: 19, lineHeight: 2.1 }}>{passage.textJp}</p>
@@ -36,7 +36,7 @@ export default async function ReadingPage() {
           </div>
         </>
       ) : (
-        <div className="mt-3"><EmptyState message="Chưa có đoạn đọc nào phù hợp với chặng bạn đang học." hint="Đoạn đọc đầu tiên mở vào ngày 23." /></div>
+        <div className="mt-3"><EmptyState message="Chưa có đoạn đọc cho những ngày bạn đã học." hint="Đoạn đọc đầu tiên mở vào ngày 23." /></div>
       )}
     </>
   );

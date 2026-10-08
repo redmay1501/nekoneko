@@ -11,7 +11,7 @@ export const NOKO_MESSAGES = {
   correct: 'Ồ! Bạn vẫn nhớ! 🌸',
   wrong: 'Không sao. Mình gặp lại nó thêm một lần nữa nhé.',
   forgotten: 'Mình tìm thấy một thứ bạn sắp quên. Ghé qua một chút thôi.',
-  recovered: 'Cứu được rồi! Lần này nó sẽ ở lại lâu hơn.',
+  recovered: 'Ôn xong rồi! Lần này nó sẽ ở lại lâu hơn.',
   achievement: 'Bạn vừa đi qua một cột mốc nhỏ. Mình có thấy đấy 🌸',
   rest: 'Đủ rồi đó. Để kiến thức ở lại một chút nhé.',
   comeback: 'Bạn quay lại rồi 🌸 Không cần học bù đâu.',

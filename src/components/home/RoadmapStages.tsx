@@ -42,7 +42,7 @@ export function RoadmapStages({ journeyDay, isJourneyComplete }: RoadmapStagesPr
               <li key={stage.name} className={`dash-stage ${isCurrent ? 'current' : ''} ${isDone ? 'done' : ''}`}>
                 {isCurrent ? <span className="dash-stage-badge">Bạn ở đây</span> : null}
                 <span className="dash-stage-island">
-                  <Image src={STAGE_IMAGES[index]} alt="" width={620} height={500} className="dash-stage-image" />
+                  <Image src={STAGE_IMAGES[index]} alt="" width={620} height={500} sizes="(min-width: 768px) 170px, 150px" className="dash-stage-image" />
                 </span>
                 <span className="dash-stage-label">
                   <b>{isDone ? '✓ ' : ''}{stage.name}</b>

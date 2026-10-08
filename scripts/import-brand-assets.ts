@@ -108,6 +108,9 @@ async function main() {
 
   const logo = await sharp(join(SOURCE_DIR, 'logo.PNG')).trim().toBuffer();
   await sharp(logo).resize({ width: LOGO_WIDTH }).webp({ quality: 88, alphaQuality: 90 }).toFile(join(BRAND_DIR, 'logo.webp'));
+  // Thanh trên vẽ 100 px (file 200 cho màn 2x). Đăng nhập 260 px và hộp chào 300 px dùng file 520.
+  await sharp(logo).resize({ width: 200 }).webp({ quality: 80, alphaQuality: 90 }).toFile(join(BRAND_DIR, 'logo-bar.webp'));
+  await sharp(logo).resize({ width: 520 }).webp({ quality: 80, alphaQuality: 90 }).toFile(join(BRAND_DIR, 'logo-login.webp'));
   console.log('✓ logo');
 
   // Nền trang đăng nhập — tranh có sẵn khung thẻ trống bên phải, form được đặt khớp vào khung đó (globals.css .login-*).

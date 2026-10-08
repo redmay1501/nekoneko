@@ -1,6 +1,7 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { LearnerSettings } from '@/lib/data/data-source';
 import { DAILY_GOAL_OPTIONS, DEFAULT_REMINDER_TIME } from '@/features/progress/settings-options';
@@ -11,6 +12,7 @@ import { VoiceSetting } from './VoiceSetting';
 
 /** SC-38 · Cài đặt — lưu ngay khi bấm, hiển thị lỗi thân thiện nếu không lưu được. */
 export function SettingsForm({ initialSettings }: { initialSettings: LearnerSettings }) {
+  const router = useRouter();
   const [settings, setSettings] = useState(initialSettings);
   const setVoiceGender = useSpeechPreferenceStore((store) => store.setVoiceGender);
   const mutation = useMutation({
@@ -33,6 +35,8 @@ export function SettingsForm({ initialSettings }: { initialSettings: LearnerSett
       setSettings(saved);
       // Mọi nút 🔊 trong app đọc bằng giọng mới ngay, không cần tải lại trang.
       setVoiceGender(saved.voiceGender);
+      // Phút trên khung và trang chủ lấy từ server — cache 30 giây cần làm mới sau khi lưu.
+      router.refresh();
     },
   });
   const save = (patch: SettingsPatch) => mutation.mutate(patch);

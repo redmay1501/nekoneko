@@ -30,7 +30,7 @@ export default async function SignInPage({ searchParams }: { searchParams: Promi
 
         <section className="login-card" aria-labelledby="login-title">
           <h1 id="login-title" className="sr-only">{APP_NAME}</h1>
-          <BrandLogo width={260} className="login-logo" />
+          <BrandLogo width={260} priority className="login-logo" />
           <p className="login-subtitle">Học tiếng Nhật nhẹ nhàng cùng Neko</p>
           {isDemoMode() ? (
             <div className="login-demo">

@@ -37,7 +37,7 @@ export function ProgressFeed({ moments }: { moments: ProgressMoment[] }) {
 export function GardenSummaryCard({ learnedCount }: { learnedCount: number }) {
   return (
     <Link href="/vuon" className="dash-card dash-garden" aria-label={`Vườn tri thức — đã trồng ${learnedCount} hạt kiến thức`}>
-      <Image src="/illustrations/home-garden.webp" alt="" width={620} height={414} className="dash-garden-bg" />
+      <Image src="/illustrations/home-garden.webp" alt="" width={620} height={414} sizes="(min-width: 1100px) 370px, (min-width: 768px) 720px, 100vw" className="dash-garden-bg" />
       <span className="dash-garden-text">
         <span className="dash-card-title"><EmojiIcon emoji="🌸" size={26} /> Vườn tri thức</span>
         <span className="dash-meta">Bạn đã trồng</span>

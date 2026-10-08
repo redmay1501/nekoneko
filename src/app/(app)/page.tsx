@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import Image from 'next/image';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
 import { GardenSummaryCard } from '@/components/home/HomeInsights';
 import { ReviewCard } from '@/components/home/ReviewCard';
@@ -45,9 +46,8 @@ export default async function HomePage() {
   return (
     <div className="dash">
       <div className="dash-hero-bg" aria-hidden="true" data-scene="exit">
-        <picture>
-          <img src="/brand/home-background-new.jpeg" alt="" fetchPriority="high" />
-        </picture>
+        <Image src="/brand/home-background-new.jpeg" alt="" fill priority quality={75}
+          sizes="(min-width: 1200px) calc(100vw - 232px), 100vw" />
       </div>
 
       <header className="dash-hero" data-reveal="light" data-scene="exit">

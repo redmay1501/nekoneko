@@ -32,8 +32,8 @@ export function DailyGreetingDialog({ greeting, displayName }: { greeting: Daily
 
   function close() {
     setIsClosed(true);
-    // Đóng ngay; ghi "đã chào hôm nay" chạy phía sau — lỗi mạng thì lần sau chào lại, không sao.
-    updateSettings({ greeted: true }).catch(() => undefined);
+    // Đóng ngay. Ghi xong mới làm mới trang — nếu không, cache 30 giây mở lại hộp chào.
+    updateSettings({ greeted: true }).then(() => router.refresh()).catch(() => undefined);
   }
 
   function startLearning() {

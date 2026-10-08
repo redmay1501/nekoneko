@@ -39,7 +39,7 @@ export function TopBar({ displayName, level, recallDays, isGentleMode, isDemo }:
         ☰
       </button>
       <Link href="/" className="row topbrand" aria-label={`${APP_NAME} — về trang chủ`}>
-        <BrandLogo width={100} />
+        <BrandLogo width={100} priority={pathname !== '/'} />
       </Link>
       <div style={{ flex: 1 }} />
       <form

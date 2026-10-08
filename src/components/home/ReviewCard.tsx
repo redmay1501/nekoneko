@@ -32,7 +32,7 @@ export function ReviewCard({ atRiskCount, learnedCount }: ReviewCardProps) {
           <div className="dash-cta-blue is-locked" aria-disabled="true">{content}</div>
         )}
       </div>
-      <Image src="/illustrations/home-study2.webp" alt="" width={420} height={366} className="dash-review-mascot" />
+      <Image src="/illustrations/home-study2.webp" alt="" width={420} height={366} sizes="(max-width: 767px) 88px, 114px" className="dash-review-mascot" />
     </section>
   );
 }

@@ -12,7 +12,7 @@ export default async function SpeakingPage() {
     <>
       <h1>Luyện nói</h1>
       <p className="soft sm" style={{ margin: '4px 0 14px' }}>
-        Nói thành tiếng, dù chỉ một câu. Phản xạ đến từ miệng, không đến từ mắt.
+        Đọc nghĩa tiếng Việt, rồi nói thành tiếng. Nhìn đáp án sau.
       </p>
       {sentences.length ? (
         sentences.map((pattern, index) => (

@@ -190,7 +190,7 @@ function describePurpose(knowledge: DayKnowledge, journeyDay: JourneyDay): strin
   }
   if (knowledge.grammar.length || knowledge.vocabulary.length || knowledge.kanji.length) {
     const lesson = journeyDay.minna && journeyDay.minna !== '—' ? `${journeyDay.minna} — ` : '';
-    return `${lesson}${journeyDay.title}. Mẫu câu cho bạn cách nói, từ vựng và Kanji là thứ để điền vào — học cùng nhau để dùng được ngay.`;
+    return `${lesson}${journeyDay.title}. Mẫu câu là cách nói. Từ và Kanji là thứ bạn đặt vào câu đó.`;
   }
   return 'Không có kiến thức mới. Hôm nay để những gì đã học bám chắc hơn — Neko chọn đúng những thứ bạn sắp quên.';
 }

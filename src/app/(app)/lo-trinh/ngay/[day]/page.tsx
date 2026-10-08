@@ -38,7 +38,7 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
       <section className="dayhero">
         <p className="sm" style={{ marginBottom: 8 }}>
           {completion.hasNewKnowledge
-            ? `Trong app: ${completion.totalCount} kiến thức · khoảng ${estimateInAppMinutes(completion.totalCount)} phút.`
+            ? `Trong app: ${completion.totalCount} mục · khoảng ${estimateInAppMinutes(completion.totalCount)} phút.`
             : 'Trong app: ngày ôn, không có kiến thức mới.'}
         </p>
         <div className="row wrap" style={{ gap: 7 }}>

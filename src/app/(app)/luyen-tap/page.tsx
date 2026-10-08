@@ -21,7 +21,7 @@ export default async function PracticeHubPage() {
     <>
       <h1>Luyện tập</h1>
       <p className="soft sm" style={{ margin: '4px 0 16px' }}>
-        Phần tối thiểu được dẫn dắt. Phần học thêm là không giới hạn — chọn kiểu phù hợp với tâm trạng hôm nay.
+        Bài mỗi ngày ở thẻ phía trên. Phía dưới là lúc bạn muốn học thêm.
       </p>
       <Link href="/hoc/daily" className="card block" style={{ width: '100%', textAlign: 'left', background: 'linear-gradient(150deg,#FFEFF2,#FFF7F2)', borderColor: '#FBE3E8' }}>
         <div className="row">

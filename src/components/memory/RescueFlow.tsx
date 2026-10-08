@@ -114,23 +114,23 @@ export function RescueFlow({ view }: { view: RescueView }) {
       {step === STEP.RESCUED ? (
         <div className="s-card pop">
           <SpriteIcon name="noko" size={96} className="mx-auto" />
-          <h2 className="mt-2">🌸 Bộ nhớ đã được cứu!</h2>
+          <h2 className="mt-2">🌸 Ôn xong rồi!</h2>
           <p className="sm soft mt-1.5">{view.face} · {view.meaning}</p>
           {rescue.isError ? <ErrorState message={rescue.error.message} onRetry={() => rescue.mutate()} /> : (
             <div className="card tight mt-4" style={{ textAlign: 'left' }}>
               <div className="between">
-                <span className="sm muted">Sức nhớ</span>
+                <span className="sm muted">Mức nhớ</span>
                 <b className="sm">
                   <span style={{ color: 'var(--ink-3)' }}>{view.scoreBefore}</span> →{' '}
                   <span style={{ color: 'var(--sage)' }}>{rescue.data ? rescue.data.memory.memoryScore : '…'}</span>
                 </b>
               </div>
-              <ProgressBar percent={rescue.data?.memory.memoryScore ?? view.scoreBefore} variant="thin-mint" label="Sức nhớ sau khi cứu" className="my-2" />
+              <ProgressBar percent={rescue.data?.memory.memoryScore ?? view.scoreBefore} variant="thin-mint" label="Mức nhớ sau khi ôn" className="my-2" />
             </div>
           )}
           <NokoMessage state="recovered" className="mt-3" />
           {view.nextAtRisk ? (
-            <Link className="btn block mt-3.5" href={`/tri-nho/cuu/${view.nextAtRisk.contentKey}`}>Cứu tiếp {view.nextAtRisk.face}</Link>
+            <Link className="btn block mt-3.5" href={`/tri-nho/cuu/${view.nextAtRisk.contentKey}`}>Ôn tiếp {view.nextAtRisk.face}</Link>
           ) : null}
           <Link className="btn quiet block mt-2" href="/">Đủ rồi, về trang chủ</Link>
         </div>

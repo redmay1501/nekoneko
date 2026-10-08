@@ -7,7 +7,7 @@ import { DayTimeline } from '@/components/roadmap/DayTimeline';
 import { getLearnerContext } from '@/features/learning/learner-context';
 import { buildDayPlan, buildDayStrip } from '@/features/roadmap/day-plan';
 import { JOURNEY_TOTAL_DAYS } from '@/features/roadmap/journey';
-import { getDayCompletionProgress } from '@/features/roadmap/journey-progress';
+import { estimateInAppMinutes, getDayCompletionProgress } from '@/features/roadmap/journey-progress';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
 
 /** SC-12 · Một ngày học. */
@@ -36,11 +36,16 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
       </div>
 
       <section className="dayhero">
+        <p className="sm" style={{ marginBottom: 8 }}>
+          {completion.hasNewKnowledge
+            ? `Trong app: ${completion.totalCount} kiến thức · khoảng ${estimateInAppMinutes(completion.totalCount)} phút.`
+            : 'Trong app: ngày ôn, không có kiến thức mới.'}
+        </p>
         <div className="row wrap" style={{ gap: 7 }}>
           <span className="chip" style={{ background: 'rgba(255,255,255,.7)' }}><EmojiIcon emoji={stage.emoji} size={16} /> {stage.name}</span>
           <span className="chip" style={{ background: 'rgba(255,255,255,.7)' }}>Tuần {dayInfo.week}</span>
           {dayInfo.minna && dayInfo.minna !== '—' ? <span className="chip lav">{dayInfo.minna}</span> : null}
-          <span className="chip mint" title="Cả bài theo lộ trình, gồm việc ngoài app">⏱ {plan.totalMinutes} phút cả bài</span>
+          <span className="chip mint">⏱ {plan.totalMinutes} phút · việc ngoài app</span>
           {plan.relation === 'today' ? <span className="chip pink">Hôm nay</span> : null}
           {plan.relation === 'past' ? <span className="chip mint">✓ Đã xong</span> : null}
         </div>
@@ -60,8 +65,13 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
           {plan.radicalBridge ? (
             <div className="card tight mt-3" style={{ background: 'var(--lav)', borderColor: 'transparent' }}>
               <p className="sm">
-                🔗 Chữ <b className="jp">{plan.radicalBridge.kanji}</b> mang bộ <b className="jp">{plan.radicalBridge.radical}</b>{' '}
-                ({plan.radicalBridge.meaning.toLowerCase()}) — bạn đã học bộ này từ ngày {plan.radicalBridge.day}.
+                🔗 {plan.radicalBridge.isPrimary ? (
+                  <>Chữ <b className="jp">{plan.radicalBridge.kanji}</b> mang bộ <b className="jp">{plan.radicalBridge.radical}</b>{' '}
+                    ({plan.radicalBridge.meaning.toLowerCase()}) — bạn đã học bộ này từ ngày {plan.radicalBridge.day}.</>
+                ) : (
+                  <>Trong chữ <b className="jp">{plan.radicalBridge.kanji}</b> có hình <b className="jp">{plan.radicalBridge.radical}</b>{' '}
+                    ({plan.radicalBridge.meaning.toLowerCase()}) bạn đã học ngày {plan.radicalBridge.day}.</>
+                )}
               </p>
             </div>
           ) : null}

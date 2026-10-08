@@ -18,7 +18,6 @@ export function DayCompletionCard({ day, completion }: { day: number; completion
               ? `Trong app còn ${remainingKnowledgeCount(completion)} kiến thức · khoảng ${estimateMinutesToFinishDay(completion)} phút. Học hết rồi bấm Hoàn thành để sang ngày tiếp theo.`
               : 'Bạn đã học hết kiến thức của ngày. Thấy thuộc rồi thì bấm Hoàn thành ngày bên dưới.'}
           </p>
-          <p className="tiny muted mt-1">Thời lượng ⏱ ở trên là cả bài theo lộ trình — gồm luyện viết tay và đọc giáo trình ngoài app.</p>
         </>
       ) : (
         <p className="tiny muted mt-1">Hôm nay không có kiến thức mới. Ôn xong thì bấm hoàn thành để sang ngày tiếp theo nhé.</p>

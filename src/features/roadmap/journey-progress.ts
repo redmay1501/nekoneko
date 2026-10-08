@@ -93,7 +93,11 @@ export function remainingKnowledgeCount(progress: DayCompletionProgress): number
   return progress.totalCount - progress.metCount;
 }
 
+/** Phút học trong app cho một số kiến thức: mỗi mục một phút, cộng phần luyện của ngày. */
+export function estimateInAppMinutes(knowledgeCount: number): number {
+  return knowledgeCount > 0 ? Math.ceil(knowledgeCount * MINUTES_PER_NEW_KNOWLEDGE) + DAY_LESSON_PRACTICE_MINUTES : 0;
+}
+
 export function estimateMinutesToFinishDay(progress: DayCompletionProgress): number {
-  const remaining = remainingKnowledgeCount(progress);
-  return remaining > 0 ? Math.ceil(remaining * MINUTES_PER_NEW_KNOWLEDGE) + DAY_LESSON_PRACTICE_MINUTES : 0;
+  return estimateInAppMinutes(remainingKnowledgeCount(progress));
 }

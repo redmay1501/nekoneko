@@ -104,9 +104,6 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
           <TipCard tip={item.content.tip} background="var(--lav)" />
           <RelatedRow title="Kanji chứa bộ này" chips={related.kanji.map((kanji) => ({
             contentKey: toContentKey('kanji', kanji.id), face: kanji.character, caption: kanji.meaning }))} />
-          <p className="tiny muted mt-2">
-            Mọi chữ mang bộ {item.face} đều liên quan tới “{item.content.meaning.toLowerCase()}”.
-          </p>
           {statusCard}
         </>
       );

@@ -58,8 +58,11 @@ export interface DayPlanView {
   purpose: string;
   /** Ngày ôn: ôn những gì (theo nhóm, có số lượng) — rỗng nếu ngày có kiến thức mới. */
   reviewTopics: ReviewTopic[];
-  /** "Chữ 時 mang bộ 日 — bạn đã học bộ này từ ngày 17." */
-  radicalBridge: { kanji: string; radical: string; meaning: string; day: number } | null;
+  /**
+   * Câu nối kanji với bộ đã học.
+   * isPrimary: bộ đứng đầu chữ. Bộ phụ thì nói "trong chữ có hình", không nói "mang bộ".
+   */
+  radicalBridge: { kanji: string; radical: string; meaning: string; day: number; isPrimary: boolean } | null;
   tasks: DayTaskView[];
 }
 
@@ -125,9 +128,8 @@ export function buildDayPlan(catalog: KnowledgeCatalog, requestedDay: number, jo
   const hasNewKnowledge = Object.values(knowledge).some((list) => list.length > 0);
 
   const firstKanji = knowledge.kanji[0];
-  const bridgeRadical = firstKanji
-    ? radicalsOfKanji(catalog, firstKanji).find((radical) => (radical.day ?? JOURNEY_TOTAL_DAYS) < (firstKanji.day ?? 0))
-    : undefined;
+  const kanjiRadicals = firstKanji ? radicalsOfKanji(catalog, firstKanji) : [];
+  const bridgeRadical = kanjiRadicals.find((radical) => (radical.day ?? JOURNEY_TOTAL_DAYS) < (firstKanji?.day ?? 0));
 
   const reviewPool = catalog.items.filter((item) => item.day !== null && item.day < day && item.type !== 'hiragana' && item.type !== 'katakana');
 
@@ -143,7 +145,13 @@ export function buildDayPlan(catalog: KnowledgeCatalog, requestedDay: number, jo
     // Mỗi mặt chữ một lần (本 vừa là Kanji vừa là từ vựng — gợi ý hai lần trông như lỗi).
     reviewSuggestions: hasNewKnowledge ? [] : pickDeterministic([...new Map(reviewPool.map((item) => [item.face, item])).values()], REVIEW_SUGGESTION_COUNT, `review:${day}`),
     radicalBridge: firstKanji && bridgeRadical
-      ? { kanji: firstKanji.character, radical: primaryRadicalGlyph(bridgeRadical.radical), meaning: bridgeRadical.meaning, day: bridgeRadical.day ?? 0 }
+      ? {
+          kanji: firstKanji.character,
+          radical: primaryRadicalGlyph(bridgeRadical.radical),
+          meaning: bridgeRadical.meaning,
+          day: bridgeRadical.day ?? 0,
+          isPrimary: kanjiRadicals[0]?.id === bridgeRadical.id,
+        }
       : null,
     tasks: tasks.map(toTaskView),
     kanaLesson: buildKanaLesson(knowledge.kana, catalog.items.filter(isKana)),

@@ -20,7 +20,7 @@ describe('supabase-content-mapper', () => {
       days: content.journeyDays.length, tasks: content.dayTasks.length, kana: content.kana.length,
       radicals: content.radicals.length, kanji: content.kanji.length, grammar: content.grammar.length,
       vocabulary: content.vocabulary.length, lessons: content.lessons.length, jlpt: content.jlptGrammar.length,
-    }).toEqual({ days: 90, tasks: 484, kana: 104, radicals: 71, kanji: 103, grammar: 112, vocabulary: 759, lessons: 25, jlpt: 94 });
+    }).toEqual({ days: 90, tasks: 484, kana: 104, radicals: 71, kanji: 103, grammar: 112, vocabulary: 755, lessons: 25, jlpt: 94 });
     // 45 bộ của lộ trình + 26 bộ tham khảo (không xếp ngày) để mọi kanji N5 đều có bộ chính.
     expect(content.radicals.filter((radical) => radical.day === null)).toHaveLength(26);
   });

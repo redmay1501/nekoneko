@@ -7,7 +7,7 @@ import { type ContentKey, toContentKey } from './knowledge-types';
 /**
  * Dữ liệu cho 4 màn kỹ năng (SC-24…27). Bài nghe từ vựng được ghi vào trí nhớ (server chấm — /api/memory/practice);
  * nói / đọc / viết là luyện tự do, không có đáp án gắn với một kiến thức nên không ghi.
- * Chỉ dùng kiến thức đã học tới ngày hiện tại để không đổ ập thứ chưa gặp.
+ * Bài nghe lấy từ đã tới ngày trên lộ trình. Nói, đọc, viết chỉ mở phần đã tới ngày, không đổ ập thứ chưa gặp.
  */
 
 type Views = ReadonlyMap<ContentKey, MemoryView>;
@@ -36,16 +36,17 @@ export interface ListeningPracticeData {
   resources: StudyResource[];
 }
 
-export function buildListeningPractice(catalog: KnowledgeCatalog, views: Views, journeyDay: number): ListeningPracticeData {
+export function buildListeningPractice(catalog: KnowledgeCatalog, _views: Views, journeyDay: number): ListeningPracticeData {
   const vocabulary = itemsOfType(catalog, 'vocabulary');
-  const learned = vocabulary.filter((item) => views.get(item.key)?.isLearned);
+  // Nghe theo ngày trên lộ trình: はい, テレビ, lời chào có bài khi tới ngày của từ, không đợi ngày 15.
+  const available = vocabulary.filter((item) => item.day !== null && item.day <= journeyDay);
   return {
-    questions: pickDeterministic(learned, LISTENING_WORDS, 'listening').map((item) => ({
+    questions: pickDeterministic(available, LISTENING_WORDS, 'listening').map((item) => ({
       contentKey: item.key,
       audioText: item.content.kana,
       answer: item.meaning,
       options: shuffleDeterministic(
-        [item.meaning, ...pickDeterministic(learned.filter((other) => other.key !== item.key && other.meaning !== item.meaning).map((other) => other.meaning), DISTRACTORS, `listening-options:${item.id}`)],
+        [item.meaning, ...pickDeterministic(available.filter((other) => other.key !== item.key && other.meaning !== item.meaning).map((other) => other.meaning), DISTRACTORS, `listening-options:${item.id}`)],
         `listening-order:${item.id}`,
       ),
     })),

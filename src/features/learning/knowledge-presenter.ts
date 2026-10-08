@@ -81,13 +81,18 @@ function buildBaseDiscoverCard(item: KnowledgeItem, catalog: KnowledgeCatalog, j
   const base = { face: item.face, reading: item.reading, meaning: item.meaning, audioText: speechTextFor(item) };
   switch (item.type) {
     case 'kanji': {
-      const radical = radicalsOfKanji(catalog, item.content).find((candidate) => (candidate.day ?? 99) <= journeyDay);
+      const radicals = radicalsOfKanji(catalog, item.content);
+      const radical = radicals.find((candidate) => (candidate.day ?? 99) <= journeyDay);
+      const glyph = radical ? primaryRadicalGlyph(radical.radical) : '';
+      const isPrimary = Boolean(radical && radicals[0]?.id === radical.id);
       return {
         ...base,
         detailLines: [`${item.content.hanViet} · ${item.content.onReading}・${item.content.kunReading || '—'}`, item.content.tip],
         relatedChips: [],
         bridgeText: radical
-          ? `Nó mang bộ ${primaryRadicalGlyph(radical.radical)} (${radical.meaning.toLowerCase()}) mà bạn đã học ngày ${radical.day}.`
+          ? isPrimary
+            ? `Nó mang bộ ${glyph} (${radical.meaning.toLowerCase()}) mà bạn đã học ngày ${radical.day}.`
+            : `Trong chữ có hình ${glyph} (${radical.meaning.toLowerCase()}) bạn đã học ngày ${radical.day}.`
           : null,
       };
     }

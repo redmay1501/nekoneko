@@ -29,7 +29,7 @@ const MODULES: LearningModule[] = [
   { href: '/luyen-tap/viet', icon: 'neko:writing', title: 'Luyện viết', description: 'Thứ tự nét – Viết tay – Chép câu', background: '#E2F0F8' },
 ];
 
-/** SC-13 · Học tập — cửa vào mọi kho kiến thức, không bắt buộc theo thứ tự. */
+/** SC-13 · Học tập — kho để tra lại. Bài mới vẫn đi theo lộ trình. */
 export default async function LearningHubPage() {
   const { memoryViews } = await getLearnerContext();
   const overview = buildMemoryOverview(memoryViews);
@@ -37,7 +37,7 @@ export default async function LearningHubPage() {
   return (
     <>
       <h1>Học tập</h1>
-      <p className="soft sm" style={{ margin: '4px 0 16px' }}>Tất cả kiến thức N5 nằm ở đây. Bạn có thể vào bất cứ lúc nào, không bắt buộc theo thứ tự.</p>
+      <p className="soft sm" style={{ margin: '4px 0 16px' }}>Đây là kho để tra lại kiến thức đã gặp. Bài mới vẫn học theo lộ trình.</p>
       <div className="grid two">
         {MODULES.map((module) => {
           // Kỹ năng (nghe/nói/đọc/viết) chưa có cơ chế theo dõi riêng → không hiện con số.

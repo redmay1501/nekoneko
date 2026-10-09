@@ -7,14 +7,17 @@
  * nên app không phụ thuộc trang ngoài khi chạy. Trên macOS, ảnh 3D được thu về 128px (đủ nét cho màn hình 2x).
  */
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, renameSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import sharp from 'sharp';
 import { ANIMATED_EMOJI, EMOJI_ICONS } from '../src/components/common/emoji-icons';
 import { VOCABULARY_IMAGE_ASSETS, vocabularyImageFile, vocabularyImageSourcePath } from '../src/features/learning/vocabulary-images';
 
 const FLUENT_BASE = 'https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/';
 const NOTO_ANIMATED_BASE = 'https://fonts.gstatic.com/s/e/notoemoji/latest/';
 const ICON_PIXELS = 128;
+/** ✨ và 🎉 chỉ hiện 26–28 px. 64 px đủ cho màn 2x; khung 512 không cần. */
+const ANIMATED_PIXELS = 64;
 const OUT_3D = join(process.cwd(), 'public', 'icons', '3d');
 const OUT_ANIMATED = join(process.cwd(), 'public', 'icons', 'animated');
 const OUT_VOCABULARY = join(process.cwd(), 'public', 'icons', 'vocab');
@@ -48,6 +51,9 @@ async function main() {
     const file = join(OUT_ANIMATED, `${slug}.webp`);
     if (existsSync(file)) continue;
     await download(`${NOTO_ANIMATED_BASE}${codepoint}/512.webp`, file);
+    const resized = `${file}.tmp`;
+    await sharp(file, { animated: true }).resize(ANIMATED_PIXELS, ANIMATED_PIXELS, { fit: 'contain' }).webp({ quality: 75 }).toFile(resized);
+    renameSync(resized, file);
     console.log(`✓ động ${slug}`);
   }
   // Ảnh minh hoạ từ vựng (content/seed/vocabulary-images.json) — nhiều từ có thể dùng chung một icon.

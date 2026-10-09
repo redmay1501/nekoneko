@@ -35,7 +35,7 @@ export function TodayLearnCard(props: TodayLearnCardProps) {
   const planParts = SESSION_PHASES.filter((phase) => plan[phase] > 0);
   return (
     <section className="dash-card dash-today" aria-labelledby="dash-today-title">
-      <Image src="/illustrations/home-study.webp" alt="" width={420} height={350} className="dash-today-mascot" />
+      <Image src="/illustrations/home-study.webp" alt="" width={420} height={350} sizes="(max-width: 767px) 88px, 94px" className="dash-today-mascot" />
       <div className="dash-today-body">
         <h2 id="dash-today-title">{isReadyToComplete ? `Đã học hết ngày ${journeyDay} 🎉` : 'Học hôm nay'}</h2>
         <p className="dash-meta">Ngày {journeyDay} · {hasNewKnowledge ? dayTitle : 'Ngày ôn tập'}</p>

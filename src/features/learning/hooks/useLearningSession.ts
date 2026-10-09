@@ -95,6 +95,8 @@ export function useLearningSession(mode: SessionMode) {
       if (!session) return;
       startNavigation();
       router.push(`/khoanh-khac?phien=${session.sessionId}`);
+      // Khung (số ngày đã ôn, trang chủ) đang giữ payload 30 giây. Làm mới sau khi phiên đã lưu.
+      router.refresh();
     },
   });
 

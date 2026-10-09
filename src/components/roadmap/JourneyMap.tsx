@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { buildJourneyMapLayout } from '@/features/roadmap/journey-map-layout';
 import { startNavigation } from '@/stores/navigation-progress-store';
 
-const FONT = 'Be Vietnam Pro,sans-serif';
+const FONT = 'Nunito,sans-serif';
 const SAKURA_SIZE = 20;
 const TORII_SIZE = 42;
 
@@ -73,7 +73,7 @@ export function JourneyMap({ currentDay, startDateLabel, isJourneyComplete }: Jo
               <circle className="hit" cx={node.x} cy={node.y} r={node.radius}
                 fill={isToday ? '#FF5B73' : isDone ? node.stage.color : '#FFFFFF'}
                 stroke={isDone || isToday ? 'none' : '#EADFDA'} strokeWidth="2" />
-              <text className="day-number" x={node.x} y={node.y + 4} textAnchor="middle" fontSize={isToday ? 14 : 12} fontWeight="800"
+              <text className="day-number" x={node.x} y={node.y + 4} textAnchor="middle" fontSize={isToday ? 14 : 12} fontWeight="700"
                 fill={isToday ? '#fff' : isDone ? '#3F3936' : '#665A55'} fontFamily={FONT}>{node.day}</text>
               {isToday ? (
                 <svg className="today-neko" x={node.x - 25} y={node.y - 53} width="50" height="50" viewBox="0 0 120 120" aria-hidden="true">

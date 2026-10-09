@@ -53,10 +53,9 @@ export function WelcomeDialog({ displayName, journeyDay, initialDailyMinutes }: 
     if (action === 'learn') {
       startNavigation();
       router.push('/hoc/daily');
-    } else {
-      // Mục tiêu mới đổi → Trang chủ và thanh trên hiện đúng số phút.
-      router.refresh();
     }
+    // Mục tiêu mới đổi → Trang chủ và thanh trên hiện đúng số phút.
+    router.refresh();
   }
 
   if (!isOpen) return null;

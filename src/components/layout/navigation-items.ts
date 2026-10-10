@@ -17,6 +17,7 @@ export const LEARNING_LINKS: NavigationItem[] = [
   { href: '/luyen-tap/noi', icon: 'neko:speaking', label: 'Luyện nói' },
   { href: '/luyen-tap/doc', icon: 'neko:reading', label: 'Đọc hiểu' },
   { href: '/luyen-tap/viet', icon: 'neko:writing', label: 'Luyện viết' },
+  { href: '/luyen-tap/ghep-the', icon: '🃏', label: 'Ghép thẻ' },
 ];
 
 export interface NavigationGroup {

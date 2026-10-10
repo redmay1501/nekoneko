@@ -1,5 +1,7 @@
+import Link from 'next/link';
 import type { CSSProperties } from 'react';
 import Image from 'next/image';
+import { MIN_MATCH_POOL } from '@/features/games/match-game';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
 import { GardenSummaryCard } from '@/components/home/HomeInsights';
 import { ReviewCard } from '@/components/home/ReviewCard';
@@ -77,6 +79,15 @@ export default async function HomePage() {
         />
         <ReviewCard atRiskCount={atRiskCount} learnedCount={overview.learnedCount} />
       </div>
+
+      {/* Trò chơi ôn tập — lựa chọn thêm, nhỏ gọn, không thay việc học hôm nay. Chỉ khi đã có từ để chơi. */}
+      {overview.learnedCount >= MIN_MATCH_POOL ? (
+        <Link className="dash-game-link" href="/luyen-tap/ghep-the">
+          <span aria-hidden="true">🃏</span>
+          <span><b>Chơi game ôn tập</b> · Ghép thẻ từ đã học, phá kỷ lục của bạn</span>
+          <span className="dash-game-arrow" aria-hidden="true">›</span>
+        </Link>
+      ) : null}
 
       <div className="dash-lower" data-reveal-stagger>
         <RoadmapStages journeyDay={journeyDay} isJourneyComplete={journey.isJourneyComplete} />

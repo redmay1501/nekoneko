@@ -930,3 +930,9 @@ a.dash-cta-blue:hover{transform:translateY(-1px);box-shadow:0 14px 26px rgba(90,
 .match-stats b{font-size:20px;color:var(--ink)}
 @keyframes match-shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
 @media (prefers-reduced-motion:reduce){.match-tile{transition:none}.match-tile.wrong{animation:none}}
+/* Trang chủ: lối vào trò chơi ôn tập — một dòng gọn dưới hai thẻ chính. */
+.dash-game-link{position:relative;display:flex;align-items:center;gap:10px;margin-top:12px;padding:11px 14px;border-radius:16px;background:rgba(255,255,255,.88);
+  border:1px solid var(--line);font-size:13.5px;color:var(--ink-2)}
+.dash-game-link>span:first-child{font-size:22px}
+.dash-game-link b{color:var(--ink)}
+.dash-game-arrow{margin-left:auto;font-size:20px;color:var(--ink-3)}

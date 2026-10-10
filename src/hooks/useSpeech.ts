@@ -36,9 +36,53 @@ function subscribeVoices(onChange: () => void): () => void {
 const getVoices = () => cachedVoices;
 const getServerVoices = () => NO_VOICES;
 
+/** Đọc một câu. Lỗi "not-allowed" = trình duyệt chặn tự phát (iOS / chưa chạm màn hình) → ghi nhớ để phát lại khi chạm. */
+function speakNow(text: string, voice: SpeechSynthesisVoice | null) {
+  const store = useSpeechPreferenceStore.getState();
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = JAPANESE_LOCALE;
+  utterance.rate = LEARNER_SPEECH_RATE;
+  if (voice) utterance.voice = voice;
+  utterance.onstart = () => { store.setAudioBlocked(null); store.setSpeakingText(text); };
+  utterance.onend = () => { if (useSpeechPreferenceStore.getState().speakingText === text) store.setSpeakingText(null); };
+  utterance.onerror = (event) => {
+    if (useSpeechPreferenceStore.getState().speakingText === text) store.setSpeakingText(null);
+    if (event.error === 'not-allowed') store.setAudioBlocked(text);
+  };
+  window.speechSynthesis.speak(utterance);
+}
+
+let isUnlocked = false;
+/**
+ * Mở khoá giọng đọc ở lần chạm / phím ĐẦU TIÊN (Safari iOS chỉ cho phát âm bắt đầu từ một thao tác người dùng).
+ * Có câu đang chờ vì bị chặn → phát luôn trong chính thao tác đó. Gọi một lần ở AppShell.
+ */
+export function installSpeechUnlock(getVoice: () => SpeechSynthesisVoice | null): () => void {
+  if (!hasSpeech()) return () => undefined;
+  const unlock = () => {
+    const { pendingText } = useSpeechPreferenceStore.getState();
+    if (pendingText) {
+      speakNow(pendingText, getVoice());
+    } else if (!isUnlocked) {
+      const silent = new SpeechSynthesisUtterance(' ');
+      silent.volume = 0;
+      window.speechSynthesis.speak(silent);
+    }
+    isUnlocked = true;
+  };
+  window.addEventListener('pointerdown', unlock, { capture: true });
+  window.addEventListener('keydown', unlock, { capture: true });
+  return () => {
+    window.removeEventListener('pointerdown', unlock, { capture: true });
+    window.removeEventListener('keydown', unlock, { capture: true });
+  };
+}
+
 /**
  * Phát âm tiếng Nhật bằng giọng có sẵn trên máy (Web Speech API), đúng giọng nam/nữ người học chọn.
  * Luôn chỉ định rõ một giọng tiếng Nhật — không để trình duyệt tự chọn (có máy sẽ đọc bằng giọng tiếng Anh).
+ * Mỗi lần đọc huỷ câu đang đọc → không bao giờ chồng tiếng khi chuyển nhanh giữa các từ.
  * Trình duyệt không hỗ trợ thì nút vẫn hiện nhưng không phát — không làm hỏng luồng học.
  */
 export function useSpeech() {
@@ -46,16 +90,26 @@ export function useSpeech() {
   const voices = useSyncExternalStore(subscribeVoices, getVoices, getServerVoices);
   const voiceGender = useSpeechPreferenceStore((store) => store.voiceGender);
   const choice = pickJapaneseVoice(voices, voiceGender);
+  const voice = choice?.voice ?? null;
 
   const speak = useCallback((text: string) => {
     if (!hasSpeech() || !text) return;
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = JAPANESE_LOCALE;
-    utterance.rate = LEARNER_SPEECH_RATE;
-    if (choice) utterance.voice = choice.voice;
-    window.speechSynthesis.speak(utterance);
-  }, [choice]);
+    speakNow(text, voice);
+  }, [voice]);
 
-  return { speak, isSupported, voiceChoice: choice, hasVoiceList: voices.length > 0 };
+  const stop = useCallback(() => {
+    if (!hasSpeech()) return;
+    window.speechSynthesis.cancel();
+    useSpeechPreferenceStore.getState().setSpeakingText(null);
+  }, []);
+
+  return {
+    speak,
+    stop,
+    isSupported,
+    voiceChoice: choice,
+    hasVoiceList: voices.length > 0,
+    /** Danh sách giọng đã tải mà không có giọng tiếng Nhật → nút 🔊 không phát được tiếng Nhật trên máy này. */
+    lacksJapaneseVoice: voices.length > 0 && !choice,
+  };
 }

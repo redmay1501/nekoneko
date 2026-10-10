@@ -15,6 +15,7 @@ export function SettingsForm({ initialSettings }: { initialSettings: LearnerSett
   const router = useRouter();
   const [settings, setSettings] = useState(initialSettings);
   const setVoiceGender = useSpeechPreferenceStore((store) => store.setVoiceGender);
+  const setAutoplayAudio = useSpeechPreferenceStore((store) => store.setAutoplayAudio);
   const mutation = useMutation({
     mutationFn: updateSettings,
     // Lạc quan: chấm radio / công tắc đổi NGAY khi bấm (trước đây chờ server → tưởng bấm không ăn); lỗi thì trả về như cũ.
@@ -35,6 +36,7 @@ export function SettingsForm({ initialSettings }: { initialSettings: LearnerSett
       setSettings(saved);
       // Mọi nút 🔊 trong app đọc bằng giọng mới ngay, không cần tải lại trang.
       setVoiceGender(saved.voiceGender);
+      setAutoplayAudio(saved.autoplayAudio);
       // Phút trên khung và trang chủ lấy từ server — cache 30 giây cần làm mới sau khi lưu.
       router.refresh();
     },
@@ -47,7 +49,7 @@ export function SettingsForm({ initialSettings }: { initialSettings: LearnerSett
       <div className="stack mt-3.5">
         <ToggleRow title="Nhắc học mỗi ngày" description={reminderLabel} isOn={Boolean(settings.reminderTime)} isDisabled={mutation.isPending}
           onToggle={() => save({ reminderEnabled: !settings.reminderTime })} />
-        <ToggleRow title="Tự phát âm thanh" description="Khi mở thẻ kiến thức" isOn={settings.autoplayAudio} isDisabled={mutation.isPending}
+        <ToggleRow title="Tự phát âm thanh" description="Đọc từ mới và đáp án trong phiên học, khi mở thẻ kiến thức" isOn={settings.autoplayAudio} isDisabled={mutation.isPending}
           onToggle={() => save({ autoplayAudio: !settings.autoplayAudio })} />
         <ToggleRow title="Hiện cách đọc phía trên chữ Hán" description="Với chữ bạn chưa thuộc" isOn={settings.showFurigana} isDisabled={mutation.isPending}
           onToggle={() => save({ showFurigana: !settings.showFurigana })} />

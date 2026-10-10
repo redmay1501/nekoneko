@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { SESSION_MODE_CONFIG, type SessionMode } from '@/features/learning/session-modes';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
+import { SessionSoundToggle } from './SessionAudio';
 import { type PublicSessionStep, SESSION_PHASE_INFO, SESSION_PHASES, phaseOfStep } from '@/features/learning/session-types';
 
 export function SessionHeader({ mode }: { mode: SessionMode }) {
@@ -8,7 +9,10 @@ export function SessionHeader({ mode }: { mode: SessionMode }) {
   return (
     <div className="between mb-3">
       <Link className="link" href="/">✕ Để sau</Link>
-      <span className="chip"><EmojiIcon emoji={config.emoji} size={16} /> {config.label}</span>
+      <span className="row" style={{ gap: 6 }}>
+        <span className="chip"><EmojiIcon emoji={config.emoji} size={16} /> {config.label}</span>
+        <SessionSoundToggle />
+      </span>
     </div>
   );
 }

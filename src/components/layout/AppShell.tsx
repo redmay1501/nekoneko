@@ -30,7 +30,7 @@ export function AppShell({ displayName, level, recallDays, dailyMinutes, isGentl
     : publicEnv.appEnvironment !== PRODUCTION_ENVIRONMENT ? publicEnv.appEnvironment : null;
   return (
     <div className="app-root">
-      <SpeechPreferenceSync voiceGender={voiceGender} />
+      <SpeechPreferenceSync voiceGender={voiceGender} autoplayAudio={shouldAutoplayAudio} />
       <SakuraFall />
       <ScrollScenes />
       <Sidebar />
@@ -39,7 +39,7 @@ export function AppShell({ displayName, level, recallDays, dailyMinutes, isGentl
         <main className="view" id="noi-dung" tabIndex={-1}>{children}</main>
       </div>
       <BottomNavigation />
-      <SheetHost dailyMinutes={dailyMinutes} shouldAutoplayAudio={shouldAutoplayAudio} />
+      <SheetHost dailyMinutes={dailyMinutes} />
       {environmentLabel ? <span className="env-badge" title="Nhãn môi trường — không hiện ở production">{environmentLabel}</span> : null}
     </div>
   );

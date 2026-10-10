@@ -12,6 +12,7 @@ import { useKnowledgeDetail, useKnowledgeSearch } from '@/features/learning/hook
 import { SESSION_MODE_CONFIG } from '@/features/learning/session-modes';
 import { speechTextFor } from '@/features/learning/speech-text';
 import { useSpeech } from '@/hooks/useSpeech';
+import { useSpeechPreferenceStore } from '@/stores/speech-preference-store';
 import { type ActiveSheet } from '@/stores/sheet-store';
 import { NavigationList } from './NavigationList';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
@@ -32,7 +33,8 @@ function ModesSheet({ onClose, dailyMinutes }: { onClose: () => void; dailyMinut
   );
 }
 
-function KnowledgeSheet({ contentKey, shouldAutoplayAudio }: { contentKey: string; shouldAutoplayAudio: boolean }) {
+function KnowledgeSheet({ contentKey }: { contentKey: string }) {
+  const shouldAutoplayAudio = useSpeechPreferenceStore((store) => store.autoplayAudio);
   const { data, isLoading, error, refetch } = useKnowledgeDetail(contentKey);
   const { speak } = useSpeech();
   const audioText = data ? speechTextFor(data.item) : null;
@@ -79,11 +81,10 @@ function SearchSheet({ query }: { query: string }) {
 
 /** Thân khay. Tách khỏi khung để chỉ tải khi người học mở khay. */
 export function SheetPanels({
-  activeSheet, dailyMinutes, shouldAutoplayAudio, onClose,
+  activeSheet, dailyMinutes, onClose,
 }: {
   activeSheet: Exclude<ActiveSheet, { kind: 'none' }>;
   dailyMinutes: number;
-  shouldAutoplayAudio: boolean;
   onClose: () => void;
 }) {
   return (
@@ -95,7 +96,7 @@ export function SheetPanels({
           <NavigationList alwaysExpandLearning onNavigate={onClose} />
         </>
       ) : null}
-      {activeSheet.kind === 'knowledge' ? <KnowledgeSheet key={activeSheet.contentKey} contentKey={activeSheet.contentKey} shouldAutoplayAudio={shouldAutoplayAudio} /> : null}
+      {activeSheet.kind === 'knowledge' ? <KnowledgeSheet key={activeSheet.contentKey} contentKey={activeSheet.contentKey} /> : null}
       {activeSheet.kind === 'search' ? <SearchSheet query={activeSheet.query} /> : null}
       {activeSheet.kind === 'knowledge' || activeSheet.kind === 'search' ? (
         <button type="button" className="btn quiet block sm mt-2.5" onClick={onClose}>Đóng</button>

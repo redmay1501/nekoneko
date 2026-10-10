@@ -161,7 +161,7 @@ function selectDiscoverGroups(input: BuildLearningSessionInput, count: number, e
 function buildRecallStep(item: KnowledgeItem, catalog: KnowledgeCatalog, stepIndex: number, seed: string, known: ReadonlySet<ContentKey>): SessionStepWithAnswer {
   const sameType = knownDistractors(item, catalog, known);
   return {
-    type: 'recall', stepIndex, contentKey: item.key, face: item.face,
+    type: 'recall', stepIndex, contentKey: item.key, face: item.face, audioText: speechTextFor(item),
     question: item.type === 'vocabulary' || item.type === 'kanji' ? 'Từ này đọc là gì?' : 'Chữ này đọc là gì?',
     options: buildOptions(item.reading, sameType.map((candidate) => candidate.reading), `${seed}:${item.key}`),
     correctAnswer: item.reading,
@@ -180,7 +180,7 @@ function buildPracticeStep(item: KnowledgeItem, catalog: KnowledgeCatalog, stepI
   const byReading = PRACTICE_BY_READING.includes(item.type);
   const correctAnswer = byReading ? item.reading : item.meaning;
   return {
-    type: 'recall', isPractice: true, stepIndex, contentKey: item.key, face: item.face,
+    type: 'recall', isPractice: true, stepIndex, contentKey: item.key, face: item.face, audioText: speechTextFor(item),
     question: byReading ? 'Chữ bạn vừa học đọc là gì?' : 'Bạn vừa học — nó nghĩa là gì?',
     options: buildOptions(correctAnswer, distractorItems.map((candidate) => (byReading ? candidate.reading : candidate.meaning)), `${seed}:practice:${item.key}`),
     correctAnswer,

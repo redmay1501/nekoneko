@@ -11,7 +11,7 @@ const SheetPanels = dynamic(() => import('./SheetPanels').then((mod) => mod.Shee
 const SHEET_LABELS = { modes: 'Học ngay', navigation: 'Điều hướng', knowledge: 'Chi tiết kiến thức', search: 'Kết quả tìm kiếm', none: '' } as const;
 
 /** Nơi DUY NHẤT hiển thị khay trượt. Các nơi khác chỉ gọi useSheetStore().openXxx(). */
-export function SheetHost({ dailyMinutes, shouldAutoplayAudio }: { dailyMinutes: number; shouldAutoplayAudio: boolean }) {
+export function SheetHost({ dailyMinutes }: { dailyMinutes: number }) {
   const { activeSheet, close } = useSheetStore();
   const pathname = usePathname();
 
@@ -23,7 +23,7 @@ export function SheetHost({ dailyMinutes, shouldAutoplayAudio }: { dailyMinutes:
   return (
     <BottomSheet isOpen={activeSheet.kind !== 'none'} label={SHEET_LABELS[activeSheet.kind]} onClose={close}>
       {activeSheet.kind === 'none' ? null : (
-        <SheetPanels activeSheet={activeSheet} dailyMinutes={dailyMinutes} shouldAutoplayAudio={shouldAutoplayAudio} onClose={close} />
+        <SheetPanels activeSheet={activeSheet} dailyMinutes={dailyMinutes} onClose={close} />
       )}
     </BottomSheet>
   );

@@ -10,6 +10,7 @@ import { useLearningSession } from '@/features/learning/hooks/useLearningSession
 import { SESSION_MODES, type SessionMode } from '@/features/learning/session-modes';
 import type { PublicSessionStep } from '@/features/learning/session-types';
 import { SessionCheckpoint } from './session/SessionCheckpoint';
+import { SessionAudioNotice, useSessionAutoplay } from './session/SessionAudio';
 import { PhaseIntro } from './session/PhaseIntro';
 import { SessionHeader, SessionPhaseBar, SessionProgress } from './session/SessionHeader';
 import { DiscoverStepView, RecallStepView, SurpriseStepView, UseStepView } from './session/SessionSteps';
@@ -21,6 +22,7 @@ import { DiscoverStepView, RecallStepView, SurpriseStepView, UseStepView } from 
 export function LearningSession({ mode, focusKeys }: { mode: SessionMode; focusKeys?: readonly string[] }) {
   const learning = useLearningSession(mode, focusKeys);
   const { sessionQuery, session, currentStep, stepIndex } = learning;
+  useSessionAutoplay(currentStep, learning.feedback);
 
   // Enter sang câu tiếp sau khi đã trả lời. Bỏ qua khi đang gõ chữ và khi giữ phím.
   const { feedback, isFinishing, isAtCheckpoint, goToNextStep } = learning;
@@ -77,6 +79,7 @@ export function LearningSession({ mode, focusKeys }: { mode: SessionMode; focusK
       <SessionHeader mode={mode} />
       <SessionPhaseBar steps={session.steps} currentIndex={stepIndex} />
       <SessionProgress total={session.steps.length} currentIndex={stepIndex} />
+      <SessionAudioNotice />
       {session.resumeFromStep > 0 && stepIndex === session.resumeFromStep && !learning.feedback ? (
         <NokoMessage state="comeback" text="Học tiếp từ chỗ bạn dừng lại 🐾 Những câu trước đã được lưu rồi." className="mb-3" />
       ) : null}

@@ -56,6 +56,8 @@ export interface RecallStep extends StepBase {
   options: string[];
   /** Luyện ngay kiến thức VỪA được giới thiệu trong phiên này (không phải gặp lại thứ cũ). */
   isPractice?: boolean;
+  /** Chữ Nhật để đọc SAU khi trả lời (speechTextFor) — không đọc trước, kẻo lộ đáp án. Phiên cũ có thể thiếu. */
+  audioText?: string;
 }
 
 export interface DiscoverStep extends StepBase {

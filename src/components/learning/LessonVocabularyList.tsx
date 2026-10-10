@@ -3,6 +3,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { lessonNumber } from '@/lib/utils/lesson';
 import type { LessonContent } from '@/types/content';
+import Link from 'next/link';
+import { MAX_FOCUS_ITEMS, focusSessionHref } from '@/features/learning/session-modes';
+import { FocusSelectToggle, FocusSelectionBar, useFocusSelection } from './FocusSelection';
 import { KnowledgeListRow, type KnowledgeListRowData } from './KnowledgeListRow';
 
 export interface VocabularyRowData extends KnowledgeListRowData {
@@ -29,6 +32,10 @@ export function LessonVocabularyList({ rows, lessons, currentTab }: { rows: Voca
   const hasKanaPeriod = rows.some((row) => tabOfRow(row) === KANA_PERIOD_TAB);
   const visibleRows = tab === ALL_TAB ? rows : rows.filter((row) => tabOfRow(row) === tab);
   const lesson = sortedLessons.find((candidate) => candidate.id === tab);
+  const selection = useFocusSelection();
+  // Học / kiểm tra cả bài đang xem: từ chưa học → học (từng chặng 5 từ); từ đã học → kiểm tra.
+  const unlearned = visibleRows.filter((row) => row.status === 'new').map((row) => row.contentKey).slice(0, MAX_FOCUS_ITEMS);
+  const learned = visibleRows.filter((row) => row.status !== 'new').map((row) => row.contentKey).slice(0, MAX_FOCUS_ITEMS);
 
   useEffect(() => {
     activeTabRef.current?.scrollIntoView({ inline: 'center', block: 'nearest' });
@@ -57,13 +64,21 @@ export function LessonVocabularyList({ rows, lessons, currentTab }: { rows: Voca
               <span className="chip">{lesson.dayRange}</span>
               <span className="chip">{visibleRows.length} từ</span>
             </div>
+            <div className="row wrap mt-2.5" style={{ gap: 8 }}>
+              {unlearned.length ? <Link className="btn sm" href={focusSessionHref(unlearned)}>▶ Học {unlearned.length} từ chưa học của bài</Link> : null}
+              {learned.length ? <Link className="btn ghost sm" href={focusSessionHref(learned)}>✅ Kiểm tra {learned.length} từ đã học</Link> : null}
+            </div>
           </div>
         ) : tab === KANA_PERIOD_TAB ? (
           <p className="sm soft mb-3">Từ chào hỏi và từ Katakana học trong hai tuần bảng chữ cái (ngày 6–13).</p>
         ) : null}
+        <div className="row mb-2" style={{ justifyContent: 'flex-end' }}><FocusSelectToggle selection={selection} unit="từ" /></div>
         <div key={tab} className="list-grid stack" style={{ gap: 9 }} data-reveal-stagger>
-          {visibleRows.map((row) => <KnowledgeListRow key={row.contentKey} row={row} />)}
+          {visibleRows.map((row) => (
+            <KnowledgeListRow key={row.contentKey} row={row} selection={selection.isSelecting ? selection.selectionFor(row.contentKey) : undefined} />
+          ))}
         </div>
+        <FocusSelectionBar selection={selection} unit="từ" />
       </div>
     </>
   );

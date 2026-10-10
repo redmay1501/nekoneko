@@ -13,7 +13,7 @@ import { speechTextFor } from './speech-text';
 import { MIN_ENCOUNTERS_TO_COUNT_AS_MET } from '@/features/roadmap/journey-progress';
 import type { ContentKey, ContentType, KnowledgeItem } from './knowledge-types';
 import { toContentKey } from './knowledge-types';
-import { DAY_CHUNK_SIZE, SESSION_MODE_CONFIG, type SessionMode } from './session-modes';
+import { DAY_CHUNK_SIZE, MAX_FOCUS_ITEMS, SESSION_MODES, SESSION_MODE_CONFIG, type SessionMode } from './session-modes';
 import {
   SESSION_PHASES,
   gradeAnswer,
@@ -55,6 +55,8 @@ export interface BuildLearningSessionInput {
   catalog: KnowledgeCatalog;
   memoryViews: ReadonlyMap<ContentKey, MemoryView>;
   journeyDay: number;
+  /** Chế độ "focus": đúng những kiến thức người học chọn (đã lọc hợp lệ, tối đa MAX_FOCUS_ITEMS). */
+  focusKeys?: readonly ContentKey[];
 }
 
 function buildOptions(correct: string, distractorPool: readonly string[], seed: string): string[] {
@@ -279,6 +281,54 @@ function buildUseSteps(
   return steps;
 }
 
+/**
+ * Phiên "Học theo lựa chọn": thứ ĐÃ GẶP → hỏi lại trước (biết mình còn nhớ gì); thứ CHƯA GẶP → giới thiệu từng chặng
+ * rồi luyện ngay — cùng luật với phiên hằng ngày (chưa giới thiệu thì không hỏi). Mẫu câu đã học thì hỏi bằng câu ví dụ.
+ */
+function buildFocusSteps(input: BuildLearningSessionInput, known: Set<ContentKey>): SessionStepWithAnswer[] {
+  const { catalog, memoryViews, seed } = input;
+  const items = [...new Set(input.focusKeys ?? [])]
+    .map((key) => catalog.byKey.get(key))
+    .filter((item): item is KnowledgeItem => Boolean(item))
+    .slice(0, MAX_FOCUS_ITEMS);
+  const isMet = (item: KnowledgeItem) => (memoryViews.get(item.key)?.encounterCount ?? 0) >= MIN_ENCOUNTERS_TO_COUNT_AS_MET;
+  const steps: SessionStepWithAnswer[] = [];
+  for (const item of shuffleDeterministic(items.filter(isMet), `${seed}:focus-review`)) {
+    steps.push({ ...buildFocusReviewStep(item, input, steps.length, known), phase: 'review' });
+  }
+  const unmet = items.filter((item) => !isMet(item))
+    .sort((left, right) => NEW_KNOWLEDGE_ORDER.indexOf(left.type) - NEW_KNOWLEDGE_ORDER.indexOf(right.type));
+  steps.push(...buildDiscoverAndPracticeSteps(unmet, input, steps.length, 'new', known));
+  return steps;
+}
+
+/**
+ * Hỏi lại một thứ đã gặp: chữ cái, Kanji → cách đọc; từ vựng, bộ thủ → nghĩa (từ viết bằng kana mà hỏi cách đọc thì
+ * đáp án chính là mặt chữ); mẫu câu → chọn câu đúng.
+ */
+function buildFocusReviewStep(item: KnowledgeItem, input: BuildLearningSessionInput, stepIndex: number, known: ReadonlySet<ContentKey>): SessionStepWithAnswer {
+  if (item.type === 'grammar') return buildGrammarCheckStep(item, input, stepIndex, known);
+  if (item.type === 'vocabulary' || item.type === 'radical') {
+    const step = buildPracticeStep(item, input.catalog, stepIndex, input.seed, known);
+    return step.type === 'recall' ? { ...step, isPractice: false, question: 'Nó nghĩa là gì?' } : step;
+  }
+  return buildRecallStep(item, input.catalog, stepIndex, input.seed, known);
+}
+
+/** Mẫu câu đã học: chọn câu tiếng Nhật đúng với câu tiếng Việt (như bước Dùng trong câu). */
+function buildGrammarCheckStep(item: KnowledgeItem, input: BuildLearningSessionInput, stepIndex: number, known: ReadonlySet<ContentKey>): SessionStepWithAnswer {
+  const pattern = input.catalog.content.grammar.find((candidate) => toContentKey('grammar', candidate.id) === item.key)!;
+  const isSentence = (sentence: string) => Boolean(sentence) && !/[→/／]/.test(sentence);
+  const knownSentences = input.catalog.content.grammar
+    .filter((candidate) => known.has(toContentKey('grammar', candidate.id))).map((candidate) => candidate.exampleJp).filter(isSentence);
+  const pool = knownSentences.length > MIN_KNOWN_DISTRACTORS ? knownSentences : input.catalog.content.grammar.map((candidate) => candidate.exampleJp).filter(isSentence);
+  return {
+    type: 'use', variant: 'choose-sentence', stepIndex, contentKey: item.key, promptVi: pattern.exampleVi,
+    options: buildOptions(pattern.exampleJp, pool, `${input.seed}:focus-grammar:${pattern.id}`),
+    correctAnswer: pattern.exampleJp,
+  };
+}
+
 /** Dựng một phiên học theo chế độ. */
 export function buildLearningSession(input: BuildLearningSessionInput): LearningSessionPlan {
   const { mode, seed, catalog, memoryViews } = input;
@@ -287,6 +337,9 @@ export function buildLearningSession(input: BuildLearningSessionInput): Learning
   const steps: SessionStepWithAnswer[] = [];
   // Thứ người học đã biết — nguồn duy nhất cho phương án nhiễu; lớn dần khi phiên giới thiệu thứ mới.
   const known = new Set([...memoryViews.values()].filter((view) => view.isLearned).map((view) => view.contentKey));
+  if (mode === SESSION_MODES.FOCUS) {
+    return { mode, steps: buildFocusSteps(input, known).map((step, index) => ({ ...step, stepIndex: index, phase: step.phase ?? phaseOfStep(step) })) };
+  }
 
   if (composition.surprise > 0) {
     const surprise = pickMemorySurprise([...memoryViews.values()], `${seed}:${mode}`);

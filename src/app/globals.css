@@ -894,3 +894,14 @@ a.dash-cta-blue:hover{transform:translateY(-1px);box-shadow:0 14px 26px rgba(90,
 .writing-picker{display:flex;flex-wrap:wrap;gap:6px}
 .writing-picker .chip{font-size:18px;min-width:40px;justify-content:center;padding:6px 8px;cursor:pointer}
 .stroke-order-placeholder{height:44px}
+
+/* ─── Học theo lựa chọn: thanh hành động, chọn nhiều ─── */
+.study-actions{background:#FFF8FA;border-color:#F8DCE3}
+.list-row.selectable{width:100%;text-align:left;cursor:pointer;font:inherit;color:inherit}
+.list-row.selectable.on{border-color:var(--sakura-deep);background:#FFF3F6}
+.list-row.selectable:disabled{opacity:.5;cursor:not-allowed}
+.select-tick{flex:0 0 auto;width:22px;height:22px;border-radius:7px;border:2px solid #E9C9D1;display:grid;place-items:center;font-size:13px;font-weight:800;color:#fff}
+.list-row.selectable.on .select-tick{background:var(--sakura-deep);border-color:var(--sakura-deep)}
+.focus-select-bar{position:sticky;bottom:calc(84px + env(safe-area-inset-bottom));z-index:20;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  margin-top:12px;padding:10px 12px;border-radius:16px;background:#fff;border:1px solid var(--line);box-shadow:0 8px 24px rgba(80,40,40,.12)}
+@media (min-width:900px){.focus-select-bar{bottom:16px}}

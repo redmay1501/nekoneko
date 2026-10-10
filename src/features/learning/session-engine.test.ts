@@ -337,3 +337,57 @@ describe('phương án nhiễu chỉ từ thứ đã biết', () => {
     }
   });
 });
+
+describe('Học theo lựa chọn (focus)', () => {
+  const buildFocus = (focusKeys: ContentKey[], views = viewsDay23, seed = 'focus-seed') =>
+    buildLearningSession({ mode: 'focus', seed, catalog, memoryViews: views, journeyDay: 23, focusKeys });
+  const isMet = (key: ContentKey) => (viewsDay23.get(key)?.encounterCount ?? 0) > 0;
+  const kanji = catalog.items.filter((item) => item.type === 'kanji');
+  const metKanji = kanji.filter((item) => isMet(item.key)).slice(0, 3).map((item) => item.key);
+  const newKanji = kanji.filter((item) => !isMet(item.key)).slice(0, 7).map((item) => item.key);
+
+  it('chỉ dùng đúng những kiến thức được chọn', () => {
+    const keys = new Set(buildFocus([...metKanji, ...newKanji]).steps.map((step) => step.contentKey));
+    expect([...keys].sort()).toEqual([...metKanji, ...newKanji].sort());
+  });
+
+  it('thứ đã gặp → hỏi lại trước (chặng Gặp lại); thứ chưa gặp → giới thiệu rồi luyện ngay theo chặng 5', () => {
+    const plan = buildFocus([...newKanji, ...metKanji]);
+    const review = plan.steps.slice(0, metKanji.length);
+    expect(review.every((step) => step.type === 'recall' && !step.isPractice && step.phase === 'review')).toBe(true);
+    const rest = plan.steps.slice(metKanji.length).map((step) => (step.type === 'discover' ? 'D' : 'P')).join('');
+    expect(rest).toBe('DDDDDPPPPPDDPP');
+  });
+
+  it('chưa giới thiệu thì không hỏi: mỗi câu về thứ mới đều đứng sau thẻ giới thiệu của nó', () => {
+    const plan = buildFocus(newKanji);
+    plan.steps.forEach((step, index) => {
+      if (step.type === 'discover') return;
+      expect(plan.steps.slice(0, index).some((earlier) => earlier.type === 'discover' && earlier.contentKey === step.contentKey)).toBe(true);
+    });
+  });
+
+  it('từ vựng đã học hỏi NGHĨA (từ viết bằng kana hỏi cách đọc thì đáp án là mặt chữ)', () => {
+    const word = catalog.items.find((item) => item.type === 'vocabulary' && isMet(item.key))!;
+    const [step] = buildFocus([word.key]).steps;
+    expect(step.type === 'recall' && step.correctAnswer).toBe(word.meaning);
+  });
+
+  it('mẫu câu đã học → chọn câu đúng, nằm ở chặng Gặp lại', () => {
+    const pattern = catalog.items.find((item) => item.type === 'grammar' && isMet(item.key));
+    if (!pattern) return;
+    const [step] = buildFocus([pattern.key]).steps;
+    expect(step.type).toBe('use');
+    expect(step.phase).toBe('review');
+  });
+
+  it('bỏ khoá không có thật, bỏ trùng, tối đa 20', () => {
+    const many = catalog.items.filter((item) => item.type === 'vocabulary').slice(0, 30).map((item) => item.key);
+    const plan = buildFocus([...many, many[0], 'kanji-99999' as ContentKey]);
+    expect(new Set(plan.steps.map((step) => step.contentKey)).size).toBe(20);
+  });
+
+  it('không chọn gì → phiên rỗng (màn hình mời chọn kiến thức)', () => {
+    expect(buildFocus([]).steps).toEqual([]);
+  });
+});

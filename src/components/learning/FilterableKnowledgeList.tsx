@@ -2,11 +2,13 @@
 
 import { useState } from 'react';
 import { MEMORY_FILTERS, type MemoryFilterId, matchesMemoryFilter } from '@/features/learning/knowledge-filters';
+import { FocusSelectToggle, FocusSelectionBar, useFocusSelection } from './FocusSelection';
 import { KnowledgeListRow, type KnowledgeListRowData } from './KnowledgeListRow';
 
-/** Danh sách kiến thức có thẻ lọc theo trạng thái trí nhớ (Kanji). */
-export function FilterableKnowledgeList({ rows }: { rows: KnowledgeListRowData[] }) {
+/** Danh sách kiến thức có thẻ lọc theo trạng thái trí nhớ (Kanji), chọn được nhiều mục để học ngay. */
+export function FilterableKnowledgeList({ rows, unit = 'chữ' }: { rows: KnowledgeListRowData[]; unit?: string }) {
   const [filter, setFilter] = useState<MemoryFilterId>('all');
+  const selection = useFocusSelection();
   const visibleRows = rows.filter((row) => matchesMemoryFilter(row.status, filter));
   return (
     <>
@@ -18,15 +20,19 @@ export function FilterableKnowledgeList({ rows }: { rows: KnowledgeListRowData[]
           </button>
         ))}
       </div>
-      <div className="mt-3">
+      <div className="row mt-2.5" style={{ justifyContent: 'flex-end' }}><FocusSelectToggle selection={selection} unit={unit} /></div>
+      <div className="mt-2">
         {visibleRows.length ? (
           <div className="list-grid stack" style={{ gap: 9 }}>
-            {visibleRows.map((row) => <KnowledgeListRow key={row.contentKey} row={row} />)}
+            {visibleRows.map((row) => (
+              <KnowledgeListRow key={row.contentKey} row={row} selection={selection.isSelecting ? selection.selectionFor(row.contentKey) : undefined} />
+            ))}
           </div>
         ) : (
           <p className="soft center">Chưa có chữ nào ở nhóm này.</p>
         )}
       </div>
+      <FocusSelectionBar selection={selection} unit={unit} />
     </>
   );
 }

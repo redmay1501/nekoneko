@@ -18,7 +18,7 @@ import { gradeAnswer, phaseOfStep, type SessionPhase, type StepAnswerFeedback } 
  * Việc ghi lên server (server chấm lại + Memory Engine cập nhật trí nhớ) chạy ngầm phía sau;
  * khi server trả về, phần "sức nhớ / lần gặp tới" được điền thêm vào phản hồi đang hiện.
  */
-export function useLearningSession(mode: SessionMode) {
+export function useLearningSession(mode: SessionMode, focusKeys?: readonly string[]) {
   const router = useRouter();
   const [attempt, setAttempt] = useState(0);
   const [stepIndex, setStepIndex] = useState(0);
@@ -31,8 +31,8 @@ export function useLearningSession(mode: SessionMode) {
   const checkpointEvery = SESSION_MODE_CONFIG[mode].checkpointEvery;
 
   const sessionQuery = useQuery({
-    queryKey: QUERY_KEYS.learningSession(mode, attempt),
-    queryFn: () => startSession(mode),
+    queryKey: [...QUERY_KEYS.learningSession(mode, attempt), focusKeys?.join(',') ?? ''],
+    queryFn: () => startSession(mode, focusKeys),
     // Mỗi lần mở: phiên mới, hoặc phiên dở dang cùng chế độ (server quyết định). Không tự tải lại giữa chừng.
     staleTime: Infinity,
     gcTime: 0,

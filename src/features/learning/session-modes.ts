@@ -16,6 +16,7 @@ export const SESSION_MODES = {
   USE: 'use',
   DAY: 'day',
   BACKLOG: 'backlog',
+  FOCUS: 'focus',
 } as const;
 
 export type SessionMode = (typeof SESSION_MODES)[keyof typeof SESSION_MODES];
@@ -46,6 +47,14 @@ export type NewKnowledgeScope = 'next-chunk' | 'rest-of-day' | 'backlog-only';
  * đủ nhỏ để không quá tải, đủ lớn để thấy mình vừa xong một phần.
  */
 export const DAY_CHUNK_SIZE = 5;
+
+/** Phiên "Học theo lựa chọn" nhận tối đa chừng này kiến thức (4 chặng) — đủ cho một bài, không quá tải. */
+export const MAX_FOCUS_ITEMS = 20;
+
+/** Đường dẫn mở phiên "Học theo lựa chọn" cho các kiến thức này. */
+export function focusSessionHref(keys: readonly string[]): string {
+  return `/hoc/${SESSION_MODES.FOCUS}?k=${keys.slice(0, MAX_FOCUS_ITEMS).join(',')}`;
+}
 
 /** Phiên "Học hôm nay" học bù tối đa chừng này kiến thức ngày cũ — đủ để không bỏ sót, không nuốt phiên. */
 export const BACKLOG_PER_DAILY_SESSION = 3;
@@ -92,6 +101,13 @@ export const SESSION_MODE_CONFIG: Record<SessionMode, SessionModeConfig> = {
     label: 'Học hết ngày', emoji: '📘', description: 'Đi hết kiến thức của ngày, từng chặng 5 thứ.', cardBackground: '#FFF3DE',
     targetMinutes: 15, composition: { surprise: 0, recall: 0, discover: 0, use: 2 }, recallSource: 'priority', isPickable: false, backlogPerSession: 0,
     newKnowledgeScope: 'rest-of-day', checkpointEvery: DAY_CHUNK_SIZE,
+  },
+  // Học theo lựa chọn: người học chọn kiến thức ở trang Học tập. Thứ đã học → hỏi lại (Gặp lại, ghi trí nhớ như ôn);
+  // thứ chưa học → giới thiệu từng chặng 5 thứ rồi luyện ngay. Số lượng do lựa chọn quyết định, không theo composition.
+  focus: {
+    label: 'Học theo lựa chọn', emoji: '🎯', description: 'Học hoặc kiểm tra đúng những gì bạn chọn.', cardBackground: '#FFEFF2',
+    targetMinutes: 8, composition: { surprise: 0, recall: 0, discover: 0, use: 0 }, recallSource: 'priority', isPickable: false, backlogPerSession: 0,
+    newKnowledgeScope: 'next-chunk', checkpointEvery: DAY_CHUNK_SIZE,
   },
   quick5: {
     label: 'Học nhanh 5 phút', emoji: '⚡', description: 'Không cần suy nghĩ. Neko Neko chọn cho bạn.', cardBackground: '#FFF3DE',

@@ -10,6 +10,7 @@ import type { ChainNode } from '@/features/learning/knowledge-presenter';
 import { KnowledgeChipButton } from './KnowledgeChipButton';
 import { StrokeOrder } from './StrokeOrder';
 import { strokeOrderCharacters } from '@/features/learning/stroke-order';
+import { focusSessionHref } from '@/features/learning/session-modes';
 
 /** Thứ tự nét cho mọi chữ có dữ liệu trong mặt chữ (âm ghép きゃ → き và ゃ). */
 function StrokeOrderSection({ face }: { face: string }) {
@@ -245,7 +246,10 @@ export function KnowledgeDetailContent({ detail }: { detail: KnowledgeDetailView
       <KnowledgeChain nodes={detail.chain} />
       {detail.memory.isLearned ? (
         <Link className="btn block mt-3.5" href={`/tri-nho/cuu/${detail.item.key}`}>🌸 Gặp lại kiến thức này</Link>
-      ) : null}
+      ) : (
+        // Chưa học: học ngay (giới thiệu + luyện, ghi trí nhớ) — không cần chờ tới ngày của lộ trình.
+        <Link className="btn block mt-3.5" href={focusSessionHref([detail.item.key])}>▶ Học {detail.item.face} ngay</Link>
+      )}
     </div>
   );
 }

@@ -18,8 +18,8 @@ import { DiscoverStepView, RecallStepView, SurpriseStepView, UseStepView } from 
  * SC-33 · Phiên học — MỘT component cho mọi chế độ (Học hôm nay, Học nhanh 5 phút, …).
  * Thứ tự: Gặp lại → Khám phá → Dùng trong câu → Khoảnh khắc tiến bộ.
  */
-export function LearningSession({ mode }: { mode: SessionMode }) {
-  const learning = useLearningSession(mode);
+export function LearningSession({ mode, focusKeys }: { mode: SessionMode; focusKeys?: readonly string[] }) {
+  const learning = useLearningSession(mode, focusKeys);
   const { sessionQuery, session, currentStep, stepIndex } = learning;
 
   // Enter sang câu tiếp sau khi đã trả lời. Bỏ qua khi đang gõ chữ và khi giữ phím.
@@ -42,6 +42,15 @@ export function LearningSession({ mode }: { mode: SessionMode }) {
   }
   if (sessionQuery.error || !session) {
     return <div className="session"><SessionHeader mode={mode} /><ErrorState message={sessionQuery.error?.message} onRetry={learning.restart} /></div>;
+  }
+  if (!session.steps.length && mode === SESSION_MODES.FOCUS) {
+    return (
+      <div className="session">
+        <SessionHeader mode={mode} />
+        <NokoMessage state="idle" text="Bạn chưa chọn kiến thức nào để học. Vào Học tập, chọn Kanji, từ vựng hay mẫu câu bạn muốn nhé 🌸" />
+        <Link className="btn block mt-4" href="/hoc-tap">Mở Học tập</Link>
+      </div>
+    );
   }
   if (!session.steps.length) {
     return (

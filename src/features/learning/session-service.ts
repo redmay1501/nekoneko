@@ -8,7 +8,7 @@ import { NotFoundError } from '@/lib/api/errors';
 import type { ContentKey } from './knowledge-types';
 import { getLearnerContext } from './learner-context';
 import { buildLearningSession, evaluateStepAnswer, reviewEventTypeForStep, summarizeSession } from './session-engine';
-import { SESSION_MODE_CONFIG, type SessionMode } from './session-modes';
+import { MAX_FOCUS_ITEMS, SESSION_MODES, SESSION_MODE_CONFIG, type SessionMode } from './session-modes';
 import {
   type AnsweredStep,
   type SessionSummary,
@@ -50,14 +50,20 @@ export async function findResumableSession(mode: SessionMode): Promise<Resumable
  * Bắt đầu một phiên — hoặc HỌC TIẾP phiên dở dang cùng chế độ (tải lại trang, đóng tab giữa chừng):
  * cùng ngày lộ trình, trong RESUME_WINDOW_HOURS giờ, còn bước chưa làm → trả lại đúng phiên đó.
  */
-export async function startLearningSession(mode: SessionMode): Promise<StartedSession> {
+export async function startLearningSession(mode: SessionMode, requestedFocusKeys: readonly string[] = []): Promise<StartedSession> {
   const context = await getLearnerContext();
   const targetMinutes = SESSION_MODE_CONFIG[mode].targetMinutes;
+  // "Học theo lựa chọn": chỉ nhận khoá kiến thức có thật, bỏ trùng, tối đa MAX_FOCUS_ITEMS.
+  const focusKeys = mode === SESSION_MODES.FOCUS
+    ? [...new Set(requestedFocusKeys)].filter((key): key is ContentKey => context.catalog.byKey.has(key as ContentKey)).slice(0, MAX_FOCUS_ITEMS)
+    : [];
   const since = new Date(context.now.getTime() - RESUME_WINDOW_HOURS * 3_600_000).toISOString();
   const open = await context.source.findLatestOpenSession(context.learner.userId, mode, since);
   const resumeFromStep = open?.steps.findIndex((stored) => stored.result === null) ?? -1;
+  // Phiên chọn riêng chỉ học tiếp khi đúng CÙNG lựa chọn — chọn bộ khác là phiên khác.
+  const isSameSelection = mode !== SESSION_MODES.FOCUS || (open !== null && sameKeys(open.steps.map((stored) => stored.step.contentKey), focusKeys));
   // Còn bước chưa làm (kể cả chưa làm bước nào — tránh đẻ thêm phiên bỏ dở mỗi lần tải lại).
-  if (open && resumeFromStep >= 0 && open.journeyDay === context.journeyDay) {
+  if (open && resumeFromStep >= 0 && open.journeyDay === context.journeyDay && isSameSelection) {
     return { sessionId: open.id, mode, targetMinutes, steps: open.steps.map((stored) => stored.step), resumeFromStep };
   }
 
@@ -67,9 +73,16 @@ export async function startLearningSession(mode: SessionMode): Promise<StartedSe
     catalog: context.catalog,
     memoryViews: context.memoryViews,
     journeyDay: context.journeyDay,
+    focusKeys,
   });
   const sessionId = await context.source.createSession(context.learner.userId, plan, context.journeyDay);
   return { sessionId, mode, targetMinutes, steps: plan.steps, resumeFromStep: 0 };
+}
+
+function sameKeys(left: readonly string[], right: readonly string[]): boolean {
+  const a = new Set(left);
+  const b = new Set(right);
+  return a.size === b.size && [...a].every((key) => b.has(key));
 }
 
 export interface AnswerStepInput {

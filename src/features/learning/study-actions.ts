@@ -29,7 +29,8 @@ export interface StudyActions {
 const byRoadmapOrder = (left: KnowledgeItem, right: KnowledgeItem) =>
   (left.day ?? Number.POSITIVE_INFINITY) - (right.day ?? Number.POSITIVE_INFINITY) || left.id - right.id;
 
-function needsReview(view: MemoryView): boolean {
+/** Đã học nhưng đang yếu / sắp quên / đến hạn gặp lại. */
+export function needsReview(view: MemoryView): boolean {
   return view.status === 'weak' || view.status === 'fading' || (view.daysUntilReview !== null && view.daysUntilReview <= 0);
 }
 

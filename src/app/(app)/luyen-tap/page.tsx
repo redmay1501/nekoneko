@@ -35,6 +35,16 @@ export default async function PracticeHubPage() {
       </Link>
       <div className="sec-h"><h2>Các kiểu học khác</h2></div>
       <ModeGrid />
+      <div className="sec-h"><h2>Trò chơi ôn tập</h2></div>
+      <Link href="/luyen-tap/ghep-the" className="card tight block" style={{ textAlign: 'left' }}>
+        <div className="row">
+          <span style={{ fontSize: 34 }} aria-hidden="true">🃏</span>
+          <div style={{ flex: 1 }}>
+            <b>Ghép thẻ</b>
+            <div className="sm soft">Ghép chữ với nghĩa — tính giờ, phá kỷ lục. Chỉ dùng thứ bạn đã học.</div>
+          </div>
+        </div>
+      </Link>
       <div className="sec-h"><h2>Theo kỹ năng</h2></div>
       <div className="grid two">
         {SKILLS.map((skill) => (

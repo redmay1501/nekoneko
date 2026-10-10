@@ -1,4 +1,5 @@
 import 'server-only';
+import type { GameRecords } from '@/features/games/match-game';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { unstable_cache } from 'next/cache';
 import type { ContentType } from '@/features/learning/knowledge-types';
@@ -81,6 +82,7 @@ function toSettings(row: UserSettingsRow): LearnerSettings {
     dailyMinutes: row.daily_minutes, reminderTime: row.reminder_time, autoplayAudio: row.autoplay_audio,
     showFurigana: row.show_furigana, gentleMode: row.gentle_mode, welcomedAt: row.welcomed_at ?? null, greetedAt: row.greeted_at ?? null,
     voiceGender: row.voice_gender === 'male' ? 'male' : 'female',
+    gameRecords: (row.game_records ?? {}) as GameRecords,
   };
 }
 
@@ -150,6 +152,7 @@ export class SupabaseDataSource implements LearningDataSource {
     if (patch.welcomedAt !== undefined) update.welcomed_at = patch.welcomedAt;
     if (patch.greetedAt !== undefined) update.greeted_at = patch.greetedAt;
     if (patch.voiceGender !== undefined) update.voice_gender = patch.voiceGender;
+    if (patch.gameRecords !== undefined) update.game_records = { ...patch.gameRecords };
     const { data, error } = await this.userClient.from('user_settings').update(update).eq('user_id', userId).select('*').single();
     throwIfError(error, 'cập nhật cài đặt');
     return toSettings(data as UserSettingsRow);

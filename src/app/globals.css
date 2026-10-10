@@ -908,3 +908,19 @@ a.dash-cta-blue:hover{transform:translateY(-1px);box-shadow:0 14px 26px rgba(90,
 .session-sound{min-width:40px;padding:6px 10px;font-size:16px}
 .session-audio-note{margin:0 0 10px;padding:8px 11px;border-radius:12px;background:#FFF8EC;border:1px solid #F6E2BF;color:var(--ink-2)}
 .is-speaking{box-shadow:0 0 0 3px rgba(255,91,115,.25);animation:speak-pulse 1s ease-in-out infinite}@keyframes speak-pulse{50%{box-shadow:0 0 0 6px rgba(255,91,115,.12)}}@media (prefers-reduced-motion:reduce){.is-speaking{animation:none}}
+
+/* ─── Trò chơi Ghép thẻ ─── */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.match-col{display:flex;flex-direction:column;gap:8px}
+.match-tile{min-height:52px;padding:8px 10px;border-radius:14px;border:1.5px solid var(--line);background:#fff;font:inherit;font-size:14px;line-height:1.3;color:var(--ink);cursor:pointer;
+  transition:transform .15s ease,background .15s ease,border-color .15s ease,opacity .25s ease}
+.match-tile.glyph{font-size:24px}
+.match-tile:hover:not(:disabled){border-color:#F3C4CF}
+.match-tile.picked{border-color:var(--sakura);background:#FFF0F3;transform:scale(1.02)}
+.match-tile.wrong{border-color:#E24159;background:#FFE3E8;animation:match-shake .35s ease}
+.match-tile.done{opacity:.25;background:#F4FBF6;border-color:#CFEBD6;cursor:default}
+.match-stats{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 18px}
+.match-stats span{font-size:14px;color:var(--ink-2)}
+.match-stats b{font-size:20px;color:var(--ink)}
+@keyframes match-shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+@media (prefers-reduced-motion:reduce){.match-tile{transition:none}.match-tile.wrong{animation:none}}

@@ -32,6 +32,8 @@ export interface LearnerProfile {
   level: number;
 }
 
+import type { GameRecords } from '@/features/games/match-game';
+
 export interface LearnerSettings {
   dailyMinutes: number;
   reminderTime: string | null;
@@ -44,6 +46,8 @@ export interface LearnerSettings {
   greetedAt: string | null;
   /** Giọng đọc tiếng Nhật người học muốn nghe. */
   voiceGender: VoiceGender;
+  /** Kỷ lục trò chơi ôn tập theo phạm vi — không phải dữ liệu trí nhớ. */
+  gameRecords: GameRecords;
 }
 
 export interface StoredStepResult {

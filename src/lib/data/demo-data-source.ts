@@ -55,6 +55,7 @@ const DEFAULT_SETTINGS: LearnerSettings = {
   reminderTime: '20:30',
   autoplayAudio: true,
   showFurigana: true,
+  gameRecords: {},
   gentleMode: false,
   // Người học mẫu đang ở giữa lộ trình → đã qua lời chào từ lâu.
   welcomedAt: '2026-01-01T00:00:00.000Z',

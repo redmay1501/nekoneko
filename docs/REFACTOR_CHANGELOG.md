@@ -68,3 +68,33 @@ Chi tiết hiện trạng & lý do: `N5_CONTENT_AUDIT.md`, `LEARNING_FLOW_AUDIT.
 - Duyệt thủ công nghĩa tiếng Việt của 394 từ bổ sung và ghi chú 112 mẫu ngữ pháp.
 - Ảnh minh hoạ Kanji: chưa có nguồn phù hợp.
 - Furigana dạng ruby trên từng chữ Hán (hiện là dòng cách đọc kana dưới câu).
+
+---
+
+# 2026-10-11 — Cải thiện theo phản hồi người dùng thật
+
+| # | Phản hồi | Đã làm |
+|---|---|---|
+| 1 | Katakana trông mềm | Chữ ĐANG HỌC (bảng kana, chữ lớn trong phiên, trang chi tiết, câu hỏi, khung viết) dùng **Klee One** (SIL OFL, kiểu sách giáo khoa). Chữ thường vẫn Zen Maru Gothic. Cắt gọn theo unicode-range: kana 31 KB, Kanji 166 KB (chỉ tải khi có Kanji). |
+| 4 | そ "mất nét" | Nguyên nhân: Zen Maru Gothic vẽ そ dạng biến thể (nét đầu là chấm xiên, mất đoạn ngang) + ô "chưa học" mờ 62 %. Không phải CSS cắt chữ. Đã đổi font, bỏ làm mờ cả ô. |
+| — | (phát hiện thêm) | Middleware chặn `/fonts/*.woff2` khi chưa đăng nhập → trang đăng nhập không có font (từ PR #3). Đã loại font / txt / json khỏi middleware. |
+| 2 | Thứ tự nét | Dữ liệu **KanjiVG** (CC BY-SA 3.0, ghi nguồn dưới mỗi hình) cho 251/251 chữ: mọi kana + 103 Kanji N5 (`scripts/fetch-stroke-order.mjs`). `StrokeOrder`: số nét, ▶ / ⏸ / ↺ / ‹ ›. `WritingPad` viết đè lên nét mẫu và chấm cơ bản từng nét (thứ tự, điểm đầu, chiều). Sửa số nét ヨ (3, không phải 2). |
+| 3 | Học chủ động | Chế độ phiên **`focus`** (Học theo lựa chọn) trong Session Engine sẵn có. Thanh "Học ngay tại đây" ở 6 trang Học tập (Bắt đầu / Học tiếp / Ôn / Kiểm tra theo trạng thái thật), chọn nhiều (Kanji, Từ vựng), học / kiểm tra cả bài (Từ vựng, Ngữ pháp), "Học … ngay" ở trang chi tiết. Không phải chờ ngày của lộ trình. |
+| 5 | Âm thanh mặc định | Cài đặt "Tự phát âm thanh" (mặc định bật) áp dụng cho phiên học: thẻ từ mới tự đọc; câu hỏi chỉ đọc SAU khi trả lời (không lộ đáp án). 🔊/🔇 trên đầu phiên (lưu vào Cài đặt). Không chồng tiếng. Mở khoá ở lần chạm đầu (iOS); bị chặn → báo và phát lại khi chạm; máy không có giọng Nhật → hướng dẫn. |
+| 6 | Game ôn tập | **Ghép thẻ** (`/luyen-tap/ghep-the`): từ vựng hoặc Kanji ↔ nghĩa, chỉ thứ ĐÃ HỌC; phạm vi Tất cả / Cần ôn / Vừa học / theo bài; thời gian, số lần sai, độ chính xác, kỷ lục. **Không đổi điểm trí nhớ**; thẻ ghép sai → "Ôn N từ này" (phiên focus, ghi trí nhớ thật). Gợi ý sau phiên học khi vừa học ≥ 3 từ; thẻ trong Luyện tập. Không thêm mục điều hướng. |
+
+## Database / API
+- `20261011000001_session_mode_focus.sql` — `learning_sessions.mode` thêm `'focus'`.
+- `20261011000002_game_records.sql` — `user_settings.game_records jsonb` (kỷ lục game, không phải trí nhớ).
+- `POST /api/session/start` nhận thêm `contentKeys` (≤ 20, server lọc lại). Mới: `POST /api/games/result`.
+
+## Kiểm thử
+- 235 unit test (thêm: stroke-order, focus session, study-actions, autoplay, match game), lint, typecheck, build.
+- Trình duyệt (tài khoản tạm, đã xoá): そ / ソ ン シ ツ ở 390 px và 1280 px; hình động nét + chấm viết đúng / ngược chiều;
+  đi trọn phiên focus từ trang Kanji (0/103 → 5/103, xuất hiện Ôn / Kiểm tra); tự phát âm, chặn → chạm để nghe, tắt lưu vào
+  Cài đặt; 2 ván Ghép thẻ — kỷ lục lưu, `review_events` và tổng điểm trí nhớ KHÔNG đổi.
+
+## Giới hạn còn lại
+- Chấm nét là mức cơ bản (điểm đầu / cuối từng nét), không nhận dạng hình chữ.
+- Âm thanh là giọng đọc của thiết bị (không có file thu sẵn) — chất lượng tuỳ máy.
+- Game mới có Ghép thẻ; "Thử thách thời gian" để sau.

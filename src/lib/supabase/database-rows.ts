@@ -42,6 +42,7 @@ export interface UserSettingsRow {
   autoplay_audio: boolean; show_furigana: boolean; gentle_mode: boolean;
   welcomed_at: string | null;
   greeted_at: string | null;
+  game_records?: Record<string, unknown> | null;
   voice_gender?: string;
 }
 export interface MemoryItemRow {

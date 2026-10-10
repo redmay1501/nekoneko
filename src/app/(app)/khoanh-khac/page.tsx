@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { NokoMessage } from '@/components/common/NokoMessage';
+import { MIN_MATCH_POOL } from '@/features/games/match-game';
 import { SpriteIcon } from '@/components/common/SpriteIcon';
 import { getLearnerContext } from '@/features/learning/learner-context';
 import { SESSION_MODES } from '@/features/learning/session-modes';
@@ -28,6 +29,9 @@ export default async function TinyWinPage({ searchParams }: { searchParams: Prom
     );
   }
   const { summary, mode } = finished;
+  // Vừa gặp ≥ 3 từ vựng (đã thành "đã học") → gợi ý thử Ghép thẻ, không bắt buộc.
+  const learnedWordsThisSession = finished.encounteredKeys
+    .filter((key) => key.startsWith('vocabulary-') && context.memoryViews.get(key)?.isLearned).length;
   const backlogCount = backlogKnowledge(context.catalog, context.memoryViews, context.journeyDay).length;
   // Gợi ý bước tiếp theo theo ngày đang học: còn kiến thức thì học tiếp; học hết rồi thì mời hoàn thành ngày.
   const dayCompletion = getDayCompletionProgress(context.catalog, context.memoryViews, context.journeyDay);
@@ -61,6 +65,11 @@ export default async function TinyWinPage({ searchParams }: { searchParams: Prom
         </div>
       ) : null}
       <NokoMessage state="achievement" className="mt-4" />
+      {learnedWordsThisSession >= MIN_MATCH_POOL ? (
+        <Link className="card tight block mt-4" href="/luyen-tap/ghep-the?loai=tu-vung&pham-vi=vua-hoc" style={{ textAlign: 'left', background: 'var(--sky)', borderColor: 'transparent' }}>
+          <p className="sm"><b>🃏 Bạn vừa học {learnedWordsThisSession} từ.</b> Thử ghép thẻ để xem mình nhớ được bao nhiêu nhé!</p>
+        </Link>
+      ) : null}
       {remainingToday > 0 ? (
         <Link className="btn block mt-4" href="/hoc/day">
           📘 Học tiếp ngày {context.journeyDay} · còn {remainingToday} kiến thức · ~{estimateMinutesToFinishDay(dayCompletion)} phút

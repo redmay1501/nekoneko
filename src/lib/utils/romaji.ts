@@ -137,7 +137,7 @@ const WORDS_ENDING_LIKE_PARTICLES = new Set(`
   あぱーと いかが いつか いつも いなか いもうと いんたーねっと えいが おとうと おなか かいもの きっと くだもの ここのか
   こども こーと しごと しずか すかーと せいと それから たてもの たべもの ちょっと てすと でぱーと とおか とても どうも
   どこか なにか なのか にぎやか のみもの のーと はつか ぱすぽーと ぴあの ふつか ぷれぜんと ぺっと ぽけっと ぽすと みっか
-  むいか もっと やおや ようか よっか ろうか ずっと やっと さっき だれか きもの
+  むいか もっと やおや ようか よっか ろうか ずっと やっと さっき だれか きもの のりもの
 `.trim().split(/\s+/));
 const COPULAS = ['でしょう', 'でした', 'です', 'じゃ'];
 const PUNCTUATION: Record<string, string> = { '。': '.', '、': ',', '？': '?', '！': '!', '「': '"', '」': '"' };
@@ -207,9 +207,34 @@ export function kanjiReadingRomaji(onReading: string, kunReading: string): strin
   return [part(onReading), part(kunReading)].filter(Boolean).join(' ・ ');
 }
 
-/** Romaji cho mẫu ngữ pháp — chỉ khi mẫu không có chữ Hán (行きます sẽ thành "行kimasu", nửa nọ nửa kia). */
+/**
+ * Cách đọc hiragana của chữ Hán trong 112 mẫu ngữ pháp N5 (場所 へ 行きます → ばしょ へ いきます).
+ * Có "〜" phía trước là trợ số đếm (〜人 = にん, khác 人 = ひと). Dài trước ngắn sau khi thay.
+ */
+const PATTERN_KANJI_READINGS: ReadonlyArray<[string, string]> = ([
+  ['[の中]', '[の なか]'], ['〜時間', '〜じかん'], ['〜週間', '〜しゅうかん'], ['〜か月', '〜かげつ'], ['〜人', '〜にん'], ['〜台', '〜だい'], ['〜枚', '〜まい'],
+  ['〜冊', '〜さつ'], ['〜回', '〜かい'], ['〜年', '〜ねん'], ['〜語', '〜ご'], ['〜時', '〜じ'], ['〜分', '〜ふん'],
+  ['行きません', 'いきません'], ['行きます', 'いきます'], ['来ます', 'きます'], ['帰ります', 'かえります'], ['乗り物', 'のりもの'],
+  ['知りません', 'しりません'], ['知って', 'しって'], ['思います', 'おもいます'], ['言います', 'いいます'], ['何ですか', 'なんですか'],
+  ['普通形', 'ふつうけい'], ['辞書形', 'じしょけい'], ['場所', 'ばしょ'], ['時間', 'じかん'], ['道具', 'どうぐ'], ['期間', 'きかん'],
+  ['回数', 'かいすう'], ['好き', 'すき'], ['嫌い', 'きらい'], ['上手', 'じょうず'], ['下手', 'へた'], ['少し', 'すこし'],
+  ['全然', 'ぜんぜん'], ['趣味', 'しゅみ'], ['約束', 'やくそく'], ['用事', 'ようじ'], ['今', 'いま'], ['人', 'ひと'], ['中', 'なか'],
+  ['何', 'なに'], ['時', 'じ'],
+] as Array<[string, string]>).sort((left, right) => right[0].length - left[0].length);
+
+/** Mẫu ngữ pháp viết bằng kana (chữ Hán đổi theo bảng trên); còn chữ Hán lạ thì null — không phiên nửa vời. */
+export function patternKana(pattern: string): string | null {
+  let kana = pattern;
+  for (const [kanji, reading] of PATTERN_KANJI_READINGS) kana = kana.split(kanji).join(reading);
+  return /[\u4e00-\u9fff]/.test(kana) ? null : kana;
+}
+
+/** Romaji cho mẫu ngữ pháp: 場所 へ 行きます → "basho e ikimasu". */
 export function patternRomaji(pattern: string): string | undefined {
-  return canRomanize(pattern) ? sentenceRomaji(pattern) : undefined;
+  // Mẫu là câu tiếng Việt có chèn chữ Nhật ("Cách chia thể て") → không cần dòng romaji. Chú thích trong ngoặc thì bỏ qua.
+  if (/[à-ỹđ]/i.test(pattern.replace(/\([^)]*\)/g, ''))) return undefined;
+  const kana = patternKana(pattern);
+  return kana && hasKana(kana) ? sentenceRomaji(kana).replace('[he]', '[e]') : undefined;
 }
 
 /** Phiên được trọn vẹn: có kana và KHÔNG có chữ Hán (chữ Hán cần cách đọc riêng). */

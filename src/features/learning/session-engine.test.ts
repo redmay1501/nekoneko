@@ -6,7 +6,7 @@ import type { MemoryView } from '@/features/memory/memory-types';
 import { buildKnowledgeCatalog } from './knowledge-catalog';
 import { type ContentKey, toContentKey } from './knowledge-types';
 import { backlogKnowledge, buildLearningSession, previewSessionPlan, evaluateStepAnswer, summarizeSession, unmetKnowledgeOfDay } from './session-engine';
-import { BACKLOG_PER_DAILY_SESSION, DAY_CHUNK_SIZE, SESSION_MODE_CONFIG, type SessionMode, totalSteps } from './session-modes';
+import { BACKLOG_PER_DAILY_SESSION, DAY_CHUNK_SIZE, MAX_FOCUS_ITEMS, SESSION_MODE_CONFIG, type SessionMode, totalSteps } from './session-modes';
 import { SESSION_PHASES, gradeAnswer, phaseOfStep } from './session-types';
 
 const NOW = new Date('2026-10-03T08:00:00.000Z');
@@ -381,10 +381,10 @@ describe('Học theo lựa chọn (focus)', () => {
     expect(step.phase).toBe('review');
   });
 
-  it('bỏ khoá không có thật, bỏ trùng, tối đa 20', () => {
-    const many = catalog.items.filter((item) => item.type === 'vocabulary').slice(0, 30).map((item) => item.key);
+  it('bỏ khoá không có thật, bỏ trùng, tối đa MAX_FOCUS_ITEMS (trọn một bài từ vựng)', () => {
+    const many = catalog.items.filter((item) => item.type === 'vocabulary').slice(0, 80).map((item) => item.key);
     const plan = buildFocus([...many, many[0], 'kanji-99999' as ContentKey]);
-    expect(new Set(plan.steps.map((step) => step.contentKey)).size).toBe(20);
+    expect(new Set(plan.steps.map((step) => step.contentKey)).size).toBe(MAX_FOCUS_ITEMS);
   });
 
   it('không chọn gì → phiên rỗng (màn hình mời chọn kiến thức)', () => {

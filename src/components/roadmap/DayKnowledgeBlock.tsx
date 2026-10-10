@@ -3,7 +3,7 @@ import { DayVocabularyList } from './DayVocabularyList';
 import { DayWritingPractice, type DayWritingCharacter } from './DayWritingPractice';
 import { KanaLessonTable } from './KanaLessonTable';
 import { hasStrokeOrder } from '@/features/learning/stroke-order';
-import { canRomanize, sentenceRomaji } from '@/lib/utils/romaji';
+import { canRomanize, patternRomaji, sentenceRomaji } from '@/lib/utils/romaji';
 import { primaryRadicalGlyph } from '@/features/learning/knowledge-catalog';
 import { toContentKey } from '@/features/learning/knowledge-types';
 import type { DayPlanView } from '@/features/roadmap/day-plan';
@@ -79,6 +79,7 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
             <KnowledgeChipButton key={pattern.id} contentKey={toContentKey('grammar', pattern.id)} className="list-row" style={{ padding: '10px 12px' }}>
               <span className="mid">
                 <b className="jp" style={{ fontSize: 14.5 }}>{pattern.pattern}</b>
+                {patternRomaji(pattern.pattern) ? <span className="romaji">{patternRomaji(pattern.pattern)}</span> : null}
                 <span>{pattern.usage}</span>
                 <span className="jp" style={{ color: 'var(--ink)' }}>{pattern.exampleJp}</span>
                 {pattern.exampleReading && pattern.exampleReading !== pattern.exampleJp ? <span className="jp tiny muted">{pattern.exampleReading}</span> : null}

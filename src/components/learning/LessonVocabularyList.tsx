@@ -3,8 +3,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { lessonNumber } from '@/lib/utils/lesson';
 import type { LessonContent } from '@/types/content';
-import Link from 'next/link';
-import { MAX_FOCUS_ITEMS, focusSessionHref } from '@/features/learning/session-modes';
 import { FocusSelectToggle, FocusSelectionBar, useFocusSelection } from './FocusSelection';
 import { KnowledgeListRow, type KnowledgeListRowData } from './KnowledgeListRow';
 
@@ -33,9 +31,6 @@ export function LessonVocabularyList({ rows, lessons, currentTab }: { rows: Voca
   const visibleRows = tab === ALL_TAB ? rows : rows.filter((row) => tabOfRow(row) === tab);
   const lesson = sortedLessons.find((candidate) => candidate.id === tab);
   const selection = useFocusSelection();
-  // Học / kiểm tra cả bài đang xem: từ chưa học → học (từng chặng 5 từ); từ đã học → kiểm tra.
-  const unlearned = visibleRows.filter((row) => row.status === 'new').map((row) => row.contentKey).slice(0, MAX_FOCUS_ITEMS);
-  const learned = visibleRows.filter((row) => row.status !== 'new').map((row) => row.contentKey).slice(0, MAX_FOCUS_ITEMS);
 
   useEffect(() => {
     activeTabRef.current?.scrollIntoView({ inline: 'center', block: 'nearest' });
@@ -63,10 +58,6 @@ export function LessonVocabularyList({ rows, lessons, currentTab }: { rows: Voca
             <div className="row wrap mt-2" style={{ gap: 6 }}>
               <span className="chip">{lesson.dayRange}</span>
               <span className="chip">{visibleRows.length} từ</span>
-            </div>
-            <div className="row wrap mt-2.5" style={{ gap: 8 }}>
-              {unlearned.length ? <Link className="btn sm" href={focusSessionHref(unlearned)}>▶ Học {unlearned.length} từ chưa học của bài</Link> : null}
-              {learned.length ? <Link className="btn ghost sm" href={focusSessionHref(learned)}>✅ Kiểm tra {learned.length} từ đã học</Link> : null}
             </div>
           </div>
         ) : tab === KANA_PERIOD_TAB ? (

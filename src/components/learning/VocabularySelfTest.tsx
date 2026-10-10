@@ -175,7 +175,7 @@ export function VocabularySelfTest({ rows }: { rows: VocabularyRowData[] }) {
       {ask === 'meaning' ? (
         <>
           <div className="center" style={{ margin: '14px 0' }}>
-            <p className="jp" style={{ fontSize: 36 }}>{row.face}</p>
+            <p className="jp glyph" style={{ fontSize: 36 }}>{row.face}</p>
             <AudioButton text={row.subtitle ?? row.face} className="btn ghost sm mt-1" label="🔊" />
           </div>
           <div className="s-opt" style={{ gap: 7 }}>

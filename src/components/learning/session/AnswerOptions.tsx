@@ -18,7 +18,7 @@ export function AnswerOptions({ options, chosenAnswer, feedback, isDisabled, isJ
         const isWrongChoice = Boolean(feedback) && option === chosenAnswer && !isCorrectOption;
         return (
           <button key={option} type="button" disabled={isDisabled || Boolean(feedback)}
-            className={`opt ${isJapanese ? 'jp' : ''} ${isCorrectOption ? 'ok' : ''} ${isWrongChoice ? 'no' : ''}`}
+            className={`opt ${isJapanese ? 'jp glyph' : ''} ${isCorrectOption ? 'ok' : ''} ${isWrongChoice ? 'no' : ''}`}
             // Đã chọn, đang chờ server chấm → vòng xoay trên đúng lựa chọn đó.
             aria-busy={isDisabled && !feedback && option === chosenAnswer}
             onClick={() => onChoose(option)}>

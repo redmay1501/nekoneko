@@ -77,7 +77,7 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
       return (
         <>
           <div className="center">
-            <div className="jp" style={{ fontSize: 86, lineHeight: 1 }}>{item.face}</div>
+            <div className="jp glyph" style={{ fontSize: 86, lineHeight: 1 }}>{item.face}</div>
             <p className="muted" style={{ letterSpacing: '.08em' }}>{item.content.romaji}</p>
             <div className="row" style={{ justifyContent: 'center', gap: 8, margin: '14px 0' }}>
               <AudioButton text={speechTextFor(item)} className="btn ghost sm" label="Nghe" />
@@ -94,7 +94,7 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
       return (
         <>
           <div className="row" style={{ gap: 14 }}>
-            <span className="jp" style={{ fontSize: 60, lineHeight: 1 }}>{item.face}</span>
+            <span className="jp glyph" style={{ fontSize: 60, lineHeight: 1 }}>{item.face}</span>
             <div>
               <h2>{item.content.meaning}</h2>
               <p className="jp soft">{item.content.nameJp}</p>
@@ -111,7 +111,7 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
       return (
         <>
           <div className="row" style={{ gap: 14 }}>
-            <span className="jp" style={{ fontSize: 66, lineHeight: 1 }}>{item.face}</span>
+            <span className="jp glyph" style={{ fontSize: 66, lineHeight: 1 }}>{item.face}</span>
             <div style={{ flex: 1 }}>
               <h2>{item.content.hanViet}</h2>
               <p className="soft">{item.content.meaning}</p>
@@ -158,7 +158,7 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
         <>
           <div className="row" style={{ gap: 14 }}>
             <div style={{ flex: 1 }}>
-              <div className="jp" style={{ fontSize: 42, lineHeight: 1.1 }}>{item.face}</div>
+              <div className="jp glyph" style={{ fontSize: 42, lineHeight: 1.1 }}>{item.face}</div>
               <p className="jp soft mt-1">{item.content.kana}</p>
               <h2 className="mt-2">{item.content.meaning}</h2>
             </div>

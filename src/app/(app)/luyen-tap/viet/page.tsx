@@ -23,7 +23,7 @@ export default async function WritingPage() {
         <>
           <div className="card tight mb-3.5">
             <div className="row">
-              <span className="jp" style={{ fontSize: 34 }}>{practice.focus.character}</span>
+              <span className="jp glyph" style={{ fontSize: 34 }}>{practice.focus.character}</span>
               <div style={{ flex: 1 }}>
                 <b>{practice.focus.hanViet} · {practice.focus.meaning}</b>
                 <div className="tiny muted">{practice.focus.strokes} nét · {practice.focus.onReading}・{practice.focus.kunReading || '—'}</div>

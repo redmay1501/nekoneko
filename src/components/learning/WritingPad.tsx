@@ -78,7 +78,7 @@ export function WritingPad({ character, reading, expectedStrokes, note }: Writin
       <p className="sm muted">Viết theo chữ mờ bên dưới. Bấm kiểm tra để đối chiếu số nét.</p>
       <div style={{ position: 'relative', width: 'min(300px,86vw)', aspectRatio: '1/1', margin: '14px auto', borderRadius: 20,
         border: '2px dashed #EADFDA', background: '#fff' }}>
-        <span className="jp" aria-hidden="true" style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center',
+        <span className="jp glyph" aria-hidden="true" style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center',
           fontSize: 170, color: '#F3EBE7', userSelect: 'none' }}>{character}</span>
         <svg viewBox="0 0 100 100" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} aria-hidden="true">
           <path d="M50 4V96M4 50H96" stroke="#F6EDE9" strokeWidth="1" strokeDasharray="3 3" />

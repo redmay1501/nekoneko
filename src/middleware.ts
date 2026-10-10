@@ -14,5 +14,6 @@ export const config = {
   runtime: 'nodejs',
   // Bỏ qua file tĩnh — cả đuôi chữ HOA (ảnh xuất từ máy thường là .PNG/.JPEG): nếu không, file ảnh bị middleware
   // coi là trang cần đăng nhập → trả 307 thay vì ảnh, next/image báo "isn't a valid image" (400).
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|SVG|PNG|JPG|JPEG|GIF|WEBP)$).*)'],
+  // Font và giấy phép font (/fonts/*.woff2, *.txt) cũng vậy: bị chuyển về trang đăng nhập thì trang đăng nhập không có font.
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|woff2?|txt|SVG|PNG|JPG|JPEG|GIF|WEBP)$).*)'],
 };

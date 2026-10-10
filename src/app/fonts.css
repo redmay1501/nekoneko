@@ -1,4 +1,4 @@
-/* Nunito, Mali, Zen Maru Gothic — SIL Open Font License. Giấy phép: /fonts/OFL-*.txt */
+/* Nunito, Mali, Zen Maru Gothic, Klee One — SIL Open Font License. Giấy phép: /fonts/OFL-*.txt */
 @font-face {
   font-family: 'Mali';
   font-style: normal;
@@ -103,4 +103,26 @@
   font-weight: 700;
   font-display: swap;
   src: url('/fonts/zen-maru-gothic-700.woff2') format('woff2');
+}
+
+/*
+ * Klee One — kiểu chữ sách giáo khoa (教科書体) cho CHỮ ĐANG HỌC: hình nét giống chữ viết tay chuẩn
+ * (そ đủ nét, ソ/ン/シ/ツ thấy rõ hướng nét). Tách hai file theo unicode-range: phần Kanji chỉ tải khi trang có Kanji.
+ */
+@font-face {
+  font-family: 'Klee One';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/klee-one-600-kana.woff2') format('woff2');
+  unicode-range: U+3000-30FF;
+}
+
+@font-face {
+  font-family: 'Klee One';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/klee-one-600-kanji.woff2') format('woff2');
+  unicode-range: U+2E80-2FDF, U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF;
 }

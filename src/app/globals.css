@@ -25,6 +25,8 @@
   --sh-3:0 14px 40px rgba(96,72,66,.10);
   --font-vi:'Nunito',system-ui,-apple-system,sans-serif;
   --font-jp:'Zen Maru Gothic','Hiragino Sans','Yu Gothic',sans-serif;
+  /* Chữ đang học (bảng chữ, chữ lớn trong phiên, trang chi tiết): đúng hình nét sách giáo khoa. */
+  --font-learn:'Klee One','Hiragino Sans','Yu Gothic',sans-serif;
   --sidebar:232px;
   --safe-t:env(safe-area-inset-top,0px);
   --safe-b:env(safe-area-inset-bottom,0px);
@@ -37,6 +39,7 @@ body{
   font-weight:400;-webkit-font-smoothing:antialiased;
 }
 .jp{font-family:var(--font-jp);font-weight:500}
+.glyph,.kana-face{font-family:var(--font-learn);font-weight:600}
 h1,h2,h3,h4{margin:0;font-weight:700;line-height:1.25;letter-spacing:-.01em}
 h1{font-size:26px} h2{font-size:21px} h3{font-size:17px} h4{font-size:15px}
 p{margin:0}
@@ -271,15 +274,17 @@ ul{margin:0;padding:0;list-style:none}
 /* ============ KNOWLEDGE LISTS ============ */
 .kana-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
 .kana-c{aspect-ratio:1/1;border-radius:14px;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;position:relative;padding:2px}
-.kana-c .ch{font-family:var(--font-jp);font-size:22px;font-weight:500;line-height:1}
+.kana-c .ch{font-family:var(--font-learn);font-size:24px;font-weight:600;line-height:1}
 .kana-c .ro{font-size:9.5px;color:var(--ink-3);letter-spacing:.03em}
 .kana-c.s-strong{background:#F4FBF6;border-color:#CFEBD6}
 .kana-c.s-weak{background:#FFF8EC;border-color:#F6E2BF}
-.kana-c.s-new{background:#FBFAF8;border-color:var(--line);opacity:.62}
+/* Chữ chưa học: chỉ nhạt nền và màu chữ — không làm mờ cả ô (mờ cả ô làm nét mảnh như そ trông như mất nét). */
+.kana-c.s-new{background:#FBFAF8;border-color:var(--line)}
+.kana-c.s-new .ch{color:var(--ink-2)}
 .kana-c .dot{position:absolute;top:6px;right:6px;width:6px;height:6px;border-radius:50%}
 
 .list-row{display:flex;align-items:center;gap:12px;padding:12px 13px;background:#fff;border:1px solid var(--line);border-radius:var(--r-m);width:100%;text-align:left}
-.list-row .big{font-family:var(--font-jp);font-size:27px;line-height:1;flex:0 0 auto;min-width:34px;text-align:center}
+.list-row .big{font-family:var(--font-learn);font-weight:600;font-size:27px;line-height:1;flex:0 0 auto;min-width:34px;text-align:center}
 .list-row .mid{flex:1;min-width:0}
 .list-row .mid b{display:block;font-size:14px;font-weight:600;line-height:1.3}
 .list-row .mid span{display:block;font-size:12px;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -299,7 +304,7 @@ ul{margin:0;padding:0;list-style:none}
 .s-prog i{flex:1;height:5px;border-radius:999px;background:#F2E9E5}
 .s-prog i.on{background:var(--sakura)}
 .s-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-xl);padding:26px 20px;box-shadow:var(--sh-2);text-align:center}
-.s-big{font-family:var(--font-jp);font-size:62px;line-height:1.1;font-weight:500;letter-spacing:.04em}
+.s-big{font-family:var(--font-learn);font-size:62px;line-height:1.1;font-weight:600;letter-spacing:.04em}
 .s-opt{display:flex;flex-direction:column;gap:9px;margin-top:18px}
 /* Ô đáp án: thẻ trắng sữa bo tròn, nổi nhẹ khi rê chuột; đúng → xanh bạc hà mềm, sai → hồng phấn (không đỏ gắt). */
 .opt{padding:15px 18px;border-radius:20px;border:1.5px solid #F3E3DF;font-size:15px;font-weight:500;text-align:left;color:var(--ink);
@@ -384,7 +389,7 @@ ul{margin:0;padding:0;list-style:none}
   background:linear-gradient(165deg,#FFF4F6 0%,#FFF9F3 100%);
   border:1px solid #FBE0E6;box-shadow:var(--sh-1);
 }
-.surprise .face{font-family:var(--font-jp);font-size:46px;line-height:1.15;margin:12px 0 4px}
+.surprise .face{font-family:var(--font-learn);font-weight:600;font-size:46px;line-height:1.15;margin:12px 0 4px}
 .surprise .yn{display:flex;gap:9px;margin-top:16px}
 .surprise .yn>button{flex:1}
 .reveal{margin-top:14px;border-radius:18px;padding:14px;text-align:left}
@@ -393,7 +398,7 @@ ul{margin:0;padding:0;list-style:none}
 .radar{display:flex;flex-direction:column;gap:9px}
 .radar-i{display:flex;align-items:center;gap:12px;width:100%;text-align:left;
   padding:13px;border-radius:var(--r-m);background:#fff;border:1px solid var(--line)}
-.radar-i .f{font-family:var(--font-jp);font-size:26px;min-width:40px;text-align:center;line-height:1}
+.radar-i .f{font-family:var(--font-learn);font-weight:600;font-size:26px;min-width:40px;text-align:center;line-height:1}
 .radar-i .b{flex:1;min-width:0}
 .radar-i .b b{display:block;font-size:14.5px}
 .radar-i .b .why{font-size:11.5px;color:var(--ink-3);margin-top:1px}
@@ -456,7 +461,7 @@ ul{margin:0;padding:0;list-style:none}
 .kana-read{font-size:11px;color:var(--ink-3)}
 @media (max-width:420px){.kana-row{grid-template-columns:1fr}.kana-row-label{margin-bottom:-2px}}
 .kcard{padding:13px 10px;border-radius:var(--r-m);background:#fff;border:1px solid var(--line);text-align:center}
-.kcard .big{font-family:var(--font-jp);font-size:34px;line-height:1.1;display:block}
+.kcard .big{font-family:var(--font-learn);font-weight:600;font-size:34px;line-height:1.1;display:block}
 .kcard b{display:block;font-size:12.5px;margin-top:5px}
 .kcard span{display:block;font-size:10.5px;color:var(--ink-3)}
 
@@ -485,7 +490,7 @@ ul{margin:0;padding:0;list-style:none}
   .grid.three{grid-template-columns:repeat(3,1fr)}
   .modes{grid-template-columns:repeat(4,1fr)}
   .kana-grid{grid-template-columns:repeat(10,1fr);gap:9px}
-  .kana-c .ch{font-size:25px}
+  .kana-c .ch{font-size:30px}
   .list-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 }
 @media (min-width:1200px){

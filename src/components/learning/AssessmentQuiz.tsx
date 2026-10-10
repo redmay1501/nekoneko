@@ -78,7 +78,7 @@ export function AssessmentQuiz({
             {question.audioText ? <AudioButton text={question.audioText} label={audioLabel} className="btn ghost sm" /> : null}
           </div>
           {question.prompt ? (
-            <p className={question.promptIsJapanese ? 'jp center' : 'center'}
+            <p className={question.promptIsJapanese ? 'jp glyph center' : 'center'}
               style={{ fontSize: question.promptIsJapanese ? 36 : 18, fontWeight: 600, margin: '14px 0' }}>
               {question.prompt}
             </p>

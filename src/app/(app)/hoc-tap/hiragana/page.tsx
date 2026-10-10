@@ -4,7 +4,8 @@ import { getLearnerContext } from '@/features/learning/learner-context';
 import { toIsoDate } from '@/lib/utils/dates';
 
 /** SC-14 · Hiragana — học → nghe → nhận diện → luyện viết → kiểm tra → gặp lại. */
-export default async function HiraganaPage() {
+export default async function HiraganaPage({ searchParams }: { searchParams: Promise<{ viet?: string }> }) {
+  const { viet } = await searchParams;
   const { catalog, memoryViews, now } = await getLearnerContext();
   const data = buildKanaPractice('hiragana', catalog.content.kana, memoryViews, toIsoDate(now));
   return (
@@ -14,7 +15,7 @@ export default async function HiraganaPage() {
         <span className="chip mint">{data.learnedCount}/{data.cells.length}</span>
       </div>
       <p className="soft sm" style={{ margin: '4px 0 12px' }}>Mỗi chữ đều có: học → nghe → nhận diện → luyện viết → kiểm tra → gặp lại.</p>
-      <KanaPractice data={data} />
+      <KanaPractice data={data} initialWriting={viet} />
     </>
   );
 }

@@ -70,9 +70,13 @@ export interface WritingPracticeData {
   others: Array<{ contentKey: ContentKey; character: string }>;
 }
 
-export function buildWritingPractice(catalog: KnowledgeCatalog, journeyDay: number): WritingPracticeData | null {
+/**
+ * Luyện viết Kanji: mặc định chữ mới nhất đã tới ngày học; `requested` (?chu=日, từ trang chi tiết Kanji) cho phép
+ * luyện BẤT KỲ Kanji N5 nào — người học chủ động, không bị khoá theo lộ trình.
+ */
+export function buildWritingPractice(catalog: KnowledgeCatalog, journeyDay: number, requested?: string): WritingPracticeData | null {
   const learnedKanji = catalog.content.kanji.filter((kanji) => kanji.day !== null && kanji.day <= journeyDay);
-  const focus = learnedKanji.at(-1);
+  const focus = catalog.content.kanji.find((kanji) => kanji.character === requested) ?? learnedKanji.at(-1);
   if (!focus) return null;
   return {
     focus,

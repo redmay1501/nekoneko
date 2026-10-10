@@ -864,3 +864,33 @@ a.dash-cta-blue:hover{transform:translateY(-1px);box-shadow:0 14px 26px rgba(90,
 @keyframes neko-hop{0%,100%{transform:translateY(0)}45%{transform:translateY(-9px)}}
 
 @media (prefers-reduced-motion:reduce){.motion-reveal,.daynode.motion-reveal{opacity:1;transform:none;transition:none}.today-neko,.pulse{animation:none}}
+
+/* ─── Thứ tự nét (StrokeOrder) — dữ liệu KanjiVG, ô 109 × 109 ─── */
+.stroke-order{display:flex;flex-direction:column;align-items:center;gap:8px;margin:0}
+.stroke-order-box{display:block;aspect-ratio:1/1;height:auto;background:#fff;border:1px solid var(--line);border-radius:18px}
+.stroke-order-box path{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.stroke-order-box .so-grid{stroke:#F3E9E5;stroke-width:.6;stroke-dasharray:2 2}
+.stroke-order-box .so-ghost path{stroke:#F1E8E4;stroke-width:5.5}
+.stroke-order-box .so-ink path{stroke:var(--ink);stroke-width:4.4}
+.stroke-order-box .so-ink path.so-drawing{stroke:#FF5B73;stroke-dasharray:1;stroke-dashoffset:1;animation:so-draw .8s ease-in-out .3s forwards}
+.stroke-order-box .so-start{fill:#FF5B73;opacity:.85}
+.stroke-order-box .so-labels text{font-family:var(--font-vi);font-size:7.5px;font-weight:700;fill:#B9A9A3}
+.stroke-order-box .so-labels text.on{fill:#FF5B73}
+.stroke-order-controls{display:flex;gap:6px;align-items:center;justify-content:center}
+.stroke-order-controls .btn{min-width:40px}
+.stroke-order-missing{padding:10px 0}
+@keyframes so-draw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.stroke-order-box .so-ink path.so-drawing{animation-duration:.01s;animation-delay:.4s}}
+
+/* ─── Luyện viết (WritingPad) ─── */
+.writing-layout{display:grid;gap:16px;justify-items:center}
+.writing-guide{display:flex;flex-direction:column;align-items:center}
+.writing-canvas{position:relative;width:min(300px,82vw);aspect-ratio:1/1;margin:0 auto 14px;border-radius:20px;border:2px dashed #EADFDA;background:#fff}
+.writing-canvas>svg,.writing-canvas>canvas,.writing-ghost-glyph{position:absolute;inset:0;width:100%;height:100%}
+.writing-canvas>canvas{touch-action:none;border-radius:20px}
+.writing-ghost path{fill:none;stroke:#F1E6E2;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+.writing-ghost-glyph{display:grid;place-items:center;font-size:170px;color:#F3EBE7;user-select:none}
+@media (min-width:760px){.writing-layout{grid-template-columns:auto auto;justify-content:center;align-items:start;gap:28px}}
+.writing-picker{display:flex;flex-wrap:wrap;gap:6px}
+.writing-picker .chip{font-size:18px;min-width:40px;justify-content:center;padding:6px 8px;cursor:pointer}
+.stroke-order-placeholder{height:44px}

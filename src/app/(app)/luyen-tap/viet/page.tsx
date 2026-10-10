@@ -1,6 +1,6 @@
 import { AudioButton } from '@/components/common/AudioButton';
 import { EmptyState } from '@/components/common/StateViews';
-import { KnowledgeChipButton } from '@/components/learning/KnowledgeChipButton';
+import Link from 'next/link';
 import { WritingPad } from '@/components/learning/WritingPad';
 import { DictationPractice } from '@/components/learning/DictationPractice';
 import { buildDictationPractice, buildWritingPractice } from '@/features/learning/skill-practice';
@@ -8,9 +8,10 @@ import { appDateKey } from '@/features/progress/recall-streak';
 import { getLearnerContext } from '@/features/learning/learner-context';
 
 /** SC-27 · Luyện viết — tay nhớ lâu hơn mắt. */
-export default async function WritingPage() {
+export default async function WritingPage({ searchParams }: { searchParams: Promise<{ chu?: string }> }) {
+  const { chu } = await searchParams;
   const { catalog, journeyDay, memoryViews, now } = await getLearnerContext();
-  const practice = buildWritingPractice(catalog, journeyDay);
+  const practice = buildWritingPractice(catalog, journeyDay, chu);
   const dictation = buildDictationPractice(catalog, memoryViews, journeyDay, appDateKey(now));
   return (
     <>
@@ -31,13 +32,15 @@ export default async function WritingPage() {
               <AudioButton text={practice.focus.character} />
             </div>
           </div>
-          <WritingPad character={practice.focus.character} reading={practice.focus.kunReading || practice.focus.onReading}
+          <WritingPad key={practice.focus.character} character={practice.focus.character} reading={practice.focus.kunReading || practice.focus.onReading}
             expectedStrokes={practice.focus.strokes ?? undefined} note={practice.focus.tip} />
           <div className="row wrap mt-3.5" style={{ gap: 7 }}>
             {practice.others.map((kanji) => (
-              <KnowledgeChipButton key={kanji.contentKey} contentKey={kanji.contentKey} className="chip jp" style={{ fontSize: 18, padding: '9px 13px' }}>
+              <Link key={kanji.contentKey} href={`/luyen-tap/viet?chu=${encodeURIComponent(kanji.character)}`} scroll={false}
+                className={`chip jp glyph ${kanji.character === practice.focus.character ? 'pink' : ''}`} style={{ fontSize: 18, padding: '9px 13px' }}
+                aria-current={kanji.character === practice.focus.character ? 'true' : undefined}>
                 {kanji.character}
-              </KnowledgeChipButton>
+              </Link>
             ))}
           </div>
         </>

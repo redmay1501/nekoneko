@@ -3,6 +3,7 @@ import type { MemoryStatus, MemoryView } from '@/features/memory/memory-types';
 import { hashToUnitInterval, pickDeterministic, shuffleDeterministic } from '@/lib/utils/deterministic-random';
 import { BASIC_KANA_COUNT } from './knowledge-filters';
 import { type ContentKey, toContentKey } from './knowledge-types';
+import { strokeCountOf } from './stroke-order';
 
 /** Dữ liệu cho màn Hiragana / Katakana: Học · Luyện viết · Luyện nghe · Kiểm tra. */
 
@@ -21,11 +22,21 @@ export interface KanaQuestion {
   options: string[];
 }
 
+export interface KanaWritingChoice {
+  character: string;
+  romaji: string;
+  tip: string;
+  /** Số nét theo KanjiVG; undefined khi chưa có dữ liệu. */
+  strokes: number | undefined;
+}
+
 export interface KanaPracticeData {
   kind: KanaKind;
   cells: KanaCell[];
   learnedCount: number;
-  writing: { character: string; romaji: string; tip: string; strokes: number | undefined };
+  writing: KanaWritingChoice;
+  /** Mọi chữ đơn (cơ bản + âm đục; âm ghép viết từng chữ) — người học tự chọn chữ muốn luyện viết. */
+  writingChoices: KanaWritingChoice[];
   listening: KanaQuestion[];
   quiz: KanaQuestion[];
 }
@@ -34,21 +45,11 @@ const LISTENING_COUNT = 6;
 const QUIZ_COUNT = 8;
 const DISTRACTOR_COUNT = 3;
 
-const KANA_STROKES: Readonly<Record<string, number>> = {
-  あ: 3, い: 2, う: 2, え: 2, お: 3, か: 3, き: 4, く: 1, け: 3, こ: 2,
-  さ: 3, し: 1, す: 2, せ: 3, そ: 1, た: 4, ち: 2, つ: 1, て: 1, と: 2,
-  な: 4, に: 3, ぬ: 2, ね: 2, の: 1, は: 3, ひ: 1, ふ: 4, へ: 1, ほ: 4,
-  ま: 3, み: 2, む: 3, め: 2, も: 3, や: 3, ゆ: 2, よ: 2, ら: 2, り: 2,
-  る: 1, れ: 2, ろ: 1, わ: 2, を: 3, ん: 1,
-  ア: 2, イ: 2, ウ: 3, エ: 3, オ: 3, カ: 2, キ: 3, ク: 2, ケ: 3, コ: 2,
-  サ: 3, シ: 3, ス: 2, セ: 2, ソ: 2, タ: 3, チ: 3, ツ: 3, テ: 3, ト: 2,
-  ナ: 2, ニ: 2, ヌ: 2, ネ: 4, ノ: 1, ハ: 2, ヒ: 2, フ: 1, ヘ: 1, ホ: 4,
-  マ: 2, ミ: 3, ム: 2, メ: 2, モ: 3, ヤ: 2, ユ: 2, ヨ: 2, ラ: 2, リ: 2,
-  ル: 2, レ: 1, ロ: 3, ワ: 2, ヲ: 3, ン: 2,
-};
-
 export function buildKanaPractice(kind: KanaKind, kana: readonly KanaContent[], views: ReadonlyMap<ContentKey, MemoryView>, seed: string): KanaPracticeData {
   const characterOf = (entry: KanaContent) => (kind === 'hiragana' ? entry.hiragana : entry.katakana);
+  const writingChoiceOf = (entry: KanaContent): KanaWritingChoice => ({
+    character: characterOf(entry), romaji: entry.romaji, tip: entry.tip, strokes: strokeCountOf(characterOf(entry)),
+  });
   const cells = kana.map((entry) => {
     const contentKey = toContentKey(kind, entry.id);
     return { contentKey, character: characterOf(entry), romaji: entry.romaji, status: views.get(contentKey)?.status ?? 'new' };
@@ -80,7 +81,8 @@ export function buildKanaPractice(kind: KanaKind, kana: readonly KanaContent[], 
     kind,
     cells,
     learnedCount: cells.filter((cell) => cell.status !== 'new').length,
-    writing: { character: characterOf(writingKana), romaji: writingKana.romaji, tip: writingKana.tip, strokes: KANA_STROKES[characterOf(writingKana)] },
+    writing: writingChoiceOf(writingKana),
+    writingChoices: kana.filter((entry) => [...characterOf(entry)].length === 1).map(writingChoiceOf),
     listening,
     quiz,
   };

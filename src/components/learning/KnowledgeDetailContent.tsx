@@ -8,6 +8,22 @@ import type { KnowledgeDetailView } from '@/features/learning/knowledge-detail';
 import { toContentKey } from '@/features/learning/knowledge-types';
 import type { ChainNode } from '@/features/learning/knowledge-presenter';
 import { KnowledgeChipButton } from './KnowledgeChipButton';
+import { StrokeOrder } from './StrokeOrder';
+import { strokeOrderCharacters } from '@/features/learning/stroke-order';
+
+/** Thứ tự nét cho mọi chữ có dữ liệu trong mặt chữ (âm ghép きゃ → き và ゃ). */
+function StrokeOrderSection({ face }: { face: string }) {
+  const characters = strokeOrderCharacters(face);
+  if (!characters.length) return <p className="tiny muted center mt-3">Chữ này chưa có dữ liệu thứ tự nét.</p>;
+  return (
+    <section className="card tight mt-3" aria-label="Thứ tự nét">
+      <b className="sm">✍️ Thứ tự nét</b>
+      <div className="row wrap mt-2.5" style={{ justifyContent: 'center', gap: 16 }}>
+        {characters.map((character, index) => <StrokeOrder key={`${character}-${index}`} character={character} size={characters.length > 1 ? 150 : 190} />)}
+      </div>
+    </section>
+  );
+}
 
 /**
  * Nội dung chi tiết một kiến thức (prototype openDetail).
@@ -73,7 +89,8 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
   switch (item.type) {
     case 'hiragana':
     case 'katakana': {
-      const writingHref = item.type === 'hiragana' ? '/hoc-tap/hiragana' : '/hoc-tap/katakana';
+      const writingPage = item.type === 'hiragana' ? '/hoc-tap/hiragana' : '/hoc-tap/katakana';
+      const writingHref = [...item.face].length === 1 ? `${writingPage}?viet=${encodeURIComponent(item.face)}` : writingPage;
       return (
         <>
           <div className="center">
@@ -84,6 +101,7 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
               <Link className="btn ghost sm" href={writingHref}>✍️ Luyện viết</Link>
             </div>
           </div>
+          <StrokeOrderSection face={item.face} />
           <TipCard tip={item.content.tip} />
           {statusCard}
           <p className="tiny muted center mt-2.5">{item.day ? <>Học vào <DayLink day={item.day} /> · </> : null}chữ số {item.id}/104</p>
@@ -122,6 +140,8 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
             </div>
             <AudioButton text={speechTextFor(item)} />
           </div>
+          <StrokeOrderSection face={item.face} />
+          <p className="center mt-2"><Link className="btn ghost sm" href={`/luyen-tap/viet?chu=${encodeURIComponent(item.face)}`}>✍️ Luyện viết chữ này</Link></p>
           {kanjiVisualAssetsOf(item.id).map((asset) => asset.imageUrl ? (
             <figure className="card tight mt-3" key={`${asset.assetKind}-${asset.imageUrl}`}>
               {/* eslint-disable-next-line @next/next/no-img-element -- local curated learning asset; supports SVG stroke sequences and raster mnemonics. */}

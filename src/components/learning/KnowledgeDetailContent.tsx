@@ -9,6 +9,7 @@ import type { ChainNode } from '@/features/learning/knowledge-presenter';
 import { KnowledgeChipButton } from './KnowledgeChipButton';
 import { StrokeOrder } from './StrokeOrder';
 import { strokeOrderCharacters } from '@/features/learning/stroke-order';
+import { canRomanize, kanjiReadingRomaji, patternRomaji, sentenceRomaji, vocabularyRomaji } from '@/lib/utils/romaji';
 
 /** Thứ tự nét cho mọi chữ có dữ liệu trong mặt chữ (âm ghép きゃ → き và ゃ). */
 function StrokeOrderSection({ face }: { face: string }) {
@@ -143,8 +144,14 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
             </figure>
           ) : null)}
           <div className="grid two mt-3.5">
-            <div className="card tight"><span className="tiny muted">Âm On 音</span><p className="jp" style={{ fontSize: 17 }}>{item.content.onReading || '—'}</p></div>
-            <div className="card tight"><span className="tiny muted">Âm Kun 訓</span><p className="jp" style={{ fontSize: 17 }}>{item.content.kunReading || '—'}</p></div>
+            <div className="card tight">
+              <span className="tiny muted">Âm On 音</span><p className="jp" style={{ fontSize: 17 }}>{item.content.onReading || '—'}</p>
+              {item.content.onReading ? <p className="romaji sm">{kanjiReadingRomaji(item.content.onReading, '')}</p> : null}
+            </div>
+            <div className="card tight">
+              <span className="tiny muted">Âm Kun 訓</span><p className="jp" style={{ fontSize: 17 }}>{item.content.kunReading || '—'}</p>
+              {item.content.kunReading ? <p className="romaji sm">{kanjiReadingRomaji('', item.content.kunReading)}</p> : null}
+            </div>
           </div>
           <TipCard tip={item.content.tip} />
           <div className="sec-h" style={{ margin: '16px 2px 7px' }}><h2 style={{ fontSize: 14 }}>Từ ghép thường gặp</h2></div>
@@ -171,7 +178,8 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
           <div className="row" style={{ gap: 14 }}>
             <div style={{ flex: 1 }}>
               <div className="jp glyph" style={{ fontSize: 42, lineHeight: 1.1 }}>{item.face}</div>
-              <p className="jp soft mt-1">{item.content.kana}</p>
+              {item.content.kanji ? <p className="jp soft mt-1">{item.content.kana}</p> : null}
+              <p className="romaji">{vocabularyRomaji(item.content)}</p>
               <h2 className="mt-2">{item.content.meaning}</h2>
             </div>
             {vocabularyImageOf(item.id) ? (
@@ -203,7 +211,8 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
       return (
         <>
           <div className="chip lav">{item.content.lesson}</div>
-          <h2 className="jp" style={{ fontSize: 26, margin: '12px 0 6px' }}>{item.content.pattern}</h2>
+          <h2 className="jp" style={{ fontSize: 26, margin: '12px 0 2px' }}>{item.content.pattern}</h2>
+          {patternRomaji(item.content.pattern) ? <p className="romaji mb-1.5">{patternRomaji(item.content.pattern)}</p> : <div className="mb-1.5" />}
           <p className="soft">{item.content.usage}</p>
           {item.content.whenToUse ? <p className="sm mt-2"><b>Khi nào dùng?</b> {item.content.whenToUse}</p> : null}
           {[
@@ -214,6 +223,7 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
               <div className="between"><b className="sm">Ví dụ {index + 1}</b><AudioButton text={example.jp} /></div>
               <p className="jp mt-1.5" style={{ fontSize: 18 }}>{example.jp}</p>
               {example.reading && example.reading !== example.jp ? <p className="jp sm muted">{example.reading}</p> : null}
+              {canRomanize(example.reading || example.jp) ? <p className="romaji sm">{sentenceRomaji(example.reading || example.jp)}</p> : null}
               <p className="sm soft mt-1">{example.vi}</p>
             </div>
           ))}

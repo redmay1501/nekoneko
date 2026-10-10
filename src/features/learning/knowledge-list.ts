@@ -54,4 +54,6 @@ export interface KnowledgeListRowData {
   faceSize?: number;
   /** Ngữ pháp không có mặt chữ lớn — tiêu đề là mẫu câu. */
   hideFace?: boolean;
+  /** Cách đọc bằng chữ Latinh (Hepburn) cho người mới — dòng nhỏ dưới cách đọc kana. */
+  romaji?: string;
 }

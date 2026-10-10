@@ -1,6 +1,9 @@
 import { KnowledgeChipButton } from '@/components/learning/KnowledgeChipButton';
 import { DayVocabularyList } from './DayVocabularyList';
+import { DayWritingPractice, type DayWritingCharacter } from './DayWritingPractice';
 import { KanaLessonTable } from './KanaLessonTable';
+import { hasStrokeOrder } from '@/features/learning/stroke-order';
+import { canRomanize, sentenceRomaji } from '@/lib/utils/romaji';
 import { primaryRadicalGlyph } from '@/features/learning/knowledge-catalog';
 import { toContentKey } from '@/features/learning/knowledge-types';
 import type { DayPlanView } from '@/features/roadmap/day-plan';
@@ -69,6 +72,7 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
         </div>
       ) : null}
       {plan.kanaLesson ? <div className="mt-2.5"><KanaLessonTable lesson={plan.kanaLesson} /></div> : null}
+      {writingCharacters(plan).length ? <DayWritingPractice characters={writingCharacters(plan)} /> : null}
       {knowledge.grammar.length ? (
         <div className="stack mt-2.5" style={{ gap: 7 }}>
           {knowledge.grammar.map((pattern) => (
@@ -78,6 +82,7 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
                 <span>{pattern.usage}</span>
                 <span className="jp" style={{ color: 'var(--ink)' }}>{pattern.exampleJp}</span>
                 {pattern.exampleReading && pattern.exampleReading !== pattern.exampleJp ? <span className="jp tiny muted">{pattern.exampleReading}</span> : null}
+                {canRomanize(pattern.exampleReading || pattern.exampleJp) ? <span className="romaji">{sentenceRomaji(pattern.exampleReading || pattern.exampleJp)}</span> : null}
                 <span>{pattern.exampleVi}</span>
               </span>
               <span className="end"><span className="tiny muted" aria-hidden="true">→</span></span>
@@ -90,4 +95,23 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
       ) : null}
     </>
   );
+}
+
+/** Chữ của ngày để xem cách viết: chữ cái (âm ghép tách từng chữ: きゃ → き, ゃ) và Kanji — chỉ chữ có dữ liệu nét. */
+function writingCharacters(plan: DayPlanView): DayWritingCharacter[] {
+  const seen = new Set<string>();
+  const result: DayWritingCharacter[] = [];
+  const add = (character: string, writingHref: string) => {
+    if (seen.has(character) || !hasStrokeOrder(character)) return;
+    seen.add(character);
+    result.push({ character, writingHref });
+  };
+  for (const row of plan.kanaLesson?.rows ?? []) {
+    for (const cell of row.cells) {
+      const page = cell.item.type === 'katakana' ? '/hoc-tap/katakana' : '/hoc-tap/hiragana';
+      for (const character of cell.item.face) add(character, `${page}?viet=${encodeURIComponent(character)}`);
+    }
+  }
+  for (const kanji of plan.knowledge.kanji) add(kanji.character, `/luyen-tap/viet?chu=${encodeURIComponent(kanji.character)}`);
+  return result;
 }

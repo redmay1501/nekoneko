@@ -1,6 +1,12 @@
 'use client';
 
 import { AudioButton } from '@/components/common/AudioButton';
+import { StrokeOrder } from '@/components/learning/StrokeOrder';
+import { strokeOrderCharacters } from '@/features/learning/stroke-order';
+
+const WRITABLE_TYPES = new Set(['hiragana', 'katakana', 'kanji']);
+/** "kanji-12" → "kanji". */
+const contentTypeOf = (contentKey: string) => contentKey.slice(0, contentKey.lastIndexOf('-'));
 import {
   DISCOVER_ACKNOWLEDGED,
   SELF_REPORT_ANSWERS,
@@ -106,7 +112,16 @@ export function DiscoverStepView({ step, isBusy, onAcknowledge }: { step: Discov
       ) : null}
       <div className="s-big" style={{ margin: '16px 0 6px', ...faceSize(card.face, 58, 38) }}>{card.face}</div>
       <p className="jp soft">{card.reading}</p>
+      {card.romaji ? <p className="romaji">{card.romaji}</p> : null}
       <h3 style={{ margin: '8px 0 10px' }}>{card.meaning}</h3>
+      {/* Chữ cái và Kanji: học cách viết ngay khi gặp chữ mới (thứ tự nét, xem từng nét). */}
+      {WRITABLE_TYPES.has(contentTypeOf(step.contentKey)) && strokeOrderCharacters(card.face).length ? (
+        <div className="row wrap discover-strokes" style={{ justifyContent: 'center', gap: 14 }}>
+          {strokeOrderCharacters(card.face).map((character, index) => (
+            <StrokeOrder key={`${character}-${index}`} character={character} size={strokeOrderCharacters(card.face).length > 1 ? 130 : 160} />
+          ))}
+        </div>
+      ) : null}
       {card.detailLines.filter(Boolean).map((line, index) => (
         <p key={index} className={`sm ${index === 0 && card.detailLines.length > 1 ? 'soft' : 'mt-2'}`}>{line}</p>
       ))}

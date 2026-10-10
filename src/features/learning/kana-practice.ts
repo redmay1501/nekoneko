@@ -4,6 +4,7 @@ import { hashToUnitInterval, pickDeterministic, shuffleDeterministic } from '@/l
 import { BASIC_KANA_COUNT } from './knowledge-filters';
 import { type ContentKey, toContentKey } from './knowledge-types';
 import { strokeCountOf } from './stroke-order';
+import { kanaToRomaji } from '@/lib/utils/romaji';
 
 /** Dữ liệu cho màn Hiragana / Katakana: Học · Luyện viết · Luyện nghe · Kiểm tra. */
 
@@ -35,7 +36,7 @@ export interface KanaPracticeData {
   cells: KanaCell[];
   learnedCount: number;
   writing: KanaWritingChoice;
-  /** Mọi chữ đơn (cơ bản + âm đục; âm ghép viết từng chữ) — người học tự chọn chữ muốn luyện viết. */
+  /** Mọi chữ đơn (cơ bản, âm đục) và chữ nhỏ của âm ghép (ゃ ゅ ょ) — người học tự chọn chữ muốn luyện viết. */
   writingChoices: KanaWritingChoice[];
   listening: KanaQuestion[];
   quiz: KanaQuestion[];
@@ -82,8 +83,19 @@ export function buildKanaPractice(kind: KanaKind, kana: readonly KanaContent[], 
     cells,
     learnedCount: cells.filter((cell) => cell.status !== 'new').length,
     writing: writingChoiceOf(writingKana),
-    writingChoices: kana.filter((entry) => [...characterOf(entry)].length === 1).map(writingChoiceOf),
+    writingChoices: writingChoicesOf(kana, characterOf, writingChoiceOf),
     listening,
     quiz,
   };
+}
+
+function writingChoicesOf(
+  kana: readonly KanaContent[], characterOf: (entry: KanaContent) => string, choiceOf: (entry: KanaContent) => KanaWritingChoice,
+): KanaWritingChoice[] {
+  const singles = kana.filter((entry) => [...characterOf(entry)].length === 1).map(choiceOf);
+  const known = new Set(singles.map((choice) => choice.character));
+  const smalls = [...new Set(kana.flatMap((entry) => [...characterOf(entry)]))]
+    .filter((character) => !known.has(character) && strokeCountOf(character) !== undefined)
+    .map((character) => ({ character, romaji: `${kanaToRomaji(character)} (nhỏ)`, tip: 'Chữ nhỏ — viết bằng nửa cỡ, sát chữ trước.', strokes: strokeCountOf(character) }));
+  return [...singles, ...smalls];
 }

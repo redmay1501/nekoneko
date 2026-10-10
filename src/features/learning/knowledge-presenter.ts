@@ -1,3 +1,4 @@
+import { canRomanize, kanjiReadingRomaji, sentenceRomaji, vocabularyRomaji } from '@/lib/utils/romaji';
 import { firstMeaning } from '@/lib/utils/text';
 import { vocabularyImageOf } from './vocabulary-images';
 import { type ContextExample, type KanaExampleWord, kanaExampleWords, pickContextExample } from './context-index';
@@ -36,6 +37,8 @@ export interface DiscoverCard {
   /** Câu nối kiến thức mới vào thứ đã học — "Nó mang bộ 日 bạn đã học ngày 17". */
   bridgeText: string | null;
   audioText: string;
+  /** Cách đọc bằng chữ Latinh cho người mới (chữ cái thì `reading` đã là romaji nên bỏ trống). */
+  romaji?: string;
   /** Câu ví dụ có kiến thức này — kèm thứ người học ĐÃ GẶP trong câu (kiến thức cũ quay lại). */
   example?: ContextExample | null;
   /** Ảnh minh hoạ (chỉ danh từ cụ thể có icon khớp nghĩa). */
@@ -87,6 +90,7 @@ function buildBaseDiscoverCard(item: KnowledgeItem, catalog: KnowledgeCatalog, j
       const isPrimary = Boolean(radical && radicals[0]?.id === radical.id);
       return {
         ...base,
+        romaji: kanjiReadingRomaji(item.content.onReading, item.content.kunReading),
         detailLines: [`${item.content.hanViet} · ${item.content.onReading}・${item.content.kunReading || '—'}`, item.content.tip],
         relatedChips: [],
         bridgeText: radical
@@ -100,6 +104,7 @@ function buildBaseDiscoverCard(item: KnowledgeItem, catalog: KnowledgeCatalog, j
       const knownKanji = kanjiInVocabulary(catalog, item.content).filter((kanji) => (kanji.day ?? 99) <= journeyDay);
       return {
         ...base,
+        romaji: vocabularyRomaji(item.content),
         detailLines: [item.content.tip],
         relatedChips: knownKanji.map((kanji) => ({ face: kanji.character, label: kanji.meaning.toLowerCase() })),
         bridgeText: knownKanji[0]
@@ -119,6 +124,7 @@ function buildBaseDiscoverCard(item: KnowledgeItem, catalog: KnowledgeCatalog, j
         ...base,
         // Chế độ HỌC: câu ví dụ kèm cách đọc. (Câu hỏi kiểm tra — Dùng thử — không hiện cách đọc.)
         detailLines: [item.content.usage, item.content.exampleJp, item.content.exampleReading, item.content.exampleVi],
+        romaji: canRomanize(item.content.exampleReading || item.content.exampleJp) ? sentenceRomaji(item.content.exampleReading || item.content.exampleJp) : undefined,
         relatedChips: [],
         bridgeText: null,
         audioText: item.content.exampleJp,

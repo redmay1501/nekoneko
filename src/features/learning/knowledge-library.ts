@@ -3,6 +3,7 @@ import type { KnowledgeListRowData } from './knowledge-list';
 import { type KnowledgeCatalog, itemsOfType } from './knowledge-catalog';
 import { kanjiContainingRadical } from './knowledge-relations';
 import type { ContentKey } from './knowledge-types';
+import { kanjiReadingRomaji, patternRomaji, vocabularyRomaji } from '@/lib/utils/romaji';
 
 /**
  * Dựng các dòng cho bốn kho kiến thức (Bộ thủ · Kanji · Từ vựng · Ngữ pháp).
@@ -26,14 +27,15 @@ export function radicalRows(catalog: KnowledgeCatalog, views: Views): KnowledgeL
 export function kanjiRows(catalog: KnowledgeCatalog, views: Views): KnowledgeListRowData[] {
   return itemsOfType(catalog, 'kanji').map((item) => ({
     contentKey: item.key, face: item.face, title: `${item.content.hanViet} · ${item.content.meaning}`,
-    subtitle: `${item.content.onReading} ・ ${item.content.kunReading || '—'}`, ...memoryOf(views, item.key),
+    subtitle: `${item.content.onReading} ・ ${item.content.kunReading || '—'}`,
+    romaji: kanjiReadingRomaji(item.content.onReading, item.content.kunReading), ...memoryOf(views, item.key),
   }));
 }
 
 export function vocabularyRows(catalog: KnowledgeCatalog, views: Views) {
   return itemsOfType(catalog, 'vocabulary').map((item) => ({
     contentKey: item.key, face: item.face, title: item.content.meaning, subtitle: item.content.kana,
-    lesson: item.content.lesson, faceSize: 22, ...memoryOf(views, item.key),
+    romaji: vocabularyRomaji(item.content), lesson: item.content.lesson, faceSize: 22, ...memoryOf(views, item.key),
   }));
 }
 
@@ -48,7 +50,7 @@ export function grammarGroups(catalog: KnowledgeCatalog, views: Views): GrammarL
     const rows = groups.get(item.content.lesson) ?? [];
     rows.push({
       contentKey: item.key, face: item.face, title: item.content.pattern, subtitle: item.content.exampleVi,
-      hideFace: true, showStatusLabel: true, ...memoryOf(views, item.key),
+      hideFace: true, showStatusLabel: true, romaji: patternRomaji(item.content.pattern), ...memoryOf(views, item.key),
     });
     groups.set(item.content.lesson, rows);
   }

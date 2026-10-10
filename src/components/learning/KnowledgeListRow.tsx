@@ -38,7 +38,10 @@ function RowBody({ row, presentation }: { row: KnowledgeListRowData; presentatio
       {row.hideFace ? null : <span className="big jp" style={row.faceSize ? { fontSize: row.faceSize } : undefined}>{row.face}</span>}
       <span className="mid">
         <b className={row.hideFace ? 'jp' : undefined} style={row.hideFace ? { fontSize: 15 } : undefined}>{row.title}</b>
+        {/* Romaji ngay dưới phần tiếng Nhật: dưới mẫu câu (ngữ pháp), dưới cách đọc kana (Kanji, từ vựng). */}
+        {row.hideFace && row.romaji ? <span className="romaji">{row.romaji}</span> : null}
         <span className={row.hideFace ? undefined : 'jp'}>{row.subtitle}</span>
+        {!row.hideFace && row.romaji ? <span className="romaji">{row.romaji}</span> : null}
       </span>
       <span className="end">
         <span className="tiny" style={{ color: presentation.color }} title={presentation.label}>

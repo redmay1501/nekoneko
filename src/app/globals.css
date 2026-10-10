@@ -25,8 +25,10 @@
   --sh-3:0 14px 40px rgba(96,72,66,.10);
   --font-vi:'Nunito',system-ui,-apple-system,sans-serif;
   --font-jp:'Zen Maru Gothic','Hiragino Sans','Yu Gothic',sans-serif;
-  /* Chữ đang học (bảng chữ, chữ lớn trong phiên, trang chi tiết): đúng hình nét sách giáo khoa. */
-  --font-learn:'Klee One','Hiragino Sans','Yu Gothic',sans-serif;
+  /* Chữ đang học (bảng chữ, chữ lớn trong phiên, trang chi tiết): font gothic đánh máy của hệ điều hành —
+     Hiragino trên iPhone / iPad / Mac, Yu Gothic trên Windows, Noto Sans CJK trên Android. Nét thẳng, chuẩn,
+     không bo tròn (Zen Maru Gothic vẽ そ dạng biến thể và làm mềm ソ ン シ ツ). Không cần tải font. */
+  --font-learn:'Hiragino Sans','Hiragino Kaku Gothic ProN','Yu Gothic UI','Yu Gothic','Meiryo','Noto Sans JP','Noto Sans CJK JP',sans-serif;
   --sidebar:232px;
   --safe-t:env(safe-area-inset-top,0px);
   --safe-b:env(safe-area-inset-bottom,0px);
@@ -39,7 +41,7 @@ body{
   font-weight:400;-webkit-font-smoothing:antialiased;
 }
 .jp{font-family:var(--font-jp);font-weight:500}
-.glyph,.kana-face{font-family:var(--font-learn);font-weight:600}
+.glyph,.kana-face{font-family:var(--font-learn);font-weight:500}
 h1,h2,h3,h4{margin:0;font-weight:700;line-height:1.25;letter-spacing:-.01em}
 h1{font-size:26px} h2{font-size:21px} h3{font-size:17px} h4{font-size:15px}
 p{margin:0}
@@ -274,7 +276,7 @@ ul{margin:0;padding:0;list-style:none}
 /* ============ KNOWLEDGE LISTS ============ */
 .kana-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
 .kana-c{aspect-ratio:1/1;border-radius:14px;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;position:relative;padding:2px}
-.kana-c .ch{font-family:var(--font-learn);font-size:24px;font-weight:600;line-height:1}
+.kana-c .ch{font-family:var(--font-learn);font-size:24px;font-weight:500;line-height:1}
 .kana-c .ro{font-size:9.5px;color:var(--ink-3);letter-spacing:.03em}
 .kana-c.s-strong{background:#F4FBF6;border-color:#CFEBD6}
 .kana-c.s-weak{background:#FFF8EC;border-color:#F6E2BF}
@@ -284,7 +286,7 @@ ul{margin:0;padding:0;list-style:none}
 .kana-c .dot{position:absolute;top:6px;right:6px;width:6px;height:6px;border-radius:50%}
 
 .list-row{display:flex;align-items:center;gap:12px;padding:12px 13px;background:#fff;border:1px solid var(--line);border-radius:var(--r-m);width:100%;text-align:left}
-.list-row .big{font-family:var(--font-learn);font-weight:600;font-size:27px;line-height:1;flex:0 0 auto;min-width:34px;text-align:center}
+.list-row .big{font-family:var(--font-learn);font-weight:500;font-size:27px;line-height:1;flex:0 0 auto;min-width:34px;text-align:center}
 .list-row .mid{flex:1;min-width:0}
 .list-row .mid b{display:block;font-size:14px;font-weight:600;line-height:1.3}
 .list-row .mid span{display:block;font-size:12px;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -304,7 +306,7 @@ ul{margin:0;padding:0;list-style:none}
 .s-prog i{flex:1;height:5px;border-radius:999px;background:#F2E9E5}
 .s-prog i.on{background:var(--sakura)}
 .s-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-xl);padding:26px 20px;box-shadow:var(--sh-2);text-align:center}
-.s-big{font-family:var(--font-learn);font-size:62px;line-height:1.1;font-weight:600;letter-spacing:.04em}
+.s-big{font-family:var(--font-learn);font-size:62px;line-height:1.1;font-weight:500;letter-spacing:.04em}
 .s-opt{display:flex;flex-direction:column;gap:9px;margin-top:18px}
 /* Ô đáp án: thẻ trắng sữa bo tròn, nổi nhẹ khi rê chuột; đúng → xanh bạc hà mềm, sai → hồng phấn (không đỏ gắt). */
 .opt{padding:15px 18px;border-radius:20px;border:1.5px solid #F3E3DF;font-size:15px;font-weight:500;text-align:left;color:var(--ink);
@@ -372,8 +374,12 @@ ul{margin:0;padding:0;list-style:none}
   padding:10px 18px calc(22px + var(--safe-b));
   box-shadow:0 -10px 40px rgba(96,72,66,.18);
   transform:translateY(102%);transition:transform .26s cubic-bezier(.3,.9,.3,1);
-  max-height:88vh;overflow-y:auto;
+  max-height:88vh;max-height:88dvh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
 }
+/* Nút ✕ luôn thấy ở góc trên khay, kể cả khi đã cuộn xuống. */
+.sheet-close{position:sticky;top:0;z-index:2;float:right;margin:-4px -6px 0 8px;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);
+  background:#fff;color:var(--ink-2);font-size:16px;line-height:1;display:grid;place-items:center;cursor:pointer;box-shadow:0 2px 8px rgba(96,72,66,.08)}
+html.sheet-open,html.sheet-open body{overflow:hidden}
 .sheet.on{transform:translateY(0)}
 /* Máy tính / iPad ngang: khay là thẻ nổi gọn ở góc (không trải hết bề ngang — xem kỹ một bộ thủ không cần cả màn hình). */
 @media (min-width:900px){.sheet{left:auto;right:24px;bottom:24px;width:min(460px,calc(100vw - 48px));border-radius:24px;max-height:min(80vh,720px);transform:translateY(calc(100% + 40px))}.sheet.on{transform:translateY(0)}}
@@ -389,7 +395,7 @@ ul{margin:0;padding:0;list-style:none}
   background:linear-gradient(165deg,#FFF4F6 0%,#FFF9F3 100%);
   border:1px solid #FBE0E6;box-shadow:var(--sh-1);
 }
-.surprise .face{font-family:var(--font-learn);font-weight:600;font-size:46px;line-height:1.15;margin:12px 0 4px}
+.surprise .face{font-family:var(--font-learn);font-weight:500;font-size:46px;line-height:1.15;margin:12px 0 4px}
 .surprise .yn{display:flex;gap:9px;margin-top:16px}
 .surprise .yn>button{flex:1}
 .reveal{margin-top:14px;border-radius:18px;padding:14px;text-align:left}
@@ -398,7 +404,7 @@ ul{margin:0;padding:0;list-style:none}
 .radar{display:flex;flex-direction:column;gap:9px}
 .radar-i{display:flex;align-items:center;gap:12px;width:100%;text-align:left;
   padding:13px;border-radius:var(--r-m);background:#fff;border:1px solid var(--line)}
-.radar-i .f{font-family:var(--font-learn);font-weight:600;font-size:26px;min-width:40px;text-align:center;line-height:1}
+.radar-i .f{font-family:var(--font-learn);font-weight:500;font-size:26px;min-width:40px;text-align:center;line-height:1}
 .radar-i .b{flex:1;min-width:0}
 .radar-i .b b{display:block;font-size:14.5px}
 .radar-i .b .why{font-size:11.5px;color:var(--ink-3);margin-top:1px}
@@ -461,7 +467,7 @@ ul{margin:0;padding:0;list-style:none}
 .kana-read{font-size:11px;color:var(--ink-3)}
 @media (max-width:420px){.kana-row{grid-template-columns:1fr}.kana-row-label{margin-bottom:-2px}}
 .kcard{padding:13px 10px;border-radius:var(--r-m);background:#fff;border:1px solid var(--line);text-align:center}
-.kcard .big{font-family:var(--font-learn);font-weight:600;font-size:34px;line-height:1.1;display:block}
+.kcard .big{font-family:var(--font-learn);font-weight:500;font-size:34px;line-height:1.1;display:block}
 .kcard b{display:block;font-size:12.5px;margin-top:5px}
 .kcard span{display:block;font-size:10.5px;color:var(--ink-3)}
 
@@ -907,7 +913,7 @@ a.dash-cta-blue:hover{transform:translateY(-1px);box-shadow:0 14px 26px rgba(90,
 @media (min-width:900px){.focus-select-bar{bottom:16px}}
 .session-sound{min-width:40px;padding:6px 10px;font-size:16px}
 .session-audio-note{margin:0 0 10px;padding:8px 11px;border-radius:12px;background:#FFF8EC;border:1px solid #F6E2BF;color:var(--ink-2)}
-.is-speaking{box-shadow:0 0 0 3px rgba(255,91,115,.25);animation:speak-pulse 1s ease-in-out infinite}@keyframes speak-pulse{50%{box-shadow:0 0 0 6px rgba(255,91,115,.12)}}@media (prefers-reduced-motion:reduce){.is-speaking{animation:none}}
+.is-speaking{border-color:var(--sakura);background:#FFF0F3}
 
 /* ─── Trò chơi Ghép thẻ ─── */
 .match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}

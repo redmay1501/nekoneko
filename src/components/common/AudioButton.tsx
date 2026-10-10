@@ -21,7 +21,6 @@ export function AudioButton({ text, label = 'Nghe phát âm', className = 'btn g
       className={`${className}${isSpeaking ? ' is-speaking' : ''}`}
       onClick={() => speak(text)}
       aria-label={label}
-      aria-busy={isSpeaking}
       title={unavailable ? 'Máy này chưa có giọng đọc tiếng Nhật' : label}
     >
       <EmojiIcon emoji="🔊" size={20} />

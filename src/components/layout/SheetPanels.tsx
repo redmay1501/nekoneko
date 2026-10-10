@@ -98,9 +98,6 @@ export function SheetPanels({
       ) : null}
       {activeSheet.kind === 'knowledge' ? <KnowledgeSheet key={activeSheet.contentKey} contentKey={activeSheet.contentKey} /> : null}
       {activeSheet.kind === 'search' ? <SearchSheet query={activeSheet.query} /> : null}
-      {activeSheet.kind === 'knowledge' || activeSheet.kind === 'search' ? (
-        <button type="button" className="btn quiet block sm mt-2.5" onClick={onClose}>Đóng</button>
-      ) : null}
     </>
   );
 }

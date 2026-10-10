@@ -1,7 +1,8 @@
 import strokeOrderIndex from '@content/seed/stroke-order.json';
 
 /**
- * Thứ tự nét viết — dữ liệu KanjiVG (© Ulrich Apel, CC BY-SA 3.0), tải bằng scripts/fetch-stroke-order.mjs.
+ * Thứ tự nét viết — dữ liệu KanjiVG (© Ulrich Apel, CC BY-SA 3.0; ghi nguồn ở Cài đặt và public/strokes/LICENSE.txt),
+ * tải bằng scripts/fetch-stroke-order.mjs.
  *
  * Mục lục (content/seed/stroke-order.json) cho biết chữ nào CÓ dữ liệu và bao nhiêu nét; hình từng nét nằm ở
  * public/strokes/<mã hex>.json, chỉ tải khi người học mở. Chữ không có trong mục lục → giao diện nói rõ
@@ -10,13 +11,6 @@ import strokeOrderIndex from '@content/seed/stroke-order.json';
 
 /** Hệ toạ độ của KanjiVG: ô vuông 109 × 109. */
 export const STROKE_ORDER_BOX = 109;
-
-export const STROKE_ORDER_CREDIT = {
-  label: 'KanjiVG',
-  url: 'https://kanjivg.tagaini.net',
-  license: 'CC BY-SA 3.0',
-  licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/',
-} as const;
 
 export interface StrokeOrderData {
   c: string;

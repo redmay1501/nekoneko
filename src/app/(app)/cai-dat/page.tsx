@@ -58,6 +58,10 @@ export default async function SettingsPage() {
         Câu ví dụ: <a className="link" href="https://tatoeba.org" target="_blank" rel="noreferrer">Tatoeba</a> và những người đóng góp
         {' '}(<a className="link" href="https://creativecommons.org/licenses/by/2.0/fr/" target="_blank" rel="noreferrer">CC BY 2.0 FR</a>)
       </p>
+      <p className="tiny muted center mt-1.5">
+        Thứ tự nét: <a className="link" href="https://kanjivg.tagaini.net" target="_blank" rel="noreferrer">KanjiVG</a> © Ulrich Apel
+        {' '}(<a className="link" href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noreferrer">CC BY-SA 3.0</a>)
+      </p>
     </>
   );
 }

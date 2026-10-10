@@ -39,7 +39,8 @@ const getServerVoices = () => NO_VOICES;
 /** Đọc một câu. Lỗi "not-allowed" = trình duyệt chặn tự phát (iOS / chưa chạm màn hình) → ghi nhớ để phát lại khi chạm. */
 function speakNow(text: string, voice: SpeechSynthesisVoice | null) {
   const store = useSpeechPreferenceStore.getState();
-  window.speechSynthesis.cancel();
+  // Chỉ huỷ khi đang đọc dở: gọi cancel() khi không có gì để huỷ làm Safari phát chậm (hoặc nuốt mất) câu kế tiếp.
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) window.speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = JAPANESE_LOCALE;
   utterance.rate = LEARNER_SPEECH_RATE;

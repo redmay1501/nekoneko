@@ -20,7 +20,7 @@ export default async function KatakanaPage({ searchParams }: { searchParams: Pro
       </div>
       <p className="soft sm" style={{ margin: '4px 0 12px' }}>Mỗi chữ đều có: học → nghe → nhận diện → luyện viết → kiểm tra → gặp lại.</p>
       <StudyActionBar actions={actions} unit="chữ" />
-      <KanaPractice data={data} initialWriting={viet} />
+      <KanaPractice key={viet ?? ''} data={data} initialWriting={viet} />
     </>
   );
 }

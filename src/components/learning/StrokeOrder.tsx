@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import {
-  STROKE_ORDER_BOX, STROKE_ORDER_CREDIT, type StrokeOrderData, hasStrokeOrder, loadStrokeOrder, strokeStartOf,
+  STROKE_ORDER_BOX, type StrokeOrderData, hasStrokeOrder, loadStrokeOrder, strokeStartOf,
 } from '@/features/learning/stroke-order';
 
 interface StrokeOrderProps {
@@ -103,11 +103,7 @@ export function StrokeOrder({ character, size = 200 }: StrokeOrderProps) {
         <button type="button" className="btn ghost sm" onClick={restart} aria-label="Xem lại từ đầu">↺</button>
         <button type="button" className="btn ghost sm" onClick={() => goTo(drawn + 1)} disabled={isDone} aria-label="Nét sau">›</button>
       </div>
-      <figcaption className="tiny muted center">
-        {isDone ? `${total} nét` : `Nét ${drawn + 1}/${total}`} · Nguồn:{' '}
-        <a href={STROKE_ORDER_CREDIT.url} target="_blank" rel="noreferrer">{STROKE_ORDER_CREDIT.label}</a>{' '}
-        (<a href={STROKE_ORDER_CREDIT.licenseUrl} target="_blank" rel="noreferrer">{STROKE_ORDER_CREDIT.license}</a>)
-      </figcaption>
+      <figcaption className="tiny muted center">{isDone ? `${total} nét` : `Nét ${drawn + 1}/${total}`}</figcaption>
     </figure>
   );
 }

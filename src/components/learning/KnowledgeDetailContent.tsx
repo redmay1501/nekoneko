@@ -3,14 +3,12 @@ import { RadicalExpandable } from './RadicalExpandable';
 import { kanjiVisualAssetsOf, vocabularyImageOf } from '@/features/learning/vocabulary-images';
 import { AudioButton } from '@/components/common/AudioButton';
 import { speechTextFor } from '@/features/learning/speech-text';
-import { MemoryStatusCard } from '@/components/memory/MemoryStatusCard';
 import type { KnowledgeDetailView } from '@/features/learning/knowledge-detail';
 import { toContentKey } from '@/features/learning/knowledge-types';
 import type { ChainNode } from '@/features/learning/knowledge-presenter';
 import { KnowledgeChipButton } from './KnowledgeChipButton';
 import { StrokeOrder } from './StrokeOrder';
 import { strokeOrderCharacters } from '@/features/learning/stroke-order';
-import { focusSessionHref } from '@/features/learning/session-modes';
 
 /** Thứ tự nét cho mọi chữ có dữ liệu trong mặt chữ (âm ghép きゃ → き và ゃ). */
 function StrokeOrderSection({ face }: { face: string }) {
@@ -84,8 +82,7 @@ function TipCard({ tip, background = 'var(--cream)' }: { tip: string; background
 }
 
 function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
-  const { item, related, memory } = detail;
-  const statusCard = memory.isLearned ? <div className="mt-3.5"><MemoryStatusCard memory={memory} /></div> : null;
+  const { item, related } = detail;
 
   switch (item.type) {
     case 'hiragana':
@@ -104,8 +101,6 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
           </div>
           <StrokeOrderSection face={item.face} />
           <TipCard tip={item.content.tip} />
-          {statusCard}
-          <p className="tiny muted center mt-2.5">{item.day ? <>Học vào <DayLink day={item.day} /> · </> : null}chữ số {item.id}/104</p>
         </>
       );
     }
@@ -117,13 +112,11 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
             <div>
               <h2>{item.content.meaning}</h2>
               <p className="jp soft">{item.content.nameJp}</p>
-              <p className="tiny muted">{item.day ? <>Bộ thủ của lộ trình · học <DayLink day={item.day} /></> : 'Bộ tham khảo — không có ngày học riêng, gặp khi học Kanji chứa nó'}</p>
             </div>
           </div>
           <TipCard tip={item.content.tip} background="var(--lav)" />
           <RelatedRow title="Kanji chứa bộ này" chips={related.kanji.map((kanji) => ({
             contentKey: toContentKey('kanji', kanji.id), face: kanji.character, caption: kanji.meaning }))} />
-          {statusCard}
         </>
       );
     case 'kanji':
@@ -136,7 +129,6 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
               <p className="soft">{item.content.meaning}</p>
               <div className="row wrap" style={{ gap: 6, marginTop: 7 }}>
                 <span className="chip">{item.content.strokes} nét</span>
-                {item.day ? <DayLink day={item.day} className="chip" /> : null}
               </div>
             </div>
             <AudioButton text={speechTextFor(item)} />
@@ -171,7 +163,6 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
           ) : null}
           <RelatedRow title="Từ vựng N5 có chữ này" chips={related.vocabulary.map((word) => ({
             contentKey: toContentKey('vocabulary', word.id), face: word.kanji || word.kana, caption: word.meaning }))} />
-          {statusCard}
         </>
       );
     case 'vocabulary':
@@ -191,7 +182,6 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
           </div>
           <div className="row wrap mt-2.5" style={{ gap: 6 }}>
             <span className="chip lav">{item.content.lesson.split('·')[0].trim()}</span>
-            {item.day ? <DayLink day={item.day} className="chip" /> : null}
           </div>
           <TipCard tip={item.content.tip} />
           <RelatedRow title="Kanji trong từ này" chips={related.kanji.map((kanji) => ({
@@ -207,7 +197,6 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
               ))}
             </>
           ) : null}
-          {statusCard}
         </>
       );
     case 'grammar':
@@ -233,7 +222,6 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
             <p className="sm soft mt-1">{detail.commonMistake}</p>
           </div>
           <Link className="btn block mt-3.5" href="/hoc/use">Luyện mẫu này trong câu</Link>
-          {statusCard}
         </>
       );
   }
@@ -244,17 +232,6 @@ export function KnowledgeDetailContent({ detail }: { detail: KnowledgeDetailView
     <div>
       <DetailBody detail={detail} />
       <KnowledgeChain nodes={detail.chain} />
-      {detail.memory.isLearned ? (
-        <Link className="btn block mt-3.5" href={`/tri-nho/cuu/${detail.item.key}`}>🌸 Gặp lại kiến thức này</Link>
-      ) : (
-        // Chưa học: học ngay (giới thiệu + luyện, ghi trí nhớ) — không cần chờ tới ngày của lộ trình.
-        <Link className="btn block mt-3.5" href={focusSessionHref([detail.item.key])}>▶ Học {detail.item.face} ngay</Link>
-      )}
     </div>
   );
-}
-
-/** "Ngày N" bấm được → trang ngày đã học kiến thức này (khay tự đóng khi chuyển trang). */
-function DayLink({ day, className = 'link' }: { day: number; className?: string }) {
-  return <Link href={`/lo-trinh/ngay/${day}`} className={className}>ngày {day} →</Link>;
 }

@@ -13,8 +13,6 @@ interface TodayLearnCardProps {
   dailyMinutes: number;
   /** Kiến thức mới còn chờ của ngày, đếm theo loại: [{ label: 'từ vựng', count: 22 }, …]. */
   newByType: Array<{ label: string; count: number }>;
-  /** Kiến thức mới của ngày còn chờ học. */
-  pendingCount: number;
   hasNewKnowledge: boolean;
   /** Đã học hết kiến thức của ngày → mời người học tự xác nhận hoàn thành (app không tự chuyển ngày). */
   isReadyToComplete: boolean;
@@ -32,7 +30,7 @@ const PLAN_TEXT: Record<SessionPhase, (count: number) => ReactNode> = {
 
 /** Thẻ chính của Trang chủ: hôm nay học gì + MỘT nút lớn để bắt đầu. */
 export function TodayLearnCard(props: TodayLearnCardProps) {
-  const { journeyDay, dayTitle, dailyMinutes, newByType, pendingCount, hasNewKnowledge, isReadyToComplete, plan } = props;
+  const { journeyDay, dayTitle, dailyMinutes, newByType, hasNewKnowledge, isReadyToComplete, plan } = props;
   const planParts = SESSION_PHASES.filter((phase) => plan[phase] > 0);
   return (
     <section className="dash-card dash-today" aria-labelledby="dash-today-title">
@@ -65,10 +63,7 @@ export function TodayLearnCard(props: TodayLearnCardProps) {
           <div className="dash-actions">
             <NekoButton href="/hoc/daily" prefetch variant={hasNewKnowledge ? 'primary' : 'review'} className="dash-neko-cta"
               leftIcon={<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z" /></svg>}>
-              <span className="dash-cta-text">
-                <b>{hasNewKnowledge ? 'Bắt đầu học' : 'Ôn ngay'}</b>
-                <span>{pendingCount > 0 ? `Hôm nay có ${pendingCount} mục đang chờ bạn ✨` : `Giữ nhịp ${dailyMinutes} phút ✨`}</span>
-              </span>
+              {hasNewKnowledge ? 'Bắt đầu học' : 'Ôn ngay'}
             </NekoButton>
           </div>
         )}

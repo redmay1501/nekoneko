@@ -19,7 +19,7 @@ import { previewSessionPlan, unmetKnowledgeOfDay } from '@/features/learning/ses
 import { SESSION_MODES, SESSION_MODE_CONFIG } from '@/features/learning/session-modes';
 import { buildMemoryOverview, forgettingRadarList } from '@/features/memory/memory-overview';
 import { displayedDailyMinutes } from '@/features/progress/settings-options';
-import { getDayCompletionProgress, isDayReadyToComplete, remainingKnowledgeCount } from '@/features/roadmap/journey-progress';
+import { getDayCompletionProgress, isDayReadyToComplete } from '@/features/roadmap/journey-progress';
 
 
 /** Chữ trang trí quanh lời chào: [chữ, x%, y%, quãng trôi khi cuộn]. */
@@ -73,7 +73,6 @@ export default async function HomePage() {
           dayTitle={dayTitle}
           dailyMinutes={dailyMinutes}
           newByType={countByType(unmetKnowledgeOfDay(catalog, memoryViews, journeyDay))}
-          pendingCount={remainingKnowledgeCount(dayCompletion)}
           hasNewKnowledge={dayCompletion.hasNewKnowledge}
           isReadyToComplete={isDayReadyToComplete(journey, dayCompletion)}
           plan={plan}

@@ -2,7 +2,7 @@ import type { MemoryView } from '@/features/memory/memory-types';
 import { type KnowledgeCatalog, itemsOfType } from '@/features/learning/knowledge-catalog';
 import type { ContentKey, ContentType, KnowledgeItem } from '@/features/learning/knowledge-types';
 import { speechTextFor } from '@/features/learning/speech-text';
-import { buildStudyParts, needsReview } from '@/features/learning/study-actions';
+import { knowledgeGroups, needsReview } from '@/features/learning/study-actions';
 import { firstMeaning } from '@/lib/utils/text';
 import type { MatchCard } from './match-game';
 
@@ -17,7 +17,7 @@ export type MatchKind = keyof typeof MATCH_KINDS;
 
 const CONTENT_TYPE: Record<MatchKind, ContentType> = { 'tu-vung': 'vocabulary', kanji: 'kanji', hiragana: 'hiragana', katakana: 'katakana' };
 
-/** Phạm vi theo trí nhớ; ngoài ra là id một phần của buildStudyParts (nhom-3, phan-8…). */
+/** Phạm vi theo trí nhớ; ngoài ra là id một nhóm của knowledgeGroups (nhom-3, phan-8…). */
 export const MEMORY_RANGES = { 'da-hoc': 'Đã học', 'can-on': 'Cần ôn', 'vua-hoc': 'Vừa học', 'tat-ca': 'Tất cả' } as const;
 
 /** Từ ≤ 1 ngày trước được xem là "vừa học" (gợi ý ngay sau phiên học). */
@@ -62,7 +62,7 @@ export function buildMatchPool(
     }),
     'tat-ca': items,
   };
-  const parts = buildStudyParts(CONTENT_TYPE[kind], items, views).parts.filter((part) => part.id !== 'tat-ca' && part.id !== 'can-on');
+  const parts = knowledgeGroups(CONTENT_TYPE[kind], items).map((group) => ({ id: group.id, label: group.label, keys: group.items.map((item) => item.key) }));
   const keysByPart = new Map(parts.map((part) => [part.id, new Set<string>(part.keys)]));
 
   const options: MatchRangeOption[] = [

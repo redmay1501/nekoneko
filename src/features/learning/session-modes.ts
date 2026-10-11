@@ -48,8 +48,8 @@ export type NewKnowledgeScope = 'next-chunk' | 'rest-of-day' | 'backlog-only';
  */
 export const DAY_CHUNK_SIZE = 5;
 
-/** Phiên "Học theo lựa chọn" nhận tối đa chừng này kiến thức — đủ trọn một bài từ vựng (bài dài nhất 53 từ). */
-export const MAX_FOCUS_ITEMS = 60;
+/** Phiên "Học theo lựa chọn" / Kiểm tra nhận tối đa chừng này kiến thức — đủ cả 103 Kanji hoặc mọi chữ cái một lần. */
+export const MAX_FOCUS_ITEMS = 120;
 
 /** Đường dẫn mở phiên "Học theo lựa chọn" cho các kiến thức này. */
 export function focusSessionHref(keys: readonly string[]): string {

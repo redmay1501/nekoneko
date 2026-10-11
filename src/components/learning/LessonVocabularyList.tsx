@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { lessonNumber } from '@/lib/utils/lesson';
 import type { LessonContent } from '@/types/content';
-import { FocusSelectToggle, FocusSelectionBar, useFocusSelection } from './FocusSelection';
 import { KnowledgeListRow, type KnowledgeListRowData } from './KnowledgeListRow';
 
 export interface VocabularyRowData extends KnowledgeListRowData {
@@ -30,7 +29,6 @@ export function LessonVocabularyList({ rows, lessons, currentTab }: { rows: Voca
   const hasKanaPeriod = rows.some((row) => tabOfRow(row) === KANA_PERIOD_TAB);
   const visibleRows = tab === ALL_TAB ? rows : rows.filter((row) => tabOfRow(row) === tab);
   const lesson = sortedLessons.find((candidate) => candidate.id === tab);
-  const selection = useFocusSelection();
 
   useEffect(() => {
     activeTabRef.current?.scrollIntoView({ inline: 'center', block: 'nearest' });
@@ -63,13 +61,11 @@ export function LessonVocabularyList({ rows, lessons, currentTab }: { rows: Voca
         ) : tab === KANA_PERIOD_TAB ? (
           <p className="sm soft mb-3">Từ chào hỏi và từ Katakana học trong hai tuần bảng chữ cái (ngày 6–13).</p>
         ) : null}
-        <div className="row mb-2" style={{ justifyContent: 'flex-end' }}><FocusSelectToggle selection={selection} unit="từ" /></div>
         <div key={tab} className="list-grid stack" style={{ gap: 9 }} data-reveal-stagger>
           {visibleRows.map((row) => (
-            <KnowledgeListRow key={row.contentKey} row={row} selection={selection.isSelecting ? selection.selectionFor(row.contentKey) : undefined} />
+            <KnowledgeListRow key={row.contentKey} row={row} />
           ))}
         </div>
-        <FocusSelectionBar selection={selection} unit="từ" visibleKeys={visibleRows.map((row) => row.contentKey)} />
       </div>
     </>
   );

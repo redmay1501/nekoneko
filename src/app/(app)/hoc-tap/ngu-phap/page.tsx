@@ -1,14 +1,14 @@
 import { KnowledgeListRow } from '@/components/learning/KnowledgeListRow';
-import { StudyActionBar } from '@/components/learning/StudyActionBar';
+import { TestPicker } from '@/components/learning/TestPicker';
 import { itemsOfType } from '@/features/learning/knowledge-catalog';
-import { buildStudyParts } from '@/features/learning/study-actions';
+import { buildTestGroups } from '@/features/learning/study-actions';
 import { countLearnedOfType, grammarGroups } from '@/features/learning/knowledge-library';
 import { getLearnerContext } from '@/features/learning/learner-context';
 
 /** SC-22 · Ngữ pháp N5 — 112 mẫu câu nhóm theo bài. */
 export default async function GrammarPage() {
   const { catalog, memoryViews } = await getLearnerContext();
-  const parts = buildStudyParts('grammar', itemsOfType(catalog, 'grammar'), memoryViews);
+  const testGroups = buildTestGroups('grammar', itemsOfType(catalog, 'grammar'), memoryViews);
   const { learned, total } = countLearnedOfType(catalog, memoryViews, 'grammar');
   return (
     <>
@@ -16,7 +16,7 @@ export default async function GrammarPage() {
       <p className="soft sm" style={{ margin: '4px 0 14px' }}>
         112 mẫu câu theo Minna bài 1–25. Mỗi mẫu đi kèm một câu thật để bạn dùng được ngay.
       </p>
-      <StudyActionBar parts={parts} unit="mẫu" />
+      <TestPicker groups={testGroups} unit="mẫu" isWide />
       {grammarGroups(catalog, memoryViews).map((group) => {
         return (
         <section key={group.lesson} data-reveal>

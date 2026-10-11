@@ -12,7 +12,6 @@ const TABS = [
   { id: 'learn', label: 'Học' },
   { id: 'write', label: 'Luyện viết' },
   { id: 'listen', label: 'Luyện nghe' },
-  { id: 'quiz', label: 'Kiểm tra' },
 ] as const;
 type TabId = (typeof TABS)[number]['id'];
 
@@ -94,11 +93,6 @@ export function KanaPractice({ data, initialWriting }: { data: KanaPracticeData;
           <AssessmentQuiz title="Luyện nghe" description="Nghe âm, chọn chữ bạn nghe được. Cuối bài sẽ có điểm và nút làm lại."
             questions={data.listening.map((question) => ({ audioText: question.character, answer: question.answer, options: question.options }))}
             emptyMessage="Học ít nhất hai chữ trong bảng trước, rồi Neko sẽ tạo bài nghe từ những chữ đó." audioLabel="Nghe chữ Nhật" />
-        ) : null}
-        {tab === 'quiz' ? (
-          <AssessmentQuiz title="Kiểm tra" description="Nhìn chữ đã học và chọn cách đọc. Làm xong xem kết quả hoặc thử lại."
-            questions={data.quiz.map((question) => ({ prompt: question.character, promptIsJapanese: true, answer: question.answer, options: question.options }))}
-            emptyMessage="Học ít nhất hai chữ trong bảng trước; bài kiểm tra sẽ chỉ lấy chữ bạn đã học." />
         ) : null}
       </div>
     </>

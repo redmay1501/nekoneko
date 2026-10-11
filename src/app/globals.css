@@ -951,3 +951,20 @@ a.dash-cta-blue:hover{transform:translateY(-1px);box-shadow:0 14px 26px rgba(90,
 .audio-text{margin-left:6px;font-weight:600}
 .row>.speakable-face{margin:0}
 .focus-select-bar{flex-wrap:wrap}
+
+/* ─── Kiểm tra: bảng chọn chữ ─── */
+.test-picker{padding-bottom:0}
+.test-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(62px,1fr));gap:6px}
+.test-grid.wide{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+.test-cell{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px;border-radius:12px;border:1.5px solid var(--line);background:#fff;font:inherit;color:var(--ink);cursor:pointer;min-width:0}
+.test-cell.on{border-color:var(--sakura);background:#FFF0F3}
+.test-face{font-size:20px;line-height:1.2;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.test-grid.wide .test-face{font-size:16px}
+.test-caption{font-size:10.5px;color:var(--ink-3);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.test-start{position:sticky;bottom:0;margin:14px -18px 0;padding:10px 18px calc(12px + var(--safe-b));background:linear-gradient(transparent,#fff 30%)}
+/* Bộ thủ: lưới 3 cột (4 cột trên màn rộng) — bấm mở khay chi tiết như các trang khác. */
+.radical-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.radical-grid .kcard{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0;cursor:pointer;font:inherit;color:var(--ink)}
+.radical-grid .kcard b{font-size:13px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.radical-grid .kcard>span:last-child{font-size:11.5px;color:var(--ink-3);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (min-width:900px){.radical-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}

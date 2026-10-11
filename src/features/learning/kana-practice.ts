@@ -6,7 +6,7 @@ import { type ContentKey, toContentKey } from './knowledge-types';
 import { strokeCountOf } from './stroke-order';
 import { kanaToRomaji } from '@/lib/utils/romaji';
 
-/** Dữ liệu cho màn Hiragana / Katakana: Học · Luyện viết · Luyện nghe · Kiểm tra. */
+/** Dữ liệu cho màn Hiragana / Katakana: Học · Luyện viết · Luyện nghe (Kiểm tra: TestPicker). */
 
 export type KanaKind = 'hiragana' | 'katakana';
 
@@ -39,11 +39,9 @@ export interface KanaPracticeData {
   /** Mọi chữ đơn (cơ bản, âm đục) và chữ nhỏ của âm ghép (ゃ ゅ ょ) — người học tự chọn chữ muốn luyện viết. */
   writingChoices: KanaWritingChoice[];
   listening: KanaQuestion[];
-  quiz: KanaQuestion[];
 }
 
 const LISTENING_COUNT = 6;
-const QUIZ_COUNT = 8;
 const DISTRACTOR_COUNT = 3;
 
 export function buildKanaPractice(kind: KanaKind, kana: readonly KanaContent[], views: ReadonlyMap<ContentKey, MemoryView>, seed: string): KanaPracticeData {
@@ -69,15 +67,6 @@ export function buildKanaPractice(kind: KanaKind, kana: readonly KanaContent[], 
     ),
   }));
 
-  const quiz = pickDeterministic(learned.length > 1 ? learned : [], QUIZ_COUNT, `quiz:${kind}`).map((entry) => ({
-    character: characterOf(entry),
-    answer: entry.romaji,
-    options: shuffleDeterministic(
-      [entry.romaji, ...pickDeterministic(learned.filter((other) => other.romaji !== entry.romaji).map((other) => other.romaji), Math.min(DISTRACTOR_COUNT, learned.length - 1), `quiz-options:${entry.id}`)],
-      `quiz-order:${entry.id}`,
-    ),
-  }));
-
   return {
     kind,
     cells,
@@ -85,7 +74,6 @@ export function buildKanaPractice(kind: KanaKind, kana: readonly KanaContent[], 
     writing: writingChoiceOf(writingKana),
     writingChoices: writingChoicesOf(kana, characterOf, writingChoiceOf),
     listening,
-    quiz,
   };
 }
 

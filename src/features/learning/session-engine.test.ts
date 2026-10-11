@@ -381,8 +381,8 @@ describe('Học theo lựa chọn (focus)', () => {
     expect(step.phase).toBe('review');
   });
 
-  it('bỏ khoá không có thật, bỏ trùng, tối đa MAX_FOCUS_ITEMS (trọn một bài từ vựng)', () => {
-    const many = catalog.items.filter((item) => item.type === 'vocabulary').slice(0, 80).map((item) => item.key);
+  it('bỏ khoá không có thật, bỏ trùng, tối đa MAX_FOCUS_ITEMS', () => {
+    const many = catalog.items.filter((item) => item.type === 'vocabulary').slice(0, 200).map((item) => item.key);
     const plan = buildFocus([...many, many[0], 'kanji-99999' as ContentKey]);
     expect(new Set(plan.steps.map((step) => step.contentKey)).size).toBe(MAX_FOCUS_ITEMS);
   });

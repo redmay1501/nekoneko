@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { NekoButton } from '@/components/common/NekoButton';
 import Image from 'next/image';
 import { CompleteDayButton } from '@/components/roadmap/CompleteDayButton';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
@@ -64,15 +65,13 @@ export function TodayLearnCard(props: TodayLearnCardProps) {
           </>
         ) : (
           <div className="dash-actions">
-            <Link href="/hoc/daily" className="btn dash-cta" prefetch>
-              <span className="dash-cta-play" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z" /></svg>
-              </span>
+            <NekoButton href="/hoc/daily" prefetch variant={hasNewKnowledge ? 'primary' : 'review'} className="dash-neko-cta"
+              leftIcon={<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z" /></svg>}>
               <span className="dash-cta-text">
                 <b>{hasNewKnowledge ? 'Bắt đầu học' : 'Ôn ngay'}</b>
                 <span>{pendingCount > 0 ? `Hôm nay có ${pendingCount} mục đang chờ bạn ✨` : `Giữ nhịp ${dailyMinutes} phút ✨`}</span>
               </span>
-            </Link>
+            </NekoButton>
           </div>
         )}
         {/* Ngày ôn tập không có kiến thức mới để "học hết" → ôn xong thì tự hoàn thành. */}

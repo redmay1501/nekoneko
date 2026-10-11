@@ -973,3 +973,49 @@ a.dash-cta-blue:hover{transform:translateY(-1px);box-shadow:0 14px 26px rgba(90,
 .nav-caret{margin-left:auto;padding-left:6px;font-size:11px;color:var(--ink-3)}
 /* Menu ☰ đang mở: thanh trên nằm trên lớp mờ để bấm ☰ lần nữa là đóng. */
 .topbar.menu-open{z-index:75}
+
+/* ═══ NekoButton — nút 3D viên thuốc + mascot mèo ngồi vắt trên mép (components/common/NekoButton.tsx) ═══ */
+.neko-btn{--nb-top:#FF9EAC;--nb-bottom:#F2667C;--nb-lip:#CF4A61;--nb-ink:#fff;--nb-glow:rgba(242,102,124,.34);--nb-cat:64px;--nb-cat-dip:22px;
+  position:relative;isolation:isolate;display:inline-flex;align-items:center;max-width:100%;min-height:52px;padding:9px 22px 9px 12px;border:0;border-radius:999px;
+  background:linear-gradient(180deg,var(--nb-top),var(--nb-bottom));color:var(--nb-ink);font:inherit;font-weight:700;text-align:left;text-decoration:none;cursor:pointer;
+  box-shadow:0 5px 0 var(--nb-lip),0 12px 22px var(--nb-glow);transform:translateY(0);
+  transition:transform .16s cubic-bezier(.3,1.4,.5,1),box-shadow .16s ease,filter .2s ease;-webkit-tap-highlight-color:transparent}
+/* Vệt sáng bóng phía trên — cảm giác bề mặt cong, láng. */
+.neko-btn::before{content:"";position:absolute;z-index:0;left:10%;right:10%;top:3px;height:44%;border-radius:999px;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.62),rgba(255,255,255,0))}
+.neko-btn-face{position:relative;z-index:1;display:flex;align-items:center;gap:10px;min-width:0}
+.neko-btn-label{min-width:0}
+.neko-btn-icon{flex:0 0 auto;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.94);color:var(--nb-bottom);
+  box-shadow:0 2px 6px rgba(80,40,40,.14)}
+/* Mèo: nằm TRONG nút (lún theo khi bấm), ngồi vắt trên mép trên phía phải, chân trước chạm mặt nút. Chữ chừa chỗ bên phải. */
+.neko-btn.has-cat{margin-top:calc(var(--nb-cat) * 1.18 - var(--nb-cat-dip));padding-right:calc(var(--nb-cat) + 18px)}
+.neko-btn-cat{position:absolute;z-index:2;right:12px;bottom:calc(100% - var(--nb-cat-dip));width:var(--nb-cat);height:auto;pointer-events:none;
+  transform-origin:50% 100%;filter:drop-shadow(0 3px 3px rgba(90,45,35,.2))}
+.neko-btn-lg{--nb-cat:76px;--nb-cat-dip:26px;min-height:60px;padding:11px 26px 11px 14px;font-size:16px}
+.neko-btn-lg .neko-btn-icon{width:38px;height:38px}
+.neko-btn.is-full{display:flex;width:100%}
+
+.neko-btn:not(.is-inactive):hover{transform:translateY(-2px);box-shadow:0 7px 0 var(--nb-lip),0 16px 26px var(--nb-glow)}
+.neko-btn:not(.is-inactive):hover .neko-btn-cat{animation:neko-btn-wiggle .7s ease-in-out}
+.neko-btn:not(.is-inactive):active{transform:translateY(4px);box-shadow:0 1px 0 var(--nb-lip),0 5px 10px var(--nb-glow);transition-duration:.06s}
+.neko-btn:focus-visible{outline:3px solid var(--nb-lip);outline-offset:4px}
+.neko-btn.is-inactive{cursor:not-allowed;filter:saturate(.55);opacity:.7;box-shadow:0 2px 0 var(--nb-lip),0 6px 12px rgba(0,0,0,.06)}
+.neko-btn.is-loading{cursor:progress;opacity:.9;filter:none}
+.neko-btn-spinner{flex:0 0 auto;width:20px;height:20px;margin:0 7px;border-radius:50%;border:2.5px solid currentColor;border-right-color:transparent;animation:spin .7s linear infinite}
+@keyframes neko-btn-wiggle{0%,100%{transform:rotate(0)}30%{transform:rotate(-5deg) translateY(-2px)}65%{transform:rotate(4deg)}}
+
+/* Màu theo chức năng — cùng một kiểu 3D. */
+.neko-btn-review{--nb-top:#FFDB7E;--nb-bottom:#F5B93D;--nb-lip:#C98E1F;--nb-ink:#4F3306;--nb-glow:rgba(245,185,61,.34)}
+.neko-btn-quiz{--nb-top:#9DD1FF;--nb-bottom:#5EA9F0;--nb-lip:#3C7FC2;--nb-glow:rgba(94,169,240,.32)}
+.neko-btn-success{--nb-top:#98E7C5;--nb-bottom:#4FC491;--nb-lip:#2F9A6B;--nb-ink:#0E3B29;--nb-glow:rgba(79,196,145,.3)}
+.neko-btn-game{--nb-top:#D3C2FF;--nb-bottom:#A68AF0;--nb-lip:#7D60CF;--nb-glow:rgba(166,138,240,.32)}
+.neko-btn-secondary{--nb-top:#FFF9EF;--nb-bottom:#F5E5CB;--nb-lip:#DDC49B;--nb-ink:#5A4636;--nb-glow:rgba(180,140,90,.2)}
+
+@media (prefers-reduced-motion:reduce){
+  .neko-btn{transition:none}
+  .neko-btn:not(.is-inactive):hover,.neko-btn:not(.is-inactive):active{transform:none}
+  .neko-btn:not(.is-inactive):hover .neko-btn-cat{animation:none}
+  .neko-btn-spinner{animation-duration:1.6s}
+}
+/* Ảnh tạm (cắt ngang ngực, không có chân trước) → mờ dần phần đáy như đang ló lên sau nút. Ảnh mascot chính thức không cần. */
+.neko-btn-cat.is-placeholder{-webkit-mask-image:linear-gradient(#000 70%,transparent 96%);mask-image:linear-gradient(#000 70%,transparent 96%)}

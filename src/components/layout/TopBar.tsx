@@ -19,7 +19,8 @@ interface TopBarProps {
 }
 
 export function TopBar({ displayName, level, recallDays, isGentleMode, isDemo }: TopBarProps) {
-  const { openNavigation, openSearch } = useSheetStore();
+  const { openNavigation, openSearch, close, activeSheet } = useSheetStore();
+  const isMenuOpen = activeSheet.kind === 'navigation';
   const pathname = usePathname();
   const [query, setQuery] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
@@ -34,8 +35,9 @@ export function TopBar({ displayName, level, recallDays, isGentleMode, isDemo }:
   }, []);
 
   return (
-    <header className={`topbar${pathname === '/' ? ' home-topbar' : ''}${isScrolled ? ' scrolled' : ''}`}>
-      <button type="button" className="nav-burger" onClick={openNavigation} aria-label="Mở menu">
+    <header className={`topbar${pathname === '/' ? ' home-topbar' : ''}${isScrolled ? ' scrolled' : ''}${isMenuOpen ? ' menu-open' : ''}`}>
+      <button type="button" className={`nav-burger${isMenuOpen ? ' on' : ''}`} onClick={isMenuOpen ? close : openNavigation}
+        aria-label={isMenuOpen ? 'Đóng menu' : 'Mở menu'} aria-expanded={isMenuOpen}>
         ☰
       </button>
       <Link href="/" className="row topbrand" aria-label={`${APP_NAME} — về trang chủ`}>

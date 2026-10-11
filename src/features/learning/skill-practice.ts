@@ -3,16 +3,18 @@ import type { MemoryView } from '@/features/memory/memory-types';
 import { pickDeterministic, shuffleDeterministic } from '@/lib/utils/deterministic-random';
 import { type KnowledgeCatalog, itemsOfType } from './knowledge-catalog';
 import { type ContentKey, toContentKey } from './knowledge-types';
+import { knowledgeGroups } from './study-actions';
 
 /**
  * Dữ liệu cho 4 màn kỹ năng (SC-24…27). Bài nghe từ vựng được ghi vào trí nhớ (server chấm — /api/memory/practice);
  * nói / đọc / viết là luyện tự do, không có đáp án gắn với một kiến thức nên không ghi.
- * Bài nghe lấy từ đã tới ngày trên lộ trình. Nói, đọc, viết chỉ mở phần đã tới ngày, không đổ ập thứ chưa gặp.
+ * Bài nghe: người học chọn phạm vi — theo lộ trình (mặc định), tất cả, hoặc từng bài (kể cả bài chưa học tới).
+ * Nói, đọc, viết chỉ mở phần đã tới ngày.
  */
 
 type Views = ReadonlyMap<ContentKey, MemoryView>;
 
-const LISTENING_WORDS = 5;
+const LISTENING_WORDS = 8;
 const SHADOWING_SENTENCES = 3;
 const SPEAKING_SENTENCES = 4;
 const LISTENING_RESOURCES = 4;
@@ -30,24 +32,47 @@ export interface ListeningQuestion {
   options: string[];
 }
 
+export interface ListeningRange {
+  id: string;
+  label: string;
+}
+
 export interface ListeningPracticeData {
+  /** Phạm vi đang chọn và các phạm vi chọn được (theo lộ trình, tất cả, từng bài). */
+  range: string;
+  ranges: ListeningRange[];
   questions: ListeningQuestion[];
   shadowing: GrammarContent[];
   resources: StudyResource[];
 }
 
-export function buildListeningPractice(catalog: KnowledgeCatalog, _views: Views, journeyDay: number): ListeningPracticeData {
+export function buildListeningPractice(
+  catalog: KnowledgeCatalog, _views: Views, journeyDay: number, requestedRange?: string, seed = 'listening',
+): ListeningPracticeData {
   const vocabulary = itemsOfType(catalog, 'vocabulary');
-  // Nghe theo ngày trên lộ trình: はい, テレビ, lời chào có bài khi tới ngày của từ, không đợi ngày 15.
-  const available = vocabulary.filter((item) => item.day !== null && item.day <= journeyDay);
+  const lessons = knowledgeGroups('vocabulary', vocabulary);
+  const ranges: ListeningRange[] = [
+    { id: 'lo-trinh', label: 'Theo lộ trình' },
+    { id: 'tat-ca', label: 'Tất cả' },
+    ...lessons.map((group) => ({ id: group.id, label: group.label })),
+  ];
+  const range = ranges.some((option) => option.id === requestedRange) ? requestedRange! : 'lo-trinh';
+  // Theo lộ trình: từ đã tới ngày (はい, テレビ, lời chào có bài khi tới ngày của từ). Phạm vi khác: không cần học tới.
+  const pool = range === 'lo-trinh'
+    ? vocabulary.filter((item) => item.day !== null && item.day <= journeyDay)
+    : range === 'tat-ca' ? vocabulary : lessons.find((group) => group.id === range)?.items ?? [];
+  // Phương án nhiễu trong cùng phạm vi; phạm vi quá nhỏ thì mượn cả kho.
+  const distractorPool = pool.length > DISTRACTORS * 2 ? pool : vocabulary;
   return {
-    questions: pickDeterministic(available, LISTENING_WORDS, 'listening').map((item) => ({
+    range,
+    ranges,
+    questions: pickDeterministic(pool, LISTENING_WORDS, `${seed}:${range}`).map((item) => ({
       contentKey: item.key,
-      audioText: item.content.kana,
+      audioText: item.type === 'vocabulary' ? item.content.kana : item.face,
       answer: item.meaning,
       options: shuffleDeterministic(
-        [item.meaning, ...pickDeterministic(available.filter((other) => other.key !== item.key && other.meaning !== item.meaning).map((other) => other.meaning), DISTRACTORS, `listening-options:${item.id}`)],
-        `listening-order:${item.id}`,
+        [item.meaning, ...pickDeterministic(distractorPool.filter((other) => other.key !== item.key && other.meaning !== item.meaning).map((other) => other.meaning), DISTRACTORS, `${seed}:options:${item.id}`)],
+        `${seed}:order:${item.id}`,
       ),
     })),
     shadowing: pickDeterministic(learnedGrammar(catalog, journeyDay), SHADOWING_SENTENCES, 'shadowing'),

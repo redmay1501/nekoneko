@@ -45,7 +45,9 @@ export function TestPicker({ groups, unit, isWide = false }: TestPickerProps) {
 
   return (
     <>
-      <button type="button" className="btn block mb-3.5 test-open" onClick={() => setIsOpen(true)}>✅ Kiểm tra</button>
+      <div className="test-open-row">
+        <button type="button" className="btn ghost sm test-open" onClick={() => setIsOpen(true)}>✅ Kiểm tra</button>
+      </div>
       {isOpen ? (
         <ModalPortal className="sheet on test-picker" labelledBy="test-picker-title" onEscape={() => setIsOpen(false)}>
           <button type="button" className="sheet-close" onClick={() => setIsOpen(false)} aria-label="Đóng">✕</button>

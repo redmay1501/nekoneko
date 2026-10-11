@@ -1,6 +1,6 @@
 import type { KanaContent } from '@/types/content';
 import type { MemoryStatus, MemoryView } from '@/features/memory/memory-types';
-import { hashToUnitInterval, pickDeterministic, shuffleDeterministic } from '@/lib/utils/deterministic-random';
+import { hashToUnitInterval } from '@/lib/utils/deterministic-random';
 import { BASIC_KANA_COUNT } from './knowledge-filters';
 import { type ContentKey, toContentKey } from './knowledge-types';
 import { strokeCountOf } from './stroke-order';
@@ -15,12 +15,6 @@ export interface KanaCell {
   character: string;
   romaji: string;
   status: MemoryStatus;
-}
-
-export interface KanaQuestion {
-  character: string;
-  answer: string;
-  options: string[];
 }
 
 export interface KanaWritingChoice {
@@ -38,11 +32,8 @@ export interface KanaPracticeData {
   writing: KanaWritingChoice;
   /** Mọi chữ đơn (cơ bản, âm đục) và chữ nhỏ của âm ghép (ゃ ゅ ょ) — người học tự chọn chữ muốn luyện viết. */
   writingChoices: KanaWritingChoice[];
-  listening: KanaQuestion[];
 }
 
-const LISTENING_COUNT = 6;
-const DISTRACTOR_COUNT = 3;
 
 export function buildKanaPractice(kind: KanaKind, kana: readonly KanaContent[], views: ReadonlyMap<ContentKey, MemoryView>, seed: string): KanaPracticeData {
   const characterOf = (entry: KanaContent) => (kind === 'hiragana' ? entry.hiragana : entry.katakana);
@@ -58,22 +49,12 @@ export function buildKanaPractice(kind: KanaKind, kana: readonly KanaContent[], 
   const writingPool = learned.length ? learned : basic;
   const writingKana = writingPool[Math.floor(hashToUnitInterval(`write:${seed}`) * writingPool.length)];
 
-  const listening = pickDeterministic(learned.length > 1 ? learned : [], LISTENING_COUNT, `listen:${kind}`).map((entry) => ({
-    character: characterOf(entry),
-    answer: characterOf(entry),
-    options: shuffleDeterministic(
-      [entry, ...pickDeterministic(learned.filter((other) => other.id !== entry.id), Math.min(DISTRACTOR_COUNT, learned.length - 1), `listen-options:${entry.id}`)].map(characterOf),
-      `listen-order:${entry.id}`,
-    ),
-  }));
-
   return {
     kind,
     cells,
     learnedCount: cells.filter((cell) => cell.status !== 'new').length,
     writing: writingChoiceOf(writingKana),
     writingChoices: writingChoicesOf(kana, characterOf, writingChoiceOf),
-    listening,
   };
 }
 

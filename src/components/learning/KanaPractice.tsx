@@ -89,12 +89,67 @@ export function KanaPractice({ data, initialWriting }: { data: KanaPracticeData;
               note={writing.tip?.trim() ? `Mẹo nhớ: ${writing.tip}` : undefined} />
           </>
         ) : null}
-        {tab === 'listen' ? (
-          <AssessmentQuiz title="Luyện nghe" description="Nghe âm, chọn chữ bạn nghe được. Cuối bài sẽ có điểm và nút làm lại."
-            questions={data.listening.map((question) => ({ audioText: question.character, answer: question.answer, options: question.options }))}
-            emptyMessage="Học ít nhất hai chữ trong bảng trước, rồi Neko sẽ tạo bài nghe từ những chữ đó." audioLabel="Nghe chữ Nhật" />
-        ) : null}
+        {tab === 'listen' ? <KanaListening cells={data.cells} /> : null}
       </div>
     </>
   );
+}
+
+const LISTENING_COUNT = 8;
+const LISTENING_OPTIONS = 4;
+
+function shuffled<T>(items: readonly T[]): T[] {
+  const copy = [...items];
+  for (let index = copy.length - 1; index > 0; index -= 1) {
+    const other = Math.floor(Math.random() * (index + 1));
+    [copy[index], copy[other]] = [copy[other], copy[index]];
+  }
+  return copy;
+}
+
+/**
+ * Luyện nghe chữ cái — chọn phạm vi (tất cả, từng nhóm, chữ đã học), KHÔNG cần học tới: nghe âm, chọn chữ.
+ * Mỗi lần "Bài khác" là một bộ câu mới; phương án nhiễu lấy trong cùng phạm vi (あ/お, ぬ/め phải phân biệt thật).
+ */
+function KanaListening({ cells }: { cells: KanaCell[] }) {
+  const learned = cells.filter((cell) => cell.status !== 'new');
+  const ranges = [
+    { id: 'all', label: 'Tất cả', cells },
+    ...KANA_GROUPS.map((group) => ({ id: group.label, label: group.label, cells: cells.slice(group.from, group.to) })),
+    ...(learned.length >= 2 ? [{ id: 'learned', label: `Đã học (${learned.length})`, cells: learned }] : []),
+  ];
+  const [rangeId, setRangeId] = useState('all');
+  const [round, setRound] = useState(0);
+  const range = ranges.find((option) => option.id === rangeId) ?? ranges[0];
+  const [questions, setQuestions] = useState(() => buildListening(range.cells));
+
+  function choose(id: string) {
+    setRangeId(id);
+    setQuestions(buildListening((ranges.find((option) => option.id === id) ?? ranges[0]).cells));
+    setRound((value) => value + 1);
+  }
+
+  return (
+    <>
+      <div className="study-parts mb-3" role="radiogroup" aria-label="Phạm vi luyện nghe">
+        {ranges.map((option) => (
+          <button key={option.id} type="button" role="radio" aria-checked={option.id === range.id}
+            className={`chip ${option.id === range.id ? 'pink' : ''}`} onClick={() => choose(option.id)}>{option.label}</button>
+        ))}
+      </div>
+      <AssessmentQuiz key={round} title="Luyện nghe" description="Nghe âm, chọn chữ bạn nghe được. Cuối bài có điểm và nút làm lại."
+        questions={questions} emptyMessage="Phần này chưa đủ chữ để luyện nghe." audioLabel="Nghe chữ Nhật" />
+      <p className="center mt-2.5">
+        <button type="button" className="btn ghost sm" onClick={() => choose(range.id)}>↻ Bài khác</button>
+      </p>
+    </>
+  );
+}
+
+function buildListening(pool: readonly KanaCell[]) {
+  if (pool.length < 2) return [];
+  return shuffled(pool).slice(0, LISTENING_COUNT).map((cell) => {
+    const others = shuffled(pool.filter((other) => other.character !== cell.character)).slice(0, LISTENING_OPTIONS - 1);
+    return { audioText: cell.character, answer: cell.character, options: shuffled([cell, ...others].map((option) => option.character)) };
+  });
 }

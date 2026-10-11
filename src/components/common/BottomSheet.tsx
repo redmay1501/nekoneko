@@ -33,7 +33,8 @@ export function BottomSheet({ isOpen, label, onClose, children }: BottomSheetPro
 
   /** Bấm một liên kết trong khay (Luyện viết, từ liên quan…) → đóng khay, kể cả khi chỉ đổi ?tham-số trên cùng trang. */
   function closeOnLinkClick(event: MouseEvent<HTMLDivElement>) {
-    if (event.target instanceof Element && event.target.closest('a[href]')) onClose();
+    // Liên kết chỉ mở / đóng một mục (preventDefault, không chuyển trang) thì khay giữ nguyên.
+    if (!event.defaultPrevented && event.target instanceof Element && event.target.closest('a[href]')) onClose();
   }
 
   return (

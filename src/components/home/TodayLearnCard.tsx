@@ -11,8 +11,8 @@ interface TodayLearnCardProps {
   journeyDay: number;
   dayTitle: string;
   dailyMinutes: number;
-  /** Chữ sẽ gặp ở phiên "Bắt đầu học" kế tiếp. */
-  nextFaces: string[];
+  /** Kiến thức mới còn chờ của ngày, đếm theo loại: [{ label: 'từ vựng', count: 22 }, …]. */
+  newByType: Array<{ label: string; count: number }>;
   /** Kiến thức mới của ngày còn chờ học. */
   pendingCount: number;
   hasNewKnowledge: boolean;
@@ -32,7 +32,7 @@ const PLAN_TEXT: Record<SessionPhase, (count: number) => ReactNode> = {
 
 /** Thẻ chính của Trang chủ: hôm nay học gì + MỘT nút lớn để bắt đầu. */
 export function TodayLearnCard(props: TodayLearnCardProps) {
-  const { journeyDay, dayTitle, dailyMinutes, nextFaces, pendingCount, hasNewKnowledge, isReadyToComplete, plan } = props;
+  const { journeyDay, dayTitle, dailyMinutes, newByType, pendingCount, hasNewKnowledge, isReadyToComplete, plan } = props;
   const planParts = SESSION_PHASES.filter((phase) => plan[phase] > 0);
   return (
     <section className="dash-card dash-today" aria-labelledby="dash-today-title">
@@ -40,19 +40,17 @@ export function TodayLearnCard(props: TodayLearnCardProps) {
       <div className="dash-today-body">
         <h2 id="dash-today-title">{isReadyToComplete ? `Đã học hết ngày ${journeyDay} 🎉` : 'Học hôm nay'}</h2>
         <p className="dash-meta">Ngày {journeyDay} · {hasNewKnowledge ? dayTitle : 'Ngày ôn tập'}</p>
-        <p className="dash-meta">{dailyMinutes} phút · Nhẹ nhàng · Hiệu quả lâu dài</p>
         {planParts.length && !isReadyToComplete ? (
           <ul className="dash-plan" aria-label="Phiên học kế tiếp gồm">
             {planParts.map((phase) => (
               <li key={phase}>
-                <EmojiIcon emoji={SESSION_PHASE_INFO[phase].emoji} size={16} /> {PLAN_TEXT[phase](plan[phase])}
+                <EmojiIcon emoji={SESSION_PHASE_INFO[phase].emoji} size={16} />{' '}
+                {/* Phần mới: nói gọn theo loại ("2 Kanji · 22 từ vựng") thay vì liệt kê từng chữ. */}
+                {phase === 'new' && newByType.length
+                  ? newByType.map((part, index) => <span key={part.label}>{index ? ' · ' : ''}<b>{part.count}</b> {part.label}</span>)
+                  : PLAN_TEXT[phase](plan[phase])}
               </li>
             ))}
-          </ul>
-        ) : null}
-        {nextFaces.length && !isReadyToComplete ? (
-          <ul className="dash-glyphs" aria-label="Chữ sẽ học ngay">
-            {nextFaces.map((face) => <li key={face} className="jp">{face}</li>)}
           </ul>
         ) : null}
 

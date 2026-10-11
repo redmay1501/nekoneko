@@ -8,6 +8,7 @@ import { ReviewCard } from '@/components/home/ReviewCard';
 import { RoadmapStages } from '@/components/home/RoadmapStages';
 import { TimeOfDayGreeting } from '@/components/home/TimeOfDayGreeting';
 import { TodayLearnCard } from '@/components/home/TodayLearnCard';
+import type { ContentType } from '@/features/learning/knowledge-types';
 import { WelcomeDialog } from '@/components/home/WelcomeDialog';
 import { DailyGreetingDialog } from '@/components/home/DailyGreetingDialog';
 import { buildDailyGreeting } from '@/features/home/daily-greeting';
@@ -71,7 +72,7 @@ export default async function HomePage() {
           journeyDay={journeyDay}
           dayTitle={dayTitle}
           dailyMinutes={dailyMinutes}
-          nextFaces={unmetKnowledgeOfDay(catalog, memoryViews, journeyDay).map((item) => item.face)}
+          newByType={countByType(unmetKnowledgeOfDay(catalog, memoryViews, journeyDay))}
           pendingCount={remainingKnowledgeCount(dayCompletion)}
           hasNewKnowledge={dayCompletion.hasNewKnowledge}
           isReadyToComplete={isDayReadyToComplete(journey, dayCompletion)}
@@ -105,4 +106,15 @@ export default async function HomePage() {
       )}
     </div>
   );
+}
+
+/** Tên loại kiến thức trên thẻ "Học hôm nay" — theo thứ tự học trong ngày. */
+const TYPE_LABELS: ReadonlyArray<[ContentType, string]> = [
+  ['hiragana', 'chữ Hiragana'], ['katakana', 'chữ Katakana'], ['radical', 'bộ thủ'], ['kanji', 'Kanji'], ['vocabulary', 'từ vựng'], ['grammar', 'mẫu câu'],
+];
+
+function countByType(items: ReadonlyArray<{ type: ContentType }>): Array<{ label: string; count: number }> {
+  return TYPE_LABELS
+    .map(([type, label]) => ({ label, count: items.filter((item) => item.type === type).length }))
+    .filter((part) => part.count > 0);
 }

@@ -8,10 +8,12 @@ interface AudioButtonProps {
   text: string;
   label?: string;
   className?: string;
+  /** Hiện chữ "Nghe" cạnh loa — nút to, dễ bấm bằng ngón cái. */
+  showText?: boolean;
 }
 
 /** Nút 🔊 phát âm tiếng Nhật (giọng đọc của trình duyệt). Bấm lại để nghe lại; đang đọc thì nút sáng lên. */
-export function AudioButton({ text, label = 'Nghe phát âm', className = 'btn ghost sm' }: AudioButtonProps) {
+export function AudioButton({ text, label = 'Nghe phát âm', className = 'btn ghost sm', showText = false }: AudioButtonProps) {
   const { speak, isSupported, lacksJapaneseVoice } = useSpeech();
   const isSpeaking = useSpeechPreferenceStore((store) => store.speakingText === text);
   const unavailable = !isSupported || lacksJapaneseVoice;
@@ -23,7 +25,22 @@ export function AudioButton({ text, label = 'Nghe phát âm', className = 'btn g
       aria-label={label}
       title={unavailable ? 'Máy này chưa có giọng đọc tiếng Nhật' : label}
     >
-      <EmojiIcon emoji="🔊" size={20} />
+      <EmojiIcon emoji="🔊" size={20} />{showText ? <span className="audio-text">Nghe</span> : null}
+    </button>
+  );
+}
+
+/**
+ * Mặt chữ lớn bấm được để nghe — chỗ ngón tay chạm tự nhiên nhất khi đang nhìn chữ.
+ * Có gợi ý nhỏ "chạm để nghe" cho người mới.
+ */
+export function SpeakableFace({ text, face, className, style }: { text: string; face: string; className?: string; style?: React.CSSProperties }) {
+  const { speak } = useSpeech();
+  const isSpeaking = useSpeechPreferenceStore((store) => store.speakingText === text);
+  return (
+    <button type="button" className={`speakable-face ${className ?? ''}${isSpeaking ? ' is-speaking' : ''}`} style={style}
+      onClick={() => speak(text)} aria-label={`${face} — chạm để nghe`} title="Chạm để nghe">
+      {face}
     </button>
   );
 }

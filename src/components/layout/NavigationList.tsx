@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FOOTER_NAVIGATION, NAVIGATION_GROUPS, type NavigationItem, isActivePath, isInLearningSection } from './navigation-items';
+import { FOOTER_NAVIGATION, NAVIGATION_GROUPS, type NavigationItem, isActivePath, isInSection } from './navigation-items';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
 
 function NavigationLink({ item, isActive, onNavigate }: { item: NavigationItem; isActive: boolean; onNavigate?: () => void }) {
@@ -15,7 +15,7 @@ function NavigationLink({ item, isActive, onNavigate }: { item: NavigationItem; 
 }
 
 interface NavigationListProps {
-  /** Trong khay điều hướng trên mobile thì luôn mở nhóm Học tập (giống prototype). */
+  /** Trong khay điều hướng trên mobile thì luôn mở các mục con (Học tập, Luyện tập). */
   alwaysExpandLearning?: boolean;
   onNavigate?: () => void;
 }
@@ -23,7 +23,6 @@ interface NavigationListProps {
 /** Danh sách điều hướng dùng chung cho thanh bên (desktop) và khay ☰ (mobile). */
 export function NavigationList({ alwaysExpandLearning = false, onNavigate }: NavigationListProps) {
   const pathname = usePathname();
-  const showLearningLinks = alwaysExpandLearning || isInLearningSection(pathname);
   return (
     <nav aria-label="Điều hướng chính">
       {NAVIGATION_GROUPS.map((group) => (
@@ -31,8 +30,8 @@ export function NavigationList({ alwaysExpandLearning = false, onNavigate }: Nav
           <p className="nav-group-label" aria-hidden="true">{group.label}</p>
           {group.items.map((item) => (
             <div key={item.href}>
-              <NavigationLink item={item} isActive={pathname === item.href || (item.href !== '/hoc-tap' && isActivePath(pathname, item.href))} onNavigate={onNavigate} />
-              {item.children && showLearningLinks ? (
+              <NavigationLink item={item} isActive={pathname === item.href || (!item.children && isActivePath(pathname, item.href))} onNavigate={onNavigate} />
+              {item.children && (alwaysExpandLearning || isInSection(pathname, item)) ? (
                 <div className="nav-sub">
                   {item.children.map((child) => (
                     <NavigationLink key={child.href} item={child} isActive={isActivePath(pathname, child.href)} onNavigate={onNavigate} />

@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import content from '@content/seed/n5-content.json';
 import {
   type StrokeEnds, checkWriting, describeWritingCheck, hasStrokeOrder, strokeCountOf, strokeOrderCharacters,
-  strokeOrderUrl, strokeStartOf,
+  STROKE_ORDER_BUNDLE_URL, strokeStartOf,
 } from './stroke-order';
 
 describe('dữ liệu thứ tự nét (KanjiVG)', () => {
@@ -21,13 +21,13 @@ describe('dữ liệu thứ tự nét (KanjiVG)', () => {
     expect(['そ', 'ソ', 'ン', 'シ', 'ツ', 'ヨ', 'き', 'ふ'].map(strokeCountOf)).toEqual([1, 2, 2, 3, 3, 3, 4, 4]);
   });
 
-  it('file hình nét tồn tại và khớp mục lục', () => {
+  it('tệp hình nét có đủ mọi chữ trong mục lục, số nét khớp', () => {
+    const bundle = JSON.parse(readFileSync(`public${STROKE_ORDER_BUNDLE_URL}`, 'utf8'));
     for (const character of ['そ', 'ソ', '日', 'ゃ']) {
-      const data = JSON.parse(readFileSync(`public${strokeOrderUrl(character)}`, 'utf8'));
-      expect(data.c).toBe(character);
-      expect(data.strokes).toHaveLength(strokeCountOf(character)!);
-      expect(data.labels).toHaveLength(data.strokes.length);
+      expect(bundle[character].strokes).toHaveLength(strokeCountOf(character)!);
+      expect(bundle[character].labels).toHaveLength(bundle[character].strokes.length);
     }
+    expect(Object.keys(bundle)).toHaveLength(251);
   });
 
   it('chữ không có dữ liệu thì nói không có (không đoán)', () => {

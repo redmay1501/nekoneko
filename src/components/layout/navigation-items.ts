@@ -13,6 +13,10 @@ export const LEARNING_LINKS: NavigationItem[] = [
   { href: '/hoc-tap/kanji', icon: 'neko:kanji', label: 'Kanji' },
   { href: '/hoc-tap/tu-vung', icon: 'neko:vocabulary', label: 'Từ vựng' },
   { href: '/hoc-tap/ngu-phap', icon: '📐', label: 'Ngữ pháp' },
+];
+
+/** Luyện kỹ năng và trò chơi — gom trong mục Luyện tập (không lẫn với kho kiến thức Học tập). */
+export const PRACTICE_LINKS: NavigationItem[] = [
   { href: '/luyen-tap/nghe', icon: 'neko:listening', label: 'Luyện nghe' },
   { href: '/luyen-tap/noi', icon: 'neko:speaking', label: 'Luyện nói' },
   { href: '/luyen-tap/doc', icon: 'neko:reading', label: 'Đọc hiểu' },
@@ -32,7 +36,7 @@ export const NAVIGATION_GROUPS: NavigationGroup[] = [
     items: [
       { href: '/', icon: 'neko:home', label: 'Trang chủ' },
       { href: '/lo-trinh', icon: 'neko:roadmap', label: 'Lộ trình' },
-      { href: '/luyen-tap', icon: 'neko:practice', label: 'Luyện tập' },
+      { href: '/luyen-tap', icon: 'neko:practice', label: 'Luyện tập', children: PRACTICE_LINKS },
     ],
   },
   {
@@ -72,6 +76,7 @@ export function isActivePath(pathname: string, href: string): boolean {
   return [href, ...(ACTIVE_ALIASES[href] ?? [])].some((path) => pathname === path || pathname.startsWith(`${path}/`));
 }
 
-export function isInLearningSection(pathname: string): boolean {
-  return isActivePath(pathname, '/hoc-tap') || LEARNING_LINKS.some((link) => isActivePath(pathname, link.href));
+/** Đang ở trong mục có trang con (Học tập, Luyện tập) → mở danh sách trang con của mục đó trên thanh bên. */
+export function isInSection(pathname: string, item: NavigationItem): boolean {
+  return isActivePath(pathname, item.href) || (item.children ?? []).some((child) => isActivePath(pathname, child.href));
 }

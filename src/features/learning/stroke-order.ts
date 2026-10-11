@@ -5,7 +5,7 @@ import strokeOrderIndex from '@content/seed/stroke-order.json';
  * tải bằng scripts/fetch-stroke-order.mjs.
  *
  * Mục lục (content/seed/stroke-order.json) cho biết chữ nào CÓ dữ liệu và bao nhiêu nét; hình từng nét nằm ở
- * public/strokes/<mã hex>.json, chỉ tải khi người học mở. Chữ không có trong mục lục → giao diện nói rõ
+ * public/strokes/all.json (một tệp cho mọi chữ, tải sẵn khi trang rảnh). Chữ không có trong mục lục → giao diện nói rõ
  * "chưa có thứ tự nét", không tự vẽ đoán.
  */
 
@@ -35,26 +35,29 @@ export function strokeOrderCharacters(text: string): string[] {
   return [...text].filter(hasStrokeOrder);
 }
 
-export function strokeOrderUrl(character: string): string {
-  return `/strokes/${character.codePointAt(0)!.toString(16).padStart(5, '0')}.json`;
+/** Hình nét của mọi chữ trong MỘT tệp (~40 KB nén) — tải một lần, mở chữ nào cũng có ngay. */
+export const STROKE_ORDER_BUNDLE_URL = '/strokes/all.json';
+
+type StrokeBundle = Record<string, Omit<StrokeOrderData, 'c'>>;
+let bundleRequest: Promise<StrokeBundle | null> | null = null;
+
+/** Tải sẵn tệp nét (gọi khi trang rảnh). Lỗi mạng thì lần sau thử lại. */
+export function preloadStrokeOrders(): Promise<StrokeBundle | null> {
+  bundleRequest ??= fetch(STROKE_ORDER_BUNDLE_URL)
+    .then((response) => (response.ok ? (response.json() as Promise<StrokeBundle>) : null))
+    .catch(() => null)
+    .then((bundle) => {
+      if (!bundle) bundleRequest = null;
+      return bundle;
+    });
+  return bundleRequest;
 }
 
-const cache = new Map<string, Promise<StrokeOrderData | null>>();
-
-/** Tải hình nét của một chữ (dùng chung cho mọi component trên trang; lỗi mạng thì lần sau thử lại). */
-export function loadStrokeOrder(character: string): Promise<StrokeOrderData | null> {
-  if (!hasStrokeOrder(character)) return Promise.resolve(null);
-  const cached = cache.get(character);
-  if (cached) return cached;
-  const request = fetch(strokeOrderUrl(character))
-    .then((response) => (response.ok ? (response.json() as Promise<StrokeOrderData>) : null))
-    .catch(() => null)
-    .then((data) => {
-      if (!data) cache.delete(character);
-      return data;
-    });
-  cache.set(character, request);
-  return request;
+/** Hình nét của một chữ (null nếu chữ không có dữ liệu hoặc tải lỗi). */
+export async function loadStrokeOrder(character: string): Promise<StrokeOrderData | null> {
+  if (!hasStrokeOrder(character)) return null;
+  const entry = (await preloadStrokeOrders())?.[character];
+  return entry ? { c: character, ...entry } : null;
 }
 
 /** Điểm đầu của một nét — lệnh "M x,y" đầu tiên của đường SVG KanjiVG. */

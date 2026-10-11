@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { RadicalExpandable } from './RadicalExpandable';
 import { kanjiVisualAssetsOf, vocabularyImageOf } from '@/features/learning/vocabulary-images';
-import { AudioButton } from '@/components/common/AudioButton';
+import { AudioButton, SpeakableFace } from '@/components/common/AudioButton';
 import { speechTextFor } from '@/features/learning/speech-text';
 import type { KnowledgeDetailView } from '@/features/learning/knowledge-detail';
 import { toContentKey } from '@/features/learning/knowledge-types';
@@ -93,10 +93,10 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
       return (
         <>
           <div className="center">
-            <div className="jp glyph" style={{ fontSize: 86, lineHeight: 1 }}>{item.face}</div>
+            <SpeakableFace text={speechTextFor(item)} face={item.face} className="jp glyph" style={{ fontSize: 86, lineHeight: 1 }} />
             <p className="muted" style={{ letterSpacing: '.08em' }}>{item.content.romaji}</p>
             <div className="row" style={{ justifyContent: 'center', gap: 8, margin: '14px 0' }}>
-              <AudioButton text={speechTextFor(item)} className="btn ghost sm" label="Nghe" />
+              <AudioButton text={speechTextFor(item)} className="btn ghost" label="Nghe" showText />
               <Link className="btn ghost sm" href={writingHref}>✍️ Luyện viết</Link>
             </div>
           </div>
@@ -109,7 +109,7 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
       return (
         <>
           <div className="row" style={{ gap: 14 }}>
-            <span className="jp glyph" style={{ fontSize: 60, lineHeight: 1 }}>{item.face}</span>
+            <SpeakableFace text={speechTextFor(item)} face={item.face} className="jp glyph" style={{ fontSize: 60, lineHeight: 1 }} />
             <div>
               <h2>{item.content.meaning}</h2>
               <p className="jp soft">{item.content.nameJp}</p>
@@ -124,7 +124,7 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
       return (
         <>
           <div className="row" style={{ gap: 14 }}>
-            <span className="jp glyph" style={{ fontSize: 66, lineHeight: 1 }}>{item.face}</span>
+            <SpeakableFace text={speechTextFor(item)} face={item.face} className="jp glyph" style={{ fontSize: 66, lineHeight: 1 }} />
             <div style={{ flex: 1 }}>
               <h2>{item.content.hanViet}</h2>
               <p className="soft">{item.content.meaning}</p>
@@ -132,7 +132,7 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
                 <span className="chip">{item.content.strokes} nét</span>
               </div>
             </div>
-            <AudioButton text={speechTextFor(item)} />
+            <AudioButton text={speechTextFor(item)} className="btn ghost" label="Nghe" showText />
           </div>
           <StrokeOrderSection face={item.face} />
           <p className="center mt-2"><Link className="btn ghost sm" href={`/luyen-tap/viet?chu=${encodeURIComponent(item.face)}`}>✍️ Luyện viết chữ này</Link></p>
@@ -177,7 +177,7 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
         <>
           <div className="row" style={{ gap: 14 }}>
             <div style={{ flex: 1 }}>
-              <div className="jp glyph" style={{ fontSize: 42, lineHeight: 1.1 }}>{item.face}</div>
+              <SpeakableFace text={item.content.kana} face={item.face} className="jp glyph" style={{ fontSize: 42, lineHeight: 1.1 }} />
               {item.content.kanji ? <p className="jp soft mt-1">{item.content.kana}</p> : null}
               <p className="romaji">{vocabularyRomaji(item.content)}</p>
               <h2 className="mt-2">{item.content.meaning}</h2>
@@ -186,7 +186,7 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
               // eslint-disable-next-line @next/next/no-img-element -- icon tĩnh 128px trong public/, không cần tối ưu ảnh
               <img src={vocabularyImageOf(item.id)!} alt="" width={72} height={72} className="vocab-image" />
             ) : null}
-            <AudioButton text={item.content.kana} />
+            <AudioButton text={item.content.kana} className="btn ghost" label="Nghe" showText />
           </div>
           <div className="row wrap mt-2.5" style={{ gap: 6 }}>
             <span className="chip lav">{item.content.lesson.split('·')[0].trim()}</span>

@@ -5,6 +5,6 @@ Copyright (C) 2009-2025 Ulrich Apel.
 Licensed under the Creative Commons Attribution-Share Alike 3.0 licence:
 https://creativecommons.org/licenses/by-sa/3.0/
 
-Changes: the SVG files were converted to JSON (stroke paths in drawing order and
+Changes: the SVG files were converted to one JSON file, all.json (stroke paths in drawing order and
 stroke-number positions) by scripts/fetch-stroke-order.mjs. The converted data is
 distributed under the same licence (CC BY-SA 3.0).

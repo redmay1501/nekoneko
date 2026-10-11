@@ -15,7 +15,7 @@ interface LearningModule {
   contentType?: ContentType;
 }
 
-/** 10 kho kiến thức — giữ đúng thứ tự, biểu tượng, mô tả của prototype. */
+/** 6 kho kiến thức. Luyện nghe / nói / đọc / viết và trò chơi nằm trong Luyện tập. */
 const MODULES: LearningModule[] = [
   { href: '/hoc-tap/hiragana', icon: 'neko:hiragana', title: 'Hiragana', description: 'Học – Luyện viết – Nghe – Ghi nhớ', background: '#FFEFF2', contentType: 'hiragana' },
   { href: '/hoc-tap/katakana', icon: 'neko:katakana', title: 'Katakana', description: 'Học – Luyện viết – Nghe – Ghi nhớ', background: '#FFF3DE', contentType: 'katakana' },
@@ -23,13 +23,9 @@ const MODULES: LearningModule[] = [
   { href: '/hoc-tap/kanji', icon: 'neko:kanji', title: 'Kanji', description: 'N5 – Ý nghĩa – Cách đọc – Ví dụ', background: '#DFF3E4', contentType: 'kanji' },
   { href: '/hoc-tap/tu-vung', icon: 'neko:vocabulary', title: 'Từ vựng', description: 'N5 – Ví dụ – Nghe – Ghi nhớ', background: '#E2F0F8', contentType: 'vocabulary' },
   { href: '/hoc-tap/ngu-phap', icon: '📐', title: 'Ngữ pháp', description: 'Giải thích – Ví dụ – Luyện tập', background: '#FFEFF2', contentType: 'grammar' },
-  { href: '/luyen-tap/nghe', icon: 'neko:listening', title: 'Luyện nghe', description: 'Nghe – Nhận diện – Shadowing', background: '#FFF3DE' },
-  { href: '/luyen-tap/noi', icon: 'neko:speaking', title: 'Luyện nói', description: 'Nói theo – Tự nói – Phản xạ', background: '#EAE4F7' },
-  { href: '/luyen-tap/doc', icon: 'neko:reading', title: 'Đọc hiểu', description: 'Đoạn văn ngắn – Câu hỏi', background: '#DFF3E4' },
-  { href: '/luyen-tap/viet', icon: 'neko:writing', title: 'Luyện viết', description: 'Thứ tự nét – Viết tay – Chép câu', background: '#E2F0F8' },
 ];
 
-/** SC-13 · Học tập — kho để tra lại. Bài mới vẫn đi theo lộ trình. */
+/** SC-13 · Học tập — kho kiến thức: tra lại, chọn phần để học hoặc ôn bất cứ lúc nào. */
 export default async function LearningHubPage() {
   const { memoryViews } = await getLearnerContext();
   const overview = buildMemoryOverview(memoryViews);
@@ -37,10 +33,9 @@ export default async function LearningHubPage() {
   return (
     <>
       <h1>Học tập</h1>
-      <p className="soft sm" style={{ margin: '4px 0 16px' }}>Đây là kho để tra lại kiến thức đã gặp. Bài mới vẫn học theo lộ trình.</p>
+      <p className="soft sm" style={{ margin: '4px 0 16px' }}>Kho kiến thức N5 — chọn phần muốn học hoặc ôn lại. Muốn đi theo thứ tự từng ngày thì học theo Lộ trình.</p>
       <div className="grid two">
         {MODULES.map((module) => {
-          // Kỹ năng (nghe/nói/đọc/viết) chưa có cơ chế theo dõi riêng → không hiện con số.
           const summary = module.contentType ? overview.byType.find((entry) => entry.type === module.contentType) : undefined;
           return (
             <Link key={module.href} href={module.href} className="card tight block" style={{ textAlign: 'left' }}>

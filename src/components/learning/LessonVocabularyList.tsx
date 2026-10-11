@@ -69,7 +69,7 @@ export function LessonVocabularyList({ rows, lessons, currentTab }: { rows: Voca
             <KnowledgeListRow key={row.contentKey} row={row} selection={selection.isSelecting ? selection.selectionFor(row.contentKey) : undefined} />
           ))}
         </div>
-        <FocusSelectionBar selection={selection} unit="từ" />
+        <FocusSelectionBar selection={selection} unit="từ" visibleKeys={visibleRows.map((row) => row.contentKey)} />
       </div>
     </>
   );

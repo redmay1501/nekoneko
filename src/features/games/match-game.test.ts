@@ -6,7 +6,7 @@ import type { MemoryView } from '@/features/memory/memory-types';
 import { buildKnowledgeCatalog } from '@/features/learning/knowledge-catalog';
 import { type ContentKey, toContentKey } from '@/features/learning/knowledge-types';
 import { type MatchCard, MATCH_PAIRS, accuracyOf, formatDuration, mergeGameRecord, pickMatchRound } from './match-game';
-import { buildMatchPool, parseMatchRange, playableLessons } from './match-pool';
+import { buildMatchPool, parseMatchKind } from './match-pool';
 
 const card = (id: number, face: string, answer: string): MatchCard => ({ contentKey: `vocabulary-${id}`, face, answer, audioText: face });
 
@@ -55,28 +55,43 @@ describe('Ghép thẻ — kỷ lục', () => {
   });
 });
 
-describe('Ghép thẻ — chỉ dùng kiến thức đã học', () => {
+describe('Ghép thẻ — chọn phạm vi như phần học', () => {
   const NOW = new Date('2026-10-03T08:00:00.000Z');
   const catalog = buildKnowledgeCatalog(loadSeedContent());
   const records = generateDemoMemoryRecords(catalog.items, 30, NOW);
   const byKey = new Map(records.map((record) => [toContentKey(record.contentType, record.contentId), record]));
   const views: Map<ContentKey, MemoryView> = new Map(catalog.items.map((item) => [item.key, toMemoryView(item.key, item.type, byKey.get(item.key) ?? null, NOW)]));
 
-  it.each([['tu-vung', 'tat-ca'], ['kanji', 'tat-ca'], ['tu-vung', 'can-on']] as const)('%s / %s: mọi thẻ đều đã học', (kind, range) => {
-    const pool = buildMatchPool(catalog, views, kind, range);
-    expect(pool.length).toBeGreaterThan(0);
-    expect(pool.every((item) => views.get(item.contentKey as ContentKey)?.isLearned)).toBe(true);
+  it('"Đã học" / "Cần ôn" chỉ gồm thứ đã học', () => {
+    for (const range of ['da-hoc', 'can-on']) {
+      const pool = buildMatchPool(catalog, views, 'tu-vung', range);
+      expect(pool.range).toBe(range);
+      expect(pool.cards.every((card) => views.get(card.contentKey as ContentKey)?.isLearned)).toBe(true);
+    }
   });
 
-  it('người mới chưa học gì → bộ thẻ rỗng (không lấy thứ chưa học làm câu đố)', () => {
-    expect(buildMatchPool(catalog, new Map(), 'tu-vung', 'tat-ca')).toEqual([]);
+  it('chọn được một bài CHƯA học tới (ôn trước)', () => {
+    const pool = buildMatchPool(catalog, views, 'tu-vung', undefined);
+    const lesson25 = pool.options.find((option) => option.label === 'Bài 25')!;
+    const chosen = buildMatchPool(catalog, views, 'tu-vung', lesson25.id);
+    expect(chosen.cards).toHaveLength(lesson25.size);
+    expect(chosen.cards.some((card) => !views.get(card.contentKey as ContentKey)?.isLearned)).toBe(true);
   });
 
-  it('chọn theo bài chỉ lấy từ của bài đó; phạm vi lạ → tất cả', () => {
-    const [lesson] = playableLessons(catalog, views, 3);
-    const pool = buildMatchPool(catalog, views, 'tu-vung', `bai-${lesson}`);
-    expect(pool.length).toBeGreaterThanOrEqual(3);
-    expect(parseMatchRange('drop table', 'tu-vung')).toBe('tat-ca');
-    expect(parseMatchRange('bai-3', 'kanji')).toBe('tat-ca');
+  it('người mới: mặc định là phần đầu tiên (chưa có "Đã học")', () => {
+    const pool = buildMatchPool(catalog, new Map(), 'kanji', undefined);
+    expect(pool.options.some((option) => option.id === 'da-hoc')).toBe(false);
+    expect(pool.range).toBe('nhom-1');
+    expect(pool.cards).toHaveLength(10);
+  });
+
+  it('chữ cái: ghép chữ với romaji', () => {
+    const pool = buildMatchPool(catalog, new Map(), 'hiragana', 'tat-ca');
+    expect(pool.cards.find((card) => card.face === 'そ')?.answer).toBe('so');
+  });
+
+  it('phạm vi lạ → mặc định; loại lạ → từ vựng', () => {
+    expect(buildMatchPool(catalog, views, 'tu-vung', 'drop table').range).toBe('da-hoc');
+    expect(parseMatchKind('xyz')).toBe('tu-vung');
   });
 });

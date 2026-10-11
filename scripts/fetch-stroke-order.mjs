@@ -1,10 +1,10 @@
 /**
  * Tải dữ liệu thứ tự nét từ KanjiVG (https://kanjivg.tagaini.net) cho mọi chữ kana và Kanji trong nội dung N5.
  *
- * KanjiVG © Ulrich Apel — Creative Commons Attribution-Share Alike 3.0. Dữ liệu chuyển đổi (public/strokes/*.json)
- * giữ cùng giấy phép; ghi nguồn ở public/strokes/LICENSE.txt và ngay dưới hình động thứ tự nét.
+ * KanjiVG © Ulrich Apel — Creative Commons Attribution-Share Alike 3.0. Dữ liệu chuyển đổi (public/strokes/all.json)
+ * giữ cùng giấy phép; ghi nguồn ở public/strokes/LICENSE.txt và trang Cài đặt.
  *
- * Mỗi chữ → public/strokes/<mã hex>.json: { c, strokes: [đường SVG theo đúng thứ tự], labels: [[x, y] vị trí số nét] }.
+ * Mọi chữ → MỘT tệp public/strokes/all.json: { [chữ]: { strokes: [đường SVG theo đúng thứ tự], labels: [[x, y] vị trí số nét] } }.
  * Mục lục content/seed/stroke-order.json: chữ nào CÓ dữ liệu và bao nhiêu nét — giao diện chỉ hiện nút
  * thứ tự nét cho chữ có trong mục lục (không đoán cho chữ thiếu).
  *
@@ -35,16 +35,18 @@ function parseKanjiVg(svg) {
 
 await mkdir(OUT_DIR, { recursive: true });
 const index = {};
+const bundle = {};
 const missing = [];
 for (const character of [...characters].sort()) {
   const response = await fetch(`${SOURCE}/${hexOf(character)}.svg`);
   if (!response.ok) { missing.push(character); continue; }
   const { strokes, labels } = parseKanjiVg(await response.text());
   if (!strokes.length || strokes.length !== labels.length) { missing.push(character); continue; }
-  await writeFile(`${OUT_DIR}/${hexOf(character)}.json`, JSON.stringify({ c: character, strokes, labels }));
+  bundle[character] = { strokes, labels };
   index[character] = strokes.length;
 }
 
+await writeFile(`${OUT_DIR}/all.json`, JSON.stringify(bundle));
 await writeFile(INDEX_FILE, `${JSON.stringify({
   source: 'KanjiVG — https://kanjivg.tagaini.net',
   license: 'CC BY-SA 3.0 — https://creativecommons.org/licenses/by-sa/3.0/',

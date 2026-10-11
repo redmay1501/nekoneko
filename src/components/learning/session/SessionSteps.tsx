@@ -1,6 +1,6 @@
 'use client';
 
-import { AudioButton } from '@/components/common/AudioButton';
+import { AudioButton, SpeakableFace } from '@/components/common/AudioButton';
 import { StrokeOrder } from '@/components/learning/StrokeOrder';
 import { strokeOrderCharacters } from '@/features/learning/stroke-order';
 
@@ -110,7 +110,7 @@ export function DiscoverStepView({ step, isBusy, onAcknowledge }: { step: Discov
         // eslint-disable-next-line @next/next/no-img-element -- icon tĩnh 128px trong public/
         <img src={card.imageSrc} alt="" width={64} height={64} className="vocab-image mx-auto mt-3" />
       ) : null}
-      <div className="s-big" style={{ margin: '16px 0 6px', ...faceSize(card.face, 58, 38) }}>{card.face}</div>
+      <SpeakableFace text={card.audioText} face={card.face} className="s-big" style={{ margin: '16px auto 6px', ...faceSize(card.face, 58, 38) }} />
       <p className="jp soft">{card.reading}</p>
       {card.romaji ? <p className="romaji">{card.romaji}</p> : null}
       <h3 style={{ margin: '8px 0 10px' }}>{card.meaning}</h3>
@@ -157,7 +157,7 @@ export function DiscoverStepView({ step, isBusy, onAcknowledge }: { step: Discov
           ))}
         </div>
       ) : null}
-      <AudioButton text={card.audioText} label="🔊 Nghe" className="btn ghost sm mt-3.5" />
+      <AudioButton text={card.audioText} label="Nghe" className="btn ghost mt-3.5" showText />
       <button type="button" className="btn block mt-3" disabled={isBusy} aria-busy={isBusy} onClick={() => onAcknowledge(DISCOVER_ACKNOWLEDGED)}>
         Mình hiểu rồi
       </button>

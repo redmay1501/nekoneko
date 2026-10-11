@@ -32,7 +32,7 @@ export function FilterableKnowledgeList({ rows, unit = 'chữ' }: { rows: Knowle
           <p className="soft center">Chưa có chữ nào ở nhóm này.</p>
         )}
       </div>
-      <FocusSelectionBar selection={selection} unit={unit} />
+      <FocusSelectionBar selection={selection} unit={unit} visibleKeys={visibleRows.map((row) => row.contentKey)} />
     </>
   );
 }

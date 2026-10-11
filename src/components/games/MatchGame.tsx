@@ -99,8 +99,7 @@ export function MatchGame({ pool, scope, initialRecord, unit }: MatchGameProps) 
   if (pool.length < 3) {
     return (
       <div className="card center">
-        <p className="soft">Cần ít nhất 3 {unit} đã học trong phạm vi này để chơi.</p>
-        <Link className="btn sm mt-3" href="/hoc/daily">Học hôm nay</Link>
+        <p className="soft">Phần này chưa đủ 3 {unit} để chơi — chọn phần khác nhé.</p>
       </div>
     );
   }
@@ -110,7 +109,7 @@ export function MatchGame({ pool, scope, initialRecord, unit }: MatchGameProps) 
       <div className="card center match-start">
         <div style={{ fontSize: 44 }} aria-hidden="true">🃏</div>
         <p className="mt-2"><b>Ghép {Math.min(6, pool.length)} cặp</b> {unit} ↔ nghĩa, nhanh và không sai.</p>
-        <p className="sm soft mt-1">Chọn từ {pool.length} {unit} bạn đã học · mỗi ván một bộ khác.</p>
+        <p className="sm soft mt-1">Lấy ngẫu nhiên từ {pool.length} {unit} của phần này · mỗi ván một bộ khác.</p>
         <RecordLine record={record} />
         <button type="button" className="btn mt-3.5" onClick={start}>▶ Bắt đầu</button>
       </div>

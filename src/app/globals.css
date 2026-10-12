@@ -176,38 +176,44 @@ ul{margin:0;padding:0;list-style:none}
 
 /* ── Nút: "bong bóng kẹo mềm" — hồng đào dịu (không hồng chói), vệt bóng phía trên, bóng đổ hồng mềm,
  *    nổi lên khi rê chuột, lún xuống khi bấm, vòng sáng hồng khi chọn bằng bàn phím. Cùng ngôn ngữ với nút đăng nhập. */
-.btn{
-  position:relative;isolation:isolate;overflow:hidden;
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  padding:14px 22px;border-radius:999px;font-weight:600;font-size:15px;letter-spacing:.01em;color:#fff;
-  text-shadow:0 1px 1px rgba(180,55,80,.32);
-  background:linear-gradient(180deg,#FFA2B0 0%,#F7808F 52%,#EA6A7E 100%);
-  box-shadow:0 10px 20px rgba(239,116,135,.28),inset 0 -3px 6px rgba(200,70,95,.18),inset 0 2px 0 rgba(255,255,255,.5);
-  transition:transform .2s cubic-bezier(.3,1.4,.5,1),box-shadow .2s ease,filter .2s ease,background-color .2s ease;
+/*
+ * NÚT CHUNG — cùng kiểu với NekoButton (viên thuốc, ánh sáng phủ đều, bóng mềm, nổi lên khi rê, lún khi bấm).
+ * Màu theo chức năng dùng chung biến --nb-*: mặc định hồng coral; .review vàng mật ong, .quiz xanh dương, .success mint,
+ * .game tím pastel; .ghost (phụ, trắng viền hồng) và .quiet (nhẹ, kem). Cỡ: .sm 34px · mặc định 40px · .lg 46px.
+ */
+.btn{--nb-top:#FF9EAC;--nb-bottom:#F2667C;--nb-ink:#fff;--nb-glow:rgba(242,102,124,.3);--nb-ring:rgba(255,170,185,.5);
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;max-width:100%;
+  min-height:40px;padding:8px 18px;border:0;border-radius:999px;font:inherit;font-weight:700;font-size:14.5px;line-height:1.25;letter-spacing:.01em;
+  color:var(--nb-ink);text-align:center;cursor:pointer;
+  background:linear-gradient(180deg,rgba(255,255,255,.34) 0%,rgba(255,255,255,0) 58%),linear-gradient(180deg,var(--nb-top),var(--nb-bottom));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -3px 6px rgba(0,0,0,.07),0 5px 14px var(--nb-glow),0 2px 4px rgba(60,30,30,.06);
+  transition:transform .16s cubic-bezier(.3,1.4,.5,1),box-shadow .16s ease,filter .2s ease;-webkit-tap-highlight-color:transparent;
 }
-/* Vệt bóng — nằm dưới chữ (z-index:-1 trong isolation) nên không làm mờ nội dung. */
-.btn::before{content:"";position:absolute;z-index:-1;left:10%;right:10%;top:2px;height:42%;border-radius:999px;pointer-events:none;
-  background:linear-gradient(180deg,rgba(255,255,255,.38),rgba(255,255,255,0))}
-.btn:hover:not([disabled]){transform:translateY(-1px);filter:brightness(1.03);
-  box-shadow:0 14px 26px rgba(239,116,135,.34),inset 0 -3px 6px rgba(200,70,95,.18),inset 0 2px 0 rgba(255,255,255,.5)}
-.btn:active:not([disabled]){transform:translateY(1px) scale(.985);filter:brightness(.98);
-  box-shadow:0 5px 12px rgba(239,116,135,.26),inset 0 2px 6px rgba(200,70,95,.22)}
-.btn:focus-visible{outline:none;box-shadow:0 0 0 4px rgba(255,170,185,.45),0 10px 20px rgba(239,116,135,.28)}
+.btn:hover:not([disabled]){transform:translateY(-1px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -3px 6px rgba(0,0,0,.07),0 9px 20px var(--nb-glow),0 3px 6px rgba(60,30,30,.07)}
+.btn:active:not([disabled]){transform:translateY(1px);box-shadow:inset 0 2px 5px rgba(0,0,0,.12),0 2px 6px var(--nb-glow);transition-duration:.06s}
+.btn:focus-visible{outline:3px solid var(--nb-ring);outline-offset:3px}
+.btn.sm{min-height:34px;padding:6px 14px;font-size:13px;gap:6px}
+.btn.lg{min-height:46px;padding:10px 24px;font-size:16px}
+/* Rộng hết khung: trên điện thoại, và trong khay / hộp thoại / bảng chọn. Màn rộng hơn: gọn, căn giữa. */
 .btn.block{display:flex;width:100%}
-/* Nút phụ: nền trắng sữa, viền hồng phấn, chữ hồng đào. */
-.btn.ghost{text-shadow:none;color:#E0566C;background:linear-gradient(180deg,#FFFFFF,#FFF6F7);border:1.5px solid #FFD3DB;
-  box-shadow:0 4px 12px rgba(239,116,135,.1),inset 0 1px 0 #fff}
-.btn.ghost::before{background:linear-gradient(180deg,rgba(255,255,255,.8),rgba(255,255,255,0))}
-.btn.ghost:hover:not([disabled]){background:linear-gradient(180deg,#FFFDFD,#FFEEF1);border-color:#FFBFCB;box-shadow:0 8px 18px rgba(239,116,135,.16),inset 0 1px 0 #fff}
-.btn.ghost:active:not([disabled]){box-shadow:inset 0 2px 5px rgba(239,116,135,.16)}
-/* Nút nhẹ: nền kem ấm, dùng cho "Để sau", "Chưa", "Dừng ở đây"… */
-.btn.quiet{text-shadow:none;color:#7A645E;background:linear-gradient(180deg,#FFF9F0,#FFF0E0);border:1.5px solid #F7E6D2;
-  box-shadow:0 3px 8px rgba(170,120,80,.08),inset 0 1px 0 #fff}
-.btn.quiet::before{background:linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,255,255,0))}
-.btn.quiet:hover:not([disabled]){background:linear-gradient(180deg,#FFF6EA,#FFEAD6);box-shadow:0 6px 14px rgba(170,120,80,.12),inset 0 1px 0 #fff}
-.btn.quiet:active:not([disabled]){box-shadow:inset 0 2px 5px rgba(170,120,80,.14)}
-.btn.ghost:focus-visible,.btn.quiet:focus-visible{box-shadow:0 0 0 4px rgba(255,170,185,.4)}
-.btn.sm{padding:9px 16px;font-size:13.5px}
+@media (min-width:640px){
+  .btn.block{width:fit-content;min-width:min(100%,240px);margin-left:auto;margin-right:auto}
+  .sheet .btn.block,.welcome .btn.block,.test-start .btn.block,.daily-session .btn.block,.s-card .btn.block{width:100%}
+}
+.btn.review{--nb-top:#FFDB7E;--nb-bottom:#F5B93D;--nb-ink:#4F3306;--nb-glow:rgba(245,185,61,.3);--nb-ring:rgba(245,185,61,.5)}
+.btn.quiz{--nb-top:#9DD1FF;--nb-bottom:#5EA9F0;--nb-glow:rgba(94,169,240,.3);--nb-ring:rgba(94,169,240,.5)}
+.btn.success{--nb-top:#98E7C5;--nb-bottom:#4FC491;--nb-ink:#0E3B29;--nb-glow:rgba(79,196,145,.28);--nb-ring:rgba(79,196,145,.5)}
+.btn.game{--nb-top:#D3C2FF;--nb-bottom:#A68AF0;--nb-glow:rgba(166,138,240,.3);--nb-ring:rgba(166,138,240,.5)}
+/* Nút phụ: trắng sữa, viền hồng phấn, chữ hồng đào. */
+.btn.ghost{--nb-top:#FFFFFF;--nb-bottom:#FFF4F6;--nb-ink:#D9506A;--nb-glow:rgba(239,116,135,.12);box-shadow:inset 0 0 0 1.5px #FFD3DB,0 3px 10px var(--nb-glow)}
+.btn.ghost:hover:not([disabled]){box-shadow:inset 0 0 0 1.5px #FFBFCB,0 7px 16px rgba(239,116,135,.16)}
+.btn.ghost:active:not([disabled]){box-shadow:inset 0 0 0 1.5px #FFBFCB,inset 0 2px 5px rgba(239,116,135,.14)}
+/* Nút nhẹ: kem ấm — "Để sau", "Dừng ở đây"… */
+.btn.quiet{--nb-top:#FFF9F0;--nb-bottom:#FFF0E0;--nb-ink:#7A645E;--nb-glow:rgba(170,120,80,.08);box-shadow:inset 0 0 0 1.5px #F7E6D2,0 2px 8px var(--nb-glow)}
+.btn.quiet:hover:not([disabled]){box-shadow:inset 0 0 0 1.5px #F0D9BF,0 6px 14px rgba(170,120,80,.12)}
+.btn.quiet:active:not([disabled]){box-shadow:inset 0 0 0 1.5px #F0D9BF,inset 0 2px 5px rgba(170,120,80,.14)}
+@media (prefers-reduced-motion:reduce){.btn{transition:none}.btn:hover:not([disabled]),.btn:active:not([disabled]){transform:none}}
 
 .chip{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:999px;background:var(--cream);font-size:12px;font-weight:600;color:var(--ink-2)}
 .chip.pink{background:#FFEFF2;color:var(--sakura-deep)}
@@ -525,7 +531,8 @@ html.sheet-open,html.sheet-open body{overflow:hidden}
 
 /* ============ BỔ SUNG CHO BẢN PRODUCTION ============ */
 /* Vùng chạm tối thiểu 44×44px (Coding Standards §23). */
-.btn,.btn.sm,.tab,.nav-i,.link,button.chip,a.chip,.nav-burger{min-height:44px}
+/* Vùng chạm tối thiểu 44px cho thẻ, liên kết, chip; nút .btn theo cỡ của nó (34 / 40 / 46px — Coding Standards §23 cập nhật). */
+.tab,.nav-i,.link,button.chip,a.chip,.nav-burger{min-height:44px}
 .tab,.link,.nav-burger{display:inline-flex;align-items:center}
 .nav-burger{min-width:44px;justify-content:center;font-size:19px}
 a.btn{text-decoration:none}
@@ -619,10 +626,11 @@ input[type="radio"]{appearance:auto;-webkit-appearance:radio;width:18px;height:1
 .dash-meta{display:block;font-size:13px;color:#8C7872;margin-top:3px}
 .dash-empty{font-size:13px;color:#9C8A85;padding:10px 0}
 .dash-sublink{display:flex;justify-content:center;margin-top:6px;font-size:13px}
-.dash-top{display:grid;grid-template-columns:1fr;gap:16px;margin-top:14px}
+/* Hai thẻ chính: cao theo nội dung (không kéo giãn bằng nhau → không có khoảng trống). */
+.dash-top{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px;align-items:start}
 /* Học hôm nay */
-.dash-today{display:flex;align-items:center;gap:8px;padding:11px 13px;background:linear-gradient(135deg,rgba(255,255,255,.76),rgba(255,247,244,.62))}
-.dash-today-mascot{width:94px;height:94px;object-fit:contain;flex:0 0 auto;align-self:center}
+.dash-today{display:flex;align-items:flex-start;gap:10px;padding:14px 16px;background:linear-gradient(135deg,rgba(255,255,255,.76),rgba(255,247,244,.62))}
+.dash-today-mascot{width:76px;height:76px;object-fit:contain;flex:0 0 auto}
 .dash-today-body{flex:1;min-width:0}
 .dash-plan{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
 .dash-plan li{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;font-size:12.5px;color:#5A4D48;background:rgba(255,255,255,.72);border:1.5px solid rgba(255,211,219,.8)}
@@ -642,16 +650,11 @@ input[type="radio"]{appearance:auto;-webkit-appearance:radio;width:18px;height:1
 .dash-cta-text b{font-size:15px}
 .dash-cta-text span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11.5px;font-weight:500;opacity:.92}
 /* Gặp lại */
-.dash-review{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(255,255,255,.76),rgba(243,249,254,.62))}
+.dash-review{display:flex;align-items:flex-start;gap:10px;padding:14px 16px;background:linear-gradient(135deg,rgba(255,255,255,.76),rgba(243,249,254,.62))}
 .dash-review-body{flex:1;min-width:0}
-.dash-review-mascot{width:114px;height:114px;object-fit:contain;flex:0 0 auto}
-.dash-cta-blue{position:relative;overflow:hidden;display:flex;align-items:center;gap:14px;margin-top:14px;padding:12px 20px 12px 12px;min-height:62px;border-radius:22px;
+.dash-review-mascot{width:76px;height:76px;object-fit:contain;flex:0 0 auto}
   color:#2D5F86;text-decoration:none;background:linear-gradient(180deg,#D9EEFC 0%,#B9DDF7 100%);border:1.5px solid #C4E2F8;
   box-shadow:0 10px 20px rgba(90,150,200,.2),inset 0 2px 0 rgba(255,255,255,.7);transition:transform .2s cubic-bezier(.3,1.4,.5,1),box-shadow .2s}
-.dash-cta-blue::before{content:"";position:absolute;left:10%;right:10%;top:2px;height:42%;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,0));pointer-events:none}
-a.dash-cta-blue:hover{transform:translateY(-1px);box-shadow:0 14px 26px rgba(90,150,200,.26),inset 0 2px 0 rgba(255,255,255,.7)}
-.dash-cta-blue .dash-cta-play{color:#4A90C8;box-shadow:0 4px 10px rgba(80,140,190,.25)}
-.dash-cta-blue.is-locked{opacity:1;filter:none;cursor:default}
 /* Khu dưới */
 .dash-lower{display:grid;grid-template-columns:1fr;gap:16px}
 .dash-pill-link{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-size:12.5px;font-weight:600;color:#C95A6C;
@@ -699,8 +702,8 @@ a.dash-cta-blue:hover{transform:translateY(-1px);box-shadow:0 14px 26px rgba(90,
 /* Điện thoại: mèo thu nhỏ lên góc phải để nút "Bắt đầu học" trải hết chiều ngang. */
 @media (max-width:767px){
   .dash-today,.dash-review{position:relative;display:block}
-  .dash-today-mascot,.dash-review-mascot{position:absolute;top:8px;right:8px;width:88px;height:88px}
-  .dash-today-body>h2,.dash-today-body>.dash-meta,.dash-review-body>h2,.dash-review-body>.dash-meta{padding-right:96px}
+  .dash-today-mascot,.dash-review-mascot{position:absolute;top:8px;right:8px;width:64px;height:64px}
+  .dash-today-body>h2,.dash-today-body>.dash-meta,.dash-review-body>h2,.dash-review-body>.dash-meta{padding-right:70px}
 }
 @media (min-width:768px){
   .dash-hero-bg{top:0;left:0;right:0;height:auto;aspect-ratio:3/1}
@@ -715,8 +718,11 @@ a.dash-cta-blue:hover{transform:translateY(-1px);box-shadow:0 14px 26px rgba(90,
   .dash-stage-island{width:min(100%,170px);height:110px}
   .dash-stage:nth-child(even){transform:translateY(38px)}
 }
+/* iPad trở lên: hai cột — "Học hôm nay" rộng hơn (việc chính), "Gặp lại" gọn bên cạnh. */
+@media (min-width:768px){
+  .dash-top{grid-template-columns:1.45fr 1fr}
+}
 @media (min-width:1100px){
-  .dash-top{grid-template-columns:1.18fr 1fr}
   .dash-lower{grid-template-columns:2.1fr 1fr;align-items:stretch}
 }
 @media (min-width:1200px){

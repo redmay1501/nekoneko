@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { PICKABLE_MODES, SESSION_MODE_CONFIG } from '@/features/learning/session-modes';
+import { PICKABLE_MODES, SESSION_MODE_CONFIG, describeComposition } from '@/features/learning/session-modes';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
 
 interface ModeGridProps {
@@ -19,6 +19,7 @@ export function ModeGrid({ includePracticeLink = false, onNavigate }: ModeGridPr
             <span className="e"><EmojiIcon emoji={config.emoji} size={34} /></span>
             <b>{config.label}</b>
             <span>{config.description}</span>
+            <span className="mode-meta">{describeComposition(mode)}</span>
           </Link>
         );
       })}

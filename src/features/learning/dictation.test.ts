@@ -15,8 +15,17 @@ const viewsAt = (day: number) => {
 };
 
 describe('buildDictationPractice', () => {
-  it('ngày 3 (chưa có từ / mẫu câu): bài trống — không hỏi thứ chưa học', () => {
-    expect(buildDictationPractice(catalog, viewsAt(3), 3, 'd')).toEqual({ words: [], sentences: [] });
+  it('ngày 3, theo lộ trình chưa có gì → không khoá: tự chuyển sang Bài 1', () => {
+    const practice = buildDictationPractice(catalog, viewsAt(3), 3, 'd');
+    expect(practice.range).toBe('bai-1');
+    expect(practice.words.length).toBeGreaterThan(0);
+    expect(practice.sentences.length).toBeGreaterThan(0);
+  });
+
+  it('chọn một bài chưa học tới (bài 20) vẫn luyện được', () => {
+    const practice = buildDictationPractice(catalog, viewsAt(3), 3, 'd', 'bai-20');
+    expect(practice.range).toBe('bai-20');
+    expect(practice.words.every((word) => /\b20\b/.test((catalog.byKey.get(word.contentKey)?.content as { lesson: string }).lesson))).toBe(true);
   });
 
   it('ngày 30: chỉ từ đã học, chỉ câu của mẫu đã tới lịch; gõ kana hay chữ Hán đều đúng', () => {

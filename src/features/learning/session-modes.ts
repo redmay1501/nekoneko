@@ -84,21 +84,21 @@ export const SESSION_MODE_CONFIG: Record<SessionMode, SessionModeConfig> = {
   // Một ngày học trọn vẹn, theo chặng: Gặp lại (≤5) → Học bù (≤3) → Mới (TOÀN BỘ kiến thức còn lại của ngày, từng chặng 5 thứ,
   // hết mỗi chặng hỏi "Học tiếp hay nghỉ?") → Dùng thử (2). Nghỉ giữa chừng thì lần sau học tiếp đúng chỗ đó.
   daily: {
-    label: 'Học hôm nay', emoji: '🌱', description: 'Ôn bài cũ, học bài mới, rồi đặt một câu.', cardBackground: '#FFEFF2',
+    label: 'Học hôm nay', emoji: '🌱', description: 'Bài chính mỗi ngày: ôn thứ đến hạn, học bù ngày trước còn sót, rồi học kiến thức mới của ngày (từng chặng 5 thứ).', cardBackground: '#FFEFF2',
     targetMinutes: 8, composition: { surprise: 1, recall: 4, discover: DAY_CHUNK_SIZE, use: 2 }, recallSource: 'priority', isPickable: false,
     backlogPerSession: BACKLOG_PER_DAILY_SESSION,
     newKnowledgeScope: 'rest-of-day', checkpointEvery: DAY_CHUNK_SIZE,
   },
   // Học bù: chỉ kiến thức các ngày trước còn chưa gặp (bấm "Hoàn thành ngày" khi còn sót, bỏ dở…), cũ nhất trước.
   backlog: {
-    label: 'Học bù', emoji: '📦', description: 'Kiến thức các ngày trước bạn chưa kịp học.', cardBackground: '#FFF3DE',
+    label: 'Học bù', emoji: '📦', description: 'Chỉ học kiến thức của các ngày trước bạn chưa kịp học.', cardBackground: '#FFF3DE',
     targetMinutes: 5, composition: { surprise: 0, recall: 0, discover: DAY_CHUNK_SIZE, use: 0 }, recallSource: 'priority', isPickable: false,
     backlogPerSession: DAY_CHUNK_SIZE,
     newKnowledgeScope: 'backlog-only', checkpointEvery: null,
   },
   // Đi hết kiến thức còn lại của ngày đang học trong MỘT phiên, có điểm dừng sau mỗi chặng.
   day: {
-    label: 'Học hết ngày', emoji: '📘', description: 'Đi hết kiến thức của ngày, từng chặng 5 thứ.', cardBackground: '#FFF3DE',
+    label: 'Học hết ngày', emoji: '📘', description: 'Học hết kiến thức còn lại của ngày đang học, từng chặng 5 thứ.', cardBackground: '#FFF3DE',
     targetMinutes: 15, composition: { surprise: 0, recall: 0, discover: 0, use: 2 }, recallSource: 'priority', isPickable: false, backlogPerSession: 0,
     newKnowledgeScope: 'rest-of-day', checkpointEvery: DAY_CHUNK_SIZE,
   },
@@ -110,49 +110,49 @@ export const SESSION_MODE_CONFIG: Record<SessionMode, SessionModeConfig> = {
     newKnowledgeScope: 'next-chunk', checkpointEvery: DAY_CHUNK_SIZE,
   },
   quick5: {
-    label: 'Học nhanh 5 phút', emoji: '⚡', description: 'Không cần suy nghĩ. Neko Neko chọn cho bạn.', cardBackground: '#FFF3DE',
+    label: 'Học nhanh 5 phút', emoji: '⚡', description: 'Vài câu ôn thứ đã học — không có gì mới. Lúc chỉ có vài phút.', cardBackground: '#FFF3DE',
     targetMinutes: 5, composition: { surprise: 1, recall: 3, discover: 0, use: 0 }, recallSource: 'priority', isPickable: true, backlogPerSession: 0,
     newKnowledgeScope: 'next-chunk', checkpointEvery: null,
   },
   random: {
-    label: 'Học ngẫu nhiên', emoji: '🪄', description: 'Neko chọn vài chữ bất kỳ để bạn ôn.', cardBackground: '#EAE4F7',
+    label: 'Học ngẫu nhiên', emoji: '🪄', description: 'Bản ngắn của Học liên tục: ít câu ôn, một thứ mới, một câu.', cardBackground: '#EAE4F7',
     targetMinutes: 6, composition: { surprise: 1, recall: 2, discover: 1, use: 1 }, recallSource: 'priority', isPickable: true, backlogPerSession: 0,
     newKnowledgeScope: 'next-chunk', checkpointEvery: null,
   },
   more: {
-    label: 'Học thêm', emoji: '🌱', description: 'Khi bạn muốn học tiếp.', cardBackground: '#DFF3E4',
+    label: 'Học thêm', emoji: '🌱', description: 'Học trước chặng kế tiếp của ngày (3 thứ mới) kèm vài câu ôn. Khi đã xong bài chính mà vẫn muốn học.', cardBackground: '#DFF3E4',
     targetMinutes: 5, composition: { surprise: 0, recall: 3, discover: 3, use: 0 }, recallSource: 'priority', isPickable: true, backlogPerSession: 0,
     newKnowledgeScope: 'next-chunk', checkpointEvery: null,
   },
   rescue: {
-    label: 'Ôn lại sau khi nghỉ', emoji: '🔄', description: 'Ôn những thứ lâu rồi chưa gặp.', cardBackground: '#E2F0F8',
+    label: 'Ôn lại sau khi nghỉ', emoji: '🔄', description: 'Chỉ ôn những thứ đã học đang mờ nhất. Dùng khi vừa nghỉ vài ngày.', cardBackground: '#E2F0F8',
     targetMinutes: 6, composition: { surprise: 0, recall: 5, discover: 0, use: 0 }, recallSource: 'at-risk', isPickable: true, backlogPerSession: 0,
     newKnowledgeScope: 'next-chunk', checkpointEvery: null,
   },
   flow: {
-    label: 'Học liên tục', emoji: '🌊', description: 'Khi bạn đang có hứng.', cardBackground: '#FFEFF2',
+    label: 'Học liên tục', emoji: '🌊', description: 'Phiên dài: ôn, học thêm thứ mới và dùng trong câu. Khi đang có hứng.', cardBackground: '#FFEFF2',
     targetMinutes: 12, composition: { surprise: 1, recall: 4, discover: 3, use: 2 }, recallSource: 'priority', isPickable: true, backlogPerSession: 0,
     newKnowledgeScope: 'next-chunk', checkpointEvery: null,
   },
   recall: {
-    label: 'Gặp lại kiến thức', emoji: '🧠', description: 'Những thứ đã đến lúc gặp lại.', cardBackground: '#FFEFF2',
+    label: 'Gặp lại kiến thức', emoji: '🧠', description: 'Chỉ ôn những thứ đã học sắp quên.', cardBackground: '#FFEFF2',
     targetMinutes: 4, composition: { surprise: 0, recall: 4, discover: 0, use: 0 }, recallSource: 'at-risk', isPickable: false, backlogPerSession: 0,
     newKnowledgeScope: 'next-chunk', checkpointEvery: null,
   },
   discover: {
-    label: 'Khám phá', emoji: '🌱', description: 'Một vài thứ mới, nhỏ thôi.', cardBackground: '#DFF3E4',
+    label: 'Khám phá', emoji: '🌱', description: 'Chỉ học vài thứ mới của ngày, không ôn.', cardBackground: '#DFF3E4',
     targetMinutes: 4, composition: { surprise: 0, recall: 0, discover: 4, use: 0 }, recallSource: 'priority', isPickable: false, backlogPerSession: 0,
     newKnowledgeScope: 'next-chunk', checkpointEvery: null,
   },
   use: {
-    label: 'Thực hành', emoji: '💬', description: 'Đưa kiến thức vào câu thật.', cardBackground: '#E2F0F8',
+    label: 'Thực hành', emoji: '💬', description: 'Chỉ luyện dùng mẫu câu và từ đã học trong câu.', cardBackground: '#E2F0F8',
     targetMinutes: 4, composition: { surprise: 0, recall: 0, discover: 0, use: 4 }, recallSource: 'priority', isPickable: false, backlogPerSession: 0,
     newKnowledgeScope: 'next-chunk', checkpointEvery: null,
   },
 };
 
-/** Thứ tự hiện trong khay "Học ngay" — giữ đúng prototype. */
-export const PICKABLE_MODES: readonly SessionMode[] = ['quick5', 'random', 'more', 'rescue', 'flow'];
+/** Thẻ ở trang Luyện tập. "Học ngẫu nhiên" (random) không hiện — là bản thu nhỏ của Học liên tục; mode và link /hoc/random vẫn chạy. */
+export const PICKABLE_MODES: readonly SessionMode[] = ['quick5', 'more', 'rescue', 'flow'];
 
 export function isSessionMode(value: string): value is SessionMode {
   return Object.values(SESSION_MODES).includes(value as SessionMode);
@@ -161,4 +161,15 @@ export function isSessionMode(value: string): value is SessionMode {
 /** Số bước của một phiên đủ nội dung. Mỗi kiến thức mới = 1 bước giới thiệu + 1 câu luyện ngay. */
 export function totalSteps(composition: SessionComposition): number {
   return composition.surprise + composition.recall + composition.discover * 2 + composition.use;
+}
+
+/** Một phiên của chế độ gồm gì — dòng nhỏ dưới thẻ chọn kiểu học, tính từ cấu hình thật (không viết tay). */
+export function describeComposition(mode: SessionMode): string {
+  const { composition, targetMinutes, newKnowledgeScope } = SESSION_MODE_CONFIG[mode];
+  const review = composition.surprise + composition.recall;
+  const parts = [`~${targetMinutes} phút`];
+  if (review) parts.push(`${review} câu ôn`);
+  parts.push(composition.discover ? `${composition.discover} thứ mới` : newKnowledgeScope === 'rest-of-day' ? 'hết thứ mới của ngày' : 'không có gì mới');
+  if (composition.use) parts.push(`${composition.use} câu dùng thử`);
+  return parts.join(' · ');
 }

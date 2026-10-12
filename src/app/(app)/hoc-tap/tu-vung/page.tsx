@@ -1,6 +1,5 @@
 import { LessonVocabularyList, KANA_PERIOD_TAB } from '@/components/learning/LessonVocabularyList';
 import { TestPicker } from '@/components/learning/TestPicker';
-import { VocabularySelfTest } from '@/components/learning/VocabularySelfTest';
 import { itemsOfType } from '@/features/learning/knowledge-catalog';
 import { buildTestGroups } from '@/features/learning/study-actions';
 import { countLearnedOfType, vocabularyRows } from '@/features/learning/knowledge-library';
@@ -25,7 +24,6 @@ export default async function VocabularyPage() {
         {total} từ: theo Minna no Nihongo I bài 1–25, cộng từ N5 bổ sung và từ của giai đoạn bảng chữ cái.
       </p>
       <TestPicker groups={testGroups} unit="từ" isWide />
-      <div className="mb-4"><VocabularySelfTest rows={rows} /></div>
       <LessonVocabularyList rows={rows} lessons={catalog.content.lessons} currentTab={currentTab} />
     </>
   );

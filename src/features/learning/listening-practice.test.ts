@@ -29,3 +29,26 @@ describe('Luyện nghe — chọn phạm vi, không cần học tới', () => {
     expect(first).not.toEqual(second);
   });
 });
+
+describe('Luyện nói / viết / đọc — không khoá theo ngày', () => {
+  it('nói: trước ngày có mẫu câu vẫn có câu (Bài 1); chọn một bài = mọi mẫu của bài', async () => {
+    const { buildSpeakingPractice } = await import('./skill-practice');
+    expect(buildSpeakingPractice(catalog, 1).range).toBe('bai-1');
+    expect(buildSpeakingPractice(catalog, 1).sentences.length).toBeGreaterThan(0);
+    const lesson12 = buildSpeakingPractice(catalog, 1, 'bai-12');
+    expect(lesson12.sentences.length).toBe(catalog.content.grammar.filter((pattern) => /\b12\b/.test(pattern.lesson)).length);
+  });
+
+  it('viết: ngày 1 vẫn luyện được Kanji đầu tiên; nhóm 10 chữ', async () => {
+    const { buildWritingPractice } = await import('./skill-practice');
+    const practice = buildWritingPractice(catalog, 1);
+    expect(practice.focus.character).toBe('日');
+    expect(practice.others).toHaveLength(10);
+    expect(practice.groups.filter((group) => group.isCurrent)).toHaveLength(1);
+  });
+
+  it('đọc: mọi đoạn đều hiện, không lọc theo ngày', async () => {
+    const { buildReadingPractice } = await import('./skill-practice');
+    expect(buildReadingPractice(catalog)).toHaveLength(catalog.content.readingPassages.length);
+  });
+});

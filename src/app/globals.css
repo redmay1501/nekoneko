@@ -575,7 +575,6 @@ a.btn{text-decoration:none}
 .radio-group legend{width:100%;margin-bottom:6px;font-weight:600;padding:0}
 .radio-group label{display:inline-flex;align-items:center;gap:7px;font-size:14px;cursor:pointer;min-height:32px}
 input[type="radio"]{appearance:auto;-webkit-appearance:radio;width:18px;height:18px;margin:0;border-radius:50%;accent-color:var(--sakura);cursor:pointer}
-.self-test{background:#FFFCF7}
 .welcome-radios{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .welcome-radios label{padding:10px 12px;border:1.5px solid var(--line);border-radius:14px;background:#fff}
 .welcome-radios label:has(input:checked){border-color:var(--sakura);background:#FFEFF2}
@@ -1038,3 +1037,4 @@ input[type="radio"]{appearance:auto;-webkit-appearance:radio;width:18px;height:1
 .tl-place{margin-left:6px;padding:1px 7px;border-radius:999px;font-size:10.5px;font-weight:700;vertical-align:1px}
 .tl-place.app{background:#FFEFF2;color:#C2415A}
 .tl-place.self{background:#F2EEE9;color:#7A645E}
+.mode .mode-meta{display:block;margin-top:6px;font-size:11px;font-weight:700;color:var(--ink-2);opacity:.85}

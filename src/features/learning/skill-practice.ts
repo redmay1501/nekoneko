@@ -4,6 +4,7 @@ import { pickDeterministic, shuffleDeterministic } from '@/lib/utils/determinist
 import { type KnowledgeCatalog, itemsOfType } from './knowledge-catalog';
 import { type ContentKey, toContentKey } from './knowledge-types';
 import { knowledgeGroups } from './study-actions';
+import { lessonNumber } from '@/lib/utils/lesson';
 
 /**
  * Dữ liệu cho 4 màn kỹ năng (SC-24…27). Bài nghe từ vựng được ghi vào trí nhớ (server chấm — /api/memory/practice);
@@ -18,7 +19,6 @@ const LISTENING_WORDS = 8;
 const SHADOWING_SENTENCES = 3;
 const SPEAKING_SENTENCES = 4;
 const LISTENING_RESOURCES = 4;
-const WRITING_KANJI_CHIPS = 8;
 const DISTRACTORS = 3;
 
 function learnedGrammar(catalog: KnowledgeCatalog, journeyDay: number): GrammarContent[] {
@@ -75,41 +75,99 @@ export function buildListeningPractice(
         `${seed}:order:${item.id}`,
       ),
     })),
-    shadowing: pickDeterministic(learnedGrammar(catalog, journeyDay), SHADOWING_SENTENCES, 'shadowing'),
+    // Chưa tới ngày có mẫu câu → vẫn có câu nói đuổi theo (bài 1), không để trống.
+    shadowing: pickDeterministic(learnedGrammar(catalog, journeyDay).length ? learnedGrammar(catalog, journeyDay) : grammarPool(catalog, journeyDay, 'bai-1'), SHADOWING_SENTENCES, 'shadowing'),
     resources: catalog.content.studyResources.filter((resource) => resource.usedFor.includes('Nghe')).slice(0, LISTENING_RESOURCES),
   };
 }
 
-export function buildSpeakingPractice(catalog: KnowledgeCatalog, journeyDay: number): GrammarContent[] {
-  return pickDeterministic(learnedGrammar(catalog, journeyDay), SPEAKING_SENTENCES, 'speaking');
+/** Phạm vi luyện theo bài: theo lộ trình (mặc định) · tất cả · Bài 1…25 — không khoá theo ngày. */
+export interface PracticeRange {
+  id: string;
+  label: string;
 }
 
-/** Đoạn đọc mới nhất mà người học đã đủ kiến thức để đọc. */
-export function buildReadingPractice(catalog: KnowledgeCatalog, journeyDay: number): ReadingPassage | null {
-  return [...catalog.content.readingPassages].filter((passage) => passage.day <= journeyDay).sort((left, right) => right.day - left.day)[0] ?? null;
+const LESSON_COUNT = 25;
+export const ROADMAP_RANGE = 'lo-trinh';
+export const ALL_RANGE = 'tat-ca';
+
+export function lessonPracticeRanges(): PracticeRange[] {
+  return [
+    { id: ROADMAP_RANGE, label: 'Theo lộ trình' },
+    { id: ALL_RANGE, label: 'Tất cả' },
+    ...Array.from({ length: LESSON_COUNT }, (_, index) => ({ id: `bai-${index + 1}`, label: `Bài ${index + 1}` })),
+  ];
+}
+
+/**
+ * Chọn phạm vi + nội dung. Phạm vi lạ → theo lộ trình; theo lộ trình mà chưa học tới gì (trước ngày có mẫu câu)
+ * → Bài 1 thay vì để trống (không khoá kỹ năng).
+ */
+function resolveRange<T>(requested: string | undefined, poolOf: (range: string) => T[]): { range: string; pool: T[] } {
+  const known = lessonPracticeRanges().some((option) => option.id === requested);
+  const range = known ? requested! : ROADMAP_RANGE;
+  const pool = poolOf(range);
+  return range === ROADMAP_RANGE && !pool.length ? { range: 'bai-1', pool: poolOf('bai-1') } : { range, pool };
+}
+
+const lessonOfRange = (range: string) => (range.startsWith('bai-') ? Number(range.slice(4)) : null);
+
+function grammarPool(catalog: KnowledgeCatalog, journeyDay: number, range: string): GrammarContent[] {
+  if (range === ROADMAP_RANGE) return learnedGrammar(catalog, journeyDay);
+  if (range === ALL_RANGE) return catalog.content.grammar;
+  return catalog.content.grammar.filter((pattern) => lessonNumber(pattern.lesson) === lessonOfRange(range));
+}
+
+export interface SpeakingPracticeData {
+  range: string;
+  ranges: PracticeRange[];
+  sentences: GrammarContent[];
+}
+
+/** Luyện nói: theo lộ trình / tất cả → vài câu ngẫu nhiên; một bài → mọi mẫu câu của bài đó. */
+export function buildSpeakingPractice(catalog: KnowledgeCatalog, journeyDay: number, requestedRange?: string, seed = 'speaking'): SpeakingPracticeData {
+  const { range, pool } = resolveRange(requestedRange, (candidate) => grammarPool(catalog, journeyDay, candidate));
+  return {
+    range,
+    ranges: lessonPracticeRanges(),
+    sentences: lessonOfRange(range) ? pool : pickDeterministic(pool, SPEAKING_SENTENCES, `${seed}:${range}`),
+  };
+}
+
+/** Các đoạn đọc hiểu, theo ngày gợi ý — không khoá theo ngày (đoạn chưa tới ngày thì ghi rõ là gợi ý cho sau). */
+export function buildReadingPractice(catalog: KnowledgeCatalog): ReadingPassage[] {
+  return [...catalog.content.readingPassages].sort((left, right) => left.day - right.day);
 }
 
 export interface WritingPracticeData {
   focus: KanjiContent;
   focusKey: ContentKey;
+  /** Các chữ cùng nhóm 10 với chữ đang luyện. */
   others: Array<{ contentKey: ContentKey; character: string }>;
+  /** Nhóm Kanji (10 chữ / nhóm) — chọn nhóm để luyện, không khoá theo ngày. */
+  groups: Array<{ id: string; label: string; first: string; isCurrent: boolean }>;
 }
 
 /**
  * Luyện viết Kanji: mặc định chữ mới nhất đã tới ngày học; `requested` (?chu=日, từ trang chi tiết Kanji) cho phép
  * luyện BẤT KỲ Kanji N5 nào — người học chủ động, không bị khoá theo lộ trình.
  */
-export function buildWritingPractice(catalog: KnowledgeCatalog, journeyDay: number, requested?: string): WritingPracticeData | null {
+export function buildWritingPractice(catalog: KnowledgeCatalog, journeyDay: number, requested?: string): WritingPracticeData {
   const learnedKanji = catalog.content.kanji.filter((kanji) => kanji.day !== null && kanji.day <= journeyDay);
-  const focus = catalog.content.kanji.find((kanji) => kanji.character === requested) ?? learnedKanji.at(-1);
-  if (!focus) return null;
+  // Chưa tới ngày có Kanji → vẫn luyện được, bắt đầu từ chữ đầu tiên của lộ trình (không khoá).
+  const focus = catalog.content.kanji.find((kanji) => kanji.character === requested) ?? learnedKanji.at(-1) ?? firstKanjiOf(catalog);
+  const groups = knowledgeGroups('kanji', itemsOfType(catalog, 'kanji'));
+  const group = groups.find((candidate) => candidate.items.some((item) => item.face === focus.character)) ?? groups[0];
   return {
     focus,
     focusKey: toContentKey('kanji', focus.id),
-    others: pickDeterministic(learnedKanji, WRITING_KANJI_CHIPS, 'writing').map((kanji) => ({
-      contentKey: toContentKey('kanji', kanji.id), character: kanji.character,
-    })),
+    others: group.items.map((item) => ({ contentKey: item.key, character: item.face })),
+    groups: groups.map((candidate) => ({ id: candidate.id, label: candidate.label, first: candidate.items[0].face, isCurrent: candidate.id === group.id })),
   };
+}
+
+function firstKanjiOf(catalog: KnowledgeCatalog): KanjiContent {
+  return [...catalog.content.kanji].sort((left, right) => (left.day ?? 999) - (right.day ?? 999) || left.id - right.id)[0];
 }
 
 export interface DictationItem {
@@ -134,8 +192,22 @@ const DICTATION_SENTENCES = 6;
  *  - Câu: câu ví dụ của các mẫu câu đã tới lịch (có cách đọc để chấp nhận khi gõ toàn kana).
  * Tất định theo `seed` (đổi mỗi ngày) để cùng một ngày làm lại vẫn là cùng bài.
  */
-export function buildDictationPractice(catalog: KnowledgeCatalog, views: Views, journeyDay: number, seed: string): { words: DictationItem[]; sentences: DictationItem[] } {
-  const learnedWords = itemsOfType(catalog, 'vocabulary').filter((item) => views.get(item.key)?.isLearned);
+export interface DictationPracticeData {
+  range: string;
+  ranges: PracticeRange[];
+  words: DictationItem[];
+  sentences: DictationItem[];
+}
+
+/**
+ * Nghe – gõ: theo lộ trình = từ đã học + câu của mẫu đã tới ngày; tất cả / một bài = không cần học tới
+ * (chỉ từ ĐÃ HỌC mới được ghi vào trí nhớ — server kiểm tra ở /api/memory/practice).
+ */
+export function buildDictationPractice(catalog: KnowledgeCatalog, views: Views, journeyDay: number, seed: string, requestedRange?: string): DictationPracticeData {
+  const vocabulary = itemsOfType(catalog, 'vocabulary');
+  const wordPool = (range: string) => (range === ROADMAP_RANGE ? vocabulary.filter((item) => views.get(item.key)?.isLearned)
+    : range === ALL_RANGE ? vocabulary : vocabulary.filter((item) => item.type === 'vocabulary' && lessonNumber(item.content.lesson) === lessonOfRange(range)));
+  const { range, pool: learnedWords } = resolveRange(requestedRange, wordPool);
   const words = pickDeterministic(learnedWords, DICTATION_WORDS, `dictation-words:${seed}`).map((item) => ({
     contentKey: item.key,
     audioText: item.content.kana,
@@ -144,7 +216,7 @@ export function buildDictationPractice(catalog: KnowledgeCatalog, views: Views, 
     display: item.content.kanji ? `${item.content.kanji}（${item.content.kana}）` : item.content.kana,
   }));
   const isSentence = (text: string) => text && !/[→/／]/.test(text);
-  const sentencePool = learnedGrammar(catalog, journeyDay).flatMap((pattern) => [
+  const sentencePool = grammarPool(catalog, journeyDay, range).flatMap((pattern) => [
     { pattern, jp: pattern.exampleJp, reading: pattern.exampleReading, vi: pattern.exampleVi },
     { pattern, jp: pattern.example2Jp, reading: pattern.example2Reading, vi: pattern.example2Vi },
   ]).filter((sentence) => isSentence(sentence.jp));
@@ -155,5 +227,5 @@ export function buildDictationPractice(catalog: KnowledgeCatalog, views: Views, 
     accepted: [sentence.jp, sentence.reading].filter(Boolean),
     display: sentence.jp,
   }));
-  return { words, sentences };
+  return { range, ranges: lessonPracticeRanges(), words, sentences };
 }

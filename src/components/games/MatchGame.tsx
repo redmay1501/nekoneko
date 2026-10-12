@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { type CSSProperties, useEffect, useState } from 'react';
+import { NekoButton } from '@/components/common/NekoButton';
 import { useSpeech } from '@/hooks/useSpeech';
 import { useEnterToContinue } from '@/hooks/useEnterToContinue';
 import { postJson } from '@/lib/api/api-client';
@@ -115,7 +116,8 @@ export function MatchGame({ pool, scope, initialRecord, unit }: MatchGameProps) 
         <p className="mt-2"><b>Ghép {Math.min(6, pool.length)} cặp</b> {unit} ↔ nghĩa, nhanh và không sai.</p>
         <p className="sm soft mt-1">Lấy ngẫu nhiên từ {pool.length} {unit} của phần này · mỗi ván một bộ khác.</p>
         <RecordLine record={record} />
-        <button type="button" className="btn mt-3.5" onClick={start}>▶ Bắt đầu</button>
+        <div className="mt-3.5"><NekoButton variant="game" catPose="none" onClick={start}>▶ Bắt đầu</NekoButton></div>
+        <p className="tiny muted mt-2">hoặc nhấn Enter</p>
       </div>
     );
   }
@@ -124,8 +126,10 @@ export function MatchGame({ pool, scope, initialRecord, unit }: MatchGameProps) 
     const accuracy = accuracyOf(finished);
     return (
       <div className="card center match-result" role="status" aria-live="polite">
-        <div style={{ fontSize: 44 }} aria-hidden="true">{accuracy === 100 ? '🏆' : '🎉'}</div>
-        <h2 className="mt-1.5">{accuracy === 100 ? 'Hoàn hảo!' : 'Xong ván!'}</h2>
+        <div className="match-stars" aria-label={`${starsOf(accuracy)}/3 sao`}>
+          {[1, 2, 3].map((star) => <span key={star} className={star <= starsOf(accuracy) ? 'on' : ''} style={{ '--i': star } as CSSProperties}>★</span>)}
+        </div>
+        <h2 className="mt-1.5">{accuracy === 100 ? 'Hoàn hảo!' : accuracy >= 75 ? 'Giỏi lắm!' : 'Xong ván!'}</h2>
         <div className="match-stats mt-3">
           <span><b>{finished.pairs}/{finished.pairs}</b> cặp</span>
           <span><b>{finished.mistakes}</b> lần sai</span>
@@ -147,14 +151,15 @@ export function MatchGame({ pool, scope, initialRecord, unit }: MatchGameProps) 
             </Link>
           </div>
         ) : null}
-        <button type="button" className="btn block mt-3.5" onClick={start}>↺ Chơi lại</button>
+        <div className="mt-3.5"><NekoButton variant="game" catPose="none" onClick={start}>↺ Chơi lại</NekoButton></div>
+        <p className="tiny muted mt-1.5">hoặc nhấn Enter</p>
         <p className="tiny muted mt-2.5">Điểm trò chơi không tính vào trí nhớ. Muốn nhớ lâu, hãy ôn trong phiên học.</p>
       </div>
     );
   }
 
   const tileClass = (side: Side, card: MatchCard) => [
-    'match-tile', side === 'face' ? 'jp glyph' : '',
+    'match-tile', side === 'face' ? 'jp glyph face' : 'answer',
     matched.includes(card.contentKey) ? 'done' : '',
     picked?.side === side && picked.key === card.contentKey ? 'picked' : '',
     wrong?.[side] === card.contentKey ? 'wrong' : '',
@@ -162,22 +167,27 @@ export function MatchGame({ pool, scope, initialRecord, unit }: MatchGameProps) 
 
   return (
     <div className="match-board">
-      <div className="between mb-2.5">
-        <span className="sm">Đã ghép <b>{matched.length}/{round.cards.length}</b> · sai <b>{mistakes}</b></span>
+      <div className="between mb-1.5">
+        <span className="sm">Đã ghép <b>{matched.length}/{round.cards.length}</b> cặp · sai <b>{mistakes}</b></span>
         <span className="chip" aria-label="Thời gian">⏱ {formatDuration(Math.max(0, now - round.startedAt))}</span>
+      </div>
+      <div className="match-progress" role="progressbar" aria-label="Tiến độ ghép thẻ" aria-valuemin={0} aria-valuemax={round.cards.length} aria-valuenow={matched.length}>
+        <i style={{ width: `${(matched.length / round.cards.length) * 100}%` }} />
       </div>
       <div className="match-grid">
         <div className="match-col" aria-label="Tiếng Nhật">
-          {round.faces.map((card) => (
+          {round.faces.map((card, index) => (
             <button key={card.contentKey} type="button" className={tileClass('face', card)} disabled={matched.includes(card.contentKey)}
+              style={{ '--i': index } as CSSProperties}
               aria-pressed={picked?.side === 'face' && picked.key === card.contentKey} onClick={() => choose('face', card)}>
               {card.face}
             </button>
           ))}
         </div>
         <div className="match-col" aria-label="Nghĩa">
-          {round.answers.map((card) => (
+          {round.answers.map((card, index) => (
             <button key={card.contentKey} type="button" className={tileClass('answer', card)} disabled={matched.includes(card.contentKey)}
+              style={{ '--i': index + 0.5 } as CSSProperties}
               aria-pressed={picked?.side === 'answer' && picked.key === card.contentKey} onClick={() => choose('answer', card)}>
               {card.answer}
             </button>
@@ -197,4 +207,9 @@ function RecordLine({ record }: { record: GameRecord | null }) {
       <span className="muted"> · {record.plays} lần chơi</span>
     </p>
   );
+}
+
+/** 3 sao: 100% · 2 sao: ≥ 75% · 1 sao: còn lại — mục tiêu rõ để muốn chơi lại. */
+function starsOf(accuracy: number): number {
+  return accuracy === 100 ? 3 : accuracy >= 75 ? 2 : 1;
 }

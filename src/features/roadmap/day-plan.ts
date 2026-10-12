@@ -27,10 +27,14 @@ export type TaskLine =
   | { kind: 'sub'; text: string }
   | { kind: 'line'; text: string };
 
+/** Việc này làm ở đâu: trong app (học, ôn kiến thức) hay tự làm (viết tay, sách, nguồn nghe ngoài, đề giấy…). */
+export type TaskPlace = 'app' | 'self';
+
 export interface DayTaskView {
   glyph: string;
   name: string;
   minutes: number;
+  place: TaskPlace;
   lines: TaskLine[];
   background: string;
   color: string;
@@ -64,6 +68,14 @@ export interface DayPlanView {
    */
   radicalBridge: { kanji: string; radical: string; meaning: string; day: number; isPrimary: boolean } | null;
   tasks: DayTaskView[];
+  /** Thời gian theo kế hoạch (Excel), tách trong app / tự làm. */
+  minutesInApp: number;
+  minutesSelf: number;
+  /**
+   * Từ vựng cần ôn của ngày ôn — lấy từ việc "Từ vựng" bắt đầu bằng "Ôn…": từ được liệt kê (khớp đúng mặt chữ trong kho)
+   * hoặc khoảng bài ("bài 1–10"). Ghi chung chung ("ôn phần yếu") thì rỗng — không đoán.
+   */
+  reviewVocabulary: VocabularyContent[];
 }
 
 /** Màu theo ký hiệu đầu nhãn đầu việc trong file Excel (◐ ôn, 部 bộ thủ, 漢 kanji…). */
@@ -90,17 +102,55 @@ export function formatTaskBody(body: string): TaskLine[] {
   });
 }
 
-function toTaskView(task: DayTask): DayTaskView {
+/**
+ * Việc học kiến thức có trong app (chữ cái, âm đục / ghép, từ, Kanji, mẫu câu, bộ thủ, khởi động = ôn nhanh, ✓ ôn câu mờ).
+ * Còn lại là tự làm: ✎ viết tay, ? tự kiểm tra trên giấy, 耳 nghe nguồn ngoài, 読 đọc sách, 📝 đề giấy, ◎ 🎒…
+ */
+const IN_APP_GLYPHS = new Set(['あ', '゛', 'ゃ', '語', '漢', '文', '部', '◐', '✓']);
+const VOCABULARY_GLYPH = '語';
+
+function toTaskView(task: DayTask, newWordCount: number, reviewWordCount: number): DayTaskView {
   const glyph = task.label.trim()[0] ?? '·';
   const [background, color] = TASK_STYLE[glyph] ?? DEFAULT_TASK_STYLE;
+  // Việc "Từ vựng": danh sách từ đã hiện ở mục Kiến thức của ngày (bấm từng từ để xem) → không lặp lại cả danh sách
+  // và câu "Trong sách, xem thêm…" ở đây; chỉ nói gọn bao nhiêu từ, xem ở đâu.
+  const vocabularyLine = glyph !== VOCABULARY_GLYPH ? null
+    : newWordCount ? `Học ${newWordCount} từ mới của ngày — danh sách ở mục “Kiến thức của ngày”, bấm từng từ để nghe và xem ví dụ.`
+      : reviewWordCount ? `Ôn ${reviewWordCount} từ — danh sách và nút “Ôn ${reviewWordCount} từ” ở mục “Kiến thức của ngày”.`
+        : null;
   return {
     glyph,
     name: task.label.replace(/^\S+\s*/, '') || task.label,
     minutes: task.minutes,
-    lines: formatTaskBody(task.body),
+    place: IN_APP_GLYPHS.has(glyph) ? 'app' : 'self',
+    lines: vocabularyLine ? [{ kind: 'line', text: vocabularyLine }] : formatTaskBody(task.body),
     background,
     color,
   };
+}
+
+/**
+ * Từ vựng của việc "Ôn …": (1) từ được liệt kê, khớp đúng mặt chữ trong kho (はい, 大きい…); (2) "bài 1–10" → từ của
+ * các bài đó. Không khớp được thì bỏ qua (không đoán).
+ */
+export function reviewVocabularyOf(task: DayTask | undefined, vocabulary: readonly VocabularyContent[]): VocabularyContent[] {
+  if (!task || !task.body.trim().startsWith('Ôn')) return [];
+  const range = task.body.match(/bài\s*(\d+)\s*[–-]\s*(\d+)/i);
+  if (range) {
+    const [first, last] = [Number(range[1]), Number(range[2])];
+    return vocabulary.filter((word) => {
+      const lesson = lessonNumber(word.lesson);
+      return lesson >= first && lesson <= last;
+    });
+  }
+  const byFace = new Map<string, VocabularyContent>();
+  for (const word of vocabulary) {
+    if (word.kanji) byFace.set(word.kanji, word);
+    if (!byFace.has(word.kana)) byFace.set(word.kana, word);
+  }
+  const tokens = task.body.match(/[\u3040-\u30ff\u4e00-\u9fff々ー]+/g) ?? [];
+  return [...new Map(tokens.map((token) => byFace.get(token)).filter((word): word is VocabularyContent => Boolean(word))
+    .map((word) => [word.id, word])).values()];
 }
 
 function summarize(knowledge: DayKnowledge): string {
@@ -131,6 +181,9 @@ export function buildDayPlan(catalog: KnowledgeCatalog, requestedDay: number, jo
   const kanjiRadicals = firstKanji ? radicalsOfKanji(catalog, firstKanji) : [];
   const bridgeRadical = kanjiRadicals.find((radical) => (radical.day ?? JOURNEY_TOTAL_DAYS) < (firstKanji?.day ?? 0));
 
+  const reviewVocabulary = knowledge.vocabulary.length ? [] : reviewVocabularyOf(tasks.find((task) => task.label.trim().startsWith(VOCABULARY_GLYPH)), content.vocabulary);
+  const taskViews = tasks.map((task) => toTaskView(task, knowledge.vocabulary.length, reviewVocabulary.length));
+
   const reviewPool = catalog.items.filter((item) => item.day !== null && item.day < day && item.type !== 'hiragana' && item.type !== 'katakana');
 
   return {
@@ -153,7 +206,10 @@ export function buildDayPlan(catalog: KnowledgeCatalog, requestedDay: number, jo
           isPrimary: kanjiRadicals[0]?.id === bridgeRadical.id,
         }
       : null,
-    tasks: tasks.map(toTaskView),
+    tasks: taskViews,
+    minutesInApp: taskViews.filter((task) => task.place === 'app').reduce((sum, task) => sum + task.minutes, 0),
+    minutesSelf: taskViews.filter((task) => task.place === 'self').reduce((sum, task) => sum + task.minutes, 0),
+    reviewVocabulary,
     kanaLesson: buildKanaLesson(knowledge.kana, catalog.items.filter(isKana)),
     purpose: describePurpose(knowledge, journeyDay),
     reviewTopics: hasNewKnowledge ? [] : reviewTopicsBefore(catalog, day),

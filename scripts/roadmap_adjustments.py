@@ -12,6 +12,10 @@ mới biết vài chữ. Nay: ngày 1–5 chỉ học 46 chữ Hiragana cơ bả
 ngày 1–5 chuyển sang ngày 8–12 (lúc đã đọc được toàn bộ Hiragana), mỗi ngày thêm 2 từ cạnh 2 từ Katakana sẵn có.
 
 ── KANA_BY_ROW (2026-10-06) — xem chú thích ở hàm _apply_kana_by_row.
+
+── VOCABULARY_TIP_CLEANUP (2026-10-12) ─────────────────────────────
+"Mẹo nhớ" chỉ hiện khi thật sự giúp nhớ. Bỏ các mẹo lấp chỗ trống (không cho thêm cách nhớ nào): "học thuộc cả cụm",
+"không cần mẹo", "đọc thẳng âm Hán Việt / từ tiếng Anh". Từ không còn mẹo thì giao diện ẩn hẳn mục Mẹo nhớ.
 """
 import json, os, re
 
@@ -245,11 +249,23 @@ def _apply_vocabulary_dedupe(data):
         by_id[word_id]["meaning"] = meaning
 
 
+VOCABULARY_TIP_CLEANUP = "vocabulary-tip-cleanup"
+# Mẹo không giúp nhớ thêm gì — so khớp theo NỘI DUNG mẹo (không theo id), để chuyển lại từ Excel vẫn bắt được.
+FILLER_TIP = re.compile(r"Học thuộc cả cụm|không cần mẹo|Đọc thẳng (âm Hán Việt|từ)", re.IGNORECASE)
+
+
+def _apply_vocabulary_tip_cleanup(data):
+    for word in data["vocabulary"]:
+        if word.get("tip") and FILLER_TIP.search(word["tip"]):
+            word["tip"] = ""
+
+
 ADJUSTMENTS = [
     (KANA_FIRST_VOCABULARY, _apply_kana_first_vocabulary),
     (KANA_BY_ROW, _apply_kana_by_row),
     (VOCABULARY_DEDUPE, _apply_vocabulary_dedupe),
     (N5_VOCABULARY_SUPPLEMENT, _apply_n5_vocabulary_supplement),
+    (VOCABULARY_TIP_CLEANUP, _apply_vocabulary_tip_cleanup),
 ]
 
 

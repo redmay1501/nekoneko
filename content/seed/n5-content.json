@@ -7,7 +7,8 @@
    "kana-first-vocabulary",
    "kana-by-row",
    "vocabulary-dedupe",
-   "n5-vocabulary-supplement"
+   "n5-vocabulary-supplement",
+   "vocabulary-tip-cleanup"
   ]
  },
  "journeyDays": [
@@ -8094,7 +8095,7 @@
    "kana": "がくせい",
    "kanji": "学生",
    "meaning": "Học sinh, sinh viên",
-   "tip": "HỌC SINH — 学 (học) + 生 (sinh). Đọc thẳng âm Hán Việt là ra.",
+   "tip": "",
    "day": 15,
    "lesson": "BÀI 1  ·  Chào hỏi & Giới thiệu bản thân  (14 từ)"
   },
@@ -8130,7 +8131,7 @@
    "kana": "だいがく",
    "kanji": "大学",
    "meaning": "Đại học",
-   "tip": "ĐẠI HỌC — chuẩn âm Hán Việt, không cần mẹo gì thêm.",
+   "tip": "",
    "day": 16,
    "lesson": "BÀI 1  ·  Chào hỏi & Giới thiệu bản thân  (14 từ)"
   },
@@ -8292,7 +8293,7 @@
    "kana": "ラジオ",
    "kanji": "",
    "meaning": "Radio",
-   "tip": "Đọc thẳng từ 'radio'.",
+   "tip": "",
    "day": 8,
    "lesson": "BÀI 2  ·  これ・それ・あれ — Chỉ đồ vật  (14 từ)"
   },
@@ -11136,7 +11137,7 @@
    "kana": "わかりました",
    "kanji": "",
    "meaning": "Tôi hiểu rồi",
-   "tip": "Học thuộc cả cụm: tôi hiểu rồi. Chưa cần chia ました.",
+   "tip": "",
    "lesson": "Chào hỏi & từ Katakana (giai đoạn chữ cái)",
    "day": 6
   },

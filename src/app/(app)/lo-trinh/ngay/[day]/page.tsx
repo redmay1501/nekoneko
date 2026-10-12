@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { DayKnowledgeBlock } from '@/components/roadmap/DayKnowledgeBlock';
-import { CompleteDayButton } from '@/components/roadmap/CompleteDayButton';
 import { DayCompletionCard } from '@/components/roadmap/DayCompletionCard';
 import { DayTimeline } from '@/components/roadmap/DayTimeline';
 import { getLearnerContext } from '@/features/learning/learner-context';
 import { buildDayPlan, buildDayStrip } from '@/features/roadmap/day-plan';
 import { JOURNEY_TOTAL_DAYS } from '@/features/roadmap/journey';
-import { estimateInAppMinutes, getDayCompletionProgress } from '@/features/roadmap/journey-progress';
+import { getDayCompletionProgress } from '@/features/roadmap/journey-progress';
+import { DayActions } from '@/components/roadmap/DayActions';
+import { DayReviewVocabulary } from '@/components/roadmap/DayReviewVocabulary';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
 
 /** SC-12 · Một ngày học. */
@@ -36,16 +37,10 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
       </div>
 
       <section className="dayhero">
-        <p className="sm" style={{ marginBottom: 8 }}>
-          {completion.hasNewKnowledge
-            ? `Trong app: ${completion.totalCount} mục · khoảng ${estimateInAppMinutes(completion.totalCount)} phút.`
-            : 'Trong app: ngày ôn, không có kiến thức mới.'}
-        </p>
         <div className="row wrap" style={{ gap: 7 }}>
           <span className="chip" style={{ background: 'rgba(255,255,255,.7)' }}><EmojiIcon emoji={stage.emoji} size={16} /> {stage.name}</span>
           <span className="chip" style={{ background: 'rgba(255,255,255,.7)' }}>Tuần {dayInfo.week}</span>
           {dayInfo.minna && dayInfo.minna !== '—' ? <span className="chip lav">{dayInfo.minna}</span> : null}
-          <span className="chip mint">⏱ {plan.totalMinutes} phút · việc ngoài app</span>
           {plan.relation === 'today' ? <span className="chip pink">Hôm nay</span> : null}
           {plan.relation === 'past' ? <span className="chip mint">✓ Đã xong</span> : null}
         </div>
@@ -53,6 +48,8 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
         <p className="soft sm mt-1">{dayInfo.title}</p>
         <p className="sm mt-2.5">{plan.summary}</p>
         <p className="sm soft mt-1.5"><b>Vì sao học hôm nay?</b> {plan.purpose}</p>
+        {/* Hành động chính của ngày — ngay đầu trang, theo trạng thái thật (học hết ≠ đã hoàn thành ngày). */}
+        <DayActions day={day} relation={plan.relation} remainingCount={completion.totalCount - completion.metCount} hasNewKnowledge={completion.hasNewKnowledge} />
       </section>
 
       <div className="daygrid mt-4">
@@ -62,6 +59,7 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
             {plan.hasNewKnowledge ? <span className="tiny muted">chạm để xem kỹ</span> : null}
           </div>
           <DayKnowledgeBlock plan={plan} />
+          {plan.reviewVocabulary.length ? <DayReviewVocabulary words={plan.reviewVocabulary} /> : null}
           {plan.radicalBridge ? (
             <div className="card tight mt-3" style={{ background: 'var(--lav)', borderColor: 'transparent' }}>
               <p className="sm">
@@ -81,19 +79,7 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
         </div>
       </div>
 
-      {plan.relation === 'today' ? (
-        <>
-          <DayCompletionCard day={day} completion={completion} />
-          {completion.metCount < completion.totalCount ? (
-            <Link className="btn block mt-3" href="/hoc/day">📘 Học hết ngày {day}</Link>
-          ) : (
-            <Link className="btn block mt-3" href="/hoc/daily">Bắt đầu học ngày {day}</Link>
-          )}
-          <CompleteDayButton day={day} remainingCount={completion.totalCount - completion.metCount} />
-        </>
-      ) : plan.relation === 'past' ? (
-        <Link className="btn ghost block mt-4" href="/hoc/rescue">Ôn lại những gì còn mờ</Link>
-      ) : null}
+      {plan.relation === 'today' ? <DayCompletionCard day={day} completion={completion} /> : null}
       <div className="row mt-3" style={{ gap: 8, justifyContent: 'space-between' }}>
         {day > 1 ? <Link className="btn quiet sm" href={`/lo-trinh/ngay/${day - 1}`} prefetch>← Ngày {day - 1}</Link> : <span />}
         {day < JOURNEY_TOTAL_DAYS ? <Link className="btn quiet sm" href={`/lo-trinh/ngay/${day + 1}`} prefetch>Ngày {day + 1} →</Link> : <span />}

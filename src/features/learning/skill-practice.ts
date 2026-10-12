@@ -143,9 +143,9 @@ export interface WritingPracticeData {
   focus: KanjiContent;
   focusKey: ContentKey;
   /** Các chữ cùng nhóm 10 với chữ đang luyện. */
-  others: Array<{ contentKey: ContentKey; character: string }>;
+  others: Array<{ contentKey: ContentKey; character: string; id: number }>;
   /** Nhóm Kanji (10 chữ / nhóm) — chọn nhóm để luyện, không khoá theo ngày. */
-  groups: Array<{ id: string; label: string; first: string; isCurrent: boolean }>;
+  groups: Array<{ id: string; label: string; first: string; firstId: number; isCurrent: boolean }>;
 }
 
 /**
@@ -155,14 +155,15 @@ export interface WritingPracticeData {
 export function buildWritingPractice(catalog: KnowledgeCatalog, journeyDay: number, requested?: string): WritingPracticeData {
   const learnedKanji = catalog.content.kanji.filter((kanji) => kanji.day !== null && kanji.day <= journeyDay);
   // Chưa tới ngày có Kanji → vẫn luyện được, bắt đầu từ chữ đầu tiên của lộ trình (không khoá).
-  const focus = catalog.content.kanji.find((kanji) => kanji.character === requested) ?? learnedKanji.at(-1) ?? firstKanjiOf(catalog);
+  // ?chu= nhận id (chu=12 — đường dẫn chỉ chữ Latinh) hoặc chính chữ Kanji (link cũ ?chu=日).
+  const focus = catalog.content.kanji.find((kanji) => String(kanji.id) === requested || kanji.character === requested) ?? learnedKanji.at(-1) ?? firstKanjiOf(catalog);
   const groups = knowledgeGroups('kanji', itemsOfType(catalog, 'kanji'));
   const group = groups.find((candidate) => candidate.items.some((item) => item.face === focus.character)) ?? groups[0];
   return {
     focus,
     focusKey: toContentKey('kanji', focus.id),
-    others: group.items.map((item) => ({ contentKey: item.key, character: item.face })),
-    groups: groups.map((candidate) => ({ id: candidate.id, label: candidate.label, first: candidate.items[0].face, isCurrent: candidate.id === group.id })),
+    others: group.items.map((item) => ({ contentKey: item.key, character: item.face, id: item.id })),
+    groups: groups.map((candidate) => ({ id: candidate.id, label: candidate.label, first: candidate.items[0].face, firstId: candidate.items[0].id, isCurrent: candidate.id === group.id })),
   };
 }
 
@@ -228,4 +229,85 @@ export function buildDictationPractice(catalog: KnowledgeCatalog, views: Views, 
     display: sentence.jp,
   }));
   return { range, ranges: lessonPracticeRanges(), words, sentences };
+}
+
+// ─── Kho cho các trang đổi phạm vi NGAY TRONG TRÌNH DUYỆT (Luyện nghe, Luyện viết) ─────────────────────────────────
+// Server gửi một lần: mọi mục + danh sách mục của từng phạm vi. Đổi phạm vi / "Bài khác" chỉ chọn lại ở trình duyệt —
+// không chuyển trang (đổi tham số trên cùng trang đôi khi bị treo — xem docs/REFACTOR_CHANGELOG.md, 2026-10-13).
+
+export interface RangePool {
+  id: string;
+  label: string;
+  /** Khoá các mục thuộc phạm vi. */
+  keys: string[];
+}
+
+export interface ListeningWord {
+  key: string;
+  audioText: string;
+  meaning: string;
+}
+
+export interface ListeningPools {
+  defaultRange: string;
+  ranges: RangePool[];
+  words: Record<string, ListeningWord>;
+}
+
+/** Luyện nghe: theo lộ trình (từ đã tới ngày) · tất cả · từng bài từ vựng. */
+export function buildListeningPools(catalog: KnowledgeCatalog, journeyDay: number): ListeningPools {
+  const vocabulary = itemsOfType(catalog, 'vocabulary');
+  const lessons = knowledgeGroups('vocabulary', vocabulary);
+  const roadmap = vocabulary.filter((item) => item.day !== null && item.day <= journeyDay);
+  const ranges: RangePool[] = [
+    { id: ROADMAP_RANGE, label: 'Theo lộ trình', keys: roadmap.map((item) => item.key) },
+    { id: ALL_RANGE, label: 'Tất cả', keys: vocabulary.map((item) => item.key) },
+    ...lessons.map((group) => ({ id: group.id, label: group.label, keys: group.items.map((item) => item.key) })),
+  ];
+  return {
+    defaultRange: roadmap.length ? ROADMAP_RANGE : lessons[0]?.id ?? ALL_RANGE,
+    ranges,
+    words: Object.fromEntries(vocabulary.map((item) => [item.key, {
+      key: item.key, audioText: item.type === 'vocabulary' ? item.content.kana : item.face, meaning: item.meaning,
+    }])),
+  };
+}
+
+export interface DictationPools {
+  defaultRange: string;
+  ranges: Array<{ id: string; label: string; wordKeys: string[]; sentenceIds: string[] }>;
+  words: Record<string, DictationItem>;
+  sentences: Record<string, DictationItem>;
+}
+
+/** Nghe – gõ: theo lộ trình (từ đã học + câu của mẫu đã tới ngày) · tất cả · Bài 1–25. */
+export function buildDictationPools(catalog: KnowledgeCatalog, views: Views, journeyDay: number): DictationPools {
+  const vocabulary = itemsOfType(catalog, 'vocabulary');
+  const isSentence = (text: string) => Boolean(text) && !/[→/／]/.test(text);
+  const sentenceEntries = catalog.content.grammar.flatMap((pattern) => [
+    { id: `${pattern.id}-1`, pattern, jp: pattern.exampleJp, reading: pattern.exampleReading, vi: pattern.exampleVi },
+    { id: `${pattern.id}-2`, pattern, jp: pattern.example2Jp, reading: pattern.example2Reading, vi: pattern.example2Vi },
+  ]).filter((sentence) => isSentence(sentence.jp));
+  const wordKeysOf = (range: string) => (range === ROADMAP_RANGE ? vocabulary.filter((item) => views.get(item.key)?.isLearned)
+    : range === ALL_RANGE ? vocabulary : vocabulary.filter((item) => item.type === 'vocabulary' && lessonNumber(item.content.lesson) === lessonOfRange(range)))
+    .map((item) => item.key);
+  const sentenceIdsOf = (range: string) => {
+    const patterns = new Set(grammarPool(catalog, journeyDay, range).map((pattern) => pattern.id));
+    return sentenceEntries.filter((sentence) => patterns.has(sentence.pattern.id)).map((sentence) => sentence.id);
+  };
+  const ranges = lessonPracticeRanges().map((range) => ({ ...range, wordKeys: wordKeysOf(range.id), sentenceIds: sentenceIdsOf(range.id) }));
+  const roadmap = ranges[0];
+  return {
+    defaultRange: roadmap.wordKeys.length || roadmap.sentenceIds.length ? ROADMAP_RANGE : 'bai-1',
+    ranges,
+    words: Object.fromEntries(vocabulary.map((item) => [item.key, {
+      contentKey: item.key, audioText: item.type === 'vocabulary' ? item.content.kana : item.face, hint: item.meaning,
+      accepted: item.type === 'vocabulary' ? [item.content.kana, item.content.kanji].filter(Boolean) : [item.face],
+      display: item.type === 'vocabulary' && item.content.kanji ? `${item.content.kanji}（${item.content.kana}）` : item.face,
+    }])),
+    sentences: Object.fromEntries(sentenceEntries.map((sentence) => [sentence.id, {
+      contentKey: toContentKey('grammar', sentence.pattern.id), audioText: sentence.jp, hint: sentence.vi,
+      accepted: [sentence.jp, sentence.reading].filter(Boolean), display: sentence.jp,
+    }])),
+  };
 }

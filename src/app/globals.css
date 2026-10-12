@@ -923,8 +923,6 @@ input[type="radio"]{appearance:auto;-webkit-appearance:radio;width:18px;height:1
 .is-speaking{border-color:var(--sakura);background:#FFF0F3}
 
 /* ─── Trò chơi Ghép thẻ — thẻ nổi bo tròn, lật vào khi bắt đầu, nảy khi đúng, lắc nhẹ khi sai (chỉ transform / opacity) ─── */
-.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.match-col{display:flex;flex-direction:column;gap:8px}
 .match-progress{height:8px;border-radius:999px;background:#F3EDF9;overflow:hidden;margin-bottom:12px}
 .match-progress i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#C9B5FF,#A68AF0);transition:width .35s ease}
 .match-tile{position:relative;min-height:54px;padding:8px 10px;border-radius:16px;border:0;font:inherit;font-size:14px;line-height:1.3;color:var(--ink);cursor:pointer;
@@ -1049,3 +1047,29 @@ input[type="radio"]{appearance:auto;-webkit-appearance:radio;width:18px;height:1
 .tl-place.app{background:#FFEFF2;color:#C2415A}
 .tl-place.self{background:#F2EEE9;color:#7A645E}
 .mode .mode-meta{display:block;margin-top:6px;font-size:11px;font-weight:700;color:var(--ink-2);opacity:.85}
+/* Mục cha có menu con (Học tập, Luyện tập): là nút mở / đóng, trông như một dòng menu. */
+button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border:1px solid transparent;text-align:left;cursor:pointer}
+.sidebar nav button.nav-i{width:calc(100% - 16px)}
+.nav-parent.in-section{font-weight:700}
+
+/* Chọn phạm vi: một nút mở bảng chọn (thay hàng chip dài). */
+.range-picker-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.range-picker-open b{margin-left:3px}
+.range-picker-change{opacity:.7;font-weight:600}
+.test-grid.range-grid{grid-template-columns:repeat(auto-fill,minmax(96px,1fr))}
+.range-grid .test-face{font-size:14px;font-weight:700}
+/* Ghép thẻ — lưới ô vuông 4 cột (12 ô = 4×3, 16 ô = 4×4), phủ hết chiều ngang; desktop tối đa 560px cho vừa tầm mắt. */
+.match-board-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;max-width:560px;margin:0 auto}
+.match-board-grid .match-tile{aspect-ratio:1/1;min-height:0;padding:6px;display:flex;align-items:center;justify-content:center;text-align:center}
+.match-board-grid .match-tile span{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
+.match-board-grid .match-tile.answer{font-size:14px;font-weight:600}
+.match-board-grid .match-tile.face{font-size:clamp(20px,6vw,30px)}
+.match-board-grid .match-tile.done::after{top:5px;right:7px}
+@media (min-width:768px){.match-board-grid .match-tile.answer{font-size:15px}}
+.match-size{display:flex;justify-content:center;gap:10px}
+.match-size-option{display:flex;flex-direction:column;align-items:center;min-width:96px;padding:10px 14px;border-radius:16px;border:0;font:inherit;cursor:pointer;color:var(--ink);
+  background:#fff;box-shadow:inset 0 0 0 1.5px #EAE2F8,0 3px 8px rgba(120,90,180,.08)}
+.match-size-option b{font-size:18px}
+.match-size-option span{font-size:12px;color:var(--ink-3)}
+.match-size-option.on{box-shadow:inset 0 0 0 2.5px #A68AF0,0 6px 14px rgba(120,90,180,.18);background:#FBF8FF}
+.match-size-option:disabled{opacity:.45;cursor:not-allowed}

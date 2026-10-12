@@ -14,14 +14,20 @@ import { useSpeechPreferenceStore } from '@/stores/speech-preference-store';
 
 interface MatchGameProps {
   pool: MatchCard[];
-  /** Phạm vi lưu kỷ lục, ví dụ "tu-vung:tat-ca". */
+  /** Phạm vi lưu kỷ lục, ví dụ "tu-vung:tat-ca" — cộng thêm cỡ bàn (":6" / ":8") khi lưu. */
   scope: string;
-  initialRecord: GameRecord | null;
+  /** Kỷ lục đã có theo số cặp của bàn (6 = 12 ô, 8 = 16 ô). */
+  recordsByPairs: Partial<Record<BoardPairs, GameRecord>>;
   unit: string;
 }
 
+/** Cỡ bàn: 12 ô (6 cặp) hoặc 16 ô (8 cặp) — lưới 4 cột ô vuông. */
+const BOARD_SIZES = [6, 8] as const;
+export type BoardPairs = (typeof BOARD_SIZES)[number];
+
 type Side = 'face' | 'answer';
-interface Round { cards: MatchCard[]; faces: MatchCard[]; answers: MatchCard[]; startedAt: number }
+interface Tile { side: Side; card: MatchCard }
+interface Round { cards: MatchCard[]; tiles: Tile[]; startedAt: number }
 interface Finished { pairs: number; mistakes: number; timeMs: number; missed: MatchCard[] }
 interface SaveState { status: 'saving' | 'saved' | 'error'; record: GameRecord | null; isNewBest: boolean }
 
@@ -32,7 +38,8 @@ const WRONG_FLASH_MS = 550;
  * Ghép thẻ: chạm một thẻ tiếng Nhật rồi chạm nghĩa của nó. Ghép hết là xong — có thời gian, số lần sai,
  * độ chính xác và kỷ lục. Kết quả KHÔNG đổi điểm trí nhớ; thẻ ghép sai được gợi ý "Ôn ngay" (ghi trí nhớ thật).
  */
-export function MatchGame({ pool, scope, initialRecord, unit }: MatchGameProps) {
+export function MatchGame({ pool, scope, recordsByPairs, unit }: MatchGameProps) {
+  const [pairs, setPairs] = useState<BoardPairs>(6);
   const [round, setRound] = useState<Round | null>(null);
   const [picked, setPicked] = useState<{ side: Side; key: string } | null>(null);
   const [matched, setMatched] = useState<string[]>([]);
@@ -42,7 +49,8 @@ export function MatchGame({ pool, scope, initialRecord, unit }: MatchGameProps) 
   const [missed, setMissed] = useState<string[]>([]);
   const [finished, setFinished] = useState<Finished | null>(null);
   const [save, setSave] = useState<SaveState | null>(null);
-  const [record, setRecord] = useState(initialRecord);
+  const [records, setRecords] = useState(recordsByPairs);
+  const record = records[pairs] ?? null;
   const [now, setNow] = useState(0);
   const { speak } = useSpeech();
   const autoplayAudio = useSpeechPreferenceStore((store) => store.autoplayAudio);
@@ -58,8 +66,9 @@ export function MatchGame({ pool, scope, initialRecord, unit }: MatchGameProps) 
   useEnterToContinue(pool.length >= 3 && (!round || Boolean(finished)), () => start());
 
   function start() {
-    const cards = pickMatchRound(pool);
-    setRound({ cards, faces: shuffle(cards), answers: shuffle(cards), startedAt: Date.now() });
+    const cards = pickMatchRound(pool, Math.random, pairs);
+    // Chữ Nhật và nghĩa trộn chung một lưới — tìm cặp bằng mắt, không phải đọc theo hai cột.
+    setRound({ cards, tiles: shuffle(cards.flatMap((card) => [{ side: 'face' as const, card }, { side: 'answer' as const, card }])), startedAt: Date.now() });
     setNow(Date.now());
     setPicked(null);
     setMatched([]);
@@ -74,8 +83,8 @@ export function MatchGame({ pool, scope, initialRecord, unit }: MatchGameProps) 
     const result = { pairs: currentRound.cards.length, mistakes: finalMistakes, timeMs: Math.max(1000, Date.now() - currentRound.startedAt) };
     setFinished({ ...result, missed: currentRound.cards.filter((card) => finalMissed.includes(card.contentKey)) });
     setSave({ status: 'saving', record: null, isNewBest: false });
-    postJson<{ record: GameRecord; isNewBest: boolean }>('/api/games/result', { game: MATCH_GAME, scope, ...result })
-      .then(({ record: saved, isNewBest }) => { setRecord(saved); setSave({ status: 'saved', record: saved, isNewBest }); })
+    postJson<{ record: GameRecord; isNewBest: boolean }>('/api/games/result', { game: MATCH_GAME, scope: `${scope}:${currentRound.cards.length}`, ...result })
+      .then(({ record: saved, isNewBest }) => { setRecords((current) => ({ ...current, [pairs]: saved })); setSave({ status: 'saved', record: saved, isNewBest }); })
       .catch(() => setSave({ status: 'error', record: null, isNewBest: false }));
   }
 
@@ -113,7 +122,15 @@ export function MatchGame({ pool, scope, initialRecord, unit }: MatchGameProps) 
     return (
       <div className="card center match-start">
         <div style={{ fontSize: 44 }} aria-hidden="true">🃏</div>
-        <p className="mt-2"><b>Ghép {Math.min(6, pool.length)} cặp</b> {unit} ↔ nghĩa, nhanh và không sai.</p>
+        <p className="mt-2">Tìm từng cặp <b>{unit} ↔ nghĩa</b> trong lưới ô vuông — nhanh và không sai.</p>
+        <div className="match-size mt-3" role="radiogroup" aria-label="Cỡ bàn">
+          {BOARD_SIZES.map((size) => (
+            <button key={size} type="button" role="radio" aria-checked={pairs === size} disabled={pool.length < size}
+              className={`match-size-option ${pairs === size ? 'on' : ''}`} onClick={() => setPairs(size)}>
+              <b>{size * 2} ô</b><span>{size} cặp</span>
+            </button>
+          ))}
+        </div>
         <p className="sm soft mt-1">Lấy ngẫu nhiên từ {pool.length} {unit} của phần này · mỗi ván một bộ khác.</p>
         <RecordLine record={record} />
         <div className="mt-3.5"><NekoButton variant="game" catPose="none" onClick={start}>▶ Bắt đầu</NekoButton></div>
@@ -174,27 +191,18 @@ export function MatchGame({ pool, scope, initialRecord, unit }: MatchGameProps) 
       <div className="match-progress" role="progressbar" aria-label="Tiến độ ghép thẻ" aria-valuemin={0} aria-valuemax={round.cards.length} aria-valuenow={matched.length}>
         <i style={{ width: `${(matched.length / round.cards.length) * 100}%` }} />
       </div>
-      <div className="match-grid">
-        <div className="match-col" aria-label="Tiếng Nhật">
-          {round.faces.map((card, index) => (
-            <button key={card.contentKey} type="button" className={tileClass('face', card)} disabled={matched.includes(card.contentKey)}
-              style={{ '--i': index } as CSSProperties}
-              aria-pressed={picked?.side === 'face' && picked.key === card.contentKey} onClick={() => choose('face', card)}>
-              {card.face}
-            </button>
-          ))}
-        </div>
-        <div className="match-col" aria-label="Nghĩa">
-          {round.answers.map((card, index) => (
-            <button key={card.contentKey} type="button" className={tileClass('answer', card)} disabled={matched.includes(card.contentKey)}
-              style={{ '--i': index + 0.5 } as CSSProperties}
-              aria-pressed={picked?.side === 'answer' && picked.key === card.contentKey} onClick={() => choose('answer', card)}>
-              {card.answer}
-            </button>
-          ))}
-        </div>
+      <div className={`match-board-grid size-${round.tiles.length}`}>
+        {round.tiles.map((tile, index) => (
+          <button key={`${tile.side}-${tile.card.contentKey}`} type="button" className={tileClass(tile.side, tile.card)}
+            disabled={matched.includes(tile.card.contentKey)} style={{ '--i': index } as CSSProperties}
+            aria-pressed={picked?.side === tile.side && picked.key === tile.card.contentKey}
+            aria-label={tile.side === 'face' ? `Chữ ${tile.card.face}` : `Nghĩa: ${tile.card.answer}`}
+            onClick={() => choose(tile.side, tile.card)}>
+            <span>{tile.side === 'face' ? tile.card.face : tile.card.answer}</span>
+          </button>
+        ))}
       </div>
-      <p className="tiny muted center mt-2.5">Chạm một thẻ bên trái rồi chạm nghĩa của nó bên phải.</p>
+      <p className="tiny muted center mt-2.5">Chạm một ô chữ Nhật và ô nghĩa của nó (thứ tự nào cũng được).</p>
     </div>
   );
 }

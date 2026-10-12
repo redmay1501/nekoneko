@@ -119,3 +119,12 @@ Chi tiết hiện trạng & lý do: `N5_CONTENT_AUDIT.md`, `LEARNING_FLOW_AUDIT.
 | 13 | Hiệu năng | Đo được: thời gian server = đọc database (mỗi truy vấn ~300 ms từ Việt Nam, kể cả truy vấn 1 dòng) — do khoảng cách; xác thực đã là getClaims (ES256, ~2 ms). Function Vercel ở iad1. Sửa có số đo: tab Từ vựng "Tất cả" vẽ từng 120 dòng (long task 102 ms → 0, 8.691 → 1.709 phần tử); bộ tải sẵn bỏ qua trang phiên học / game và gộp lần quét DOM. |
 
 API: không đổi (thêm tham số phạm vi trang). Database: không đổi schema; nội dung: 4 mẹo nhớ.
+
+## 2026-10-13 — Menu, Ghép thẻ, chọn phạm vi
+- Menu: Học tập / Luyện tập là nút mở / đóng (không chuyển trang); trang tổng ở dòng "Tổng quan".
+- Ghép thẻ: lưới ô vuông 4 cột — chọn 12 ô (6 cặp) hoặc 16 ô (8 cặp); chữ Nhật và nghĩa trộn chung; kỷ lục theo cỡ bàn.
+- Chọn phạm vi: một nút "Phạm vi: … · Đổi" mở bảng lưới (như bảng Kiểm tra) thay hàng chip dài.
+- Lỗi phát hiện khi kiểm tra: đổi tham số trên CÙNG trang Luyện nghe / Luyện viết bằng chuyển trang của Next.js đôi khi bị treo
+  (yêu cầu RSC về đủ nhưng router không áp dụng — không tái hiện ổn định, chưa tìm ra gốc). Hai trang này nay đổi phạm vi /
+  chữ ngay trong trình duyệt (server gửi sẵn kho mọi phạm vi, URL cập nhật bằng history.replaceState) — tức thì, không phụ
+  thuộc lỗi đó. Luyện nói và Ghép thẻ vẫn chuyển trang (đã thử nhiều lần đều chạy).

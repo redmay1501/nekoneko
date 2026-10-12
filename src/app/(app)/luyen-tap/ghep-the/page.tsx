@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { MatchGame } from '@/components/games/MatchGame';
 import { MATCH_GAME, gameRecordKey } from '@/features/games/match-game';
-import { MATCH_KINDS, type MatchKind, buildMatchPool, parseMatchKind } from '@/features/games/match-pool';
+import { MATCH_KINDS, MEMORY_RANGES, type MatchKind, buildMatchPool, parseMatchKind } from '@/features/games/match-pool';
+import { RangePicker } from '@/components/learning/RangePicker';
 import { getLearnerContext } from '@/features/learning/learner-context';
 
 const hrefFor = (kind: MatchKind, range?: string) => `/luyen-tap/ghep-the?loai=${kind}${range ? `&pham-vi=${range}` : ''}`;
@@ -33,16 +34,16 @@ export default async function MatchGamePage({ searchParams }: { searchParams: Pr
           </Link>
         ))}
       </div>
-      <div className="study-parts mt-2.5 mb-3.5" aria-label="Phạm vi">
-        {pool.options.map((option) => (
-          <Link key={option.id} className={`chip ${option.id === pool.range ? 'pink' : ''}`} href={hrefFor(kind, option.id)} scroll={false}
-            aria-current={option.id === pool.range ? 'true' : undefined}>
-            <span className={/[\u3040-\u30ff\u4e00-\u9fff]/.test(option.label) ? 'jp' : undefined}>{option.label}</span>
-          </Link>
-        ))}
+      <div className="mt-2.5">
+        <RangePicker title="Phạm vi" current={pool.range}
+          options={pool.options.map((option) => ({ id: option.id, label: option.label, caption: `${option.size} ${unit}`, href: hrefFor(kind, option.id),
+            group: option.id in MEMORY_RANGES ? 'Theo trí nhớ' : kind === 'tu-vung' ? 'Theo bài' : 'Theo nhóm' }))} />
       </div>
       <MatchGame key={scope} pool={pool.cards} scope={scope} unit={unit}
-        initialRecord={settings.gameRecords[gameRecordKey(MATCH_GAME, scope)] ?? null} />
+        recordsByPairs={{
+          6: settings.gameRecords[gameRecordKey(MATCH_GAME, `${scope}:6`)] ?? settings.gameRecords[gameRecordKey(MATCH_GAME, scope)],
+          8: settings.gameRecords[gameRecordKey(MATCH_GAME, `${scope}:8`)],
+        }} />
     </>
   );
 }

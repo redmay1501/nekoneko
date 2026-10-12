@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { SpriteIcon } from '@/components/common/SpriteIcon';
-import { RangeChips } from '@/components/learning/RangeChips';
+import { RangePicker } from '@/components/learning/RangePicker';
 import { SpeakingPrompt } from '@/components/learning/SpeakingPrompt';
 import { buildSpeakingPractice } from '@/features/learning/skill-practice';
 import { getLearnerContext } from '@/features/learning/learner-context';
@@ -16,8 +16,8 @@ export default async function SpeakingPage({ searchParams }: { searchParams: Pro
     <>
       <h1>Luyện nói</h1>
       <p className="soft sm" style={{ margin: '4px 0 12px' }}>Đọc nghĩa tiếng Việt, rồi nói thành tiếng. Nhìn đáp án sau. Chọn bài muốn luyện — kể cả bài chưa học tới.</p>
-      <RangeChips label="Phạm vi luyện nói" current={practice.range}
-        options={practice.ranges.map((range) => ({ ...range, href: hrefFor(range.id) }))} />
+      <RangePicker title="Phạm vi" current={practice.range}
+        options={practice.ranges.map((range, index) => ({ ...range, href: hrefFor(range.id), group: index < 2 ? 'Gợi ý' : 'Theo bài' }))} />
       {practice.sentences.map((pattern, index) => (
         <SpeakingPrompt key={pattern.id} lessonLabel={pattern.lesson.split('·')[0].trim()} promptVi={pattern.exampleVi}
           answerJp={pattern.exampleJp} chipClass={index % 2 ? 'mint' : 'pink'} />

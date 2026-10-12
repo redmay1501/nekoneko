@@ -2,69 +2,70 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { type MouseEvent, useState } from 'react';
+import { useState } from 'react';
 import { FOOTER_NAVIGATION, NAVIGATION_GROUPS, type NavigationItem, isActivePath, isInSection } from './navigation-items';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
 
-function NavigationLink({ item, isActive, onNavigate, onClick, isExpanded }: {
-  item: NavigationItem;
-  isActive: boolean;
-  onNavigate?: () => void;
-  onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
-  /** Mục có danh sách con: đang mở hay đóng (mũi tên ▾ / ▸). */
-  isExpanded?: boolean;
-}) {
+function ItemIcon({ icon }: { icon: string }) {
+  return <span className="ic"><EmojiIcon emoji={icon} size={icon.startsWith('neko:') ? 30 : 22} /></span>;
+}
+
+function NavigationLink({ item, isActive, onNavigate }: { item: NavigationItem; isActive: boolean; onNavigate?: () => void }) {
   return (
-    <Link href={item.href} className={`nav-i ${isActive ? 'on' : ''}`} aria-current={isActive ? 'page' : undefined}
-      aria-expanded={isExpanded} onClick={(event) => { onClick?.(event); if (!event.defaultPrevented) onNavigate?.(); }}>
-      <span className="ic"><EmojiIcon emoji={item.icon} size={item.icon.startsWith('neko:') ? 30 : 22} /></span>
+    <Link href={item.href} className={`nav-i ${isActive ? 'on' : ''}`} aria-current={isActive ? 'page' : undefined} onClick={onNavigate}>
+      <ItemIcon icon={item.icon} />
       {item.label}
-      {isExpanded !== undefined ? <span className="nav-caret" aria-hidden="true">{isExpanded ? '▾' : '▸'}</span> : null}
     </Link>
   );
 }
 
 interface NavigationListProps {
-  /** Khay ☰ trên điện thoại: mục cha chỉ mở / đóng danh sách con, kèm dòng "Xem tất cả". */
+  /** Khay ☰ trên điện thoại (đóng khay khi chuyển trang). */
   alwaysExpandLearning?: boolean;
   onNavigate?: () => void;
 }
 
-/** Danh sách điều hướng dùng chung cho thanh bên (desktop) và khay ☰ (mobile). */
-export function NavigationList({ alwaysExpandLearning = false, onNavigate }: NavigationListProps) {
+/**
+ * Danh sách điều hướng dùng chung cho thanh bên (desktop) và khay ☰ (mobile).
+ * Mục có danh sách con (Học tập, Luyện tập) là NÚT mở / đóng — bấm không chuyển trang. Trang tổng của mục nằm ở dòng
+ * "Tổng quan" đầu danh sách con. Mặc định mở mục đang đứng trong đó.
+ */
+export function NavigationList({ onNavigate }: NavigationListProps) {
   const pathname = usePathname();
-  // Mục có danh sách con (Học tập, Luyện tập): bấm lần đầu → mở (và tới trang đó); bấm lần nữa → đóng lại.
-  // Mặc định mở mục đang đứng trong đó; trong khay ☰ trên điện thoại thì mặc định mở hết như trước.
   const [toggled, setToggled] = useState<Record<string, boolean>>({});
-  // Khay ☰: bấm mục cha chỉ mở / đóng (chuyển trang thì khay đóng mất, không kịp thấy mục con) — có dòng "Xem tất cả".
   const isExpanded = (item: NavigationItem) => toggled[item.href] ?? isInSection(pathname, item);
-  function toggleSection(item: NavigationItem, event: MouseEvent<HTMLAnchorElement>) {
-    const expanded = isExpanded(item);
-    if (expanded || alwaysExpandLearning) event.preventDefault(); // Đang mở → chỉ đóng lại, không chuyển trang.
-    setToggled((current) => ({ ...current, [item.href]: !expanded }));
-  }
+  const toggle = (item: NavigationItem) => setToggled((current) => ({ ...current, [item.href]: !isExpanded(item) }));
+
   return (
     <nav aria-label="Điều hướng chính">
       {NAVIGATION_GROUPS.map((group) => (
         <div key={group.label} className="nav-group" role="group" aria-label={group.label}>
           <p className="nav-group-label" aria-hidden="true">{group.label}</p>
-          {group.items.map((item) => (
-            <div key={item.href}>
-              <NavigationLink item={item} isActive={pathname === item.href || (!item.children && isActivePath(pathname, item.href))} onNavigate={onNavigate}
-                isExpanded={item.children ? isExpanded(item) : undefined}
-                onClick={item.children ? (event) => toggleSection(item, event) : undefined} />
-              {item.children && isExpanded(item) ? (
-                <div className="nav-sub">
-                  {alwaysExpandLearning ? (
-                    <NavigationLink item={{ href: item.href, icon: '📚', label: `Xem tất cả · ${item.label}` }} isActive={pathname === item.href} onNavigate={onNavigate} />
-                  ) : null}
-                  {item.children.map((child) => (
-                    <NavigationLink key={child.href} item={child} isActive={isActivePath(pathname, child.href)} onNavigate={onNavigate} />
-                  ))}
-                </div>
-              ) : null}
-            </div>
-          ))}
+          {group.items.map((item) => {
+            if (!item.children) {
+              return <NavigationLink key={item.href} item={item} isActive={isActivePath(pathname, item.href)} onNavigate={onNavigate} />;
+            }
+            const expanded = isExpanded(item);
+            const subId = `nav-sub-${item.href.slice(1)}`;
+            return (
+              <div key={item.href}>
+                <button type="button" className={`nav-i nav-parent ${isInSection(pathname, item) ? 'in-section' : ''}`}
+                  aria-expanded={expanded} aria-controls={subId} onClick={() => toggle(item)}>
+                  <ItemIcon icon={item.icon} />
+                  {item.label}
+                  <span className="nav-caret" aria-hidden="true">{expanded ? '▾' : '▸'}</span>
+                </button>
+                {expanded ? (
+                  <div className="nav-sub" id={subId}>
+                    <NavigationLink item={{ href: item.href, icon: '📚', label: 'Tổng quan' }} isActive={pathname === item.href} onNavigate={onNavigate} />
+                    {item.children.map((child) => (
+                      <NavigationLink key={child.href} item={child} isActive={isActivePath(pathname, child.href)} onNavigate={onNavigate} />
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            );
+          })}
         </div>
       ))}
       <div className="nav-sep" />

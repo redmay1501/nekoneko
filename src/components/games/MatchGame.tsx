@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useSpeech } from '@/hooks/useSpeech';
+import { useEnterToContinue } from '@/hooks/useEnterToContinue';
 import { postJson } from '@/lib/api/api-client';
 import { focusSessionHref } from '@/features/learning/session-modes';
 import {
@@ -51,6 +52,9 @@ export function MatchGame({ pool, scope, initialRecord, unit }: MatchGameProps) 
     const timer = window.setInterval(() => setNow(Date.now()), 500);
     return () => window.clearInterval(timer);
   }, [round, finished]);
+
+  // Enter: màn bắt đầu → bắt đầu; màn kết quả → chơi lại. Trong lúc chơi thì không (ghép thẻ bằng chạm / chuột).
+  useEnterToContinue(pool.length >= 3 && (!round || Boolean(finished)), () => start());
 
   function start() {
     const cards = pickMatchRound(pool);

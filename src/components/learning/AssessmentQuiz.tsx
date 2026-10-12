@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { AudioButton } from '@/components/common/AudioButton';
+import { useEnterToContinue } from '@/hooks/useEnterToContinue';
 
 export interface AssessmentQuestion {
   /** Có thì mỗi câu trả lời được báo lên `onAnswer` (để ghi vào trí nhớ). */
@@ -50,6 +51,9 @@ export function AssessmentQuiz({
     setQuestionIndex((index) => index + 1);
     setChosenAnswer(null);
   }
+
+  // Enter: đã chọn đáp án → câu tiếp / xem kết quả. Chưa chọn thì không bỏ qua câu.
+  useEnterToContinue(Boolean(question) && !isComplete && chosenAnswer !== null, continueQuiz);
 
   function reset() {
     setQuestionIndex(0);

@@ -108,6 +108,8 @@ export function DictationPractice({ words, sentences }: { words: DictationItem[]
       </div>
       <form onSubmit={check} className="mt-3">
         <input className="input jp" value={typed} onChange={(event) => setTyped(event.target.value)} disabled={Boolean(current)}
+          // Enter để CHỐT CHỮ của bộ gõ tiếng Nhật không được nộp bài (Safari gửi Enter ngay sau khi chốt).
+          onKeyDown={(event) => { if (event.key === 'Enter' && (event.nativeEvent.isComposing || event.keyCode === 229)) event.preventDefault(); }}
           lang="ja" autoComplete="off" autoCorrect="off" spellCheck={false}
           placeholder={mode === 'words' ? 'Gõ từ bạn nghe được (kana hoặc chữ Hán)' : 'Gõ cả câu bạn nghe được'} aria-label="Câu trả lời" />
         {!current ? <button type="submit" className="btn block mt-2.5" disabled={!typed.trim()}>Kiểm tra</button> : null}

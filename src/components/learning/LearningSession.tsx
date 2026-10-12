@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect } from 'react';
 import Link from 'next/link';
 import { NokoMessage } from '@/components/common/NokoMessage';
 import { SessionCardSkeleton } from '@/components/common/PageSkeletons';
 import { SkeletonScreen } from '@/components/common/Skeleton';
 import { ErrorState } from '@/components/common/StateViews';
 import { useLearningSession } from '@/features/learning/hooks/useLearningSession';
+import { useEnterToContinue } from '@/hooks/useEnterToContinue';
 import { SESSION_MODES, type SessionMode } from '@/features/learning/session-modes';
 import type { PublicSessionStep } from '@/features/learning/session-types';
 import { SessionCheckpoint } from './session/SessionCheckpoint';
@@ -24,20 +24,9 @@ export function LearningSession({ mode, focusKeys }: { mode: SessionMode; focusK
   const { sessionQuery, session, currentStep, stepIndex } = learning;
   useSessionAutoplay(currentStep, learning.feedback);
 
-  // Enter sang câu tiếp sau khi đã trả lời. Bỏ qua khi đang gõ chữ và khi giữ phím.
+  // Enter sang câu tiếp sau khi đã trả lời (không khi đang gõ / chọn chữ IME / mở khay — xem useEnterToContinue).
   const { feedback, isFinishing, isAtCheckpoint, goToNextStep } = learning;
-  useEffect(() => {
-    if (!feedback || isFinishing || isAtCheckpoint) return;
-    function handleKeyDown(event: KeyboardEvent) {
-      const target = event.target;
-      if (event.key !== 'Enter' || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
-      if (target instanceof HTMLElement && (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName))) return;
-      event.preventDefault();
-      goToNextStep();
-    }
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [feedback, isFinishing, isAtCheckpoint, goToNextStep]);
+  useEnterToContinue(Boolean(feedback) && !isFinishing && !isAtCheckpoint, goToNextStep);
 
   if (sessionQuery.isLoading) {
     return <div className="session"><SessionHeader mode={mode} /><SkeletonScreen label="Noko đang chọn bài cho bạn…"><SessionCardSkeleton /></SkeletonScreen></div>;

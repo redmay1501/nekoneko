@@ -12,6 +12,8 @@ export interface VocabularyRowData extends KnowledgeListRowData {
 /** Tab "Chữ cái": từ của giai đoạn học bảng chữ cái (ngày 6–13), chưa thuộc bài Minna nào. */
 export const KANA_PERIOD_TAB = 'chu-cai';
 const ALL_TAB = '';
+/** Tab "Tất cả" có 755 từ: vẽ từng đợt chừng này dòng (đo được: vẽ cả 755 dòng một lúc khựng ~100ms, 8.700 phần tử). */
+const PAGE_SIZE = 120;
 
 const tabOfRow = (row: VocabularyRowData) => {
   const number = lessonNumber(row.lesson);
@@ -24,6 +26,7 @@ const tabOfRow = (row: VocabularyRowData) => {
  */
 export function LessonVocabularyList({ rows, lessons, currentTab }: { rows: VocabularyRowData[]; lessons: LessonContent[]; currentTab: string }) {
   const [tab, setTab] = useState(currentTab);
+  const [shownCount, setShownCount] = useState(PAGE_SIZE);
   const activeTabRef = useRef<HTMLButtonElement>(null);
   const sortedLessons = [...lessons].sort((left, right) => lessonNumber(left.id) - lessonNumber(right.id));
   const hasKanaPeriod = rows.some((row) => tabOfRow(row) === KANA_PERIOD_TAB);
@@ -36,7 +39,7 @@ export function LessonVocabularyList({ rows, lessons, currentTab }: { rows: Voca
 
   const tabButton = (id: string, label: string) => (
     <button key={id || 'all'} ref={tab === id ? activeTabRef : undefined} type="button" role="tab" aria-selected={tab === id}
-      className={`tab ${tab === id ? 'on' : ''}`} onClick={() => setTab(id)}>
+      className={`tab ${tab === id ? 'on' : ''}`} onClick={() => { setTab(id); setShownCount(PAGE_SIZE); }}>
       {label}{id === currentTab && id !== ALL_TAB ? ' · đang học' : ''}
     </button>
   );
@@ -62,10 +65,17 @@ export function LessonVocabularyList({ rows, lessons, currentTab }: { rows: Voca
           <p className="sm soft mb-3">Từ chào hỏi và từ Katakana học trong hai tuần bảng chữ cái (ngày 6–13).</p>
         ) : null}
         <div key={tab} className="list-grid stack" style={{ gap: 9 }} data-reveal-stagger>
-          {visibleRows.map((row) => (
+          {visibleRows.slice(0, shownCount).map((row) => (
             <KnowledgeListRow key={row.contentKey} row={row} />
           ))}
         </div>
+        {visibleRows.length > shownCount ? (
+          <p className="center mt-3">
+            <button type="button" className="btn ghost sm" onClick={() => setShownCount((count) => count + PAGE_SIZE)}>
+              Xem thêm {Math.min(PAGE_SIZE, visibleRows.length - shownCount)} từ · còn {visibleRows.length - shownCount}
+            </button>
+          </p>
+        ) : null}
       </div>
     </>
   );

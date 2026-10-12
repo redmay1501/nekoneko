@@ -98,3 +98,24 @@ Chi tiết hiện trạng & lý do: `N5_CONTENT_AUDIT.md`, `LEARNING_FLOW_AUDIT.
 - Chấm nét là mức cơ bản (điểm đầu / cuối từng nét), không nhận dạng hình chữ.
 - Âm thanh là giọng đọc của thiết bị (không có file thu sẵn) — chất lượng tuỳ máy.
 - Game mới có Ghép thẻ; "Thử thách thời gian" để sau.
+
+---
+
+# 2026-10-12 — Refactor UI/UX, learning flow, practice, performance
+
+| # | Việc | Kết quả |
+|---|---|---|
+| 1 | Nút | `.btn` dùng chung kiểu NekoButton (ánh sáng đều, bóng mềm), cỡ sm 34 / 40 / lg 46px, màu review/quiz/success/game. `.block` chỉ rộng hết trên điện thoại hoặc trong khay / hộp thoại. |
+| 2 | Trang chủ | Hai thẻ cao theo nội dung (không kéo giãn), hai cột từ iPad, mèo nhỏ; nút Ôn ngay là NekoButton. |
+| 3 | Trang ngày | CTA lên đầu (Học hết ngày / Ôn lại / Hoàn thành ngày). Bỏ khối "Cách viết" trùng. Từ vựng mở khay chi tiết chung. 4 mẹo nhớ lấp chỗ bị bỏ (roadmap adjustment `vocabulary-tip-cleanup`, đã seed). |
+| 4 | Ngày ôn | "Từ vựng cần ôn — N từ": khớp đúng từ được liệt kê hoặc khoảng bài; thẻ gọn + "Ôn N từ" (phiên chọn riêng). |
+| 5 | Thời gian | Bỏ chip "việc ngoài app" (thực ra là tổng mọi việc trong Excel). Dòng thời gian ghi trong app / tự làm, mỗi việc có nhãn. |
+| 6 | Việc "Từ vựng" | Không lặp danh sách và câu "Trong sách…" — chỉ số từ mới + chỗ xem (từ đã gắn đúng ngày). |
+| 7 | Kiểu học | Mô tả đúng hành vi + dòng tính từ cấu hình. Ẩn "Học ngẫu nhiên" (mode vẫn chạy). |
+| 8 | Ghép thẻ | Thanh tiến độ, thẻ nổi lật vào, nảy ✓ / lắc nhẹ, sao, Enter. |
+| 9 | Từ vựng | Bỏ "Tự kiểm tra"; còn một nút Kiểm tra. |
+| 10–11 | Kỹ năng | Không khoá theo ngày. Chọn phạm vi (lộ trình / tất cả / bài) cho nói, nghe – gõ; viết Kanji theo nhóm; đọc hiểu hiện mọi đoạn (hiện chỉ có 1 đoạn). |
+| 12 | Enter | `useEnterToContinue`: chỉ sau khi trả lời, bỏ qua ô nhập / IME / khay. Phiên học, trắc nghiệm, nghe, game; ô nghe – gõ không nộp khi chốt chữ IME. |
+| 13 | Hiệu năng | Đo được: thời gian server = đọc database (mỗi truy vấn ~300 ms từ Việt Nam, kể cả truy vấn 1 dòng) — do khoảng cách; xác thực đã là getClaims (ES256, ~2 ms). Function Vercel ở iad1. Sửa có số đo: tab Từ vựng "Tất cả" vẽ từng 120 dòng (long task 102 ms → 0, 8.691 → 1.709 phần tử); bộ tải sẵn bỏ qua trang phiên học / game và gộp lần quét DOM. |
+
+API: không đổi (thêm tham số phạm vi trang). Database: không đổi schema; nội dung: 4 mẹo nhớ.

@@ -24,6 +24,8 @@ export function KnowledgePrefetcher() {
   const pathname = usePathname();
 
   useEffect(() => {
+    // Phiên học / trò chơi không có thẻ để bấm xem chi tiết, lại đổi DOM liên tục (đồng hồ, câu hỏi) → không theo dõi.
+    if (pathname.startsWith('/hoc/') || pathname.startsWith('/luyen-tap/ghep-the')) return;
     const pending = new Set<string>();
     let timer: number | undefined;
     const hasDetail = (key: string) => queryClient.getQueryData(QUERY_KEYS.knowledgeDetail(key)) !== undefined;
@@ -57,10 +59,12 @@ export function KnowledgePrefetcher() {
     const observeAll = () => document.querySelectorAll('[data-knowledge-key]').forEach((element) => observer.observe(element));
     observeAll();
     // Danh sách đổi (đổi tab bài, lọc…) → theo dõi thêm các thẻ mới.
+    // Gộp các thay đổi DOM: quét lại tối đa ~4 lần mỗi giây (trước đây mỗi khung hình có thay đổi).
     let frame = 0;
+    let lastScan = 0;
     const mutations = new MutationObserver(() => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(observeAll);
+      if (frame) return;
+      frame = window.setTimeout(() => { frame = 0; lastScan = performance.now(); observeAll(); }, Math.max(0, 250 - (performance.now() - lastScan)));
     });
     mutations.observe(document.body, { childList: true, subtree: true });
 
@@ -73,7 +77,7 @@ export function KnowledgePrefetcher() {
     return () => {
       observer.disconnect();
       mutations.disconnect();
-      cancelAnimationFrame(frame);
+      window.clearTimeout(frame);
       window.clearTimeout(timer);
       if (window.cancelIdleCallback && typeof idleHandle === 'number') window.cancelIdleCallback(idleHandle);
     };

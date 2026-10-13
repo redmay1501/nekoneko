@@ -176,7 +176,7 @@ export function MatchGame({ pool, scope, recordsByPairs, unit }: MatchGameProps)
   }
 
   const tileClass = (side: Side, card: MatchCard) => [
-    'match-tile', side === 'face' ? 'jp glyph face' : 'answer',
+    'match-tile', side === 'face' ? 'jp glyph face' : 'answer', lengthClass(side, card),
     matched.includes(card.contentKey) ? 'done' : '',
     picked?.side === side && picked.key === card.contentKey ? 'picked' : '',
     wrong?.[side] === card.contentKey ? 'wrong' : '',
@@ -205,6 +205,16 @@ export function MatchGame({ pool, scope, recordsByPairs, unit }: MatchGameProps)
       <p className="tiny muted center mt-2.5">Chạm một ô chữ Nhật và ô nghĩa của nó (thứ tự nào cũng được).</p>
     </div>
   );
+}
+
+/**
+ * Cỡ chữ theo độ dài nội dung — ô vuông nhỏ (≈ 80 px trên điện thoại) nên từ / nghĩa dài phải nhỏ lại thay vì tràn ô.
+ * Mặt chữ Nhật: 1–2 chữ to nhất; nghĩa tiếng Việt: theo số ký tự.
+ */
+function lengthClass(side: Side, card: MatchCard): string {
+  const length = [...(side === 'face' ? card.face : card.answer)].length;
+  if (side === 'face') return length <= 2 ? '' : length <= 4 ? 'len-m' : length <= 6 ? 'len-l' : 'len-xl';
+  return length <= 12 ? '' : length <= 22 ? 'len-m' : length <= 34 ? 'len-l' : 'len-xl';
 }
 
 function RecordLine({ record }: { record: GameRecord | null }) {

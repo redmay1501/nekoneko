@@ -36,7 +36,7 @@ export function kanjiReadingList(content: { onReading: string; kunReading: strin
     .filter((reading) => reading && reading !== '-' && reading !== '—');
 }
 
-const readingKey = (reading: string) => normalizeJapanese(reading.replace(/[()（）.\-]/g, ''), { foldKatakana: true });
+export const readingKey = (reading: string) => normalizeJapanese(reading.replace(/[()（）.\-]/g, ''), { foldKatakana: true });
 
 /** Đúng / sai của một câu trả lời; `null` khi kiểu câu hỏi không áp dụng cho loại kiến thức này. */
 export function gradeStudyAnswer(item: KnowledgeItem, ask: StudyAsk, answer: string, prompt = ''): boolean | null {

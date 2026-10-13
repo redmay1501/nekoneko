@@ -133,7 +133,7 @@ const TE_FORM_STEMS = new Set('あそん あん しん すん たのん とん �
  * Từ N5 tự nó kết thúc bằng chữ trông như trợ từ — không tách (こども ≠ "kodo mo", ちょっと ≠ "chot to").
  * Lọc từ kho từ vựng (content/seed/n5-content.json): từ ≥ 3 chữ kết thúc bằng một trong TRAILING_PARTICLES.
  */
-const WORDS_ENDING_LIKE_PARTICLES = new Set(`
+export const WORDS_ENDING_LIKE_PARTICLES = new Set(`
   あぱーと いかが いつか いつも いなか いもうと いんたーねっと えいが おとうと おなか かいもの きっと くだもの ここのか
   こども こーと しごと しずか すかーと せいと それから たてもの たべもの ちょっと てすと でぱーと とおか とても どうも
   どこか なにか なのか にぎやか のみもの のーと はつか ぱすぽーと ぴあの ふつか ぷれぜんと ぺっと ぽけっと ぽすと みっか

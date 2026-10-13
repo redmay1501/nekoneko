@@ -128,3 +128,20 @@ API: không đổi (thêm tham số phạm vi trang). Database: không đổi sc
   (yêu cầu RSC về đủ nhưng router không áp dụng — không tái hiện ổn định, chưa tìm ra gốc). Hai trang này nay đổi phạm vi /
   chữ ngay trong trình duyệt (server gửi sẵn kho mọi phạm vi, URL cập nhật bằng history.replaceState) — tức thì, không phụ
   thuộc lỗi đó. Luyện nói và Ghép thẻ vẫn chuyển trang (đã thử nhiều lần đều chạy).
+
+## 2026-10-13 — Học theo ngày: Từ vựng → Ngữ pháp → Kanji → Ôn tập
+- Thứ tự học thống nhất ở cả ba chỗ: phiên "Học hôm nay" (`NEW_KNOWLEDGE_ORDER`: chữ cái → từ vựng → ngữ pháp → bộ thủ → Kanji),
+  dòng thời gian của ngày (xếp theo loại việc, giữ thứ tự Excel trong cùng loại) và mục "Kiến thức của ngày" (① ② ③).
+- Trang mới `/lo-trinh/ngay/[day]/hoc` (nút "Học hết ngày N"; ngày đã qua có "Học lại theo bước"; ngày chữ cái vẫn dùng `/hoc/day`).
+  Bốn bước, đổi bước / chế độ ngay trong trình duyệt (`?buoc=&che-do=` ghi bằng replaceState):
+  - Từ vựng: thẻ lật (trước / sau, ← → Space, "5/20 từ", nghe, câu ví dụ nếu có, đánh dấu ôn) + Nhật→Việt, Việt→Nhật, Ghép cặp, Gõ kana.
+  - Ngữ pháp: thẻ chủ đề (công thức, ý nghĩa, khi nào dùng, lỗi hay gặp, ví dụ + nghe, áp dụng) + Việt→Nhật, Nhật→Việt (ghi trí nhớ),
+    Sắp xếp câu, Tự viết câu (chỉ luyện, không ghi).
+  - Kanji: bộ thủ của ngày + thẻ lật (Hán Việt, nghĩa, On/Kun, từ ghép, từ vựng chứa chữ, mẹo, thứ tự nét) + chữ→nghĩa, nghĩa→chữ,
+    cách đọc, đọc từ ghép.
+  - Ôn tập: phiên focus — câu sai và mục đánh dấu trước, rồi mục yếu nhất theo trí nhớ.
+  - Mỗi bài có tổng kết: số đúng, độ chính xác, danh sách sai, "Làm lại", "Ôn … sai".
+- API mới `POST /api/study/answer`: server chấm (`study-grading.ts`, dùng chung với trình duyệt) và ghi trí nhớ (RECALL, khoá lạc quan,
+  requestId) — nhận cả mục chưa học, tối đa một lần mỗi mục mỗi ngày. Xem thẻ không ghi gì. Database: không đổi.
+- Giới hạn: câu ví dụ của từ vựng chỉ có khi kho câu (Tatoeba + câu mẫu ngữ pháp) chứa từ đó; 2 từ ghép Kanji không có cách đọc
+  trong dữ liệu (生ビール, 聞こえます) nên không vào câu "đọc từ ghép".

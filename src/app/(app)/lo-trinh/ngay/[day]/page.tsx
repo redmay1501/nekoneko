@@ -49,7 +49,8 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
         <p className="sm mt-2.5">{plan.summary}</p>
         <p className="sm soft mt-1.5"><b>Vì sao học hôm nay?</b> {plan.purpose}</p>
         {/* Hành động chính của ngày — ngay đầu trang, theo trạng thái thật (học hết ≠ đã hoàn thành ngày). */}
-        <DayActions day={day} relation={plan.relation} remainingCount={completion.totalCount - completion.metCount} hasNewKnowledge={completion.hasNewKnowledge} />
+        <DayActions day={day} relation={plan.relation} remainingCount={completion.totalCount - completion.metCount} hasNewKnowledge={completion.hasNewKnowledge}
+          hasDayStudy={plan.knowledge.vocabulary.length + plan.knowledge.grammar.length + plan.knowledge.kanji.length > 0} />
       </section>
 
       <div className="daygrid mt-4">

@@ -110,10 +110,10 @@ function selectRecallItems(input: BuildLearningSessionInput, count: number, excl
 }
 
 /**
- * Thứ tự giới thiệu kiến thức mới trong một ngày — đi từ mảnh nhỏ tới câu:
- * chữ cái → bộ thủ → kanji → từ vựng → ngữ pháp (Bộ thủ ↔ Kanji ↔ Từ ↔ Câu).
+ * Thứ tự giới thiệu kiến thức mới trong một ngày: chữ cái → từ vựng → ngữ pháp → bộ thủ → Kanji.
+ * Có vốn từ trước rồi mới học mẫu câu (câu ví dụ dùng chính các từ đó) và chữ Hán (bộ thủ ngay trước Kanji chứa nó).
  */
-const NEW_KNOWLEDGE_ORDER: readonly ContentType[] = ['hiragana', 'katakana', 'radical', 'kanji', 'vocabulary', 'grammar'];
+export const NEW_KNOWLEDGE_ORDER: readonly ContentType[] = ['hiragana', 'katakana', 'vocabulary', 'grammar', 'radical', 'kanji'];
 
 /** Kiến thức của ngày đang học mà người học CHƯA gặp, theo thứ tự cố định. */
 export function unmetKnowledgeOfDay(

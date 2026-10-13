@@ -48,48 +48,58 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
     );
   }
 
+  // Thứ tự học của ngày: chữ cái → ① Từ vựng → ② Ngữ pháp → ③ Bộ thủ & Kanji (có vốn từ rồi mới học câu và chữ Hán).
   return (
     <>
-      {knowledge.kanji.length || knowledge.radicals.length ? (
-        <div className="kgrid">
-          {knowledge.radicals.map((radical) => (
-            <KnowledgeChipButton key={`r${radical.id}`} contentKey={toContentKey('radical', radical.id)} className="kcard"
-              style={{ background: '#F9F6FE', borderColor: '#E6DEF7' }}>
-              <span className="big">{primaryRadicalGlyph(radical.radical)}</span>
-              <b>Bộ {firstMeaning(radical.meaning)}</b>
-              <span>{radical.nameJp.split(' / ')[0]}</span>
-            </KnowledgeChipButton>
-          ))}
-          {knowledge.kanji.map((kanji) => (
-            <KnowledgeChipButton key={`k${kanji.id}`} contentKey={toContentKey('kanji', kanji.id)} className="kcard">
-              <span className="big">{kanji.character}</span>
-              <b>{kanji.hanViet}</b>
-              <span>{firstMeaning(kanji.meaning)} · {kanji.strokes} nét</span>
-            </KnowledgeChipButton>
-          ))}
-        </div>
-      ) : null}
       {plan.kanaLesson ? <div className="mt-2.5"><KanaLessonTable lesson={plan.kanaLesson} /></div> : null}
-      {knowledge.grammar.length ? (
-        <div className="stack mt-2.5" style={{ gap: 7 }}>
-          {knowledge.grammar.map((pattern) => (
-            <KnowledgeChipButton key={pattern.id} contentKey={toContentKey('grammar', pattern.id)} className="list-row" style={{ padding: '10px 12px' }}>
-              <span className="mid">
-                <b className="jp" style={{ fontSize: 14.5 }}>{pattern.pattern}</b>
-                {patternRomaji(pattern.pattern) ? <span className="romaji">{patternRomaji(pattern.pattern)}</span> : null}
-                <span>{pattern.usage}</span>
-                <span className="jp" style={{ color: 'var(--ink)' }}>{pattern.exampleJp}</span>
-                {pattern.exampleReading && pattern.exampleReading !== pattern.exampleJp ? <span className="jp tiny muted">{pattern.exampleReading}</span> : null}
-                {canRomanize(pattern.exampleReading || pattern.exampleJp) ? <span className="romaji">{sentenceRomaji(pattern.exampleReading || pattern.exampleJp)}</span> : null}
-                <span>{pattern.exampleVi}</span>
-              </span>
-              <span className="end"><span className="tiny muted" aria-hidden="true">→</span></span>
-            </KnowledgeChipButton>
-          ))}
-        </div>
-      ) : null}
       {knowledge.vocabulary.length ? (
-        <DayVocabularyList words={knowledge.vocabulary} />
+        <>
+          <p className="day-step-label">① Từ vựng</p>
+          <DayVocabularyList words={knowledge.vocabulary} />
+        </>
+      ) : null}
+      {knowledge.grammar.length ? (
+        <>
+          <p className="day-step-label">② Ngữ pháp</p>
+          <div className="stack mt-2.5" style={{ gap: 7 }}>
+            {knowledge.grammar.map((pattern) => (
+              <KnowledgeChipButton key={pattern.id} contentKey={toContentKey('grammar', pattern.id)} className="list-row" style={{ padding: '10px 12px' }}>
+                <span className="mid">
+                  <b className="jp" style={{ fontSize: 14.5 }}>{pattern.pattern}</b>
+                  {patternRomaji(pattern.pattern) ? <span className="romaji">{patternRomaji(pattern.pattern)}</span> : null}
+                  <span>{pattern.usage}</span>
+                  <span className="jp" style={{ color: 'var(--ink)' }}>{pattern.exampleJp}</span>
+                  {pattern.exampleReading && pattern.exampleReading !== pattern.exampleJp ? <span className="jp tiny muted">{pattern.exampleReading}</span> : null}
+                  {canRomanize(pattern.exampleReading || pattern.exampleJp) ? <span className="romaji">{sentenceRomaji(pattern.exampleReading || pattern.exampleJp)}</span> : null}
+                  <span>{pattern.exampleVi}</span>
+                </span>
+                <span className="end"><span className="tiny muted" aria-hidden="true">→</span></span>
+              </KnowledgeChipButton>
+            ))}
+          </div>
+        </>
+      ) : null}
+      {knowledge.kanji.length || knowledge.radicals.length ? (
+        <>
+          <p className="day-step-label">③ Bộ thủ & Kanji</p>
+          <div className="kgrid">
+            {knowledge.radicals.map((radical) => (
+              <KnowledgeChipButton key={`r${radical.id}`} contentKey={toContentKey('radical', radical.id)} className="kcard"
+                style={{ background: '#F9F6FE', borderColor: '#E6DEF7' }}>
+                <span className="big">{primaryRadicalGlyph(radical.radical)}</span>
+                <b>Bộ {firstMeaning(radical.meaning)}</b>
+                <span>{radical.nameJp.split(' / ')[0]}</span>
+              </KnowledgeChipButton>
+            ))}
+            {knowledge.kanji.map((kanji) => (
+              <KnowledgeChipButton key={`k${kanji.id}`} contentKey={toContentKey('kanji', kanji.id)} className="kcard">
+                <span className="big">{kanji.character}</span>
+                <b>{kanji.hanViet}</b>
+                <span>{firstMeaning(kanji.meaning)} · {kanji.strokes} nét</span>
+              </KnowledgeChipButton>
+            ))}
+          </div>
+        </>
       ) : null}
     </>
   );

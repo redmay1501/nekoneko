@@ -124,7 +124,7 @@ describe('kiến thức mới đi theo chặng của ngày đang học', () => {
 
   it('ngày đang học (23) bắt đầu với 26 kiến thức chưa gặp (gồm từ N5 bổ sung), theo thứ tự bộ thủ → kanji → từ → ngữ pháp', () => {
     expect(unmetDay23).toHaveLength(26);
-    const order = ['radical', 'kanji', 'vocabulary', 'grammar'];
+    const order = ['vocabulary', 'grammar', 'radical', 'kanji'];
     const typeRanks = unmetDay23.map((item) => order.indexOf(item.type));
     expect(typeRanks).toEqual([...typeRanks].sort((left, right) => left - right));
   });

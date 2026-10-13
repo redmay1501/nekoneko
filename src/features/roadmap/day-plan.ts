@@ -108,6 +108,12 @@ export function formatTaskBody(body: string): TaskLine[] {
  */
 const IN_APP_GLYPHS = new Set(['あ', '゛', 'ゃ', '語', '漢', '文', '部', '◐', '✓']);
 const VOCABULARY_GLYPH = '語';
+/** Thứ tự các loại việc trong ngày (ký hiệu đầu nhãn Excel); loại khác (✎ ? 耳 読…) đứng sau, giữ thứ tự gốc. */
+const TASK_ORDER = ['◐', 'あ', '゛', 'ゃ', '語', '文', '部', '漢'];
+const taskRank = (task: DayTask) => {
+  const rank = TASK_ORDER.indexOf(task.label.trim()[0] ?? '');
+  return rank < 0 ? TASK_ORDER.length : rank;
+};
 
 function toTaskView(task: DayTask, newWordCount: number, reviewWordCount: number): DayTaskView {
   const glyph = task.label.trim()[0] ?? '·';
@@ -181,6 +187,8 @@ export function buildDayPlan(catalog: KnowledgeCatalog, requestedDay: number, jo
   const kanjiRadicals = firstKanji ? radicalsOfKanji(catalog, firstKanji) : [];
   const bridgeRadical = kanjiRadicals.find((radical) => (radical.day ?? JOURNEY_TOTAL_DAYS) < (firstKanji?.day ?? 0));
 
+  // Dòng thời gian theo thứ tự học: khởi động → chữ cái → từ vựng → ngữ pháp → bộ thủ → Kanji → việc tự làm (giữ thứ tự Excel trong cùng nhóm).
+  tasks.sort((left, right) => taskRank(left) - taskRank(right) || left.orderNo - right.orderNo);
   const reviewVocabulary = knowledge.vocabulary.length ? [] : reviewVocabularyOf(tasks.find((task) => task.label.trim().startsWith(VOCABULARY_GLYPH)), content.vocabulary);
   const taskViews = tasks.map((task) => toTaskView(task, knowledge.vocabulary.length, reviewVocabulary.length));
 

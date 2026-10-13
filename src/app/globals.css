@@ -440,8 +440,29 @@ html.sheet-open,html.sheet-open body{overflow:hidden}
 .chain .arw{color:var(--pink);font-size:15px;line-height:1.4}
 
 /* ============ MỘT NGÀY HỌC ============ */
-.daystrip{display:flex;gap:7px;overflow-x:auto;padding:4px 0 8px;scrollbar-width:none}
+/* Dải ngày: đủ 90 ngày, vuốt ngang tự nhiên; overscroll-behavior giữ cú vuốt trong dải (không kéo trang / không "lùi trang"). */
+.daypicker{min-width:0}
+.daypicker-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.daystrip{min-width:0;display:flex;gap:7px;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;
+  touch-action:pan-x pan-y;scroll-snap-type:x proximity;padding:4px 2px 8px;scrollbar-width:none}
 .daystrip::-webkit-scrollbar{display:none}
+@media (hover:hover) and (pointer:fine){.daystrip{scrollbar-width:thin;scrollbar-color:#F3D6DC transparent}.daystrip::-webkit-scrollbar{display:block;height:6px}.daystrip::-webkit-scrollbar-thumb{background:#F3D6DC;border-radius:99px}}
+.daypicker-open{flex:0 0 auto;white-space:nowrap}
+.daychip{scroll-snap-align:center}
+.daychip.is-done{background:#F1FAF4;border-color:#CFEBD6}
+.daychip.is-partial{background:#FFF7E8;border-color:#F6DDB0}
+.daychip.is-today:not(.on){box-shadow:inset 0 0 0 2px var(--sakura)}
+.daypick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:6px}
+.daygrid-cell{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:48px;border-radius:12px;
+  border:1.5px solid var(--line);background:#fff;color:var(--ink);font-size:15px}
+.daygrid-cell.on{border-color:var(--sakura);background:var(--sakura);color:#fff}
+.daygrid-cell.is-today:not(.on){border-color:var(--sakura)}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#E5DCD8;vertical-align:middle}
+.dot.is-done,.is-done>.dot{background:#5DB37A}
+.dot.is-partial,.is-partial>.dot{background:#E8A93B}
+.daygrid-cell.on>.dot{background:#fff}
+.daygrid-legend{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.daygrid-legend .dot{margin-left:6px}
 .daychip{flex:0 0 auto;width:52px;padding:8px 0;border-radius:15px;text-align:center;
   background:#fff;border:1px solid var(--line)}
 .daychip b{display:block;font-size:15px;line-height:1.1}
@@ -1141,3 +1162,19 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 .order-piece{min-height:44px;padding:8px 14px;border-radius:12px;border:1px solid var(--line);background:#fff;font-family:var(--font-learn);font-size:17px}
 .order-piece:disabled{opacity:.35}
 .order-answer .order-piece:disabled{opacity:1}
+/* ── Mặt chữ tự vừa khung (fitTextStyle): cha có .fit-box, chữ có .fit-text ── */
+.fit-box{container-type:inline-size;width:100%;min-width:0}
+.fit-text{font-size:clamp(var(--fit-min,20px),calc((100cqi - 24px) / var(--fit-em,1)),var(--fit-max,48px))!important;
+  max-width:100%;white-space:normal;word-break:keep-all;overflow-wrap:anywhere;line-break:strict}
+.fit-box>.fit-text.speakable-face,.fit-box>.s-big{display:block}
+.flashcard .fit-box{display:block;text-align:center}
+.keep-words{word-break:keep-all;overflow-wrap:anywhere}
+.vocab-head{display:flex;gap:12px;align-items:flex-start}
+.vocab-head-main{flex:1 1 auto;min-width:0}
+.vocab-head-main .speakable-face{margin:0;padding:2px 4px;text-align:left}
+.vocab-head-side{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:8px}
+@media (max-width:420px){.vocab-head-side .vocab-image{width:52px;height:52px}}
+.day-step-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:14px 2px 4px}
+.day-step-head .day-step-label{margin:0}
+.day-step-link{flex:0 0 auto;font-size:12.5px;font-weight:700;color:var(--sakura-deep,#C95A6C);min-height:32px;display:inline-flex;align-items:center}
+.review-window{background:#fff;border-radius:14px;padding:10px 12px;border:1px solid #F3E4CC}

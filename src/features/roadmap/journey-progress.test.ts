@@ -5,6 +5,7 @@ import { toMemoryView, createInitialMemoryRecord } from '@/features/memory/memor
 import type { MemoryView } from '@/features/memory/memory-types';
 import { loadSeedContent } from '@/lib/data/seed-content';
 import {
+  buildDayStatuses,
   completedDayCount,
   getDayCompletionProgress,
   relationToCurrentDay,
@@ -97,5 +98,19 @@ describe('estimateMinutesToFinishDay', () => {
     const { estimateMinutesToFinishDay } = await import('./journey-progress');
     expect(estimateMinutesToFinishDay({ metCount: 0, totalCount: 13, hasNewKnowledge: true, isAllKnowledgeMet: false })).toBe(15);
     expect(estimateMinutesToFinishDay({ metCount: 13, totalCount: 13, hasNewKnowledge: true, isAllKnowledgeMet: true })).toBe(0);
+  });
+});
+
+describe('buildDayStatuses', () => {
+  it('trạng thái theo kiến thức thật đã gặp; học bộ thủ không làm Kanji thành "đã học"', () => {
+    const day15 = itemsScheduledOn(catalog, 15);
+    const radicalKeys = day15.filter((item) => item.type === 'radical').map((item) => item.key);
+    const statuses = buildDayStatuses(catalog, freshViews(15, radicalKeys), 15);
+    expect(statuses).toHaveLength(90);
+    expect(statuses[14].status).toBe('partial');
+    expect(buildDayStatuses(catalog, freshViews(15, day15.map((item) => item.key)), 15)[14].status).toBe('done');
+    expect(statuses[15].status).toBe('todo');
+    // Ngày ôn (không có kiến thức mới): đã qua → done.
+    expect(buildDayStatuses(catalog, freshViews(30), 30)[20].status).toBe('done');
   });
 });

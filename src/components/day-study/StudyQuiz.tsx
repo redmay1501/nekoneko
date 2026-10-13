@@ -5,6 +5,7 @@ import { AudioButton } from '@/components/common/AudioButton';
 import { useEnterToContinue } from '@/hooks/useEnterToContinue';
 import { createRequestId, postJson } from '@/lib/api/api-client';
 import { compareJapanese } from '@/lib/utils/japanese-text';
+import { fitTextStyle } from '@/lib/utils/fit-text';
 import type { StudyQuestion } from '@/features/learning/day-study-quiz';
 
 interface Answered {
@@ -111,7 +112,9 @@ export function StudyQuiz({ questions, unit, isRecorded = true, onRestart, onRet
         {question.audioText && (given !== null || question.promptIsJapanese) ? <AudioButton text={question.audioText} /> : null}
       </div>
       <div className="study-progress" aria-hidden="true"><span style={{ width: `${(index / questions.length) * 100}%` }} /></div>
-      <p className={question.promptIsJapanese ? 'jp study-prompt is-jp' : 'study-prompt'}>{question.prompt}</p>
+      {question.promptIsJapanese ? (
+        <div className="fit-box"><p className="jp study-prompt is-jp fit-text" style={fitTextStyle(question.prompt, 36, 18)}>{question.prompt}</p></div>
+      ) : <p className="study-prompt">{question.prompt}</p>}
       {question.hint ? <p className="center tiny muted">{question.hint}</p> : null}
       {question.options.length ? (
         <div className="study-options mt-3">

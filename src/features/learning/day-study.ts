@@ -4,6 +4,7 @@ import type { JourneyPosition } from '@/features/roadmap/journey-progress';
 import { canRomanize, kanjiReadingRomaji, patternRomaji, sentenceRomaji, vocabularyRomaji } from '@/lib/utils/romaji';
 import { primaryRadicalGlyph, itemsOfType, type KnowledgeCatalog } from './knowledge-catalog';
 import { pickContextExample } from './context-index';
+import { kanjiContainingRadical, radicalsOfKanji } from './knowledge-relations';
 import { type ContentKey, toContentKey } from './knowledge-types';
 import { type KanjiWord, kanjiReadingList, parseKanjiWords } from './study-grading';
 
@@ -52,6 +53,8 @@ export interface StudyRadicalCard {
   name: string;
   meaning: string;
   tip: string;
+  /** Kanji (trong app) chứa bộ này — bộ thủ là công cụ nhận ra / nhớ chữ, không thay cho việc học chữ. */
+  kanji: Array<{ character: string; meaning: string }>;
 }
 
 export interface StudyKanjiCard {
@@ -65,6 +68,8 @@ export interface StudyKanjiCard {
   readings: string[];
   strokes: number | null;
   words: KanjiWord[];
+  /** Bộ thủ tạo nên chữ (gợi ý ghi nhớ). */
+  radicals: Array<{ glyph: string; meaning: string }>;
   /** Từ vựng trong app có chứa chữ này. */
   relatedVocab: Array<{ face: string; kana: string; meaning: string }>;
   tip: string;
@@ -75,6 +80,7 @@ export interface StudyDistractors {
   vocab: Array<{ face: string; kana: string; meaning: string }>;
   kanji: Array<{ character: string; meaning: string; readings: string[]; words: KanjiWord[] }>;
   grammar: Array<{ jp: string; vi: string }>;
+  radicals: Array<{ glyph: string; meaning: string }>;
 }
 
 export interface DayStudyData {
@@ -86,7 +92,7 @@ export interface DayStudyData {
   kanji: StudyKanjiCard[];
   distractors: StudyDistractors;
   /** Số mục đã gặp (đã học) theo từng bước — tiến độ hiện trên thanh bước. */
-  learned: Record<'vocab' | 'grammar' | 'kanji', number>;
+  learned: Record<'vocab' | 'grammar' | 'radical' | 'kanji', number>;
   /** Mục của ngày, yếu nhất trước (điểm trí nhớ thấp / chưa học) — nguồn cho bước Ôn tập. */
   weakestKeys: ContentKey[];
 }
@@ -94,6 +100,7 @@ export interface DayStudyData {
 const VOCAB_DISTRACTORS = 40;
 const KANJI_DISTRACTORS = 24;
 const GRAMMAR_DISTRACTORS = 14;
+const RADICAL_DISTRACTORS = 12;
 
 /** Gần ngày `day` nhất trước (ngày đã học quanh đó), loại mục của chính ngày. */
 function nearest<T extends { day: number | null }>(items: readonly T[], day: number, limit: number): T[] {
@@ -142,17 +149,19 @@ export function buildDayStudy(
   const radicals = knowledge.radicals.map((radical): StudyRadicalCard => ({
     key: toContentKey('radical', radical.id), glyph: primaryRadicalGlyph(radical.radical),
     name: radical.nameJp.split(' / ')[0], meaning: radical.meaning, tip: radical.tip,
+    kanji: kanjiContainingRadical(catalog, radical).slice(0, 6).map((entry) => ({ character: entry.character, meaning: entry.meaning })),
   }));
 
   const kanji = knowledge.kanji.map((entry): StudyKanjiCard => ({
     key: toContentKey('kanji', entry.id), character: entry.character, hanViet: entry.hanViet, meaning: entry.meaning,
     onReading: entry.onReading, kunReading: entry.kunReading, readingRomaji: kanjiReadingRomaji(entry.onReading, entry.kunReading),
     readings: kanjiReadingList(entry), strokes: entry.strokes, words: parseKanjiWords(entry.words), tip: entry.tip,
+    radicals: radicalsOfKanji(catalog, entry).map((radical) => ({ glyph: primaryRadicalGlyph(radical.radical), meaning: radical.meaning })),
     relatedVocab: content.vocabulary.filter((word) => word.kanji.includes(entry.character)).slice(0, 4)
       .map((word) => ({ face: word.kanji, kana: word.kana, meaning: word.meaning })),
   }));
 
-  const studyKeys: ContentKey[] = [...vocab, ...grammar, ...kanji].map((card) => card.key);
+  const studyKeys: ContentKey[] = [...vocab, ...grammar, ...radicals, ...kanji].map((card) => card.key);
   const countLearned = (cards: Array<{ key: ContentKey }>) => cards.filter((card) => memoryViews.get(card.key)?.isLearned).length;
   const strength = (key: ContentKey) => {
     const view = memoryViews.get(key);
@@ -172,8 +181,9 @@ export function buildDayStudy(
         { jp: item.content.exampleJp, vi: item.content.exampleVi },
         ...(item.content.example2Jp ? [{ jp: item.content.example2Jp, vi: item.content.example2Vi }] : []),
       ]),
+      radicals: nearest(content.radicals, day, RADICAL_DISTRACTORS).map((radical) => ({ glyph: primaryRadicalGlyph(radical.radical), meaning: radical.meaning })),
     },
-    learned: { vocab: countLearned(vocab), grammar: countLearned(grammar), kanji: countLearned(kanji) },
+    learned: { vocab: countLearned(vocab), grammar: countLearned(grammar), radical: countLearned(radicals), kanji: countLearned(kanji) },
     weakestKeys: [...studyKeys].sort((left, right) => strength(left) - strength(right)),
   };
 }

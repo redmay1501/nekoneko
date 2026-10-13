@@ -145,3 +145,19 @@ API: không đổi (thêm tham số phạm vi trang). Database: không đổi sc
   requestId) — nhận cả mục chưa học, tối đa một lần mỗi mục mỗi ngày. Xem thẻ không ghi gì. Database: không đổi.
 - Giới hạn: câu ví dụ của từ vựng chỉ có khi kho câu (Tatoeba + câu mẫu ngữ pháp) chứa từ đó; 2 từ ghép Kanji không có cách đọc
   trong dữ liệu (生ビール, 聞こえます) nên không vào câu "đọc từ ghép".
+
+## 2026-10-14 — Mobile, bộ chọn ngày, Bộ thủ ≠ Kanji, audit ngày 15–90
+- Chữ từ vựng rớt dòng: mặt chữ 42px cố định đứng chung hàng với ảnh + nút Nghe (cột chữ ~150px), chữ Nhật được ngắt giữa
+  bất kỳ hai ký tự. Nay `fitTextStyle` + `.fit-box/.fit-text`: cỡ chữ = bề rộng khung (container query) ÷ độ rộng chữ, kẹp
+  [min, max]; chạm min mới xuống dòng và chỉ ở khoảng trắng (`word-break: keep-all`). Dùng chung cho khay chi tiết, thẻ học,
+  phiên học, cứu từ, câu hỏi quiz (thay hai hàm "dài/ngắn" theo số ký tự).
+- Bộ chọn ngày: `buildDayStrip` chỉ dựng 7 ngày → vuốt không đi đâu. Nay `DayPicker`: dải đủ 90 ngày (cuộn sẵn tới ngày đang
+  xem, giữ cú vuốt trong dải) + "📅 Tất cả ngày" mở bảng lưới theo chặng; trạng thái đã học / đang học / chưa học tính từ
+  kiến thức thật đã gặp (`buildDayStatuses`).
+- Bộ thủ và Kanji: dữ liệu và memory vốn đã tách (radical / kanji); chỗ gộp là giao diện ("③ Bộ thủ & Kanji", bộ thủ nằm
+  trong bước Kanji). Nay hai phần riêng ở trang ngày và luồng học (bước Bộ thủ có thẻ + quiz "Bộ → nghĩa" ghi vào trí nhớ
+  của bộ thủ). Kanji liên kết bộ thủ của chữ; bộ thủ liệt kê Kanji chứa nó. Mỗi phần có "Thẻ & kiểm tra →"; ngày chưa tới có
+  "Học trước theo bước".
+- Ngày ôn giữa lộ trình (21, 28, …, 77): gắn kiến thức thật của các ngày học liền trước (ví dụ 21 → 15–20) + nút ôn cả tuần;
+  "Kiểm tra lại từ vựng bài 1–3" nay ra danh sách từ. Việc trong app chỉ ra sách (練習A/B/C): phần làm trong app lên trước,
+  sách là dòng "tuỳ chọn".

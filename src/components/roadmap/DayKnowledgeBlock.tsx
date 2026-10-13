@@ -1,13 +1,25 @@
+import Link from 'next/link';
 import { KnowledgeChipButton } from '@/components/learning/KnowledgeChipButton';
 import { DayVocabularyList } from './DayVocabularyList';
 import { KanaLessonTable } from './KanaLessonTable';
 import { canRomanize, patternRomaji, sentenceRomaji } from '@/lib/utils/romaji';
 import { primaryRadicalGlyph } from '@/features/learning/knowledge-catalog';
-import { toContentKey } from '@/features/learning/knowledge-types';
+import { CONTENT_TYPE_LABELS, toContentKey } from '@/features/learning/knowledge-types';
+import { MAX_FOCUS_ITEMS, focusSessionHref } from '@/features/learning/session-modes';
 import type { DayPlanView } from '@/features/roadmap/day-plan';
 import { firstMeaning } from '@/lib/utils/text';
 
 const CHIP_STYLE = { background: '#fff', border: '1px solid var(--line)', padding: '8px 12px' } as const;
+
+/** Tiêu đề một phần kiến thức + lối vào thẻ học / kiểm tra của đúng phần đó trong luồng học theo ngày. */
+function StepHeading({ label, note, day, step }: { label: string; note?: string; day: number; step: string }) {
+  return (
+    <div className="day-step-head">
+      <p className="day-step-label">{label}{note ? <span className="tiny muted"> · {note}</span> : null}</p>
+      <Link className="day-step-link" href={`/lo-trinh/ngay/${day}/hoc?buoc=${step}`}>Thẻ & kiểm tra →</Link>
+    </div>
+  );
+}
 
 /** Kiến thức thật của một ngày, bấm được để xem kỹ. */
 export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
@@ -22,7 +34,16 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
               ? 'Hôm nay không học thêm gì mới. Mọi thứ bạn cần đã ở trong đầu rồi.'
               : 'Không có kiến thức mới. Hôm nay là lúc để những thứ cũ bám chắc hơn.'}
           </p>
-          {plan.reviewTopics.length && plan.day !== 90 ? (
+          {plan.reviewWindow ? (
+            <div className="review-window mt-2.5">
+              <p className="sm"><b>Ôn kiến thức ngày {plan.reviewWindow.from}–{plan.reviewWindow.to}:</b>{' '}
+                {plan.reviewWindow.counts.map((entry) => `${entry.count} ${CONTENT_TYPE_LABELS[entry.type].toLowerCase()}`).join(' · ')}</p>
+              <Link className="btn review sm mt-2" href={focusSessionHref(plan.reviewWindow.keys)}>
+                🔁 Ôn kiến thức tuần ({Math.min(plan.reviewWindow.keys.length, MAX_FOCUS_ITEMS)} mục)
+              </Link>
+            </div>
+          ) : null}
+          {plan.reviewTopics.length && plan.day !== 90 && !plan.reviewWindow ? (
             <>
               <p className="sm mt-2.5"><b>Hôm nay bạn sẽ ôn:</b></p>
               <ul className="sm soft mt-1" style={{ paddingLeft: 18, listStyle: 'disc' }}>
@@ -48,19 +69,25 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
     );
   }
 
-  // Thứ tự học của ngày: chữ cái → ① Từ vựng → ② Ngữ pháp → ③ Bộ thủ & Kanji (có vốn từ rồi mới học câu và chữ Hán).
+  // Thứ tự học của ngày: chữ cái → Từ vựng → Ngữ pháp → Bộ thủ → Kanji. Bộ thủ và Kanji là HAI phần riêng (nội dung, mục tiêu,
+  // trạng thái riêng) — bộ thủ chỉ hỗ trợ nhận ra / nhớ chữ, không thay cho Kanji. Số thứ tự đánh theo phần có trong ngày.
+  const steps = [
+    knowledge.vocabulary.length && 'vocabulary', knowledge.grammar.length && 'grammar',
+    knowledge.radicals.length && 'radical', knowledge.kanji.length && 'kanji',
+  ].filter(Boolean);
+  const number = (step: string) => '①②③④'[steps.indexOf(step)];
   return (
     <>
       {plan.kanaLesson ? <div className="mt-2.5"><KanaLessonTable lesson={plan.kanaLesson} /></div> : null}
       {knowledge.vocabulary.length ? (
         <>
-          <p className="day-step-label">① Từ vựng</p>
+          <StepHeading label={`${number('vocabulary')} Từ vựng`} day={plan.day} step="tu-vung" />
           <DayVocabularyList words={knowledge.vocabulary} />
         </>
       ) : null}
       {knowledge.grammar.length ? (
         <>
-          <p className="day-step-label">② Ngữ pháp</p>
+          <StepHeading label={`${number('grammar')} Ngữ pháp`} note={`${knowledge.grammar.length} mẫu câu`} day={plan.day} step="ngu-phap" />
           <div className="stack mt-2.5" style={{ gap: 7 }}>
             {knowledge.grammar.map((pattern) => (
               <KnowledgeChipButton key={pattern.id} contentKey={toContentKey('grammar', pattern.id)} className="list-row" style={{ padding: '10px 12px' }}>
@@ -79,9 +106,9 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
           </div>
         </>
       ) : null}
-      {knowledge.kanji.length || knowledge.radicals.length ? (
+      {knowledge.radicals.length ? (
         <>
-          <p className="day-step-label">③ Bộ thủ & Kanji</p>
+          <StepHeading label={`${number('radical')} Bộ thủ`} note="mảnh ghép giúp nhận ra chữ Hán" day={plan.day} step="bo-thu" />
           <div className="kgrid">
             {knowledge.radicals.map((radical) => (
               <KnowledgeChipButton key={`r${radical.id}`} contentKey={toContentKey('radical', radical.id)} className="kcard"
@@ -91,6 +118,13 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
                 <span>{radical.nameJp.split(' / ')[0]}</span>
               </KnowledgeChipButton>
             ))}
+          </div>
+        </>
+      ) : null}
+      {knowledge.kanji.length ? (
+        <>
+          <StepHeading label={`${number('kanji')} Kanji`} note={`${knowledge.kanji.length} chữ`} day={plan.day} step="kanji" />
+          <div className="kgrid">
             {knowledge.kanji.map((kanji) => (
               <KnowledgeChipButton key={`k${kanji.id}`} contentKey={toContentKey('kanji', kanji.id)} className="kcard">
                 <span className="big">{kanji.character}</span>

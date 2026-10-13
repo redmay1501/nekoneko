@@ -16,7 +16,7 @@ interface DayActionsProps {
  * Hành động chính của trang ngày, đặt ngay dưới phần giới thiệu:
  *  - hôm nay, còn kiến thức chưa học → "Học hết ngày N" (luồng học theo ngày: Từ vựng → Ngữ pháp → Kanji → Ôn tập); học hết rồi / ngày ôn → "Học ngày N" (phiên hằng ngày);
  *    kèm "Hoàn thành ngày" (nút phụ — hoàn thành ngày là người học tự xác nhận, không phải tự động khi học hết);
- *  - ngày đã qua → ôn lại thứ còn mờ; ngày chưa tới → không có gì để bấm.
+ *  - ngày đã qua → học lại theo bước / ôn thứ còn mờ; ngày chưa tới → học trước theo bước (nếu ngày có từ, mẫu câu, Kanji).
  */
 export function DayActions({ day, relation, remainingCount, hasNewKnowledge, hasDayStudy }: DayActionsProps) {
   if (relation === 'past') {
@@ -27,7 +27,10 @@ export function DayActions({ day, relation, remainingCount, hasNewKnowledge, has
       </div>
     );
   }
-  if (relation !== 'today') return null;
+  if (relation !== 'today') {
+    // Ngày chưa tới: vẫn cho học trước theo bước (thẻ + kiểm tra) — không đánh dấu hoàn thành ngày.
+    return hasDayStudy ? <div className="day-actions"><Link className="btn ghost" href={`/lo-trinh/ngay/${day}/hoc`}>📚 Học trước theo bước</Link></div> : null;
+  }
   const isUnfinished = hasNewKnowledge && remainingCount > 0;
   return (
     <div className="day-actions">

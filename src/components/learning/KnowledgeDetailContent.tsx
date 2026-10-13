@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { fitTextStyle } from '@/lib/utils/fit-text';
 import { RadicalExpandable } from './RadicalExpandable';
 import { kanjiVisualAssetsOf, vocabularyImageOf } from '@/features/learning/vocabulary-images';
 import { AudioButton, SpeakableFace } from '@/components/common/AudioButton';
@@ -175,18 +176,21 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
     case 'vocabulary':
       return (
         <>
-          <div className="row" style={{ gap: 14 }}>
-            <div style={{ flex: 1 }}>
-              <SpeakableFace text={item.content.kana} face={item.face} className="jp glyph" style={{ fontSize: 42, lineHeight: 1.1 }} />
-              {item.content.kanji ? <p className="jp soft mt-1">{item.content.kana}</p> : null}
+          {/* Cột chữ co giãn (min-width 0) + cột phụ (ảnh, nút Nghe) cố định — mặt chữ tự vừa bề rộng cột, không rớt dòng. */}
+          <div className="vocab-head">
+            <div className="vocab-head-main fit-box">
+              <SpeakableFace text={item.content.kana} face={item.face} className="jp glyph fit-text" style={{ lineHeight: 1.15, ...fitTextStyle(item.face, 42, 24) }} />
+              {item.content.kanji ? <p className="jp soft mt-1 keep-words">{item.content.kana}</p> : null}
               <p className="romaji">{vocabularyRomaji(item.content)}</p>
               <h2 className="mt-2">{item.content.meaning}</h2>
             </div>
-            {vocabularyImageOf(item.id) ? (
-              // eslint-disable-next-line @next/next/no-img-element -- icon tĩnh 128px trong public/, không cần tối ưu ảnh
-              <img src={vocabularyImageOf(item.id)!} alt="" width={72} height={72} className="vocab-image" />
-            ) : null}
-            <AudioButton text={item.content.kana} className="btn ghost" label="Nghe" showText />
+            <div className="vocab-head-side">
+              {vocabularyImageOf(item.id) ? (
+                // eslint-disable-next-line @next/next/no-img-element -- icon tĩnh 128px trong public/, không cần tối ưu ảnh
+                <img src={vocabularyImageOf(item.id)!} alt="" width={64} height={64} className="vocab-image" />
+              ) : null}
+              <AudioButton text={item.content.kana} className="btn ghost" label="Nghe" showText />
+            </div>
           </div>
           <div className="row wrap mt-2.5" style={{ gap: 6 }}>
             <span className="chip lav">{item.content.lesson.split('·')[0].trim()}</span>

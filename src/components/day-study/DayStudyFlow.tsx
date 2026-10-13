@@ -1,16 +1,16 @@
 'use client';
 
 import Link from 'next/link';
+import { fitTextStyle } from '@/lib/utils/fit-text';
 import { useEffect, useMemo, useState } from 'react';
 import { AudioButton } from '@/components/common/AudioButton';
 import { NekoButton } from '@/components/common/NekoButton';
-import { KnowledgeChipButton } from '@/components/learning/KnowledgeChipButton';
 import { StrokeOrder } from '@/components/learning/StrokeOrder';
 import { MatchGame } from '@/components/games/MatchGame';
 import { MIN_MATCH_POOL } from '@/features/games/match-game';
-import type { DayStudyData, StudyGrammarCard, StudyKanjiCard, StudyVocabCard } from '@/features/learning/day-study';
+import type { DayStudyData, StudyGrammarCard, StudyKanjiCard, StudyRadicalCard, StudyVocabCard } from '@/features/learning/day-study';
 import {
-  GRAMMAR_QUIZZES, KANJI_QUIZZES, type KanjiQuizId, STUDY_STEPS, type StudyStepId, VOCAB_QUIZZES, buildGrammarQuiz, buildKanjiQuiz, buildVocabQuiz,
+  GRAMMAR_QUIZZES, KANJI_QUIZZES, type KanjiQuizId, RADICAL_QUIZZES, STUDY_STEPS, type StudyStepId, VOCAB_QUIZZES, buildGrammarQuiz, buildKanjiQuiz, buildRadicalQuiz, buildVocabQuiz,
 } from '@/features/learning/day-study-quiz';
 import { MAX_FOCUS_ITEMS, focusSessionHref } from '@/features/learning/session-modes';
 import { Flashcards } from './Flashcards';
@@ -50,7 +50,7 @@ function readTracking(day: number): Tracking {
 export function DayStudyFlow({ data, initialStep, initialMode }: { data: DayStudyData; initialStep: StudyStepId; initialMode: ModeId }) {
   const steps = STUDY_STEPS.filter((step) => step.id === 'on-tap'
     || (step.id === 'tu-vung' && data.vocab.length) || (step.id === 'ngu-phap' && data.grammar.length)
-    || (step.id === 'kanji' && (data.kanji.length || data.radicals.length)));
+    || (step.id === 'bo-thu' && data.radicals.length) || (step.id === 'kanji' && data.kanji.length));
   const [stepId, setStepId] = useState<StudyStepId>(steps.some((step) => step.id === initialStep) ? initialStep : steps[0].id);
   const [mode, setMode] = useState<ModeId>(initialMode || LESSON_MODE);
   /** Lần chạy quiz (tăng = tạo bộ câu mới) và tập mục đang làm lại (rỗng = tất cả). */
@@ -86,13 +86,14 @@ export function DayStudyFlow({ data, initialStep, initialMode }: { data: DayStud
   const stepIndex = steps.findIndex((step) => step.id === stepId);
   const nextStep = steps[stepIndex + 1];
   const quizzes = stepId === 'tu-vung' ? VOCAB_QUIZZES.filter((quiz) => quiz.id !== 'ghep' || data.vocab.length >= MIN_MATCH_POOL)
-    : stepId === 'ngu-phap' ? GRAMMAR_QUIZZES : stepId === 'kanji' && data.kanji.length ? KANJI_QUIZZES : [];
+    : stepId === 'ngu-phap' ? GRAMMAR_QUIZZES : stepId === 'bo-thu' ? RADICAL_QUIZZES : stepId === 'kanji' ? KANJI_QUIZZES : [];
   const quizProps = { onRestart: restart, onRetryWrong: retryWrong, onWrong: addWrong };
   // Bộ câu hỏi dựng MỘT lần cho mỗi lượt (đổi chế độ / làm lại) — không xáo lại khi trang vẽ lại giữa bài.
   const questions = useMemo(() => {
     const only = <T extends { key: string }>(cards: readonly T[]) => (retryKeys.length ? cards.filter((card) => retryKeys.includes(card.key)) : cards);
     if (stepId === 'tu-vung' && (mode === 'nghia' || mode === 'tu' || mode === 'go')) return buildVocabQuiz(data, mode, only(data.vocab));
     if (stepId === 'ngu-phap' && (mode === 'viet-nhat' || mode === 'nhat-viet')) return buildGrammarQuiz(data, mode, only(data.grammar));
+    if (stepId === 'bo-thu' && mode === 'nghia') return buildRadicalQuiz(data, only(data.radicals));
     if (stepId === 'kanji' && KANJI_QUIZZES.some((quiz) => quiz.id === mode)) return buildKanjiQuiz(data, mode as KanjiQuizId, only(data.kanji));
     return [];
     // eslint-disable-next-line react-hooks/exhaustive-deps -- `run` tăng = tạo bộ câu mới
@@ -102,8 +103,9 @@ export function DayStudyFlow({ data, initialStep, initialMode }: { data: DayStud
     <div className="day-study">
       <nav className="study-steps" aria-label="Các bước học">
         {steps.map((step, index) => {
-          const total = step.id === 'tu-vung' ? data.vocab.length : step.id === 'ngu-phap' ? data.grammar.length : step.id === 'kanji' ? data.kanji.length : 0;
-          const learned = step.id === 'tu-vung' ? data.learned.vocab : step.id === 'ngu-phap' ? data.learned.grammar : step.id === 'kanji' ? data.learned.kanji : 0;
+          const counts = { 'tu-vung': [data.learned.vocab, data.vocab.length], 'ngu-phap': [data.learned.grammar, data.grammar.length],
+            'bo-thu': [data.learned.radical, data.radicals.length], kanji: [data.learned.kanji, data.kanji.length], 'on-tap': [0, 0] }[step.id];
+          const [learned, total] = counts;
           return (
             <button key={step.id} type="button" className={`study-step ${step.id === stepId ? 'on' : ''} ${index < stepIndex ? 'done' : ''}`}
               aria-current={step.id === stepId ? 'step' : undefined} onClick={() => goTo(step.id)}>
@@ -152,21 +154,17 @@ export function DayStudyFlow({ data, initialStep, initialMode }: { data: DayStud
         ) : null}
         {stepId === 'ngu-phap' && (mode === 'sap-xep' || mode === 'tu-viet') ? <GrammarPractice cards={data.grammar} kind={mode} onRestart={restart} /> : null}
 
+        {stepId === 'bo-thu' && mode === LESSON_MODE ? (
+          <>
+            <p className="sm soft mb-2">Bộ thủ là “mảnh ghép” giúp nhận ra và nhớ cấu tạo chữ Hán. Học bộ thủ không thay cho học Kanji — Kanji có bước riêng.</p>
+            <Flashcards cards={data.radicals} unit="bộ" marked={marked} onToggleMark={toggleMark}
+              front={(card) => <span className="glyph flashcard-glyph">{card.glyph}</span>} back={(card) => <RadicalBack card={card} />} />
+          </>
+        ) : null}
+        {stepId === 'bo-thu' && mode === 'nghia' ? <StudyQuiz questions={questions} unit="bộ" {...quizProps} /> : null}
+
         {stepId === 'kanji' && mode === LESSON_MODE ? (
           <>
-            {data.radicals.length ? (
-              <div className="card tight mb-3">
-                <b className="sm">Bộ thủ của ngày</b>
-                <div className="row wrap mt-2" style={{ gap: 8 }}>
-                  {data.radicals.map((radical) => (
-                    <KnowledgeChipButton key={radical.key} contentKey={radical.key} className="radical-chip">
-                      <span className="glyph" style={{ fontSize: 26 }}>{radical.glyph}</span>
-                      <span className="sm"><b>{radical.meaning}</b><br /><span className="tiny muted jp">{radical.name}</span></span>
-                    </KnowledgeChipButton>
-                  ))}
-                </div>
-              </div>
-            ) : null}
             {data.kanji.length ? (
               <Flashcards cards={data.kanji} unit="chữ" marked={marked} onToggleMark={toggleMark}
                 audioText={(card) => card.words[0]?.reading ?? card.readings[0] ?? card.character}
@@ -175,7 +173,7 @@ export function DayStudyFlow({ data, initialStep, initialMode }: { data: DayStud
             ) : null}
           </>
         ) : null}
-        {stepId === 'kanji' && mode !== LESSON_MODE && data.kanji.length ? (
+        {stepId === 'kanji' && mode !== LESSON_MODE ? (
           <StudyQuiz questions={questions} unit="câu" {...quizProps} />
         ) : null}
 
@@ -195,7 +193,7 @@ export function DayStudyFlow({ data, initialStep, initialMode }: { data: DayStud
 function VocabFront({ card }: { card: StudyVocabCard }) {
   return (
     <>
-      <span className="glyph flashcard-glyph is-word">{card.face}</span>
+      <span className="fit-box"><span className="glyph flashcard-glyph fit-text" style={fitTextStyle(card.face, 56, 26)}>{card.face}</span></span>
       {card.kanji ? <span className="jp soft">{card.kana}</span> : null}
     </>
   );
@@ -204,7 +202,7 @@ function VocabFront({ card }: { card: StudyVocabCard }) {
 function VocabBack({ card }: { card: StudyVocabCard }) {
   return (
     <>
-      <span className="glyph" style={{ fontSize: 30 }}>{card.face}</span>
+      <span className="fit-box"><span className="glyph fit-text" style={fitTextStyle(card.face, 34, 22)}>{card.face}</span></span>
       {card.kanji ? <span className="jp">{card.kana}</span> : null}
       <span className="romaji">{card.romaji}</span>
       <b className="flashcard-meaning">{card.meaning}</b>
@@ -237,8 +235,29 @@ function KanjiBack({ card }: { card: StudyKanjiCard }) {
           {card.words.map((word) => <span key={word.word} className="sm"><b className="jp">{word.word}</b> <span className="jp soft">({word.reading})</span> {word.meaning}</span>)}
         </span>
       ) : null}
+      {card.radicals.length ? (
+        <span className="sm soft">Bộ thủ trong chữ: <span className="jp">{card.radicals.map((radical) => `${radical.glyph} (${radical.meaning.split(/[,;]/)[0].toLowerCase()})`).join(' + ')}</span></span>
+      ) : null}
       {card.relatedVocab.length ? (
         <span className="sm soft">Trong từ vựng: {card.relatedVocab.map((word) => `${word.face} (${word.kana})`).join(' · ')}</span>
+      ) : null}
+      {card.tip ? <span className="sm flashcard-tip">💡 {card.tip}</span> : null}
+    </>
+  );
+}
+
+function RadicalBack({ card }: { card: StudyRadicalCard }) {
+  return (
+    <>
+      <span className="row" style={{ gap: 12, alignItems: 'center', justifyContent: 'center' }}>
+        <span className="glyph" style={{ fontSize: 44 }}>{card.glyph}</span>
+        <span style={{ textAlign: 'left' }}><b>Bộ {card.meaning}</b><br /><span className="sm jp soft">{card.name}</span></span>
+      </span>
+      {card.kanji.length ? (
+        <span className="flashcard-example">
+          <span className="tiny muted">Kanji có bộ này</span>
+          <span className="sm">{card.kanji.map((kanji) => <span key={kanji.character} style={{ marginRight: 10 }}><b className="jp">{kanji.character}</b> {kanji.meaning.split(/[,;]/)[0]}</span>)}</span>
+        </span>
       ) : null}
       {card.tip ? <span className="sm flashcard-tip">💡 {card.tip}</span> : null}
     </>
@@ -303,6 +322,7 @@ function ReviewStep({ data, tracking }: { data: DayStudyData; tracking: Tracking
   const faces = new Map<string, string>([
     ...data.vocab.map((card) => [card.key, card.face] as const),
     ...data.grammar.map((card) => [card.key, card.pattern] as const),
+    ...data.radicals.map((card) => [card.key, card.glyph] as const),
     ...data.kanji.map((card) => [card.key, card.character] as const),
   ]);
   const ownKeys = new Set(faces.keys());
@@ -317,7 +337,7 @@ function ReviewStep({ data, tracking }: { data: DayStudyData; tracking: Tracking
       <ul className="sm mt-3 stack" style={{ gap: 6 }}>
         <li>❌ Câu sai hôm nay: <b>{wrong.length}</b>{wrong.length ? <span className="jp soft"> — {show(wrong)}</span> : null}</li>
         <li>☆ Đã đánh dấu: <b>{marked.length}</b>{marked.length ? <span className="jp soft"> — {show(marked)}</span> : null}</li>
-        <li>📚 Tổng cộng: <b>{keys.length}</b> mục (từ vựng, ngữ pháp, Kanji)</li>
+        <li>📚 Tổng cộng: <b>{keys.length}</b> mục (từ vựng, ngữ pháp, bộ thủ, Kanji)</li>
       </ul>
       {keys.length ? (
         <div className="mt-4"><NekoButton href={focusSessionHref(keys)} size="lg">Bắt đầu ôn {keys.length} mục</NekoButton></div>

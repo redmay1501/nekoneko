@@ -12,7 +12,7 @@ export const STUDY_ASKS = ['meaning', 'face', 'reading', 'word-reading', 'vi-to-
 export type StudyAsk = (typeof STUDY_ASKS)[number];
 
 /** Loại kiến thức có quiz trong luồng học theo ngày. */
-export const STUDY_TYPES = ['vocabulary', 'grammar', 'kanji'] as const;
+export const STUDY_TYPES = ['vocabulary', 'grammar', 'radical', 'kanji'] as const;
 
 export interface KanjiWord {
   word: string;
@@ -56,6 +56,9 @@ export function gradeStudyAnswer(item: KnowledgeItem, ask: StudyAsk, answer: str
         return word ? readingKey(word.reading) === readingKey(trimmed) : null;
       }
       return null;
+    case 'radical':
+      // Bộ thủ chỉ hỏi nghĩa (nhận ra bộ) — tính riêng cho bộ thủ, không bao giờ tính thay cho Kanji.
+      return ask === 'meaning' ? trimmed === item.meaning : null;
     case 'grammar':
       if (ask === 'vi-to-jp') return compareJapanese(trimmed, [item.content.exampleJp, item.content.example2Jp].filter(Boolean)).isCorrect;
       if (ask === 'jp-to-vi') return [item.content.exampleVi, item.content.example2Vi].includes(trimmed);

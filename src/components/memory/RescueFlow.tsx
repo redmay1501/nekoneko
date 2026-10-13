@@ -1,5 +1,6 @@
 'use client';
 
+import { fitTextStyle } from '@/lib/utils/fit-text';
 import Link from 'next/link';
 import { useState } from 'react';
 import { AudioButton } from '@/components/common/AudioButton';
@@ -14,9 +15,6 @@ import { EmojiIcon } from '@/components/common/EmojiIcon';
 const STEP_LABELS = ['Sắp quên', 'Gợi ý', 'Nhớ lại', 'Ngữ cảnh', 'Đã cứu'] as const;
 const STEP = { AT_RISK: 0, HINT: 1, RECALL: 2, CONTEXT: 3, RESCUED: 4 } as const;
 type RescueStep = (typeof STEP)[keyof typeof STEP];
-
-const LONG_FACE_LENGTH = 3;
-const bigFace = (face: string, short: number, long: number) => ({ fontSize: face.length > LONG_FACE_LENGTH ? long : short });
 
 /** Luồng 5 bước cứu một kiến thức. Trạng thái bước là của riêng màn này → useState. */
 export function RescueFlow({ view }: { view: RescueView }) {
@@ -44,7 +42,7 @@ export function RescueFlow({ view }: { view: RescueView }) {
         <div className="s-card pop">
           <span className="chip" style={{ background: 'var(--cream)' }}><EmojiIcon emoji="🍂" size={16} /> {view.reason}</span>
           <p className="sm soft mt-3.5">Bạn còn nhớ cái này không?</p>
-          <div className="s-big" style={{ margin: '12px 0 6px', ...bigFace(view.face, 62, 40) }}>{view.face}</div>
+          <div className="fit-box"><div className="s-big fit-text" style={{ margin: '12px 0 6px', ...fitTextStyle(view.face, 62, 28) }}>{view.face}</div></div>
           <p className="tiny muted">Bạn đã học nó {view.lastEncounterText} · đã gặp {view.encounterCount} lần</p>
           <div className="s-opt" style={{ flexDirection: 'row', gap: 9 }}>
             <button type="button" className="btn" style={{ flex: 1 }} onClick={() => setStep(STEP.RECALL)}>Tôi nhớ</button>
@@ -56,7 +54,7 @@ export function RescueFlow({ view }: { view: RescueView }) {
       {step === STEP.HINT ? (
         <div className="s-card pop">
           <span className="chip lav"><EmojiIcon emoji="💡" size={16} /> Gợi ý nhỏ</span>
-          <div className="s-big" style={{ margin: '14px 0 4px', ...bigFace(view.face, 56, 38) }}>{view.face}</div>
+          <div className="fit-box"><div className="s-big fit-text" style={{ margin: '14px 0 4px', ...fitTextStyle(view.face, 56, 26) }}>{view.face}</div></div>
           <p className="jp soft" style={{ fontSize: 17 }}>{view.reading}</p>
           <p className="sm mt-3" style={{ textAlign: 'left' }}>{view.hint.hintText}</p>
           {view.hint.parts.length ? (
@@ -72,7 +70,7 @@ export function RescueFlow({ view }: { view: RescueView }) {
       {step === STEP.RECALL ? (
         <div className="s-card pop">
           <span className="chip pink"><EmojiIcon emoji="🧠" size={16} /> Nhớ lại</span>
-          <div className="s-big" style={{ margin: '14px 0 4px', ...bigFace(view.face, 56, 38) }}>{view.face}</div>
+          <div className="fit-box"><div className="s-big fit-text" style={{ margin: '14px 0 4px', ...fitTextStyle(view.face, 56, 26) }}>{view.face}</div></div>
           <p className="jp soft">{view.reading}</p>
           <p className="sm soft mt-2.5">Nó có nghĩa là gì?</p>
           <div className="s-opt">

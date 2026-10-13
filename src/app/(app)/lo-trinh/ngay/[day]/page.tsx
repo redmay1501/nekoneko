@@ -4,9 +4,10 @@ import { DayKnowledgeBlock } from '@/components/roadmap/DayKnowledgeBlock';
 import { DayCompletionCard } from '@/components/roadmap/DayCompletionCard';
 import { DayTimeline } from '@/components/roadmap/DayTimeline';
 import { getLearnerContext } from '@/features/learning/learner-context';
-import { buildDayPlan, buildDayStrip } from '@/features/roadmap/day-plan';
+import { buildDayPlan } from '@/features/roadmap/day-plan';
 import { JOURNEY_TOTAL_DAYS } from '@/features/roadmap/journey';
-import { getDayCompletionProgress } from '@/features/roadmap/journey-progress';
+import { buildDayStatuses, getDayCompletionProgress } from '@/features/roadmap/journey-progress';
+import { DayPicker } from '@/components/roadmap/DayPicker';
 import { DayActions } from '@/components/roadmap/DayActions';
 import { DayReviewVocabulary } from '@/components/roadmap/DayReviewVocabulary';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
@@ -23,18 +24,7 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
 
   return (
     <>
-      <Link className="link" href="/lo-trinh">← Lộ trình</Link>
-      <div className="daystrip">
-        {buildDayStrip(day).map((stripDay) => (
-          // Ngày kề bên tải sẵn (prefetch đầy đủ) → bấm sang là hiện ngay, không chờ server.
-          <Link key={stripDay} href={`/lo-trinh/ngay/${stripDay}`} aria-label={`Ngày ${stripDay}`} prefetch={Math.abs(stripDay - day) <= 1}
-            aria-current={stripDay === day ? 'page' : undefined}
-            className={`daychip ${stripDay === day ? 'on' : stripDay < journeyDay ? 'past' : ''}`}>
-            <b>{stripDay}</b>
-            <span>{stripDay === journeyDay ? 'hôm nay' : `T${catalog.content.journeyDays[stripDay - 1].week}`}</span>
-          </Link>
-        ))}
-      </div>
+      <DayPicker days={buildDayStatuses(catalog, memoryViews, journeyDay)} day={day} today={journeyDay} />
 
       <section className="dayhero">
         <div className="row wrap" style={{ gap: 7 }}>
@@ -50,7 +40,7 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
         <p className="sm soft mt-1.5"><b>Vì sao học hôm nay?</b> {plan.purpose}</p>
         {/* Hành động chính của ngày — ngay đầu trang, theo trạng thái thật (học hết ≠ đã hoàn thành ngày). */}
         <DayActions day={day} relation={plan.relation} remainingCount={completion.totalCount - completion.metCount} hasNewKnowledge={completion.hasNewKnowledge}
-          hasDayStudy={plan.knowledge.vocabulary.length + plan.knowledge.grammar.length + plan.knowledge.kanji.length > 0} />
+          hasDayStudy={plan.knowledge.vocabulary.length + plan.knowledge.grammar.length + plan.knowledge.radicals.length + plan.knowledge.kanji.length > 0} />
       </section>
 
       <div className="daygrid mt-4">

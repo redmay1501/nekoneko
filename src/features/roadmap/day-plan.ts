@@ -4,7 +4,7 @@ import { primaryRadicalGlyph, type KnowledgeCatalog } from '@/features/learning/
 import { radicalsOfKanji } from '@/features/learning/knowledge-relations';
 import { type KanaLesson, buildKanaLesson } from './kana-lesson';
 import { lessonNumber } from '@/lib/utils/lesson';
-import type { KnowledgeItem } from '@/features/learning/knowledge-types';
+import type { ContentKey, ContentType, KnowledgeItem } from '@/features/learning/knowledge-types';
 import { JOURNEY_TOTAL_DAYS, clampJourneyDay, stageOfDay, type JourneyStage } from './journey';
 import { type JourneyPosition, relationToCurrentDay } from './journey-progress';
 
@@ -76,6 +76,11 @@ export interface DayPlanView {
    * hoặc khoảng bài ("bài 1–10"). Ghi chung chung ("ôn phần yếu") thì rỗng — không đoán.
    */
   reviewVocabulary: VocabularyContent[];
+  /**
+   * Ngày ôn giữa lộ trình: kiến thức THẬT của các ngày học ngay trước nó (từ sau ngày ôn trước tới hôm qua — đúng "tuần" mà
+   * ngày ôn nhắc tới, ví dụ ngày 21 → ngày 15–20). Ngày có kiến thức mới, hoặc ngay sau một ngày ôn khác (tổng ôn 78–90), là null.
+   */
+  reviewWindow: { from: number; to: number; keys: ContentKey[]; counts: Array<{ type: ContentType; count: number }> } | null;
 }
 
 /** Màu theo ký hiệu đầu nhãn đầu việc trong file Excel (◐ ôn, 部 bộ thủ, 漢 kanji…). */
@@ -115,7 +120,7 @@ const taskRank = (task: DayTask) => {
   return rank < 0 ? TASK_ORDER.length : rank;
 };
 
-function toTaskView(task: DayTask, newWordCount: number, reviewWordCount: number): DayTaskView {
+function toTaskView(task: DayTask, newWordCount: number, reviewWordCount: number, hasGrammar: boolean): DayTaskView {
   const glyph = task.label.trim()[0] ?? '·';
   const [background, color] = TASK_STYLE[glyph] ?? DEFAULT_TASK_STYLE;
   // Việc "Từ vựng": danh sách từ đã hiện ở mục Kiến thức của ngày (bấm từng từ để xem) → không lặp lại cả danh sách
@@ -129,10 +134,28 @@ function toTaskView(task: DayTask, newWordCount: number, reviewWordCount: number
     name: task.label.replace(/^\S+\s*/, '') || task.label,
     minutes: task.minutes,
     place: IN_APP_GLYPHS.has(glyph) ? 'app' : 'self',
-    lines: vocabularyLine ? [{ kind: 'line', text: vocabularyLine }] : formatTaskBody(task.body),
+    lines: vocabularyLine ? [{ kind: 'line', text: vocabularyLine }] : inAppFirst(glyph, formatTaskBody(task.body), hasGrammar),
     background,
     color,
   };
+}
+
+/** Câu trong việc "trong app" nhưng chỉ ra sách giấy (練習A/B/C, sách bài tập Minna…). */
+const BOOK_EXERCISE = /練習|trong sách|sách bài tập|問題集/;
+
+/**
+ * Việc học trong app mà Excel chỉ ghi bài tập sách giấy: đưa phần làm được trong app lên trước, câu về sách thành dòng phụ
+ * "(tuỳ chọn)". Không bỏ chữ nào; việc tự làm (耳 nghe, 読 đọc nguồn ngoài) giữ nguyên vì app chưa có tài liệu đó.
+ */
+function inAppFirst(glyph: string, lines: TaskLine[], hasGrammar: boolean): TaskLine[] {
+  if (!IN_APP_GLYPHS.has(glyph) || !lines.some((line) => BOOK_EXERCISE.test(line.text))) return lines;
+  const inApp: TaskLine[] = glyph === '文'
+    ? [{ kind: 'line', text: hasGrammar
+      ? 'Luyện ngay trong app: “Thẻ & kiểm tra” ở phần Ngữ pháp — Việt → Nhật, Nhật → Việt, Sắp xếp câu, Tự viết câu.'
+      : 'Trong app: ôn mẫu câu của tuần bằng nút “Ôn kiến thức tuần” ở mục Kiến thức của ngày.' }]
+    : [];
+  return [...inApp, ...lines.map((line): TaskLine => (BOOK_EXERCISE.test(line.text)
+    ? { kind: 'sub', text: `Có sách Minna (tuỳ chọn): ${line.text.replace(/^→\s*/, '')}` } : line))];
 }
 
 /**
@@ -140,7 +163,7 @@ function toTaskView(task: DayTask, newWordCount: number, reviewWordCount: number
  * các bài đó. Không khớp được thì bỏ qua (không đoán).
  */
 export function reviewVocabularyOf(task: DayTask | undefined, vocabulary: readonly VocabularyContent[]): VocabularyContent[] {
-  if (!task || !task.body.trim().startsWith('Ôn')) return [];
+  if (!task || !/^(Ôn|Kiểm tra lại)/.test(task.body.trim())) return [];
   const range = task.body.match(/bài\s*(\d+)\s*[–-]\s*(\d+)/i);
   if (range) {
     const [first, last] = [Number(range[1]), Number(range[2])];
@@ -190,7 +213,7 @@ export function buildDayPlan(catalog: KnowledgeCatalog, requestedDay: number, jo
   // Dòng thời gian theo thứ tự học: khởi động → chữ cái → từ vựng → ngữ pháp → bộ thủ → Kanji → việc tự làm (giữ thứ tự Excel trong cùng nhóm).
   tasks.sort((left, right) => taskRank(left) - taskRank(right) || left.orderNo - right.orderNo);
   const reviewVocabulary = knowledge.vocabulary.length ? [] : reviewVocabularyOf(tasks.find((task) => task.label.trim().startsWith(VOCABULARY_GLYPH)), content.vocabulary);
-  const taskViews = tasks.map((task) => toTaskView(task, knowledge.vocabulary.length, reviewVocabulary.length));
+  const taskViews = tasks.map((task) => toTaskView(task, knowledge.vocabulary.length, reviewVocabulary.length, knowledge.grammar.length > 0));
 
   const reviewPool = catalog.items.filter((item) => item.day !== null && item.day < day && item.type !== 'hiragana' && item.type !== 'katakana');
 
@@ -221,14 +244,26 @@ export function buildDayPlan(catalog: KnowledgeCatalog, requestedDay: number, jo
     kanaLesson: buildKanaLesson(knowledge.kana, catalog.items.filter(isKana)),
     purpose: describePurpose(knowledge, journeyDay),
     reviewTopics: hasNewKnowledge ? [] : reviewTopicsBefore(catalog, day),
+    reviewWindow: hasNewKnowledge ? null : reviewWindowOf(catalog, day),
   };
 }
 
-/** Dải 7 ngày quanh ngày đang xem. */
-export function buildDayStrip(day: number): number[] {
-  const STRIP_LENGTH = 7;
-  const first = Math.max(1, Math.min(JOURNEY_TOTAL_DAYS - STRIP_LENGTH + 1, day - 3));
-  return Array.from({ length: STRIP_LENGTH }, (_, index) => first + index);
+const REVIEW_TYPE_ORDER: readonly ContentType[] = ['vocabulary', 'grammar', 'radical', 'kanji'];
+
+/** Kiến thức (không tính chữ cái) của các ngày học liền trước ngày ôn `day`. */
+export function reviewWindowOf(catalog: KnowledgeCatalog, day: number): DayPlanView['reviewWindow'] {
+  const learnable = (item: KnowledgeItem) => !isKana(item) && item.day !== null;
+  const hasKnowledge = (candidate: number) => catalog.items.some((item) => learnable(item) && item.day === candidate);
+  let from = day;
+  while (from > 1 && hasKnowledge(from - 1)) from -= 1;
+  if (from === day) return null;
+  const items = catalog.items.filter((item) => learnable(item) && item.day! >= from && item.day! < day)
+    .sort((left, right) => REVIEW_TYPE_ORDER.indexOf(left.type) - REVIEW_TYPE_ORDER.indexOf(right.type));
+  return {
+    from, to: day - 1,
+    keys: items.map((item) => item.key),
+    counts: REVIEW_TYPE_ORDER.map((type) => ({ type, count: items.filter((item) => item.type === type).length })).filter((entry) => entry.count),
+  };
 }
 
 const isKana = (item: KnowledgeItem) => item.type === 'hiragana' || item.type === 'katakana';

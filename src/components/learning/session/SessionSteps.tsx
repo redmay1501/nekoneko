@@ -1,5 +1,6 @@
 'use client';
 
+import { fitTextStyle } from '@/lib/utils/fit-text';
 import { AudioButton, SpeakableFace } from '@/components/common/AudioButton';
 import { StrokeOrder } from '@/components/learning/StrokeOrder';
 import { strokeOrderCharacters } from '@/features/learning/stroke-order';
@@ -31,9 +32,6 @@ interface StepInteraction {
   onAnswer: (answer: string) => void;
   onContinue: () => void;
 }
-
-const LONG_FACE_LENGTH = 3;
-const faceSize = (face: string, short: number, long: number) => ({ fontSize: face.length > LONG_FACE_LENGTH ? long : short });
 
 export function SurpriseStepView({ step, feedback, chosenAnswer, isBusy, onAnswer, onContinue, isDaily = false }: StepInteraction & { step: SurpriseStep; isDaily?: boolean }) {
   const openKnowledge = useSheetStore((store) => store.openKnowledge);
@@ -87,7 +85,7 @@ export function RecallStepView({ step, isDaily = false, ...interaction }: StepIn
       {step.isPractice
         ? <span className="chip mint"><EmojiIcon emoji="✏️" size={16} /> Luyện ngay</span>
         : <p className="sm muted">Bạn còn nhớ cái này không? 🌸</p>}
-      <div className="s-big" style={{ margin: '16px 0 10px' }}>{step.face}</div>
+      <div className="fit-box"><div className="s-big fit-text" style={{ margin: '16px 0 10px', ...fitTextStyle(step.face, 62, 26) }}>{step.face}</div></div>
       <p className="sm soft">{step.question}</p>
       {interaction.feedback && isDaily ? <StepFeedback kind={step.isPractice ? 'practice' : 'recall'} feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} compact /> : null}
       <AnswerOptions options={step.options} chosenAnswer={interaction.chosenAnswer} feedback={interaction.feedback}
@@ -110,7 +108,7 @@ export function DiscoverStepView({ step, isBusy, onAcknowledge }: { step: Discov
         // eslint-disable-next-line @next/next/no-img-element -- icon tĩnh 128px trong public/
         <img src={card.imageSrc} alt="" width={64} height={64} className="vocab-image mx-auto mt-3" />
       ) : null}
-      <SpeakableFace text={card.audioText} face={card.face} className="s-big" style={{ margin: '16px auto 6px', ...faceSize(card.face, 58, 38) }} />
+      <div className="fit-box"><SpeakableFace text={card.audioText} face={card.face} className="s-big fit-text" style={{ margin: '16px auto 6px', ...fitTextStyle(card.face, 58, 26) }} /></div>
       <p className="jp soft">{card.reading}</p>
       {card.romaji ? <p className="romaji">{card.romaji}</p> : null}
       <h3 style={{ margin: '8px 0 10px' }}>{card.meaning}</h3>

@@ -1,7 +1,7 @@
 import { shuffle } from '@/features/games/match-game';
 import { normalizeJapanese } from '@/lib/utils/japanese-text';
 import { WORDS_ENDING_LIKE_PARTICLES } from '@/lib/utils/romaji';
-import type { DayStudyData, StudyGrammarCard, StudyKanjiCard, StudyVocabCard } from './day-study';
+import type { DayStudyData, StudyGrammarCard, StudyKanjiCard, StudyRadicalCard, StudyVocabCard } from './day-study';
 import type { ContentKey } from './knowledge-types';
 import { type StudyAsk, readingKey } from './study-grading';
 
@@ -34,6 +34,7 @@ export interface StudyQuestion {
 export const STUDY_STEPS = [
   { id: 'tu-vung', label: 'Từ vựng', icon: '語' },
   { id: 'ngu-phap', label: 'Ngữ pháp', icon: '文' },
+  { id: 'bo-thu', label: 'Bộ thủ', icon: '部' },
   { id: 'kanji', label: 'Kanji', icon: '漢' },
   { id: 'on-tap', label: 'Ôn tập', icon: '🔁' },
 ] as const;
@@ -50,6 +51,9 @@ export const GRAMMAR_QUIZZES = [
   { id: 'nhat-viet', label: 'Nhật → Việt', icon: '🇯🇵' },
   { id: 'sap-xep', label: 'Sắp xếp câu', icon: '🔀' },
   { id: 'tu-viet', label: 'Tự viết câu', icon: '✍️' },
+] as const;
+export const RADICAL_QUIZZES = [
+  { id: 'nghia', label: 'Bộ → nghĩa', icon: '部' },
 ] as const;
 export const KANJI_QUIZZES = [
   { id: 'nghia', label: 'Chữ → nghĩa', icon: '漢' },
@@ -131,6 +135,15 @@ export function buildKanjiQuiz(data: DayStudyData, kind: KanjiQuizId, cards: rea
       options: pickOptions(word.reading, pool.flatMap((other) => other.words.map((entry) => entry.reading)), random, (value) => own.has(readingKey(value))),
       optionsAreJapanese: true, answer: word.reading }];
   });
+}
+
+/** Bộ thủ: nhìn bộ → chọn nghĩa. Ghi vào trí nhớ của BỘ THỦ (không phải Kanji). */
+export function buildRadicalQuiz(data: DayStudyData, cards: readonly StudyRadicalCard[] = data.radicals, random = Math.random): StudyQuestion[] {
+  const pool = [...data.radicals, ...data.distractors.radicals];
+  return shuffle(cards, random).map((card) => ({
+    id: `bo-thu:${card.key}`, contentKey: card.key, ask: 'meaning' as const, prompt: card.glyph, promptIsJapanese: true, hint: 'Bộ này nghĩa là…',
+    options: pickOptions(card.meaning, pool.map((other) => other.meaning), random), optionsAreJapanese: false, answer: card.meaning,
+  }));
 }
 
 /** Đuôi tách thành mảnh riêng khi sắp xếp câu (dài trước). */

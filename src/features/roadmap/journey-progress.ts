@@ -101,3 +101,30 @@ export function estimateInAppMinutes(knowledgeCount: number): number {
 export function estimateMinutesToFinishDay(progress: DayCompletionProgress): number {
   return estimateInAppMinutes(remainingKnowledgeCount(progress));
 }
+
+export type DayStatus = 'done' | 'partial' | 'todo';
+
+export interface DayStatusView {
+  day: number;
+  week: number | null;
+  status: DayStatus;
+}
+
+/**
+ * Trạng thái cả 90 ngày cho bộ chọn ngày, theo kiến thức THẬT đã gặp (không theo ngày lịch):
+ * gặp hết kiến thức của ngày → done; gặp một phần → partial; chưa gặp → todo.
+ * Ngày không có kiến thức mới (ôn tập / thi thử): đã qua (trước ngày đang học) → done, còn lại → todo.
+ */
+export function buildDayStatuses(
+  catalog: KnowledgeCatalog,
+  views: ReadonlyMap<ContentKey, MemoryView>,
+  currentDay: number,
+): DayStatusView[] {
+  return catalog.content.journeyDays.map((journeyDay, index) => {
+    const day = index + 1;
+    const progress = getDayCompletionProgress(catalog, views, day);
+    const status: DayStatus = !progress.hasNewKnowledge ? (day < currentDay ? 'done' : 'todo')
+      : progress.isAllKnowledgeMet ? 'done' : progress.metCount > 0 ? 'partial' : 'todo';
+    return { day, week: journeyDay.week, status };
+  });
+}

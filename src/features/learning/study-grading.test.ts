@@ -49,3 +49,12 @@ describe('study grading', () => {
     expect(gradeStudyAnswer(grammar, 'jp-to-vi', 'Đây là cái bút.')).toBe(false);
   });
 });
+
+describe('radical grading', () => {
+  const radical = { key: 'radical-1', id: 1, type: 'radical', face: '亻', reading: '', meaning: 'Người', day: 15,
+    content: { id: 1, radical: '人 / 亻', nameJp: 'ひと', meaning: 'Người', kanjiList: '', tip: '', day: 15 } } as KnowledgeItem;
+  it('chỉ chấm nghĩa của bộ thủ', () => {
+    expect(gradeStudyAnswer(radical, 'meaning', 'Người')).toBe(true);
+    expect(gradeStudyAnswer(radical, 'reading', 'ひと')).toBeNull();
+  });
+});

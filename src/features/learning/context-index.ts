@@ -131,7 +131,10 @@ export function kanaExampleWords(catalog: KnowledgeCatalog, item: KnowledgeItem,
     .slice(0, limit)
     .map(({ word }) => {
       const kana = word.kana.split(/[／/]/)[0].trim();
-      return { face: word.kanji ? `${word.kanji.split(/[／/]/)[0].trim()}（${kana}）` : kana, meaning: word.meaning };
+      // Cặp từ ("夏 / 冬" = "Mùa hè / mùa đông"): chỉ lấy từ đầu thì nghĩa cũng lấy phần đầu.
+      const isPair = /[／/]/.test(`${word.kana}${word.kanji}`);
+      const meaning = isPair ? word.meaning.split(/\s*[／/]\s*/)[0].trim() : word.meaning;
+      return { face: word.kanji ? `${word.kanji.split(/[／/]/)[0].trim()}（${kana}）` : kana, meaning };
     });
 }
 

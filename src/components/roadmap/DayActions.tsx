@@ -8,7 +8,7 @@ interface DayActionsProps {
   /** Kiến thức của ngày chưa gặp trong app. */
   remainingCount: number;
   hasNewKnowledge: boolean;
-  /** Ngày có từ vựng / ngữ pháp / bộ thủ / Kanji → trang học của ngày (/lo-trinh/ngay/N/hoc); ngày chữ cái vẫn dùng phiên /hoc/day. */
+  /** Ngày có kiến thức mới (chữ cái, từ, mẫu câu, bộ thủ, Kanji) → trang học của ngày (/lo-trinh/ngay/N/hoc). */
   hasDayStudy: boolean;
   /**
    * Học / ôn ĐÚNG kiến thức của ngày này: trang học của ngày, hoặc phiên ôn các chữ cái của ngày (ngày 1–14), hoặc phiên ôn

@@ -1,7 +1,7 @@
 import { shuffle } from '@/features/games/match-game';
 import { normalizeJapanese } from '@/lib/utils/japanese-text';
 import { WORDS_ENDING_LIKE_PARTICLES } from '@/lib/utils/romaji';
-import type { DayStudyData, StudyGrammarCard, StudyKanjiCard, StudyRadicalCard, StudyVocabCard } from './day-study';
+import type { DayStudyData, StudyGrammarCard, StudyKanaCard, StudyKanjiCard, StudyRadicalCard, StudyVocabCard } from './day-study';
 import type { ContentKey } from './knowledge-types';
 import { type StudyAsk, readingKey } from './study-grading';
 
@@ -32,6 +32,7 @@ export interface StudyQuestion {
 
 /** Bốn bước của luồng học theo ngày, đúng thứ tự học. */
 export const STUDY_STEPS = [
+  { id: 'chu-cai', label: 'Chữ cái', icon: 'あ' },
   { id: 'tu-vung', label: 'Từ vựng', icon: '語' },
   { id: 'ngu-phap', label: 'Ngữ pháp', icon: '文' },
   { id: 'bo-thu', label: 'Bộ thủ', icon: '部' },
@@ -40,6 +41,10 @@ export const STUDY_STEPS = [
 ] as const;
 export type StudyStepId = (typeof STUDY_STEPS)[number]['id'];
 
+export const KANA_QUIZZES = [
+  { id: 'doc', label: 'Chữ → cách đọc', icon: 'あ' },
+  { id: 'chu', label: 'Cách đọc → chữ', icon: '🔤' },
+] as const;
 export const VOCAB_QUIZZES = [
   { id: 'nghia', label: 'Nhật → Việt', icon: '🇯🇵' },
   { id: 'tu', label: 'Việt → Nhật', icon: '🇻🇳' },
@@ -135,6 +140,16 @@ export function buildKanjiQuiz(data: DayStudyData, kind: KanjiQuizId, cards: rea
       options: pickOptions(word.reading, pool.flatMap((other) => other.words.map((entry) => entry.reading)), random, (value) => own.has(readingKey(value))),
       optionsAreJapanese: true, answer: word.reading }];
   });
+}
+
+/** Chữ cái: nhìn chữ → chọn romaji, hoặc nghe / đọc romaji → chọn chữ. Nhiễu là chữ cùng bảng của các ngày gần. */
+export function buildKanaQuiz(data: DayStudyData, kind: 'doc' | 'chu', cards: readonly StudyKanaCard[] = data.kana, random = Math.random): StudyQuestion[] {
+  const pool = [...data.kana, ...data.distractors.kana];
+  return shuffle(cards, random).map((card): StudyQuestion => (kind === 'doc'
+    ? { id: `doc:${card.key}`, contentKey: card.key, ask: 'reading', prompt: card.face, promptIsJapanese: true, audioText: card.face,
+      options: pickOptions(card.romaji, pool.map((other) => other.romaji), random), optionsAreJapanese: false, answer: card.romaji }
+    : { id: `chu:${card.key}`, contentKey: card.key, ask: 'face', prompt: card.romaji, promptIsJapanese: false, hint: `Chữ ${card.script} nào đọc là…`,
+      audioText: card.face, options: pickOptions(card.face, pool.map((other) => other.face), random), optionsAreJapanese: true, answer: card.face }));
 }
 
 /** Bộ thủ: nhìn bộ → chọn nghĩa. Ghi vào trí nhớ của BỘ THỦ (không phải Kanji). */

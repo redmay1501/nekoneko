@@ -22,12 +22,10 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
   const plan = buildDayPlan(catalog, requestedDay, journey);
   const completion = getDayCompletionProgress(catalog, memoryViews, plan.day);
   const { day, journeyDay: dayInfo, stage } = plan;
-  const { knowledge } = plan;
-  const hasDayStudy = knowledge.vocabulary.length + knowledge.grammar.length + knowledge.radicals.length + knowledge.kanji.length > 0;
-  // Nút "Học lại / Học trước ngày N" luôn mở đúng kiến thức của ngày: trang học của ngày → chữ cái của ngày → kiến thức của tuần (ngày ôn).
+  // Ngày có kiến thức (kể cả chữ cái) → trang học của ngày; ngày ôn tuần → phiên ôn kiến thức của tuần; tổng ôn 78–90 → không có.
+  const hasDayStudy = plan.hasNewKnowledge;
   const studyHref = hasDayStudy ? `/lo-trinh/ngay/${day}/hoc`
-    : knowledge.kana.length ? focusSessionHref(knowledge.kana.map((item) => item.key))
-      : plan.reviewWindow ? focusSessionHref(plan.reviewWindow.keys) : null;
+    : plan.reviewWindow ? focusSessionHref(plan.reviewWindow.keys) : null;
 
   return (
     <>

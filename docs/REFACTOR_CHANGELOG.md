@@ -161,3 +161,6 @@ API: không đổi (thêm tham số phạm vi trang). Database: không đổi sc
 - Ngày ôn giữa lộ trình (21, 28, …, 77): gắn kiến thức thật của các ngày học liền trước (ví dụ 21 → 15–20) + nút ôn cả tuần;
   "Kiểm tra lại từ vựng bài 1–3" nay ra danh sách từ. Việc trong app chỉ ra sách (練習A/B/C): phần làm trong app lên trước,
   sách là dòng "tuỳ chọn".
+- Chữ cái trong trang học của ngày: bước "Chữ cái" (thẻ lật + thứ tự nét, "Chữ → cách đọc", "Cách đọc → chữ", ghi trí nhớ) đứng
+  trước Từ vựng. Trước đó ngày 6, 8–13 (chữ cái + vài từ) mở trang học chỉ có Từ vựng — bỏ sót chữ cái. Nay mọi ngày có kiến
+  thức mới đều dùng trang học của ngày; ngày ôn tuần mở phiên ôn kiến thức của tuần.

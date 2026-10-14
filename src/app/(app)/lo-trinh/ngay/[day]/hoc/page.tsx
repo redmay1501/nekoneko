@@ -6,7 +6,7 @@ import { buildDayStudy } from '@/features/learning/day-study';
 import { getLearnerContext } from '@/features/learning/learner-context';
 import { JOURNEY_TOTAL_DAYS } from '@/features/roadmap/journey';
 
-/** Học theo ngày: Từ vựng → Ngữ pháp → Kanji → Ôn tập, mỗi bước có thẻ học + bài quiz. */
+/** Học theo ngày: Chữ cái → Từ vựng → Ngữ pháp → Bộ thủ → Kanji → Ôn tập, mỗi bước có thẻ học + bài quiz. */
 export default async function DayStudyPage({ params, searchParams }: {
   params: Promise<{ day: string }>;
   searchParams: Promise<{ buoc?: string; 'che-do'?: string }>;
@@ -17,8 +17,9 @@ export default async function DayStudyPage({ params, searchParams }: {
 
   const { catalog, journey, memoryViews } = await getLearnerContext();
   const data = buildDayStudy(catalog, day, journey, memoryViews);
-  const hasStudy = data.vocab.length + data.grammar.length + data.kanji.length + data.radicals.length > 0;
-  const initialStep = (STUDY_STEPS.find((step) => step.id === buoc)?.id ?? 'tu-vung') as StudyStepId;
+  const hasStudy = data.kana.length + data.vocab.length + data.grammar.length + data.kanji.length + data.radicals.length > 0;
+  // Không ghi bước → bắt đầu từ bước đầu tiên ngày đó có (chữ cái trước từ vựng).
+  const initialStep = (STUDY_STEPS.find((step) => step.id === buoc)?.id ?? null) as StudyStepId | null;
 
   return (
     <>
@@ -31,7 +32,7 @@ export default async function DayStudyPage({ params, searchParams }: {
         <div className="mt-3"><DayStudyFlow data={data} initialStep={initialStep} initialMode={mode ?? ''} /></div>
       ) : (
         <div className="card mt-3">
-          <p className="sm">Ngày {day} không có từ vựng, ngữ pháp, bộ thủ hay Kanji mới để học.</p>
+          <p className="sm">Ngày {day} không có kiến thức mới để học.</p>
           <Link className="btn ghost sm mt-3" href={`/lo-trinh/ngay/${day}`}>← Về trang ngày</Link>
         </div>
       )}

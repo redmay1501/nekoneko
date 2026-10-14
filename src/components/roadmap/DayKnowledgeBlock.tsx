@@ -69,15 +69,18 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
     );
   }
 
-  // Thứ tự học của ngày: chữ cái → Từ vựng → Ngữ pháp → Bộ thủ → Kanji. Bộ thủ và Kanji là HAI phần riêng (nội dung, mục tiêu,
+  // Thứ tự học của ngày: Chữ cái → Từ vựng → Ngữ pháp → Bộ thủ → Kanji. Bộ thủ và Kanji là HAI phần riêng (nội dung, mục tiêu,
   // trạng thái riêng) — bộ thủ chỉ hỗ trợ nhận ra / nhớ chữ, không thay cho Kanji. Số thứ tự đánh theo phần có trong ngày.
   const steps = [
-    knowledge.vocabulary.length && 'vocabulary', knowledge.grammar.length && 'grammar',
+    knowledge.kana.length && 'kana', knowledge.vocabulary.length && 'vocabulary', knowledge.grammar.length && 'grammar',
     knowledge.radicals.length && 'radical', knowledge.kanji.length && 'kanji',
   ].filter(Boolean);
-  const number = (step: string) => '①②③④'[steps.indexOf(step)];
+  const number = (step: string) => '①②③④⑤'[steps.indexOf(step)];
   return (
     <>
+      {knowledge.kana.length ? (
+        <StepHeading label={`${number('kana')} Chữ cái`} note={`${knowledge.kana.length} chữ`} day={plan.day} step="chu-cai" />
+      ) : null}
       {plan.kanaLesson ? <div className="mt-2.5"><KanaLessonTable lesson={plan.kanaLesson} /></div> : null}
       {knowledge.vocabulary.length ? (
         <>

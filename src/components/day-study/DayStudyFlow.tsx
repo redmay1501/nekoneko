@@ -8,9 +8,9 @@ import { NekoButton } from '@/components/common/NekoButton';
 import { StrokeOrder } from '@/components/learning/StrokeOrder';
 import { MatchGame } from '@/components/games/MatchGame';
 import { MIN_MATCH_POOL } from '@/features/games/match-game';
-import type { DayStudyData, StudyGrammarCard, StudyKanjiCard, StudyRadicalCard, StudyVocabCard } from '@/features/learning/day-study';
+import type { DayStudyData, StudyGrammarCard, StudyKanaCard, StudyKanjiCard, StudyRadicalCard, StudyVocabCard } from '@/features/learning/day-study';
 import {
-  GRAMMAR_QUIZZES, KANJI_QUIZZES, type KanjiQuizId, RADICAL_QUIZZES, STUDY_STEPS, type StudyStepId, VOCAB_QUIZZES, buildGrammarQuiz, buildKanjiQuiz, buildRadicalQuiz, buildVocabQuiz,
+  GRAMMAR_QUIZZES, KANA_QUIZZES, KANJI_QUIZZES, type KanjiQuizId, RADICAL_QUIZZES, STUDY_STEPS, type StudyStepId, VOCAB_QUIZZES, buildGrammarQuiz, buildKanaQuiz, buildKanjiQuiz, buildRadicalQuiz, buildVocabQuiz,
 } from '@/features/learning/day-study-quiz';
 import { MAX_FOCUS_ITEMS, focusSessionHref } from '@/features/learning/session-modes';
 import { Flashcards } from './Flashcards';
@@ -47,11 +47,11 @@ function readTracking(day: number): Tracking {
  * Đổi bước / chế độ ngay trong trình duyệt (dữ liệu đã có sẵn), URL chỉ ghi lại vị trí (?buoc=…&che-do=…).
  * Câu sai + mục "Đánh dấu ôn" được gom lại (giữ trong phiên trình duyệt) → bước Ôn tập ôn chúng trước tiên.
  */
-export function DayStudyFlow({ data, initialStep, initialMode }: { data: DayStudyData; initialStep: StudyStepId; initialMode: ModeId }) {
-  const steps = STUDY_STEPS.filter((step) => step.id === 'on-tap'
+export function DayStudyFlow({ data, initialStep, initialMode }: { data: DayStudyData; initialStep: StudyStepId | null; initialMode: ModeId }) {
+  const steps = STUDY_STEPS.filter((step) => step.id === 'on-tap' || (step.id === 'chu-cai' && data.kana.length)
     || (step.id === 'tu-vung' && data.vocab.length) || (step.id === 'ngu-phap' && data.grammar.length)
     || (step.id === 'bo-thu' && data.radicals.length) || (step.id === 'kanji' && data.kanji.length));
-  const [stepId, setStepId] = useState<StudyStepId>(steps.some((step) => step.id === initialStep) ? initialStep : steps[0].id);
+  const [stepId, setStepId] = useState<StudyStepId>(steps.find((step) => step.id === initialStep)?.id ?? steps[0].id);
   const [mode, setMode] = useState<ModeId>(initialMode || LESSON_MODE);
   /** Lần chạy quiz (tăng = tạo bộ câu mới) và tập mục đang làm lại (rỗng = tất cả). */
   const [run, setRun] = useState(0);
@@ -85,12 +85,13 @@ export function DayStudyFlow({ data, initialStep, initialMode }: { data: DayStud
 
   const stepIndex = steps.findIndex((step) => step.id === stepId);
   const nextStep = steps[stepIndex + 1];
-  const quizzes = stepId === 'tu-vung' ? VOCAB_QUIZZES.filter((quiz) => quiz.id !== 'ghep' || data.vocab.length >= MIN_MATCH_POOL)
+  const quizzes = stepId === 'chu-cai' ? KANA_QUIZZES : stepId === 'tu-vung' ? VOCAB_QUIZZES.filter((quiz) => quiz.id !== 'ghep' || data.vocab.length >= MIN_MATCH_POOL)
     : stepId === 'ngu-phap' ? GRAMMAR_QUIZZES : stepId === 'bo-thu' ? RADICAL_QUIZZES : stepId === 'kanji' ? KANJI_QUIZZES : [];
   const quizProps = { onRestart: restart, onRetryWrong: retryWrong, onWrong: addWrong };
   // Bộ câu hỏi dựng MỘT lần cho mỗi lượt (đổi chế độ / làm lại) — không xáo lại khi trang vẽ lại giữa bài.
   const questions = useMemo(() => {
     const only = <T extends { key: string }>(cards: readonly T[]) => (retryKeys.length ? cards.filter((card) => retryKeys.includes(card.key)) : cards);
+    if (stepId === 'chu-cai' && (mode === 'doc' || mode === 'chu')) return buildKanaQuiz(data, mode, only(data.kana));
     if (stepId === 'tu-vung' && (mode === 'nghia' || mode === 'tu' || mode === 'go')) return buildVocabQuiz(data, mode, only(data.vocab));
     if (stepId === 'ngu-phap' && (mode === 'viet-nhat' || mode === 'nhat-viet')) return buildGrammarQuiz(data, mode, only(data.grammar));
     if (stepId === 'bo-thu' && mode === 'nghia') return buildRadicalQuiz(data, only(data.radicals));
@@ -103,7 +104,7 @@ export function DayStudyFlow({ data, initialStep, initialMode }: { data: DayStud
     <div className="day-study">
       <nav className="study-steps" aria-label="Các bước học">
         {steps.map((step, index) => {
-          const counts = { 'tu-vung': [data.learned.vocab, data.vocab.length], 'ngu-phap': [data.learned.grammar, data.grammar.length],
+          const counts = { 'chu-cai': [data.learned.kana, data.kana.length], 'tu-vung': [data.learned.vocab, data.vocab.length], 'ngu-phap': [data.learned.grammar, data.grammar.length],
             'bo-thu': [data.learned.radical, data.radicals.length], kanji: [data.learned.kanji, data.kanji.length], 'on-tap': [0, 0] }[step.id];
           const [learned, total] = counts;
           return (
@@ -132,6 +133,13 @@ export function DayStudyFlow({ data, initialStep, initialMode }: { data: DayStud
       ) : null}
 
       <div className="mt-3" key={`${stepId}:${mode}:${run}`}>
+        {stepId === 'chu-cai' && mode === LESSON_MODE ? (
+          <Flashcards cards={data.kana} unit="chữ" marked={marked} onToggleMark={toggleMark} audioText={(card) => card.face}
+            front={(card) => <span className="glyph flashcard-glyph">{card.face}</span>} back={(card) => <KanaBack card={card} />}
+            footer={(card) => <StrokeToggle key={card.key} character={card.face} />} />
+        ) : null}
+        {stepId === 'chu-cai' && mode !== LESSON_MODE ? <StudyQuiz questions={questions} unit="chữ" {...quizProps} /> : null}
+
         {stepId === 'tu-vung' && mode === LESSON_MODE ? (
           <Flashcards cards={data.vocab} unit="từ" marked={marked} onToggleMark={toggleMark}
             audioText={(card) => card.kana} front={(card) => <VocabFront card={card} />} back={(card) => <VocabBack card={card} />} />
@@ -187,6 +195,22 @@ export function DayStudyFlow({ data, initialStep, initialMode }: { data: DayStud
         </div>
       ) : null}
     </div>
+  );
+}
+
+function KanaBack({ card }: { card: StudyKanaCard }) {
+  return (
+    <>
+      <span className="glyph" style={{ fontSize: 56, lineHeight: 1.1 }}>{card.face}</span>
+      <b className="flashcard-meaning" style={{ letterSpacing: '.06em' }}>{card.romaji}</b>
+      <span className="tiny muted">{card.script}</span>
+      {card.exampleWords.length ? (
+        <span className="flashcard-example">
+          <span className="tiny muted">Từ có chữ này</span>
+          {card.exampleWords.map((word) => <span key={word.face} className="sm"><b className="jp">{word.face}</b> — {word.meaning}</span>)}
+        </span>
+      ) : null}
+    </>
   );
 }
 
@@ -320,6 +344,7 @@ function GrammarTopic({ card, isMarked, onToggleMark }: { card: StudyGrammarCard
 
 function ReviewStep({ data, tracking }: { data: DayStudyData; tracking: Tracking }) {
   const faces = new Map<string, string>([
+    ...data.kana.map((card) => [card.key, card.face] as const),
     ...data.vocab.map((card) => [card.key, card.face] as const),
     ...data.grammar.map((card) => [card.key, card.pattern] as const),
     ...data.radicals.map((card) => [card.key, card.glyph] as const),
@@ -337,7 +362,7 @@ function ReviewStep({ data, tracking }: { data: DayStudyData; tracking: Tracking
       <ul className="sm mt-3 stack" style={{ gap: 6 }}>
         <li>❌ Câu sai hôm nay: <b>{wrong.length}</b>{wrong.length ? <span className="jp soft"> — {show(wrong)}</span> : null}</li>
         <li>☆ Đã đánh dấu: <b>{marked.length}</b>{marked.length ? <span className="jp soft"> — {show(marked)}</span> : null}</li>
-        <li>📚 Tổng cộng: <b>{keys.length}</b> mục (từ vựng, ngữ pháp, bộ thủ, Kanji)</li>
+        <li>📚 Tổng cộng: <b>{keys.length}</b> mục của ngày</li>
       </ul>
       {keys.length ? (
         <div className="mt-4"><NekoButton href={focusSessionHref(keys)} size="lg">Bắt đầu ôn {keys.length} mục</NekoButton></div>

@@ -12,7 +12,7 @@ export const STUDY_ASKS = ['meaning', 'face', 'reading', 'word-reading', 'vi-to-
 export type StudyAsk = (typeof STUDY_ASKS)[number];
 
 /** Loại kiến thức có quiz trong luồng học theo ngày. */
-export const STUDY_TYPES = ['vocabulary', 'grammar', 'radical', 'kanji'] as const;
+export const STUDY_TYPES = ['hiragana', 'katakana', 'vocabulary', 'grammar', 'radical', 'kanji'] as const;
 
 export interface KanjiWord {
   word: string;
@@ -42,6 +42,12 @@ export const readingKey = (reading: string) => normalizeJapanese(reading.replace
 export function gradeStudyAnswer(item: KnowledgeItem, ask: StudyAsk, answer: string, prompt = ''): boolean | null {
   const trimmed = answer.trim();
   switch (item.type) {
+    case 'hiragana':
+    case 'katakana':
+      // Chữ → cách đọc (romaji), cách đọc → chữ.
+      if (ask === 'reading') return trimmed.toLowerCase() === item.reading.toLowerCase();
+      if (ask === 'face') return trimmed === item.face;
+      return null;
     case 'vocabulary':
       if (ask === 'meaning') return trimmed === item.meaning;
       if (ask === 'face') return trimmed === item.face;

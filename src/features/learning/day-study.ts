@@ -3,7 +3,7 @@ import { buildDayPlan } from '@/features/roadmap/day-plan';
 import type { JourneyPosition } from '@/features/roadmap/journey-progress';
 import { canRomanize, kanjiReadingRomaji, patternRomaji, sentenceRomaji, vocabularyRomaji } from '@/lib/utils/romaji';
 import { primaryRadicalGlyph, itemsOfType, type KnowledgeCatalog } from './knowledge-catalog';
-import { pickContextExample } from './context-index';
+import { kanaExampleWords, pickContextExample } from './context-index';
 import { kanjiContainingRadical, radicalsOfKanji } from './knowledge-relations';
 import { type ContentKey, toContentKey } from './knowledge-types';
 import { type KanjiWord, kanjiReadingList, parseKanjiWords } from './study-grading';
@@ -12,11 +12,20 @@ import { type KanjiWord, kanjiReadingList, parseKanjiWords } from './study-gradi
  * ═══════════════════════════════════════════════════════════════════
  *  HỌC THEO NGÀY — dữ liệu cho /lo-trinh/ngay/[day]/hoc
  * ═══════════════════════════════════════════════════════════════════
- *  Bốn bước theo thứ tự: Từ vựng → Ngữ pháp → Kanji → Ôn tập. Server dựng sẵn mọi thẻ + "kho nhiễu" (đáp án sai
+ *  Các bước theo thứ tự: Chữ cái → Từ vựng → Ngữ pháp → Bộ thủ → Kanji → Ôn tập (chỉ hiện bước ngày đó có). Server dựng sẵn mọi thẻ + "kho nhiễu" (đáp án sai
  *  hợp lý, lấy từ những ngày gần nhất) để trình duyệt tự tạo câu hỏi mới mỗi lần làm lại mà không gọi server.
  *  Chỉ dữ liệu thuần (serializable) — truyền thẳng vào component client.
  * ═══════════════════════════════════════════════════════════════════
  */
+
+export interface StudyKanaCard {
+  key: ContentKey;
+  face: string;
+  romaji: string;
+  script: 'Hiragana' | 'Katakana';
+  /** Vài từ bắt đầu bằng chữ này (khi có trong kho từ). */
+  exampleWords: Array<{ face: string; meaning: string }>;
+}
 
 export interface StudyVocabCard {
   key: ContentKey;
@@ -77,6 +86,8 @@ export interface StudyKanjiCard {
 
 /** Đáp án sai hợp lý cho câu hỏi trắc nghiệm (kiến thức của các ngày gần nhất). */
 export interface StudyDistractors {
+  /** Chữ cái cùng bảng (Hiragana / Katakana) của các ngày gần nhất. */
+  kana: Array<{ face: string; romaji: string }>;
   vocab: Array<{ face: string; kana: string; meaning: string }>;
   kanji: Array<{ character: string; meaning: string; readings: string[]; words: KanjiWord[] }>;
   grammar: Array<{ jp: string; vi: string }>;
@@ -86,13 +97,14 @@ export interface StudyDistractors {
 export interface DayStudyData {
   day: number;
   title: string;
+  kana: StudyKanaCard[];
   vocab: StudyVocabCard[];
   grammar: StudyGrammarCard[];
   radicals: StudyRadicalCard[];
   kanji: StudyKanjiCard[];
   distractors: StudyDistractors;
   /** Số mục đã gặp (đã học) theo từng bước — tiến độ hiện trên thanh bước. */
-  learned: Record<'vocab' | 'grammar' | 'radical' | 'kanji', number>;
+  learned: Record<'kana' | 'vocab' | 'grammar' | 'radical' | 'kanji', number>;
   /** Mục của ngày, yếu nhất trước (điểm trí nhớ thấp / chưa học) — nguồn cho bước Ôn tập. */
   weakestKeys: ContentKey[];
 }
@@ -101,6 +113,7 @@ const VOCAB_DISTRACTORS = 40;
 const KANJI_DISTRACTORS = 24;
 const GRAMMAR_DISTRACTORS = 14;
 const RADICAL_DISTRACTORS = 12;
+const KANA_DISTRACTORS = 24;
 
 /** Gần ngày `day` nhất trước (ngày đã học quanh đó), loại mục của chính ngày. */
 function nearest<T extends { day: number | null }>(items: readonly T[], day: number, limit: number): T[] {
@@ -119,6 +132,13 @@ export function buildDayStudy(
   const plan = buildDayPlan(catalog, day, journey);
   const { knowledge } = plan;
   const { content } = catalog;
+
+  const kana = knowledge.kana.map((item): StudyKanaCard => ({
+    key: item.key, face: item.face, romaji: item.reading, script: item.type === 'katakana' ? 'Katakana' : 'Hiragana',
+    exampleWords: kanaExampleWords(catalog, item),
+  }));
+  const kanaTypes = new Set(knowledge.kana.map((item) => item.type));
+  const ownKana = new Set(kana.map((card) => card.key));
 
   const vocab = knowledge.vocabulary.map((word): StudyVocabCard => {
     const key = toContentKey('vocabulary', word.id);
@@ -161,7 +181,7 @@ export function buildDayStudy(
       .map((word) => ({ face: word.kanji, kana: word.kana, meaning: word.meaning })),
   }));
 
-  const studyKeys: ContentKey[] = [...vocab, ...grammar, ...radicals, ...kanji].map((card) => card.key);
+  const studyKeys: ContentKey[] = [...kana, ...vocab, ...grammar, ...radicals, ...kanji].map((card) => card.key);
   const countLearned = (cards: Array<{ key: ContentKey }>) => cards.filter((card) => memoryViews.get(card.key)?.isLearned).length;
   const strength = (key: ContentKey) => {
     const view = memoryViews.get(key);
@@ -171,8 +191,10 @@ export function buildDayStudy(
   return {
     day,
     title: plan.journeyDay.title,
-    vocab, grammar, radicals, kanji,
+    kana, vocab, grammar, radicals, kanji,
     distractors: {
+      kana: nearest(catalog.items.filter((item) => kanaTypes.has(item.type) && !ownKana.has(item.key)), day, KANA_DISTRACTORS)
+        .map((item) => ({ face: item.face, romaji: item.reading })),
       vocab: nearest(content.vocabulary, day, VOCAB_DISTRACTORS).map((word) => ({ face: word.kanji || word.kana, kana: word.kana, meaning: word.meaning })),
       kanji: nearest(content.kanji, day, KANJI_DISTRACTORS).map((entry) => ({
         character: entry.character, meaning: entry.meaning, readings: kanjiReadingList(entry), words: parseKanjiWords(entry.words),
@@ -183,7 +205,7 @@ export function buildDayStudy(
       ]),
       radicals: nearest(content.radicals, day, RADICAL_DISTRACTORS).map((radical) => ({ glyph: primaryRadicalGlyph(radical.radical), meaning: radical.meaning })),
     },
-    learned: { vocab: countLearned(vocab), grammar: countLearned(grammar), radical: countLearned(radicals), kanji: countLearned(kanji) },
+    learned: { kana: countLearned(kana), vocab: countLearned(vocab), grammar: countLearned(grammar), radical: countLearned(radicals), kanji: countLearned(kanji) },
     weakestKeys: [...studyKeys].sort((left, right) => strength(left) - strength(right)),
   };
 }

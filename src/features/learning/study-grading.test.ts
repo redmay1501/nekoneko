@@ -58,3 +58,14 @@ describe('radical grading', () => {
     expect(gradeStudyAnswer(radical, 'reading', 'ひと')).toBeNull();
   });
 });
+
+describe('kana grading', () => {
+  const kana = { key: 'hiragana-1', id: 1, type: 'hiragana', face: 'あ', reading: 'a', meaning: 'Chữ Hiragana', day: 1,
+    content: { id: 1, hiragana: 'あ', katakana: 'ア', romaji: 'a', day: 1 } } as unknown as KnowledgeItem;
+  it('chữ → romaji và romaji → chữ', () => {
+    expect(gradeStudyAnswer(kana, 'reading', 'A')).toBe(true);
+    expect(gradeStudyAnswer(kana, 'face', 'あ')).toBe(true);
+    expect(gradeStudyAnswer(kana, 'face', 'お')).toBe(false);
+    expect(gradeStudyAnswer(kana, 'meaning', 'a')).toBeNull();
+  });
+});

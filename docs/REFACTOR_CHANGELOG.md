@@ -173,3 +173,17 @@ API: không đổi (thêm tham số phạm vi trang). Database: không đổi sc
 - /luyen-tap/doc: danh sách bài, đã làm X/25, điểm cao nhất, "Làm tiếp" bài nên làm. /luyen-tap/doc/[id]: mỗi câu chọn một
   lần, điểm + bản dịch, "Làm lại", "Bài tiếp theo". Kết quả lưu ở user_settings.game_records (khoá doc:bai-N) qua
   POST /api/reading/result; giới hạn 40 kỷ lục nay tính riêng cho từng loại (Ghép thẻ không đẩy mất kết quả bài đọc).
+
+## 2026-10-14 — Thư viện video luyện nghe N5
+- /luyen-tap/nghe có hai thẻ: "Bài nghe" (giữ nguyên) và "Video N5" (đổi trong trình duyệt, ?muc=video). Trang xem:
+  /luyen-tap/nghe/video/[id].
+- 83 video thật (content/seed/listening-videos.json, xác minh 2026-10-14):
+  - 10 IRODORI Starter (kênh YouTube chính thức The Japan Foundation, Phnom Penh): oEmbed 200, playableInEmbed=true,
+    40–69 giây, phụ đề làm tay tiếng Nhật / Anh / Khmer (không có tiếng Việt) → nhúng bằng youtube-nocookie, bật sẵn CC tiếng Nhật.
+  - 48 bài NHK WORLD-JAPAN "Cùng nhau học tiếng Nhật" (bản tiếng Việt): trang bài có lời thoại Nhật + romaji + bản dịch
+    tiếng Việt; video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ "Xem tại nguồn", không dùng ảnh của NHK.
+  - 25 bài Erin's Challenge (Japan Foundation): điều khoản cho phép đặt link, cấm sao chép → chỉ "Xem tại nguồn".
+- Trình độ: IRODORI theo giáo trình (A1); NHK / Erin là Neko đánh giá theo câu chính / chủ đề bài, ghi rõ trong levelBasis
+  (21 bài có phần vượt N5 được ghi "N5 – có phần N4").
+- Tìm (không dấu cũng được), lọc chủ đề / nguồn / đã xem. "Đã xem" do người học tự bấm, lưu ở game_records (khoá video:<id>),
+  POST /api/videos/watched — không đổi điểm trí nhớ. Chưa liên kết video với từ / mẫu câu (chưa có transcript được phép dùng).

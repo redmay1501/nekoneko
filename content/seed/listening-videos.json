@@ -1,0 +1,2237 @@
+{
+ "_note": "Thư viện video luyện nghe N5. Chỉ gồm video THẬT đã xác minh ngày verifiedAt (không có URL / thời lượng / phụ đề tự đặt). Nhúng chỉ khi nguồn cho phép (YouTube chính thức, playableInEmbed=true); còn lại mở tại nguồn. Trình độ ghi rõ cơ sở (levelBasis). Thêm video = thêm một mục, status \"review\" sẽ không hiện cho người học.",
+ "sources": {
+  "irodori": {
+   "name": "IRODORI Starter — The Japan Foundation",
+   "shortName": "IRODORI",
+   "homeUrl": "https://www.irodori.jpf.go.jp/",
+   "license": "Video trên kênh YouTube chính thức của The Japan Foundation (Phnom Penh), nhúng bằng trình phát YouTube."
+  },
+  "nhk": {
+   "name": "NHK WORLD-JAPAN — Cùng nhau học tiếng Nhật",
+   "shortName": "NHK",
+   "homeUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/",
+   "license": "© NHK. Xem trên trang NHK WORLD-JAPAN."
+  },
+  "erin": {
+   "name": "Erin's Challenge! — The Japan Foundation",
+   "shortName": "Erin",
+   "homeUrl": "https://www.erin.jpf.go.jp/",
+   "license": "© The Japan Foundation. Trang cho phép đặt link tự do; xem trên trang Erin."
+  }
+ },
+ "topics": [
+  {
+   "id": "chao-hoi",
+   "label": "Chào hỏi & giới thiệu"
+  },
+  {
+   "id": "giao-tiep",
+   "label": "Giao tiếp cơ bản"
+  },
+  {
+   "id": "an-uong",
+   "label": "Ăn uống"
+  },
+  {
+   "id": "mua-sam",
+   "label": "Mua sắm"
+  },
+  {
+   "id": "di-lai",
+   "label": "Đi lại & hỏi đường"
+  },
+  {
+   "id": "sinh-hoat",
+   "label": "Sinh hoạt hằng ngày"
+  },
+  {
+   "id": "thoi-gian",
+   "label": "Ngày giờ & lịch"
+  },
+  {
+   "id": "truong-viec",
+   "label": "Trường học & công việc"
+  },
+  {
+   "id": "so-thich",
+   "label": "Sở thích & du lịch"
+  },
+  {
+   "id": "suc-khoe",
+   "label": "Sức khỏe & sự cố"
+  }
+ ],
+ "videos": [
+  {
+   "id": "irodori-3stbOEUrCE4",
+   "title": "【いろどり入門】L3 Can-do 10「ご出身は？」",
+   "description": "Hỏi quê quán: ご出身は？",
+   "source": "irodori",
+   "sourceUrl": "https://www.youtube.com/watch?v=3stbOEUrCE4",
+   "youtubeId": "3stbOEUrCE4",
+   "thumbnailUrl": "https://i.ytimg.com/vi/3stbOEUrCE4/hqdefault.jpg",
+   "durationSeconds": 54,
+   "topics": [
+    "chao-hoi"
+   ],
+   "level": "N5",
+   "levelBasis": "Giáo trình IRODORI Starter (A1) của Japan Foundation — tương đương N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": false,
+    "other": [
+     "Tiếng Anh",
+     "Tiếng Khmer"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km"
+  },
+  {
+   "id": "irodori-6wBPHVGgffY",
+   "title": "【いろどり入門】L4 Can-do 13「25歳です」",
+   "description": "Nói tuổi: 25歳です",
+   "source": "irodori",
+   "sourceUrl": "https://www.youtube.com/watch?v=6wBPHVGgffY",
+   "youtubeId": "6wBPHVGgffY",
+   "thumbnailUrl": "https://i.ytimg.com/vi/6wBPHVGgffY/hqdefault.jpg",
+   "durationSeconds": 48,
+   "topics": [
+    "chao-hoi"
+   ],
+   "level": "N5",
+   "levelBasis": "Giáo trình IRODORI Starter (A1) của Japan Foundation — tương đương N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": false,
+    "other": [
+     "Tiếng Anh",
+     "Tiếng Khmer"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km"
+  },
+  {
+   "id": "irodori-qgceqOnEQGs",
+   "title": "【いろどり入門】L5 Can-do 19「朝ご飯、あまり食べません」",
+   "description": "Thói quen ăn sáng: 朝ご飯、あまり食べません",
+   "source": "irodori",
+   "sourceUrl": "https://www.youtube.com/watch?v=qgceqOnEQGs",
+   "youtubeId": "qgceqOnEQGs",
+   "thumbnailUrl": "https://i.ytimg.com/vi/qgceqOnEQGs/hqdefault.jpg",
+   "durationSeconds": 41,
+   "topics": [
+    "sinh-hoat"
+   ],
+   "level": "N5",
+   "levelBasis": "Giáo trình IRODORI Starter (A1) của Japan Foundation — tương đương N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": false,
+    "other": [
+     "Tiếng Anh",
+     "Tiếng Khmer"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km"
+  },
+  {
+   "id": "irodori-41fbTYoH7Ko",
+   "title": "【いろどり入門】L6 Can-do 23「私はカレーにします」",
+   "description": "Chọn món: 私はカレーにします",
+   "source": "irodori",
+   "sourceUrl": "https://www.youtube.com/watch?v=41fbTYoH7Ko",
+   "youtubeId": "41fbTYoH7Ko",
+   "thumbnailUrl": "https://i.ytimg.com/vi/41fbTYoH7Ko/hqdefault.jpg",
+   "durationSeconds": 47,
+   "topics": [
+    "an-uong"
+   ],
+   "level": "N5",
+   "levelBasis": "Giáo trình IRODORI Starter (A1) của Japan Foundation — tương đương N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": false,
+    "other": [
+     "Tiếng Anh",
+     "Tiếng Khmer"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km"
+  },
+  {
+   "id": "irodori-l3UTXgVaNUs",
+   "title": "【いろどり入門】L6 Can-do 24「枝豆２つください」",
+   "description": "Gọi món kèm số lượng: 枝豆２つください",
+   "source": "irodori",
+   "sourceUrl": "https://www.youtube.com/watch?v=l3UTXgVaNUs",
+   "youtubeId": "l3UTXgVaNUs",
+   "thumbnailUrl": "https://i.ytimg.com/vi/l3UTXgVaNUs/hqdefault.jpg",
+   "durationSeconds": 45,
+   "topics": [
+    "an-uong"
+   ],
+   "level": "N5",
+   "levelBasis": "Giáo trình IRODORI Starter (A1) của Japan Foundation — tương đương N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": false,
+    "other": [
+     "Tiếng Anh",
+     "Tiếng Khmer"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km"
+  },
+  {
+   "id": "irodori-792POX-cVp4",
+   "title": "【いろどり入門】L11 Can-do 45「ドラゴンボールが大好きです」",
+   "description": "Nói điều mình thích: ドラゴンボールが大好きです",
+   "source": "irodori",
+   "sourceUrl": "https://www.youtube.com/watch?v=792POX-cVp4",
+   "youtubeId": "792POX-cVp4",
+   "thumbnailUrl": "https://i.ytimg.com/vi/792POX-cVp4/hqdefault.jpg",
+   "durationSeconds": 40,
+   "topics": [
+    "so-thich"
+   ],
+   "level": "N5",
+   "levelBasis": "Giáo trình IRODORI Starter (A1) của Japan Foundation — tương đương N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": false,
+    "other": [
+     "Tiếng Anh",
+     "Tiếng Khmer"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km"
+  },
+  {
+   "id": "irodori-kCYMZ4KNWdY",
+   "title": "【いろどり入門】L16 Can-do 69「こちら、温めますか？」",
+   "description": "Ở cửa hàng tiện lợi: こちら、温めますか？",
+   "source": "irodori",
+   "sourceUrl": "https://www.youtube.com/watch?v=kCYMZ4KNWdY",
+   "youtubeId": "kCYMZ4KNWdY",
+   "thumbnailUrl": "https://i.ytimg.com/vi/kCYMZ4KNWdY/hqdefault.jpg",
+   "durationSeconds": 56,
+   "topics": [
+    "mua-sam"
+   ],
+   "level": "N5",
+   "levelBasis": "Giáo trình IRODORI Starter (A1) của Japan Foundation — tương đương N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": false,
+    "other": [
+     "Tiếng Anh",
+     "Tiếng Khmer"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km"
+  },
+  {
+   "id": "irodori-hoFeJJ5-NFE",
+   "title": "【いろどり入門】L17 Can-do 72「楽しかったです」",
+   "description": "Kể cảm tưởng: 楽しかったです",
+   "source": "irodori",
+   "sourceUrl": "https://www.youtube.com/watch?v=hoFeJJ5-NFE",
+   "youtubeId": "hoFeJJ5-NFE",
+   "thumbnailUrl": "https://i.ytimg.com/vi/hoFeJJ5-NFE/hqdefault.jpg",
+   "durationSeconds": 59,
+   "topics": [
+    "so-thich"
+   ],
+   "level": "N5",
+   "levelBasis": "Giáo trình IRODORI Starter (A1) của Japan Foundation — tương đương N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": false,
+    "other": [
+     "Tiếng Anh",
+     "Tiếng Khmer"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km"
+  },
+  {
+   "id": "irodori-LQqpDcLOLwM",
+   "title": "【いろどり入門】L18 Can-do 77「日本で何がしたい？」",
+   "description": "Muốn làm gì ở Nhật: 日本で何がしたい？",
+   "source": "irodori",
+   "sourceUrl": "https://www.youtube.com/watch?v=LQqpDcLOLwM",
+   "youtubeId": "LQqpDcLOLwM",
+   "thumbnailUrl": "https://i.ytimg.com/vi/LQqpDcLOLwM/hqdefault.jpg",
+   "durationSeconds": 69,
+   "topics": [
+    "so-thich"
+   ],
+   "level": "N5",
+   "levelBasis": "Giáo trình IRODORI Starter (A1) của Japan Foundation — tương đương N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": false,
+    "other": [
+     "Tiếng Anh",
+     "Tiếng Khmer"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km"
+  },
+  {
+   "id": "irodori-yipYA1ocYmE",
+   "title": "【いろどり入門】L18 Can-do 79「はじめて露天風呂に入りました」",
+   "description": "Trải nghiệm lần đầu: はじめて露天風呂に入りました",
+   "source": "irodori",
+   "sourceUrl": "https://www.youtube.com/watch?v=yipYA1ocYmE",
+   "youtubeId": "yipYA1ocYmE",
+   "thumbnailUrl": "https://i.ytimg.com/vi/yipYA1ocYmE/hqdefault.jpg",
+   "durationSeconds": 43,
+   "topics": [
+    "so-thich"
+   ],
+   "level": "N5",
+   "levelBasis": "Giáo trình IRODORI Starter (A1) của Japan Foundation — tương đương N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": false,
+    "other": [
+     "Tiếng Anh",
+     "Tiếng Khmer"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km"
+  },
+  {
+   "id": "nhk-01",
+   "title": "Bài 1 — はるさんハウスはどこですか",
+   "description": "Haru-san House ở đâu ạ? · Hỏi địa điểm",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/01.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "di-lai"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-02",
+   "title": "Bài 2 — タムです。学生です",
+   "description": "Cháu là Tâm. Cháu là sinh viên. · Tự giới thiệu tên và nghề nghiệp.",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/02.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "chao-hoi"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-03",
+   "title": "Bài 3 — ベトナムから来ました",
+   "description": "Em đến từ Việt Nam. · Nói về nơi xuất thân của mình",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/03.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "chao-hoi"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-04",
+   "title": "Bài 4 — 大学で日本語を勉強します",
+   "description": "Em sẽ học tiếng Nhật ở trường đại học. · Nói mình sẽ làm gì",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/04.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "truong-viec"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-05",
+   "title": "Bài 5 — ラジオで勉強しました",
+   "description": "Cháu đã học qua đài phát thanh. · Nói đã học tiếng Nhật bằng cách nào",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/05.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "truong-viec"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-06",
+   "title": "Bài 6 — この電車は池袋に行きますか",
+   "description": "Tàu điện này có đi Ikebukuro không ạ? · Xác nhận đích đến của phương tiện giao thông công cộng",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/06.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "di-lai"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-07",
+   "title": "Bài 7 — ゆっくり話してください",
+   "description": "Xin nói chậm thôi ạ! · Đề nghị ai đó nói chậm lại",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/07.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "giao-tiep"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-08",
+   "title": "Bài 8 — 友達のあやかさんです",
+   "description": "Đây là Ayaka, bạn em. · Giới thiệu bạn bè và người khác",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/08.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "chao-hoi"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-09",
+   "title": "Bài 9 — これは何ですか",
+   "description": "Đây là cái gì ạ? · Hỏi tên của đồ vật",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/09.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "mua-sam"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-10",
+   "title": "Bài 10 — このドライヤーはいくらですか",
+   "description": "Máy sấy tóc này bao nhiêu tiền ạ? · Hỏi giá tiền",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/10.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "mua-sam"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-11",
+   "title": "Bài 11 — お守りはありますか",
+   "description": "Có bùa may mắn không ạ? · Hỏi xem có thứ mình muốn hay không",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/11.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "mua-sam"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-12",
+   "title": "Bài 12 — かわいいお守りですね",
+   "description": "Cái bùa này dễ thương nhỉ! · Nói về ấn tượng và giải thích -- Phần 1",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/12.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "mua-sam"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-13",
+   "title": "Bài 13 — 雪が見たいです",
+   "description": "Cháu muốn ngắm tuyết ạ. · Nói mình muốn làm gì",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/13.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "so-thich"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-14",
+   "title": "Bài 14 — 日本へ行ってみたいです",
+   "description": "Em muốn thử đi Nhật một lần. · Nói về nguyện vọng của mình",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/14.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "so-thich"
+   ],
+   "level": "N5-N4",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: có mẫu 〜てみたい (thường xếp N4). NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-15",
+   "title": "Bài 15 — 猿の温泉までお願いします",
+   "description": "Làm ơn cho tôi đến suối nước nóng con khỉ. · Nói với tài xế taxi nơi mình muốn đến",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/15.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "di-lai"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-16",
+   "title": "Bài 16 — 有名な温泉です",
+   "description": "Đây là suối nước nóng nổi tiếng. · Nói về ấn tượng và giải thích--Phần 2",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/16.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "so-thich"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-17",
+   "title": "Bài 17 — 日本を旅行しています",
+   "description": "Cháu đang đi du lịch Nhật Bản. · Nói về việc mình đang làm",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/17.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "so-thich"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-18",
+   "title": "Bài 18 — すごく楽しかったです",
+   "description": "Rất vui ạ. · Diễn tả cảm tưởng về việc đã trải qua",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/18.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "so-thich"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-19",
+   "title": "Bài 19 — 手袋が欲しいんですが",
+   "description": "Tôi muốn mua một đôi găng tay. · Nói mình muốn mua gì",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/19.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "mua-sam"
+   ],
+   "level": "N5-N4",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: có mẫu 〜んですが (thường xếp N4). NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-20",
+   "title": "Bài 20 — わさびは入れないでください",
+   "description": "Làm ơn đừng cho wasabi. · Đề nghị không cho gì đó vào món của mình",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/20.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "an-uong"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-21",
+   "title": "Bài 21 — 時計台の中にいます",
+   "description": "Em đang ở trong tháp đồng hồ. · Nói mình đang ở chỗ nào",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/21.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "di-lai"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-22",
+   "title": "Bài 22 — 写真を撮りましょう",
+   "description": "Chụp ảnh cùng nhau đi. · Rủ đối phương cùng làm gì -- Phần 1",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/22.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "so-thich"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-23",
+   "title": "Bài 23 — 私はこの猫が好きです",
+   "description": "Em thích con mèo này. · Nói về thứ mình thích",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/23.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "so-thich"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-24",
+   "title": "Bài 24 — 生卵は食べられません",
+   "description": "Cháu không ăn được trứng sống. · Nói mình không ăn được thứ gì",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/24.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "an-uong"
+   ],
+   "level": "N5-N4",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: có mẫu thể khả năng (食べられません) (thường xếp N4). NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-25",
+   "title": "Bài 25 — のどが痛いんです",
+   "description": "Cháu bị đau họng. · Nói rằng mình thấy không khỏe",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/25.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "suc-khoe"
+   ],
+   "level": "N5-N4",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: có mẫu 〜んです (thường xếp N4). NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-26",
+   "title": "Bài 26 — この卵焼き、甘くておいしいです",
+   "description": "Món trứng cuộn này ngọt và ngon quá! · Diễn tả nhiều ấn tượng cùng lúc -- Phần 1",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/26.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "an-uong"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-27",
+   "title": "Bài 27 — どれが一番おいしいですか",
+   "description": "Món nào ngon nhất ạ? · Hỏi xem nên chọn cái nào",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/27.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "an-uong"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-28",
+   "title": "Bài 28 — 写真を撮ってもいいですか",
+   "description": "Tôi chụp ảnh có được không ạ? · Xin phép được làm gì",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/28.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "giao-tiep"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-29",
+   "title": "Bài 29 — ピアノの演奏を聴きに行きました",
+   "description": "Cháu đã đi nghe biểu diễn piano. · Nói bạn đã làm gì",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/29.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "so-thich"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-30",
+   "title": "Bài 30 — 一緒に歌ったり、踊ったりしました",
+   "description": "Chúng em đã hát và múa cùng nhau. · Liệt kê các hành động",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/30.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "so-thich"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-31",
+   "title": "Bài 31 — 一緒に行きませんか",
+   "description": "Đi cùng với tôi không? · Rủ đối phương cùng làm gì -- Phần 2",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/31.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "so-thich"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-32",
+   "title": "Bài 32 — 忍者博物館まで、どう行ったらいいですか",
+   "description": "Đi đến Bảo tàng Ninja như thế nào ạ? · Hỏi cách đi đến nơi bạn muốn đến",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/32.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "di-lai"
+   ],
+   "level": "N5-N4",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: có mẫu 〜たらいいですか (thường xếp N4). NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-33",
+   "title": "Bài 33 — どのくらい待ちますか",
+   "description": "Phải đợi bao lâu ạ? · Hỏi mất bao lâu để làm việc gì đó",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/33.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "thoi-gian"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-34",
+   "title": "Bài 34 — 読んだことあります",
+   "description": "Em đã từng đọc rồi. · Nói đã từng làm việc gì.",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/34.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "so-thich"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-35",
+   "title": "Bài 35 — 大涌谷に行って、黒たまごが食べたいです",
+   "description": "Em muốn đi Owakudani, rồi ăn trứng đen ạ. · Liệt kê lần lượt các hành động",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/35.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "so-thich"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-36",
+   "title": "Bài 36 — お風呂は何時から何時までですか",
+   "description": "Có thể sử dụng bể tắm từ mấy giờ đến mấy giờ ạ? · Hỏi giờ",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/36.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "thoi-gian"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-37",
+   "title": "Bài 37 — テレビがつかないんですが・・・",
+   "description": "Tivi bật không lên ạ… · Nói cái gì đó bị trục trặc",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/37.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "suc-khoe"
+   ],
+   "level": "N5-N4",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: có mẫu 〜んですが (thường xếp N4). NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-38",
+   "title": "Bài 38 — 外のほうがいいです",
+   "description": "Em thích bên ngoài hơn. · So sánh 2 thứ",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/38.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "sinh-hoat"
+   ],
+   "level": "N5-N4",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: có mẫu 〜ほうがいい (thường xếp N4). NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-39",
+   "title": "Bài 39 — 財布を落としてしまいました",
+   "description": "Cháu đánh rơi ví mất rồi. · Diễn tả mình đã lỡ làm gì",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/39.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "suc-khoe"
+   ],
+   "level": "N5-N4",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: có mẫu 〜てしまいました (thường xếp N4). NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-40",
+   "title": "Bài 40 — 初めてだったから、びっくりしました",
+   "description": "Vì đây là lần đầu tiên, nên em giật mình. · Giải thích lý do",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/40.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "so-thich"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-41",
+   "title": "Bài 41 — チケットを買うことができますか",
+   "description": "Có thể mua vé được không ạ? · Hỏi xem việc mình muốn làm có khả thi không",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/41.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "mua-sam"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-42",
+   "title": "Bài 42 — 悠輝さんに渡すつもりです",
+   "description": "Em định tặng cho anh Yuuki. · Nói về dự định hoặc kế hoạch.",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/42.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "sinh-hoat"
+   ],
+   "level": "N5-N4",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: có mẫu 〜つもり (thường xếp N4). NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-43",
+   "title": "Bài 43 — 元気そうですね",
+   "description": "Anh có vẻ khoẻ nhỉ. · Diễn tả ấn tượng của mình khi nhìn thấy gì đó.",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/43.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "chao-hoi"
+   ],
+   "level": "N5-N4",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: có mẫu 〜そうです (vẻ ngoài) (thường xếp N4). NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-44",
+   "title": "Bài 44 — またコンサートがあるそうです",
+   "description": "Nghe nói lại có hòa nhạc ạ. · Truyền tải điều mình nghe được",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/44.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "so-thich"
+   ],
+   "level": "N5-N4",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: có mẫu 〜そうです (nghe nói) (thường xếp N4). NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-45",
+   "title": "Bài 45 — 日本語をチェックしてもらえませんか",
+   "description": "Làm ơn kiểm tra tiếng Nhật cho cháu được không ạ? · Đề nghị một cách lịch sự",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/45.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "giao-tiep"
+   ],
+   "level": "N5-N4",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: có mẫu 〜てもらえませんか (thường xếp N4). NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-46",
+   "title": "Bài 46 — 小さいけどきれいですね",
+   "description": "Nhỏ nhưng đẹp nhỉ. · Diễn tả nhiều ấn tượng cùng lúc -- Phần 2",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/46.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "sinh-hoat"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: mẫu câu N5. NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-47",
+   "title": "Bài 47 — どうやってするんですか",
+   "description": "Làm như thế nào ạ? · Hỏi cách thức làm việc gì đó",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/47.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "giao-tiep"
+   ],
+   "level": "N5-N4",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: có mẫu 〜んですか (thường xếp N4). NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "nhk-48",
+   "title": "Bài 48 — 卒業したら、日本で働きたいです",
+   "description": "Sau khi tốt nghiệp, cháu muốn làm việc ở Nhật Bản. · Nói mình muốn làm gì trong tương lai",
+   "source": "nhk",
+   "sourceUrl": "https://www3.nhk.or.jp/nhkworld/lesson/vi/lessons/48.html",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "truong-viec"
+   ],
+   "level": "N5-N4",
+   "levelBasis": "Neko đánh giá theo câu chính của bài: có mẫu 〜たら (thường xếp N4). NHK ghi chung cả khoá là JF Standard A1–A2.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": []
+   },
+   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-01",
+   "title": "Lesson 1: First-meeting Greetings",
+   "description": "Chào hỏi khi gặp lần đầu",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/01/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "chao-hoi"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: chức năng giao tiếp N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-02",
+   "title": "Lesson 2: Making Requests",
+   "description": "Nhờ vả",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/02/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "giao-tiep"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: chức năng giao tiếp N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-03",
+   "title": "Lesson 3: Indicating Things",
+   "description": "Chỉ đồ vật",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/03/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "sinh-hoat"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: chức năng giao tiếp N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-04",
+   "title": "Lesson 4: Asking Locations",
+   "description": "Hỏi địa điểm",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/04/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "di-lai"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: chức năng giao tiếp N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-05",
+   "title": "Lesson 5: Expressing Time",
+   "description": "Nói giờ giấc",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/05/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "thoi-gian"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: chức năng giao tiếp N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-06",
+   "title": "Lesson 6: Asking Prices",
+   "description": "Hỏi giá",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/06/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "mua-sam"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: chức năng giao tiếp N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-07",
+   "title": "Lesson 7: Discussing Interests",
+   "description": "Nói về sở thích",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/07/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "so-thich"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: chức năng giao tiếp N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-08",
+   "title": "Lesson 8: Ordering",
+   "description": "Gọi món",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/08/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "an-uong"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: chức năng giao tiếp N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-09",
+   "title": "Lesson 9: Describing Present Situation",
+   "description": "Kể việc đang làm",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/09/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "sinh-hoat"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: chức năng giao tiếp N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-10",
+   "title": "Lesson 10: Asking Permission",
+   "description": "Xin phép",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/10/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "giao-tiep"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: chức năng giao tiếp N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-11",
+   "title": "Lesson 11: Describing Order of Events",
+   "description": "Kể thứ tự việc làm",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/11/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "sinh-hoat"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: chức năng giao tiếp N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-12",
+   "title": "Lesson 12: Talking with Friends",
+   "description": "Nói chuyện với bạn (thể thân mật)",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/12/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "giao-tiep"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: chức năng giao tiếp N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-13",
+   "title": "Lesson 13: Asking How",
+   "description": "Hỏi cách làm / cách đi",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/13/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "di-lai"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: chức năng giao tiếp N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-14",
+   "title": "Lesson 14: Making Assumptions",
+   "description": "Phỏng đoán",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/14/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "giao-tiep"
+   ],
+   "level": "N5-N4",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: có phần phỏng đoán (〜でしょう / 〜かもしれない) vượt N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-15",
+   "title": "Lesson 15: Expressing Desires",
+   "description": "Nói mong muốn",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/15/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "so-thich"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: chức năng giao tiếp N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-16",
+   "title": "Lesson 16: Explaining",
+   "description": "Giải thích (khi bị thương, ốm)",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/16/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "suc-khoe"
+   ],
+   "level": "N5-N4",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: có phần 〜んです vượt N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-17",
+   "title": "Lesson 17: Describing Contradictory Ideas",
+   "description": "Nói ý trái ngược",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/17/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "giao-tiep"
+   ],
+   "level": "N5-N4",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: có phần 〜のに / 〜けど vượt N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-18",
+   "title": "Lesson 18: Comparing",
+   "description": "So sánh",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/18/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "mua-sam"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: chức năng giao tiếp N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-19",
+   "title": "Lesson 19: Giving Reasons",
+   "description": "Nêu lý do",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/19/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "truong-viec"
+   ],
+   "level": "N5-N4",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: có phần 〜ので vượt N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-20",
+   "title": "Lesson 20: Talking about Experiences",
+   "description": "Kể trải nghiệm",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/20/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "so-thich"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: chức năng giao tiếp N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-21",
+   "title": "Lesson 21: Asking about Rules",
+   "description": "Hỏi về quy định",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/21/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "giao-tiep"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: chức năng giao tiếp N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-22",
+   "title": "Lesson 22: Explaining Problems",
+   "description": "Trình bày sự cố",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/22/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "suc-khoe"
+   ],
+   "level": "N5-N4",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: có phần 〜てしまう vượt N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-23",
+   "title": "Lesson 23: Making Suggestions to Friends",
+   "description": "Rủ / gợi ý bạn bè",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/23/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "so-thich"
+   ],
+   "level": "N5-N4",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: có phần 〜たらどう vượt N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-24",
+   "title": "Lesson 24: Describing Changes",
+   "description": "Diễn tả sự thay đổi",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/24/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "truong-viec"
+   ],
+   "level": "N5",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: chức năng giao tiếp N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  },
+  {
+   "id": "erin-25",
+   "title": "Lesson 25: Conveying What You Feel",
+   "description": "Bày tỏ cảm xúc",
+   "source": "erin",
+   "sourceUrl": "https://www.erin.jpf.go.jp/en/program/25/",
+   "youtubeId": null,
+   "thumbnailUrl": null,
+   "durationSeconds": null,
+   "topics": [
+    "giao-tiep"
+   ],
+   "level": "N5-N4",
+   "levelBasis": "Neko đánh giá theo chủ đề bài: có phần cách nói cảm xúc ở trình độ sơ cấp 2 vượt N5. Erin là chương trình cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 8 thứ tiếng khác"
+    ]
+   },
+   "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
+   "embeddable": false,
+   "status": "published",
+   "verifiedAt": "2026-10-14",
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+  }
+ ]
+}

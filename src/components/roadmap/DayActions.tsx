@@ -8,8 +8,13 @@ interface DayActionsProps {
   /** Kiến thức của ngày chưa gặp trong app. */
   remainingCount: number;
   hasNewKnowledge: boolean;
-  /** Ngày có từ vựng / ngữ pháp / Kanji → học theo bước ở /lo-trinh/ngay/N/hoc; ngày chữ cái vẫn dùng phiên /hoc/day. */
+  /** Ngày có từ vựng / ngữ pháp / bộ thủ / Kanji → trang học của ngày (/lo-trinh/ngay/N/hoc); ngày chữ cái vẫn dùng phiên /hoc/day. */
   hasDayStudy: boolean;
+  /**
+   * Học / ôn ĐÚNG kiến thức của ngày này: trang học của ngày, hoặc phiên ôn các chữ cái của ngày (ngày 1–14), hoặc phiên ôn
+   * kiến thức của tuần (ngày ôn 21, 28…). Null khi ngày không gắn kiến thức cụ thể (tổng ôn / thi thử 78–90).
+   */
+  studyHref: string | null;
 }
 
 /**
@@ -18,23 +23,23 @@ interface DayActionsProps {
  *    kèm "Hoàn thành ngày" (nút phụ — hoàn thành ngày là người học tự xác nhận, không phải tự động khi học hết);
  *  - ngày đã qua → "Học lại ngày N" (thẻ học + kiểm tra) / ôn thứ còn mờ; ngày chưa tới → "Học trước ngày N" (nếu ngày có từ, mẫu câu, Kanji).
  */
-export function DayActions({ day, relation, remainingCount, hasNewKnowledge, hasDayStudy }: DayActionsProps) {
+export function DayActions({ day, relation, remainingCount, hasNewKnowledge, hasDayStudy, studyHref }: DayActionsProps) {
   if (relation === 'past') {
     return (
       <div className="day-actions">
-        {hasDayStudy ? <Link className="btn ghost" href={`/lo-trinh/ngay/${day}/hoc`}>📚 Học lại ngày {day}</Link> : null}
+        {studyHref ? <Link className="btn ghost" href={studyHref}>📚 Học lại ngày {day}</Link> : null}
         <Link className="btn ghost" href="/hoc/rescue">🔁 Ôn lại những gì còn mờ</Link>
       </div>
     );
   }
   if (relation !== 'today') {
     // Ngày chưa tới: vẫn cho học trước (thẻ học + kiểm tra) — không đánh dấu hoàn thành ngày.
-    return hasDayStudy ? <div className="day-actions"><Link className="btn ghost" href={`/lo-trinh/ngay/${day}/hoc`}>📚 Học trước ngày {day}</Link></div> : null;
+    return studyHref ? <div className="day-actions"><Link className="btn ghost" href={studyHref}>📚 Học trước ngày {day}</Link></div> : null;
   }
   const isUnfinished = hasNewKnowledge && remainingCount > 0;
   return (
     <div className="day-actions">
-      <NekoButton href={isUnfinished ? (hasDayStudy ? `/lo-trinh/ngay/${day}/hoc` : '/hoc/day') : '/hoc/daily'} prefetch variant={isUnfinished ? 'primary' : 'review'}
+      <NekoButton href={isUnfinished ? (hasDayStudy ? `/lo-trinh/ngay/${day}/hoc` : '/hoc/day') : (studyHref ?? '/hoc/daily')} prefetch variant={isUnfinished ? 'primary' : 'review'}
         leftIcon={<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z" /></svg>}>
         {isUnfinished ? `Học hết ngày ${day}` : hasNewKnowledge ? `Ôn lại ngày ${day}` : `Ôn tập ngày ${day}`}
       </NekoButton>

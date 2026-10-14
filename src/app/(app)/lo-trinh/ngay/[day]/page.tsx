@@ -8,6 +8,7 @@ import { buildDayPlan } from '@/features/roadmap/day-plan';
 import { JOURNEY_TOTAL_DAYS } from '@/features/roadmap/journey';
 import { buildDayStatuses, getDayCompletionProgress } from '@/features/roadmap/journey-progress';
 import { DayPicker } from '@/components/roadmap/DayPicker';
+import { focusSessionHref } from '@/features/learning/session-modes';
 import { DayActions } from '@/components/roadmap/DayActions';
 import { DayReviewVocabulary } from '@/components/roadmap/DayReviewVocabulary';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
@@ -21,6 +22,12 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
   const plan = buildDayPlan(catalog, requestedDay, journey);
   const completion = getDayCompletionProgress(catalog, memoryViews, plan.day);
   const { day, journeyDay: dayInfo, stage } = plan;
+  const { knowledge } = plan;
+  const hasDayStudy = knowledge.vocabulary.length + knowledge.grammar.length + knowledge.radicals.length + knowledge.kanji.length > 0;
+  // Nút "Học lại / Học trước ngày N" luôn mở đúng kiến thức của ngày: trang học của ngày → chữ cái của ngày → kiến thức của tuần (ngày ôn).
+  const studyHref = hasDayStudy ? `/lo-trinh/ngay/${day}/hoc`
+    : knowledge.kana.length ? focusSessionHref(knowledge.kana.map((item) => item.key))
+      : plan.reviewWindow ? focusSessionHref(plan.reviewWindow.keys) : null;
 
   return (
     <>
@@ -40,7 +47,7 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
         <p className="sm soft mt-1.5"><b>Vì sao học hôm nay?</b> {plan.purpose}</p>
         {/* Hành động chính của ngày — ngay đầu trang, theo trạng thái thật (học hết ≠ đã hoàn thành ngày). */}
         <DayActions day={day} relation={plan.relation} remainingCount={completion.totalCount - completion.metCount} hasNewKnowledge={completion.hasNewKnowledge}
-          hasDayStudy={plan.knowledge.vocabulary.length + plan.knowledge.grammar.length + plan.knowledge.radicals.length + plan.knowledge.kanji.length > 0} />
+          hasDayStudy={hasDayStudy} studyHref={studyHref} />
       </section>
 
       <div className="daygrid mt-4">

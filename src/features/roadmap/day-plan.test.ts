@@ -115,3 +115,12 @@ describe('lộ trình ngày 15–90 (audit)', () => {
     }
   });
 });
+
+describe('nút học lại của mọi ngày có kiến thức', () => {
+  it('ngày 1–77 đều có kiến thức của riêng ngày hoặc của tuần; chỉ tổng ôn / thi thử 78–90 không gắn', () => {
+    const plans = Array.from({ length: 90 }, (_, index) => buildDayPlan(catalog, index + 1, AT_DAY_1));
+    const withoutOwnKnowledge = plans.filter((plan) => !plan.hasNewKnowledge && !plan.reviewWindow).map((plan) => plan.day);
+    expect(withoutOwnKnowledge).toEqual([78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90]);
+    expect(plans[13].knowledge.kana.length).toBeGreaterThan(0);
+  });
+});

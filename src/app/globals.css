@@ -1245,3 +1245,17 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
   .video-card-title{font-size:14px}
   .video-card-desc{-webkit-line-clamp:1}
 }
+/* ── Luyện nói: đọc theo mẫu (nhận diện của trình duyệt — chỉ so chữ) ── */
+.read-aloud-sentence{font-size:20px;line-height:1.6;margin:0}
+.read-aloud-mic.is-listening{background:linear-gradient(180deg,#FF8FA0,#E24159);color:#fff}
+.read-aloud-box{border-radius:14px;padding:10px 12px;background:var(--cream);font-size:14px;overflow-wrap:anywhere}
+.read-aloud-box.is-matched{background:var(--mint)}
+.read-aloud-box.is-different{background:#FFF7E8}
+.read-aloud-box.is-permission_denied,.read-aloud-box.is-error{background:#FFF0F2}
+.read-aloud-note{font-size:13px;background:var(--cream);border-radius:12px;padding:8px 10px}
+.read-aloud-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#E24159;margin-right:6px;vertical-align:middle;animation:read-aloud-pulse 1s ease-in-out infinite}
+@keyframes read-aloud-pulse{50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.read-aloud-dot{animation:none}}
+.read-aloud-diff{font-size:18px;line-height:1.9;margin-top:4px;word-break:break-all}
+.diff-missing{text-decoration:underline wavy #E24159;text-underline-offset:4px;color:#C2415A}
+.diff-extra{background:#FFE7A8;border-radius:4px}

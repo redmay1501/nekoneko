@@ -1178,3 +1178,6 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 .day-step-head .day-step-label{margin:0}
 .day-step-link{flex:0 0 auto;font-size:12.5px;font-weight:700;color:var(--sakura-deep,#C95A6C);min-height:32px;display:inline-flex;align-items:center}
 .review-window{background:#fff;border-radius:14px;padding:10px 12px;border:1px solid #F3E4CC}
+/* Bảng chọn phạm vi chọn nhiều: thanh "Đã chọn … · Chơi" dính đáy khay. */
+.range-multi-bar{position:sticky;bottom:calc(-22px - var(--safe-b));margin:16px -18px calc(-22px - var(--safe-b));padding:12px 18px calc(12px + var(--safe-b));
+  display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;border-top:1px solid var(--line);box-shadow:0 -6px 16px rgba(96,72,66,.06)}

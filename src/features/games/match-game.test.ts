@@ -90,6 +90,19 @@ describe('Ghép thẻ — chọn phạm vi như phần học', () => {
     expect(pool.cards.find((card) => card.face === 'そ')?.answer).toBe('so');
   });
 
+  it('ghép nhiều bài: đủ thẻ của từng bài, thứ tự id theo danh sách, nhãn "Bài 1 + Bài 3"', () => {
+    const base = buildMatchPool(catalog, views, 'tu-vung', undefined);
+    const [lesson1, lesson3, lesson5, lesson7] = ['Bài 1', 'Bài 3', 'Bài 5', 'Bài 7'].map((label) => base.options.find((option) => option.label === label)!);
+    const combined = buildMatchPool(catalog, views, 'tu-vung', `${lesson3.id},${lesson1.id}`);
+    expect(combined.range).toBe(`${lesson1.id},${lesson3.id}`);
+    expect(combined.rangeLabel).toBe('Bài 1 + Bài 3');
+    expect(combined.cards).toHaveLength(lesson1.size + lesson3.size);
+    const many = buildMatchPool(catalog, views, 'tu-vung', [lesson1, lesson3, lesson5, lesson7].map((option) => option.id).join(','));
+    expect(many.rangeLabel).toBe('4 bài');
+    // id lạ trong tổ hợp bị bỏ qua, phần hợp lệ vẫn giữ.
+    expect(buildMatchPool(catalog, views, 'tu-vung', `${lesson1.id},xyz`).range).toBe(lesson1.id);
+  });
+
   it('phạm vi lạ → mặc định; loại lạ → từ vựng', () => {
     expect(buildMatchPool(catalog, views, 'tu-vung', 'drop table').range).toBe('da-hoc');
     expect(parseMatchKind('xyz')).toBe('tu-vung');

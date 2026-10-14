@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { MatchGame } from '@/components/games/MatchGame';
-import { MATCH_GAME, gameRecordKey } from '@/features/games/match-game';
+import { MATCH_GAME, MIN_MATCH_POOL, gameRecordKey } from '@/features/games/match-game';
 import { MATCH_KINDS, MEMORY_RANGES, type MatchKind, buildMatchPool, parseMatchKind } from '@/features/games/match-pool';
 import { RangePicker } from '@/components/learning/RangePicker';
 import { getLearnerContext } from '@/features/learning/learner-context';
@@ -18,6 +18,7 @@ export default async function MatchGamePage({ searchParams }: { searchParams: Pr
   const pool = buildMatchPool(catalog, memoryViews, kind, params['pham-vi']);
   const scope = `${kind}:${pool.range}`;
   const unit = kind === 'tu-vung' ? 'từ' : 'chữ';
+  const partGroup = kind === 'tu-vung' ? 'Theo bài' : 'Theo nhóm';
   return (
     <>
       <div className="between">
@@ -25,7 +26,7 @@ export default async function MatchGamePage({ searchParams }: { searchParams: Pr
         <Link className="link sm" href="/luyen-tap">← Luyện tập</Link>
       </div>
       <p className="soft sm" style={{ margin: '4px 0 12px' }}>
-        Chọn loại và phần muốn ôn — kể cả phần chưa học tới. Chơi lại để phá kỷ lục, nhắm 100% không sai.
+        Chọn loại và phần muốn ôn — một hay nhiều bài, kể cả phần chưa học tới. Chơi lại để phá kỷ lục, nhắm 100% không sai.
       </p>
       <div className="pill-tabs" role="tablist" aria-label="Loại kiến thức">
         {(Object.keys(MATCH_KINDS) as MatchKind[]).map((option) => (
@@ -35,9 +36,10 @@ export default async function MatchGamePage({ searchParams }: { searchParams: Pr
         ))}
       </div>
       <div className="mt-2.5">
-        <RangePicker title="Phạm vi" current={pool.range}
-          options={pool.options.map((option) => ({ id: option.id, label: option.label, caption: `${option.size} ${unit}`, href: hrefFor(kind, option.id),
-            group: option.id in MEMORY_RANGES ? 'Theo trí nhớ' : kind === 'tu-vung' ? 'Theo bài' : 'Theo nhóm' }))} />
+        <RangePicker title="Phạm vi" current={pool.range} currentLabel={pool.rangeLabel}
+          options={pool.options.map((option) => ({ id: option.id, label: option.label, caption: `${option.size} ${unit}`, size: option.size,
+            href: hrefFor(kind, option.id), group: option.id in MEMORY_RANGES ? 'Theo trí nhớ' : partGroup }))}
+          multi={{ groups: [partGroup], hrefPrefix: `${hrefFor(kind)}&pham-vi=`, unit, partUnit: kind === 'tu-vung' ? 'bài' : 'nhóm', minSize: MIN_MATCH_POOL }} />
       </div>
       <MatchGame key={scope} pool={pool.cards} scope={scope} unit={unit}
         recordsByPairs={{

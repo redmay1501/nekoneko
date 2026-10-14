@@ -2,12 +2,13 @@ import { describe, expect, it } from 'vitest';
 import rawLibrary from '@content/seed/listening-videos.json';
 import { LISTENING_VIDEOS, VIDEO_SOURCES, VIDEO_TOPICS, filterVideos, formatDuration, nextVideoOf, youtubeEmbedUrl } from './video-library';
 
-const ALL = { query: '', topic: null, source: null, watched: null } as const;
+const ALL = { query: '', topic: null, source: null, watched: null, view: null } as const;
+const YOUTUBE_SOURCES = ['chibi', 'aiu', 'oyasumi', 'irodori'];
 
 describe('thư viện video luyện nghe', () => {
   it('mọi video có nguồn, chủ đề hợp lệ, link https của đúng nguồn, ngày xác minh và cơ sở trình độ', () => {
     const topics = new Set(VIDEO_TOPICS.map((topic) => topic.id));
-    const hosts = { irodori: 'www.youtube.com', nhk: 'www3.nhk.or.jp', erin: 'www.erin.jpf.go.jp' };
+    const hosts: Record<string, string> = { chibi: 'www.youtube.com', aiu: 'www.youtube.com', oyasumi: 'www.youtube.com', irodori: 'www.youtube.com', nhk: 'www3.nhk.or.jp', erin: 'www.erin.jpf.go.jp' };
     expect(new Set(LISTENING_VIDEOS.map((video) => video.id)).size).toBe(LISTENING_VIDEOS.length);
     for (const video of LISTENING_VIDEOS) {
       expect(VIDEO_SOURCES[video.source]).toBeDefined();
@@ -18,10 +19,11 @@ describe('thư viện video luyện nghe', () => {
     }
   });
 
-  it('chỉ video YouTube chính thức mới nhúng; NHK / Erin luôn mở tại nguồn và không dùng ảnh của nguồn', () => {
+  it('chỉ video YouTube (của chính kênh) mới nhúng; NHK / Erin luôn mở tại nguồn và không dùng ảnh của nguồn', () => {
     for (const video of LISTENING_VIDEOS) {
       if (video.embeddable) {
-        expect(video.source).toBe('irodori');
+        expect(YOUTUBE_SOURCES).toContain(video.source);
+        expect(video.sourceUrl).toBe(`https://www.youtube.com/watch?v=${video.youtubeId}`);
         expect(video.youtubeId).toMatch(/^[\w-]{11}$/);
         expect(video.durationSeconds).toBeGreaterThan(0);
         expect(video.thumbnailUrl).toBe(`https://i.ytimg.com/vi/${video.youtubeId}/hqdefault.jpg`);
@@ -30,13 +32,26 @@ describe('thư viện video luyện nghe', () => {
         expect(video.thumbnailUrl).toBeNull();
       }
     }
-    expect(LISTENING_VIDEOS.filter((video) => video.embeddable)).toHaveLength(10);
+    expect(LISTENING_VIDEOS.filter((video) => video.embeddable)).toHaveLength(65);
+    // Xem được ngay đứng trước video mở tại nguồn; hoạt hình đứng đầu.
+    const firstExternal = LISTENING_VIDEOS.findIndex((video) => !video.embeddable);
+    expect(LISTENING_VIDEOS.slice(firstExternal).every((video) => !video.embeddable)).toBe(true);
+    expect(LISTENING_VIDEOS[0].style).toBe('animation');
   });
 
   it('không có phụ đề tiếng Việt thì không ghi là có (IRODORI chỉ có Nhật / Anh / Khmer)', () => {
     for (const video of LISTENING_VIDEOS.filter((entry) => entry.source === 'irodori')) {
       expect(video.subtitles).toMatchObject({ ja: true, vi: false });
     }
+  });
+
+  it('lọc "Xem trong app" và "Hoạt hình"; phụ đề tiếng Việt chỉ ghi có khi kênh thật sự tải lên', () => {
+    expect(filterVideos(LISTENING_VIDEOS, { ...ALL, view: 'in-app' }, new Set()).every((video) => video.embeddable)).toBe(true);
+    const animated = filterVideos(LISTENING_VIDEOS, { ...ALL, view: 'animation' }, new Set());
+    expect(animated.length).toBe(31);
+    expect(animated.every((video) => video.style === 'animation' && video.embeddable)).toBe(true);
+    for (const video of LISTENING_VIDEOS.filter((entry) => entry.source === 'oyasumi')) expect(video.subtitles.vi).toBe(true);
+    for (const video of LISTENING_VIDEOS.filter((entry) => entry.source === 'chibi' || entry.source === 'aiu')) expect(video.subtitles.vi).toBe(false);
   });
 
   it('video "review" không hiện cho người học', () => {

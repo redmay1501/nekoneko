@@ -187,3 +187,8 @@ API: không đổi (thêm tham số phạm vi trang). Database: không đổi sc
   (21 bài có phần vượt N5 được ghi "N5 – có phần N4").
 - Tìm (không dấu cũng được), lọc chủ đề / nguồn / đã xem. "Đã xem" do người học tự bấm, lưu ở game_records (khoá video:<id>),
   POST /api/videos/watched — không đổi điểm trí nhớ. Chưa liên kết video với từ / mẫu câu (chưa có transcript được phép dùng).
+- 2026-10-15 — ưu tiên video xem ngay trong app và hoạt hình: thêm 55 video YouTube do chính kênh sản xuất, cho phép nhúng
+  (oEmbed 200, playableInEmbed=true): Chibi Japanese (6, hoạt hình), Learn Japanese for beginners 【あいう】 (25, hoạt hình 2D),
+  OYASUMI JAPANESE (24, truyện tranh minh hoạ, có phụ đề tiếng Việt do kênh tải). Bản NHK / Erin trên YouTube đều do
+  người khác đăng lại (bản NHK chính thức đã chuyển riêng tư) nên không dùng; Japarrot! tắt nhúng nên không dùng.
+  Tổng 138 video, 65 xem ngay (đứng trước), lọc "▶ Xem trong app" / "🎨 Hoạt hình"; mỗi video có kiểu hình (style).

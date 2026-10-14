@@ -1,6 +1,24 @@
 {
- "_note": "Thư viện video luyện nghe N5. Chỉ gồm video THẬT đã xác minh ngày verifiedAt (không có URL / thời lượng / phụ đề tự đặt). Nhúng chỉ khi nguồn cho phép (YouTube chính thức, playableInEmbed=true); còn lại mở tại nguồn. Trình độ ghi rõ cơ sở (levelBasis). Thêm video = thêm một mục, status \"review\" sẽ không hiện cho người học.",
+ "_note": "Thư viện video luyện nghe N5. Chỉ gồm video THẬT đã xác minh ngày verifiedAt (không có URL / thời lượng / phụ đề tự đặt). Nhúng chỉ khi nguồn cho phép (video YouTube do chính kênh sản xuất, playableInEmbed=true; không dùng bản đăng lại); còn lại mở tại nguồn. Trình độ ghi rõ cơ sở (levelBasis). Thêm video = thêm một mục, status \"review\" sẽ không hiện cho người học.",
  "sources": {
+  "chibi": {
+   "name": "Chibi Japanese (YouTube)",
+   "shortName": "Chibi",
+   "homeUrl": "https://www.youtube.com/@ChibiJapanese-z7r",
+   "license": "Video trên kênh YouTube Chibi Japanese, nhúng bằng trình phát YouTube (kênh cho phép nhúng)."
+  },
+  "aiu": {
+   "name": "Learn Japanese for beginners 【あいう】 (YouTube)",
+   "shortName": "あいう",
+   "homeUrl": "https://www.youtube.com/@JapaneseBeginnersChannel",
+   "license": "Video trên kênh YouTube của kênh, nhúng bằng trình phát YouTube (kênh cho phép nhúng)."
+  },
+  "oyasumi": {
+   "name": "OYASUMI JAPANESE CHANNEL (YouTube)",
+   "shortName": "OYASUMI",
+   "homeUrl": "https://www.youtube.com/@TOMO_speaksJP",
+   "license": "Video trên kênh YouTube của kênh, nhúng bằng trình phát YouTube (kênh cho phép nhúng)."
+  },
   "irodori": {
    "name": "IRODORI Starter — The Japan Foundation",
    "shortName": "IRODORI",
@@ -64,6 +82,1505 @@
  ],
  "videos": [
   {
+   "id": "chibi-cAFz4nWkJoA",
+   "title": "Learn Japanese with Anime #1 | Convenience Store (PDF)",
+   "description": "Ở cửa hàng tiện lợi — từ và câu thường dùng khi mua hàng",
+   "source": "chibi",
+   "sourceUrl": "https://www.youtube.com/watch?v=cAFz4nWkJoA",
+   "youtubeId": "cAFz4nWkJoA",
+   "thumbnailUrl": "https://i.ytimg.com/vi/cAFz4nWkJoA/hqdefault.jpg",
+   "durationSeconds": 319,
+   "topics": [
+    "mua-sam"
+   ],
+   "style": "animation",
+   "level": "N5",
+   "levelBasis": "Kênh dạy hội thoại cơ bản cho người mới bằng hoạt hình; Neko xếp N5 theo chủ đề bài (kênh không ghi cấp JLPT).",
+   "subtitles": {
+    "ja": true,
+    "vi": false,
+    "other": []
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Chibi Japanese · phụ đề do kênh tải: ja"
+  },
+  {
+   "id": "chibi-4r6EUB5_GOs",
+   "title": "Learn Japanese with Anime #2 | Cafe conversation",
+   "description": "Gọi đồ uống ở quán cà phê",
+   "source": "chibi",
+   "sourceUrl": "https://www.youtube.com/watch?v=4r6EUB5_GOs",
+   "youtubeId": "4r6EUB5_GOs",
+   "thumbnailUrl": "https://i.ytimg.com/vi/4r6EUB5_GOs/hqdefault.jpg",
+   "durationSeconds": 388,
+   "topics": [
+    "an-uong"
+   ],
+   "style": "animation",
+   "level": "N5",
+   "levelBasis": "Kênh dạy hội thoại cơ bản cho người mới bằng hoạt hình; Neko xếp N5 theo chủ đề bài (kênh không ghi cấp JLPT).",
+   "subtitles": {
+    "ja": true,
+    "vi": false,
+    "other": []
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Chibi Japanese · phụ đề do kênh tải: ja"
+  },
+  {
+   "id": "chibi-gxV5GVTWY4g",
+   "title": "Learn Japanese with Anime #3 | Travel conversation",
+   "description": "Hội thoại khi đi du lịch",
+   "source": "chibi",
+   "sourceUrl": "https://www.youtube.com/watch?v=gxV5GVTWY4g",
+   "youtubeId": "gxV5GVTWY4g",
+   "thumbnailUrl": "https://i.ytimg.com/vi/gxV5GVTWY4g/hqdefault.jpg",
+   "durationSeconds": 379,
+   "topics": [
+    "di-lai"
+   ],
+   "style": "animation",
+   "level": "N5",
+   "levelBasis": "Kênh dạy hội thoại cơ bản cho người mới bằng hoạt hình; Neko xếp N5 theo chủ đề bài (kênh không ghi cấp JLPT).",
+   "subtitles": {
+    "ja": true,
+    "vi": false,
+    "other": []
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Chibi Japanese · phụ đề do kênh tải: ja"
+  },
+  {
+   "id": "chibi-R8eCtP93iZU",
+   "title": "Learn Japanese with Anime #4 | Restaurant",
+   "description": "Ở nhà hàng — gọi món, thanh toán",
+   "source": "chibi",
+   "sourceUrl": "https://www.youtube.com/watch?v=R8eCtP93iZU",
+   "youtubeId": "R8eCtP93iZU",
+   "thumbnailUrl": "https://i.ytimg.com/vi/R8eCtP93iZU/hqdefault.jpg",
+   "durationSeconds": 431,
+   "topics": [
+    "an-uong"
+   ],
+   "style": "animation",
+   "level": "N5",
+   "levelBasis": "Kênh dạy hội thoại cơ bản cho người mới bằng hoạt hình; Neko xếp N5 theo chủ đề bài (kênh không ghi cấp JLPT).",
+   "subtitles": {
+    "ja": true,
+    "vi": false,
+    "other": []
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Chibi Japanese · phụ đề do kênh tải: ja"
+  },
+  {
+   "id": "chibi-3ct3kkmF4RM",
+   "title": "Learn Japanese with Anime #5 | Family",
+   "description": "Nói về gia đình",
+   "source": "chibi",
+   "sourceUrl": "https://www.youtube.com/watch?v=3ct3kkmF4RM",
+   "youtubeId": "3ct3kkmF4RM",
+   "thumbnailUrl": "https://i.ytimg.com/vi/3ct3kkmF4RM/hqdefault.jpg",
+   "durationSeconds": 319,
+   "topics": [
+    "chao-hoi"
+   ],
+   "style": "animation",
+   "level": "N5",
+   "levelBasis": "Kênh dạy hội thoại cơ bản cho người mới bằng hoạt hình; Neko xếp N5 theo chủ đề bài (kênh không ghi cấp JLPT).",
+   "subtitles": {
+    "ja": true,
+    "vi": false,
+    "other": []
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Chibi Japanese · phụ đề do kênh tải: ja"
+  },
+  {
+   "id": "chibi-LA6_LzXKkZ0",
+   "title": "Learn Japanese with Anime #6 | School",
+   "description": "Ở trường học",
+   "source": "chibi",
+   "sourceUrl": "https://www.youtube.com/watch?v=LA6_LzXKkZ0",
+   "youtubeId": "LA6_LzXKkZ0",
+   "thumbnailUrl": "https://i.ytimg.com/vi/LA6_LzXKkZ0/hqdefault.jpg",
+   "durationSeconds": 384,
+   "topics": [
+    "truong-viec"
+   ],
+   "style": "animation",
+   "level": "N5",
+   "levelBasis": "Kênh dạy hội thoại cơ bản cho người mới bằng hoạt hình; Neko xếp N5 theo chủ đề bài (kênh không ghi cấp JLPT).",
+   "subtitles": {
+    "ja": false,
+    "vi": false,
+    "other": []
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Chibi Japanese · phụ đề do kênh tải: không có",
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+  },
+  {
+   "id": "aiu-ZXDI-XqGDKw",
+   "title": "Can You Understand a 35°C Day in Japan? 🇯🇵 | N5 N4 Listening Practice",
+   "description": "Một ngày 35°C ở Nhật — truyện nghe hiểu",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=ZXDI-XqGDKw",
+   "youtubeId": "ZXDI-XqGDKw",
+   "thumbnailUrl": "https://i.ytimg.com/vi/ZXDI-XqGDKw/hqdefault.jpg",
+   "durationSeconds": 777,
+   "topics": [
+    "sinh-hoat"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh tự ghi \"N5・N4\".",
+   "subtitles": {
+    "ja": true,
+    "vi": false,
+    "other": []
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: ja"
+  },
+  {
+   "id": "aiu-KHfXqz2v3kA",
+   "title": "Can You Understand His Whole Day? 🇯🇵 | N5 N4 Listening Practice",
+   "description": "Một ngày của anh ấy — truyện nghe hiểu",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=KHfXqz2v3kA",
+   "youtubeId": "KHfXqz2v3kA",
+   "thumbnailUrl": "https://i.ytimg.com/vi/KHfXqz2v3kA/hqdefault.jpg",
+   "durationSeconds": 781,
+   "topics": [
+    "sinh-hoat"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh tự ghi \"N5・N4\".",
+   "subtitles": {
+    "ja": true,
+    "vi": false,
+    "other": []
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: ja"
+  },
+  {
+   "id": "aiu-tUiXWBtOfbc",
+   "title": "Can You Understand Her Whole Day? 🇯🇵 | N5 N4 Listening Practice | Japanese Story",
+   "description": "Một ngày của cô ấy — truyện nghe hiểu",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=tUiXWBtOfbc",
+   "youtubeId": "tUiXWBtOfbc",
+   "thumbnailUrl": "https://i.ytimg.com/vi/tUiXWBtOfbc/hqdefault.jpg",
+   "durationSeconds": 708,
+   "topics": [
+    "sinh-hoat"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh tự ghi \"N5・N4\".",
+   "subtitles": {
+    "ja": true,
+    "vi": false,
+    "other": []
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: ja"
+  },
+  {
+   "id": "aiu-6g5ZNZYpo6U",
+   "title": "Can You Understand This Story? 🇯🇵 | N5 N4 Listening Practice",
+   "description": "Bạn có hiểu câu chuyện này? — truyện nghe hiểu",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=6g5ZNZYpo6U",
+   "youtubeId": "6g5ZNZYpo6U",
+   "thumbnailUrl": "https://i.ytimg.com/vi/6g5ZNZYpo6U/hqdefault.jpg",
+   "durationSeconds": 598,
+   "topics": [
+    "sinh-hoat"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh tự ghi \"N5・N4\".",
+   "subtitles": {
+    "ja": true,
+    "vi": false,
+    "other": []
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: ja"
+  },
+  {
+   "id": "aiu-1UdfEvUYFEk",
+   "title": "Japanese Story | A \"Scary\" Dog in Tokyo!? 🐶 | N5 N4 Listening Practice",
+   "description": "Chú chó \"đáng sợ\" ở Tokyo — truyện ngắn",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=1UdfEvUYFEk",
+   "youtubeId": "1UdfEvUYFEk",
+   "thumbnailUrl": "https://i.ytimg.com/vi/1UdfEvUYFEk/hqdefault.jpg",
+   "durationSeconds": 667,
+   "topics": [
+    "sinh-hoat"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh tự ghi \"N5・N4\".",
+   "subtitles": {
+    "ja": true,
+    "vi": false,
+    "other": []
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: ja"
+  },
+  {
+   "id": "aiu-Ek3UA09vyIA",
+   "title": "Japanese Story | A \"Rainy\" Day in Tokyo!? ☔ | N5 N4 Listening Practice",
+   "description": "Một ngày mưa ở Tokyo — truyện ngắn",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=Ek3UA09vyIA",
+   "youtubeId": "Ek3UA09vyIA",
+   "thumbnailUrl": "https://i.ytimg.com/vi/Ek3UA09vyIA/hqdefault.jpg",
+   "durationSeconds": 724,
+   "topics": [
+    "sinh-hoat"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh tự ghi \"N5・N4\".",
+   "subtitles": {
+    "ja": true,
+    "vi": false,
+    "other": []
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: ja"
+  },
+  {
+   "id": "aiu-WiXVaXRFis0",
+   "title": "Easy & Natural Japanese TAXI Conversation | With English Subtitles",
+   "description": "Đi taxi",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=WiXVaXRFis0",
+   "youtubeId": "WiXVaXRFis0",
+   "thumbnailUrl": "https://i.ytimg.com/vi/WiXVaXRFis0/hqdefault.jpg",
+   "durationSeconds": 600,
+   "topics": [
+    "di-lai"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh dành cho người mới; video này không ghi cấp JLPT — Neko xếp N5–N4 theo chủ đề tình huống.",
+   "subtitles": {
+    "ja": false,
+    "vi": false,
+    "other": []
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: không có",
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+  },
+  {
+   "id": "aiu-teRoRxF67as",
+   "title": "Easy Japanese Conversation at an Izakaya | With English Subtitles",
+   "description": "Ở quán izakaya",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=teRoRxF67as",
+   "youtubeId": "teRoRxF67as",
+   "thumbnailUrl": "https://i.ytimg.com/vi/teRoRxF67as/hqdefault.jpg",
+   "durationSeconds": 705,
+   "topics": [
+    "an-uong"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh dành cho người mới; video này không ghi cấp JLPT — Neko xếp N5–N4 theo chủ đề tình huống.",
+   "subtitles": {
+    "ja": false,
+    "vi": false,
+    "other": []
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: không có",
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+  },
+  {
+   "id": "aiu-2ffzW0pJEGM",
+   "title": "Daily Japanese Conversation with English subtitles | Ordering at a Café in Japanese Made Easy",
+   "description": "Gọi đồ ở quán cà phê",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=2ffzW0pJEGM",
+   "youtubeId": "2ffzW0pJEGM",
+   "thumbnailUrl": "https://i.ytimg.com/vi/2ffzW0pJEGM/hqdefault.jpg",
+   "durationSeconds": 597,
+   "topics": [
+    "an-uong"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh dành cho người mới; video này không ghi cấp JLPT — Neko xếp N5–N4 theo chủ đề tình huống.",
+   "subtitles": {
+    "ja": false,
+    "vi": false,
+    "other": []
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: không có",
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+  },
+  {
+   "id": "aiu-xrkXxABexUo",
+   "title": "Japanese Conversation Practice with English Subtitles | コンビニ (Convenience Store)",
+   "description": "Ở cửa hàng tiện lợi",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=xrkXxABexUo",
+   "youtubeId": "xrkXxABexUo",
+   "thumbnailUrl": "https://i.ytimg.com/vi/xrkXxABexUo/hqdefault.jpg",
+   "durationSeconds": 741,
+   "topics": [
+    "mua-sam"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh dành cho người mới; video này không ghi cấp JLPT — Neko xếp N5–N4 theo chủ đề tình huống.",
+   "subtitles": {
+    "ja": false,
+    "vi": false,
+    "other": [
+     "Tiếng Anh"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+  },
+  {
+   "id": "aiu-s-IozzdN8DA",
+   "title": "Japanese Conversation Practice with Subtitles | Japanese Train",
+   "description": "Đi tàu điện",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=s-IozzdN8DA",
+   "youtubeId": "s-IozzdN8DA",
+   "thumbnailUrl": "https://i.ytimg.com/vi/s-IozzdN8DA/hqdefault.jpg",
+   "durationSeconds": 785,
+   "topics": [
+    "di-lai"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh dành cho người mới; video này không ghi cấp JLPT — Neko xếp N5–N4 theo chủ đề tình huống.",
+   "subtitles": {
+    "ja": false,
+    "vi": false,
+    "other": [
+     "Tiếng Anh"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+  },
+  {
+   "id": "aiu-swA6S5_U1-4",
+   "title": "Daily Japanese Conversation Practice | Easy Japanese for helping someone",
+   "description": "Giúp đỡ người khác",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=swA6S5_U1-4",
+   "youtubeId": "swA6S5_U1-4",
+   "thumbnailUrl": "https://i.ytimg.com/vi/swA6S5_U1-4/hqdefault.jpg",
+   "durationSeconds": 648,
+   "topics": [
+    "giao-tiep"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh dành cho người mới; video này không ghi cấp JLPT — Neko xếp N5–N4 theo chủ đề tình huống.",
+   "subtitles": {
+    "ja": false,
+    "vi": false,
+    "other": [
+     "Tiếng Anh"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+  },
+  {
+   "id": "aiu-dsQfOv2-_7g",
+   "title": "Daily Japanese Conversation Practice with Subtitles | How to Make Friends in Japan",
+   "description": "Làm quen bạn mới ở Nhật",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=dsQfOv2-_7g",
+   "youtubeId": "dsQfOv2-_7g",
+   "thumbnailUrl": "https://i.ytimg.com/vi/dsQfOv2-_7g/hqdefault.jpg",
+   "durationSeconds": 590,
+   "topics": [
+    "chao-hoi"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh dành cho người mới; video này không ghi cấp JLPT — Neko xếp N5–N4 theo chủ đề tình huống.",
+   "subtitles": {
+    "ja": false,
+    "vi": false,
+    "other": [
+     "Tiếng Anh"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+  },
+  {
+   "id": "aiu-xh1IcCQWYUw",
+   "title": "Japanese Conversation Practice with Subtitles | Speaking Test for Beginners",
+   "description": "Bài thi nói cho người mới",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=xh1IcCQWYUw",
+   "youtubeId": "xh1IcCQWYUw",
+   "thumbnailUrl": "https://i.ytimg.com/vi/xh1IcCQWYUw/hqdefault.jpg",
+   "durationSeconds": 775,
+   "topics": [
+    "truong-viec"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh dành cho người mới; video này không ghi cấp JLPT — Neko xếp N5–N4 theo chủ đề tình huống.",
+   "subtitles": {
+    "ja": false,
+    "vi": false,
+    "other": [
+     "Tiếng Anh"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+  },
+  {
+   "id": "aiu-soGKLTPL-XU",
+   "title": "Family Life in Japanese | Japanese Conversation",
+   "description": "Sinh hoạt gia đình",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=soGKLTPL-XU",
+   "youtubeId": "soGKLTPL-XU",
+   "thumbnailUrl": "https://i.ytimg.com/vi/soGKLTPL-XU/hqdefault.jpg",
+   "durationSeconds": 929,
+   "topics": [
+    "sinh-hoat"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh dành cho người mới; video này không ghi cấp JLPT — Neko xếp N5–N4 theo chủ đề tình huống.",
+   "subtitles": {
+    "ja": false,
+    "vi": false,
+    "other": [
+     "Tiếng Anh"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+  },
+  {
+   "id": "aiu-IbFdgiWHDLM",
+   "title": "First Day in a Japanese Share House | Japanese Conversation Practice",
+   "description": "Ngày đầu ở nhà chung (share house)",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=IbFdgiWHDLM",
+   "youtubeId": "IbFdgiWHDLM",
+   "thumbnailUrl": "https://i.ytimg.com/vi/IbFdgiWHDLM/hqdefault.jpg",
+   "durationSeconds": 541,
+   "topics": [
+    "sinh-hoat"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh dành cho người mới; video này không ghi cấp JLPT — Neko xếp N5–N4 theo chủ đề tình huống.",
+   "subtitles": {
+    "ja": false,
+    "vi": false,
+    "other": [
+     "Tiếng Anh"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+  },
+  {
+   "id": "aiu-4A3HgXMQFpw",
+   "title": "Asking and Giving Directions to Japanese Mt. Fuji | Japanese Conversation Practice",
+   "description": "Hỏi và chỉ đường đến núi Phú Sĩ",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=4A3HgXMQFpw",
+   "youtubeId": "4A3HgXMQFpw",
+   "thumbnailUrl": "https://i.ytimg.com/vi/4A3HgXMQFpw/hqdefault.jpg",
+   "durationSeconds": 522,
+   "topics": [
+    "di-lai"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh dành cho người mới; video này không ghi cấp JLPT — Neko xếp N5–N4 theo chủ đề tình huống.",
+   "subtitles": {
+    "ja": false,
+    "vi": false,
+    "other": [
+     "Tiếng Anh"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+  },
+  {
+   "id": "aiu-brera07EzuI",
+   "title": "Talking about Daily Routines in Japanese | Japanese Conversation Practice",
+   "description": "Nói về sinh hoạt hằng ngày",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=brera07EzuI",
+   "youtubeId": "brera07EzuI",
+   "thumbnailUrl": "https://i.ytimg.com/vi/brera07EzuI/hqdefault.jpg",
+   "durationSeconds": 535,
+   "topics": [
+    "sinh-hoat"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh dành cho người mới; video này không ghi cấp JLPT — Neko xếp N5–N4 theo chủ đề tình huống.",
+   "subtitles": {
+    "ja": false,
+    "vi": false,
+    "other": [
+     "Tiếng Anh"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+  },
+  {
+   "id": "aiu-eIlBv46G79g",
+   "title": "Shopping at the Japanese Supermarket | Japanese Conversation Practice",
+   "description": "Mua sắm ở siêu thị",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=eIlBv46G79g",
+   "youtubeId": "eIlBv46G79g",
+   "thumbnailUrl": "https://i.ytimg.com/vi/eIlBv46G79g/hqdefault.jpg",
+   "durationSeconds": 684,
+   "topics": [
+    "mua-sam"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh dành cho người mới; video này không ghi cấp JLPT — Neko xếp N5–N4 theo chủ đề tình huống.",
+   "subtitles": {
+    "ja": false,
+    "vi": false,
+    "other": [
+     "Tiếng Anh"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+  },
+  {
+   "id": "aiu-8iMGxZfa1Gg",
+   "title": "First day at Japanese class | Japanese Conversation Practice",
+   "description": "Ngày đầu đến lớp tiếng Nhật",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=8iMGxZfa1Gg",
+   "youtubeId": "8iMGxZfa1Gg",
+   "thumbnailUrl": "https://i.ytimg.com/vi/8iMGxZfa1Gg/hqdefault.jpg",
+   "durationSeconds": 484,
+   "topics": [
+    "truong-viec"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh dành cho người mới; video này không ghi cấp JLPT — Neko xếp N5–N4 theo chủ đề tình huống.",
+   "subtitles": {
+    "ja": false,
+    "vi": false,
+    "other": [
+     "Tiếng Anh"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+  },
+  {
+   "id": "aiu-xEBSoXi0jVg",
+   "title": "At the Japanese Hospital | Japanese Conversation Practice",
+   "description": "Ở bệnh viện",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=xEBSoXi0jVg",
+   "youtubeId": "xEBSoXi0jVg",
+   "thumbnailUrl": "https://i.ytimg.com/vi/xEBSoXi0jVg/hqdefault.jpg",
+   "durationSeconds": 629,
+   "topics": [
+    "suc-khoe"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh dành cho người mới; video này không ghi cấp JLPT — Neko xếp N5–N4 theo chủ đề tình huống.",
+   "subtitles": {
+    "ja": false,
+    "vi": false,
+    "other": [
+     "Tiếng Anh"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+  },
+  {
+   "id": "aiu-RQQbcmi-Hlk",
+   "title": "At the Japanese Restaurant | Japanese Conversation Practice",
+   "description": "Ở nhà hàng",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=RQQbcmi-Hlk",
+   "youtubeId": "RQQbcmi-Hlk",
+   "thumbnailUrl": "https://i.ytimg.com/vi/RQQbcmi-Hlk/hqdefault.jpg",
+   "durationSeconds": 481,
+   "topics": [
+    "an-uong"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh dành cho người mới; video này không ghi cấp JLPT — Neko xếp N5–N4 theo chủ đề tình huống.",
+   "subtitles": {
+    "ja": false,
+    "vi": false,
+    "other": [
+     "Tiếng Anh"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+  },
+  {
+   "id": "aiu-_fjhAoD_NUc",
+   "title": "At the Hotel in Japan |  Japanese Conversation Practice",
+   "description": "Ở khách sạn",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=_fjhAoD_NUc",
+   "youtubeId": "_fjhAoD_NUc",
+   "thumbnailUrl": "https://i.ytimg.com/vi/_fjhAoD_NUc/hqdefault.jpg",
+   "durationSeconds": 456,
+   "topics": [
+    "di-lai"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh dành cho người mới; video này không ghi cấp JLPT — Neko xếp N5–N4 theo chủ đề tình huống.",
+   "subtitles": {
+    "ja": false,
+    "vi": false,
+    "other": [
+     "Tiếng Anh"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+  },
+  {
+   "id": "aiu-h5y4C5Pwi8g",
+   "title": "At the Japanese Airport | Japanese Conversation Practice",
+   "description": "Ở sân bay",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=h5y4C5Pwi8g",
+   "youtubeId": "h5y4C5Pwi8g",
+   "thumbnailUrl": "https://i.ytimg.com/vi/h5y4C5Pwi8g/hqdefault.jpg",
+   "durationSeconds": 500,
+   "topics": [
+    "di-lai"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh dành cho người mới; video này không ghi cấp JLPT — Neko xếp N5–N4 theo chủ đề tình huống.",
+   "subtitles": {
+    "ja": false,
+    "vi": false,
+    "other": [
+     "Tiếng Anh"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+  },
+  {
+   "id": "aiu-OmYF8CI2e1M",
+   "title": "My First Japanese Test Day | Japanese Conversation",
+   "description": "Ngày thi tiếng Nhật đầu tiên",
+   "source": "aiu",
+   "sourceUrl": "https://www.youtube.com/watch?v=OmYF8CI2e1M",
+   "youtubeId": "OmYF8CI2e1M",
+   "thumbnailUrl": "https://i.ytimg.com/vi/OmYF8CI2e1M/hqdefault.jpg",
+   "durationSeconds": 699,
+   "topics": [
+    "truong-viec"
+   ],
+   "style": "animation",
+   "level": "N5-N4",
+   "levelBasis": "Kênh dành cho người mới; video này không ghi cấp JLPT — Neko xếp N5–N4 theo chủ đề tình huống.",
+   "subtitles": {
+    "ja": false,
+    "vi": false,
+    "other": [
+     "Tiếng Anh"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+  },
+  {
+   "id": "oyasumi-7lecxH9nyCU",
+   "title": "World’s Easiest Japanese Listening | Absolute Beginner (N7) | Little Red Riding Hood",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Cô bé quàng khăn đỏ (赤ずきん)",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=7lecxH9nyCU",
+   "youtubeId": "7lecxH9nyCU",
+   "thumbnailUrl": "https://i.ytimg.com/vi/7lecxH9nyCU/hqdefault.jpg",
+   "durationSeconds": 474,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh tự ghi \"Absolute Beginner (N7)\" — dễ hơn N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 31 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi-bevlA_3gY5Q",
+   "title": "World’s Easiest Japanese Listening | Absolute Beginner (N7) | Kasajizo",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Truyện cổ \"Kasajizo\" (かさじぞう)",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=bevlA_3gY5Q",
+   "youtubeId": "bevlA_3gY5Q",
+   "thumbnailUrl": "https://i.ytimg.com/vi/bevlA_3gY5Q/hqdefault.jpg",
+   "durationSeconds": 482,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh tự ghi \"Absolute Beginner (N7)\" — dễ hơn N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 31 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi-xCpaYCpuYmk",
+   "title": "World’s Easiest Japanese Listening | Absolute Beginner (N7) | Issun-boshi",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Truyện cổ \"Issun-boshi\" (一寸法師)",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=xCpaYCpuYmk",
+   "youtubeId": "xCpaYCpuYmk",
+   "thumbnailUrl": "https://i.ytimg.com/vi/xCpaYCpuYmk/hqdefault.jpg",
+   "durationSeconds": 568,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh tự ghi \"Absolute Beginner (N7)\" — dễ hơn N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 31 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi--5z9Z8-WteU",
+   "title": "World’s Easiest Japanese Listening | Absolute Beginner (N7) | The Three Little Pigs",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Ba chú heo con",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=-5z9Z8-WteU",
+   "youtubeId": "-5z9Z8-WteU",
+   "thumbnailUrl": "https://i.ytimg.com/vi/-5z9Z8-WteU/hqdefault.jpg",
+   "durationSeconds": 534,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh tự ghi \"Absolute Beginner (N7)\" — dễ hơn N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 29 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi-MkB-vxtwlZU",
+   "title": "World’s Easiest Japanese Listening | Absolute Beginner (N7) | Momotaro",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Truyện cổ \"Momotaro\" (桃太郎)",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=MkB-vxtwlZU",
+   "youtubeId": "MkB-vxtwlZU",
+   "thumbnailUrl": "https://i.ytimg.com/vi/MkB-vxtwlZU/hqdefault.jpg",
+   "durationSeconds": 520,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh tự ghi \"Absolute Beginner (N7)\" — dễ hơn N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 29 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi-rd1JAr0jwkI",
+   "title": "Easy Japanese Listening | Kachi-Kachi Mountain (N7)",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Truyện cổ \"Núi Kachi-kachi\"",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=rd1JAr0jwkI",
+   "youtubeId": "rd1JAr0jwkI",
+   "thumbnailUrl": "https://i.ytimg.com/vi/rd1JAr0jwkI/hqdefault.jpg",
+   "durationSeconds": 606,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh tự ghi \"Absolute Beginner (N7)\" — dễ hơn N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 29 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi-MMMwSpBg0sw",
+   "title": "The Shortest Japanese Story? | Easy Japanese Listening (N5)",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Truyện cổ ngắn \"Nioi Dorobo\"",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=MMMwSpBg0sw",
+   "youtubeId": "MMMwSpBg0sw",
+   "thumbnailUrl": "https://i.ytimg.com/vi/MMMwSpBg0sw/hqdefault.jpg",
+   "durationSeconds": 371,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh tự ghi JLPT N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 29 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi-kuZdOc1CgBs",
+   "title": "Learn Japanese Naturally | The Enchanted Willow | JLPT N5",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Cây liễu thần",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=kuZdOc1CgBs",
+   "youtubeId": "kuZdOc1CgBs",
+   "thumbnailUrl": "https://i.ytimg.com/vi/kuZdOc1CgBs/hqdefault.jpg",
+   "durationSeconds": 782,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh tự ghi JLPT N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 31 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi-xuc0YWZW8mU",
+   "title": "Learn Japanese by Listening | Jiraiya: The Ninja | JLPT N5",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Ninja Jiraiya",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=xuc0YWZW8mU",
+   "youtubeId": "xuc0YWZW8mU",
+   "thumbnailUrl": "https://i.ytimg.com/vi/xuc0YWZW8mU/hqdefault.jpg",
+   "durationSeconds": 666,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh tự ghi JLPT N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 31 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi-YN7vJdekm5M",
+   "title": "Japanese You Can Understand | King Enma’s Mistake | JLPT N5",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Sai lầm của vua Diêm Vương",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=YN7vJdekm5M",
+   "youtubeId": "YN7vJdekm5M",
+   "thumbnailUrl": "https://i.ytimg.com/vi/YN7vJdekm5M/hqdefault.jpg",
+   "durationSeconds": 638,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh tự ghi JLPT N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 31 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi-d4NKJ0c2pOA",
+   "title": "Easy Japanese Story | The Forbidden Room | JLPT N5",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Căn phòng cấm",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=d4NKJ0c2pOA",
+   "youtubeId": "d4NKJ0c2pOA",
+   "thumbnailUrl": "https://i.ytimg.com/vi/d4NKJ0c2pOA/hqdefault.jpg",
+   "durationSeconds": 758,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh tự ghi JLPT N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 31 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi-PhkFko0m5gE",
+   "title": "Learn Japanese Naturally | Byobu no Tora | JLPT N5",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Con hổ trong bức bình phong (Ikkyu-san)",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=PhkFko0m5gE",
+   "youtubeId": "PhkFko0m5gE",
+   "thumbnailUrl": "https://i.ytimg.com/vi/PhkFko0m5gE/hqdefault.jpg",
+   "durationSeconds": 561,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh tự ghi JLPT N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 31 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi-AWehMhlH0GA",
+   "title": "Learn Japanese Naturally | The Great Salmon | JLPT N5",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Con cá hồi lớn",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=AWehMhlH0GA",
+   "youtubeId": "AWehMhlH0GA",
+   "thumbnailUrl": "https://i.ytimg.com/vi/AWehMhlH0GA/hqdefault.jpg",
+   "durationSeconds": 591,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh tự ghi JLPT N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 30 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi-rWa2O21LFpc",
+   "title": "Easy Japanese Listening N5 | The Three Magic Charms",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Ba lá bùa thần",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=rWa2O21LFpc",
+   "youtubeId": "rWa2O21LFpc",
+   "thumbnailUrl": "https://i.ytimg.com/vi/rWa2O21LFpc/hqdefault.jpg",
+   "durationSeconds": 760,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh tự ghi JLPT N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 30 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi-9_3_G3cOtaE",
+   "title": "Easy Japanese Listening N5 | Little Garban",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Cậu bé Garban",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=9_3_G3cOtaE",
+   "youtubeId": "9_3_G3cOtaE",
+   "thumbnailUrl": "https://i.ytimg.com/vi/9_3_G3cOtaE/hqdefault.jpg",
+   "durationSeconds": 556,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh tự ghi JLPT N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 29 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi-Z7a_uMtf7hA",
+   "title": "Thunder Boy | Easy Japanese N5",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Cậu bé Sấm",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=Z7a_uMtf7hA",
+   "youtubeId": "Z7a_uMtf7hA",
+   "thumbnailUrl": "https://i.ytimg.com/vi/Z7a_uMtf7hA/hqdefault.jpg",
+   "durationSeconds": 783,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh tự ghi JLPT N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 29 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi-tqdpWXdJfAo",
+   "title": "The Kindest Ogre | A Touching Japanese Story (N5)",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Con quỷ hiền lành nhất",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=tqdpWXdJfAo",
+   "youtubeId": "tqdpWXdJfAo",
+   "thumbnailUrl": "https://i.ytimg.com/vi/tqdpWXdJfAo/hqdefault.jpg",
+   "durationSeconds": 756,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh tự ghi JLPT N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 29 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi-pmvNqX1qetU",
+   "title": "Must-See for Beginners! [The Giant Turnip] Easy Japanese・JLPT N5",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Củ cải khổng lồ",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=pmvNqX1qetU",
+   "youtubeId": "pmvNqX1qetU",
+   "thumbnailUrl": "https://i.ytimg.com/vi/pmvNqX1qetU/hqdefault.jpg",
+   "durationSeconds": 362,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh tự ghi JLPT N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 27 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi-MZHL3cNst1w",
+   "title": "What Do You See in the Moon?｜【The Moon Rabbit】｜Easy Japanese JLPT N5",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Thỏ trên mặt trăng",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=MZHL3cNst1w",
+   "youtubeId": "MZHL3cNst1w",
+   "thumbnailUrl": "https://i.ytimg.com/vi/MZHL3cNst1w/hqdefault.jpg",
+   "durationSeconds": 536,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh tự ghi JLPT N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 27 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi-WjpmrayBmBQ",
+   "title": "🐈A Talking Cat? 【Neko Danka】｜Easy Japanese・JLPT N5",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Con mèo biết nói (Neko Danka)",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=WjpmrayBmBQ",
+   "youtubeId": "WjpmrayBmBQ",
+   "thumbnailUrl": "https://i.ytimg.com/vi/WjpmrayBmBQ/hqdefault.jpg",
+   "durationSeconds": 514,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh tự ghi JLPT N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 27 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi-i4MYX1gD660",
+   "title": "An Unexpected Ending… | Gon, the Little Fox 【Easy Japanese・JLPT N5】",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Cáo con Gon",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=i4MYX1gD660",
+   "youtubeId": "i4MYX1gD660",
+   "thumbnailUrl": "https://i.ytimg.com/vi/i4MYX1gD660/hqdefault.jpg",
+   "durationSeconds": 657,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh tự ghi JLPT N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 27 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi-gWblZeT6T-I",
+   "title": "Easy Japanese Listening [JLPT N5] The Seven Lucky Gods 🎍 Happy New Year 2026",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Bảy vị thần may mắn (năm mới)",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=gWblZeT6T-I",
+   "youtubeId": "gWblZeT6T-I",
+   "thumbnailUrl": "https://i.ytimg.com/vi/gWblZeT6T-I/hqdefault.jpg",
+   "durationSeconds": 532,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh tự ghi JLPT N5.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 29 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi-G_gu6ttRaM0",
+   "title": "Your first Japanese story | yokai",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Truyện tiếng Nhật đầu tiên: yêu quái",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=G_gu6ttRaM0",
+   "youtubeId": "G_gu6ttRaM0",
+   "thumbnailUrl": "https://i.ytimg.com/vi/G_gu6ttRaM0/hqdefault.jpg",
+   "durationSeconds": 683,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh ghi dành cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 29 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
+   "id": "oyasumi-oQEtTzPk1-g",
+   "title": "Japanese Listening for Absolute Beginners.",
+   "description": "Truyện kể bằng tiếng Nhật dễ: Nghe tiếng Nhật cho người mới bắt đầu",
+   "source": "oyasumi",
+   "sourceUrl": "https://www.youtube.com/watch?v=oQEtTzPk1-g",
+   "youtubeId": "oQEtTzPk1-g",
+   "thumbnailUrl": "https://i.ytimg.com/vi/oQEtTzPk1-g/hqdefault.jpg",
+   "durationSeconds": 621,
+   "topics": [
+    "so-thich"
+   ],
+   "style": "illustrated",
+   "level": "N5",
+   "levelBasis": "Kênh ghi dành cho người mới bắt đầu.",
+   "subtitles": {
+    "ja": true,
+    "vi": true,
+    "other": [
+     "Tiếng Anh",
+     "và 29 thứ tiếng khác"
+    ]
+   },
+   "embeddable": true,
+   "status": "published",
+   "verifiedAt": "2026-10-15",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+  },
+  {
    "id": "irodori-3stbOEUrCE4",
    "title": "【いろどり入門】L3 Can-do 10「ご出身は？」",
    "description": "Hỏi quê quán: ご出身は？",
@@ -88,7 +1605,8 @@
    "embeddable": true,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km"
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km",
+   "style": "live"
   },
   {
    "id": "irodori-6wBPHVGgffY",
@@ -115,7 +1633,8 @@
    "embeddable": true,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km"
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km",
+   "style": "live"
   },
   {
    "id": "irodori-qgceqOnEQGs",
@@ -142,7 +1661,8 @@
    "embeddable": true,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km"
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km",
+   "style": "live"
   },
   {
    "id": "irodori-41fbTYoH7Ko",
@@ -169,7 +1689,8 @@
    "embeddable": true,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km"
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km",
+   "style": "live"
   },
   {
    "id": "irodori-l3UTXgVaNUs",
@@ -196,7 +1717,8 @@
    "embeddable": true,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km"
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km",
+   "style": "live"
   },
   {
    "id": "irodori-792POX-cVp4",
@@ -223,7 +1745,8 @@
    "embeddable": true,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km"
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km",
+   "style": "live"
   },
   {
    "id": "irodori-kCYMZ4KNWdY",
@@ -250,7 +1773,8 @@
    "embeddable": true,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km"
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km",
+   "style": "live"
   },
   {
    "id": "irodori-hoFeJJ5-NFE",
@@ -277,7 +1801,8 @@
    "embeddable": true,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km"
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km",
+   "style": "live"
   },
   {
    "id": "irodori-LQqpDcLOLwM",
@@ -304,7 +1829,8 @@
    "embeddable": true,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km"
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km",
+   "style": "live"
   },
   {
    "id": "irodori-yipYA1ocYmE",
@@ -331,7 +1857,8 @@
    "embeddable": true,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km"
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km",
+   "style": "live"
   },
   {
    "id": "nhk-01",
@@ -356,7 +1883,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-02",
@@ -381,7 +1909,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-03",
@@ -406,7 +1935,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-04",
@@ -431,7 +1961,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-05",
@@ -456,7 +1987,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-06",
@@ -481,7 +2013,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-07",
@@ -506,7 +2039,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-08",
@@ -531,7 +2065,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-09",
@@ -556,7 +2091,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-10",
@@ -581,7 +2117,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-11",
@@ -606,7 +2143,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-12",
@@ -631,7 +2169,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-13",
@@ -656,7 +2195,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-14",
@@ -681,7 +2221,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-15",
@@ -706,7 +2247,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-16",
@@ -731,7 +2273,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-17",
@@ -756,7 +2299,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-18",
@@ -781,7 +2325,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-19",
@@ -806,7 +2351,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-20",
@@ -831,7 +2377,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-21",
@@ -856,7 +2403,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-22",
@@ -881,7 +2429,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-23",
@@ -906,7 +2455,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-24",
@@ -931,7 +2481,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-25",
@@ -956,7 +2507,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-26",
@@ -981,7 +2533,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-27",
@@ -1006,7 +2559,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-28",
@@ -1031,7 +2585,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-29",
@@ -1056,7 +2611,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-30",
@@ -1081,7 +2637,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-31",
@@ -1106,7 +2663,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-32",
@@ -1131,7 +2689,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-33",
@@ -1156,7 +2715,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-34",
@@ -1181,7 +2741,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-35",
@@ -1206,7 +2767,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-36",
@@ -1231,7 +2793,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-37",
@@ -1256,7 +2819,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-38",
@@ -1281,7 +2845,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-39",
@@ -1306,7 +2871,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-40",
@@ -1331,7 +2897,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-41",
@@ -1356,7 +2923,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-42",
@@ -1381,7 +2949,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-43",
@@ -1406,7 +2975,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-44",
@@ -1431,7 +3001,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-45",
@@ -1456,7 +3027,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-46",
@@ -1481,7 +3053,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-47",
@@ -1506,7 +3079,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "nhk-48",
@@ -1531,7 +3105,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn."
+   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-01",
@@ -1559,7 +3134,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-02",
@@ -1587,7 +3163,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-03",
@@ -1615,7 +3192,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-04",
@@ -1643,7 +3221,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-05",
@@ -1671,7 +3250,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-06",
@@ -1699,7 +3279,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-07",
@@ -1727,7 +3308,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-08",
@@ -1755,7 +3337,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-09",
@@ -1783,7 +3366,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-10",
@@ -1811,7 +3395,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-11",
@@ -1839,7 +3424,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-12",
@@ -1867,7 +3453,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-13",
@@ -1895,7 +3482,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-14",
@@ -1923,7 +3511,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-15",
@@ -1951,7 +3540,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-16",
@@ -1979,7 +3569,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-17",
@@ -2007,7 +3598,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-18",
@@ -2035,7 +3627,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-19",
@@ -2063,7 +3656,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-20",
@@ -2091,7 +3685,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-21",
@@ -2119,7 +3714,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-22",
@@ -2147,7 +3743,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-23",
@@ -2175,7 +3772,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-24",
@@ -2203,7 +3801,8 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
   },
   {
    "id": "erin-25",
@@ -2231,7 +3830,26 @@
    "embeddable": false,
    "status": "published",
    "verifiedAt": "2026-10-14",
-   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn."
+   "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
+   "style": "unknown"
+  }
+ ],
+ "styles": [
+  {
+   "id": "animation",
+   "label": "Hoạt hình"
+  },
+  {
+   "id": "illustrated",
+   "label": "Truyện tranh minh hoạ"
+  },
+  {
+   "id": "live",
+   "label": "Quay thật"
+  },
+  {
+   "id": "unknown",
+   "label": "Trên trang nguồn"
   }
  ]
 }

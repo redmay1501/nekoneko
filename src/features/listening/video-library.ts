@@ -2,12 +2,15 @@ import rawLibrary from '@content/seed/listening-videos.json';
 
 /**
  * Thư viện video luyện nghe N5 (content/seed/listening-videos.json) — CHỈ video thật đã xác minh (ngày verifiedAt):
- *  - nhúng (`embeddable`) chỉ khi nguồn cho phép: YouTube chính thức, playableInEmbed=true → trình phát YouTube;
+ *  - nhúng (`embeddable`) chỉ khi nguồn cho phép: video YouTube do CHÍNH kênh sản xuất, playableInEmbed=true → trình phát
+ *    YouTube (không dùng bản người khác đăng lại); thứ tự trong file: xem được ngay + hoạt hình trước;
  *  - còn lại (NHK, Erin) mở tại trang gốc — không lấy luồng video, không dùng ảnh của nguồn.
  * Trình độ luôn kèm cơ sở đánh giá (`levelBasis`). Xem video KHÔNG đổi điểm trí nhớ.
  */
 
-export type VideoSourceId = 'irodori' | 'nhk' | 'erin';
+export type VideoSourceId = 'chibi' | 'aiu' | 'oyasumi' | 'irodori' | 'nhk' | 'erin';
+/** Kiểu hình: hoạt hình · truyện tranh minh hoạ · quay thật · chưa biết (xem trên trang nguồn). */
+export type VideoStyle = 'animation' | 'illustrated' | 'live' | 'unknown';
 export type VideoLevel = 'N5' | 'N5-N4';
 
 export interface VideoSource {
@@ -32,6 +35,7 @@ export interface ListeningVideo {
   thumbnailUrl: string | null;
   durationSeconds: number | null;
   topics: string[];
+  style: VideoStyle;
   level: VideoLevel;
   levelBasis: string;
   subtitles: { ja: boolean; vi: boolean; other: string[] };
@@ -45,6 +49,7 @@ export interface ListeningVideo {
 interface VideoLibraryFile {
   sources: Record<VideoSourceId, VideoSource>;
   topics: VideoTopic[];
+  styles: Array<{ id: VideoStyle; label: string }>;
   videos: ListeningVideo[];
 }
 
@@ -53,6 +58,7 @@ const YOUTUBE_ID = /^[\w-]{11}$/;
 
 export const VIDEO_SOURCES = library.sources;
 export const VIDEO_TOPICS = library.topics;
+export const VIDEO_STYLE_LABELS = Object.fromEntries(library.styles.map((style) => [style.id, style.label])) as Record<VideoStyle, string>;
 export const LEVEL_LABELS: Record<VideoLevel, string> = { N5: 'N5', 'N5-N4': 'N5 – có phần N4' };
 
 /** Video người học thấy: đã xuất bản; video nhúng phải có mã YouTube hợp lệ. */
@@ -84,6 +90,8 @@ export interface VideoFilter {
   source: VideoSourceId | null;
   /** 'watched' | 'unwatched' | null (tất cả). */
   watched: 'watched' | 'unwatched' | null;
+  /** 'in-app' = xem ngay trong app · 'animation' = hoạt hình · null = tất cả. */
+  view: 'in-app' | 'animation' | null;
 }
 
 const fold = (text: string) => text.normalize('NFKC').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd');
@@ -95,7 +103,8 @@ export function filterVideos(videos: readonly ListeningVideo[], filter: VideoFil
     (!query || fold(`${video.title} ${video.description}`).includes(query))
     && (!filter.topic || video.topics.includes(filter.topic))
     && (!filter.source || video.source === filter.source)
-    && (filter.watched === null || (filter.watched === 'watched') === watchedIds.has(video.id)));
+    && (filter.watched === null || (filter.watched === 'watched') === watchedIds.has(video.id))
+    && (filter.view === null || (filter.view === 'in-app' ? video.embeddable : video.style === 'animation')));
 }
 
 /** Video kế tiếp cùng nguồn (theo thứ tự thư viện) — để xem liền mạch. */

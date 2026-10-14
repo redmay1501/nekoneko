@@ -22,20 +22,27 @@ const WATCHED_FILTERS = [
 
 /** Thư viện video N5: tìm theo tên (không dấu cũng được), lọc chủ đề / nguồn / đã xem; mỗi thẻ mở trang xem video. */
 export function VideoLibrary({ videos, sources, topics, watchedIds }: VideoLibraryProps) {
-  const [filter, setFilter] = useState<VideoFilter>({ query: '', topic: null, source: null, watched: null });
+  const [filter, setFilter] = useState<VideoFilter>({ query: '', topic: null, source: null, watched: null, view: null });
   const watched = useMemo(() => new Set(watchedIds), [watchedIds]);
   const results = useMemo(() => filterVideos(videos, filter, watched), [videos, filter, watched]);
   const topicLabel = new Map(topics.map((topic) => [topic.id, topic.label]));
   const usedTopics = topics.filter((topic) => videos.some((video) => video.topics.includes(topic.id)));
   const update = (patch: Partial<VideoFilter>) => setFilter((current) => ({ ...current, ...patch }));
-  const isFiltered = Boolean(filter.query || filter.topic || filter.source || filter.watched);
+  const isFiltered = Boolean(filter.query || filter.topic || filter.source || filter.watched || filter.view);
+  const inAppCount = videos.filter((video) => video.embeddable).length;
+  const animationCount = videos.filter((video) => video.style === 'animation').length;
 
   return (
     <section aria-label="Video tiếng Nhật N5">
       <p className="soft sm" style={{ margin: '4px 0 10px' }}>
-        {videos.length} video từ Japan Foundation và NHK cho người mới học · ▶ xem ngay trong app, ↗ mở ở trang gốc. Đã xem {watched.size}/{videos.length}.
+        {videos.length} video cho người mới học — {inAppCount} video ▶ xem ngay trong app (hoạt hình, truyện tranh, Japan Foundation), còn lại ↗ mở ở trang gốc. Đã xem {watched.size}/{videos.length}.
       </p>
-      <input className="input" type="search" value={filter.query} onChange={(event) => update({ query: event.target.value })}
+      <div className="chip-scroll" role="group" aria-label="Cách xem">
+        {([[null, `Tất cả · ${videos.length}`], ['in-app', `▶ Xem trong app · ${inAppCount}`], ['animation', `🎨 Hoạt hình · ${animationCount}`]] as const).map(([id, label]) => (
+          <button key={label} type="button" className={`chip ${filter.view === id ? 'pink' : ''}`} aria-pressed={filter.view === id} onClick={() => update({ view: id })}>{label}</button>
+        ))}
+      </div>
+      <input className="input mt-2.5" type="search" value={filter.query} onChange={(event) => update({ query: event.target.value })}
         placeholder="Tìm video: gọi món, hỏi đường, いくら…" aria-label="Tìm video" />
       <div className="chip-scroll mt-2.5" role="group" aria-label="Chủ đề">
         <button type="button" className={`chip ${filter.topic === null ? 'pink' : ''}`} aria-pressed={filter.topic === null} onClick={() => update({ topic: null })}>Mọi chủ đề</button>
@@ -61,7 +68,7 @@ export function VideoLibrary({ videos, sources, topics, watchedIds }: VideoLibra
       </div>
       <p className="tiny muted mt-2" aria-live="polite">
         {results.length} video{isFiltered ? ' phù hợp' : ''}
-        {isFiltered ? <> · <button type="button" className="link tiny" onClick={() => setFilter({ query: '', topic: null, source: null, watched: null })}>Bỏ lọc</button></> : null}
+        {isFiltered ? <> · <button type="button" className="link tiny" onClick={() => setFilter({ query: '', topic: null, source: null, watched: null, view: null })}>Bỏ lọc</button></> : null}
       </p>
       {results.length ? (
         <ul className="video-grid mt-2">
@@ -74,10 +81,11 @@ export function VideoLibrary({ videos, sources, topics, watchedIds }: VideoLibra
                   <span className="video-card-desc">{video.description}</span>
                   <span className="video-card-meta">
                     <span>{sources[video.source].shortName}</span>
+                    {video.style === 'animation' || video.style === 'illustrated' ? <span>{video.style === 'animation' ? '🎨 Hoạt hình' : '📖 Truyện tranh'}</span> : null}
                     <span>{video.topics.map((topic) => topicLabel.get(topic)).join(', ')}</span>
                     <span>{LEVEL_LABELS[video.level]}</span>
                     {formatDuration(video.durationSeconds) ? <span>⏱ {formatDuration(video.durationSeconds)}</span> : null}
-                    <span>CC {[video.subtitles.ja && 'JP', video.subtitles.vi && 'VI'].filter(Boolean).join(' · ') || 'không có'}</span>
+                    <span>CC {[video.subtitles.ja && 'JP', video.subtitles.vi && 'VI', !video.subtitles.ja && !video.subtitles.vi && video.subtitles.other.length && 'EN'].filter(Boolean).join(' · ') || 'không có'}</span>
                     {watched.has(video.id) ? <span className="video-watched">✓ Đã xem</span> : null}
                   </span>
                 </span>
@@ -88,7 +96,7 @@ export function VideoLibrary({ videos, sources, topics, watchedIds }: VideoLibra
       ) : (
         <div className="card tight mt-2 center">
           <p className="sm">Không có video nào khớp.</p>
-          <button type="button" className="btn ghost sm mt-2" onClick={() => setFilter({ query: '', topic: null, source: null, watched: null })}>Xem tất cả video</button>
+          <button type="button" className="btn ghost sm mt-2" onClick={() => setFilter({ query: '', topic: null, source: null, watched: null, view: null })}>Xem tất cả video</button>
         </div>
       )}
     </section>

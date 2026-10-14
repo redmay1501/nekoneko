@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { WatchedToggle } from '@/components/listening/WatchedToggle';
 import { getLearnerContext } from '@/features/learning/learner-context';
 import {
-  LEVEL_LABELS, VIDEO_SOURCES, VIDEO_TOPICS, findVideo, formatDuration, nextVideoOf, youtubeEmbedUrl,
+  LEVEL_LABELS, VIDEO_SOURCES, VIDEO_STYLE_LABELS, VIDEO_TOPICS, findVideo, formatDuration, nextVideoOf, youtubeEmbedUrl,
 } from '@/features/listening/video-library';
 import { watchedVideoIds } from '@/features/listening/video-progress';
 
@@ -43,6 +43,7 @@ export default async function ListeningVideoPage({ params }: { params: Promise<{
           <p className="soft sm mt-1">{video.description}</p>
           <div className="row wrap mt-2" style={{ gap: 6 }}>
             <span className="chip lav">{source.shortName}</span>
+            {video.style !== 'unknown' ? <span className="chip">{VIDEO_STYLE_LABELS[video.style]}</span> : null}
             {topics.map((label) => <span key={label} className="chip">{label}</span>)}
             <span className="chip mint">{LEVEL_LABELS[video.level]}</span>
             {duration ? <span className="chip">⏱ {duration}</span> : null}

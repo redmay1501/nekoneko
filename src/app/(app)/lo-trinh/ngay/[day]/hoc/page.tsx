@@ -31,7 +31,7 @@ export default async function DayStudyPage({ params, searchParams }: {
         <div className="mt-3"><DayStudyFlow data={data} initialStep={initialStep} initialMode={mode ?? ''} /></div>
       ) : (
         <div className="card mt-3">
-          <p className="sm">Ngày {day} không có từ vựng, ngữ pháp hay Kanji mới để học theo bước.</p>
+          <p className="sm">Ngày {day} không có từ vựng, ngữ pháp, bộ thủ hay Kanji mới để học.</p>
           <Link className="btn ghost sm mt-3" href={`/lo-trinh/ngay/${day}`}>← Về trang ngày</Link>
         </div>
       )}

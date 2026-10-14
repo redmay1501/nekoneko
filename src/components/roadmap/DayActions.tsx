@@ -16,20 +16,20 @@ interface DayActionsProps {
  * Hành động chính của trang ngày, đặt ngay dưới phần giới thiệu:
  *  - hôm nay, còn kiến thức chưa học → "Học hết ngày N" (luồng học theo ngày: Từ vựng → Ngữ pháp → Kanji → Ôn tập); học hết rồi / ngày ôn → "Học ngày N" (phiên hằng ngày);
  *    kèm "Hoàn thành ngày" (nút phụ — hoàn thành ngày là người học tự xác nhận, không phải tự động khi học hết);
- *  - ngày đã qua → học lại theo bước / ôn thứ còn mờ; ngày chưa tới → học trước theo bước (nếu ngày có từ, mẫu câu, Kanji).
+ *  - ngày đã qua → "Học lại ngày N" (thẻ học + kiểm tra) / ôn thứ còn mờ; ngày chưa tới → "Học trước ngày N" (nếu ngày có từ, mẫu câu, Kanji).
  */
 export function DayActions({ day, relation, remainingCount, hasNewKnowledge, hasDayStudy }: DayActionsProps) {
   if (relation === 'past') {
     return (
       <div className="day-actions">
-        {hasDayStudy ? <Link className="btn ghost" href={`/lo-trinh/ngay/${day}/hoc`}>📚 Học lại theo bước</Link> : null}
+        {hasDayStudy ? <Link className="btn ghost" href={`/lo-trinh/ngay/${day}/hoc`}>📚 Học lại ngày {day}</Link> : null}
         <Link className="btn ghost" href="/hoc/rescue">🔁 Ôn lại những gì còn mờ</Link>
       </div>
     );
   }
   if (relation !== 'today') {
-    // Ngày chưa tới: vẫn cho học trước theo bước (thẻ + kiểm tra) — không đánh dấu hoàn thành ngày.
-    return hasDayStudy ? <div className="day-actions"><Link className="btn ghost" href={`/lo-trinh/ngay/${day}/hoc`}>📚 Học trước theo bước</Link></div> : null;
+    // Ngày chưa tới: vẫn cho học trước (thẻ học + kiểm tra) — không đánh dấu hoàn thành ngày.
+    return hasDayStudy ? <div className="day-actions"><Link className="btn ghost" href={`/lo-trinh/ngay/${day}/hoc`}>📚 Học trước ngày {day}</Link></div> : null;
   }
   const isUnfinished = hasNewKnowledge && remainingCount > 0;
   return (

@@ -16,7 +16,7 @@ export default async function GrammarPage() {
       <p className="soft sm" style={{ margin: '4px 0 14px' }}>
         112 mẫu câu theo Minna bài 1–25. Mỗi mẫu đi kèm một câu thật để bạn dùng được ngay.
       </p>
-      <TestPicker groups={testGroups} unit="mẫu" isWide />
+      <TestPicker groups={testGroups} unit="mẫu" partUnit="bài" />
       {grammarGroups(catalog, memoryViews).map((group) => {
         return (
         <section key={group.lesson} data-reveal>

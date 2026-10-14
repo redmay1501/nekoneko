@@ -1,58 +1,10 @@
-import Link from 'next/link';
-import { SpriteIcon } from '@/components/common/SpriteIcon';
-import { ModeGrid } from '@/components/learning/ModeGrid';
-import { getLearnerContext } from '@/features/learning/learner-context';
-import { SESSION_MODE_CONFIG } from '@/features/learning/session-modes';
-import { displayedDailyMinutes } from '@/features/progress/settings-options';
-import { EmojiIcon } from '@/components/common/EmojiIcon';
+import { redirect } from 'next/navigation';
+import { PRACTICE_LINKS } from '@/components/layout/navigation-items';
 
-const SKILLS = [
-  { href: '/luyen-tap/nghe', icon: 'neko:listening', label: 'Luyện nghe' },
-  { href: '/luyen-tap/noi', icon: 'neko:speaking', label: 'Luyện nói' },
-  { href: '/luyen-tap/doc', icon: 'neko:reading', label: 'Đọc hiểu' },
-  { href: '/luyen-tap/viet', icon: 'neko:writing', label: 'Luyện viết' },
-] as const;
-
-/** Luyện tập — mọi kiểu học dùng chung một Session Engine. */
-export default async function PracticeHubPage() {
-  const { settings } = await getLearnerContext();
-  const daily = SESSION_MODE_CONFIG.daily;
-  return (
-    <>
-      <h1>Luyện tập</h1>
-      <p className="soft sm" style={{ margin: '4px 0 16px' }}>
-        Bài mỗi ngày ở thẻ phía trên. Phía dưới là lúc bạn muốn học thêm.
-      </p>
-      <Link href="/hoc/daily" className="card block" style={{ width: '100%', textAlign: 'left', background: 'linear-gradient(150deg,#FFEFF2,#FFF7F2)', borderColor: '#FBE3E8' }}>
-        <div className="row">
-          <SpriteIcon name="noko" size={54} />
-          <div style={{ flex: 1 }}>
-            <b><EmojiIcon emoji={daily.emoji} size={18} style={{ verticalAlign: '-3px' }} /> {daily.label} · {displayedDailyMinutes(settings.dailyMinutes, daily.targetMinutes)} phút</b>
-            <div className="sm soft">{daily.description}</div>
-          </div>
-        </div>
-        <span className="btn block sm mt-3">Bắt đầu</span>
-      </Link>
-      <div className="sec-h"><h2>Các kiểu học khác</h2></div>
-      <ModeGrid />
-      <div className="sec-h"><h2>Trò chơi ôn tập</h2></div>
-      <Link href="/luyen-tap/ghep-the" className="card tight block" style={{ textAlign: 'left' }}>
-        <div className="row">
-          <span style={{ fontSize: 34 }} aria-hidden="true">🃏</span>
-          <div style={{ flex: 1 }}>
-            <b>Ghép thẻ</b>
-            <div className="sm soft">Ghép chữ với nghĩa — tính giờ, phá kỷ lục. Chỉ dùng thứ bạn đã học.</div>
-          </div>
-        </div>
-      </Link>
-      <div className="sec-h"><h2>Theo kỹ năng</h2></div>
-      <div className="grid two">
-        {SKILLS.map((skill) => (
-          <Link key={skill.href} href={skill.href} className="card tight block" style={{ textAlign: 'left' }}>
-            <div className="row"><EmojiIcon emoji={skill.icon} size={40} /><b>{skill.label}</b></div>
-          </Link>
-        ))}
-      </div>
-    </>
-  );
+/**
+ * Luyện tập không còn trang tổng quan: các kiểu học (5 phút, cứu từ…) nằm ở khay "Học ngay", kỹ năng và Ghép thẻ ở menu.
+ * Đường dẫn cũ /luyen-tap chuyển sang kỹ năng đầu tiên để không link nào hỏng.
+ */
+export default function PracticeHubPage() {
+  redirect(PRACTICE_LINKS[0].href);
 }

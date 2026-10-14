@@ -27,8 +27,8 @@ interface NavigationListProps {
 
 /**
  * Danh sách điều hướng dùng chung cho thanh bên (desktop) và khay ☰ (mobile).
- * Mục có danh sách con (Học tập, Luyện tập) là NÚT mở / đóng — bấm không chuyển trang. Trang tổng của mục nằm ở dòng
- * "Tổng quan" đầu danh sách con. Mặc định mở mục đang đứng trong đó.
+ * Mục có danh sách con (Học tập, Luyện tập) là NÚT mở / đóng — bấm không chuyển trang (không còn trang tổng quan).
+ * Mặc định mở mục đang đứng trong đó.
  */
 export function NavigationList({ onNavigate }: NavigationListProps) {
   const pathname = usePathname();
@@ -57,7 +57,6 @@ export function NavigationList({ onNavigate }: NavigationListProps) {
                 </button>
                 {expanded ? (
                   <div className="nav-sub" id={subId}>
-                    <NavigationLink item={{ href: item.href, icon: '📚', label: 'Tổng quan' }} isActive={pathname === item.href} onNavigate={onNavigate} />
                     {item.children.map((child) => (
                       <NavigationLink key={child.href} item={child} isActive={isActivePath(pathname, child.href)} onNavigate={onNavigate} />
                     ))}

@@ -9,8 +9,8 @@ import type { TestGroup } from '@/features/learning/study-actions';
 interface TestPickerProps {
   groups: TestGroup[];
   unit: string;
-  /** Mặt chữ dài (từ vựng, mẫu câu) → ô rộng hơn. */
-  isWide?: boolean;
+  /** Tên mỗi phần để chọn: "bài" (từ vựng, ngữ pháp) hoặc "nhóm" (chữ cái, Kanji, bộ thủ). */
+  partUnit?: string;
 }
 
 /** Số câu mỗi lần kiểm tra (mỗi câu một mục); "Tất cả" = mọi mục đã chọn (tối đa MAX_FOCUS_ITEMS). */
@@ -30,16 +30,16 @@ function sample<T>(items: readonly T[], limit: number): T[] {
 }
 
 /**
- * MỘT nút "Kiểm tra" → bảng chọn: tất cả, chỉ chữ đã học, cả nhóm, hoặc từng chữ → chọn số câu (10 · 20 · 30 · 50 · tất cả) → bắt đầu.
+ * MỘT nút "Kiểm tra" → bảng chọn THEO BÀI / NHÓM (chọn một hay nhiều, không phải chọn từng chữ) → chọn số câu
+ * (10 · 20 · 30 · 50 · tất cả) → bắt đầu. Câu hỏi lấy ngẫu nhiên trong các bài đã chọn.
  * Bài kiểm tra là phiên "Học theo lựa chọn": thứ đã học được hỏi lại (ghi trí nhớ thật); thứ chưa học được giới thiệu trước.
  */
-export function TestPicker({ groups, unit, isWide = false }: TestPickerProps) {
+export function TestPicker({ groups, unit, partUnit = 'nhóm' }: TestPickerProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState<Set<string>>(new Set());
-  const allKeys = groups.flatMap((group) => group.entries.map((entry) => entry.key));
-  const learnedKeys = groups.flatMap((group) => group.entries.filter((entry) => entry.isLearned).map((entry) => entry.key));
-  const isAllSelected = selected.size === allKeys.length;
+  const [picked, setPicked] = useState<Set<string>>(new Set());
+  const [onlyLearned, setOnlyLearned] = useState(false);
+  const isAllPicked = picked.size === groups.length;
   /** Số câu đã chọn (0 = tất cả). Nhớ lần chọn trước trên máy này. */
   const [count, setCount] = useState<number>(DEFAULT_COUNT);
   useEffect(() => {
@@ -54,16 +54,18 @@ export function TestPicker({ groups, unit, isWide = false }: TestPickerProps) {
     setCount(value);
     try { localStorage.setItem(COUNT_STORAGE_KEY, String(value)); } catch { /* bỏ qua */ }
   }
-  const allLimit = Math.min(selected.size, MAX_FOCUS_ITEMS);
-  const questionCount = count === ALL ? allLimit : Math.min(count, allLimit);
-
-  const setMany = (keys: readonly string[], on: boolean) => setSelected((current) => {
+  const togglePart = (id: string) => setPicked((current) => {
     const next = new Set(current);
-    for (const key of keys) (on ? next.add(key) : next.delete(key));
+    if (next.has(id)) next.delete(id); else next.add(id);
     return next;
   });
-  const toggle = (key: string) => setMany([key], !selected.has(key));
-  const start = () => router.push(focusSessionHref(sample([...selected], questionCount)));
+
+  const entries = groups.filter((group) => picked.has(group.id)).flatMap((group) => group.entries);
+  const pool = (onlyLearned ? entries.filter((entry) => entry.isLearned) : entries).map((entry) => entry.key);
+  const hasLearned = groups.some((group) => group.entries.some((entry) => entry.isLearned));
+  const allLimit = Math.min(pool.length, MAX_FOCUS_ITEMS);
+  const questionCount = count === ALL ? allLimit : Math.min(count, allLimit);
+  const start = () => router.push(focusSessionHref(sample(pool, questionCount)));
 
   return (
     <>
@@ -73,61 +75,57 @@ export function TestPicker({ groups, unit, isWide = false }: TestPickerProps) {
       {isOpen ? (
         <ModalPortal className="sheet on test-picker" labelledBy="test-picker-title" onEscape={() => setIsOpen(false)}>
           <button type="button" className="sheet-close" onClick={() => setIsOpen(false)} aria-label="Đóng">✕</button>
-          <h2 id="test-picker-title" style={{ fontSize: 18 }}>Chọn {unit} để kiểm tra</h2>
+          <h2 id="test-picker-title" style={{ fontSize: 18 }}>Kiểm tra {unit} theo {partUnit}</h2>
+          <p className="sm soft mt-1">Chọn một hay nhiều {partUnit}, rồi chọn số câu mỗi lần.</p>
           <div className="row wrap mt-2.5" style={{ gap: 8 }}>
-            <button type="button" className={`chip ${isAllSelected ? 'pink' : ''}`} onClick={() => setSelected(isAllSelected ? new Set() : new Set(allKeys))}>
-              {isAllSelected ? 'Bỏ chọn tất cả' : `Chọn tất cả (${allKeys.length})`}
+            <button type="button" className={`chip ${isAllPicked ? 'pink' : ''}`}
+              onClick={() => setPicked(isAllPicked ? new Set() : new Set(groups.map((group) => group.id)))}>
+              {isAllPicked ? 'Bỏ chọn tất cả' : `Chọn tất cả ${groups.length} ${partUnit}`}
             </button>
-            {learnedKeys.length && learnedKeys.length < allKeys.length ? (
-              <button type="button" className="chip" onClick={() => setSelected(new Set(learnedKeys))}>Chỉ {unit} đã học ({learnedKeys.length})</button>
+            {hasLearned ? (
+              <button type="button" role="switch" aria-checked={onlyLearned} className={`chip ${onlyLearned ? 'pink' : ''}`}
+                onClick={() => setOnlyLearned((current) => !current)}>
+                {onlyLearned ? '✓ ' : ''}Chỉ hỏi {unit} đã học
+              </button>
             ) : null}
           </div>
-          {groups.map((group) => {
-            const keys = group.entries.map((entry) => entry.key);
-            const isGroupSelected = keys.every((key) => selected.has(key));
-            return (
-              <section key={group.id} className="mt-3.5" aria-label={group.label}>
-                <div className="between mb-2">
-                  <b className="sm">{group.label}</b>
-                  <button type="button" className="link sm" onClick={() => setMany(keys, !isGroupSelected)}>
-                    {isGroupSelected ? 'Bỏ chọn nhóm' : 'Chọn cả nhóm'}
-                  </button>
-                </div>
-                <div className={`test-grid ${isWide ? 'wide' : ''}`}>
-                  {group.entries.map((entry) => (
-                    <button key={entry.key} type="button" className={`test-cell ${selected.has(entry.key) ? 'on' : ''}`}
-                      aria-pressed={selected.has(entry.key)} onClick={() => toggle(entry.key)}>
-                      <span className="jp glyph test-face">{entry.face}</span>
-                      <span className="test-caption">{entry.caption}</span>
-                    </button>
-                  ))}
-                </div>
-              </section>
-            );
-          })}
+          <div className="test-grid range-grid mt-3" role="group" aria-label={`Chọn ${partUnit}`}>
+            {groups.map((group) => {
+              const learned = group.entries.filter((entry) => entry.isLearned).length;
+              return (
+                <button key={group.id} type="button" role="checkbox" aria-checked={picked.has(group.id)}
+                  className={`test-cell ${picked.has(group.id) ? 'on' : ''}`} onClick={() => togglePart(group.id)}>
+                  <span className="test-face">{picked.has(group.id) ? '✓ ' : ''}{group.label}</span>
+                  <span className="test-caption">{group.entries.length} {unit}{learned && learned < group.entries.length ? ` · đã học ${learned}` : ''}</span>
+                </button>
+              );
+            })}
+          </div>
           <div className="test-start">
-            {selected.size ? (
+            {pool.length ? (
               <div className="test-count" role="radiogroup" aria-label="Số câu mỗi lần">
                 <span className="sm">Số câu:</span>
-                {QUESTION_COUNTS.filter((value) => value < selected.size).map((value) => (
+                {QUESTION_COUNTS.filter((value) => value < pool.length).map((value) => (
                   <button key={value} type="button" role="radio" aria-checked={count === value}
                     className={`chip ${count === value ? 'pink' : ''}`} onClick={() => chooseCount(value)}>{value}</button>
                 ))}
-                <button type="button" role="radio" aria-checked={count === ALL || count >= selected.size}
-                  className={`chip ${count === ALL || count >= selected.size ? 'pink' : ''}`} onClick={() => chooseCount(ALL)}>
+                <button type="button" role="radio" aria-checked={count === ALL || count >= pool.length}
+                  className={`chip ${count === ALL || count >= pool.length ? 'pink' : ''}`} onClick={() => chooseCount(ALL)}>
                   Tất cả ({allLimit})
                 </button>
               </div>
             ) : null}
-            {questionCount < selected.size ? (
-              <p className="tiny muted mb-1.5">Lấy ngẫu nhiên {questionCount} trong {selected.size} {unit} đã chọn — lần sau sẽ ra {unit} khác.</p>
+            {pool.length ? (
+              <p className="tiny muted mb-1.5">
+                Đã chọn {picked.size} {partUnit} · {pool.length} {unit}{questionCount < pool.length ? ` — lấy ngẫu nhiên ${questionCount}, lần sau ra ${unit} khác` : ''}.
+              </p>
             ) : null}
-            {selected.size ? (
-              <button type="button" className="btn block" onClick={start}>
-                ▶ Bắt đầu kiểm tra · {questionCount} câu
-              </button>
+            {pool.length ? (
+              <button type="button" className="btn block" onClick={start}>▶ Bắt đầu kiểm tra · {questionCount} câu</button>
             ) : (
-              <button type="button" className="btn block" disabled>Chọn ít nhất một {unit}</button>
+              <button type="button" className="btn block" disabled>
+                {picked.size && onlyLearned ? `Các ${partUnit} này chưa có ${unit} đã học` : `Chọn ít nhất một ${partUnit}`}
+              </button>
             )}
           </div>
         </ModalPortal>

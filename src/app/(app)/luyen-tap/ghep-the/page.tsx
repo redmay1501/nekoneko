@@ -21,10 +21,7 @@ export default async function MatchGamePage({ searchParams }: { searchParams: Pr
   const partGroup = kind === 'tu-vung' ? 'Theo bài' : 'Theo nhóm';
   return (
     <>
-      <div className="between">
-        <h1>🃏 Ghép thẻ</h1>
-        <Link className="link sm" href="/luyen-tap">← Luyện tập</Link>
-      </div>
+      <h1>🃏 Ghép thẻ</h1>
       <p className="soft sm" style={{ margin: '4px 0 12px' }}>
         Chọn loại và phần muốn ôn — một hay nhiều bài, kể cả phần chưa học tới. Chơi lại để phá kỷ lục, nhắm 100% không sai.
       </p>

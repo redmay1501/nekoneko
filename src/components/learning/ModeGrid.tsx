@@ -24,7 +24,7 @@ export function ModeGrid({ includePracticeLink = false, onNavigate }: ModeGridPr
         );
       })}
       {includePracticeLink ? (
-        <Link href="/luyen-tap" className="mode" style={{ background: '#FFF9F2' }} onClick={onNavigate}>
+        <Link href="/luyen-tap/nghe" className="mode" style={{ background: '#FFF9F2' }} onClick={onNavigate}>
           <span className="e" aria-hidden="true">🎧</span>
           <b>Luyện tập</b>
           <span>Nghe · nói · đọc · viết.</span>

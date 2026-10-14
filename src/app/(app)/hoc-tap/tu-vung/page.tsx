@@ -23,7 +23,7 @@ export default async function VocabularyPage() {
       <p className="soft sm" style={{ margin: '4px 0 12px' }}>
         {total} từ: theo Minna no Nihongo I bài 1–25, cộng từ N5 bổ sung và từ của giai đoạn bảng chữ cái.
       </p>
-      <TestPicker groups={testGroups} unit="từ" isWide />
+      <TestPicker groups={testGroups} unit="từ" partUnit="bài" />
       <LessonVocabularyList rows={rows} lessons={catalog.content.lessons} currentTab={currentTab} />
     </>
   );

@@ -39,7 +39,7 @@ export function LearningSession({ mode, focusKeys }: { mode: SessionMode; focusK
       <div className="session">
         <SessionHeader mode={mode} />
         <NokoMessage state="idle" text="Bạn chưa chọn kiến thức nào để học. Vào Học tập, chọn Kanji, từ vựng hay mẫu câu bạn muốn nhé 🌸" />
-        <Link className="btn block mt-4" href="/hoc-tap">Mở Học tập</Link>
+        <Link className="btn block mt-4" href="/hoc-tap/tu-vung">Mở Học tập</Link>
       </div>
     );
   }

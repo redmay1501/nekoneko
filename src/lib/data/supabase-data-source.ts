@@ -2,6 +2,7 @@ import 'server-only';
 import type { GameRecords } from '@/features/games/match-game';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { unstable_cache } from 'next/cache';
+import { withReadingPassages } from './reading-passages';
 import type { ContentType } from '@/features/learning/knowledge-types';
 import type { SessionMode } from '@/features/learning/session-modes';
 import type { JourneyAdvanceResult, JourneyCompletionMethod } from '@/features/roadmap/journey-progress';
@@ -55,9 +56,10 @@ const fetchCachedContent = unstable_cache(
         return [key, rows] as const;
       }),
     );
-    return contentFromRows(Object.fromEntries(entries) as unknown as ContentRows);
+    // Bài đọc hiểu đọc từ repo (có tiêu đề + bản dịch) — xem lib/data/reading-passages.ts.
+    return withReadingPassages(contentFromRows(Object.fromEntries(entries) as unknown as ContentRows));
   },
-  ['neko-neko-n5-content'],
+  ['neko-neko-n5-content-v2'],
   { revalidate: CONTENT_CACHE_SECONDS, tags: ['content'] },
 );
 

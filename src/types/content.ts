@@ -120,7 +120,11 @@ export interface ReadingPassage {
   id: number;
   day: number;
   lesson: string;
+  /** Tên bài (tiếng Việt). */
+  title: string;
   textJp: string;
+  /** Bản dịch cả đoạn — hiện sau khi làm xong. */
+  textVi: string;
   questions: ReadingQuestion[];
 }
 

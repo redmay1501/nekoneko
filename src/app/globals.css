@@ -1190,3 +1190,11 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 .game-card-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
 .game-card-play{flex:0 0 auto}
 .game-card.is-soon{opacity:.7;border-style:dashed}
+/* ── Đọc hiểu ── */
+.reading-next{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;background:linear-gradient(150deg,#FFEFF2,#FFF7F2);border-color:#FBE3E8}
+.reading-list{display:grid;gap:7px}
+.reading-row{padding:10px 12px}
+.reading-row.is-next{border-color:var(--sakura);box-shadow:inset 0 0 0 1px var(--sakura)}
+.reading-status{flex:0 0 26px;text-align:center;font-size:17px;color:#5DB37A}
+.reading-text{font-size:19px;line-height:2.1;word-break:keep-all;overflow-wrap:anywhere}
+.reading-translation{text-align:left;background:var(--cream);border-radius:14px;padding:10px 12px}

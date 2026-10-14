@@ -1,0 +1,1125 @@
+{
+ "_note": "Bài đọc hiểu do Neko Neko soạn (không trích giáo trình). Mỗi bài Minna 1–25 một bài; chỉ dùng chữ Hán đã học tới ngày của bài (chữ chưa học viết kana) — kiểm tra tự động trong reading-passages.test.ts. Cần duyệt thủ công nội dung tiếng Nhật.",
+ "passages": [
+  {
+   "id": 1,
+   "day": 16,
+   "lesson": "Bài 1",
+   "title": "Tự giới thiệu",
+   "textJp": "はじめまして。わたしは リンです。ベトナムじんです。わたしの 国は ベトナムです。わたしは がくせいです。かいしゃいんじゃ ありません。マリアさんも がくせいです。マリアさんは ブラジルじんです。",
+   "textVi": "Rất hân hạnh. Tôi là Linh. Tôi là người Việt Nam. Đất nước của tôi là Việt Nam. Tôi là sinh viên, không phải nhân viên công ty. Chị Maria cũng là sinh viên. Chị Maria là người Brazil.",
+   "questions": [
+    {
+     "question": "Linh là người nước nào?",
+     "options": [
+      "Người Nhật",
+      "Người Việt Nam",
+      "Người Mỹ",
+      "Người Brazil"
+     ],
+     "correctIndex": 1
+    },
+    {
+     "question": "Linh làm gì?",
+     "options": [
+      "Là sinh viên",
+      "Là nhân viên công ty",
+      "Là giáo viên",
+      "Là bác sĩ"
+     ],
+     "correctIndex": 0
+    },
+    {
+     "question": "Câu nào đúng về chị Maria?",
+     "options": [
+      "Cũng là sinh viên, người Brazil",
+      "Là người Việt Nam",
+      "Là giáo viên người Brazil",
+      "Là nhân viên công ty"
+     ],
+     "correctIndex": 0
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "day": 18,
+   "lesson": "Bài 2",
+   "title": "Đồ của tôi",
+   "textJp": "これは わたしの かばんです。あれも わたしのです。この ほんは にほんごの ほんです。それは えいごの じしょです。「これは ペンですか、えんぴつですか。」「ボールペンです。」あの とけいは わたしのじゃ ありません。せんせいのです。",
+   "textVi": "Đây là cặp của tôi. Cái kia cũng là của tôi. Quyển sách này là sách tiếng Nhật. Cái đó là từ điển tiếng Anh. \"Đây là bút hay bút chì?\" \"Là bút bi.\" Cái đồng hồ kia không phải của tôi. Là của thầy giáo.",
+   "questions": [
+    {
+     "question": "\"この ほん\" là sách gì?",
+     "options": [
+      "Sách tiếng Nhật",
+      "Từ điển tiếng Nhật",
+      "Tạp chí",
+      "Sách tiếng Anh"
+     ],
+     "correctIndex": 0
+    },
+    {
+     "question": "\"それ\" là gì?",
+     "options": [
+      "Từ điển tiếng Anh",
+      "Cái cặp",
+      "Sách tiếng Nhật",
+      "Đồng hồ"
+     ],
+     "correctIndex": 0
+    },
+    {
+     "question": "Cái đồng hồ kia là của ai?",
+     "options": [
+      "Của người viết",
+      "Của trường",
+      "Của thầy giáo",
+      "Của bạn người viết"
+     ],
+     "correctIndex": 2
+    },
+    {
+     "question": "Câu trả lời cho \"ペンですか、えんぴつですか\" là gì?",
+     "options": [
+      "Bút bi",
+      "Bút chì",
+      "Bút máy",
+      "Bút mực"
+     ],
+     "correctIndex": 0
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "day": 20,
+   "lesson": "Bài 3",
+   "title": "Trường của tôi",
+   "textJp": "ここは さくらだいがくです。わたしの きょうしつは 二かいです。しょくどうは 一かいです。じむしょも 一かいです。トイレは あそこです。「この ノートは いくらですか。」「150えんです。」",
+   "textVi": "Đây là trường đại học Sakura. Phòng học của tôi ở tầng 2. Nhà ăn ở tầng 1. Văn phòng cũng ở tầng 1. Nhà vệ sinh ở đằng kia. \"Quyển vở này bao nhiêu tiền?\" \"150 yên.\"",
+   "questions": [
+    {
+     "question": "Phòng học của người viết ở tầng mấy?",
+     "options": [
+      "Tầng 2",
+      "Tầng 3",
+      "Tầng 1",
+      "Tầng hầm"
+     ],
+     "correctIndex": 0
+    },
+    {
+     "question": "Cái gì ở tầng 1?",
+     "options": [
+      "Phòng học",
+      "Nhà ăn và văn phòng",
+      "Nhà vệ sinh",
+      "Cửa hàng tiện lợi"
+     ],
+     "correctIndex": 1
+    },
+    {
+     "question": "Quyển vở giá bao nhiêu?",
+     "options": [
+      "50 yên",
+      "100 yên",
+      "1500 yên",
+      "150 yên"
+     ],
+     "correctIndex": 3
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "day": 23,
+   "lesson": "Bài 4",
+   "title": "Một ngày của tôi",
+   "textJp": "わたしは まいあさ 6時に おきます。9時から 5時まで はたらきます。ひるやすみは 12時から 1時までです。きのうは 11時に ねました。きのうは べんきょうしませんでした。こんばん べんきょうします。",
+   "textVi": "Mỗi sáng tôi dậy lúc 6 giờ. Tôi làm việc từ 9 giờ đến 5 giờ. Giờ nghỉ trưa từ 12 giờ đến 1 giờ. Hôm qua tôi ngủ lúc 11 giờ. Hôm qua tôi đã không học bài. Tối nay tôi sẽ học.",
+   "questions": [
+    {
+     "question": "Người viết dậy lúc mấy giờ?",
+     "options": [
+      "9 giờ",
+      "7 giờ",
+      "6 giờ",
+      "5 giờ"
+     ],
+     "correctIndex": 2
+    },
+    {
+     "question": "Người viết làm việc từ mấy giờ đến mấy giờ?",
+     "options": [
+      "Từ 6 giờ đến 9 giờ",
+      "Từ 12 giờ đến 1 giờ",
+      "Từ 9 giờ đến 11 giờ",
+      "Từ 9 giờ đến 5 giờ"
+     ],
+     "correctIndex": 3
+    },
+    {
+     "question": "Hôm qua người viết có học bài không?",
+     "options": [
+      "Không học",
+      "Học buổi trưa",
+      "Có học",
+      "Học đến 11 giờ"
+     ],
+     "correctIndex": 0
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "day": 25,
+   "lesson": "Bài 5",
+   "title": "Đi Kyoto",
+   "textJp": "わたしは きょねん 日本へ きました。まいにち でんしゃで 会社へ 行きます。あした ともだちと きょうとへ 行きます。しんかんせんで 行きます。らいしゅうは どこも 行きません。",
+   "textVi": "Năm ngoái tôi đã đến Nhật. Hằng ngày tôi đi làm bằng tàu điện. Ngày mai tôi sẽ đi Kyoto cùng bạn. Chúng tôi đi bằng Shinkansen. Tuần sau tôi không đi đâu cả.",
+   "questions": [
+    {
+     "question": "Người viết đến Nhật khi nào?",
+     "options": [
+      "Năm nay",
+      "Tuần trước",
+      "Tháng trước",
+      "Năm ngoái"
+     ],
+     "correctIndex": 3
+    },
+    {
+     "question": "Người viết đi làm bằng gì?",
+     "options": [
+      "Xe buýt",
+      "Xe đạp",
+      "Đi bộ",
+      "Tàu điện"
+     ],
+     "correctIndex": 3
+    },
+    {
+     "question": "Ngày mai người viết đi Kyoto với ai, bằng gì?",
+     "options": [
+      "Với gia đình, bằng ô tô",
+      "Với bạn, bằng Shinkansen",
+      "Một mình, bằng tàu điện",
+      "Với bạn, bằng máy bay"
+     ],
+     "correctIndex": 1
+    },
+    {
+     "question": "Tuần sau người viết làm gì?",
+     "options": [
+      "Đi Kyoto",
+      "Không đi đâu cả",
+      "Đi công ty",
+      "Về nước"
+     ],
+     "correctIndex": 1
+    }
+   ]
+  },
+  {
+   "id": 6,
+   "day": 27,
+   "lesson": "Bài 6",
+   "title": "Gặp bạn",
+   "textJp": "きのう ともだちの マイさんに 会いました。いっしょに きっさてんで コーヒーを のみました。マイさんは パンも たべました。「こんばん いっしょに ばんごはんを たべませんか。」「いいですね。たべましょう。」",
+   "textVi": "Hôm qua tôi gặp bạn Mai. Chúng tôi cùng uống cà phê ở quán cà phê. Mai còn ăn cả bánh mì. \"Tối nay mình cùng ăn tối nhé?\" \"Hay đấy. Cùng ăn nào.\"",
+   "questions": [
+    {
+     "question": "Hôm qua người viết gặp ai?",
+     "options": [
+      "Thầy giáo",
+      "Mẹ",
+      "Đồng nghiệp",
+      "Bạn Mai"
+     ],
+     "correctIndex": 3
+    },
+    {
+     "question": "Hai người uống gì ở quán?",
+     "options": [
+      "Trà",
+      "Cà phê",
+      "Nước hoa quả",
+      "Sữa"
+     ],
+     "correctIndex": 1
+    },
+    {
+     "question": "Mai ăn thêm gì?",
+     "options": [
+      "Cá",
+      "Trứng",
+      "Cơm",
+      "Bánh mì"
+     ],
+     "correctIndex": 3
+    },
+    {
+     "question": "Người viết rủ Mai làm gì tối nay?",
+     "options": [
+      "Cùng ăn tối",
+      "Cùng xem phim",
+      "Cùng uống cà phê",
+      "Cùng học bài"
+     ],
+     "correctIndex": 0
+    }
+   ]
+  },
+  {
+   "id": 7,
+   "day": 30,
+   "lesson": "Bài 7",
+   "title": "Sinh nhật",
+   "textJp": "きのうは わたしの たんじょうびでした。おかあさんに はなを もらいました。ともだちの リンさんに 本を もらいました。にほんごの 本です。わたしは リンさんに ベトナムの コーヒーを あげました。ばんごはんは はしで たべました。",
+   "textVi": "Hôm qua là sinh nhật tôi. Tôi được mẹ tặng hoa. Tôi được bạn Linh tặng sách. Là sách tiếng Nhật. Tôi tặng Linh cà phê Việt Nam. Bữa tối tôi ăn bằng đũa.",
+   "questions": [
+    {
+     "question": "Người viết được mẹ tặng gì?",
+     "options": [
+      "Cà phê",
+      "Bánh",
+      "Sách",
+      "Hoa"
+     ],
+     "correctIndex": 3
+    },
+    {
+     "question": "Linh tặng người viết gì?",
+     "options": [
+      "Hoa",
+      "Từ điển tiếng Anh",
+      "Sách tiếng Nhật",
+      "Cà phê Việt Nam"
+     ],
+     "correctIndex": 2
+    },
+    {
+     "question": "Người viết tặng Linh gì?",
+     "options": [
+      "Sách tiếng Nhật",
+      "Cà phê Việt Nam",
+      "Hoa",
+      "Đũa"
+     ],
+     "correctIndex": 1
+    }
+   ]
+  },
+  {
+   "id": 8,
+   "day": 32,
+   "lesson": "Bài 8",
+   "title": "Phòng và khu phố",
+   "textJp": "わたしの アパートは 新しいですが、ちいさいです。わたしの まちは にぎやかじゃ ありません。しずかです。きのう 新しい かばんを かいました。この かばんは やすいですが、とても いいです。日本の たべものは おいしいです。でも、すこし たかいです。",
+   "textVi": "Căn hộ của tôi mới nhưng nhỏ. Khu phố của tôi không náo nhiệt. Rất yên tĩnh. Hôm qua tôi mua một cái túi mới. Cái túi này rẻ nhưng rất tốt. Đồ ăn Nhật ngon. Nhưng hơi đắt.",
+   "questions": [
+    {
+     "question": "Căn hộ của người viết thế nào?",
+     "options": [
+      "Cũ và nhỏ",
+      "Mới và to",
+      "Mới nhưng nhỏ",
+      "Cũ nhưng rộng"
+     ],
+     "correctIndex": 2
+    },
+    {
+     "question": "Khu phố của người viết thế nào?",
+     "options": [
+      "Yên tĩnh",
+      "Nguy hiểm",
+      "Bẩn",
+      "Náo nhiệt"
+     ],
+     "correctIndex": 0
+    },
+    {
+     "question": "Cái túi mới thế nào?",
+     "options": [
+      "Rẻ nhưng rất tốt",
+      "Rẻ và nhẹ",
+      "Cũ và nặng",
+      "Đắt nhưng đẹp"
+     ],
+     "correctIndex": 0
+    },
+    {
+     "question": "Người viết nghĩ gì về đồ ăn Nhật?",
+     "options": [
+      "Không ngon",
+      "Rẻ và ngon",
+      "Cay quá",
+      "Ngon nhưng hơi đắt"
+     ],
+     "correctIndex": 3
+    }
+   ]
+  },
+  {
+   "id": 9,
+   "day": 34,
+   "lesson": "Bài 9",
+   "title": "Sở thích",
+   "textJp": "わたしは 学生です。にほんごの べんきょうが すきです。ひらがなと カタカナが わかります。でも、かんじは あまり わかりません。かんじは むずかしいですから。スポーツは あまり すきじゃ ありません。ともだちの アンさんは えが じょうずです。",
+   "textVi": "Tôi là sinh viên. Tôi thích học tiếng Nhật. Tôi hiểu Hiragana và Katakana. Nhưng chữ Hán thì tôi không hiểu lắm. Vì chữ Hán khó. Tôi không thích thể thao lắm. Bạn An của tôi vẽ giỏi.",
+   "questions": [
+    {
+     "question": "Người viết thích gì?",
+     "options": [
+      "Thể thao",
+      "Âm nhạc",
+      "Vẽ tranh",
+      "Học tiếng Nhật"
+     ],
+     "correctIndex": 3
+    },
+    {
+     "question": "Người viết có hiểu chữ Hán không?",
+     "options": [
+      "Hiểu một nửa",
+      "Hoàn toàn không học",
+      "Không hiểu lắm",
+      "Hiểu rất rõ"
+     ],
+     "correctIndex": 2
+    },
+    {
+     "question": "Vì sao?",
+     "options": [
+      "Vì chữ Hán khó",
+      "Vì không có thời gian",
+      "Vì chưa có sách",
+      "Vì không thích"
+     ],
+     "correctIndex": 0
+    },
+    {
+     "question": "Bạn An giỏi gì?",
+     "options": [
+      "Hát",
+      "Vẽ tranh",
+      "Chữ Hán",
+      "Thể thao"
+     ],
+     "correctIndex": 1
+    }
+   ]
+  },
+  {
+   "id": 10,
+   "day": 37,
+   "lesson": "Bài 10",
+   "title": "Phòng của tôi",
+   "textJp": "わたしの へやに つくえと ベッドが あります。つくえの 上に 本や ノートが あります。ベッドの したに ねこが います。まどの 前に いすが あります。こうえんは アパートの となりに あります。",
+   "textVi": "Trong phòng tôi có bàn và giường. Trên bàn có sách, vở… Dưới giường có con mèo. Trước cửa sổ có cái ghế. Công viên ở cạnh căn hộ.",
+   "questions": [
+    {
+     "question": "Trên bàn có gì?",
+     "options": [
+      "Ti vi",
+      "Cái ghế",
+      "Sách, vở",
+      "Con mèo"
+     ],
+     "correctIndex": 2
+    },
+    {
+     "question": "Con mèo ở đâu?",
+     "options": [
+      "Dưới giường",
+      "Trên bàn",
+      "Trước cửa sổ",
+      "Trong công viên"
+     ],
+     "correctIndex": 0
+    },
+    {
+     "question": "Trước cửa sổ có gì?",
+     "options": [
+      "Cái ghế",
+      "Cái giường",
+      "Con mèo",
+      "Sách"
+     ],
+     "correctIndex": 0
+    },
+    {
+     "question": "Công viên ở đâu?",
+     "options": [
+      "Xa căn hộ",
+      "Trước nhà ga",
+      "Sau trường học",
+      "Cạnh căn hộ"
+     ],
+     "correctIndex": 3
+    }
+   ]
+  },
+  {
+   "id": 11,
+   "day": 39,
+   "lesson": "Bài 11",
+   "title": "Gia đình và lớp học",
+   "textJp": "わたしには あにが 一人と いもうとが 二人 います。きのう コンビニで りんごを 六つ かいました。わたしは 一しゅうかんに 三かい にほんごを べんきょうします。きょうしつに 学生が 八人 います。",
+   "textVi": "Tôi có một anh trai và hai em gái. Hôm qua tôi mua 6 quả táo ở cửa hàng tiện lợi. Mỗi tuần tôi học tiếng Nhật 3 lần. Trong lớp học có 8 sinh viên.",
+   "questions": [
+    {
+     "question": "Người viết có anh chị em thế nào?",
+     "options": [
+      "Không có anh chị em",
+      "Một anh trai và hai em gái",
+      "Hai anh trai và một em gái",
+      "Một chị gái và hai em trai"
+     ],
+     "correctIndex": 1
+    },
+    {
+     "question": "Hôm qua người viết mua mấy quả táo?",
+     "options": [
+      "2 quả",
+      "3 quả",
+      "6 quả",
+      "8 quả"
+     ],
+     "correctIndex": 2
+    },
+    {
+     "question": "Mỗi tuần người viết học tiếng Nhật mấy lần?",
+     "options": [
+      "3 lần",
+      "6 lần",
+      "1 lần",
+      "8 lần"
+     ],
+     "correctIndex": 0
+    },
+    {
+     "question": "Trong lớp có bao nhiêu sinh viên?",
+     "options": [
+      "8 người",
+      "6 người",
+      "2 người",
+      "3 người"
+     ],
+     "correctIndex": 0
+    }
+   ]
+  },
+  {
+   "id": 12,
+   "day": 41,
+   "lesson": "Bài 12",
+   "title": "Thời tiết và mùa",
+   "textJp": "きのうは さむかったです。きょうは あたたかいです。ベトナムは 日本より あついです。「なつと ふゆと どちらが すきですか。」「ふゆが すきです。」でも、いちばん すきな きせつは はるです。",
+   "textVi": "Hôm qua trời lạnh. Hôm nay ấm áp. Việt Nam nóng hơn Nhật. \"Mùa hè và mùa đông, bạn thích mùa nào hơn?\" \"Tôi thích mùa đông.\" Nhưng mùa tôi thích nhất là mùa xuân.",
+   "questions": [
+    {
+     "question": "Hôm qua thời tiết thế nào?",
+     "options": [
+      "Lạnh",
+      "Ấm áp",
+      "Nóng",
+      "Mưa"
+     ],
+     "correctIndex": 0
+    },
+    {
+     "question": "So với Nhật, Việt Nam thế nào?",
+     "options": [
+      "Giống nhau",
+      "Nóng hơn",
+      "Lạnh hơn",
+      "Mát hơn"
+     ],
+     "correctIndex": 1
+    },
+    {
+     "question": "Giữa mùa hè và mùa đông, người viết thích mùa nào?",
+     "options": [
+      "Mùa đông",
+      "Cả hai",
+      "Mùa hè",
+      "Không mùa nào"
+     ],
+     "correctIndex": 0
+    },
+    {
+     "question": "Mùa người viết thích nhất là mùa nào?",
+     "options": [
+      "Mùa hè",
+      "Mùa xuân",
+      "Mùa thu",
+      "Mùa đông"
+     ],
+     "correctIndex": 1
+    }
+   ]
+  },
+  {
+   "id": 13,
+   "day": 44,
+   "lesson": "Bài 13",
+   "title": "Điều tôi muốn",
+   "textJp": "わたしは 新しい カメラが ほしいです。らいしゅうの にちようび、デパートへ かいものに 行きます。それから、山へ 行きたいです。山で さんぽしたいです。",
+   "textVi": "Tôi muốn có một cái máy ảnh mới. Chủ nhật tuần sau tôi sẽ đi cửa hàng bách hoá để mua sắm. Sau đó tôi muốn đi núi. Tôi muốn đi dạo trên núi.",
+   "questions": [
+    {
+     "question": "Người viết muốn có gì?",
+     "options": [
+      "Máy tính",
+      "Máy ảnh mới",
+      "Xe đạp",
+      "Túi mới"
+     ],
+     "correctIndex": 1
+    },
+    {
+     "question": "Người viết đến cửa hàng bách hoá để làm gì?",
+     "options": [
+      "Để ăn trưa",
+      "Để mua sắm",
+      "Để gặp bạn",
+      "Để làm việc"
+     ],
+     "correctIndex": 1
+    },
+    {
+     "question": "Người viết muốn làm gì ở núi?",
+     "options": [
+      "Đi dạo",
+      "Chụp ảnh",
+      "Ngủ lại",
+      "Bơi"
+     ],
+     "correctIndex": 0
+    }
+   ]
+  },
+  {
+   "id": 14,
+   "day": 47,
+   "lesson": "Bài 14",
+   "title": "Ngày mưa",
+   "textJp": "いま あめが ふって います。わたしは へやで てがみを 書いて います。ともだちが きました。ともだちの にもつは おもかったです。「にもつを もちましょうか。」「ありがとう。おねがいします。」",
+   "textVi": "Bây giờ trời đang mưa. Tôi đang viết thư trong phòng. Bạn tôi đến. Hành lý của bạn nặng. \"Để tôi mang hành lý giúp nhé?\" \"Cảm ơn. Nhờ bạn nhé.\"",
+   "questions": [
+    {
+     "question": "Bây giờ thời tiết thế nào?",
+     "options": [
+      "Gió to",
+      "Đang mưa",
+      "Nắng đẹp",
+      "Có tuyết"
+     ],
+     "correctIndex": 1
+    },
+    {
+     "question": "Người viết đang làm gì?",
+     "options": [
+      "Đang ngủ",
+      "Đang viết thư",
+      "Đang đọc sách",
+      "Đang nấu ăn"
+     ],
+     "correctIndex": 1
+    },
+    {
+     "question": "Người viết đề nghị giúp bạn việc gì?",
+     "options": [
+      "Gọi taxi",
+      "Mang hành lý",
+      "Viết thư",
+      "Cho mượn ô"
+     ],
+     "correctIndex": 1
+    }
+   ]
+  },
+  {
+   "id": 15,
+   "day": 50,
+   "lesson": "Bài 15",
+   "title": "Ở bảo tàng",
+   "textJp": "わたしは とうきょうに すんで います。ぎんこうで はたらいて います。きのう びじゅつかんへ 行きました。「ここで しゃしんを とっても いいですか。」「いいえ、とっては いけません。」「先生の でんわばんごうを しって いますか。」「いいえ、しりません。」",
+   "textVi": "Tôi sống ở Tokyo. Tôi làm việc ở ngân hàng. Hôm qua tôi đi bảo tàng mỹ thuật. \"Tôi chụp ảnh ở đây có được không?\" \"Không, không được chụp.\" \"Bạn có biết số điện thoại của thầy không?\" \"Không, tôi không biết.\"",
+   "questions": [
+    {
+     "question": "Người viết sống ở đâu?",
+     "options": [
+      "Kyoto",
+      "Tokyo",
+      "Osaka",
+      "Việt Nam"
+     ],
+     "correctIndex": 1
+    },
+    {
+     "question": "Người viết làm việc ở đâu?",
+     "options": [
+      "Bảo tàng",
+      "Bệnh viện",
+      "Trường học",
+      "Ngân hàng"
+     ],
+     "correctIndex": 3
+    },
+    {
+     "question": "Ở bảo tàng có được chụp ảnh không?",
+     "options": [
+      "Không được",
+      "Chỉ được chụp buổi sáng",
+      "Được",
+      "Không ai biết"
+     ],
+     "correctIndex": 0
+    }
+   ]
+  },
+  {
+   "id": 16,
+   "day": 52,
+   "lesson": "Bài 16",
+   "title": "Buổi sáng của tôi",
+   "textJp": "わたしは まいあさ 6時に おきて、シャワーを あびて、あさごはんを たべます。それから、でんしゃで 会社へ 行きます。しごとが おわってから、こうえんを あるきます。わたしの まちは 道が ひろくて、きれいです。",
+   "textVi": "Mỗi sáng tôi dậy lúc 6 giờ, tắm vòi sen rồi ăn sáng. Sau đó tôi đi làm bằng tàu điện. Sau khi xong việc, tôi đi bộ trong công viên. Khu phố của tôi đường rộng và đẹp.",
+   "questions": [
+    {
+     "question": "Dậy xong, người viết làm gì trước?",
+     "options": [
+      "Tắm vòi sen",
+      "Đi tàu điện",
+      "Đi bộ",
+      "Ăn sáng"
+     ],
+     "correctIndex": 0
+    },
+    {
+     "question": "Sau giờ làm, người viết làm gì?",
+     "options": [
+      "Đi uống cà phê",
+      "Đi bộ trong công viên",
+      "Về nhà ngủ",
+      "Đi mua sắm"
+     ],
+     "correctIndex": 1
+    },
+    {
+     "question": "Đường phố trong khu của người viết thế nào?",
+     "options": [
+      "Đông và ồn",
+      "Hẹp và tối",
+      "Rộng và đẹp",
+      "Rộng nhưng bẩn"
+     ],
+     "correctIndex": 2
+    }
+   ]
+  },
+  {
+   "id": 17,
+   "day": 55,
+   "lesson": "Bài 17",
+   "title": "Bị sốt",
+   "textJp": "きのうから ねつが あります。びょういんへ 行きました。いしゃ:「まいにち くすりを のまなければ なりません。きょうは 会社へ 行かなくても いいです。おふろに 入らないで ください。」",
+   "textVi": "Từ hôm qua tôi bị sốt. Tôi đã đi bệnh viện. Bác sĩ: \"Mỗi ngày phải uống thuốc. Hôm nay không cần đi làm cũng được. Đừng tắm bồn nhé.\"",
+   "questions": [
+    {
+     "question": "Người viết bị làm sao?",
+     "options": [
+      "Đau răng",
+      "Bị thương ở tay",
+      "Bị sốt",
+      "Đau chân"
+     ],
+     "correctIndex": 2
+    },
+    {
+     "question": "Mỗi ngày người viết phải làm gì?",
+     "options": [
+      "Tắm bồn",
+      "Uống thuốc",
+      "Đi làm",
+      "Đi bệnh viện"
+     ],
+     "correctIndex": 1
+    },
+    {
+     "question": "Hôm nay có cần đi làm không?",
+     "options": [
+      "Phải đi",
+      "Đi muộn",
+      "Đi buổi chiều",
+      "Không cần"
+     ],
+     "correctIndex": 3
+    },
+    {
+     "question": "Bác sĩ dặn không được làm gì?",
+     "options": [
+      "Uống thuốc",
+      "Ngủ",
+      "Tắm bồn",
+      "Ăn cơm"
+     ],
+     "correctIndex": 2
+    }
+   ]
+  },
+  {
+   "id": 18,
+   "day": 58,
+   "lesson": "Bài 18",
+   "title": "Sở thích của tôi",
+   "textJp": "わたしの しゅみは おんがくを 聞く ことです。わたしは ピアノを ひく ことが できます。ねる まえに、にっきを 書きます。",
+   "textVi": "Sở thích của tôi là nghe nhạc. Tôi có thể chơi piano. Trước khi ngủ, tôi viết nhật ký.",
+   "questions": [
+    {
+     "question": "Sở thích của người viết là gì?",
+     "options": [
+      "Nghe nhạc",
+      "Đọc sách",
+      "Nấu ăn",
+      "Chơi thể thao"
+     ],
+     "correctIndex": 0
+    },
+    {
+     "question": "Người viết có thể làm gì?",
+     "options": [
+      "Lái xe",
+      "Chơi piano",
+      "Bơi",
+      "Chơi ghi-ta"
+     ],
+     "correctIndex": 1
+    },
+    {
+     "question": "Trước khi ngủ người viết làm gì?",
+     "options": [
+      "Đánh răng",
+      "Nghe nhạc",
+      "Viết nhật ký",
+      "Đọc báo"
+     ],
+     "correctIndex": 2
+    }
+   ]
+  },
+  {
+   "id": 19,
+   "day": 61,
+   "lesson": "Bài 19",
+   "title": "Trải nghiệm",
+   "textJp": "わたしは 日本の 山に のぼった ことが あります。にちようびは 本を よんだり、えいがを 見たり します。さいきん、だんだん さむく なりました。日本の 食べものは おいしいです。",
+   "textVi": "Tôi đã từng leo núi ở Nhật. Chủ nhật tôi đọc sách, xem phim… Gần đây trời lạnh dần. Đồ ăn Nhật ngon.",
+   "questions": [
+    {
+     "question": "Người viết đã từng làm gì?",
+     "options": [
+      "Bơi ở biển Nhật",
+      "Đi Shinkansen",
+      "Sống ở Tokyo",
+      "Leo núi ở Nhật"
+     ],
+     "correctIndex": 3
+    },
+    {
+     "question": "Chủ nhật người viết thường làm gì?",
+     "options": [
+      "Leo núi",
+      "Đọc sách, xem phim",
+      "Đi làm thêm",
+      "Nấu ăn"
+     ],
+     "correctIndex": 1
+    },
+    {
+     "question": "Gần đây thời tiết thế nào?",
+     "options": [
+      "Mưa nhiều",
+      "Lạnh dần",
+      "Nóng dần",
+      "Không đổi"
+     ],
+     "correctIndex": 1
+    }
+   ]
+  },
+  {
+   "id": 20,
+   "day": 65,
+   "lesson": "Bài 20",
+   "title": "Nhật ký (thể thân mật)",
+   "textJp": "きょうは 天気が いい。まいにち いそがしいけど、きょうは やすみ。ともだちと 古い 店で コーヒーを のんだ。白い シャツを 買った。安かった。あした また 会社へ 行く。",
+   "textVi": "Hôm nay trời đẹp. Ngày nào cũng bận nhưng hôm nay được nghỉ. Mình uống cà phê với bạn ở một quán cũ. Mình mua một cái áo sơ mi trắng. Rẻ lắm. Mai lại đi làm.",
+   "questions": [
+    {
+     "question": "Hôm nay thời tiết thế nào?",
+     "options": [
+      "Mưa",
+      "Có tuyết",
+      "Lạnh",
+      "Đẹp trời"
+     ],
+     "correctIndex": 3
+    },
+    {
+     "question": "Người viết uống cà phê ở đâu?",
+     "options": [
+      "Ở nhà",
+      "Ở công ty",
+      "Ở một quán cũ",
+      "Ở quán mới"
+     ],
+     "correctIndex": 2
+    },
+    {
+     "question": "Người viết mua gì?",
+     "options": [
+      "Áo sơ mi trắng",
+      "Áo len đen",
+      "Giày trắng",
+      "Túi mới"
+     ],
+     "correctIndex": 0
+    },
+    {
+     "question": "Cái áo giá thế nào?",
+     "options": [
+      "Đắt",
+      "Rẻ",
+      "Không nói",
+      "Bình thường"
+     ],
+     "correctIndex": 1
+    }
+   ]
+  },
+  {
+   "id": 21,
+   "day": 67,
+   "lesson": "Bài 21",
+   "title": "Dự báo",
+   "textJp": "母は 「あした あめが ふる」と 言いました。わたしも あしたは あめが ふると おもいます。来週 こうえんへ 花を 見に 行きます。",
+   "textVi": "Mẹ nói: \"Ngày mai trời sẽ mưa\". Tôi cũng nghĩ mai trời sẽ mưa. Tuần sau tôi sẽ đi công viên ngắm hoa.",
+   "questions": [
+    {
+     "question": "Mẹ nói gì?",
+     "options": [
+      "Hôm nay lạnh",
+      "Ngày mai trời đẹp",
+      "Tuần sau đi ngắm hoa",
+      "Ngày mai trời sẽ mưa"
+     ],
+     "correctIndex": 3
+    },
+    {
+     "question": "Người viết nghĩ gì về ngày mai?",
+     "options": [
+      "Không biết",
+      "Trời sẽ nắng",
+      "Sẽ có tuyết",
+      "Trời sẽ mưa"
+     ],
+     "correctIndex": 3
+    },
+    {
+     "question": "Tuần sau người viết làm gì?",
+     "options": [
+      "Về quê",
+      "Đi bơi",
+      "Đi công viên ngắm hoa",
+      "Đi mua ô"
+     ],
+     "correctIndex": 2
+    }
+   ]
+  },
+  {
+   "id": 22,
+   "day": 69,
+   "lesson": "Bài 22",
+   "title": "Bánh của bạn",
+   "textJp": "これは 友だちが つくった ケーキです。わたしが すんで いる まちは しずかです。きのう 読んだ 本は おもしろかったです。あしたは 友だちと 会う やくそくが あります。",
+   "textVi": "Đây là cái bánh do bạn tôi làm. Khu phố tôi đang sống thì yên tĩnh. Quyển sách tôi đọc hôm qua rất thú vị. Ngày mai tôi có hẹn gặp bạn.",
+   "questions": [
+    {
+     "question": "Cái bánh do ai làm?",
+     "options": [
+      "Người viết",
+      "Cửa hàng bánh",
+      "Bạn của người viết",
+      "Mẹ của người viết"
+     ],
+     "correctIndex": 2
+    },
+    {
+     "question": "Quyển sách đọc hôm qua thế nào?",
+     "options": [
+      "Dài",
+      "Thú vị",
+      "Khó",
+      "Chán"
+     ],
+     "correctIndex": 1
+    },
+    {
+     "question": "Ngày mai người viết có việc gì?",
+     "options": [
+      "Đi làm",
+      "Đi mua bánh",
+      "Không có việc gì",
+      "Có hẹn gặp bạn"
+     ],
+     "correctIndex": 3
+    }
+   ]
+  },
+  {
+   "id": 23,
+   "day": 72,
+   "lesson": "Bài 23",
+   "title": "Hồi nhỏ",
+   "textJp": "子どもの とき、よく 川で およぎました。休みの とき、父と 山へ 行きました。駅で この ボタンを おすと、きっぷが 出ます。",
+   "textVi": "Hồi nhỏ, tôi hay bơi ở sông. Những lúc được nghỉ, tôi cùng bố đi núi. Ở nhà ga, ấn nút này thì vé sẽ ra.",
+   "questions": [
+    {
+     "question": "Hồi nhỏ người viết hay làm gì?",
+     "options": [
+      "Bơi ở sông",
+      "Đọc sách",
+      "Leo cây",
+      "Đi tàu"
+     ],
+     "correctIndex": 0
+    },
+    {
+     "question": "Những ngày nghỉ người viết đi đâu với bố?",
+     "options": [
+      "Đi núi",
+      "Đi nhà ga",
+      "Đi biển",
+      "Đi chợ"
+     ],
+     "correctIndex": 0
+    },
+    {
+     "question": "Ấn nút thì sao?",
+     "options": [
+      "Cửa sẽ mở",
+      "Tiền sẽ ra",
+      "Đèn sẽ sáng",
+      "Vé sẽ ra"
+     ],
+     "correctIndex": 3
+    }
+   ]
+  },
+  {
+   "id": 24,
+   "day": 74,
+   "lesson": "Bài 24",
+   "title": "Được giúp đỡ",
+   "textJp": "母が セーターを おくって くれました。友だちに 日本語を おしえて もらいました。わたしは 友だちに ベトナムの りょうりを つくって あげました。雨の 日に、友だちが かさを かして くれました。",
+   "textVi": "Mẹ đã gửi cho tôi cái áo len. Tôi được bạn dạy tiếng Nhật. Tôi đã nấu món ăn Việt Nam cho bạn. Vào ngày mưa, bạn đã cho tôi mượn ô.",
+   "questions": [
+    {
+     "question": "Mẹ gửi cho người viết cái gì?",
+     "options": [
+      "Ô",
+      "Áo len",
+      "Sách",
+      "Thức ăn"
+     ],
+     "correctIndex": 1
+    },
+    {
+     "question": "Người viết được bạn dạy gì?",
+     "options": [
+      "Chơi piano",
+      "Lái xe",
+      "Tiếng Nhật",
+      "Nấu ăn"
+     ],
+     "correctIndex": 2
+    },
+    {
+     "question": "Người viết làm gì cho bạn?",
+     "options": [
+      "Nấu món ăn Việt Nam",
+      "Dạy tiếng Việt",
+      "Gửi áo len",
+      "Cho mượn ô"
+     ],
+     "correctIndex": 0
+    },
+    {
+     "question": "Ngày mưa, bạn đã làm gì cho người viết?",
+     "options": [
+      "Đưa về nhà",
+      "Cho mượn ô",
+      "Gọi taxi",
+      "Cho mượn áo khoác"
+     ],
+     "correctIndex": 1
+    }
+   ]
+  },
+  {
+   "id": 25,
+   "day": 76,
+   "lesson": "Bài 25",
+   "title": "Nếu…",
+   "textJp": "もし 雨が ふったら、うちで 本を 読みます。雨が ふっても、会社へ 行かなければ なりません。もし お金が たくさん あったら、日本を りょこうしたいです。いくら かんがえても、この もんだいは わかりません。",
+   "textVi": "Nếu trời mưa, tôi sẽ đọc sách ở nhà. Dù trời mưa, tôi vẫn phải đi làm. Giả sử có nhiều tiền, tôi muốn đi du lịch Nhật Bản. Dù nghĩ bao nhiêu, tôi vẫn không hiểu câu hỏi này.",
+   "questions": [
+    {
+     "question": "Nếu trời mưa, người viết sẽ làm gì?",
+     "options": [
+      "Đi mua ô",
+      "Đi du lịch",
+      "Đọc sách ở nhà",
+      "Đi làm"
+     ],
+     "correctIndex": 2
+    },
+    {
+     "question": "Dù trời mưa, người viết vẫn phải làm gì?",
+     "options": [
+      "Đi bệnh viện",
+      "Đi học",
+      "Ở nhà",
+      "Đi làm"
+     ],
+     "correctIndex": 3
+    },
+    {
+     "question": "Nếu có nhiều tiền, người viết muốn làm gì?",
+     "options": [
+      "Về Việt Nam",
+      "Du lịch Nhật Bản",
+      "Mua nhà",
+      "Mua xe"
+     ],
+     "correctIndex": 1
+    },
+    {
+     "question": "Câu hỏi \"この もんだい\" thế nào với người viết?",
+     "options": [
+      "Nghĩ mãi vẫn không hiểu",
+      "Chưa đọc",
+      "Hiểu ngay",
+      "Rất dễ"
+     ],
+     "correctIndex": 0
+    }
+   ]
+  }
+ ]
+}

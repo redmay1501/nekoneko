@@ -34,7 +34,7 @@ export interface GameRecord {
 
 export type GameRecords = Record<string, GameRecord>;
 
-/** Tối đa chừng này kỷ lục mỗi người (mỗi phạm vi một kỷ lục) — bỏ phạm vi chơi lâu nhất khi vượt. */
+/** Tối đa chừng này kỷ lục cho MỖI loại trò / bài (mỗi phạm vi một kỷ lục) — bỏ phạm vi chơi lâu nhất khi vượt. */
 const MAX_RECORDS = 40;
 
 export function gameRecordKey(game: string, scope: string): string {
@@ -62,7 +62,10 @@ export function mergeGameRecord(records: GameRecords, key: string, result: GameR
     lastPlayedAt: now.toISOString(),
   };
   const merged = { ...records, [key]: record };
-  const kept = Object.entries(merged).sort(([, left], [, right]) => right.lastPlayedAt.localeCompare(left.lastPlayedAt)).slice(0, MAX_RECORDS);
+  // Giới hạn TỪNG loại (phần trước dấu ":" — match, doc…): chơi Ghép thẻ nhiều không đẩy mất kết quả bài đọc.
+  const gameOf = (recordKey: string) => recordKey.split(':')[0];
+  const newestFirst = Object.entries(merged).sort(([, left], [, right]) => right.lastPlayedAt.localeCompare(left.lastPlayedAt));
+  const kept = newestFirst.filter(([recordKey], index) => newestFirst.slice(0, index).filter(([other]) => gameOf(other) === gameOf(recordKey)).length < MAX_RECORDS);
   return { records: Object.fromEntries(kept), record, isNewBest };
 }
 

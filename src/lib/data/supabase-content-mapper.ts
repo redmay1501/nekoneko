@@ -47,7 +47,8 @@ export function contentFromRows(rows: ContentRows): N5Content {
     jlptGrammar: rows.jlptGrammar.map((row) => ({ ...row })),
     studyResources: rows.studyResources.map((row) => ({ id: row.id, source: row.source, usedFor: row.used_for, howTo: row.how_to })),
     readingPassages: rows.readingPassages.map((row) => ({
-      id: row.id, day: row.day, lesson: row.lesson, textJp: row.text_jp, questions: row.questions,
+      // Bảng chưa có tiêu đề / bản dịch — bài đọc thật lấy từ repo (lib/data/reading-passages.ts).
+      id: row.id, day: row.day, lesson: row.lesson, title: '', textJp: row.text_jp, textVi: '', questions: row.questions,
     })),
     practiceTemplates: rows.practiceTemplates.map((row) => ({
       id: row.id, kind: row.kind, contextJp: row.context_jp, sentenceJp: row.sentence_jp, promptVi: row.prompt_vi,

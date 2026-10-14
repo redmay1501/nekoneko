@@ -164,3 +164,12 @@ API: không đổi (thêm tham số phạm vi trang). Database: không đổi sc
 - Chữ cái trong trang học của ngày: bước "Chữ cái" (thẻ lật + thứ tự nét, "Chữ → cách đọc", "Cách đọc → chữ", ghi trí nhớ) đứng
   trước Từ vựng. Trước đó ngày 6, 8–13 (chữ cái + vài từ) mở trang học chỉ có Từ vựng — bỏ sót chữ cái. Nay mọi ngày có kiến
   thức mới đều dùng trang học của ngày; ngày ôn tuần mở phiên ôn kiến thức của tuần.
+
+## 2026-10-14 — Đọc hiểu thành hệ thống bài
+- 25 bài đọc Neko soạn (content/seed/reading-passages.json), mỗi bài Minna 1–25 một bài, 3–4 câu hỏi, có tiêu đề và bản
+  dịch. Chỉ dùng chữ Hán đã học tới ngày của bài (chữ chưa học viết kana), đặt sau khi học xong bài Minna đó — kiểm tra tự
+  động trong reading-passages.test.ts. Bài cũ (id 1) dùng chữ chưa học nên được soạn lại, giữ id. Cần duyệt thủ công.
+- App đọc bài từ repo ở mọi chế độ (bảng reading_passages chưa có cột tiêu đề / bản dịch; không cần migration).
+- /luyen-tap/doc: danh sách bài, đã làm X/25, điểm cao nhất, "Làm tiếp" bài nên làm. /luyen-tap/doc/[id]: mỗi câu chọn một
+  lần, điểm + bản dịch, "Làm lại", "Bài tiếp theo". Kết quả lưu ở user_settings.game_records (khoá doc:bai-N) qua
+  POST /api/reading/result; giới hạn 40 kỷ lục nay tính riêng cho từng loại (Ghép thẻ không đẩy mất kết quả bài đọc).

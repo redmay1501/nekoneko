@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ModalPortal } from '@/components/common/ModalPortal';
 import { MAX_FOCUS_ITEMS, focusSessionHref } from '@/features/learning/session-modes';
 import type { TestGroup } from '@/features/learning/study-actions';
@@ -12,6 +12,12 @@ interface TestPickerProps {
   /** Mặt chữ dài (từ vựng, mẫu câu) → ô rộng hơn. */
   isWide?: boolean;
 }
+
+/** Số câu mỗi lần kiểm tra (mỗi câu một mục); "Tất cả" = mọi mục đã chọn (tối đa MAX_FOCUS_ITEMS). */
+const QUESTION_COUNTS = [10, 20, 30, 50] as const;
+const ALL = 0;
+const DEFAULT_COUNT = 20;
+const COUNT_STORAGE_KEY = 'test-picker:count';
 
 /** Lấy ngẫu nhiên tối đa `limit` mục (chọn quá nhiều thì mỗi lần kiểm tra một phần, lần sau phần khác). */
 function sample<T>(items: readonly T[], limit: number): T[] {
@@ -24,7 +30,7 @@ function sample<T>(items: readonly T[], limit: number): T[] {
 }
 
 /**
- * MỘT nút "Kiểm tra" → bảng chọn: tất cả, chỉ chữ đã học, cả nhóm, hoặc từng chữ → bắt đầu.
+ * MỘT nút "Kiểm tra" → bảng chọn: tất cả, chỉ chữ đã học, cả nhóm, hoặc từng chữ → chọn số câu (10 · 20 · 30 · 50 · tất cả) → bắt đầu.
  * Bài kiểm tra là phiên "Học theo lựa chọn": thứ đã học được hỏi lại (ghi trí nhớ thật); thứ chưa học được giới thiệu trước.
  */
 export function TestPicker({ groups, unit, isWide = false }: TestPickerProps) {
@@ -34,6 +40,22 @@ export function TestPicker({ groups, unit, isWide = false }: TestPickerProps) {
   const allKeys = groups.flatMap((group) => group.entries.map((entry) => entry.key));
   const learnedKeys = groups.flatMap((group) => group.entries.filter((entry) => entry.isLearned).map((entry) => entry.key));
   const isAllSelected = selected.size === allKeys.length;
+  /** Số câu đã chọn (0 = tất cả). Nhớ lần chọn trước trên máy này. */
+  const [count, setCount] = useState<number>(DEFAULT_COUNT);
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(COUNT_STORAGE_KEY);
+      if (raw === null) return;
+      const saved = Number(raw);
+      if (saved === ALL || QUESTION_COUNTS.includes(saved as (typeof QUESTION_COUNTS)[number])) setCount(saved);
+    } catch { /* trình duyệt chặn lưu — dùng mặc định */ }
+  }, []);
+  function chooseCount(value: number) {
+    setCount(value);
+    try { localStorage.setItem(COUNT_STORAGE_KEY, String(value)); } catch { /* bỏ qua */ }
+  }
+  const allLimit = Math.min(selected.size, MAX_FOCUS_ITEMS);
+  const questionCount = count === ALL ? allLimit : Math.min(count, allLimit);
 
   const setMany = (keys: readonly string[], on: boolean) => setSelected((current) => {
     const next = new Set(current);
@@ -41,7 +63,7 @@ export function TestPicker({ groups, unit, isWide = false }: TestPickerProps) {
     return next;
   });
   const toggle = (key: string) => setMany([key], !selected.has(key));
-  const start = () => router.push(focusSessionHref(sample([...selected], MAX_FOCUS_ITEMS)));
+  const start = () => router.push(focusSessionHref(sample([...selected], questionCount)));
 
   return (
     <>
@@ -84,12 +106,25 @@ export function TestPicker({ groups, unit, isWide = false }: TestPickerProps) {
             );
           })}
           <div className="test-start">
-            {selected.size > MAX_FOCUS_ITEMS ? (
-              <p className="tiny muted mb-1.5">Mỗi lần kiểm tra tối đa {MAX_FOCUS_ITEMS} {unit} — lấy ngẫu nhiên trong số bạn chọn.</p>
+            {selected.size ? (
+              <div className="test-count" role="radiogroup" aria-label="Số câu mỗi lần">
+                <span className="sm">Số câu:</span>
+                {QUESTION_COUNTS.filter((value) => value < selected.size).map((value) => (
+                  <button key={value} type="button" role="radio" aria-checked={count === value}
+                    className={`chip ${count === value ? 'pink' : ''}`} onClick={() => chooseCount(value)}>{value}</button>
+                ))}
+                <button type="button" role="radio" aria-checked={count === ALL || count >= selected.size}
+                  className={`chip ${count === ALL || count >= selected.size ? 'pink' : ''}`} onClick={() => chooseCount(ALL)}>
+                  Tất cả ({allLimit})
+                </button>
+              </div>
+            ) : null}
+            {questionCount < selected.size ? (
+              <p className="tiny muted mb-1.5">Lấy ngẫu nhiên {questionCount} trong {selected.size} {unit} đã chọn — lần sau sẽ ra {unit} khác.</p>
             ) : null}
             {selected.size ? (
               <button type="button" className="btn block" onClick={start}>
-                ▶ Bắt đầu kiểm tra · {Math.min(selected.size, MAX_FOCUS_ITEMS)} {unit}
+                ▶ Bắt đầu kiểm tra · {questionCount} câu
               </button>
             ) : (
               <button type="button" className="btn block" disabled>Chọn ít nhất một {unit}</button>

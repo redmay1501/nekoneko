@@ -25,7 +25,7 @@ export function KnowledgePrefetcher() {
 
   useEffect(() => {
     // Phiên học / trò chơi không có thẻ để bấm xem chi tiết, lại đổi DOM liên tục (đồng hồ, câu hỏi) → không theo dõi.
-    if (pathname.startsWith('/hoc/') || pathname.startsWith('/luyen-tap/ghep-the')) return;
+    if (pathname.startsWith('/hoc/') || pathname.startsWith('/tro-choi/')) return;
     const pending = new Set<string>();
     let timer: number | undefined;
     const hasDetail = (key: string) => queryClient.getQueryData(QUERY_KEYS.knowledgeDetail(key)) !== undefined;

@@ -1182,3 +1182,11 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 .range-multi-bar{position:sticky;bottom:0;z-index:2;margin:16px -18px calc(-22px - var(--safe-b));padding:12px 18px calc(12px + var(--safe-b));
   display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;border-top:1px solid var(--line);box-shadow:0 -6px 16px rgba(96,72,66,.06)}
 .test-count{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:8px}.test-count .chip{min-height:36px;padding:6px 12px}
+/* ── Trò chơi (/tro-choi) ── */
+.game-list{display:grid;gap:10px;grid-template-columns:1fr}
+@media (min-width:768px){.game-list{grid-template-columns:1fr 1fr}}
+.game-card{display:flex;align-items:center;gap:12px;text-align:left;color:inherit}
+.game-card-icon{flex:0 0 auto;width:56px;height:56px;border-radius:18px;display:grid;place-items:center;font-size:32px;background:var(--cream)}
+.game-card-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.game-card-play{flex:0 0 auto}
+.game-card.is-soon{opacity:.7;border-style:dashed}

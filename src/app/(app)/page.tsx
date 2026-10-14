@@ -82,9 +82,9 @@ export default async function HomePage() {
 
       {/* Trò chơi ôn tập — lựa chọn thêm, nhỏ gọn, không thay việc học hôm nay. Chỉ khi đã có từ để chơi. */}
       {overview.learnedCount >= MIN_MATCH_POOL ? (
-        <Link className="dash-game-link" href="/luyen-tap/ghep-the">
-          <span aria-hidden="true">🃏</span>
-          <span><b>Chơi game ôn tập</b> · Ghép thẻ từ đã học, phá kỷ lục của bạn</span>
+        <Link className="dash-game-link" href="/tro-choi">
+          <span aria-hidden="true">🎮</span>
+          <span><b>Trò chơi ôn tập</b> · Chọn trò, ôn từ đã học, phá kỷ lục của bạn</span>
           <span className="dash-game-arrow" aria-hidden="true">›</span>
         </Link>
       ) : null}

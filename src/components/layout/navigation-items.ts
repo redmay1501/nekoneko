@@ -15,13 +15,12 @@ export const LEARNING_LINKS: NavigationItem[] = [
   { href: '/hoc-tap/ngu-phap', icon: '📐', label: 'Ngữ pháp' },
 ];
 
-/** Luyện kỹ năng và trò chơi — gom trong mục Luyện tập (không lẫn với kho kiến thức Học tập). */
+/** Luyện kỹ năng — gom trong mục Luyện tập (trò chơi có mục riêng "Trò chơi"). */
 export const PRACTICE_LINKS: NavigationItem[] = [
   { href: '/luyen-tap/nghe', icon: 'neko:listening', label: 'Luyện nghe' },
   { href: '/luyen-tap/noi', icon: 'neko:speaking', label: 'Luyện nói' },
   { href: '/luyen-tap/doc', icon: 'neko:reading', label: 'Đọc hiểu' },
   { href: '/luyen-tap/viet', icon: 'neko:writing', label: 'Luyện viết' },
-  { href: '/luyen-tap/ghep-the', icon: '🃏', label: 'Ghép thẻ' },
 ];
 
 export interface NavigationGroup {
@@ -37,6 +36,8 @@ export const NAVIGATION_GROUPS: NavigationGroup[] = [
       { href: '/', icon: 'neko:home', label: 'Trang chủ' },
       { href: '/lo-trinh', icon: 'neko:roadmap', label: 'Lộ trình' },
       { href: '/luyen-tap', icon: 'neko:practice', label: 'Luyện tập', children: PRACTICE_LINKS },
+      // Một mục chung cho mọi trò chơi — trang /tro-choi để chọn trò (thêm trò mới ở features/games/game-catalog.ts).
+      { href: '/tro-choi', icon: '🎮', label: 'Trò chơi' },
     ],
   },
   {

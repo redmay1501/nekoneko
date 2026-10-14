@@ -66,7 +66,7 @@ export default async function TinyWinPage({ searchParams }: { searchParams: Prom
       ) : null}
       <NokoMessage state="achievement" className="mt-4" />
       {learnedWordsThisSession >= MIN_MATCH_POOL ? (
-        <Link className="card tight block mt-4" href="/luyen-tap/ghep-the?loai=tu-vung&pham-vi=vua-hoc" style={{ textAlign: 'left', background: 'var(--sky)', borderColor: 'transparent' }}>
+        <Link className="card tight block mt-4" href="/tro-choi/ghep-the?loai=tu-vung&pham-vi=vua-hoc" style={{ textAlign: 'left', background: 'var(--sky)', borderColor: 'transparent' }}>
           <p className="sm"><b>🃏 Bạn vừa học {learnedWordsThisSession} từ.</b> Thử ghép thẻ để xem mình nhớ được bao nhiêu nhé!</p>
         </Link>
       ) : null}

@@ -68,6 +68,9 @@ export const VIDEO_TOPICS = library.topics;
 export const VIDEO_STYLE_LABELS = Object.fromEntries(library.styles.map((style) => [style.id, style.label])) as Record<VideoStyle, string>;
 export const LEVEL_LABELS: Record<VideoLevel, string> = { N5: 'N5', 'N5-N4': 'N5 – có phần N4' };
 
+/** Mọi video trong tệp, kể cả đang chờ duyệt / lưu trữ — chỉ dùng cho trang admin. */
+export const ALL_LISTENING_VIDEOS: readonly ListeningVideo[] = library.videos;
+
 /** Video người học thấy: đã xuất bản; video nhúng phải có mã YouTube hợp lệ. */
 export const LISTENING_VIDEOS: readonly ListeningVideo[] = library.videos.filter((video) =>
   video.status === 'published' && (!video.embeddable || (video.youtubeId !== null && YOUTUBE_ID.test(video.youtubeId))));

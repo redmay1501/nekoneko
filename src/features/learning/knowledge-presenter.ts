@@ -1,6 +1,7 @@
 import { canRomanize, kanjiReadingRomaji, sentenceRomaji, vocabularyRomaji } from '@/lib/utils/romaji';
 import { firstMeaning } from '@/lib/utils/text';
-import { vocabularyImageOf } from './vocabulary-images';
+import { learnerImageOf } from './vocabulary-images';
+import type { ContentImage } from '@/types/content';
 import { type ContextExample, type KanaExampleWord, kanaExampleWords, pickContextExample } from './context-index';
 import type { MemoryView } from '@/features/memory/memory-types';
 import { speechTextFor } from './speech-text';
@@ -41,8 +42,8 @@ export interface DiscoverCard {
   romaji?: string;
   /** Câu ví dụ có kiến thức này — kèm thứ người học ĐÃ GẶP trong câu (kiến thức cũ quay lại). */
   example?: ContextExample | null;
-  /** Ảnh minh hoạ (chỉ danh từ cụ thể có icon khớp nghĩa). */
-  imageSrc?: string | null;
+  /** Ảnh minh hoạ: ảnh admin tải lên, hoặc icon có sẵn của danh từ cụ thể. */
+  image?: ContentImage | null;
   /** Chữ cái: vài từ bắt đầu bằng chữ này ("あ trong あなた — bạn"). */
   exampleWords?: KanaExampleWord[];
 }
@@ -75,8 +76,9 @@ export function buildDiscoverCard(
   const card = buildBaseDiscoverCard(item, catalog, journeyDay);
   if (item.type === 'hiragana' || item.type === 'katakana') return { ...card, exampleWords: kanaExampleWords(catalog, item) };
   // Ngữ pháp đã có câu mẫu riêng trong thẻ → chỉ thêm ngữ cảnh cho từ vựng / kanji.
-  if (item.type === 'vocabulary') return { ...card, example: pickContextExample(catalog, item, memoryViews), imageSrc: vocabularyImageOf(item.id) };
-  if (item.type === 'kanji') return { ...card, example: pickContextExample(catalog, item, memoryViews) };
+  if (item.type === 'vocabulary') return { ...card, example: pickContextExample(catalog, item, memoryViews), image: learnerImageOf('vocabulary', item.content) };
+  if (item.type === 'kanji') return { ...card, example: pickContextExample(catalog, item, memoryViews), image: learnerImageOf('kanji', item.content) };
+  if (item.type === 'radical' || item.type === 'grammar') return { ...card, image: learnerImageOf(item.type, item.content) };
   return card;
 }
 

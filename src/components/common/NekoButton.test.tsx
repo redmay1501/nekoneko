@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { existsSync } from 'node:fs';
 
+// eslint-disable-next-line @next/next/no-img-element -- mock của next/image trong test
 vi.mock('next/image', () => ({ default: (props: { src: string; alt: string; className?: string }) => <img src={props.src} alt={props.alt} className={props.className} /> }));
 vi.mock('next/link', () => ({ default: ({ href, children, ...rest }: { href: string; children: React.ReactNode }) => <a href={href} {...rest}>{children}</a> }));
 

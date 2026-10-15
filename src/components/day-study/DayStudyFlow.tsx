@@ -14,6 +14,7 @@ import {
 } from '@/features/learning/day-study-quiz';
 import { MAX_FOCUS_ITEMS, focusSessionHref } from '@/features/learning/session-modes';
 import { Flashcards } from './Flashcards';
+import { ContentImageView } from '@/components/common/ContentImageView';
 import { GrammarPractice } from './GrammarPractice';
 import { StudyQuiz } from './StudyQuiz';
 
@@ -226,6 +227,7 @@ function VocabFront({ card }: { card: StudyVocabCard }) {
 function VocabBack({ card }: { card: StudyVocabCard }) {
   return (
     <>
+      <ContentImageView image={card.image} size={72} />
       <span className="fit-box"><span className="glyph fit-text" style={fitTextStyle(card.face, 34, 22)}>{card.face}</span></span>
       {card.kanji ? <span className="jp">{card.kana}</span> : null}
       <span className="romaji">{card.romaji}</span>
@@ -244,6 +246,7 @@ function VocabBack({ card }: { card: StudyVocabCard }) {
 function KanjiBack({ card }: { card: StudyKanjiCard }) {
   return (
     <>
+      <ContentImageView image={card.image} size={72} />
       <span className="row" style={{ gap: 12, alignItems: 'center', justifyContent: 'center' }}>
         <span className="glyph" style={{ fontSize: 44 }}>{card.character}</span>
         <span style={{ textAlign: 'left' }}><b>{card.hanViet}</b><br /><span className="sm">{card.meaning}</span></span>
@@ -273,6 +276,7 @@ function KanjiBack({ card }: { card: StudyKanjiCard }) {
 function RadicalBack({ card }: { card: StudyRadicalCard }) {
   return (
     <>
+      <ContentImageView image={card.image} size={72} />
       <span className="row" style={{ gap: 12, alignItems: 'center', justifyContent: 'center' }}>
         <span className="glyph" style={{ fontSize: 44 }}>{card.glyph}</span>
         <span style={{ textAlign: 'left' }}><b>Bộ {card.meaning}</b><br /><span className="sm jp soft">{card.name}</span></span>

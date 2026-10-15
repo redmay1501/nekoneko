@@ -814,6 +814,8 @@ input[type="radio"]{appearance:auto;-webkit-appearance:radio;width:18px;height:1
 .login-input input::placeholder{color:#C8B3AD;font-weight:400}
 .login-eye{display:grid;place-items:center;width:2.4em;height:2.4em;border-radius:999px;color:#C79C93}
 .login-eye:hover{background:#FFF0F2;color:#F07B8C}
+.login-forgot{align-self:flex-end;margin-top:-.3em;font-size:.82em;font-weight:600;color:#C2566A;text-decoration:underline;text-underline-offset:2px}
+.login-forgot:disabled{opacity:.6}
 .login-message{margin:0;padding:.6em .9em;border-radius:16px;background:#FFF1F3;color:#B4475A;font-size:.85em;line-height:1.45}
 .login-submit{position:relative;display:flex;align-items:center;justify-content:center;gap:.5em;min-height:3.25em;margin-top:.2em;
   border-radius:999px;overflow:hidden;color:#fff;font-size:1.04em;font-weight:700;letter-spacing:.01em;text-decoration:none;
@@ -1306,3 +1308,7 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 .test-open{display:inline-flex;align-items:center;gap:6px}
 .test-face .check-circle-icon{margin-right:4px;vertical-align:-2px}
 .test-cell.on .test-face .check-circle-icon{color:var(--sakura-deep,#E24159)}
+
+/* Ảnh minh hoạ nội dung (admin tải lên) — khung cố định, ảnh vừa khung không méo. */
+.content-image{object-fit:contain;border-radius:var(--r-s);background:var(--card);display:block;flex:0 0 auto}
+.flashcard .content-image{margin:0 auto 8px}

@@ -5,6 +5,7 @@
  *
  * - Idempotent: chạy lại bao nhiêu lần cũng được (upsert theo khoá chính).
  * - KHÔNG BAO GIỜ đụng tới bảng trí nhớ (memory_items, review_events, learning_sessions…).
+ * - CHÚ Ý: ghi đè các cột nội dung bằng giá trị trong file → sửa đổi làm ở /admin trên cùng id sẽ mất. Chỉ chạy khi chủ ý.
  * - Dùng SUPABASE_SERVICE_ROLE_KEY → chỉ chạy trên máy dev / CI, không bao giờ ở trình duyệt.
  */
 import { type SupabaseClient, createClient } from '@supabase/supabase-js';
@@ -54,12 +55,16 @@ async function removeStaleDayTasks(supabase: SupabaseClient, seeded: { day: numb
   if (stale.length) console.log(`✓ đã xoá ${stale.length} đầu việc không còn trong lộ trình`);
 }
 
-/** Mục nội dung đã bị bỏ khỏi file (ví dụ từ vựng trùng — scripts/roadmap_adjustments.py) → xoá khỏi database. */
+/**
+ * Mục nội dung đã bị bỏ khỏi file (ví dụ từ vựng trùng — scripts/roadmap_adjustments.py) → xoá khỏi database.
+ * Mục admin thêm ở /admin có id lớn hơn mọi id trong file → không bao giờ bị xoá ở đây.
+ */
 async function removeStaleById(supabase: SupabaseClient, table: string, keepIds: number[]) {
   const keep = new Set(keepIds);
+  const maxSeedId = Math.max(...keepIds);
   const { data, error } = await supabase.from(table).select('id');
   if (error) throw new Error(`đọc ${table}: ${error.message}`);
-  const stale = (data as { id: number }[]).map((row) => row.id).filter((id) => !keep.has(id));
+  const stale = (data as { id: number }[]).map((row) => row.id).filter((id) => id <= maxSeedId && !keep.has(id));
   if (!stale.length) return;
   const removal = await supabase.from(table).delete().in('id', stale);
   if (removal.error) throw new Error(`xoá ${table}: ${removal.error.message}`);

@@ -1,4 +1,5 @@
 import rawVocabularyImages from '@content/seed/vocabulary-images.json';
+import type { ContentImage } from '@/types/content';
 
 export type ImageStatus = 'none' | 'reference_only' | 'approved' | 'needs_review';
 export type ImageQuality = 'good' | 'ambiguous' | 'wrong';
@@ -64,4 +65,19 @@ export function vocabularyImageSourcePath(asset: VocabularyImageAsset): string |
 
 export function vocabularyImageFile(sourcePath: string): string {
   return sourcePath.split('/').at(-1)!.replace(/_3d(_default)?\.png$/, '.png');
+}
+
+/**
+ * Ảnh hiển thị cho người học: ảnh admin tải lên (Supabase Storage) trước, rồi tới icon có sẵn của từ vựng.
+ * alt: mô tả admin nhập, thiếu thì dùng nghĩa của mục. Không có ảnh → null (giao diện bỏ khung ảnh).
+ */
+export function learnerImageOf(
+  type: 'vocabulary' | 'kanji' | 'radical' | 'grammar',
+  content: { id: number; meaning?: string; usage?: string; image?: ContentImage | null },
+): ContentImage | null {
+  const fallbackAlt = content.meaning ?? content.usage ?? '';
+  if (content.image?.url) return { url: content.image.url, alt: content.image.alt || fallbackAlt };
+  if (type !== 'vocabulary') return null;
+  const bundled = vocabularyImageOf(content.id);
+  return bundled ? { url: bundled, alt: fallbackAlt } : null;
 }

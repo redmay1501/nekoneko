@@ -46,6 +46,16 @@ export function SignInForm({ redirectTo, hasConfirmationError }: { redirectTo: s
     router.refresh();
   }
 
+  async function sendResetLink() {
+    if (!email.includes('@')) { setMessage('Nhập email của bạn trước, rồi bấm "Quên mật khẩu?" nhé.'); return; }
+    setIsBusy(true);
+    const { error } = await createBrowserSupabaseClient().auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/dat-lai-mat-khau` });
+    setIsBusy(false);
+    // Không cho biết email có tài khoản hay không.
+    setMessage(error?.status === 429 ? 'Bạn vừa yêu cầu rồi — đợi một lúc rồi thử lại nhé.'
+      : 'Nếu email này có tài khoản, Neko đã gửi liên kết đặt lại mật khẩu. Mở email trên chính trình duyệt này nhé 🌸');
+  }
+
   async function signInWithGoogle() {
     const supabase = createBrowserSupabaseClient();
     const { error } = await supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: callbackUrl() } });
@@ -90,6 +100,9 @@ export function SignInForm({ redirectTo, hasConfirmationError }: { redirectTo: s
         </span>
       </label>
 
+      {mode === 'sign-in' ? (
+        <button type="button" className="login-forgot" onClick={sendResetLink} disabled={isBusy}>Quên mật khẩu?</button>
+      ) : null}
       {message ? <p className="login-message" role="status">{message}</p> : null}
 
       <button type="submit" className="login-submit" disabled={isBusy} aria-busy={isBusy}>

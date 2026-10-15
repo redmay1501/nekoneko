@@ -3,6 +3,8 @@ import type { GameRecords } from '@/features/games/match-game';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { unstable_cache } from 'next/cache';
 import { withReadingPassages } from './reading-passages';
+import { applyContentOverlays, type ContentImageRow, type ContentStatusRow, storagePublicUrl } from './content-overlays';
+import { publicEnv } from '@/config/env';
 import type { ContentType } from '@/features/learning/knowledge-types';
 import type { SessionMode } from '@/features/learning/session-modes';
 import type { JourneyAdvanceResult, JourneyCompletionMethod } from '@/features/roadmap/journey-progress';
@@ -56,12 +58,34 @@ const fetchCachedContent = unstable_cache(
         return [key, rows] as const;
       }),
     );
+    const overlays = await fetchAdminOverlays(client);
     // Bài đọc hiểu đọc từ repo (có tiêu đề + bản dịch) — xem lib/data/reading-passages.ts.
-    return withReadingPassages(contentFromRows(Object.fromEntries(entries) as unknown as ContentRows));
+    const content = withReadingPassages(contentFromRows(Object.fromEntries(entries) as unknown as ContentRows));
+    return applyContentOverlays(content, overlays.statuses, overlays.images,
+      (path) => storagePublicUrl(publicEnv.supabaseUrl, 'content-media', path));
   },
   ['neko-neko-n5-content-v2'],
   { revalidate: CONTENT_CACHE_SECONDS, tags: ['content'] },
 );
+
+/**
+ * Trạng thái biên tập + ảnh minh hoạ do admin quản lý. Bảng chưa có (chưa chạy migration admin) hoặc đọc lỗi
+ * → coi như không có lớp phủ: app học vẫn chạy như trước, không bao giờ hỏng vì thiếu bảng phụ.
+ */
+async function fetchAdminOverlays(client: SupabaseClient): Promise<{ statuses: ContentStatusRow[]; images: ContentImageRow[] }> {
+  const [statuses, images] = await Promise.all([
+    client.from('content_status').select('content_type, content_id, status'),
+    client.from('content_images').select('content_type, content_id, alt_text, media_assets(storage_path)'),
+  ]);
+  type JoinedImage = { content_type: string; content_id: number; alt_text: string; media_assets: { storage_path: string } | { storage_path: string }[] | null };
+  return {
+    statuses: statuses.error ? [] : (statuses.data as ContentStatusRow[]),
+    images: images.error ? [] : (images.data as unknown as JoinedImage[]).flatMap((row) => {
+      const asset = Array.isArray(row.media_assets) ? row.media_assets[0] : row.media_assets;
+      return asset ? [{ content_type: row.content_type, content_id: row.content_id, alt_text: row.alt_text, storage_path: asset.storage_path }] : [];
+    }),
+  };
+}
 
 function toMemoryRecord(row: MemoryItemRow): MemoryRecord {
   return {

@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import { ZodError } from 'zod';
 import { USER_MESSAGES } from '@/lib/constants/messages';
 import { logger } from '@/lib/utils/logger';
-import { NotFoundError, UnauthenticatedError } from './errors';
+import { ActionRejectedError, ForbiddenError, NotFoundError, UnauthenticatedError } from './errors';
 
 export interface ApiErrorBody {
   error: string;
@@ -19,6 +19,12 @@ export async function handleApiRoute<T>(routeName: string, handler: () => Promis
   } catch (error) {
     if (error instanceof UnauthenticatedError) {
       return NextResponse.json<ApiErrorBody>({ error: USER_MESSAGES.SIGN_IN_REQUIRED }, { status: 401 });
+    }
+    if (error instanceof ForbiddenError) {
+      return NextResponse.json<ApiErrorBody>({ error: USER_MESSAGES.FORBIDDEN }, { status: 403 });
+    }
+    if (error instanceof ActionRejectedError) {
+      return NextResponse.json<ApiErrorBody>({ error: error.message }, { status: error.status });
     }
     if (error instanceof ZodError) {
       logger.warn(`${routeName}: dữ liệu không hợp lệ`, { issues: error.issues });

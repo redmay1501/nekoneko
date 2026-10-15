@@ -28,6 +28,13 @@ export interface DayTask {
   minutes: number;
 }
 
+/** Ảnh minh hoạ admin gắn cho một mục (Supabase Storage, bucket content-media). Không có → giao diện tự bỏ qua. */
+export interface ContentImage {
+  url: string;
+  /** Mô tả ảnh cho trình đọc màn hình — rỗng thì dùng nghĩa của mục. */
+  alt: string;
+}
+
 export interface KanaContent {
   id: number;
   hiragana: string;
@@ -45,6 +52,7 @@ export interface RadicalContent {
   kanjiList: string;
   tip: string;
   day: number | null;
+  image?: ContentImage | null;
 }
 
 export interface KanjiContent {
@@ -58,6 +66,7 @@ export interface KanjiContent {
   words: string;
   tip: string;
   day: number | null;
+  image?: ContentImage | null;
 }
 
 export interface VocabularyContent {
@@ -68,6 +77,7 @@ export interface VocabularyContent {
   tip: string;
   lesson: string;
   day: number | null;
+  image?: ContentImage | null;
 }
 
 export interface GrammarContent {
@@ -85,6 +95,7 @@ export interface GrammarContent {
   example2Jp: string;
   example2Reading: string;
   example2Vi: string;
+  image?: ContentImage | null;
 }
 
 export interface LessonContent {

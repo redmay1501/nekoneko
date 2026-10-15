@@ -3,7 +3,7 @@ import { type NextRequest, NextResponse } from 'next/server';
 import { publicEnv } from '@/config/env';
 
 /** Các đường dẫn ai cũng vào được, không cần đăng nhập. */
-const PUBLIC_PATH_PREFIXES = ['/dang-nhap', '/auth'];
+const PUBLIC_PATH_PREFIXES = ['/dang-nhap', '/dat-lai-mat-khau', '/auth'];
 
 /**
  * Làm mới phiên Supabase ở mỗi request và chuyển người chưa đăng nhập về /dang-nhap.

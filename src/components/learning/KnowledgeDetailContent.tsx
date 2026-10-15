@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { fitTextStyle } from '@/lib/utils/fit-text';
 import { RadicalExpandable } from './RadicalExpandable';
-import { kanjiVisualAssetsOf, vocabularyImageOf } from '@/features/learning/vocabulary-images';
+import { kanjiVisualAssetsOf, learnerImageOf } from '@/features/learning/vocabulary-images';
+import { ContentImageView } from '@/components/common/ContentImageView';
 import { AudioButton, SpeakableFace } from '@/components/common/AudioButton';
 import { speechTextFor } from '@/features/learning/speech-text';
 import type { KnowledgeDetailView } from '@/features/learning/knowledge-detail';
@@ -115,6 +116,7 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
               <h2>{item.content.meaning}</h2>
               <p className="jp soft">{item.content.nameJp}</p>
             </div>
+            <ContentImageView image={learnerImageOf('radical', item.content)} size={72} className="ml-auto" />
           </div>
           <TipCard tip={item.content.tip} background="var(--lav)" />
           <RelatedRow title="Kanji chứa bộ này" chips={related.kanji.map((kanji) => ({
@@ -135,6 +137,9 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
             </div>
             <AudioButton text={speechTextFor(item)} className="btn ghost" label="Nghe" showText />
           </div>
+          {learnerImageOf('kanji', item.content) ? (
+            <ContentImageView image={learnerImageOf('kanji', item.content)} size={120} className="mx-auto mt-3" />
+          ) : null}
           <StrokeOrderSection face={item.face} />
           <p className="center mt-2"><Link className="btn ghost sm" href={`/luyen-tap/viet?chu=${encodeURIComponent(item.face)}`}>✍️ Luyện viết chữ này</Link></p>
           {kanjiVisualAssetsOf(item.id).map((asset) => asset.imageUrl ? (
@@ -185,10 +190,7 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
               <h2 className="mt-2">{item.content.meaning}</h2>
             </div>
             <div className="vocab-head-side">
-              {vocabularyImageOf(item.id) ? (
-                // eslint-disable-next-line @next/next/no-img-element -- icon tĩnh 128px trong public/, không cần tối ưu ảnh
-                <img src={vocabularyImageOf(item.id)!} alt="" width={64} height={64} className="vocab-image" />
-              ) : null}
+              <ContentImageView image={learnerImageOf('vocabulary', item.content)} className="vocab-image" />
               <AudioButton text={item.content.kana} className="btn ghost" label="Nghe" showText />
             </div>
           </div>

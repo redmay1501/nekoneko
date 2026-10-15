@@ -7,6 +7,8 @@ import { kanaExampleWords, pickContextExample } from './context-index';
 import { kanjiContainingRadical, radicalsOfKanji } from './knowledge-relations';
 import { type ContentKey, toContentKey } from './knowledge-types';
 import { type KanjiWord, kanjiReadingList, parseKanjiWords } from './study-grading';
+import { learnerImageOf } from './vocabulary-images';
+import type { ContentImage } from '@/types/content';
 
 /**
  * ═══════════════════════════════════════════════════════════════════
@@ -37,6 +39,8 @@ export interface StudyVocabCard {
   tip: string;
   /** Câu ví dụ thật (Tatoeba / câu mẫu) — chỉ có khi tìm được câu chứa từ này. */
   example: { jp: string; vi: string; romaji: string } | null;
+  /** Ảnh minh hoạ (admin tải lên, hoặc icon có sẵn) — null thì thẻ không có khung ảnh. */
+  image: ContentImage | null;
 }
 
 export interface StudyGrammarExample {
@@ -64,6 +68,7 @@ export interface StudyRadicalCard {
   tip: string;
   /** Kanji (trong app) chứa bộ này — bộ thủ là công cụ nhận ra / nhớ chữ, không thay cho việc học chữ. */
   kanji: Array<{ character: string; meaning: string }>;
+  image: ContentImage | null;
 }
 
 export interface StudyKanjiCard {
@@ -82,6 +87,7 @@ export interface StudyKanjiCard {
   /** Từ vựng trong app có chứa chữ này. */
   relatedVocab: Array<{ face: string; kana: string; meaning: string }>;
   tip: string;
+  image: ContentImage | null;
 }
 
 /** Đáp án sai hợp lý cho câu hỏi trắc nghiệm (kiến thức của các ngày gần nhất). */
@@ -148,6 +154,7 @@ export function buildDayStudy(
       key, face: word.kanji || word.kana, kana: word.kana, kanji: word.kanji, romaji: vocabularyRomaji(word),
       meaning: word.meaning, tip: word.tip,
       example: found ? { jp: found.jp, vi: found.vi, romaji: canRomanize(found.jp) ? sentenceRomaji(found.jp) : '' } : null,
+      image: learnerImageOf('vocabulary', word),
     };
   });
 
@@ -170,6 +177,7 @@ export function buildDayStudy(
     key: toContentKey('radical', radical.id), glyph: primaryRadicalGlyph(radical.radical),
     name: radical.nameJp.split(' / ')[0], meaning: radical.meaning, tip: radical.tip,
     kanji: kanjiContainingRadical(catalog, radical).slice(0, 6).map((entry) => ({ character: entry.character, meaning: entry.meaning })),
+    image: learnerImageOf('radical', radical),
   }));
 
   const kanji = knowledge.kanji.map((entry): StudyKanjiCard => ({
@@ -179,6 +187,7 @@ export function buildDayStudy(
     radicals: radicalsOfKanji(catalog, entry).map((radical) => ({ glyph: primaryRadicalGlyph(radical.radical), meaning: radical.meaning })),
     relatedVocab: content.vocabulary.filter((word) => word.kanji.includes(entry.character)).slice(0, 4)
       .map((word) => ({ face: word.kanji, kana: word.kana, meaning: word.meaning })),
+    image: learnerImageOf('kanji', entry),
   }));
 
   const studyKeys: ContentKey[] = [...kana, ...vocab, ...grammar, ...radicals, ...kanji].map((card) => card.key);

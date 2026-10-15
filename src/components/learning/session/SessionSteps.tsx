@@ -1,5 +1,6 @@
 'use client';
 
+import { ContentImageView } from '@/components/common/ContentImageView';
 import { fitTextStyle } from '@/lib/utils/fit-text';
 import { AudioButton, SpeakableFace } from '@/components/common/AudioButton';
 import { StrokeOrder } from '@/components/learning/StrokeOrder';
@@ -104,10 +105,7 @@ export function DiscoverStepView({ step, isBusy, onAcknowledge }: { step: Discov
       ) : (
         <span className="chip mint"><EmojiIcon emoji="🌱" size={16} /> Một thứ mới, nhỏ thôi</span>
       )}
-      {card.imageSrc ? (
-        // eslint-disable-next-line @next/next/no-img-element -- icon tĩnh 128px trong public/
-        <img src={card.imageSrc} alt="" width={64} height={64} className="vocab-image mx-auto mt-3" />
-      ) : null}
+      <ContentImageView image={card.image} className="vocab-image mx-auto mt-3" />
       <div className="fit-box"><SpeakableFace text={card.audioText} face={card.face} className="s-big fit-text" style={{ margin: '16px auto 6px', ...fitTextStyle(card.face, 58, 26) }} /></div>
       <p className="jp soft">{card.reading}</p>
       {card.romaji ? <p className="romaji">{card.romaji}</p> : null}

@@ -71,13 +71,14 @@ export function ReadingQuiz({ passageId, questions, textVi, nextHref }: ReadingQ
           <p className="chip mint">Xong bài</p>
           <p className="study-result-score">{correct}/{questions.length} câu đúng</p>
           <p className="sm soft">
-            {correct === questions.length ? 'Tuyệt — hiểu hết cả đoạn!' : 'Đọc lại đoạn văn với bản dịch dưới đây rồi thử lại nhé.'}
+            {correct === questions.length ? 'Tuyệt — hiểu hết cả đoạn!' : 'Đọc lại đoạn văn, mở bản dịch bên dưới nếu cần, rồi thử lại nhé.'}
             {saved === 'saved' ? ' · Đã lưu kết quả.' : saved === 'error' ? ' · Chưa lưu được kết quả (mạng?).' : ''}
           </p>
-          <div className="reading-translation mt-3">
-            <span className="tiny muted">Bản dịch</span>
-            <p className="sm">{textVi}</p>
-          </div>
+          {/* Bản dịch CẢ ĐOẠN — tách với đáp án từng câu (đã tô ✓ / ✕ ở trên); thu gọn để người học tự đọc lại trước khi xem. */}
+          <details className="reading-translation mt-3">
+            <summary>Xem bản dịch tiếng Việt cả đoạn</summary>
+            <p className="sm mt-2">{textVi}</p>
+          </details>
           <div className="row wrap mt-3" style={{ gap: 8, justifyContent: 'center' }}>
             <button type="button" className="btn ghost" onClick={retry}>↻ Làm lại</button>
             {nextHref ? <NekoButton href={nextHref} catPose="none">Bài tiếp theo →</NekoButton> : <Link className="btn" href="/luyen-tap/doc">🎉 Đã tới bài cuối — về danh sách</Link>}

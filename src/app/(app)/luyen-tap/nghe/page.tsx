@@ -1,18 +1,16 @@
+import Link from 'next/link';
 import { ListeningPanel } from '@/components/learning/PracticePanels';
 import { ListeningTabs } from '@/components/listening/ListeningTabs';
 import { VideoLibrary } from '@/components/listening/VideoLibrary';
 import { LISTENING_VIDEOS, VIDEO_SOURCES, VIDEO_TOPICS } from '@/features/listening/video-library';
 import { watchedVideoIds } from '@/features/listening/video-progress';
-import { AudioButton } from '@/components/common/AudioButton';
-import { buildListeningPools, buildListeningPractice } from '@/features/learning/skill-practice';
+import { buildListeningPools } from '@/features/learning/skill-practice';
 import { getLearnerContext } from '@/features/learning/learner-context';
 
 /** SC-24 · Luyện nghe — nghe trước, hiểu sau. Hai phần: bài nghe sẵn có và thư viện video N5 (content/seed/listening-videos.json). */
 export default async function ListeningPage({ searchParams }: { searchParams: Promise<{ 'pham-vi'?: string; muc?: string }> }) {
   const params = await searchParams;
-  const { catalog, memoryViews, journeyDay, settings } = await getLearnerContext();
-  // Shadowing và nguồn nghe vẫn dựng ở server; bài nghe đổi phạm vi ngay trong trình duyệt (ListeningPanel).
-  const practice = buildListeningPractice(catalog, memoryViews, journeyDay);
+  const { catalog, journeyDay, settings } = await getLearnerContext();
   return (
     <>
       <h1>Luyện nghe</h1>
@@ -25,26 +23,12 @@ export default async function ListeningPage({ searchParams }: { searchParams: Pr
               Nghe một từ, chọn nghĩa. Chọn phần muốn nghe — kể cả bài chưa học tới. Từ đã học thì được ôn thêm một lần.
             </p>
             <ListeningPanel pools={buildListeningPools(catalog, journeyDay)} initialRange={params['pham-vi']} />
-            <div className="sec-h"><h2>Shadowing — nói đuổi theo</h2></div>
-            {practice.shadowing.length ? (
-              <div className="stack">
-                {practice.shadowing.map((pattern) => (
-                  <div key={pattern.id} className="card tight">
-                    <div className="between">
-                      <p className="jp" style={{ fontSize: 17 }}>{pattern.exampleJp}</p>
-                      <AudioButton text={pattern.exampleJp} label="Nghe câu mẫu" />
-                    </div>
-                    <p className="sm muted mt-1">{pattern.exampleVi}</p>
-                  </div>
-                ))}
-              </div>
-            ) : null}
-            <div className="card tight mt-3.5" style={{ background: 'var(--cream)', borderColor: '#F3E4CC' }}>
-              <b className="sm">Nguồn nghe gợi ý</b>
-              <ul className="sm soft mt-2" style={{ lineHeight: 1.8 }}>
-                {practice.resources.map((resource) => <li key={resource.id}>• {resource.source}</li>)}
-              </ul>
-            </div>
+            {/* Shadowing (3 câu cố định) và "Nguồn nghe gợi ý" (không có link) đã bỏ: nói đuổi theo câu mẫu nằm ở
+                Luyện nói › Đọc theo mẫu (cùng câu, có nghe mẫu + nhận diện); nguồn NHK / Erin có link thật trong thẻ Video N5. */}
+            <Link href="/luyen-tap/noi?che-do=doc-theo-mau" className="card tight block mt-3.5" style={{ textAlign: 'left' }}>
+              <b className="sm">🎙️ Muốn nói đuổi theo câu mẫu?</b>
+              <p className="sm soft mt-1">Luyện nói › Đọc theo mẫu: nghe câu, đọc theo từng câu một, trình duyệt nhận diện để bạn tự so.</p>
+            </Link>
           </>
         )} />
     </>

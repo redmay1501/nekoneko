@@ -122,7 +122,8 @@ export function WritingPad({ character, reading, expectedStrokes, note }: Writin
             <StrokeOrder key={character} character={character} size={180} />
           </div>
         ) : null}
-        <div className="center">
+        {/* Cột viết có bề rộng CỐ ĐỊNH bằng khung viết: dòng kết quả dài xuống dòng bên trong, không nong cột → cột ① không bị đẩy. */}
+        <div className="center writing-column">
           <p className="tiny muted mb-2">{hasGuide ? '② Viết đè lên chữ mờ, đúng thứ tự nét' : 'Viết theo chữ mờ bên dưới'}</p>
           <div className="writing-canvas">
             {guide ? (
@@ -139,13 +140,14 @@ export function WritingPad({ character, reading, expectedStrokes, note }: Writin
               onPointerDown={startStroke} onPointerMove={continueStroke}
               onPointerUp={() => { isDrawingRef.current = false; }} onPointerCancel={() => { isDrawingRef.current = false; }} />
           </div>
-          <div className="row" style={{ justifyContent: 'center', gap: 8 }}>
+          <div className="row wrap writing-actions" style={{ justifyContent: 'center', gap: 8 }}>
             <button type="button" className="btn ghost sm" onClick={clear}>Xoá</button>
             <button type="button" className="btn sm" onClick={check}>Kiểm tra</button>
             <AudioButton text={character} label={`Nghe ${reading}`} className="btn ghost sm" />
             <span className="sm soft">{reading}{expected ? ` · ${expected} nét` : ''}</span>
           </div>
-          {checkMessage ? <p className="sm mt-2" role="status">{checkMessage}</p> : null}
+          {/* Chỗ của dòng kết quả luôn có sẵn (kể cả khi trống) → bấm Kiểm tra không làm khung nhảy. */}
+          <p className="sm mt-2 writing-result" role="status" aria-live="polite">{checkMessage}</p>
         </div>
       </div>
       {note ? <p className="sm soft mt-3.5 center">{note}</p> : null}

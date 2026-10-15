@@ -4,6 +4,11 @@ import { type MouseEvent, type ReactNode, useEffect, useRef } from 'react';
 
 interface BottomSheetProps {
   isOpen: boolean;
+  /**
+   * corner (mặc định) = máy tính: thẻ nổi góc phải dưới. center = máy tính: hộp thoại giữa màn hình ~1/3 bề ngang
+   * (chi tiết từ vựng / Kanji). Điện thoại: luôn là khay trượt từ dưới lên.
+   */
+  placement?: 'corner' | 'center';
   label: string;
   onClose: () => void;
   children: ReactNode;
@@ -13,7 +18,7 @@ interface BottomSheetProps {
  * Khay trượt từ dưới lên (prototype: .scrim + .sheet).
  * Đóng bằng nút ✕ (luôn thấy ở góc trên), chạm nền, phím Esc, hoặc bấm một liên kết trong khay. Đưa focus vào khay khi mở để dùng được bằng bàn phím.
  */
-export function BottomSheet({ isOpen, label, onClose, children }: BottomSheetProps) {
+export function BottomSheet({ isOpen, placement = 'corner', label, onClose, children }: BottomSheetProps) {
   const sheetRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -42,7 +47,7 @@ export function BottomSheet({ isOpen, label, onClose, children }: BottomSheetPro
       <div className={`scrim ${isOpen ? 'on' : ''}`} onClick={onClose} aria-hidden="true" />
       <div
         ref={sheetRef}
-        className={`sheet ${isOpen ? 'on' : ''}`}
+        className={`sheet ${placement === 'center' ? 'sheet-center' : ''} ${isOpen ? 'on' : ''}`}
         role="dialog"
         aria-modal="true"
         aria-label={label}

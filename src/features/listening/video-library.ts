@@ -41,7 +41,14 @@ export interface ListeningVideo {
   subtitles: { ja: boolean; vi: boolean; other: string[] };
   subtitleNote?: string;
   embeddable: boolean;
+  /**
+   * Cách học song ngữ: switchable = phụ đề Nhật và Việt chuyển được trong trình phát (một ngôn ngữ mỗi lúc);
+   * source-transcript = trang nguồn có lời thoại Nhật kèm bản dịch Việt. Không có → video không vào danh sách chính.
+   */
+  bilingual?: 'switchable' | 'source-transcript';
   status: 'published' | 'review' | 'archived';
+  /** Vì sao video đang chờ duyệt (không hiện cho người học). */
+  reviewReason?: string;
   verifiedAt: string;
   verification: string;
 }
@@ -69,14 +76,21 @@ export function findVideo(id: string): ListeningVideo | undefined {
   return LISTENING_VIDEOS.find((video) => video.id === id);
 }
 
-/** Trình phát YouTube chính thức (chế độ riêng tư nâng cao): bật phụ đề tiếng Nhật nếu video có, giao diện tiếng Việt. */
-export function youtubeEmbedUrl(youtubeId: string, hasJapaneseSubtitles: boolean): string {
+export type SubtitleChoice = 'ja' | 'vi' | 'off';
+
+/** Trình phát YouTube chính thức (chế độ riêng tư nâng cao), giao diện tiếng Việt; bật phụ đề theo ngôn ngữ người học chọn. */
+export function youtubeEmbedUrl(youtubeId: string, subtitle: SubtitleChoice): string {
   const params = new URLSearchParams({ rel: '0', hl: 'vi', playsinline: '1' });
-  if (hasJapaneseSubtitles) {
+  if (subtitle !== 'off') {
     params.set('cc_load_policy', '1');
-    params.set('cc_lang_pref', 'ja');
+    params.set('cc_lang_pref', subtitle);
   }
   return `https://www.youtube-nocookie.com/embed/${youtubeId}?${params}`;
+}
+
+/** Các lựa chọn phụ đề thật sự có cho video (chỉ ngôn ngữ kênh đã tải lên). */
+export function subtitleChoices(video: ListeningVideo): SubtitleChoice[] {
+  return [...(video.subtitles.ja ? ['ja' as const] : []), ...(video.subtitles.vi ? ['vi' as const] : []), 'off'];
 }
 
 export function formatDuration(seconds: number | null): string | null {

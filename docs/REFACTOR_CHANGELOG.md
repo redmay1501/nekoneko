@@ -192,3 +192,19 @@ API: không đổi (thêm tham số phạm vi trang). Database: không đổi sc
   OYASUMI JAPANESE (24, truyện tranh minh hoạ, có phụ đề tiếng Việt do kênh tải). Bản NHK / Erin trên YouTube đều do
   người khác đăng lại (bản NHK chính thức đã chuyển riêng tư) nên không dùng; Japarrot! tắt nhúng nên không dùng.
   Tổng 138 video, 65 xem ngay (đứng trước), lọc "▶ Xem trong app" / "🎨 Hoạt hình"; mỗi video có kiểu hình (style).
+
+## 2026-10-16 — Audit & sửa UX, logic học
+- Lộ trình: audit — ngày chỉ tăng qua `advance_journey_day` khi người học bấm Hoàn thành đúng ngày đang học (không theo ngày lịch,
+  không trigger). Sửa hiển thị: ngày đã qua mà còn kiến thức chưa học → "Đã qua · còn N mục học bù" (bản đồ: viền nét đứt), không
+  còn ✓ "Đã xong". Chấm ngày: số căn tâm bằng dominant-baseline (trước: y+4 tay, font 15–17px trong vòng Ø20px), vòng Ø28+,
+  màu hồng theo trạng thái + huy hiệu ✓ + chú thích.
+- Luyện nghe: bỏ Shadowing (3 câu cố định, trùng Đọc theo mẫu) và "Nguồn nghe gợi ý" (không có link). Video: chỉ giữ video có
+  tiếng Việt — OYASUMI (24, phụ đề Nhật / Việt chuyển trong trình phát) và NHK (48, lời thoại Nhật – Việt trên trang); Chibi, あいう,
+  IRODORI (không có tiếng Việt) và Erin (chưa xác minh) chuyển "review".
+- Luyện nói: mỗi lần một câu (vị trí, Câu trước / Câu tiếp, màn kết thúc), chế độ "Nói tiếng Nhật từ gợi ý tiếng Việt".
+- Đọc hiểu: bản dịch cả đoạn thu gọn "Xem bản dịch tiếng Việt cả đoạn" sau khi làm xong.
+- Luyện viết: hai tab (Nghe và gõ · Viết tay Kanji); "Xem nghĩa tiếng Việt" (chỉ ở Gõ câu); sửa lệch bố cục khi Kiểm tra
+  (cột viết cố định bề rộng, chỗ dòng kết quả giữ sẵn).
+- Popup từ vựng / Kanji: giữa màn hình trên máy tính (clamp 480–640px), khay dưới trên điện thoại.
+- Kiểm tra: chọn N câu → đúng N câu; thanh tiến độ đếm câu hỏi (questionProgress), không đếm thẻ giới thiệu; thêm mức 5 câu.
+- Icon kiểm tra / đã chọn: CheckCircleIcon (SVG hồng) thay emoji ✅.

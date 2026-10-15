@@ -257,13 +257,11 @@ ul{margin:0;padding:0;list-style:none}
 .map-wrap > svg{display:block;width:100%;height:auto}
 .daynode{cursor:pointer}
 .daynode .touch-target{transform-box:fill-box;transform-origin:center}
-.daynode:hover circle.hit{stroke:var(--sakura);stroke-width:2}
-.daynode .day-number{font-size:15px;font-weight:700;paint-order:stroke;stroke:rgba(255,255,255,.94);stroke-width:.9px;stroke-linejoin:round}
+.daynode:hover circle.hit{stroke:var(--sakura);stroke-width:2.2}
 .daynode .today-neko{overflow:visible}
 @media (max-width:767px){
   .map-wrap{width:calc(100vw - 16px);max-width:none;margin-left:calc((100% - (100vw - 16px))/2)}
   .daynode .touch-target{transform:scale(1.32)}
-  .daynode .day-number{font-size:17px;stroke-width:.7px}
 }
 @media (max-width:1099px), (hover:none), (pointer:coarse){
   .day-vocab-desktop{display:none!important}
@@ -390,6 +388,15 @@ html.sheet-open,html.sheet-open body{overflow:hidden}
 .sheet.on{transform:translateY(0)}
 /* Máy tính / iPad ngang: khay là thẻ nổi gọn ở góc (không trải hết bề ngang — xem kỹ một bộ thủ không cần cả màn hình). */
 @media (min-width:900px){.sheet{left:auto;right:24px;bottom:24px;width:min(460px,calc(100vw - 48px));border-radius:24px;max-height:min(80vh,720px);transform:translateY(calc(100% + 40px))}.sheet.on{transform:translateY(0)}}
+/* Hộp thoại giữa màn hình (chi tiết từ vựng / Kanji): ~1/3 bề ngang, không hẹp quá 480px, không rộng quá 640px; cuộn bên trong. */
+@media (min-width:900px){
+  .sheet.sheet-center{left:50%;right:auto;top:50%;bottom:auto;width:clamp(480px,34vw,640px);max-width:calc(100vw - 48px);
+    max-height:min(86vh,820px);max-height:min(86dvh,820px);border-radius:26px;padding:14px 24px 26px;
+    transform:translate(-50%,-47%) scale(.98);opacity:0;visibility:hidden;transition:transform .22s ease,opacity .18s ease,visibility 0s .22s}
+  .sheet.sheet-center.on{transform:translate(-50%,-50%);opacity:1;visibility:visible;transition:transform .22s ease,opacity .18s ease}
+  .sheet.sheet-center .grab{display:none}
+}
+@media (min-width:900px) and (prefers-reduced-motion:reduce){.sheet.sheet-center,.sheet.sheet-center.on{transition:none}}
 .grab{width:42px;height:4px;border-radius:99px;background:#EDE1DC;margin:4px auto 14px}
 
 /* ============ NOKO ============ */
@@ -919,12 +926,15 @@ input[type="radio"]{appearance:auto;-webkit-appearance:radio;width:18px;height:1
 /* ─── Luyện viết (WritingPad) ─── */
 .writing-layout{display:grid;gap:16px;justify-items:center}
 .writing-guide{display:flex;flex-direction:column;align-items:center}
-.writing-canvas{position:relative;width:min(300px,82vw);aspect-ratio:1/1;margin:0 auto 14px;border-radius:20px;border:2px dashed #EADFDA;background:#fff}
+.writing-pad{--writing-size:min(300px,82vw)}
+.writing-column{width:var(--writing-size);max-width:100%}
+.writing-result{min-height:2.9em;margin-bottom:0;overflow-wrap:anywhere}
+.writing-canvas{position:relative;width:var(--writing-size);aspect-ratio:1/1;margin:0 auto 14px;border-radius:20px;border:2px dashed #EADFDA;background:#fff}
 .writing-canvas>svg,.writing-canvas>canvas,.writing-ghost-glyph{position:absolute;inset:0;width:100%;height:100%}
 .writing-canvas>canvas{touch-action:none;border-radius:20px}
 .writing-ghost path{fill:none;stroke:#F1E6E2;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
 .writing-ghost-glyph{display:grid;place-items:center;font-size:170px;color:#F3EBE7;user-select:none}
-@media (min-width:760px){.writing-layout{grid-template-columns:auto auto;justify-content:center;align-items:start;gap:28px}}
+@media (min-width:760px){.writing-layout{grid-template-columns:auto var(--writing-size);justify-content:center;align-items:start;gap:28px}}
 .writing-picker{display:flex;flex-wrap:wrap;gap:6px}
 .writing-picker .chip{font-size:18px;min-width:40px;justify-content:center;padding:6px 8px;cursor:pointer}
 .stroke-order-placeholder{height:46px}
@@ -1259,3 +1269,40 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 .read-aloud-diff{font-size:18px;line-height:1.9;margin-top:4px;word-break:break-all}
 .diff-missing{text-decoration:underline wavy #E24159;text-underline-offset:4px;color:#C2415A}
 .diff-extra{background:#FFE7A8;border-radius:4px}
+
+/* ── Bản đồ lộ trình: chấm ngày ── */
+.daynode .day-dot{stroke-width:2;transition:stroke .15s}
+.daynode .day-number{font-size:12.5px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em;pointer-events:none}
+.daynode.is-upcoming .day-dot{fill:#fff;stroke:#EADFDA}
+.daynode.is-upcoming .day-number{fill:#9A8F8A;font-weight:700}
+.daynode.is-done .day-dot{fill:#FFE6EB;stroke:#F2798C}
+.daynode.is-done .day-number{fill:#C2415A}
+.daynode.is-partial .day-dot{fill:#fff;stroke:#F2798C;stroke-dasharray:3.2 2.6}
+.daynode.is-partial .day-number{fill:#C2415A}
+.daynode.is-today .day-dot{fill:#FF5B73;stroke:#fff;stroke-width:2.5}
+.daynode.is-today .day-number{fill:#fff;font-size:14.5px}
+.daynode .day-pulse{fill:#FF5B73;opacity:.35}
+.daynode .day-badge circle{fill:#E24159;stroke:#fff;stroke-width:1.2}
+.daynode .day-badge path{fill:none;stroke:#fff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.map-legend{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;padding:10px 12px 12px;font-size:12px;color:var(--ink-2)}
+.map-legend li{display:inline-flex;align-items:center;gap:6px}
+.legend-dot{display:inline-grid;place-items:center;width:16px;height:16px;border-radius:50%;font-size:9px;font-weight:800;color:#fff}
+.legend-dot.is-done{background:#E24159}
+.legend-dot.is-partial{border:2px dashed #F2798C;background:#fff}
+.legend-dot.is-today{background:#FF5B73}
+.legend-dot.is-upcoming{border:2px solid #EADFDA;background:#fff}
+.video-cc-switch{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.video-cc-switch .chip{min-height:36px;cursor:pointer}
+.speaking-progress{gap:10px;margin-bottom:8px}
+.speaking-nav{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.speaking-nav .btn{min-height:48px}
+.reading-translation summary{cursor:pointer;font-weight:700;font-size:14px;color:var(--sakura-deep,#E24159);min-height:36px;display:flex;align-items:center}
+.reading-translation[open] summary{margin-bottom:2px}
+.s-prog-wrap{display:flex;align-items:center;gap:10px}
+.s-prog-wrap .s-prog{flex:1;min-width:0}
+.s-prog-count{flex:0 0 auto;white-space:nowrap;font-variant-numeric:tabular-nums}
+/* Icon hoàn thành / kiểm tra (CheckCircleIcon) — hồng thương hiệu, nét gọn. */
+.check-circle-icon{color:var(--sakura-deep,#E24159);flex:0 0 auto;vertical-align:-3px}
+.test-open{display:inline-flex;align-items:center;gap:6px}
+.test-face .check-circle-icon{margin-right:4px;vertical-align:-2px}
+.test-cell.on .test-face .check-circle-icon{color:var(--sakura-deep,#E24159)}

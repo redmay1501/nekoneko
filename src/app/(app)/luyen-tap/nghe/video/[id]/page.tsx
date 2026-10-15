@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { VideoPlayer } from '@/components/listening/VideoPlayer';
 import { WatchedToggle } from '@/components/listening/WatchedToggle';
 import { getLearnerContext } from '@/features/learning/learner-context';
 import {
-  LEVEL_LABELS, VIDEO_SOURCES, VIDEO_STYLE_LABELS, VIDEO_TOPICS, findVideo, formatDuration, nextVideoOf, youtubeEmbedUrl,
+  LEVEL_LABELS, VIDEO_SOURCES, VIDEO_STYLE_LABELS, VIDEO_TOPICS, findVideo, formatDuration, nextVideoOf,
 } from '@/features/listening/video-library';
 import { watchedVideoIds } from '@/features/listening/video-progress';
 
@@ -25,12 +26,7 @@ export default async function ListeningVideoPage({ params }: { params: Promise<{
       <Link className="link" href={LIST_HREF}>← Video N5</Link>
       <div className="video-detail mt-2">
         {video.embeddable && video.youtubeId ? (
-          <div className="video-frame">
-            <iframe src={youtubeEmbedUrl(video.youtubeId, video.subtitles.ja)} title={video.title} loading="lazy"
-              allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowFullScreen
-              referrerPolicy="strict-origin-when-cross-origin"
-              sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox" />
-          </div>
+          <VideoPlayer video={video} />
         ) : (
           <div className="card video-external">
             <p className="sm">Video này phát trên trang <b>{source.name}</b> — nguồn không cho nhúng vào ứng dụng khác.</p>
@@ -51,8 +47,8 @@ export default async function ListeningVideoPage({ params }: { params: Promise<{
           <div className="card tight mt-3 video-subtitles">
             <b className="sm">Phụ đề</b>
             <ul className="sm mt-1.5">
-              <li>Tiếng Nhật: {video.subtitles.ja ? (video.embeddable ? 'có — đã bật sẵn trong trình phát (nút CC để tắt / đổi).' : 'có trên trang nguồn.') : 'không có.'}</li>
-              <li>Tiếng Việt: {video.subtitles.vi ? (video.embeddable ? 'có — chọn trong nút CC.' : 'có trên trang nguồn.') : 'nguồn chưa có phụ đề tiếng Việt.'}</li>
+              <li>Tiếng Nhật: {video.subtitles.ja ? (video.embeddable ? 'có — chọn “日本語” phía trên video.' : 'có trên trang nguồn.') : 'không có.'}</li>
+              <li>Tiếng Việt: {video.subtitles.vi ? (video.embeddable ? 'có — chọn “Tiếng Việt” phía trên video.' : 'bản dịch có trên trang nguồn.') : 'nguồn chưa có phụ đề tiếng Việt.'}</li>
               {video.subtitles.other.length ? <li>Khác: {video.subtitles.other.join(', ')}.</li> : null}
             </ul>
             {video.subtitleNote ? <p className="tiny muted mt-1">{video.subtitleNote}</p> : null}

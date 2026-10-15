@@ -35,10 +35,12 @@ export function VideoLibrary({ videos, sources, topics, watchedIds }: VideoLibra
   return (
     <section aria-label="Video tiếng Nhật N5">
       <p className="soft sm" style={{ margin: '4px 0 10px' }}>
-        {videos.length} video cho người mới học — {inAppCount} video ▶ xem ngay trong app (hoạt hình, truyện tranh, Japan Foundation), còn lại ↗ mở ở trang gốc. Đã xem {watched.size}/{videos.length}.
+        {videos.length} video cho người mới học, <b>đều có tiếng Việt</b>: {inAppCount} video ▶ xem trong app (chuyển phụ đề Nhật / Việt),
+        còn lại ↗ mở trang NHK có lời thoại song ngữ. Đã xem {watched.size}/{videos.length}.
       </p>
       <div className="chip-scroll" role="group" aria-label="Cách xem">
-        {([[null, `Tất cả · ${videos.length}`], ['in-app', `▶ Xem trong app · ${inAppCount}`], ['animation', `🎨 Hoạt hình · ${animationCount}`]] as const).map(([id, label]) => (
+        {([[null, `Tất cả · ${videos.length}`, videos.length], ['in-app', `▶ Xem trong app · ${inAppCount}`, inAppCount], ['animation', `🎨 Hoạt hình · ${animationCount}`, animationCount]] as const)
+          .filter(([, , count]) => count > 0).map(([id, label]) => (
           <button key={label} type="button" className={`chip ${filter.view === id ? 'pink' : ''}`} aria-pressed={filter.view === id} onClick={() => update({ view: id })}>{label}</button>
         ))}
       </div>
@@ -54,7 +56,7 @@ export function VideoLibrary({ videos, sources, topics, watchedIds }: VideoLibra
       <div className="video-filter-row mt-2">
         <div className="chip-scroll" role="group" aria-label="Nguồn">
           <button type="button" className={`chip ${filter.source === null ? 'pink' : ''}`} aria-pressed={filter.source === null} onClick={() => update({ source: null })}>Mọi nguồn</button>
-          {(Object.keys(sources) as VideoSourceId[]).map((id) => (
+          {(Object.keys(sources) as VideoSourceId[]).filter((id) => videos.some((video) => video.source === id)).map((id) => (
             <button key={id} type="button" className={`chip ${filter.source === id ? 'pink' : ''}`} aria-pressed={filter.source === id}
               onClick={() => update({ source: filter.source === id ? null : id })}>{sources[id].shortName}</button>
           ))}
@@ -85,7 +87,7 @@ export function VideoLibrary({ videos, sources, topics, watchedIds }: VideoLibra
                     <span>{video.topics.map((topic) => topicLabel.get(topic)).join(', ')}</span>
                     <span>{LEVEL_LABELS[video.level]}</span>
                     {formatDuration(video.durationSeconds) ? <span>⏱ {formatDuration(video.durationSeconds)}</span> : null}
-                    <span>CC {[video.subtitles.ja && 'JP', video.subtitles.vi && 'VI', !video.subtitles.ja && !video.subtitles.vi && video.subtitles.other.length && 'EN'].filter(Boolean).join(' · ') || 'không có'}</span>
+                    <span>{video.bilingual === 'source-transcript' ? 'Lời thoại Nhật – Việt' : `Phụ đề ${[video.subtitles.ja && 'Nhật', video.subtitles.vi && 'Việt'].filter(Boolean).join(' · ') || 'không có'}`}</span>
                     {watched.has(video.id) ? <span className="video-watched">✓ Đã xem</span> : null}
                   </span>
                 </span>

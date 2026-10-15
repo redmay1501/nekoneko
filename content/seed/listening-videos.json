@@ -1,5 +1,5 @@
 {
- "_note": "Thư viện video luyện nghe N5. Chỉ gồm video THẬT đã xác minh ngày verifiedAt (không có URL / thời lượng / phụ đề tự đặt). Nhúng chỉ khi nguồn cho phép (video YouTube do chính kênh sản xuất, playableInEmbed=true; không dùng bản đăng lại); còn lại mở tại nguồn. Trình độ ghi rõ cơ sở (levelBasis). Thêm video = thêm một mục, status \"review\" sẽ không hiện cho người học.",
+ "_note": "Thư viện video luyện nghe N5. Chỉ gồm video THẬT đã xác minh ngày verifiedAt (không có URL / thời lượng / phụ đề tự đặt). Nhúng chỉ khi nguồn cho phép (video YouTube do chính kênh sản xuất, playableInEmbed=true; không dùng bản đăng lại); còn lại mở tại nguồn. Trình độ ghi rõ cơ sở (levelBasis). Thêm video = thêm một mục, status \"review\" sẽ không hiện cho người học. 2026-10-16: danh sách chính chỉ gồm video có bản dịch tiếng Việt (OYASUMI: phụ đề Việt chuyển được trong trình phát; NHK: lời thoại song ngữ trên trang); video không có / chưa xác minh tiếng Việt chuyển \"review\" kèm reviewReason.",
  "sources": {
   "chibi": {
    "name": "Chibi Japanese (YouTube)",
@@ -102,9 +102,10 @@
     "other": []
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Chibi Japanese · phụ đề do kênh tải: ja"
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Chibi Japanese · phụ đề do kênh tải: ja",
+   "reviewReason": "Không có phụ đề tiếng Việt (kênh chỉ tải phụ đề tiếng Nhật) — 2026-10-16."
   },
   {
    "id": "chibi-4r6EUB5_GOs",
@@ -127,9 +128,10 @@
     "other": []
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Chibi Japanese · phụ đề do kênh tải: ja"
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Chibi Japanese · phụ đề do kênh tải: ja",
+   "reviewReason": "Không có phụ đề tiếng Việt (kênh chỉ tải phụ đề tiếng Nhật) — 2026-10-16."
   },
   {
    "id": "chibi-gxV5GVTWY4g",
@@ -152,9 +154,10 @@
     "other": []
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Chibi Japanese · phụ đề do kênh tải: ja"
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Chibi Japanese · phụ đề do kênh tải: ja",
+   "reviewReason": "Không có phụ đề tiếng Việt (kênh chỉ tải phụ đề tiếng Nhật) — 2026-10-16."
   },
   {
    "id": "chibi-R8eCtP93iZU",
@@ -177,9 +180,10 @@
     "other": []
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Chibi Japanese · phụ đề do kênh tải: ja"
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Chibi Japanese · phụ đề do kênh tải: ja",
+   "reviewReason": "Không có phụ đề tiếng Việt (kênh chỉ tải phụ đề tiếng Nhật) — 2026-10-16."
   },
   {
    "id": "chibi-3ct3kkmF4RM",
@@ -202,9 +206,10 @@
     "other": []
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Chibi Japanese · phụ đề do kênh tải: ja"
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Chibi Japanese · phụ đề do kênh tải: ja",
+   "reviewReason": "Không có phụ đề tiếng Việt (kênh chỉ tải phụ đề tiếng Nhật) — 2026-10-16."
   },
   {
    "id": "chibi-LA6_LzXKkZ0",
@@ -227,10 +232,11 @@
     "other": []
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Chibi Japanese · phụ đề do kênh tải: không có",
-   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật.",
+   "reviewReason": "Không có phụ đề tiếng Việt (kênh chỉ tải phụ đề tiếng Nhật) — 2026-10-16."
   },
   {
    "id": "aiu-ZXDI-XqGDKw",
@@ -253,9 +259,10 @@
     "other": []
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: ja"
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: ja",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-KHfXqz2v3kA",
@@ -278,9 +285,10 @@
     "other": []
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: ja"
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: ja",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-tUiXWBtOfbc",
@@ -303,9 +311,10 @@
     "other": []
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: ja"
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: ja",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-6g5ZNZYpo6U",
@@ -328,9 +337,10 @@
     "other": []
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: ja"
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: ja",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-1UdfEvUYFEk",
@@ -353,9 +363,10 @@
     "other": []
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: ja"
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: ja",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-Ek3UA09vyIA",
@@ -378,9 +389,10 @@
     "other": []
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: ja"
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: ja",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-WiXVaXRFis0",
@@ -403,10 +415,11 @@
     "other": []
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: không có",
-   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật.",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-teRoRxF67as",
@@ -429,10 +442,11 @@
     "other": []
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: không có",
-   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật.",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-2ffzW0pJEGM",
@@ -455,10 +469,11 @@
     "other": []
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: không có",
-   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật.",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-xrkXxABexUo",
@@ -483,10 +498,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
-   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật.",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-s-IozzdN8DA",
@@ -511,10 +527,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
-   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật.",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-swA6S5_U1-4",
@@ -539,10 +556,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
-   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật.",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-dsQfOv2-_7g",
@@ -567,10 +585,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
-   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật.",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-xh1IcCQWYUw",
@@ -595,10 +614,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
-   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật.",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-soGKLTPL-XU",
@@ -623,10 +643,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
-   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật.",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-IbFdgiWHDLM",
@@ -651,10 +672,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
-   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật.",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-4A3HgXMQFpw",
@@ -679,10 +701,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
-   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật.",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-brera07EzuI",
@@ -707,10 +730,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
-   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật.",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-eIlBv46G79g",
@@ -735,10 +759,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
-   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật.",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-8iMGxZfa1Gg",
@@ -763,10 +788,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
-   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật.",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-xEBSoXi0jVg",
@@ -791,10 +817,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
-   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật.",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-RQQbcmi-Hlk",
@@ -819,10 +846,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
-   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật.",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-_fjhAoD_NUc",
@@ -847,10 +875,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
-   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật.",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-h5y4C5Pwi8g",
@@ -875,10 +904,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
-   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật.",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "aiu-OmYF8CI2e1M",
@@ -903,10 +933,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-15",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh Learn Japanese for beginners 【 あいう 】 · phụ đề do kênh tải: en",
-   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật."
+   "subtitleNote": "Phụ đề tiếng Nhật chỉ có bản tự động của YouTube (có thể sai) — kênh không tải phụ đề tiếng Nhật.",
+   "reviewReason": "Không có phụ đề tiếng Việt (chỉ tiếng Nhật / tiếng Anh) — 2026-10-16."
   },
   {
    "id": "oyasumi-7lecxH9nyCU",
@@ -933,8 +964,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi-bevlA_3gY5Q",
@@ -961,8 +994,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi-xCpaYCpuYmk",
@@ -989,8 +1024,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi--5z9Z8-WteU",
@@ -1017,8 +1054,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi-MkB-vxtwlZU",
@@ -1045,8 +1084,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi-rd1JAr0jwkI",
@@ -1073,8 +1114,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi-MMMwSpBg0sw",
@@ -1101,8 +1144,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi-kuZdOc1CgBs",
@@ -1129,8 +1174,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi-xuc0YWZW8mU",
@@ -1157,8 +1204,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi-YN7vJdekm5M",
@@ -1185,8 +1234,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi-d4NKJ0c2pOA",
@@ -1213,8 +1264,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi-PhkFko0m5gE",
@@ -1241,8 +1294,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi-AWehMhlH0GA",
@@ -1269,8 +1324,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi-rWa2O21LFpc",
@@ -1297,8 +1354,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi-9_3_G3cOtaE",
@@ -1325,8 +1384,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi-Z7a_uMtf7hA",
@@ -1353,8 +1414,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi-tqdpWXdJfAo",
@@ -1381,8 +1444,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi-pmvNqX1qetU",
@@ -1409,8 +1474,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi-MZHL3cNst1w",
@@ -1437,8 +1504,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi-WjpmrayBmBQ",
@@ -1465,8 +1534,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi-i4MYX1gD660",
@@ -1493,8 +1564,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi-gWblZeT6T-I",
@@ -1521,8 +1594,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi-G_gu6ttRaM0",
@@ -1549,8 +1624,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "oyasumi-oQEtTzPk1-g",
@@ -1577,8 +1654,10 @@
    },
    "embeddable": true,
    "status": "published",
-   "verifiedAt": "2026-10-15",
-   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…"
+   "verifiedAt": "2026-10-16",
+   "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh OYASUMI JAPANESE CHANNEL · phụ đề do kênh tải: ar, bn, cs, da, de…",
+   "bilingual": "switchable",
+   "subtitleNote": "Phụ đề tiếng Nhật và tiếng Việt do kênh tải lên (không phải phụ đề tự động). Trình phát YouTube hiện một ngôn ngữ mỗi lúc — chuyển Nhật / Việt bằng nút phía trên video. Nội dung bản dịch do kênh cung cấp, NekoNeko chưa kiểm duyệt."
   },
   {
    "id": "irodori-3stbOEUrCE4",
@@ -1603,10 +1682,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km",
-   "style": "live"
+   "style": "live",
+   "reviewReason": "Không có phụ đề tiếng Việt (tiếng Nhật / Anh / Khmer) — 2026-10-16."
   },
   {
    "id": "irodori-6wBPHVGgffY",
@@ -1631,10 +1711,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km",
-   "style": "live"
+   "style": "live",
+   "reviewReason": "Không có phụ đề tiếng Việt (tiếng Nhật / Anh / Khmer) — 2026-10-16."
   },
   {
    "id": "irodori-qgceqOnEQGs",
@@ -1659,10 +1740,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km",
-   "style": "live"
+   "style": "live",
+   "reviewReason": "Không có phụ đề tiếng Việt (tiếng Nhật / Anh / Khmer) — 2026-10-16."
   },
   {
    "id": "irodori-41fbTYoH7Ko",
@@ -1687,10 +1769,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km",
-   "style": "live"
+   "style": "live",
+   "reviewReason": "Không có phụ đề tiếng Việt (tiếng Nhật / Anh / Khmer) — 2026-10-16."
   },
   {
    "id": "irodori-l3UTXgVaNUs",
@@ -1715,10 +1798,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km",
-   "style": "live"
+   "style": "live",
+   "reviewReason": "Không có phụ đề tiếng Việt (tiếng Nhật / Anh / Khmer) — 2026-10-16."
   },
   {
    "id": "irodori-792POX-cVp4",
@@ -1743,10 +1827,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km",
-   "style": "live"
+   "style": "live",
+   "reviewReason": "Không có phụ đề tiếng Việt (tiếng Nhật / Anh / Khmer) — 2026-10-16."
   },
   {
    "id": "irodori-kCYMZ4KNWdY",
@@ -1771,10 +1856,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km",
-   "style": "live"
+   "style": "live",
+   "reviewReason": "Không có phụ đề tiếng Việt (tiếng Nhật / Anh / Khmer) — 2026-10-16."
   },
   {
    "id": "irodori-hoFeJJ5-NFE",
@@ -1799,10 +1885,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km",
-   "style": "live"
+   "style": "live",
+   "reviewReason": "Không có phụ đề tiếng Việt (tiếng Nhật / Anh / Khmer) — 2026-10-16."
   },
   {
    "id": "irodori-LQqpDcLOLwM",
@@ -1827,10 +1914,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km",
-   "style": "live"
+   "style": "live",
+   "reviewReason": "Không có phụ đề tiếng Việt (tiếng Nhật / Anh / Khmer) — 2026-10-16."
   },
   {
    "id": "irodori-yipYA1ocYmE",
@@ -1855,10 +1943,11 @@
     ]
    },
    "embeddable": true,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "YouTube oEmbed 200 · playableInEmbed=true · kênh The Japan Foundation, Phnom Penh Liaison Office · phụ đề làm tay: en-US, ja, km",
-   "style": "live"
+   "style": "live",
+   "reviewReason": "Không có phụ đề tiếng Việt (tiếng Nhật / Anh / Khmer) — 2026-10-16."
   },
   {
    "id": "nhk-01",
@@ -1879,12 +1968,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-02",
@@ -1905,12 +1995,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-03",
@@ -1931,12 +2022,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-04",
@@ -1957,12 +2049,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-05",
@@ -1983,12 +2076,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-06",
@@ -2009,12 +2103,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-07",
@@ -2035,12 +2130,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-08",
@@ -2061,12 +2157,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-09",
@@ -2087,12 +2184,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-10",
@@ -2113,12 +2211,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-11",
@@ -2139,12 +2238,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-12",
@@ -2165,12 +2265,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-13",
@@ -2191,12 +2292,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-14",
@@ -2217,12 +2319,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-15",
@@ -2243,12 +2346,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-16",
@@ -2269,12 +2373,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-17",
@@ -2295,12 +2400,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-18",
@@ -2321,12 +2427,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-19",
@@ -2347,12 +2454,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-20",
@@ -2373,12 +2481,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-21",
@@ -2399,12 +2508,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-22",
@@ -2425,12 +2535,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-23",
@@ -2451,12 +2562,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-24",
@@ -2477,12 +2589,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-25",
@@ -2503,12 +2616,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-26",
@@ -2529,12 +2643,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-27",
@@ -2555,12 +2670,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-28",
@@ -2581,12 +2697,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-29",
@@ -2607,12 +2724,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-30",
@@ -2633,12 +2751,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-31",
@@ -2659,12 +2778,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-32",
@@ -2685,12 +2805,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-33",
@@ -2711,12 +2832,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-34",
@@ -2737,12 +2859,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-35",
@@ -2763,12 +2886,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-36",
@@ -2789,12 +2913,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-37",
@@ -2815,12 +2940,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-38",
@@ -2841,12 +2967,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-39",
@@ -2867,12 +2994,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-40",
@@ -2893,12 +3021,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-41",
@@ -2919,12 +3048,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-42",
@@ -2945,12 +3075,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-43",
@@ -2971,12 +3102,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-44",
@@ -2997,12 +3129,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-45",
@@ -3023,12 +3156,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-46",
@@ -3049,12 +3183,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-47",
@@ -3075,12 +3210,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "nhk-48",
@@ -3101,12 +3237,13 @@
     "vi": true,
     "other": []
    },
-   "subtitleNote": "Trên trang NHK: lời thoại tiếng Nhật và bản dịch tiếng Việt của bài.",
+   "subtitleNote": "Trang bài NHK có video và lời thoại song ngữ: câu tiếng Nhật, romaji và bản dịch tiếng Việt (bản dịch chính thức của NHK WORLD-JAPAN).",
    "embeddable": false,
    "status": "published",
-   "verifiedAt": "2026-10-14",
-   "verification": "Trang bài trả 200, tên bài lấy từ danh sách bài tiếng Việt của NHK. Video phát bằng trình phát riêng của NHK (không có mã nhúng chính thức) → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "verifiedAt": "2026-10-16",
+   "verification": "Trang bài trả 200 (2026-10-16), có luồng video, 34–41 dòng thoại tiếng Nhật kèm bản dịch tiếng Việt. Video phát bằng trình phát riêng của NHK (không có mã nhúng) → chỉ mở tại nguồn.",
+   "style": "unknown",
+   "bilingual": "source-transcript"
   },
   {
    "id": "erin-01",
@@ -3132,10 +3269,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-02",
@@ -3161,10 +3299,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-03",
@@ -3190,10 +3329,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-04",
@@ -3219,10 +3359,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-05",
@@ -3248,10 +3389,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-06",
@@ -3277,10 +3419,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-07",
@@ -3306,10 +3449,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-08",
@@ -3335,10 +3479,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-09",
@@ -3364,10 +3509,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-10",
@@ -3393,10 +3539,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-11",
@@ -3422,10 +3569,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-12",
@@ -3451,10 +3599,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-13",
@@ -3480,10 +3629,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-14",
@@ -3509,10 +3659,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-15",
@@ -3538,10 +3689,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-16",
@@ -3567,10 +3719,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-17",
@@ -3596,10 +3749,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-18",
@@ -3625,10 +3779,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-19",
@@ -3654,10 +3809,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-20",
@@ -3683,10 +3839,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-21",
@@ -3712,10 +3869,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-22",
@@ -3741,10 +3899,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-23",
@@ -3770,10 +3929,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-24",
@@ -3799,10 +3959,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   },
   {
    "id": "erin-25",
@@ -3828,10 +3989,11 @@
    },
    "subtitleNote": "Trên trang Erin: phụ đề tiếng Nhật (kana / romaji) và 10 thứ tiếng, có tiếng Việt.",
    "embeddable": false,
-   "status": "published",
+   "status": "review",
    "verifiedAt": "2026-10-14",
    "verification": "Bài có trong mục lục chính thức (25 bài) và chỉ mục tìm kiếm. Điều khoản: cho phép đặt link tự do, cấm sao chép / dùng lại nội dung → chỉ mở tại nguồn.",
-   "style": "unknown"
+   "style": "unknown",
+   "reviewReason": "Chưa xác minh được phụ đề tiếng Việt cho từng video (trang bài và bản /vi/ chặn truy cập tự động) — 2026-10-16."
   }
  ],
  "styles": [

@@ -67,7 +67,7 @@ export function LearningSession({ mode, focusKeys }: { mode: SessionMode; focusK
     <div className="session daily-session">
       <SessionHeader mode={mode} />
       <SessionPhaseBar steps={session.steps} currentIndex={stepIndex} />
-      <SessionProgress total={session.steps.length} currentIndex={stepIndex} />
+      <SessionProgress steps={session.steps} currentIndex={stepIndex} />
       <SessionAudioNotice />
       {session.resumeFromStep > 0 && stepIndex === session.resumeFromStep && !learning.feedback ? (
         <NokoMessage state="comeback" text="Học tiếp từ chỗ bạn dừng lại 🐾 Những câu trước đã được lưu rồi." className="mb-3" />

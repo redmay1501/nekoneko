@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { SESSION_MODE_CONFIG, type SessionMode } from '@/features/learning/session-modes';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
 import { SessionSoundToggle } from './SessionAudio';
-import { type PublicSessionStep, SESSION_PHASE_INFO, SESSION_PHASES, phaseOfStep } from '@/features/learning/session-types';
+import { type PublicSessionStep, SESSION_PHASE_INFO, SESSION_PHASES, phaseOfStep, questionProgress } from '@/features/learning/session-types';
 
 export function SessionHeader({ mode }: { mode: SessionMode }) {
   const config = SESSION_MODE_CONFIG[mode];
@@ -17,10 +17,17 @@ export function SessionHeader({ mode }: { mode: SessionMode }) {
   );
 }
 
-export function SessionProgress({ total, currentIndex }: { total: number; currentIndex: number }) {
+/** Thanh tiến độ + "Câu X/N" đếm theo CÂU HỎI (questionProgress) — cùng một nguồn số với bảng chọn số câu kiểm tra. */
+export function SessionProgress({ steps, currentIndex }: { steps: PublicSessionStep[]; currentIndex: number }) {
+  const { total, current, isIntro } = questionProgress(steps, currentIndex);
+  if (!total) return null;
+  const done = current - 1;
   return (
-    <div className="s-prog" role="progressbar" aria-label="Tiến độ phiên học" aria-valuemin={1} aria-valuemax={total} aria-valuenow={currentIndex + 1}>
-      {Array.from({ length: total }, (_, index) => <i key={index} className={index <= currentIndex ? 'on' : ''} />)}
+    <div className="s-prog-wrap">
+      <div className="s-prog" role="progressbar" aria-label="Tiến độ theo câu hỏi" aria-valuemin={0} aria-valuemax={total} aria-valuenow={done}>
+        {Array.from({ length: total }, (_, index) => <i key={index} className={index < current ? 'on' : ''} />)}
+      </div>
+      <span className="tiny muted s-prog-count">{isIntro ? `Giới thiệu trước câu ${current}/${total}` : `Câu ${current}/${total}`}</span>
     </div>
   );
 }

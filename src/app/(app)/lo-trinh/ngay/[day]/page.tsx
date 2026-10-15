@@ -37,7 +37,12 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
           <span className="chip" style={{ background: 'rgba(255,255,255,.7)' }}>Tuần {dayInfo.week}</span>
           {dayInfo.minna && dayInfo.minna !== '—' ? <span className="chip lav">{dayInfo.minna}</span> : null}
           {plan.relation === 'today' ? <span className="chip pink">Hôm nay</span> : null}
-          {plan.relation === 'past' ? <span className="chip mint">✓ Đã xong</span> : null}
+          {plan.relation === 'past' ? (
+            completion.hasNewKnowledge && completion.metCount < completion.totalCount
+              // Đã bấm Hoàn thành nhưng còn kiến thức chưa học → nói thật, phần đó nằm ở Học bù.
+              ? <span className="chip">Đã qua · còn {completion.totalCount - completion.metCount} mục học bù</span>
+              : <span className="chip mint">✓ Đã xong</span>
+          ) : null}
         </div>
         <h1>Ngày {day}</h1>
         <p className="soft sm mt-1">{dayInfo.title}</p>

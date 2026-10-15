@@ -19,7 +19,11 @@ export interface JourneyNode {
   x: number;
   y: number;
   radius: number;
-  state: 'done' | 'today' | 'upcoming';
+  /**
+   * done = đã qua và đã học hết kiến thức của ngày (hoặc ngày ôn đã qua) · partial = đã qua nhưng còn kiến thức học bù ·
+   * today = ngày đang học · upcoming = chưa tới. "Đã qua" chỉ do người học bấm Hoàn thành — không theo ngày lịch.
+   */
+  state: 'done' | 'partial' | 'today' | 'upcoming';
   stage: JourneyStage;
   isWeekMark: boolean;
 }
@@ -41,7 +45,13 @@ function nodePosition(index: number): { x: number; y: number } {
   return { x: SIDE_MARGIN + (direction * (WIDTH - SIDE_MARGIN * 2)) / (COLUMNS - 1), y: TOP + row * ROW_GAP };
 }
 
-export function buildJourneyMapLayout(currentDay: number, isJourneyComplete = false): JourneyMapLayout {
+/** Bán kính chấm: đủ rộng cho số hai chữ số (10, 45, 90) ở mọi cỡ màn hình — chữ không chạm viền. */
+export const NODE_RADIUS = { NORMAL: 14, WEEK: 15, TODAY: 19 } as const;
+
+/**
+ * `isDayFullyLearned(day)` (tuỳ chọn): ngày đã qua có học hết kiến thức chưa — không có thì mọi ngày đã qua coi là done.
+ */
+export function buildJourneyMapLayout(currentDay: number, isJourneyComplete = false, isDayFullyLearned?: (day: number) => boolean): JourneyMapLayout {
   const { WIDTH, COLUMNS, ROW_GAP, TOP, BOTTOM_SPACE } = JOURNEY_MAP;
   const rows = Math.ceil(JOURNEY_TOTAL_DAYS / COLUMNS);
   const height = TOP + rows * ROW_GAP + BOTTOM_SPACE;
@@ -61,8 +71,10 @@ export function buildJourneyMapLayout(currentDay: number, isJourneyComplete = fa
     const isToday = day === currentDay && !isJourneyComplete;
     nodes.push({
       day, ...point,
-      radius: isToday ? 17 : day % 7 === 0 ? 13 : 10,
-      state: isToday ? 'today' : day < currentDay || isJourneyComplete ? 'done' : 'upcoming',
+      radius: isToday ? NODE_RADIUS.TODAY : day % 7 === 0 ? NODE_RADIUS.WEEK : NODE_RADIUS.NORMAL,
+      state: isToday ? 'today'
+        : day < currentDay || isJourneyComplete ? (isDayFullyLearned && !isDayFullyLearned(day) ? 'partial' : 'done')
+          : 'upcoming',
       stage: stageOfDay(day),
       isWeekMark: day % 7 === 0,
     });

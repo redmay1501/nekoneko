@@ -23,3 +23,18 @@ describe('buildJourneyMapLayout', () => {
     expect(layout.nodes.filter((node) => node.state === 'done')).toHaveLength(22);
   });
 });
+
+describe('trạng thái ngày trên bản đồ (audit hoàn thành ngày)', () => {
+  it('ngày chỉ "đã qua" khi currentDay vượt qua nó — không theo ngày lịch; ngày còn học bù hiện partial', async () => {
+    const { buildJourneyMapLayout, NODE_RADIUS } = await import('./journey-map-layout');
+    const layout = buildJourneyMapLayout(3, false, (day) => day !== 2);
+    const state = (day: number) => layout.nodes[day - 1].state;
+    expect([state(1), state(2), state(3), state(4)]).toEqual(['done', 'partial', 'today', 'upcoming']);
+    // Không có thông tin học bù → giữ cách cũ (mọi ngày đã qua là done).
+    expect(buildJourneyMapLayout(3).nodes[1].state).toBe('done');
+    // Xong cả lộ trình → không ngày nào là "hôm nay".
+    expect(buildJourneyMapLayout(90, true).nodes.every((node) => node.state === 'done')).toBe(true);
+    // Đủ rộng cho số hai chữ số.
+    expect(Math.min(...layout.nodes.map((node) => node.radius))).toBeGreaterThanOrEqual(NODE_RADIUS.NORMAL);
+  });
+});

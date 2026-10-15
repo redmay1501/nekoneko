@@ -13,15 +13,20 @@ interface JourneyMapProps {
   currentDay: number;
   startDateLabel: string;
   isJourneyComplete: boolean;
+  /** Ngày (đã qua) còn kiến thức chưa học — vẽ "còn học bù" thay vì "đã xong". */
+  unfinishedDays?: number[];
 }
+
+const STATE_LABEL = { done: 'đã hoàn thành', partial: 'đã qua, còn kiến thức học bù', today: 'hôm nay — đang học', upcoming: 'chưa học' } as const;
 
 /**
  * Bản đồ 90 ngày: con đường uốn lượn, torii đầu mỗi chặng, sakura mỗi tuần, Phú Sĩ cuối đường.
  * Toạ độ do journey-map-layout.ts tính — component chỉ vẽ.
  */
-export function JourneyMap({ currentDay, startDateLabel, isJourneyComplete }: JourneyMapProps) {
+export function JourneyMap({ currentDay, startDateLabel, isJourneyComplete, unfinishedDays = [] }: JourneyMapProps) {
   const router = useRouter();
-  const { width, height, pathData, nodes, stageBanners, finish } = buildJourneyMapLayout(currentDay, isJourneyComplete);
+  const unfinished = new Set(unfinishedDays);
+  const { width, height, pathData, nodes, stageBanners, finish } = buildJourneyMapLayout(currentDay, isJourneyComplete, (day) => !unfinished.has(day));
   const openDay = (day: number) => {
     startNavigation();
     router.push(`/lo-trinh/ngay/${day}`);
@@ -62,21 +67,25 @@ export function JourneyMap({ currentDay, startDateLabel, isJourneyComplete }: Jo
 
         {nodes.map((node) => {
           const isToday = node.state === 'today';
-          const isDone = node.state === 'done';
           return (
-            <g key={node.day} className="daynode" role="link" tabIndex={0} aria-label={`Ngày ${node.day}${isToday ? ' — hôm nay' : ''}`}
+            <g key={node.day} className={`daynode is-${node.state}`} role="link" tabIndex={0} aria-label={`Ngày ${node.day} — ${STATE_LABEL[node.state]}`}
               onClick={() => openDay(node.day)}
               onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') openDay(node.day); }}>
-              {isToday ? <circle cx={node.x} cy={node.y} r="17" fill="#FF5B73" opacity=".4" className="pulse" /> : null}
+              {isToday ? <circle cx={node.x} cy={node.y} r={node.radius} className="pulse day-pulse" /> : null}
               {/* Vùng chạm vô hình 44px quanh mỗi chấm (chấm vẽ nhỏ hơn). */}
               <circle className="touch-target" cx={node.x} cy={node.y} r="22" fill="transparent" />
-              <circle className="hit" cx={node.x} cy={node.y} r={node.radius}
-                fill={isToday ? '#FF5B73' : isDone ? node.stage.color : '#FFFFFF'}
-                stroke={isDone || isToday ? 'none' : '#EADFDA'} strokeWidth="2" />
-              <text className="day-number" x={node.x} y={node.y + 4} textAnchor="middle" fontSize={isToday ? 14 : 12} fontWeight="700"
-                fill={isToday ? '#fff' : isDone ? '#3F3936' : '#665A55'} fontFamily={FONT}>{node.day}</text>
+              <circle className="hit day-dot" cx={node.x} cy={node.y} r={node.radius} />
+              {/* Căn giữa theo tâm chữ (dominant-baseline: central) — không cộng lệch tay theo cỡ font. */}
+              <text className="day-number" x={node.x} y={node.y} textAnchor="middle" dominantBaseline="central" fontFamily={FONT}>{node.day}</text>
+              {node.state === 'done' ? (
+                // Dấu ✓ nhỏ góc trên phải — trạng thái không chỉ dựa vào màu.
+                <g className="day-badge" transform={`translate(${node.x + node.radius * 0.72},${node.y - node.radius * 0.72})`} aria-hidden="true">
+                  <circle r="5.5" />
+                  <path d="M-2.6 0.1 -0.8 1.9 2.7 -1.8" />
+                </g>
+              ) : null}
               {isToday ? (
-                <svg className="today-neko" x={node.x - 25} y={node.y - 53} width="50" height="50" viewBox="0 0 120 120" aria-hidden="true">
+                <svg className="today-neko" x={node.x - 25} y={node.y - 55} width="50" height="50" viewBox="0 0 120 120" aria-hidden="true">
                   <use href="#noko" x="0" y="0" width="120" height="120" />
                 </svg>
               ) : null}
@@ -90,6 +99,12 @@ export function JourneyMap({ currentDay, startDateLabel, isJourneyComplete }: Jo
           <text x="55" y="96" textAnchor="middle" fontSize="14" fontWeight="700" fill="#5E5A57" fontFamily={FONT}>🏆 JLPT N5</text>
         </g>
       </svg>
+      <ul className="map-legend" aria-label="Chú thích trạng thái ngày">
+        <li><span className="legend-dot is-done">✓</span>Đã hoàn thành</li>
+        <li><span className="legend-dot is-partial" />Đã qua, còn học bù</li>
+        <li><span className="legend-dot is-today" />Đang học</li>
+        <li><span className="legend-dot is-upcoming" />Chưa học</li>
+      </ul>
     </div>
   );
 }

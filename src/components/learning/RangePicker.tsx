@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { CheckCircleIcon } from '@/components/common/CheckCircleIcon';
 import { ModalPortal } from '@/components/common/ModalPortal';
 
 export interface RangePickerOption {
@@ -33,7 +34,7 @@ export interface RangeMultiSelect {
  * Chọn phạm vi luyện tập (theo lộ trình · tất cả · một hay NHIỀU bài / nhóm khi có `multi`) — MỘT nút "Phạm vi: … · Đổi" mở bảng chọn dạng lưới
  * như bảng Kiểm tra, thay cho hàng chip dài. Chọn xong chuyển trang ngay: server dựng đúng nội dung của phạm vi đó.
  */
-export function RangePicker({ options, current, currentLabel, title, onSelect, param = 'pham-vi', multi }: {
+export function RangePicker({ options, current, currentLabel, title, onSelect, param = 'pham-vi', multi, keepParams = [] }: {
   options: RangePickerOption[];
   current: string;
   title: string;
@@ -44,6 +45,8 @@ export function RangePicker({ options, current, currentLabel, title, onSelect, p
   /** Nhãn khi phạm vi hiện tại là tổ hợp nhiều phần (không trùng một lựa chọn nào). */
   currentLabel?: string;
   multi?: RangeMultiSelect;
+  /** Tham số URL hiện tại cần giữ khi chuyển phạm vi (vd chế độ đang chọn trong trang — có thể đổi phía client). */
+  keepParams?: string[];
 }) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -72,6 +75,17 @@ export function RangePicker({ options, current, currentLabel, title, onSelect, p
     router.push(`${multi.hrefPrefix}${ordered.join(',')}`, { scroll: false });
   }
 
+  function withKeptParams(href: string): string {
+    if (!keepParams.length) return href;
+    const target = new URL(href, window.location.origin);
+    const current = new URL(window.location.href);
+    for (const name of keepParams) {
+      const value = current.searchParams.get(name);
+      if (value) target.searchParams.set(name, value);
+    }
+    return `${target.pathname}${target.search}`;
+  }
+
   function choose(option: RangePickerOption) {
     setIsOpen(false);
     if (option.id === current) return;
@@ -82,7 +96,7 @@ export function RangePicker({ options, current, currentLabel, title, onSelect, p
       window.history.replaceState(window.history.state, '', url);
       return;
     }
-    if (option.href) router.push(option.href, { scroll: false });
+    if (option.href) router.push(withKeptParams(option.href), { scroll: false });
   }
 
   return (
@@ -114,7 +128,7 @@ export function RangePicker({ options, current, currentLabel, title, onSelect, p
                 {options.filter((option) => option.group === group).map((option) => (isMultiGroup(group) ? (
                   <button key={option.id} type="button" role="checkbox" aria-checked={picked.includes(option.id)}
                     className={`test-cell ${picked.includes(option.id) ? 'on' : ''}`} onClick={() => togglePart(option.id)}>
-                    <span className="test-face">{picked.includes(option.id) ? '✓ ' : ''}{option.label}</span>
+                    <span className="test-face">{picked.includes(option.id) ? <CheckCircleIcon size={15} filled /> : null}{option.label}</span>
                     {option.caption ? <span className="test-caption">{option.caption}</span> : null}
                   </button>
                 ) : (

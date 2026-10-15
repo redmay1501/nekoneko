@@ -2,8 +2,10 @@
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { CheckCircleIcon } from '@/components/common/CheckCircleIcon';
 import { ModalPortal } from '@/components/common/ModalPortal';
-import { MAX_FOCUS_ITEMS, focusSessionHref } from '@/features/learning/session-modes';
+import { focusSessionHref } from '@/features/learning/session-modes';
+import { ALL_QUESTIONS, QUESTION_COUNTS, pickTestKeys, questionCountFor } from '@/features/learning/test-selection';
 import type { TestGroup } from '@/features/learning/study-actions';
 
 interface TestPickerProps {
@@ -13,21 +15,9 @@ interface TestPickerProps {
   partUnit?: string;
 }
 
-/** Số câu mỗi lần kiểm tra (mỗi câu một mục); "Tất cả" = mọi mục đã chọn (tối đa MAX_FOCUS_ITEMS). */
-const QUESTION_COUNTS = [10, 20, 30, 50] as const;
-const ALL = 0;
-const DEFAULT_COUNT = 20;
 const COUNT_STORAGE_KEY = 'test-picker:count';
-
-/** Lấy ngẫu nhiên tối đa `limit` mục (chọn quá nhiều thì mỗi lần kiểm tra một phần, lần sau phần khác). */
-function sample<T>(items: readonly T[], limit: number): T[] {
-  const copy = [...items];
-  for (let index = copy.length - 1; index > 0; index -= 1) {
-    const other = Math.floor(Math.random() * (index + 1));
-    [copy[index], copy[other]] = [copy[other], copy[index]];
-  }
-  return copy.slice(0, limit);
-}
+const DEFAULT_COUNT = 20;
+const ALL = ALL_QUESTIONS;
 
 /**
  * MỘT nút "Kiểm tra" → bảng chọn THEO BÀI / NHÓM (chọn một hay nhiều, không phải chọn từng chữ) → chọn số câu
@@ -63,14 +53,15 @@ export function TestPicker({ groups, unit, partUnit = 'nhóm' }: TestPickerProps
   const entries = groups.filter((group) => picked.has(group.id)).flatMap((group) => group.entries);
   const pool = (onlyLearned ? entries.filter((entry) => entry.isLearned) : entries).map((entry) => entry.key);
   const hasLearned = groups.some((group) => group.entries.some((entry) => entry.isLearned));
-  const allLimit = Math.min(pool.length, MAX_FOCUS_ITEMS);
-  const questionCount = count === ALL ? allLimit : Math.min(count, allLimit);
-  const start = () => router.push(focusSessionHref(sample(pool, questionCount)));
+  const allLimit = questionCountFor(ALL_QUESTIONS, pool.length);
+  // Cùng một số cho nút, ghi chú và số mục gửi đi → phiên có đúng chừng đó câu hỏi.
+  const questionCount = questionCountFor(count, pool.length);
+  const start = () => router.push(focusSessionHref(pickTestKeys(pool, questionCount)));
 
   return (
     <>
       <div className="test-open-row">
-        <button type="button" className="btn ghost sm test-open" onClick={() => setIsOpen(true)}>✅ Kiểm tra</button>
+        <button type="button" className="btn ghost sm test-open" onClick={() => setIsOpen(true)}><CheckCircleIcon size={17} /> Kiểm tra</button>
       </div>
       {isOpen ? (
         <ModalPortal className="sheet on test-picker" labelledBy="test-picker-title" onEscape={() => setIsOpen(false)}>
@@ -85,7 +76,7 @@ export function TestPicker({ groups, unit, partUnit = 'nhóm' }: TestPickerProps
             {hasLearned ? (
               <button type="button" role="switch" aria-checked={onlyLearned} className={`chip ${onlyLearned ? 'pink' : ''}`}
                 onClick={() => setOnlyLearned((current) => !current)}>
-                {onlyLearned ? '✓ ' : ''}Chỉ hỏi {unit} đã học
+                {onlyLearned ? <CheckCircleIcon size={15} filled /> : null} Chỉ hỏi {unit} đã học
               </button>
             ) : null}
           </div>
@@ -95,7 +86,7 @@ export function TestPicker({ groups, unit, partUnit = 'nhóm' }: TestPickerProps
               return (
                 <button key={group.id} type="button" role="checkbox" aria-checked={picked.has(group.id)}
                   className={`test-cell ${picked.has(group.id) ? 'on' : ''}`} onClick={() => togglePart(group.id)}>
-                  <span className="test-face">{picked.has(group.id) ? '✓ ' : ''}{group.label}</span>
+                  <span className="test-face">{picked.has(group.id) ? <CheckCircleIcon size={15} filled /> : null}{group.label}</span>
                   <span className="test-caption">{group.entries.length} {unit}{learned && learned < group.entries.length ? ` · đã học ${learned}` : ''}</span>
                 </button>
               );
@@ -118,6 +109,7 @@ export function TestPicker({ groups, unit, partUnit = 'nhóm' }: TestPickerProps
             {pool.length ? (
               <p className="tiny muted mb-1.5">
                 Đã chọn {picked.size} {partUnit} · {pool.length} {unit}{questionCount < pool.length ? ` — lấy ngẫu nhiên ${questionCount}, lần sau ra ${unit} khác` : ''}.
+                {count !== ALL && count > pool.length ? ` Phạm vi chỉ có ${pool.length} ${unit} nên bài có ${questionCount} câu.` : ''}
               </p>
             ) : null}
             {pool.length ? (

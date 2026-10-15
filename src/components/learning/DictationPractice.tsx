@@ -100,11 +100,16 @@ export function DictationPractice({ words, sentences }: { words: DictationItem[]
       {tabs}
       <div className="between">
         <span className="tiny muted">Câu {index + 1}/{items.length}</span>
-        <button type="button" className="link tiny" onClick={() => setShowHint((value) => !value)}>{showHint ? 'Ẩn gợi ý' : 'Xem gợi ý nghĩa'}</button>
+        {/* Gõ từ: nghĩa tiếng Việt luôn hiện (là gợi ý chính). Gõ câu: bản dịch tiếng Việt ẩn, bấm mới xem. */}
+        {mode === 'sentences' ? (
+          <button type="button" className="link tiny" aria-expanded={showHint} onClick={() => setShowHint((value) => !value)}>
+            {showHint ? 'Ẩn nghĩa tiếng Việt' : 'Xem nghĩa tiếng Việt'}
+          </button>
+        ) : null}
       </div>
       <div className="center mt-2">
         <AudioButton text={item.audioText} label="🔊 Nghe" className="btn ghost" />
-        {showHint || mode === 'words' ? <p className="sm soft mt-2">“{item.hint}”</p> : null}
+        {showHint || mode === 'words' ? <p className="sm soft mt-2"><span className="tiny muted">Nghĩa: </span>“{item.hint}”</p> : null}
       </div>
       <form onSubmit={check} className="mt-3">
         <input className="input jp" value={typed} onChange={(event) => setTyped(event.target.value)} disabled={Boolean(current)}

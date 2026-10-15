@@ -1,4 +1,4 @@
-import type { GrammarContent, KanjiContent, ReadingPassage, StudyResource } from '@/types/content';
+import type { GrammarContent, KanjiContent, ReadingPassage } from '@/types/content';
 import type { MemoryView } from '@/features/memory/memory-types';
 import { pickDeterministic, shuffleDeterministic } from '@/lib/utils/deterministic-random';
 import { type KnowledgeCatalog, itemsOfType } from './knowledge-catalog';
@@ -16,9 +16,7 @@ import { lessonNumber } from '@/lib/utils/lesson';
 type Views = ReadonlyMap<ContentKey, MemoryView>;
 
 const LISTENING_WORDS = 8;
-const SHADOWING_SENTENCES = 3;
-const SPEAKING_SENTENCES = 4;
-const LISTENING_RESOURCES = 4;
+const SPEAKING_SENTENCES = 10;
 const DISTRACTORS = 3;
 
 function learnedGrammar(catalog: KnowledgeCatalog, journeyDay: number): GrammarContent[] {
@@ -42,8 +40,6 @@ export interface ListeningPracticeData {
   range: string;
   ranges: ListeningRange[];
   questions: ListeningQuestion[];
-  shadowing: GrammarContent[];
-  resources: StudyResource[];
 }
 
 export function buildListeningPractice(
@@ -75,9 +71,6 @@ export function buildListeningPractice(
         `${seed}:order:${item.id}`,
       ),
     })),
-    // Chưa tới ngày có mẫu câu → vẫn có câu nói đuổi theo (bài 1), không để trống.
-    shadowing: pickDeterministic(learnedGrammar(catalog, journeyDay).length ? learnedGrammar(catalog, journeyDay) : grammarPool(catalog, journeyDay, 'bai-1'), SHADOWING_SENTENCES, 'shadowing'),
-    resources: catalog.content.studyResources.filter((resource) => resource.usedFor.includes('Nghe')).slice(0, LISTENING_RESOURCES),
   };
 }
 

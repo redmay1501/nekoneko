@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import rawLibrary from '@content/seed/listening-videos.json';
-import { LISTENING_VIDEOS, VIDEO_SOURCES, VIDEO_TOPICS, filterVideos, formatDuration, nextVideoOf, youtubeEmbedUrl } from './video-library';
+import { LISTENING_VIDEOS, VIDEO_SOURCES, VIDEO_TOPICS, filterVideos, formatDuration, nextVideoOf, subtitleChoices, youtubeEmbedUrl } from './video-library';
 
 const ALL = { query: '', topic: null, source: null, watched: null, view: null } as const;
 const YOUTUBE_SOURCES = ['chibi', 'aiu', 'oyasumi', 'irodori'];
@@ -32,11 +32,10 @@ describe('thư viện video luyện nghe', () => {
         expect(video.thumbnailUrl).toBeNull();
       }
     }
-    expect(LISTENING_VIDEOS.filter((video) => video.embeddable)).toHaveLength(65);
-    // Xem được ngay đứng trước video mở tại nguồn; hoạt hình đứng đầu.
+    expect(LISTENING_VIDEOS.filter((video) => video.embeddable)).toHaveLength(24);
+    // Xem được ngay đứng trước video mở tại nguồn.
     const firstExternal = LISTENING_VIDEOS.findIndex((video) => !video.embeddable);
     expect(LISTENING_VIDEOS.slice(firstExternal).every((video) => !video.embeddable)).toBe(true);
-    expect(LISTENING_VIDEOS[0].style).toBe('animation');
   });
 
   it('không có phụ đề tiếng Việt thì không ghi là có (IRODORI chỉ có Nhật / Anh / Khmer)', () => {
@@ -45,13 +44,15 @@ describe('thư viện video luyện nghe', () => {
     }
   });
 
-  it('lọc "Xem trong app" và "Hoạt hình"; phụ đề tiếng Việt chỉ ghi có khi kênh thật sự tải lên', () => {
+  it('danh sách chính chỉ có video có tiếng Việt; video bị ẩn ghi rõ lý do', () => {
+    for (const video of LISTENING_VIDEOS) {
+      expect(video.subtitles.vi).toBe(true);
+      expect(video.bilingual).toBeDefined();
+      if (video.bilingual === 'switchable') expect(video.embeddable && video.subtitles.ja).toBe(true);
+    }
+    const file = rawLibrary as unknown as { videos: Array<{ status: string; reviewReason?: string; source: string }> };
+    for (const video of file.videos.filter((entry) => entry.status === 'review')) expect(video.reviewReason?.length).toBeGreaterThan(10);
     expect(filterVideos(LISTENING_VIDEOS, { ...ALL, view: 'in-app' }, new Set()).every((video) => video.embeddable)).toBe(true);
-    const animated = filterVideos(LISTENING_VIDEOS, { ...ALL, view: 'animation' }, new Set());
-    expect(animated.length).toBe(31);
-    expect(animated.every((video) => video.style === 'animation' && video.embeddable)).toBe(true);
-    for (const video of LISTENING_VIDEOS.filter((entry) => entry.source === 'oyasumi')) expect(video.subtitles.vi).toBe(true);
-    for (const video of LISTENING_VIDEOS.filter((entry) => entry.source === 'chibi' || entry.source === 'aiu')) expect(video.subtitles.vi).toBe(false);
   });
 
   it('video "review" không hiện cho người học', () => {
@@ -72,7 +73,10 @@ describe('thư viện video luyện nghe', () => {
   });
 
   it('trình phát nhúng dùng youtube-nocookie và bật phụ đề tiếng Nhật; tiện ích nhỏ', () => {
-    expect(youtubeEmbedUrl('3stbOEUrCE4', true)).toBe('https://www.youtube-nocookie.com/embed/3stbOEUrCE4?rel=0&hl=vi&playsinline=1&cc_load_policy=1&cc_lang_pref=ja');
+    expect(youtubeEmbedUrl('MMMwSpBg0sw', 'ja')).toBe('https://www.youtube-nocookie.com/embed/MMMwSpBg0sw?rel=0&hl=vi&playsinline=1&cc_load_policy=1&cc_lang_pref=ja');
+    expect(youtubeEmbedUrl('MMMwSpBg0sw', 'vi')).toContain('cc_lang_pref=vi');
+    expect(youtubeEmbedUrl('MMMwSpBg0sw', 'off')).not.toContain('cc_');
+    expect(subtitleChoices(LISTENING_VIDEOS.find((video) => video.embeddable)!)).toEqual(['ja', 'vi', 'off']);
     expect(formatDuration(69)).toBe('1:09');
     expect(formatDuration(null)).toBeNull();
     expect(nextVideoOf('nhk-01')?.id).toBe('nhk-02');

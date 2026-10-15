@@ -21,7 +21,9 @@ export function SheetHost({ dailyMinutes }: { dailyMinutes: number }) {
   }, [pathname, close]);
 
   return (
-    <BottomSheet isOpen={activeSheet.kind !== 'none'} label={SHEET_LABELS[activeSheet.kind]} onClose={close}>
+    // Chi tiết từ vựng / Kanji (và kết quả tìm) mở GIỮA màn hình trên máy tính; Học ngay / điều hướng giữ thẻ nổi ở góc.
+    <BottomSheet isOpen={activeSheet.kind !== 'none'} label={SHEET_LABELS[activeSheet.kind]} onClose={close}
+      placement={activeSheet.kind === 'knowledge' || activeSheet.kind === 'search' ? 'center' : 'corner'}>
       {activeSheet.kind === 'none' ? null : (
         <SheetPanels activeSheet={activeSheet} dailyMinutes={dailyMinutes} onClose={close} />
       )}

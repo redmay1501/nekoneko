@@ -164,3 +164,15 @@ export function phaseOfStep(step: PublicSessionStep): SessionPhase {
   if (step.type === 'use') return 'use';
   return 'new';
 }
+
+/**
+ * Tiến độ theo CÂU HỎI (không theo bước): thẻ giới thiệu (discover) không phải một câu — nó đứng trước câu hỏi về cùng
+ * kiến thức. Chọn 10 câu kiểm tra mà có 4 thứ chưa học → 14 bước nhưng vẫn là 10 câu.
+ * `current` = số thứ tự câu đang làm (bước giới thiệu → câu hỏi kế tiếp của nó), 1-based.
+ */
+export function questionProgress(steps: readonly PublicSessionStep[], currentIndex: number): { total: number; current: number; isIntro: boolean } {
+  const total = steps.filter((step) => step.type !== 'discover').length;
+  const asked = steps.slice(0, currentIndex).filter((step) => step.type !== 'discover').length;
+  const isIntro = steps[currentIndex]?.type === 'discover';
+  return { total, current: Math.min(asked + 1, Math.max(total, 1)), isIntro };
+}

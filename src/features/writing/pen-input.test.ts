@@ -53,3 +53,12 @@ describe('vùng chạm lớn và vệt lòng bàn tay', () => {
     expect(cleaned.strokes.map((item) => item.pointerType)).toEqual(['touch', 'mouse', 'pen']);
   });
 });
+
+describe('chỉ nhận bút: danh sách cho phép', () => {
+  it('loại chạm lạ (rỗng, không rõ) cũng bị bỏ qua khi đã dùng bút; bút và chuột vẫn viết', () => {
+    expect(decidePointer({ ...base, penSeen: true, pointerType: '' })).toBe('ignore');
+    expect(decidePointer({ ...base, mode: 'pen', pointerType: 'unknown' })).toBe('ignore');
+    expect(decidePointer({ ...base, penSeen: true, pointerType: 'pen' })).toBe('start');
+    expect(decidePointer({ ...base, penSeen: true, pointerType: 'mouse' })).toBe('start');
+  });
+});

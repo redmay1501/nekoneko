@@ -1,7 +1,7 @@
 'use client';
 
 import { memo, type PointerEvent, useCallback, useRef, useState } from 'react';
-import { activeStrokes, decidePointer, penInput } from '@/features/writing/pen-input';
+import { activeStrokes, decidePointer, penInput, pointerDiagnostics } from '@/features/writing/pen-input';
 import { type InkPoint, type InkStroke, normalizePoint, shouldAddPoint, strokePath } from '@/features/writing/ink';
 import { STROKE_ORDER_BOX, type StrokeOrderData } from '@/features/learning/stroke-order';
 
@@ -125,6 +125,10 @@ function NotebookCellView({ cellId, glyph, hasGhost, guide, showGrid, isActive, 
       pointerType: event.pointerType, mode, penSeen, activePointerType: activeStrokes.current(), contactWidth: event.width, contactHeight: event.height,
     });
     event.preventDefault();
+    pointerDiagnostics.record({
+      at: Date.now(), pointerType: event.pointerType || '(trống)', width: Math.round(event.width), height: Math.round(event.height),
+      pressure: Math.round(event.pressure * 100) / 100, isPrimary: event.isPrimary, decision,
+    });
     if (tool === 'eraser') {
       // Tẩy: chỉ cần không phải tì tay; không giữ con trỏ trong ô để quẹt sang ô khác vẫn tẩy.
       if (decision === 'ignore' && !(event.pointerType === 'pen' || event.pointerType === 'mouse')) return;

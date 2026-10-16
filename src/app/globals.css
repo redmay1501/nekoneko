@@ -1341,7 +1341,12 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 .nb-tools{position:sticky;top:calc(var(--safe-t) + 6px);z-index:5;display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px;margin-bottom:10px;
   border-radius:14px;background:rgba(255,253,248,.94);backdrop-filter:blur(6px);border:1px solid var(--line)}
 .nb-settings{position:relative}
-.nb-pen-chip{border-color:#F3C1CB;background:#FFF1F4}
+.nb-pen-chip{display:inline-flex;align-items:center;padding:5px 11px;border-radius:999px;border:1.5px solid #F3C1CB;background:#FFF1F4;font-size:13px;font-weight:700;color:var(--sakura-deep)}
+.nb-pen-chip.is-touch{background:#FFF7E8;border-color:#F2D49B;color:#8A5A00}
+.nb-diagnostics summary{cursor:pointer;font-weight:700}
+.nb-diag-table{width:100%;margin-top:6px;border-collapse:collapse;font-size:12px;font-weight:500}
+.nb-diag-table th,.nb-diag-table td{padding:3px 4px;border-bottom:1px solid var(--line);text-align:left}
+.nb-diag-table tr.is-ignored td{color:var(--ink-3)}
 .nb-tool-switch{display:inline-flex;border:1.5px solid #F3C1CB;border-radius:999px;overflow:hidden;background:#fff}
 .nb-tool-switch button{padding:6px 12px;font-size:13px;font-weight:700;color:var(--ink-2)}
 .nb-tool-switch button.on{background:var(--sakura);color:#fff}

@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
-import { isLikelyPalmStroke, isPenOnly, penInput, type PenMode } from '@/features/writing/pen-input';
+import { isLikelyPalmStroke, isPenOnly, penInput, type PenMode, pointerDiagnostics } from '@/features/writing/pen-input';
 import { createPortal } from 'react-dom';
 import { preloadStrokeOrders, type StrokeOrderData } from '@/features/learning/stroke-order';
 import { dropEmptyEraseStep, EMPTY_INK, ERASER_RADIUS, type InkAction, type InkPoint, inkReducer, type InkState, type InkStroke, strokeHitsPoint } from '@/features/writing/ink';
@@ -321,9 +321,12 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
         <button type="button" className="btn ghost sm" onClick={() => activeCell && dispatchInk({ type: 'clear-cell', cellId: activeCell })}
           disabled={!activeCell || !strokesByCell.get(activeCell)?.length}>Xoá ô đang viết</button>
         <button type="button" className="btn ghost sm" onClick={clearPage} disabled={!ink.strokes.length}>🗑 Xoá hết</button>
+        {/* Trạng thái bút: nhãn, KHÔNG phải nút (chạm nhầm / tì tay vào không được tắt chống tì tay). Đổi chế độ ở ⚙️ Tuỳ chỉnh. */}
         {isPenOnly(pen) ? (
-          <button type="button" className="btn ghost sm nb-pen-chip" onClick={() => { penInput.setMode('all'); penInput.forgetPen(); }}
-            title="Đang dùng bút: chạm tay vào ô viết sẽ không vẽ (chống tì tay). Bấm để cho phép viết bằng tay.">✏️ Chỉ nhận bút</button>
+          <span className="nb-pen-chip" role="status" title="Đang chỉ nhận nét bút — chạm tay vào ô viết không vẽ. Đổi ở ⚙️ Tuỳ chỉnh → Bút cảm ứng.">✏️ Chỉ nhận bút</span>
+        ) : pen.mode === 'all' ? (
+          <button type="button" className="btn ghost sm nb-pen-chip is-touch" onClick={() => penInput.setMode('auto')}
+            title="Đang nhận cả chạm tay. Bấm để quay về tự nhận bút (bỏ qua chạm tay khi dùng bút).">✋ Đang nhận cả tay · bấm để chỉ nhận bút</button>
         ) : null}
         <details className="nb-settings" ref={settingsRef}>
           <summary className="btn ghost sm">⚙️ Tuỳ chỉnh</summary>
@@ -363,6 +366,7 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
                 <option value="pen">Chỉ nhận bút</option>
                 <option value="all">Nhận cả bút và tay</option>
               </select></label>
+            <PenDiagnostics />
             <label className="nb-setting nb-check"><input type="checkbox" checked={settings.showGrid} onChange={(event) => setSettings((current) => ({ ...current, showGrid: event.target.checked }))} /> Đường kẻ hướng dẫn trong ô</label>
             <div className="nb-setting"><span>In / lưu PDF (khổ A4, ô trống để viết tay)</span>
               <span className="row wrap" style={{ gap: 6 }}>
@@ -535,5 +539,33 @@ function WordLinesRow({ word, reading, meaning, rowId, width, lineHeight, autoRo
         })}
       </div>
     </section>
+  );
+}
+
+/** Chẩn đoán bút / chạm: 8 lần chạm gần nhất vào ô viết — để chụp màn hình gửi khi vẫn bị dính tì tay. */
+function PenDiagnostics() {
+  const log = useSyncExternalStore(pointerDiagnostics.subscribe, pointerDiagnostics.getSnapshot, pointerDiagnostics.getServerSnapshot);
+  const pen = useSyncExternalStore(penInput.subscribe, penInput.getSnapshot, penInput.getServerSnapshot);
+  const label = (decision: string) => decision === 'ignore' ? 'bỏ qua' : decision === 'replace' ? 'nhận (huỷ nét tay)' : 'nhận';
+  return (
+    <details className="nb-setting nb-diagnostics">
+      <summary>🔍 Chẩn đoán bút / chạm</summary>
+      <p className="tiny muted" style={{ fontWeight: 400 }}>
+        Chế độ: {pen.mode === 'auto' ? 'Tự nhận' : pen.mode === 'pen' ? 'Chỉ nhận bút' : 'Nhận cả tay'} · máy {pen.penSeen ? 'đã' : 'chưa'} dùng bút.
+        Vẫn bị dính tì tay? Viết vài nét, chạm tay thử, rồi chụp màn hình bảng này gửi lại.
+      </p>
+      {log.length ? (
+        <table className="nb-diag-table">
+          <thead><tr><th>Loại</th><th>Cỡ</th><th>Lực</th><th>Chính</th><th>Kết quả</th></tr></thead>
+          <tbody>
+            {log.map((entry) => (
+              <tr key={entry.at + entry.pointerType + entry.width} className={entry.decision === 'ignore' ? 'is-ignored' : ''}>
+                <td>{entry.pointerType}</td><td>{entry.width}×{entry.height}</td><td>{entry.pressure}</td><td>{entry.isPrimary ? 'có' : 'không'}</td><td>{label(entry.decision)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : <p className="tiny muted" style={{ fontWeight: 400 }}>Chưa có lần chạm nào vào ô viết.</p>}
+    </details>
   );
 }

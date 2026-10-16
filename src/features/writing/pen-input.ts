@@ -27,7 +27,8 @@ export interface PointerDecisionInput {
 /** start = bắt đầu nét mới · replace = huỷ nét đang vẽ dở (của tay) rồi bắt đầu nét bút · ignore = bỏ qua. */
 export function decidePointer({ pointerType, mode, penSeen, activePointerType, contactWidth = 0, contactHeight = 0 }: PointerDecisionInput): 'start' | 'replace' | 'ignore' {
   const penOnly = mode === 'pen' || (mode === 'auto' && (penSeen || pointerType === 'pen'));
-  if (pointerType === 'touch' && penOnly) return 'ignore';
+  // Chỉ nhận bút: CHỈ chấp nhận bút và chuột / trackpad — mọi loại chạm khác (touch, hoặc loại trình duyệt báo lạ) đều bỏ qua.
+  if (penOnly && pointerType !== 'pen' && pointerType !== 'mouse') return 'ignore';
   // Chưa thấy bút nhưng vùng chạm to như lòng bàn tay → bỏ qua (trừ khi người học chọn "Nhận cả bút và tay").
   if (pointerType === 'touch' && mode === 'auto' && Math.max(contactWidth, contactHeight) > PALM_CONTACT_PX) return 'ignore';
   if (activePointerType === null) return 'start';
@@ -106,3 +107,27 @@ export const RECENT_PALM_MS = 2500;
 export function isLikelyPalmStroke(stroke: { pointerType?: string; at?: number }, penAt: number): boolean {
   return stroke.pointerType === 'touch' && stroke.at !== undefined && penAt - stroke.at <= RECENT_PALM_MS && stroke.at <= penAt;
 }
+
+/** Nhật ký chạm gần nhất — hiện trong "Chẩn đoán bút / chạm" để người học chụp màn hình gửi khi còn bị dính tì tay. */
+export interface PointerLogEntry {
+  at: number;
+  pointerType: string;
+  width: number;
+  height: number;
+  pressure: number;
+  isPrimary: boolean;
+  decision: string;
+}
+const LOG_SIZE = 8;
+let pointerLog: PointerLogEntry[] = [];
+const logListeners = new Set<() => void>();
+export const pointerDiagnostics = {
+  record(entry: PointerLogEntry) {
+    pointerLog = [entry, ...pointerLog].slice(0, LOG_SIZE);
+    for (const listener of logListeners) listener();
+  },
+  subscribe(listener: () => void) { logListeners.add(listener); return () => logListeners.delete(listener); },
+  getSnapshot: () => pointerLog,
+  getServerSnapshot: () => EMPTY_LOG,
+};
+const EMPTY_LOG: PointerLogEntry[] = [];

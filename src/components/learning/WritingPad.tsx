@@ -7,7 +7,7 @@ import {
   loadStrokeOrder, strokeCountOf,
 } from '@/features/learning/stroke-order';
 import { StrokeOrder } from './StrokeOrder';
-import { decidePointer, penInput } from '@/features/writing/pen-input';
+import { decidePointer, penInput, pointerDiagnostics } from '@/features/writing/pen-input';
 
 const CANVAS_SIZE = 600;
 const STROKE_WIDTH = 16;
@@ -65,9 +65,14 @@ export function WritingPad({ character, reading, expectedStrokes, note }: Writin
     // Chống tì tay: đã dùng bút thì chạm tay vào khung không vẽ; đang vẽ thì ngón / tay thứ hai bị bỏ qua.
     if (event.pointerType === 'pen') penInput.notePen();
     const { mode, penSeen } = penInput.getSnapshot();
-    if (decidePointer({
+    const decision = decidePointer({
       pointerType: event.pointerType, mode, penSeen, activePointerType: isDrawingRef.current ? 'touch' : null, contactWidth: event.width, contactHeight: event.height,
-    }) === 'ignore') return;
+    });
+    pointerDiagnostics.record({
+      at: Date.now(), pointerType: event.pointerType || '(trống)', width: Math.round(event.width), height: Math.round(event.height),
+      pressure: Math.round(event.pressure * 100) / 100, isPrimary: event.isPrimary, decision,
+    });
+    if (decision === 'ignore') return;
     isDrawingRef.current = true;
     setStrokeCount((count) => count + 1);
     setCheckMessage('');

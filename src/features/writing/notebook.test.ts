@@ -1,14 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import { loadSeedContent } from '@/lib/data/seed-content';
-import { buildNotebooks, DEFAULT_REPEATS, fillRepeats, findNotebookPage, gridColumns, isGhostCell, KANJI_PER_PAGE, REPEAT_OPTIONS } from './notebook';
+import { buildNotebooks, DEFAULT_REPEATS, fillRepeats, findNotebookPage, gridColumns, isGhostCell, KANJI_PER_PAGE, REPEAT_OPTIONS, wordCells, writingFormOf } from './notebook';
+import { notebookRecordKey } from './notebook-progress';
 
 const content = loadSeedContent();
 const notebooks = buildNotebooks(content);
 const byId = Object.fromEntries(notebooks.map((notebook) => [notebook.id, notebook]));
 
 describe('buildNotebooks', () => {
-  it('có đủ bốn sổ: Hiragana, Katakana, Kanji, Bộ thủ', () => {
-    expect(notebooks.map((notebook) => notebook.id)).toEqual(['hiragana', 'katakana', 'kanji', 'bo-thu']);
+  it('có đủ năm sổ: Hiragana, Katakana, Kanji, Bộ thủ, Từ vựng', () => {
+    expect(notebooks.map((notebook) => notebook.id)).toEqual(['hiragana', 'katakana', 'kanji', 'bo-thu', 'tu-vung']);
   });
 
   it('Hiragana trang 1 là hàng あ: あいうえお đúng thứ tự, mỗi chữ một dòng', () => {
@@ -52,8 +53,8 @@ describe('buildNotebooks', () => {
     expect(findNotebookPage(notebooks, 'kanji-999')).toBeUndefined();
   });
 
-  it('mỗi sổ ≤ 40 trang (giới hạn bản ghi của kho tiến độ)', () => {
-    expect(notebooks.every((notebook) => notebook.pages.length <= 40)).toBe(true);
+  it('sổ chữ ≤ 40 trang (giới hạn bản ghi của kho tiến độ; sổ Từ vựng chia tiền tố riêng)', () => {
+    expect(notebooks.filter((notebook) => notebook.id !== 'tu-vung').every((notebook) => notebook.pages.length <= 40)).toBe(true);
   });
 });
 
@@ -84,5 +85,57 @@ describe('Đầy khung — số cột và số ô theo bề rộng', () => {
   it('điện thoại (ít cột) → 3 hàng để đủ ô luyện', () => {
     expect(fillRepeats(4)).toEqual({ rows: 3, repeats: 8 });
     expect(fillRepeats(5)).toEqual({ rows: 3, repeats: 11 });
+  });
+});
+
+describe('Sổ Từ vựng', () => {
+  const vocab = byId['tu-vung'];
+  it('có sổ, đủ mọi từ viết được, mỗi trang tối đa 5 từ, theo bài', () => {
+    expect(vocab).toBeDefined();
+    const rows = vocab.pages.flatMap((page) => page.rows);
+    expect(rows.length).toBe(content.vocabulary.filter((word) => writingFormOf(word.kana).length).length);
+    expect(vocab.pages.every((page) => page.rows.length <= 5)).toBe(true);
+    expect(vocab.pages.every((page) => /^(Bài \d+|Chào hỏi)/.test(page.subtitle))).toBe(true);
+  });
+  it('mỗi chữ một ô: 先生 → kana せ・ん・せ・い, chữ Kanji 先・生', () => {
+    const row = vocab.pages.flatMap((page) => page.rows).find((item) => item.word?.kanji?.join('') === '先生')!;
+    expect(row.word).toMatchObject({ kana: ['せ', 'ん', 'せ', 'い'], kanji: ['先', '生'] });
+  });
+  it('làm sạch ký hiệu phụ trong dữ liệu', () => {
+    expect(writingFormOf('だれ / どなた')).toEqual([...'だれ']);
+    expect(writingFormOf('しんせつ[な]')).toEqual([...'しんせつ']);
+    expect(writingFormOf('〜さん')).toEqual([...'さん']);
+    expect(writingFormOf('ひとつ〜とお')).toEqual([...'ひとつ']);
+    expect(writingFormOf('どうぞ よろしく')).toEqual([...'どうぞよろしく']);
+    expect(writingFormOf('〜')).toEqual([]);
+  });
+  it('không có ký tự lạ trong ô viết', () => {
+    for (const row of vocab.pages.flatMap((page) => page.rows)) {
+      expect([...(row.word!.kana), ...(row.word!.kanji ?? [])].join('')).not.toMatch(/[\s/〜~[\]()]/);
+    }
+  });
+  it('viết nối tiếp: kín đúng số hàng, mọi từ cùng số cột (ô cùng cỡ)', () => {
+    expect(wordCells({ columns: 15, rows: 2, wordLength: 2, repeats: 'auto' }).total).toBe(30);
+    expect(wordCells({ columns: 15, rows: 2, wordLength: 9, repeats: 'auto' }).total).toBe(30);
+  });
+  it('từ dài trên điện thoại → thêm hàng để đủ mẫu + 2 lần viết', () => {
+    expect(wordCells({ columns: 4, rows: 3, wordLength: 9, repeats: 'auto' }).total).toBe(28);
+    expect(wordCells({ columns: 4, rows: 3, wordLength: 2, repeats: 'auto' }).total).toBe(12);
+  });
+  it('số lần cố định: mẫu + N lần', () => {
+    expect(wordCells({ columns: 15, rows: 2, wordLength: 3, repeats: 4 }).total).toBe(15);
+  });
+  it('nửa đồ: chữ mờ hết hàng đầu (tròn từ), phần sau tự viết', () => {
+    const short = wordCells({ columns: 15, rows: 2, wordLength: 3, repeats: 'auto' });
+    expect(short.ghostLimit('half')).toBe(15);
+    expect(wordCells({ columns: 15, rows: 2, wordLength: 2, repeats: 'auto' }).ghostLimit('half')).toBe(15);
+    expect(short.ghostLimit('none')).toBe(3);
+    expect(short.ghostLimit('all')).toBe(30);
+    expect(wordCells({ columns: 15, rows: 2, wordLength: 9, repeats: 'auto' }).ghostLimit('half')).toBe(18);
+  });
+  it('tiến độ: tiền tố chia theo từng 40 trang (≤ 40 bản ghi mỗi loại)', () => {
+    expect(notebookRecordKey('tu-vung', 'tu-vung-1')).toBe('viet-tu1:tu-vung-1');
+    expect(notebookRecordKey('tu-vung', 'tu-vung-41')).toBe('viet-tu2:tu-vung-41');
+    expect(notebookRecordKey('kanji', 'kanji-3')).toBe('viet-kanji:kanji-3');
   });
 });

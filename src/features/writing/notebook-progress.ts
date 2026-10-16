@@ -12,9 +12,15 @@ import type { NotebookId } from './notebook';
  *  - plays = số lần bấm "Đã luyện xong"; lastPlayedAt = lần luyện gần nhất.
  * KHÔNG ghi trí nhớ, KHÔNG đổi ngày lộ trình: viết tay không được chấm nên không phải bằng chứng đã nhớ.
  */
-const PREFIX: Record<NotebookId, string> = { hiragana: 'viet-hira', katakana: 'viet-kata', kanji: 'viet-kanji', 'bo-thu': 'viet-bo' };
+const PREFIX: Record<NotebookId, string> = { hiragana: 'viet-hira', katakana: 'viet-kata', kanji: 'viet-kanji', 'bo-thu': 'viet-bo', 'tu-vung': 'viet-tu' };
+/** Sổ Từ vựng có hơn 40 trang → chia tiền tố theo từng 40 trang (viet-tu1, viet-tu2…) để không chạm giới hạn 40 bản ghi / loại. */
+const PAGES_PER_PREFIX = 40;
 
-export const notebookRecordKey = (notebookId: NotebookId, pageId: string) => `${PREFIX[notebookId]}:${pageId}`;
+export function notebookRecordKey(notebookId: NotebookId, pageId: string): string {
+  if (notebookId !== 'tu-vung') return `${PREFIX[notebookId]}:${pageId}`;
+  const number = Number(/(\d+)$/.exec(pageId)?.[1] ?? 1);
+  return `${PREFIX[notebookId]}${Math.ceil(number / PAGES_PER_PREFIX)}:${pageId}`;
+}
 
 export type PageProgressState = 'new' | 'started' | 'done';
 export interface PageProgress {

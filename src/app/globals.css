@@ -1320,7 +1320,7 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 .nb-cover{position:relative;display:flex;flex-direction:column;gap:6px;min-height:230px;padding:18px 18px 16px 26px;text-align:left;border-radius:8px 18px 18px 8px;
   background:linear-gradient(90deg,rgba(0,0,0,.06) 0,rgba(0,0,0,0) 10px),var(--cover,#FFE4EA);border:1px solid rgba(0,0,0,.06);box-shadow:var(--sh-2);transition:transform .15s}
 .nb-cover:hover{transform:translateY(-2px)}
-.nb-cover-hiragana{--cover:#FFE4EA} .nb-cover-katakana{--cover:#E2F0F8} .nb-cover-kanji{--cover:#FFF3DE} .nb-cover-bo-thu{--cover:#EAE4F7}
+.nb-cover-tu-vung{--cover:#DFF3E4} .nb-cover-hiragana{--cover:#FFE4EA} .nb-cover-katakana{--cover:#E2F0F8} .nb-cover-kanji{--cover:#FFF3DE} .nb-cover-bo-thu{--cover:#EAE4F7}
 .nb-cover-label{align-self:flex-start;padding:2px 10px;border-radius:6px;background:#fff;font-size:11px;letter-spacing:.2em;color:var(--ink-3)}
 .nb-cover-glyph{font-family:var(--font-learn);font-size:58px;line-height:1.1;color:var(--ink)}
 .nb-cover-title{font-size:17px}
@@ -1374,6 +1374,14 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 .nb-ink path{fill:none;stroke:#E2475E;stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round}
 .nb-foot{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;margin-top:12px}
 @media (max-width:560px){.nb-foot>.btn{flex:1 1 40%} .nb-foot>.btn:nth-child(2){order:3;flex-basis:100%}}
+/* Sổ Từ vựng: cụm = cả từ, mỗi chữ một ô; khe giữa các cụm rộng hơn khe giữa các chữ. */
+.nb-word-legend{display:flex;flex-wrap:wrap;gap:2px 14px;margin-top:6px;font-size:13px;color:var(--ink-2)}
+.nb-word-slot{position:relative;display:block}
+.nb-word-slot>.nb-cell,.nb-word-cells>.nb-word-model{width:100%;height:auto;aspect-ratio:1/1}
+.nb-word-model{cursor:default;touch-action:auto;border:2px solid #D2B8B0;background:#FFF8F5;border-radius:6px}
+/* Ô bắt đầu mỗi lần viết từ: vạch hồng bên trái để mắt thấy ranh giới các lần viết. */
+.nb-word-cells .is-word-start{box-shadow:-4px 0 0 -1px #F7A9B8}
+.nb-word-slot.is-word-start>.nb-cell{border-left-color:#F08DA0}
 /* In: chỉ tờ luyện (portal ở <body>), A4, mỗi trang sổ một tờ giấy. Màn hình thường không thấy. */
 .nb-print-root{display:none}
 @media print{
@@ -1389,6 +1397,9 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
   .nb-sheet-cells{display:flex;flex-wrap:wrap;gap:1mm}
   .nb-sheet-cell{width:13mm;height:13mm;border:.3mm solid #888;flex:0 0 auto}
   .nb-sheet-cell.is-sample{border-width:.5mm}
+  .nb-sheet-words{gap:2.5mm 3mm}
+  .nb-sheet-word{display:inline-flex;gap:.6mm;break-inside:avoid}
+  .nb-sheet .nb-order-numbers text{fill:#c33;stroke:#fff}
   .nb-sheet-foot{margin-top:4mm;font-size:8pt;color:#888;text-align:right}
   .nb-sheet .nb-grid{stroke:#bbb}
   .nb-sheet .nb-ghost path{stroke:#d6d6d6} .nb-sheet .nb-ghost-text{fill:#d6d6d6}

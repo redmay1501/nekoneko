@@ -4,14 +4,14 @@ import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore
 import { isLikelyPalmStroke, isPenOnly, penInput, type PenMode } from '@/features/writing/pen-input';
 import { createPortal } from 'react-dom';
 import { preloadStrokeOrders, type StrokeOrderData } from '@/features/learning/stroke-order';
-import { EMPTY_INK, type InkAction, inkReducer, type InkState, type InkStroke } from '@/features/writing/ink';
+import { dropEmptyEraseStep, EMPTY_INK, ERASER_RADIUS, type InkAction, type InkPoint, inkReducer, type InkState, type InkStroke, strokeHitsPoint } from '@/features/writing/ink';
 import {
   DEFAULT_REPEATS, fillRepeats, type GhostMode, gridColumns, isGhostCell, type Notebook, type NotebookId, type NotebookPage, PRINT_AUTO_REPEATS,
   REPEAT_OPTIONS, type RepeatSetting, ghostCopies, VOCAB_LINE_OPTIONS, type VocabLines, wordLines,
 } from '@/features/writing/notebook';
 import type { PageProgress } from '@/features/writing/notebook-progress';
 import { postJson } from '@/lib/api/api-client';
-import { CellGhost, CellGrid, CellModel, LineGhost, NotebookCell } from './NotebookCell';
+import { CellGhost, CellGrid, CellModel, eraserPointer, LineGhost, NotebookCell } from './NotebookCell';
 
 type CellSize = 'nho' | 'vua' | 'lon';
 interface NotebookSettings {
@@ -79,6 +79,7 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
   const [printScope, setPrintScope] = useState<'page' | 'notebook' | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const startedRef = useRef(new Set<string>());
+  const [tool, setTool] = useState<'pen' | 'eraser'>('pen');
   // Chỉ ghi URL sau khi người học tự chọn sổ / lật trang — tab đang ẩn không được đổi ?muc= của tab khác.
   const shouldSyncUrlRef = useRef(false);
   const settingsRef = useRef<HTMLDetailsElement>(null);
@@ -169,6 +170,21 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
     if (!page) return;
     setInkByPage((current) => ({ ...current, [page.id]: inkReducer(current[page.id] ?? EMPTY_INK, action) }));
   }, [page]);
+
+  const eraseStart = useCallback(() => dispatchInk({ type: 'erase-begin' }), [dispatchInk]);
+  const erase = useCallback((cellId: string, points: InkPoint[], aspect: number) => {
+    dispatchInk({ type: 'erase', shouldErase: (stroke) => stroke.cellId === cellId && points.some((point) => strokeHitsPoint(stroke, point, ERASER_RADIUS, aspect)) });
+  }, [dispatchInk]);
+  // Nhấc bút / tay ở BẤT KỲ đâu → kết thúc lần quẹt tẩy (lần quẹt trượt hết thì bỏ bước Hoàn tác rỗng).
+  useEffect(() => {
+    if (tool !== 'eraser' || !page) return;
+    const finish = () => {
+      if (eraserPointer.end()) setInkByPage((current) => ({ ...current, [page.id]: dropEmptyEraseStep(current[page.id] ?? EMPTY_INK) }));
+    };
+    window.addEventListener('pointerup', finish);
+    window.addEventListener('pointercancel', finish);
+    return () => { window.removeEventListener('pointerup', finish); window.removeEventListener('pointercancel', finish); };
+  }, [tool, page]);
 
   const sendProgress = useCallback(async (pageId: string, action: 'start' | 'complete' | 'uncomplete') => {
     try {
@@ -266,7 +282,7 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
   const pageProgress = progress[page.id];
   const sizeClass = `nb-size-${settings.cellSize}`;
   return (
-    <section id="so-luyen-viet" className={`nb ${sizeClass}`} aria-label={`Sổ ${notebook.title}`}>
+    <section id="so-luyen-viet" className={`nb ${sizeClass} ${tool === 'eraser' ? 'is-erasing' : ''}`} aria-label={`Sổ ${notebook.title}`}>
       <div className="nb-head">
         <button type="button" className="btn ghost sm" onClick={() => { shouldSyncUrlRef.current = true; setNotebookId(null); }}>← Các cuốn sổ</button>
         <div className="nb-head-title">
@@ -295,8 +311,13 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
       </details>
 
       <div className="nb-tools" role="toolbar" aria-label="Công cụ viết">
-        <button type="button" className="btn ghost sm" onClick={() => dispatchInk({ type: 'undo' })} disabled={!ink.strokes.length && !ink.cleared?.length}>↶ Hoàn tác</button>
-        <button type="button" className="btn ghost sm" onClick={() => dispatchInk({ type: 'redo' })} disabled={!ink.undone.length}>↷ Làm lại</button>
+        <span className="nb-tool-switch" role="group" aria-label="Công cụ">
+          <button type="button" className={tool === 'pen' ? 'on' : ''} aria-pressed={tool === 'pen'} onClick={() => setTool('pen')}>✏️ Viết</button>
+          <button type="button" className={tool === 'eraser' ? 'on' : ''} aria-pressed={tool === 'eraser'} onClick={() => setTool('eraser')}
+            title="Quẹt qua nét viết sai để xoá cả nét. Hoàn tác để lấy lại.">🧽 Tẩy</button>
+        </span>
+        <button type="button" className="btn ghost sm" onClick={() => dispatchInk({ type: 'undo' })} disabled={!ink.past.length}>↶ Hoàn tác</button>
+        <button type="button" className="btn ghost sm" onClick={() => dispatchInk({ type: 'redo' })} disabled={!ink.future.length}>↷ Làm lại</button>
         <button type="button" className="btn ghost sm" onClick={() => activeCell && dispatchInk({ type: 'clear-cell', cellId: activeCell })}
           disabled={!activeCell || !strokesByCell.get(activeCell)?.length}>Xoá ô đang viết</button>
         <button type="button" className="btn ghost sm" onClick={clearPage} disabled={!ink.strokes.length}>🗑 Xoá hết</button>
@@ -365,11 +386,11 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
             reading={settings.vocabForm === 'kanji' && row.word.kanji ? row.word.kana.join('') : row.word.kanji?.join('') ?? ''} meaning={row.meaning ?? ''}
             rowId={`${page.id}-${rowIndex}-${settings.vocabForm === 'kanji' && row.word.kanji ? 'k' : 'h'}`}
             width={cellsWidth} lineHeight={layout.unitPx} autoRows={layout.rows} setting={settings.vocabLines} ghost={settings.ghost} showGrid={settings.showGrid}
-            activeCell={activeCell} strokesByCell={strokesByCell} noStrokes={noStrokes} onStroke={handleStroke} onFocusCell={setActiveCell} />
+            activeCell={activeCell} strokesByCell={strokesByCell} noStrokes={noStrokes} onStroke={handleStroke} onFocusCell={setActiveCell} eraser={{ tool, erase, eraseStart }} />
         ) : (
           <NotebookRowView key={`${page.id}-${rowIndex}`} row={row} rowId={`${page.id}-${rowIndex}`} repeats={layout.repeats} columns={layout.columns} ghost={settings.ghost}
             showGrid={settings.showGrid} guide={[...row.glyph].length === 1 ? guides[row.glyph] ?? null : null} activeCell={activeCell}
-            strokesByCell={strokesByCell} noStrokes={noStrokes} onStroke={handleStroke} onFocusCell={setActiveCell} />
+            strokesByCell={strokesByCell} noStrokes={noStrokes} onStroke={handleStroke} onFocusCell={setActiveCell} eraser={{ tool, erase, eraseStart }} />
         ))}
       </article>
 
@@ -393,10 +414,12 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
   );
 }
 
-function NotebookRowView({ row, rowId, repeats, columns, ghost, showGrid, guide, activeCell, strokesByCell, noStrokes, onStroke, onFocusCell }: {
+type EraserProps = { tool: 'pen' | 'eraser'; erase: (cellId: string, points: InkPoint[], aspect: number) => void; eraseStart: () => void };
+
+function NotebookRowView({ row, rowId, repeats, columns, ghost, showGrid, guide, activeCell, strokesByCell, noStrokes, onStroke, onFocusCell, eraser }: {
   row: NotebookPage['rows'][number]; rowId: string; repeats: number; columns: number; ghost: GhostMode; showGrid: boolean; guide: StrokeOrderData | null;
   activeCell: string | null; strokesByCell: Map<string, InkStroke[]>; noStrokes: InkStroke[];
-  onStroke: (stroke: InkStroke) => void; onFocusCell: (cellId: string) => void;
+  onStroke: (stroke: InkStroke) => void; onFocusCell: (cellId: string) => void; eraser: EraserProps;
 }) {
   const description = [row.glyph, row.label, row.meaning, row.reading, row.strokeCount ? `${row.strokeCount} nét` : ''].filter(Boolean).join(' · ');
   return (
@@ -416,6 +439,7 @@ function NotebookRowView({ row, rowId, repeats, columns, ghost, showGrid, guide,
           return (
             <NotebookCell key={cellId} cellId={cellId} glyph={row.glyph} hasGhost={isGhostCell(index, repeats, ghost)} guide={guide} showGrid={showGrid}
               isActive={activeCell === cellId} strokes={strokesByCell.get(cellId) ?? noStrokes} onStroke={onStroke} onFocusCell={onFocusCell}
+              tool={eraser.tool} onErase={eraser.erase} onEraseStart={eraser.eraseStart}
               label={`Ô ${index + 1} luyện chữ ${row.glyph}${isGhostCell(index, repeats, ghost) ? ' (có chữ mờ)' : ''}`} />
           );
         })}
@@ -482,10 +506,10 @@ const VOCAB_NARROW_PX = 560;
  * Dòng từ vựng kiểu vở kẻ dòng: ô nhỏ đầu dòng (từ, cách đọc, nghĩa tiếng Việt) rồi các dòng kẻ chạy hết bề ngang
  * để tự viết. Màn hẹp (điện thoại): ô chữ ở trên, dòng kẻ ở dưới. Mỗi dòng là một vùng vẽ riêng (toạ độ chuẩn hoá).
  */
-function WordLinesRow({ word, reading, meaning, rowId, width, lineHeight, autoRows, setting, ghost, showGrid, activeCell, strokesByCell, noStrokes, onStroke, onFocusCell }: {
+function WordLinesRow({ word, reading, meaning, rowId, width, lineHeight, autoRows, setting, ghost, showGrid, activeCell, strokesByCell, noStrokes, onStroke, onFocusCell, eraser }: {
   word: string; reading: string; meaning: string; rowId: string; width: number; lineHeight: number; autoRows: number; setting: VocabLines;
   ghost: GhostMode; showGrid: boolean; activeCell: string | null; strokesByCell: Map<string, InkStroke[]>; noStrokes: InkStroke[];
-  onStroke: (stroke: InkStroke) => void; onFocusCell: (cellId: string) => void;
+  onStroke: (stroke: InkStroke) => void; onFocusCell: (cellId: string) => void; eraser: EraserProps;
 }) {
   const isNarrow = width > 0 && width < VOCAB_NARROW_PX;
   const lineWidth = width > 0 ? (isNarrow ? width : width - VOCAB_LABEL_PX - 14) : lineHeight * 10;
@@ -506,7 +530,7 @@ function WordLinesRow({ word, reading, meaning, rowId, width, lineHeight, autoRo
           return (
             <NotebookCell key={cellId} cellId={cellId} glyph={word} aspect={aspect} ghostCopies={copies} hasGhost={index < ghostLines} guide={null}
               showGrid={showGrid} isActive={activeCell === cellId} strokes={strokesByCell.get(cellId) ?? noStrokes} onStroke={onStroke}
-              onFocusCell={onFocusCell} label={`Dòng ${index + 1} để viết từ ${label}${index < ghostLines ? ' — có chữ mờ' : ''}`} />
+              onFocusCell={onFocusCell} tool={eraser.tool} onErase={eraser.erase} onEraseStart={eraser.eraseStart} label={`Dòng ${index + 1} để viết từ ${label}${index < ghostLines ? ' — có chữ mờ' : ''}`} />
           );
         })}
       </div>

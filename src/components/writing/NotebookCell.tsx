@@ -22,7 +22,21 @@ interface NotebookCellProps {
   aspect?: number;
   /** Dòng kẻ của sổ Từ vựng: chữ mờ lặp lại `ghostCopies` lần dọc dòng (thay vì một chữ giữa ô). */
   ghostCopies?: number;
+  /** Công cụ đang chọn: viết hoặc tẩy (quẹt qua nét để xoá cả nét). */
+  tool?: 'pen' | 'eraser';
+  onErase?: (cellId: string, points: InkPoint[], aspect: number) => void;
+  onEraseStart?: () => void;
 }
+
+/**
+ * Con trỏ đang tẩy (toàn trang): khi tẩy KHÔNG giữ con trỏ trong một ô (releasePointerCapture) → quẹt liền qua nhiều ô;
+ * ô nào con trỏ đi qua cũng tẩy. Trang (WritingNotebook) kết thúc lần quẹt khi nhấc bút / tay.
+ */
+let erasingPointer: number | null = null;
+export const eraserPointer = {
+  current: () => erasingPointer,
+  end: () => { const wasErasing = erasingPointer !== null; erasingPointer = null; return wasErasing; },
+};
 
 /** Lưới ô tập viết kiểu vở Nhật: chữ thập nét đứt ở giữa (田). Ô từ vựng (chữ nhật): chỉ đường ngang giữa. */
 export function CellGrid({ aspect = 1 }: { aspect?: number }) {
@@ -85,7 +99,7 @@ export function CellModel({ glyph, guide }: { glyph: string; guide: StrokeOrderD
  * nét vẽ lại bằng SVG theo cỡ hiện tại → cuộn trang, đổi cỡ, xoay iPad không làm lệch nét.
  * Chuột, ngón tay và bút đều viết được; touch-action: none chỉ trong ô (cuộn trang bằng lề / chữ mẫu).
  */
-function NotebookCellView({ cellId, glyph, hasGhost, guide, showGrid, isActive, strokes, onStroke, onFocusCell, label, aspect = 1, ghostCopies }: NotebookCellProps) {
+function NotebookCellView({ cellId, glyph, hasGhost, guide, showGrid, isActive, strokes, onStroke, onFocusCell, label, aspect = 1, ghostCopies, tool = 'pen', onErase, onEraseStart }: NotebookCellProps) {
   const [live, setLive] = useState<InkPoint[] | null>(null);
   const pointsRef = useRef<InkPoint[]>([]);
   const pointerRef = useRef<number | null>(null);
@@ -111,6 +125,17 @@ function NotebookCellView({ cellId, glyph, hasGhost, guide, showGrid, isActive, 
       pointerType: event.pointerType, mode, penSeen, activePointerType: activeStrokes.current(), contactWidth: event.width, contactHeight: event.height,
     });
     event.preventDefault();
+    if (tool === 'eraser') {
+      // Tẩy: chỉ cần không phải tì tay; không giữ con trỏ trong ô để quẹt sang ô khác vẫn tẩy.
+      if (decision === 'ignore' && !(event.pointerType === 'pen' || event.pointerType === 'mouse')) return;
+      if (erasingPointer !== null) return;
+      try { event.currentTarget.releasePointerCapture(event.pointerId); } catch { /* không giữ thì thôi */ }
+      erasingPointer = event.pointerId;
+      onEraseStart?.();
+      onErase?.(cellId, [pointOf(event)], aspect);
+      onFocusCell(cellId);
+      return;
+    }
     if (decision === 'ignore') return; // tì tay khi đang dùng bút, hoặc ngón thứ hai
     if (decision === 'replace') activeStrokes.cancelCurrent();
     try { event.currentTarget.setPointerCapture(event.pointerId); } catch { /* Safari có thể từ chối với con trỏ đã kết thúc */ }
@@ -124,6 +149,13 @@ function NotebookCellView({ cellId, glyph, hasGhost, guide, showGrid, isActive, 
   }
 
   function move(event: PointerEvent<SVGSVGElement>) {
+    if (tool === 'eraser') {
+      if (erasingPointer !== event.pointerId) return;
+      const events = typeof event.nativeEvent.getCoalescedEvents === 'function' ? event.nativeEvent.getCoalescedEvents() : [];
+      const rect = event.currentTarget.getBoundingClientRect();
+      onErase?.(cellId, events.length ? events.map((item) => normalizePoint(item.clientX, item.clientY, rect)) : [pointOf(event)], aspect);
+      return;
+    }
     if (pointerRef.current !== event.pointerId) return;
     // Bút / chuột nhanh: lấy cả các điểm bị gộp giữa hai khung hình để nét không gãy khúc.
     const events = typeof event.nativeEvent.getCoalescedEvents === 'function' ? event.nativeEvent.getCoalescedEvents() : [];
@@ -147,7 +179,7 @@ function NotebookCellView({ cellId, glyph, hasGhost, guide, showGrid, isActive, 
   }
 
   return (
-    <svg className={`nb-cell ${ghostCopies !== undefined ? 'nb-line' : ''} ${isActive ? 'is-active' : ''}`} viewBox={`0 0 ${100 * aspect} 100`} role="img" aria-label={label}
+    <svg className={`nb-cell ${ghostCopies !== undefined ? 'nb-line' : ''} ${isActive && tool === 'pen' ? 'is-active' : ''}`} viewBox={`0 0 ${100 * aspect} 100`} role="img" aria-label={label}
       style={aspect !== 1 ? { aspectRatio: `${aspect} / 1` } : undefined}
       onPointerDown={start} onPointerMove={move} onPointerUp={end} onPointerCancel={end} onContextMenu={(event) => event.preventDefault()}>
       {showGrid ? <CellGrid aspect={aspect} /> : null}
@@ -163,6 +195,6 @@ function NotebookCellView({ cellId, glyph, hasGhost, guide, showGrid, isActive, 
 
 /** Chỉ vẽ lại ô có nét / trạng thái thay đổi (một trang có thể có hơn 100 ô). */
 export const NotebookCell = memo(NotebookCellView, (previous, next) =>
-  previous.glyph === next.glyph && previous.aspect === next.aspect && previous.ghostCopies === next.ghostCopies && previous.hasGhost === next.hasGhost && previous.guide === next.guide && previous.showGrid === next.showGrid
+  previous.glyph === next.glyph && previous.tool === next.tool && previous.onErase === next.onErase && previous.aspect === next.aspect && previous.ghostCopies === next.ghostCopies && previous.hasGhost === next.hasGhost && previous.guide === next.guide && previous.showGrid === next.showGrid
   && previous.isActive === next.isActive && previous.onStroke === next.onStroke && previous.onFocusCell === next.onFocusCell
   && previous.strokes.length === next.strokes.length && previous.strokes.every((stroke, index) => stroke === next.strokes[index]));

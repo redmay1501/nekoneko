@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { EMPTY_INK, inkReducer, normalizePoint, shouldAddPoint, strokePath } from './ink';
+import { dropEmptyEraseStep, EMPTY_INK, inkReducer, normalizePoint, shouldAddPoint, strokeHitsPoint, strokePath } from './ink';
 
 const stroke = (cellId: string, x = 0.5) => ({ cellId, points: [[x, 0.1], [x, 0.9]] as Array<readonly [number, number]> });
 
@@ -25,17 +25,18 @@ describe('inkReducer', () => {
     expect(inkReducer(state, { type: 'clear-cell', cellId: 'a' }).strokes.map((item) => item.cellId)).toEqual(['b']);
     expect(inkReducer(state, { type: 'clear-all' }).strokes).toEqual([]);
   });
-  it('Xoá hết rồi Hoàn tác → cả trang trở lại; viết nét mới thì không lấy lại được nữa', () => {
+  it('Xoá hết rồi Hoàn tác → cả trang trở lại; viết nét mới rồi hoàn tác hai lần cũng về cả trang', () => {
     let state = inkReducer(EMPTY_INK, { type: 'add', stroke: stroke('a') });
     state = inkReducer(state, { type: 'add', stroke: stroke('b') });
     const cleared = inkReducer(state, { type: 'clear-all' });
     expect(cleared.strokes).toEqual([]);
     expect(inkReducer(cleared, { type: 'undo' }).strokes.map((item) => item.cellId)).toEqual(['a', 'b']);
     const rewritten = inkReducer(cleared, { type: 'add', stroke: stroke('c') });
-    expect(inkReducer(inkReducer(rewritten, { type: 'undo' }), { type: 'undo' }).strokes).toEqual([]);
+    expect(inkReducer(inkReducer(rewritten, { type: 'undo' }), { type: 'undo' }).strokes.map((item) => item.cellId)).toEqual(['a', 'b']);
   });
   it('hoàn tác khi chưa có nét → không đổi; nét rỗng bị bỏ', () => {
     expect(inkReducer(EMPTY_INK, { type: 'undo' })).toBe(EMPTY_INK);
+    expect(inkReducer(EMPTY_INK, { type: 'redo' })).toBe(EMPTY_INK);
     expect(inkReducer(EMPTY_INK, { type: 'add', stroke: { cellId: 'a', points: [] } })).toBe(EMPTY_INK);
   });
 });
@@ -58,5 +59,37 @@ describe('toạ độ không lệch khi đổi cỡ / cuộn', () => {
   it('bỏ điểm rung quá sát', () => {
     expect(shouldAddPoint([0.5, 0.5], [0.501, 0.5])).toBe(false);
     expect(shouldAddPoint([0.5, 0.5], [0.52, 0.5])).toBe(true);
+  });
+});
+
+describe('cục tẩy', () => {
+  const horizontal = { cellId: 'a', points: [[0.1, 0.5], [0.9, 0.5]] as Array<readonly [number, number]> };
+  it('quẹt trúng nét (gần đoạn thẳng) → trúng; xa → không', () => {
+    expect(strokeHitsPoint(horizontal, [0.5, 0.55], 0.08)).toBe(true);
+    expect(strokeHitsPoint(horizontal, [0.5, 0.7], 0.08)).toBe(false);
+    expect(strokeHitsPoint(horizontal, [0.95, 0.5], 0.08)).toBe(true);
+  });
+  it('dòng kẻ chữ nhật: khoảng cách ngang tính theo tỉ lệ ô', () => {
+    // Dòng rộng gấp 10 chiều cao: 0,02 bề ngang = 0,2 chiều cao → ngoài bán kính 0,08.
+    expect(strokeHitsPoint({ cellId: 'l', points: [[0.5, 0.5]] }, [0.52, 0.5], 0.08, 10)).toBe(false);
+    expect(strokeHitsPoint({ cellId: 'l', points: [[0.5, 0.5]] }, [0.505, 0.5], 0.08, 10)).toBe(true);
+  });
+  it('một lần quẹt tẩy nhiều nét = một bước Hoàn tác', () => {
+    let state = EMPTY_INK;
+    for (const x of [0.2, 0.5, 0.8]) state = inkReducer(state, { type: 'add', stroke: { cellId: 'a', points: [[x, 0.1], [x, 0.9]] } });
+    state = inkReducer(state, { type: 'erase-begin' });
+    state = inkReducer(state, { type: 'erase', shouldErase: (stroke) => strokeHitsPoint(stroke, [0.2, 0.5], 0.08) });
+    state = inkReducer(state, { type: 'erase', shouldErase: (stroke) => strokeHitsPoint(stroke, [0.5, 0.5], 0.08) });
+    expect(state.strokes).toHaveLength(1);
+    state = inkReducer(state, { type: 'undo' });
+    expect(state.strokes).toHaveLength(3);
+    state = inkReducer(state, { type: 'redo' });
+    expect(state.strokes).toHaveLength(1);
+  });
+  it('quẹt tẩy trượt hết → không để lại bước Hoàn tác rỗng', () => {
+    let state = inkReducer(EMPTY_INK, { type: 'add', stroke: horizontal });
+    state = dropEmptyEraseStep(inkReducer(state, { type: 'erase-begin' }));
+    expect(state.past).toHaveLength(1);
+    expect(inkReducer(state, { type: 'undo' }).strokes).toEqual([]);
   });
 });

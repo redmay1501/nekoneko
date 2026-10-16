@@ -12,15 +12,18 @@ export interface InkStroke {
   at?: number;
 }
 
+/**
+ * Lịch sử dạng ảnh chụp: mỗi thao tác (viết một nét, một lần quẹt tẩy, xoá ô, xoá hết) đẩy trạng thái cũ vào `past`
+ * → Hoàn tác / Làm lại hoạt động giống nhau cho mọi thao tác.
+ */
 export interface InkState {
   strokes: InkStroke[];
-  /** Nét vừa hoàn tác — "Làm lại" đưa về. Viết nét mới thì xoá danh sách này. */
-  undone: InkStroke[];
-  /** Nét trước khi bấm "Xoá hết" — "Hoàn tác" ngay sau đó đưa cả trang về. */
-  cleared?: InkStroke[];
+  past: InkStroke[][];
+  future: InkStroke[][];
 }
 
-export const EMPTY_INK: InkState = { strokes: [], undone: [] };
+export const EMPTY_INK: InkState = { strokes: [], past: [], future: [] };
+const MAX_HISTORY = 200;
 
 export type InkAction =
   | { type: 'add'; stroke: InkStroke }
@@ -28,31 +31,73 @@ export type InkAction =
   | { type: 'redo' }
   | { type: 'clear-cell'; cellId: string }
   | { type: 'clear-all' }
+  /** Bắt đầu một lần quẹt tẩy — ghi một bước lịch sử (cả lần quẹt hoàn tác một lần). */
+  | { type: 'erase-begin' }
+  /** Tẩy các nét bị quẹt trúng (trong lần quẹt đang diễn ra — không thêm bước lịch sử). */
+  | { type: 'erase'; shouldErase: (stroke: InkStroke) => boolean }
+  /** Bỏ nét không cần lưu lịch sử (dọn vệt lòng bàn tay). */
   | { type: 'remove'; shouldRemove: (stroke: InkStroke) => boolean };
+
+function commit(state: InkState, strokes: InkStroke[]): InkState {
+  if (strokes === state.strokes) return state;
+  return { strokes, past: [...state.past, state.strokes].slice(-MAX_HISTORY), future: [] };
+}
 
 export function inkReducer(state: InkState, action: InkAction): InkState {
   switch (action.type) {
     case 'add':
-      return action.stroke.points.length ? { strokes: [...state.strokes, action.stroke], undone: [] } : state;
+      return action.stroke.points.length ? commit(state, [...state.strokes, action.stroke]) : state;
     case 'undo': {
-      if (!state.strokes.length && state.cleared?.length) return { strokes: state.cleared, undone: [] };
-      const last = state.strokes.at(-1);
-      return last ? { strokes: state.strokes.slice(0, -1), undone: [...state.undone, last] } : state;
+      const previous = state.past.at(-1);
+      return previous ? { strokes: previous, past: state.past.slice(0, -1), future: [...state.future, state.strokes] } : state;
     }
     case 'redo': {
-      const last = state.undone.at(-1);
-      return last ? { strokes: [...state.strokes, last], undone: state.undone.slice(0, -1) } : state;
+      const next = state.future.at(-1);
+      return next ? { strokes: next, past: [...state.past, state.strokes], future: state.future.slice(0, -1) } : state;
     }
-    case 'clear-cell':
-      return { strokes: state.strokes.filter((stroke) => stroke.cellId !== action.cellId), undone: [] };
+    case 'clear-cell': {
+      const kept = state.strokes.filter((stroke) => stroke.cellId !== action.cellId);
+      return kept.length === state.strokes.length ? state : commit(state, kept);
+    }
+    case 'clear-all':
+      return state.strokes.length ? commit(state, []) : state;
+    case 'erase-begin':
+      return { strokes: state.strokes, past: [...state.past, state.strokes].slice(-MAX_HISTORY), future: [] };
+    case 'erase': {
+      const kept = state.strokes.filter((stroke) => !action.shouldErase(stroke));
+      return kept.length === state.strokes.length ? state : { ...state, strokes: kept };
+    }
     case 'remove': {
       const kept = state.strokes.filter((stroke) => !action.shouldRemove(stroke));
       return kept.length === state.strokes.length ? state : { ...state, strokes: kept };
     }
-    case 'clear-all':
-      return state.strokes.length ? { strokes: [], undone: [], cleared: state.strokes } : state;
   }
 }
+
+/** Lần quẹt tẩy không trúng nét nào → bỏ bước lịch sử rỗng vừa ghi (Hoàn tác không phải bấm thừa). */
+export function dropEmptyEraseStep(state: InkState): InkState {
+  return state.past.at(-1) === state.strokes ? { ...state, past: state.past.slice(0, -1) } : state;
+}
+
+/**
+ * Nét có bị cục tẩy (tâm `point`, bán kính `radius` theo chiều cao ô) quẹt trúng không.
+ * Ô chữ nhật (dòng kẻ): trục x nhân `aspect` để khoảng cách đo đúng như trên màn hình.
+ */
+export function strokeHitsPoint(stroke: InkStroke, point: InkPoint, radius: number, aspect = 1): boolean {
+  const [px, py] = [point[0] * aspect, point[1]];
+  const points = stroke.points.map(([x, y]) => [x * aspect, y] as const);
+  if (points.length === 1) return Math.hypot(points[0][0] - px, points[0][1] - py) <= radius;
+  for (let index = 1; index < points.length; index += 1) {
+    const [ax, ay] = points[index - 1];
+    const [bx, by] = points[index];
+    const lengthSquared = (bx - ax) ** 2 + (by - ay) ** 2;
+    const t = lengthSquared === 0 ? 0 : Math.max(0, Math.min(1, ((px - ax) * (bx - ax) + (py - ay) * (by - ay)) / lengthSquared));
+    if (Math.hypot(ax + t * (bx - ax) - px, ay + t * (by - ay) - py) <= radius) return true;
+  }
+  return false;
+}
+
+export const ERASER_RADIUS = 0.08;
 
 /** Điểm con trỏ → toạ độ chuẩn hoá trong ô, kẹp trong 0–1. */
 export function normalizePoint(clientX: number, clientY: number, rect: { left: number; top: number; width: number; height: number }): InkPoint {

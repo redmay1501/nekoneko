@@ -61,6 +61,13 @@ export const FOOTER_NAVIGATION: NavigationItem[] = [
   { href: '/cai-dat', icon: 'neko:settings', label: 'Cài đặt' },
 ];
 
+/** Lối vào khu quản trị — chỉ thêm vào điều hướng khi tài khoản có vai trò admin. */
+export const ADMIN_NAVIGATION_ITEM: NavigationItem = { href: '/admin', icon: '🛠️', label: 'Quản trị nội dung' };
+
+export function footerNavigation(isAdmin: boolean): NavigationItem[] {
+  return isAdmin ? [...FOOTER_NAVIGATION, ADMIN_NAVIGATION_ITEM] : FOOTER_NAVIGATION;
+}
+
 export const BOTTOM_NAVIGATION: NavigationItem[] = [
   { href: '/', icon: 'neko:home', label: 'Trang chủ' },
   { href: '/lo-trinh', icon: 'neko:roadmap', label: 'Lộ trình' },

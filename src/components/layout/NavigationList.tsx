@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { FOOTER_NAVIGATION, NAVIGATION_GROUPS, type NavigationItem, isActivePath, isInSection } from './navigation-items';
+import { footerNavigation, NAVIGATION_GROUPS, type NavigationItem, isActivePath, isInSection } from './navigation-items';
+import { useIsAdmin } from './AdminFlag';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
 
 function ItemIcon({ icon }: { icon: string }) {
@@ -32,6 +33,7 @@ interface NavigationListProps {
  */
 export function NavigationList({ onNavigate }: NavigationListProps) {
   const pathname = usePathname();
+  const isAdmin = useIsAdmin();
   const [toggled, setToggled] = useState<Record<string, boolean>>({});
   const isExpanded = (item: NavigationItem) => toggled[item.href] ?? isInSection(pathname, item);
   const toggle = (item: NavigationItem) => setToggled((current) => ({ ...current, [item.href]: !isExpanded(item) }));
@@ -68,7 +70,7 @@ export function NavigationList({ onNavigate }: NavigationListProps) {
         </div>
       ))}
       <div className="nav-sep" />
-      {FOOTER_NAVIGATION.map((item) => (
+      {footerNavigation(isAdmin).map((item) => (
         <NavigationLink key={item.href} item={item} isActive={isActivePath(pathname, item.href)} onNavigate={onNavigate} />
       ))}
     </nav>

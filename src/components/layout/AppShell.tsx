@@ -9,6 +9,7 @@ import { ScrollScenes } from './ScrollScenes';
 import { SheetHost } from './SheetHost';
 import { Sidebar } from './Sidebar';
 import { TopBar } from './TopBar';
+import { AdminFlagProvider } from './AdminFlag';
 
 interface AppShellProps {
   displayName: string;
@@ -32,6 +33,7 @@ export function AppShell({ displayName, level, recallDays, dailyMinutes, isGentl
     ? 'Chế độ demo'
     : publicEnv.appEnvironment !== PRODUCTION_ENVIRONMENT ? publicEnv.appEnvironment : null;
   return (
+    <AdminFlagProvider isAdmin={isAdmin}>
     <div className="app-root">
       <SpeechPreferenceSync voiceGender={voiceGender} autoplayAudio={shouldAutoplayAudio} />
       <SakuraFall />
@@ -46,5 +48,6 @@ export function AppShell({ displayName, level, recallDays, dailyMinutes, isGentl
       <SheetHost dailyMinutes={dailyMinutes} />
       {environmentLabel ? <span className="env-badge" title="Nhãn môi trường — không hiện ở production">{environmentLabel}</span> : null}
     </div>
+    </AdminFlagProvider>
   );
 }

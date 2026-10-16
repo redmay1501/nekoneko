@@ -9,6 +9,7 @@ import { ALLOWED_IMAGE_TYPES } from '@/features/admin/media-validation';
 import { AdminModal } from './AdminModal';
 import { adminFetch, useAdminUi } from './AdminUi';
 import { MediaPicker, precheckImage, uploadFiles } from './ImagePanel';
+import { RowImageCell, RowImageDropProvider } from './RowImageDrop';
 
 export interface BulkImageItem {
   id: number;
@@ -281,15 +282,15 @@ export function BulkImageManager({ entity, items, isDemo }: { entity: AdminEntit
           }} />
         </div>
         {visible.length ? (
+          <RowImageDropProvider entity={entity}>
           <div className="adm-table-wrap">
             <table className="adm-table">
               <thead><tr><th><span className="sr-only">Chọn</span></th><th>Ảnh</th><th>{config.label}</th><th>Nghĩa / chi tiết</th><th>Trạng thái</th></tr></thead>
               <tbody>
                 {visible.map((item) => (
-                  <tr key={item.id} className={selected.has(item.id) ? 'is-selected' : ''} onClick={(event) => { if (!(event.target as HTMLElement).closest('a, button, input')) toggle(item.id); }}>
+                  <tr key={item.id} data-drop-row={item.id} data-drop-title={item.title} className={selected.has(item.id) ? 'is-selected' : ''} onClick={(event) => { if (!(event.target as HTMLElement).closest('a, button, input')) toggle(item.id); }}>
                     <td><input type="checkbox" checked={selected.has(item.id)} onChange={() => toggle(item.id)} aria-label={`Chọn ${item.title}`} /></td>
-                    {/* eslint-disable-next-line @next/next/no-img-element -- ảnh thu nhỏ từ Supabase Storage */}
-                    <td>{item.imageUrl ? <img className="adm-thumb" src={item.imageUrl} alt={item.imageAlt} loading="lazy" /> : <span className="adm-thumb adm-thumb-empty" aria-hidden="true" />}</td>
+                    <td><RowImageCell id={item.id} title={item.title} imageUrl={item.imageUrl} imageAlt={item.imageAlt} /></td>
                     <td><a className="adm-row-link adm-face" href={`/admin/${config.slug}/${item.id}`}>{item.title}</a> <span className="adm-sm adm-muted">#{item.id}</span></td>
                     <td className="adm-sm" style={{ maxWidth: 360 }}>{item.subtitle}</td>
                     <td>{item.imageUrl ? <span className="adm-badge published">Có ảnh</span> : <span className="adm-badge review">Thiếu ảnh</span>}</td>
@@ -298,6 +299,7 @@ export function BulkImageManager({ entity, items, isDemo }: { entity: AdminEntit
               </tbody>
             </table>
           </div>
+          </RowImageDropProvider>
         ) : <div className="adm-empty"><b>Không có mục nào khớp</b></div>}
       </section>
 

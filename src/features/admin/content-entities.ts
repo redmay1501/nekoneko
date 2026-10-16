@@ -197,7 +197,7 @@ export function foldSearch(value: string): string {
 }
 
 /** Lọc + phân trang thuần (danh sách ≤ vài nghìn dòng, làm trong bộ nhớ ở server). */
-export function filterRows(entity: AdminEntity, rows: readonly ListableRow[], filters: ListFilters) {
+export function filterRows<T extends ListableRow>(entity: AdminEntity, rows: readonly T[], filters: ListFilters) {
   const config = ENTITY_CONFIG[entity];
   const query = foldSearch(filters.q ?? '');
   const matches = rows.filter(({ row, status, hasImage }) => {

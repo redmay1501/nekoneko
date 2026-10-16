@@ -146,3 +146,16 @@
 .adm-queue-main{flex:1;display:flex;flex-direction:column;gap:4px;min-width:0}
 .adm-queue-actions{display:flex;flex-direction:column;gap:6px}
 @media (max-width:640px){.adm-queue-item{flex-wrap:wrap} .adm-queue-actions{flex-direction:row;width:100%} .adm-bulk-bar{top:56px}}
+/* Thả ảnh vào từng dòng */
+.adm-table tr.is-drop-target td{background:#FFE4EA !important;box-shadow:inset 0 2px 0 var(--adm-rose),inset 0 -2px 0 var(--adm-rose)}
+.adm-row-image{display:flex;align-items:center;gap:6px}
+.adm-row-image-box{position:relative;display:grid;place-items:center;width:44px;height:44px;flex:0 0 44px;border-radius:10px;overflow:hidden;
+  border:1.5px solid var(--adm-border);background:#fff;color:var(--ink-3);font-size:18px}
+.adm-row-image-box.is-empty{border-style:dashed;border-color:#E2B5C0;background:var(--adm-pink-2)}
+.adm-row-image-box:hover{border-color:var(--adm-rose);color:var(--adm-rose)}
+.adm-row-image-box.is-error{border-color:#D23A55}
+.adm-row-image-box img{width:100%;height:100%;object-fit:contain}
+.adm-row-image-box.is-busy img{opacity:.45}
+.adm-row-image-spin{position:absolute;width:18px;height:18px;border-radius:50%;border:2.5px solid #F3C1CB;border-top-color:var(--adm-rose);animation:adm-spin .8s linear infinite}
+@keyframes adm-spin{to{transform:rotate(360deg)}}
+.adm-row-image-status{font-size:12px;color:var(--ink-3);white-space:nowrap}

@@ -123,3 +123,25 @@
   .adm-header-user .adm-email,.adm-header-user .adm-badge{display:none}
   .adm-header{gap:8px}
 }
+.adm-modal-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.adm-modal-head h2{margin:0}
+.adm-dialog .adm-form{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:640px){.adm-dialog .adm-form{grid-template-columns:1fr} .adm-dialog{padding:16px}}
+/* Quản lý ảnh hàng loạt */
+.adm-bulk{outline:none}
+.adm-seg{display:inline-flex;border:1px solid var(--adm-border);border-radius:12px;overflow:hidden;background:#fff}
+.adm-seg button{padding:8px 12px;font-size:13px;font-weight:700;color:var(--ink-2)}
+.adm-seg button.on{background:var(--adm-pink);color:var(--adm-rose)}
+.adm-bulk-bar{position:sticky;top:62px;z-index:4;padding:8px 10px;margin-bottom:10px;border-radius:12px;background:#FFF7F9;border:1px solid var(--adm-border)}
+.adm-bulk-sep{flex:1 1 0}
+.adm-table tr.is-selected td{background:#FFF1F4}
+.adm-table tbody tr{cursor:pointer}
+.adm-thumb-empty{display:inline-block;background:repeating-linear-gradient(45deg,#FBEFF1 0 6px,#fff 6px 12px)}
+.adm-queue{display:flex;flex-direction:column;gap:8px}
+.adm-queue-item{display:flex;gap:12px;align-items:flex-start;padding:10px;border:1px solid var(--adm-border);border-radius:14px;background:#fff}
+.adm-queue-item>img{width:72px;height:72px;object-fit:contain;border-radius:10px;background:var(--adm-pink-2);flex:0 0 72px}
+.adm-queue-item.done{background:#F6FBF6;border-color:#CFE8D2}
+.adm-queue-item.error,.adm-queue-item.is-duplicate{border-color:#F5B8C3;background:#FFF8F9}
+.adm-queue-main{flex:1;display:flex;flex-direction:column;gap:4px;min-width:0}
+.adm-queue-actions{display:flex;flex-direction:column;gap:6px}
+@media (max-width:640px){.adm-queue-item{flex-wrap:wrap} .adm-queue-actions{flex-direction:row;width:100%} .adm-bulk-bar{top:56px}}

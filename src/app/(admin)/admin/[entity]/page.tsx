@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { AdminPageHeader, DemoNotice, EmptyState, Pager, StatusBadge } from '@/components/admin/AdminParts';
+import { CreateEntityButton, RowActions } from '@/components/admin/ContentListActions';
 import { requireAdminPage } from '@/features/admin/admin-guard';
 import { loadEntityRecords } from '@/features/admin/content-admin';
 import { CONTENT_STATUSES, type ContentStatus, ENTITY_BY_SLUG, ENTITY_CONFIG, filterRows, lessonOptions, STATUS_LABELS } from '@/features/admin/content-entities';
@@ -32,7 +33,10 @@ export default async function AdminEntityListPage({ params, searchParams }: { pa
   return (
     <>
       <AdminPageHeader crumbs={[{ label: config.label }]} title={`${config.label} (${records.length})`}
-        actions={admin.isDemo ? null : <Link className="adm-btn" href={`/admin/${config.slug}/moi`}>+ Thêm {config.singular}</Link>} />
+        actions={<>
+          <Link className="adm-btn ghost" href={`/admin/${config.slug}/anh`}>🖼️ Quản lý ảnh</Link>
+          <CreateEntityButton entity={entity} isDemo={admin.isDemo} />
+        </>} />
       {admin.isDemo ? <DemoNotice /> : null}
       <form className="adm-filters" method="get" role="search" style={{ marginTop: 12 }}>
         <label className="adm-field"><span>Tìm</span>
@@ -71,7 +75,7 @@ export default async function AdminEntityListPage({ params, searchParams }: { pa
       {result.items.length ? (
         <div className="adm-table-wrap">
           <table className="adm-table">
-            <thead><tr><th>ID</th><th>{config.label}</th><th>Chi tiết</th>{config.hasLesson ? <th>Bài</th> : null}<th>Ngày</th><th>Ảnh</th><th>Trạng thái</th></tr></thead>
+            <thead><tr><th>ID</th><th>{config.label}</th><th>Chi tiết</th>{config.hasLesson ? <th>Bài</th> : null}<th>Ngày</th><th>Ảnh</th><th>Trạng thái</th><th><span className="sr-only">Thao tác</span></th></tr></thead>
             <tbody>
               {result.items.map(({ row, status: rowStatus, hasImage }) => (
                 <tr key={row.id}>
@@ -82,6 +86,7 @@ export default async function AdminEntityListPage({ params, searchParams }: { pa
                   <td>{row.day ?? <span className="adm-muted">—</span>}</td>
                   <td>{hasImage ? '🖼️' : <span className="adm-muted">—</span>}</td>
                   <td><StatusBadge status={rowStatus} /></td>
+                  <td><RowActions entity={entity} id={row.id} title={config.title(row) || `#${row.id}`} isDemo={admin.isDemo} /></td>
                 </tr>
               ))}
             </tbody>

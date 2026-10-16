@@ -265,3 +265,38 @@ export async function buildLearnerPreview(entity: AdminEntity, record: EntityRec
   if (!item) return null;
   return buildKnowledgeDetail(item, toMemoryView(key, entity, null, new Date()), catalog);
 }
+
+export const MAX_BULK_IMAGE_ITEMS = 500;
+
+/**
+ * Gắn MỘT ảnh cho nhiều mục, hoặc gỡ ảnh khỏi nhiều mục (assetId = null) — một lệnh database, một dòng nhật ký.
+ * Gỡ chỉ xoá liên kết, ảnh vẫn trong thư viện. Ảnh phải tồn tại (khoá ngoại + kiểm tra trước) → không có liên kết tới ảnh không có.
+ */
+export async function setEntityImagesBulk(admin: AdminUser, entity: AdminEntity, ids: number[], assetId: string | null, altText: string): Promise<{ updated: number }> {
+  await requireAdminTables('media_assets', 'content_images');
+  const unique = [...new Set(ids)];
+  if (!unique.length || unique.length > MAX_BULK_IMAGE_ITEMS) throw new ActionRejectedError(`Chọn từ 1 đến ${MAX_BULK_IMAGE_ITEMS} mục.`, 422);
+  const existing = new Set((await loadEntityRecords(entity)).map((record) => record.row.id));
+  const missing = unique.filter((id) => !existing.has(id));
+  if (missing.length) throw new ActionRejectedError(`Không tìm thấy mục: ${missing.slice(0, 10).join(', ')}.`, 404);
+  const client = createAdminSupabaseClient();
+  if (assetId === null) {
+    const { error } = await client.from('content_images').delete().eq('content_type', entity).in('content_id', unique);
+    if (error) throw new Error(`Supabase: gỡ ảnh hàng loạt — ${error.message}`);
+  } else {
+    const asset = await client.from('media_assets').select('id').eq('id', assetId).maybeSingle();
+    if (asset.error) throw new Error(`Supabase: đọc ảnh — ${asset.error.message}`);
+    if (!asset.data) throw new ActionRejectedError('Ảnh này không còn trong thư viện.', 404);
+    const at = new Date().toISOString();
+    const { error } = await client.from('content_images').upsert(unique.map((contentId) => ({
+      content_type: entity, content_id: contentId, asset_id: assetId, alt_text: altText.trim().slice(0, 300), updated_by: admin.userId, updated_at: at,
+    })));
+    if (error) throw new Error(`Supabase: gắn ảnh hàng loạt — ${error.message}`);
+  }
+  refreshLearnerContent();
+  await writeAuditLog(admin, {
+    action: assetId === null ? 'content.image.remove' : 'content.image.set', targetType: entity, targetId: unique.length === 1 ? unique[0] : `${unique.length} mục`,
+    detail: { ids: unique.slice(0, 50), count: unique.length, assetId },
+  });
+  return { updated: unique.length };
+}

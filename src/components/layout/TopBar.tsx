@@ -16,9 +16,10 @@ interface TopBarProps {
   /** Chế độ nhẹ nhàng: không đếm chuỗi ngày (cài đặt của người học). */
   isGentleMode: boolean;
   isDemo: boolean;
+  isAdmin?: boolean;
 }
 
-export function TopBar({ displayName, level, recallDays, isGentleMode, isDemo }: TopBarProps) {
+export function TopBar({ displayName, level, recallDays, isGentleMode, isDemo, isAdmin = false }: TopBarProps) {
   const { openNavigation, openSearch, close, activeSheet } = useSheetStore();
   const isMenuOpen = activeSheet.kind === 'navigation';
   const pathname = usePathname();
@@ -68,7 +69,7 @@ export function TopBar({ displayName, level, recallDays, isGentleMode, isDemo }:
           <EmojiIcon emoji="🧠" size={16} /> Đã ôn {recallDays} ngày
         </Link>
       )}
-      <UserMenu displayName={displayName} level={level} isDemo={isDemo} />
+      <UserMenu displayName={displayName} level={level} isDemo={isDemo} isAdmin={isAdmin} />
     </header>
   );
 }

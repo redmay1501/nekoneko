@@ -10,13 +10,24 @@ interface UserMenuProps {
   level: number;
   /** Chế độ demo không có tài khoản → không có Đăng xuất. */
   isDemo: boolean;
+  /** Chỉ admin (server quyết định) mới thấy mục Quản trị nội dung. */
+  isAdmin?: boolean;
+}
+
+/** Mục trong menu tài khoản. "Quản trị nội dung" chỉ khi server xác nhận vai trò admin (API admin vẫn tự kiểm tra lại). */
+export function accountMenuLinks(isAdmin: boolean): Array<{ href: string; icon: string; label: string }> {
+  return [
+    { href: '/theo-doi', icon: 'neko:progress', label: 'Theo dõi' },
+    { href: '/cai-dat', icon: 'neko:settings', label: 'Hồ sơ & cài đặt' },
+    ...(isAdmin ? [{ href: '/admin', icon: '🛠️', label: 'Quản trị nội dung' }] : []),
+  ];
 }
 
 /**
  * Ô người dùng ở góc trên bên phải: bấm vào mở menu nhỏ (Hồ sơ · Cài đặt · Đăng xuất).
  * Đóng khi bấm ra ngoài, nhấn Esc, hoặc chuyển trang.
  */
-export function UserMenu({ displayName, level, isDemo }: UserMenuProps) {
+export function UserMenu({ displayName, level, isDemo, isAdmin = false }: UserMenuProps) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
@@ -65,8 +76,9 @@ export function UserMenu({ displayName, level, isDemo }: UserMenuProps) {
             <EmojiIcon emoji="neko:profile" size={40} />
             <span><b>{displayName}</b><span className="tiny muted">Cấp {level}{isDemo ? ' · chế độ demo' : ''}</span></span>
           </div>
-          <Link href="/theo-doi" role="menuitem" className="user-menu-item"><EmojiIcon emoji="neko:progress" size={24} /> Theo dõi</Link>
-          <Link href="/cai-dat" role="menuitem" className="user-menu-item"><EmojiIcon emoji="neko:settings" size={24} /> Hồ sơ & cài đặt</Link>
+          {accountMenuLinks(isAdmin).map((link) => (
+            <Link key={link.href} href={link.href} role="menuitem" className="user-menu-item"><EmojiIcon emoji={link.icon} size={24} /> {link.label}</Link>
+          ))}
           {isDemo ? null : (
             <form action="/auth/dang-xuat" method="post" onSubmit={() => setIsSigningOut(true)}>
               <button type="submit" role="menuitem" className="user-menu-item danger" disabled={isSigningOut} aria-busy={isSigningOut}>

@@ -15,6 +15,8 @@ interface ConfirmOptions {
   tone?: 'danger' | 'default';
   /** Bắt gõ lại chuỗi này (ví dụ email) mới bấm xác nhận được. */
   typeToConfirm?: string;
+  /** Chỉ thông báo (một nút Đóng) — ví dụ: không thể xoá vì người học đang dùng. */
+  alertOnly?: boolean;
 }
 interface AdminUi {
   toast: (message: string, tone?: ToastTone) => void;
@@ -76,10 +78,12 @@ function ConfirmDialog({ options, onClose }: { options: ConfirmOptions; onClose:
           </label>
         ) : null}
         <div className="adm-dialog-actions">
-          <button ref={cancelRef} type="button" className="adm-btn ghost" onClick={() => onClose(false)}>Huỷ</button>
-          <button type="button" className={`adm-btn ${options.tone === 'danger' ? 'danger' : ''}`} disabled={isBlocked} onClick={() => onClose(true)}>
-            {options.confirmLabel ?? 'Đồng ý'}
-          </button>
+          <button ref={cancelRef} type="button" className="adm-btn ghost" onClick={() => onClose(false)}>{options.alertOnly ? 'Đóng' : 'Huỷ'}</button>
+          {options.alertOnly ? null : (
+            <button type="button" className={`adm-btn ${options.tone === 'danger' ? 'danger' : ''}`} disabled={isBlocked} onClick={() => onClose(true)}>
+              {options.confirmLabel ?? 'Đồng ý'}
+            </button>
+          )}
         </div>
       </div>
     </div>

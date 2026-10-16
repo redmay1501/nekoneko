@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { AppShell } from '@/components/layout/AppShell';
 import { getCurrentLearner } from '@/features/auth/current-learner';
+import { isCurrentUserAdmin } from '@/features/auth/current-roles';
 import { getLearnerContext } from '@/features/learning/learner-context';
 import { SESSION_MODE_CONFIG } from '@/features/learning/session-modes';
 import { displayedDailyMinutes } from '@/features/progress/settings-options';
@@ -15,7 +16,7 @@ export const dynamic = 'force-dynamic';
 /** Mọi màn hình sau đăng nhập dùng chung khung này. */
 export default async function AuthenticatedLayout({ children }: { children: ReactNode }) {
   if (!(await getCurrentLearner())) redirect('/dang-nhap');
-  const context = await getLearnerContext();
+  const [context, isAdmin] = await Promise.all([getLearnerContext(), isCurrentUserAdmin()]);
   return (
     <AppShell
       displayName={context.profile.displayName}
@@ -26,6 +27,7 @@ export default async function AuthenticatedLayout({ children }: { children: Reac
       shouldAutoplayAudio={context.settings.autoplayAudio}
       voiceGender={context.settings.voiceGender}
       isDemo={context.learner.isDemo}
+      isAdmin={isAdmin}
     >
       {children}
     </AppShell>

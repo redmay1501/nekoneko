@@ -8,6 +8,7 @@ import {
   HIDDEN_FROM_LEARNERS, STATUS_LABELS, validateEntityInput,
 } from '@/features/admin/content-entities';
 import { adminFetch, useAdminUi } from './AdminUi';
+import { EntityFields } from './EntityFields';
 import { ImagePanel, type PanelImage } from './ImagePanel';
 
 interface ContentEditorProps {
@@ -76,30 +77,8 @@ export function ContentEditor(props: ContentEditorProps) {
     <div className="adm-two">
       <div>
         <form className="adm-card" onSubmit={save} noValidate>
-          <div className="adm-form">
-            {config.fields.map((field) => {
-              const error = errors[field.name];
-              const common = {
-                id: `f-${field.name}`, name: field.name, value: values[field.name] ?? '', 'aria-invalid': error ? true : undefined,
-                'aria-describedby': error ? `e-${field.name}` : undefined, disabled: isDemo,
-                onChange: (event: { target: { value: string } }) => { setValues((current) => ({ ...current, [field.name]: event.target.value })); setIsDirty(true); },
-              };
-              const className = field.isJapanese ? 'adm-jp' : undefined;
-              return (
-                <label key={field.name} className={`adm-field ${field.kind === 'textarea' ? 'wide' : ''}`} htmlFor={common.id}>
-                  <span>{field.label}{field.required ? ' *' : ''}</span>
-                  {field.kind === 'textarea'
-                    ? <textarea {...common} className={`adm-textarea ${className ?? ''}`} maxLength={field.max} />
-                    : field.kind === 'day'
-                      ? <input {...common} className="adm-input" type="number" min={1} max={90} inputMode="numeric" placeholder="Chưa gắn" />
-                      : field.kind === 'number'
-                        ? <input {...common} className="adm-input" type="number" min={field.min} max={field.max} inputMode="numeric" />
-                        : <input {...common} className={`adm-input ${className ?? ''}`} maxLength={field.max} lang={field.isJapanese ? 'ja' : undefined} />}
-                  {error ? <small id={`e-${field.name}`} className="adm-err">{error}</small> : field.help ? <small>{field.help}</small> : null}
-                </label>
-              );
-            })}
-          </div>
+          <EntityFields entity={entity} values={values} errors={errors} disabled={isDemo}
+            onChange={(name, value) => { setValues((current) => ({ ...current, [name]: value })); setIsDirty(true); }} />
           <div className="adm-actions" style={{ marginTop: 16 }}>
             <button type="submit" className="adm-btn" disabled={isSaving || isDemo} aria-busy={isSaving}>{isSaving ? 'Đang lưu…' : id === null ? 'Thêm mới' : 'Lưu thay đổi'}</button>
             <Link className="adm-btn ghost" href={`/admin/${config.slug}`}>Về danh sách</Link>

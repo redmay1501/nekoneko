@@ -19,13 +19,15 @@ interface AppShellProps {
   shouldAutoplayAudio: boolean;
   voiceGender: VoiceGender;
   isDemo: boolean;
+  /** Có vai trò admin (server đã kiểm tra) → menu tài khoản có mục "Quản trị nội dung". */
+  isAdmin?: boolean;
   children: ReactNode;
 }
 
 const PRODUCTION_ENVIRONMENT = 'production';
 
 /** Khung ứng dụng: thanh bên (desktop) · thanh trên · nội dung · thanh dưới (mobile) · khay trượt. */
-export function AppShell({ displayName, level, recallDays, dailyMinutes, isGentleMode, shouldAutoplayAudio, voiceGender, isDemo, children }: AppShellProps) {
+export function AppShell({ displayName, level, recallDays, dailyMinutes, isGentleMode, shouldAutoplayAudio, voiceGender, isDemo, isAdmin = false, children }: AppShellProps) {
   const environmentLabel = isDemo
     ? 'Chế độ demo'
     : publicEnv.appEnvironment !== PRODUCTION_ENVIRONMENT ? publicEnv.appEnvironment : null;
@@ -37,7 +39,7 @@ export function AppShell({ displayName, level, recallDays, dailyMinutes, isGentl
       <KnowledgePrefetcher />
       <Sidebar />
       <div className="main">
-        <TopBar displayName={displayName} level={level} recallDays={recallDays} isGentleMode={isGentleMode} isDemo={isDemo} />
+        <TopBar displayName={displayName} level={level} recallDays={recallDays} isGentleMode={isGentleMode} isDemo={isDemo} isAdmin={isAdmin} />
         <main className="view" id="noi-dung" tabIndex={-1}>{children}</main>
       </div>
       <BottomNavigation />

@@ -29,7 +29,7 @@ export function AdminShell({ email, isDemo, children }: { email: string | null; 
               </div>
             ))}
           </nav>
-          <div className="adm-side-foot"><Link href="/">← Về app học</Link></div>
+          <div className="adm-side-foot"><Link href="/">← Trở về học tập</Link></div>
         </aside>
         {isNavOpen ? <button type="button" className="adm-overlay" style={{ zIndex: 50 }} aria-label="Đóng menu" onClick={() => setIsNavOpen(false)} /> : null}
         <div className="adm-main">
@@ -40,6 +40,7 @@ export function AdminShell({ email, isDemo, children }: { email: string | null; 
             <div className="adm-header-user">
               <span className="adm-badge pink">admin</span>
               {email ? <span className="adm-email">{email}</span> : null}
+              <Link className="adm-btn ghost sm" href="/">← Trở về học tập</Link>
               <form action="/auth/dang-xuat" method="post"><button type="submit" className="adm-btn ghost sm">Đăng xuất</button></form>
             </div>
           </header>

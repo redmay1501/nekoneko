@@ -5,7 +5,8 @@ import { createPortal } from 'react-dom';
 import { preloadStrokeOrders, type StrokeOrderData } from '@/features/learning/stroke-order';
 import { EMPTY_INK, type InkAction, inkReducer, type InkState, type InkStroke } from '@/features/writing/ink';
 import {
-  DEFAULT_REPEATS, type GhostMode, isGhostCell, type Notebook, type NotebookId, type NotebookPage, REPEAT_OPTIONS,
+  DEFAULT_REPEATS, fillRepeats, type GhostMode, gridColumns, isGhostCell, type Notebook, type NotebookId, type NotebookPage, PRINT_AUTO_REPEATS,
+  REPEAT_OPTIONS, type RepeatSetting,
 } from '@/features/writing/notebook';
 import type { PageProgress } from '@/features/writing/notebook-progress';
 import { postJson } from '@/lib/api/api-client';
@@ -13,7 +14,7 @@ import { CellGhost, CellGrid, CellModel, NotebookCell } from './NotebookCell';
 
 type CellSize = 'nho' | 'vua' | 'lon';
 interface NotebookSettings {
-  repeats: number;
+  repeats: RepeatSetting;
   ghost: GhostMode;
   showGrid: boolean;
   cellSize: CellSize;
@@ -22,6 +23,9 @@ const DEFAULT_SETTINGS: NotebookSettings = { repeats: DEFAULT_REPEATS, ghost: 'h
 const SETTINGS_KEY = 'neko-writing-notebook-settings';
 const GHOST_LABELS: Record<GhostMode, string> = { all: 'Đồ chữ mờ', half: 'Nửa đồ, nửa tự viết', none: 'Tự viết' };
 const SIZE_LABELS: Record<CellSize, string> = { nho: 'Nhỏ', vua: 'Vừa', lon: 'Lớn' };
+/** Cỡ ô tối thiểu (px) của từng chế độ — khớp --nb-cell trong globals.css; ô giãn thêm cho kín bề rộng khung. */
+const CELL_PX: Record<CellSize, number> = { nho: 52, vua: 64, lon: 84 };
+const CELL_GAP_PX = 6;
 
 /** Cùng múi giờ ở server và trình duyệt → không lệch khi hydrate. */
 function formatPracticedAt(value: string): string {
@@ -33,7 +37,7 @@ function readSettings(): NotebookSettings {
     const saved = JSON.parse(window.localStorage.getItem(SETTINGS_KEY) ?? 'null') as Partial<NotebookSettings> | null;
     if (!saved) return DEFAULT_SETTINGS;
     return {
-      repeats: (REPEAT_OPTIONS as readonly number[]).includes(saved.repeats ?? 0) ? saved.repeats! : DEFAULT_SETTINGS.repeats,
+      repeats: saved.repeats === 'auto' || (REPEAT_OPTIONS as readonly number[]).includes(Number(saved.repeats)) ? saved.repeats! : DEFAULT_SETTINGS.repeats,
       ghost: saved.ghost && saved.ghost in GHOST_LABELS ? saved.ghost : DEFAULT_SETTINGS.ghost,
       showGrid: typeof saved.showGrid === 'boolean' ? saved.showGrid : DEFAULT_SETTINGS.showGrid,
       cellSize: saved.cellSize && saved.cellSize in SIZE_LABELS ? saved.cellSize : DEFAULT_SETTINGS.cellSize,
@@ -70,6 +74,22 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
   // Chỉ ghi URL sau khi người học tự chọn sổ / lật trang — tab đang ẩn không được đổi ?muc= của tab khác.
   const shouldSyncUrlRef = useRef(false);
   const settingsRef = useRef<HTMLDetailsElement>(null);
+  const paperRef = useRef<HTMLElement>(null);
+  const [cellsWidth, setCellsWidth] = useState(0);
+
+  // Đo bề rộng vùng ô (đổi cỡ cửa sổ, xoay iPad, mở / đóng thanh bên) → tính lại số cột cho kín khung.
+  useEffect(() => {
+    const paper = paperRef.current;
+    if (!paper) return;
+    const measure = () => {
+      const style = getComputedStyle(paper);
+      setCellsWidth(paper.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight));
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(paper);
+    return () => observer.disconnect();
+  }, [notebookId]);
 
   // Bảng Tuỳ chỉnh: bấm ra ngoài hoặc nhấn Esc thì đóng.
   useEffect(() => {
@@ -218,6 +238,9 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
     );
   }
 
+  const columns = gridColumns(cellsWidth, CELL_PX[settings.cellSize], CELL_GAP_PX);
+  const filled = fillRepeats(columns);
+  const layout = { columns, rows: filled.rows, repeats: settings.repeats === 'auto' ? filled.repeats : settings.repeats };
   const pageProgress = progress[page.id];
   const sizeClass = `nb-size-${settings.cellSize}`;
   return (
@@ -259,7 +282,8 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
           <summary className="btn ghost sm">⚙️ Tuỳ chỉnh</summary>
           <div className="nb-settings-panel">
             <label className="nb-setting"><span>Số ô mỗi chữ</span>
-              <select value={settings.repeats} onChange={(event) => setSettings((current) => ({ ...current, repeats: Number(event.target.value) }))}>
+              <select value={settings.repeats} onChange={(event) => setSettings((current) => ({ ...current, repeats: event.target.value === 'auto' ? 'auto' : Number(event.target.value) }))}>
+                <option value="auto">Đầy khung ({layout.rows} hàng · {fillRepeats(layout.columns).repeats} ô)</option>
                 {REPEAT_OPTIONS.map((value) => <option key={value} value={value}>{value} ô</option>)}
               </select></label>
             <label className="nb-setting"><span>Chữ mờ</span>
@@ -280,7 +304,7 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
         </details>
       </div>
 
-      <article className="nb-paper">
+      <article className="nb-paper" ref={paperRef}>
         <header className="nb-paper-head">
           <div>
             <h2 className="jp">{page.title}</h2>
@@ -289,7 +313,7 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
           <span className="nb-page-no">Trang {page.number}/{notebook.pages.length}</span>
         </header>
         {page.rows.map((row, rowIndex) => (
-          <NotebookRowView key={`${page.id}-${rowIndex}`} row={row} rowId={`${page.id}-${rowIndex}`} repeats={settings.repeats} ghost={settings.ghost}
+          <NotebookRowView key={`${page.id}-${rowIndex}`} row={row} rowId={`${page.id}-${rowIndex}`} repeats={layout.repeats} columns={layout.columns} ghost={settings.ghost}
             showGrid={settings.showGrid} guide={[...row.glyph].length === 1 ? guides[row.glyph] ?? null : null} activeCell={activeCell}
             strokesByCell={strokesByCell} noStrokes={noStrokes} onStroke={handleStroke} onFocusCell={setActiveCell} />
         ))}
@@ -307,15 +331,15 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
       </p>
 
       {printScope ? createPortal(
-        <PrintSheets pages={printScope === 'notebook' ? notebook.pages : [page]} notebookTitle={notebook.title} repeats={settings.repeats} ghost={settings.ghost} showGrid={settings.showGrid} guides={guides} />,
+        <PrintSheets pages={printScope === 'notebook' ? notebook.pages : [page]} notebookTitle={notebook.title} repeats={settings.repeats === 'auto' ? PRINT_AUTO_REPEATS : settings.repeats} ghost={settings.ghost} showGrid={settings.showGrid} guides={guides} />,
         document.body,
       ) : null}
     </section>
   );
 }
 
-function NotebookRowView({ row, rowId, repeats, ghost, showGrid, guide, activeCell, strokesByCell, noStrokes, onStroke, onFocusCell }: {
-  row: NotebookPage['rows'][number]; rowId: string; repeats: number; ghost: GhostMode; showGrid: boolean; guide: StrokeOrderData | null;
+function NotebookRowView({ row, rowId, repeats, columns, ghost, showGrid, guide, activeCell, strokesByCell, noStrokes, onStroke, onFocusCell }: {
+  row: NotebookPage['rows'][number]; rowId: string; repeats: number; columns: number; ghost: GhostMode; showGrid: boolean; guide: StrokeOrderData | null;
   activeCell: string | null; strokesByCell: Map<string, InkStroke[]>; noStrokes: InkStroke[];
   onStroke: (stroke: InkStroke) => void; onFocusCell: (cellId: string) => void;
 }) {
@@ -323,7 +347,8 @@ function NotebookRowView({ row, rowId, repeats, ghost, showGrid, guide, activeCe
   return (
     // Vùng viết chỉ có ô: không chữ, không nút → chạm / vuốt trên điện thoại không bôi chọn nhầm thứ khác.
     <section className="nb-row" aria-label={`Luyện chữ ${description}`}>
-      <div className="nb-cells">
+      {/* Đúng `columns` cột, ô giãn đều cho kín bề rộng khung (không chừa khoảng trống bên phải). */}
+      <div className="nb-cells" style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}>
         {/* Ô đầu dòng: chữ mẫu (đậm, không viết vào) — rồi các ô lặp lại trên cùng dòng. */}
         <svg className="nb-cell nb-cell-sample" viewBox="0 0 100 100" role="img"
           aria-label={guide ? `Chữ mẫu ${row.glyph}: ${guide.strokes.length} nét, có đánh số thứ tự` : `Chữ mẫu ${row.glyph}`}

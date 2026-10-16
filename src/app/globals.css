@@ -1358,11 +1358,13 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 /* Vùng giấy: chỉ để viết — không bôi chọn chữ, không menu nhấn giữ / kính lúp trên điện thoại. */
 .nb-paper{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 .nb-cells{display:grid;gap:6px;grid-template-columns:repeat(auto-fill,var(--nb-cell))}
+.nb-cells>.nb-cell{width:100%;height:auto;aspect-ratio:1/1}
 .nb-cell{display:block;width:var(--nb-cell);height:var(--nb-cell);border:1.5px solid #E7D6D0;border-radius:6px;background:#fff;touch-action:none;cursor:crosshair;
   -webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .nb-cell.is-active{border-color:var(--sakura);box-shadow:0 0 0 3px rgba(255,91,115,.15)}
 .nb-cell-sample{cursor:default;touch-action:auto;border:2px solid #D2B8B0;background:#FFF8F5;
-  grid-row:span 2;grid-column:span 2;width:calc(var(--nb-cell) * 2 + 6px);height:calc(var(--nb-cell) * 2 + 6px)}
+  grid-row:span 2;grid-column:span 2}
+.nb-cells>.nb-cell-sample{height:100%}
 .nb-order-numbers text{font-family:var(--font-vi);font-size:10px;font-weight:800;fill:#FF5B73;paint-order:stroke;stroke:#FFF8F5;stroke-width:2.2px}
 .nb-grid{fill:none;stroke:#F0DDD8;stroke-width:1;stroke-dasharray:3 3;vector-effect:non-scaling-stroke}
 .nb-ghost path{fill:none;stroke:#EFE4E0;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}

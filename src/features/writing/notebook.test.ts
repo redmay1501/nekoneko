@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { loadSeedContent } from '@/lib/data/seed-content';
-import { buildNotebooks, DEFAULT_REPEATS, findNotebookPage, isGhostCell, KANJI_PER_PAGE, REPEAT_OPTIONS } from './notebook';
+import { buildNotebooks, DEFAULT_REPEATS, fillRepeats, findNotebookPage, gridColumns, isGhostCell, KANJI_PER_PAGE, REPEAT_OPTIONS } from './notebook';
 
 const content = loadSeedContent();
 const notebooks = buildNotebooks(content);
@@ -65,5 +65,24 @@ describe('isGhostCell — số ô có chữ mờ theo cấu hình', () => {
     expect(count('half')).toBe(Math.ceil(repeats / 2));
     expect(isGhostCell(0, repeats, 'half')).toBe(true);
   });
-  it('mặc định 8 ô', () => expect(DEFAULT_REPEATS).toBe(8));
+  it('mặc định: đầy khung', () => expect(DEFAULT_REPEATS).toBe('auto'));
+});
+
+describe('Đầy khung — số cột và số ô theo bề rộng', () => {
+  it('số cột theo bề rộng, cỡ ô và khe hở; tối thiểu 4 cột', () => {
+    expect(gridColumns(970, 64, 6)).toBe(13);
+    expect(gridColumns(970, 84, 6)).toBe(10);
+    expect(gridColumns(330, 64, 6)).toBe(4);
+    expect(gridColumns(0, 64, 6)).toBe(4);
+  });
+  it('khung rộng (PC / iPad) → kín đúng 2 hàng: ô mẫu 2×2 + ô luyện', () => {
+    const { rows, repeats } = fillRepeats(13);
+    expect(rows).toBe(2);
+    expect(repeats + 4).toBe(2 * 13);
+    expect(fillRepeats(9)).toEqual({ rows: 2, repeats: 14 });
+  });
+  it('điện thoại (ít cột) → 3 hàng để đủ ô luyện', () => {
+    expect(fillRepeats(4)).toEqual({ rows: 3, repeats: 8 });
+    expect(fillRepeats(5)).toEqual({ rows: 3, repeats: 11 });
+  });
 });

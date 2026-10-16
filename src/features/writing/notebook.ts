@@ -147,9 +147,30 @@ export function findNotebookPage(notebooks: readonly Notebook[], pageId: string)
   return notebooks.flatMap((notebook) => notebook.pages).find((page) => page.id === pageId);
 }
 
-/** Số ô lặp lại mỗi chữ (người học chọn). */
+/** Số ô lặp lại mỗi chữ (người học chọn) — hoặc 'auto': lấp đầy khung giấy. */
 export const REPEAT_OPTIONS = [4, 6, 8, 10, 12] as const;
-export const DEFAULT_REPEATS = 8;
+export type RepeatSetting = number | 'auto';
+export const DEFAULT_REPEATS: RepeatSetting = 'auto';
+/** Số ô khi in ở chế độ "Đầy khung" — vừa một dòng A4 (13 ô × 13 mm kể cả ô mẫu). */
+export const PRINT_AUTO_REPEATS = 12;
+
+/** Lưới của một dòng chữ: số cột vừa bề rộng khung; ô mẫu chiếm 2 cột × 2 hàng. */
+export const SAMPLE_SPAN = 2;
+const MIN_COLUMNS = SAMPLE_SPAN + 2;
+
+export function gridColumns(containerWidth: number, cellSize: number, gap: number): number {
+  if (containerWidth <= 0) return MIN_COLUMNS;
+  return Math.max(MIN_COLUMNS, Math.floor((containerWidth + gap) / (cellSize + gap)));
+}
+
+/**
+ * "Đầy khung": số ô luyện để dòng chữ lấp kín đúng số hàng — 2 hàng khi khung rộng (máy tính, iPad: ≥ 8 cột),
+ * 3 hàng khi khung hẹp (điện thoại) để vẫn đủ ô luyện. Ô mẫu chiếm SAMPLE_SPAN × SAMPLE_SPAN chỗ.
+ */
+export function fillRepeats(columns: number): { rows: number; repeats: number } {
+  const rows = columns >= 8 ? 2 : 3;
+  return { rows, repeats: rows * columns - SAMPLE_SPAN * SAMPLE_SPAN };
+}
 
 export type GhostMode = 'all' | 'half' | 'none';
 /** Ô thứ `index` (0-based) có chữ mờ để đồ theo không: đồ hết · nửa đầu đồ, nửa sau tự viết · tự viết hết. */

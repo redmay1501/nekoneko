@@ -18,9 +18,17 @@ import { type AdminAccess, type AdminUser, decideAdminAccess, decideDemoAccess }
 export const getAdminAccess = cache(async (): Promise<AdminAccess> => {
   if (!isSupabaseConfigured()) return decideDemoAccess(process.env.NODE_ENV, DEMO_LEARNER.userId);
   const supabase = await createServerSupabaseClient();
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data.user) return { kind: 'unauthenticated' };
-  const roles = await createAdminSupabaseClient().from('app_roles').select('role').eq('user_id', data.user.id);
+  // Mã người dùng từ JWT (kiểm chữ ký tại chỗ, không tốn lượt mạng) → hỏi Supabase Auth và đọc vai trò SONG SONG.
+  // Quyết định vẫn dựa trên getUser() (tài khoản đã xoá / phiên bị thu hồi không qua) và id phải trùng nhau.
+  const { data: claimsData } = await supabase.auth.getClaims();
+  const claimedId = typeof claimsData?.claims?.sub === 'string' ? claimsData.claims.sub : null;
+  if (!claimedId) return { kind: 'unauthenticated' };
+  const [userResult, roles] = await Promise.all([
+    supabase.auth.getUser(),
+    createAdminSupabaseClient().from('app_roles').select('role').eq('user_id', claimedId),
+  ]);
+  const { data, error } = userResult;
+  if (error || !data.user || data.user.id !== claimedId) return { kind: 'unauthenticated' };
   if (roles.error) {
     logger.error('admin: không đọc được app_roles', roles.error);
     return { kind: 'forbidden', reason: 'not-admin' };

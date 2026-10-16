@@ -1,6 +1,7 @@
 /* Admin Studio — hồng / trắng pastel, dùng chung token của app (globals.css). Mọi class có tiền tố .adm- để không đụng app học. */
-.adm{--adm-pink:#FFE4EA;--adm-pink-2:#FFF4F6;--adm-rose:#E24159;--adm-border:#F3DCE1;--adm-side:248px;
-  display:flex;min-height:100vh;background:linear-gradient(180deg,#FFF9FA 0%,#FFFDF8 320px);color:var(--ink)}
+/* Token đặt ở :root (không phải .adm): popup, hộp xác nhận, toast được gắn thẳng vào <body>, nằm ngoài .adm. */
+:root{--adm-pink:#FFE4EA;--adm-pink-2:#FFF4F6;--adm-rose:#E24159;--adm-border:#F3DCE1;--adm-input-border:#DDBFC6;--adm-side:248px}
+.adm{display:flex;min-height:100vh;background:linear-gradient(180deg,#FFF9FA 0%,#FFFDF8 320px);color:var(--ink)}
 .adm *{min-width:0}
 .adm-side{position:sticky;top:0;height:100vh;flex:0 0 var(--adm-side);display:flex;flex-direction:column;gap:2px;padding:18px 12px;
   background:#fff;border-right:1px solid var(--adm-border);overflow-y:auto}
@@ -43,10 +44,10 @@
 .adm-btn.danger{background:#fff;color:#C2253F;border-color:#F5B8C3}
 .adm-btn.danger:hover{background:#FFF0F2}
 .adm-btn.sm{min-height:32px;padding:0 10px;font-size:13px;border-radius:10px}
-.adm-input,.adm-select,.adm-textarea{width:100%;min-height:38px;padding:7px 11px;border-radius:12px;border:1px solid var(--adm-border);background:#fff;font:inherit;font-size:14px;color:var(--ink)}
+.adm-input,.adm-select,.adm-textarea{width:100%;min-height:38px;padding:7px 11px;border-radius:12px;border:1.5px solid var(--adm-input-border);background:#fff;font:inherit;font-size:14px;color:var(--ink)}
 .adm-textarea{min-height:84px;resize:vertical}
-.adm-input:focus,.adm-select:focus,.adm-textarea:focus{outline:0;border-color:#FFB0BE;box-shadow:0 0 0 3px rgba(255,150,170,.2)}
-.adm-input[aria-invalid="true"],.adm-textarea[aria-invalid="true"]{border-color:#E8798B;background:#FFF8F9}
+.adm-input:focus,.adm-select:focus,.adm-textarea:focus{outline:0;border-color:var(--adm-rose);box-shadow:0 0 0 3px rgba(255,150,170,.2)}
+.adm-input[aria-invalid="true"],.adm-textarea[aria-invalid="true"]{border-color:#D23A55;background:#FFF8F9}
 .adm-field{display:flex;flex-direction:column;gap:5px}
 .adm-field > span{font-size:13px;font-weight:700;color:var(--ink-2)}
 .adm-field small{font-size:12px;color:var(--ink-3)}

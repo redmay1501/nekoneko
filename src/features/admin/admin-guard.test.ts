@@ -1,11 +1,14 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 /** Lớp guard thật (admin-guard.ts) với Supabase giả: người học thường bị chặn ở API và trang. */
-const state = vi.hoisted(() => ({ user: null as null | { id: string; email: string; banned_until?: string }, roles: [] as string[] }));
+const state = vi.hoisted(() => ({ user: null as null | { id: string; email: string; banned_until?: string }, roles: [] as string[], claimedId: null as string | null }));
 
 vi.mock('@/config/env', () => ({ isSupabaseConfigured: () => true, publicEnv: { supabaseUrl: 'https://x', supabaseAnonKey: 'anon' } }));
 vi.mock('@/lib/supabase/server', () => ({
-  createServerSupabaseClient: async () => ({ auth: { getUser: async () => ({ data: { user: state.user }, error: state.user ? null : { message: 'no session' } }) } }),
+  createServerSupabaseClient: async () => ({ auth: {
+    getClaims: async () => ({ data: state.user ? { claims: { sub: state.claimedId ?? state.user.id } } : null }),
+    getUser: async () => ({ data: { user: state.user }, error: state.user ? null : { message: 'no session' } }),
+  } }),
 }));
 vi.mock('@/lib/supabase/admin', () => ({
   createAdminSupabaseClient: () => ({
@@ -22,7 +25,7 @@ const { requireAdminApi, requireAdminPage, requireAdminWriter } = await import('
 const { ForbiddenError, UnauthenticatedError } = await import('@/lib/api/errors');
 
 describe('admin guard (server)', () => {
-  beforeEach(() => { state.user = null; state.roles = []; });
+  beforeEach(() => { state.user = null; state.roles = []; state.claimedId = null; });
 
   it('chưa đăng nhập: API → 401, trang → chuyển về đăng nhập', async () => {
     await expect(requireAdminApi()).rejects.toBeInstanceOf(UnauthenticatedError);
@@ -39,6 +42,12 @@ describe('admin guard (server)', () => {
     state.user = { id: 'u1', email: 'a@example.com', banned_until: '2126-01-01T00:00:00Z' };
     state.roles = ['admin'];
     await expect(requireAdminApi()).rejects.toBeInstanceOf(ForbiddenError);
+  });
+  it('JWT nói một người, Supabase Auth trả người khác → coi như chưa đăng nhập', async () => {
+    state.user = { id: 'u1', email: 'a@example.com' };
+    state.roles = ['admin'];
+    state.claimedId = 'someone-else';
+    await expect(requireAdminApi()).rejects.toBeInstanceOf(UnauthenticatedError);
   });
   it('admin → qua', async () => {
     state.user = { id: 'u1', email: 'a@example.com' };

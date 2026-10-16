@@ -86,7 +86,7 @@ export default async function AdminEntityListPage({ params, searchParams }: { pa
                   <td>{row.day ?? <span className="adm-muted">—</span>}</td>
                   <td>{hasImage ? '🖼️' : <span className="adm-muted">—</span>}</td>
                   <td><StatusBadge status={rowStatus} /></td>
-                  <td><RowActions entity={entity} id={row.id} title={config.title(row) || `#${row.id}`} isDemo={admin.isDemo} /></td>
+                  <td><RowActions entity={entity} id={row.id} title={config.title(row) || `#${row.id}`} isDemo={admin.isDemo} row={row} /></td>
                 </tr>
               ))}
             </tbody>

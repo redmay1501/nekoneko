@@ -21,11 +21,15 @@ interface EntityDetail {
  * Popup Thêm / Sửa. Lưu xong: đóng popup, làm mới danh sách tại chỗ (bộ lọc, tìm kiếm, trang nằm trên URL nên giữ nguyên).
  * Lưu lỗi: giữ nguyên dữ liệu đang nhập, báo lỗi ngay trong popup. Đang lưu: khoá nút, không đóng được.
  */
-export function EntityFormModal({ entity, id, onClose, isDemo }: { entity: AdminEntity; id: number | null; onClose: () => void; isDemo: boolean }) {
+export function EntityFormModal({ entity, id, onClose, isDemo, initialRow }: {
+  entity: AdminEntity; id: number | null; onClose: () => void; isDemo: boolean;
+  /** Dòng đã có sẵn trong danh sách → mở form ngay, không chờ tải. */
+  initialRow?: EntityDetail['row'];
+}) {
   const config = ENTITY_CONFIG[entity];
   const router = useRouter();
   const { toast } = useAdminUi();
-  const [values, setValues] = useState<Record<string, string> | null>(id === null ? rowToFormValues(entity, null) : null);
+  const [values, setValues] = useState<Record<string, string> | null>(id === null || initialRow ? rowToFormValues(entity, initialRow ?? null) : null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [saveError, setSaveError] = useState<string | null>(null);
@@ -33,7 +37,7 @@ export function EntityFormModal({ entity, id, onClose, isDemo }: { entity: Admin
   const savingRef = useRef(false);
 
   useEffect(() => {
-    if (id === null) return;
+    if (id === null || initialRow) return;
     let isCurrent = true;
     adminFetch<EntityDetail>(`/api/admin/content/${entity}/${id}`).then((result) => {
       if (!isCurrent) return;
@@ -41,7 +45,7 @@ export function EntityFormModal({ entity, id, onClose, isDemo }: { entity: Admin
       else setLoadError(result.error);
     });
     return () => { isCurrent = false; };
-  }, [entity, id]);
+  }, [entity, id, initialRow]);
 
   // Sửa: dữ liệu tải xong mới có ô nhập → đưa focus vào ô đầu tiên.
   const hasValues = values !== null;
@@ -115,7 +119,7 @@ export function deletionImpact(entity: AdminEntity, detail: Pick<EntityDetail, '
   return { canDelete: true, notes };
 }
 
-export function RowActions({ entity, id, title, isDemo }: { entity: AdminEntity; id: number; title: string; isDemo: boolean }) {
+export function RowActions({ entity, id, title, isDemo, row }: { entity: AdminEntity; id: number; title: string; isDemo: boolean; row: EntityDetail['row'] }) {
   const router = useRouter();
   const { toast, confirm } = useAdminUi();
   const [isEditing, setIsEditing] = useState(false);
@@ -145,7 +149,7 @@ export function RowActions({ entity, id, title, isDemo }: { entity: AdminEntity;
     <span className="adm-actions" style={{ flexWrap: 'nowrap', gap: 4 }}>
       <button type="button" className="adm-btn ghost sm" onClick={() => setIsEditing(true)}>Sửa</button>
       <button type="button" className="adm-btn danger sm" onClick={remove} disabled={isDeleting} aria-busy={isDeleting}>Xoá</button>
-      {isEditing ? <EntityFormModal entity={entity} id={id} isDemo={isDemo} onClose={() => setIsEditing(false)} /> : null}
+      {isEditing ? <EntityFormModal entity={entity} id={id} isDemo={isDemo} initialRow={row} onClose={() => setIsEditing(false)} /> : null}
     </span>
   );
 }

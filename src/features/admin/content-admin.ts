@@ -90,10 +90,34 @@ export async function loadEntityRecords(entity: AdminEntity): Promise<EntityReco
   });
 }
 
+/** Một mục: ba truy vấn nhỏ theo id (không tải cả bảng — mở popup / trang chi tiết nhanh). */
 export async function loadEntityRecord(entity: AdminEntity, id: number): Promise<EntityRecord> {
-  const record = (await loadEntityRecords(entity)).find((item) => item.row.id === id);
-  if (!record) throw new NotFoundError(`${entity} ${id}`);
-  return record;
+  if (!isSupabaseConfigured()) {
+    const row = demoRows(entity).find((item) => item.id === id);
+    if (!row) throw new NotFoundError(`${entity} ${id}`);
+    return { row, status: 'published', hasImage: false, image: null, statusNote: '' };
+  }
+  const client = createAdminSupabaseClient();
+  const schema = await getAdminSchema();
+  const [row, status, image] = await Promise.all([
+    client.from(ENTITY_CONFIG[entity].table).select('*').eq('id', id).maybeSingle(),
+    schema.content_status
+      ? client.from('content_status').select('status, note').eq('content_type', entity).eq('content_id', id).maybeSingle()
+      : Promise.resolve({ data: null, error: null }),
+    schema.content_images && schema.media_assets
+      ? client.from('content_images').select('asset_id, alt_text, media_assets(storage_path, alt_text)').eq('content_type', entity).eq('content_id', id).maybeSingle()
+      : Promise.resolve({ data: null, error: null }),
+  ]);
+  if (row.error) throw new Error(`Supabase: đọc ${ENTITY_CONFIG[entity].table} — ${row.error.message}`);
+  if (!row.data) throw new NotFoundError(`${entity} ${id}`);
+  type ImageJoin = { asset_id: string; alt_text: string; media_assets: { storage_path: string; alt_text: string } | Array<{ storage_path: string; alt_text: string }> | null };
+  const joined = image.data as unknown as ImageJoin | null;
+  const asset = joined ? (Array.isArray(joined.media_assets) ? joined.media_assets[0] : joined.media_assets) : null;
+  const statusRow = status.data as { status: ContentStatus; note: string } | null;
+  return {
+    row: row.data as AdminRow, status: statusRow?.status ?? 'published', statusNote: statusRow?.note ?? '',
+    hasImage: Boolean(asset), image: joined && asset ? { assetId: joined.asset_id, url: mediaUrl(asset.storage_path), alt: joined.alt_text, assetAlt: asset.alt_text } : null,
+  };
 }
 
 /** Số thẻ nhớ (của mọi người học) đang trỏ tới mục này. Chỉ đếm — không đọc nội dung trí nhớ. */
@@ -242,7 +266,8 @@ export async function loadAdminContent(): Promise<N5Content> {
  * với trí nhớ trống (người học chưa gặp). Không ghi gì.
  */
 export async function buildLearnerPreview(entity: AdminEntity, record: EntityRecord): Promise<KnowledgeDetailView | null> {
-  const content = await loadAdminContent();
+  // Nội dung của app học (đã cache) làm nền — chỉ mục đang sửa lấy thẳng từ database. Không tải lại cả bốn bảng.
+  const content = await (await getLearningDataSource()).getContent();
   const mapped = contentFromRows({
     ...rowsFromContent({ ...content, vocabulary: [], kanji: [], radicals: [], grammar: [] }),
     vocabulary: entity === 'vocabulary' ? [record.row as never] : [],
@@ -276,10 +301,12 @@ export async function setEntityImagesBulk(admin: AdminUser, entity: AdminEntity,
   await requireAdminTables('media_assets', 'content_images');
   const unique = [...new Set(ids)];
   if (!unique.length || unique.length > MAX_BULK_IMAGE_ITEMS) throw new ActionRejectedError(`Chọn từ 1 đến ${MAX_BULK_IMAGE_ITEMS} mục.`, 422);
-  const existing = new Set((await loadEntityRecords(entity)).map((record) => record.row.id));
+  const client = createAdminSupabaseClient();
+  const found = await client.from(ENTITY_CONFIG[entity].table).select('id').in('id', unique);
+  if (found.error) throw new Error(`Supabase: kiểm tra mục — ${found.error.message}`);
+  const existing = new Set(((found.data ?? []) as Array<{ id: number }>).map((row) => row.id));
   const missing = unique.filter((id) => !existing.has(id));
   if (missing.length) throw new ActionRejectedError(`Không tìm thấy mục: ${missing.slice(0, 10).join(', ')}.`, 404);
-  const client = createAdminSupabaseClient();
   if (assetId === null) {
     const { error } = await client.from('content_images').delete().eq('content_type', entity).in('content_id', unique);
     if (error) throw new Error(`Supabase: gỡ ảnh hàng loạt — ${error.message}`);

@@ -27,11 +27,22 @@ async function tableExists(client: SupabaseClient, table: AdminTable): Promise<b
   return !isMissingTableError(error);
 }
 
+/**
+ * Nhớ kết quả giữa các request: bảng đã có thì không mất đi → nhớ luôn; còn thiếu bảng (chưa chạy migration)
+ * thì kiểm tra lại sau MISSING_RECHECK_MS. Tránh 4 truy vấn thừa ở MỖI thao tác admin.
+ */
+const MISSING_RECHECK_MS = 30_000;
+let remembered: { schema: AdminSchema; at: number } | null = null;
+
 export const getAdminSchema = cache(async (): Promise<AdminSchema> => {
   if (!isSupabaseConfigured()) return Object.fromEntries(ADMIN_TABLES.map((table) => [table, false])) as AdminSchema;
+  const isComplete = remembered && ADMIN_TABLES.every((table) => remembered!.schema[table]);
+  if (remembered && (isComplete || Date.now() - remembered.at < MISSING_RECHECK_MS)) return remembered.schema;
   const client = createAdminSupabaseClient();
   const flags = await Promise.all(ADMIN_TABLES.map((table) => tableExists(client, table)));
-  return Object.fromEntries(ADMIN_TABLES.map((table, index) => [table, flags[index]])) as AdminSchema;
+  const schema = Object.fromEntries(ADMIN_TABLES.map((table, index) => [table, flags[index]])) as AdminSchema;
+  remembered = { schema, at: Date.now() };
+  return schema;
 });
 
 export const MIGRATION_REQUIRED_MESSAGE = `Cần áp dụng migration ${ADMIN_MIGRATION_FILE} trong Supabase SQL Editor trước.`;

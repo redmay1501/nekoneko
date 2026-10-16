@@ -175,6 +175,36 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
   const erase = useCallback((cellId: string, points: InkPoint[], aspect: number) => {
     dispatchInk({ type: 'erase', shouldErase: (stroke) => stroke.cellId === cellId && points.some((point) => strokeHitsPoint(stroke, point, ERASER_RADIUS, aspect)) });
   }, [dispatchInk]);
+  // Vòng tròn cục tẩy đi theo bút / ngón tay / chuột (iPad không có con trỏ chuột → phải tự vẽ). Cập nhật thẳng style,
+  // không qua state, để không vẽ lại cả trang ở mỗi lần di chuyển.
+  const eraserCursorRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (tool !== 'eraser') return;
+    const cursor = eraserCursorRef.current;
+    if (!cursor) return;
+    let isPressed = false;
+    const overWritingArea = (event: PointerEvent) => Boolean((event.target as Element | null)?.closest?.('.nb-paper'));
+    const place = (event: PointerEvent) => {
+      // Chuột / bút rê (hover) thì hiện cả khi chưa bấm; chạm tay chỉ hiện lúc đang quẹt.
+      const isVisible = overWritingArea(event) && (isPressed || event.pointerType !== 'touch');
+      cursor.style.opacity = isVisible ? '1' : '0';
+      cursor.style.transform = `translate(${event.clientX}px, ${event.clientY}px) translate(-50%, -50%) scale(${isPressed ? 1 : 0.9})`;
+    };
+    const down = (event: PointerEvent) => { isPressed = true; place(event); };
+    const up = (event: PointerEvent) => { isPressed = false; place(event); if (event.pointerType === 'touch') cursor.style.opacity = '0'; };
+    window.addEventListener('pointermove', place, { passive: true });
+    window.addEventListener('pointerdown', down, { passive: true });
+    window.addEventListener('pointerup', up, { passive: true });
+    window.addEventListener('pointercancel', up, { passive: true });
+    return () => {
+      window.removeEventListener('pointermove', place);
+      window.removeEventListener('pointerdown', down);
+      window.removeEventListener('pointerup', up);
+      window.removeEventListener('pointercancel', up);
+      cursor.style.opacity = '0';
+    };
+  }, [tool]);
+
   // Nhấc bút / tay ở BẤT KỲ đâu → kết thúc lần quẹt tẩy (lần quẹt trượt hết thì bỏ bước Hoàn tác rỗng).
   useEffect(() => {
     if (tool !== 'eraser' || !page) return;
@@ -409,6 +439,11 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
         {message ?? (pageProgress?.lastPracticedAt ? `Luyện gần nhất: ${formatPracticedAt(pageProgress.lastPracticedAt)}` : 'Nét viết chỉ giữ trong lần mở này; tiến độ lưu khi bạn viết và khi bấm "Đã luyện xong".')}
       </p>
 
+      {tool === 'eraser' ? createPortal(
+        <div ref={eraserCursorRef} className="nb-eraser-cursor" aria-hidden="true"
+          style={{ width: Math.round(2 * ERASER_RADIUS * layout.unitPx), height: Math.round(2 * ERASER_RADIUS * layout.unitPx) }} />,
+        document.body,
+      ) : null}
       {printScope ? createPortal(
         <PrintSheets pages={printScope === 'notebook' ? notebook.pages : [page]} notebookTitle={notebook.title} repeats={settings.repeats === 'auto' ? PRINT_AUTO_REPEATS : settings.repeats}
           vocabLines={settings.vocabLines} vocabForm={settings.vocabForm} ghost={settings.ghost} showGrid={settings.showGrid} guides={guides} />,

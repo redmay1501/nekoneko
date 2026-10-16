@@ -1350,8 +1350,11 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 .nb-tool-switch{display:inline-flex;border:1.5px solid #F3C1CB;border-radius:999px;overflow:hidden;background:#fff}
 .nb-tool-switch button{padding:6px 12px;font-size:13px;font-weight:700;color:var(--ink-2)}
 .nb-tool-switch button.on{background:var(--sakura);color:#fff}
-/* Đang tẩy: con trỏ hình cục tẩy tròn trên ô viết. */
-.nb.is-erasing .nb-cell:not(.nb-cell-sample):not(.nb-word-model){cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='26' height='26'><circle cx='13' cy='13' r='10' fill='%23ffffff' fill-opacity='.7' stroke='%23E2475E' stroke-width='2'/></svg>") 13 13,auto}
+/* Đang tẩy: ẩn con trỏ thường trên ô viết, thay bằng vòng tròn cục tẩy (đúng cỡ vùng tẩy) đi theo bút / tay / chuột. */
+.nb.is-erasing .nb-cell:not(.nb-cell-sample):not(.nb-word-model){cursor:none}
+.nb-eraser-cursor{position:fixed;left:0;top:0;z-index:70;pointer-events:none;opacity:0;border-radius:50%;
+  border:2px solid var(--sakura);background:rgba(255,255,255,.55);box-shadow:0 0 0 1px rgba(255,255,255,.9),0 2px 8px rgba(226,71,94,.25);
+  transition:opacity .12s ease,scale .08s ease;will-change:transform}
 .nb-settings>summary{list-style:none;cursor:pointer} .nb-settings>summary::-webkit-details-marker{display:none}
 .nb-settings-panel{position:absolute;right:0;top:calc(100% + 6px);z-index:6;display:flex;flex-direction:column;gap:10px;width:min(300px,86vw);padding:14px;
   border-radius:16px;background:#fff;border:1px solid var(--line);box-shadow:var(--sh-3)}

@@ -97,7 +97,8 @@ export function strokeHitsPoint(stroke: InkStroke, point: InkPoint, radius: numb
   return false;
 }
 
-export const ERASER_RADIUS = 0.08;
+/** Bán kính cục tẩy theo chiều cao ô (ô 65px → vòng tẩy ≈ 24px). Vòng tròn hiện trên màn hình đúng bằng vùng tẩy này. */
+export const ERASER_RADIUS = 0.18;
 
 /** Điểm con trỏ → toạ độ chuẩn hoá trong ô, kẹp trong 0–1. */
 export function normalizePoint(clientX: number, clientY: number, rect: { left: number; top: number; width: number; height: number }): InkPoint {

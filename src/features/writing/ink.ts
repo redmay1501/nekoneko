@@ -7,6 +7,9 @@ export type InkPoint = readonly [number, number];
 export interface InkStroke {
   cellId: string;
   points: InkPoint[];
+  /** Vẽ bằng gì (mouse / pen / touch) và lúc nào — để dọn vệt lòng bàn tay khi bút xuất hiện. */
+  pointerType?: string;
+  at?: number;
 }
 
 export interface InkState {
@@ -24,7 +27,8 @@ export type InkAction =
   | { type: 'undo' }
   | { type: 'redo' }
   | { type: 'clear-cell'; cellId: string }
-  | { type: 'clear-all' };
+  | { type: 'clear-all' }
+  | { type: 'remove'; shouldRemove: (stroke: InkStroke) => boolean };
 
 export function inkReducer(state: InkState, action: InkAction): InkState {
   switch (action.type) {
@@ -41,6 +45,10 @@ export function inkReducer(state: InkState, action: InkAction): InkState {
     }
     case 'clear-cell':
       return { strokes: state.strokes.filter((stroke) => stroke.cellId !== action.cellId), undone: [] };
+    case 'remove': {
+      const kept = state.strokes.filter((stroke) => !action.shouldRemove(stroke));
+      return kept.length === state.strokes.length ? state : { ...state, strokes: kept };
+    }
     case 'clear-all':
       return state.strokes.length ? { strokes: [], undone: [], cleared: state.strokes } : state;
   }

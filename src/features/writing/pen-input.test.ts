@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { decidePointer, isPenOnly } from './pen-input';
+import { decidePointer, isLikelyPalmStroke, isPenOnly, RECENT_PALM_MS } from './pen-input';
+import { EMPTY_INK, inkReducer } from './ink';
 
 const base = { mode: 'auto' as const, penSeen: false, activePointerType: null };
 
@@ -31,5 +32,24 @@ describe('chống tì tay khi viết bằng bút', () => {
     expect(isPenOnly({ mode: 'auto', penSeen: true })).toBe(true);
     expect(isPenOnly({ mode: 'all', penSeen: true })).toBe(false);
     expect(isPenOnly({ mode: 'pen', penSeen: false })).toBe(true);
+  });
+});
+
+describe('vùng chạm lớn và vệt lòng bàn tay', () => {
+  it('chưa thấy bút: vùng chạm to như lòng bàn tay bị bỏ qua, đầu ngón vẫn viết', () => {
+    expect(decidePointer({ ...base, pointerType: 'touch', contactWidth: 140, contactHeight: 110 })).toBe('ignore');
+    expect(decidePointer({ ...base, pointerType: 'touch', contactWidth: 44, contactHeight: 44 })).toBe('start');
+    expect(decidePointer({ ...base, pointerType: 'touch' })).toBe('start');
+  });
+  it('"Nhận cả bút và tay": vùng chạm lớn vẫn vẽ (người học chủ động chọn)', () => {
+    expect(decidePointer({ ...base, mode: 'all', pointerType: 'touch', contactWidth: 140 })).toBe('start');
+  });
+  it('bút xuất hiện → xoá nét tay vừa vẽ trong RECENT_PALM_MS, giữ nét cũ hơn và nét bút / chuột', () => {
+    const now = 100_000;
+    const stroke = (pointerType: string, ago: number) => ({ cellId: 'a', points: [[0.1, 0.1], [0.2, 0.2]] as Array<readonly [number, number]>, pointerType, at: now - ago });
+    let state = EMPTY_INK;
+    for (const item of [stroke('touch', RECENT_PALM_MS + 2000), stroke('mouse', 500), stroke('touch', 800), stroke('pen', 100)]) state = inkReducer(state, { type: 'add', stroke: item });
+    const cleaned = inkReducer(state, { type: 'remove', shouldRemove: (item) => isLikelyPalmStroke(item, now) });
+    expect(cleaned.strokes.map((item) => item.pointerType)).toEqual(['touch', 'mouse', 'pen']);
   });
 });

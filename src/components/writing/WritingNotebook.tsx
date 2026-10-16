@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
-import { isPenOnly, penInput, type PenMode } from '@/features/writing/pen-input';
+import { isLikelyPalmStroke, isPenOnly, penInput, type PenMode } from '@/features/writing/pen-input';
 import { createPortal } from 'react-dom';
 import { preloadStrokeOrders, type StrokeOrderData } from '@/features/learning/stroke-order';
 import { EMPTY_INK, type InkAction, inkReducer, type InkState, type InkStroke } from '@/features/writing/ink';
@@ -83,6 +83,17 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
   const shouldSyncUrlRef = useRef(false);
   const settingsRef = useRef<HTMLDetailsElement>(null);
   const pen = useSyncExternalStore(penInput.subscribe, penInput.getSnapshot, penInput.getServerSnapshot);
+  // Bút vừa xuất hiện lần đầu → dọn các nét chạm tay vừa vẽ ngay trước đó (thường là vệt lòng bàn tay).
+  const wasPenSeen = useRef(pen.penSeen);
+  useEffect(() => {
+    if (pen.penSeen && !wasPenSeen.current && pen.mode === 'auto') {
+      const penAt = Date.now();
+      setInkByPage((current) => Object.fromEntries(Object.entries(current).map(([pageId, state]) => [
+        pageId, inkReducer(state, { type: 'remove', shouldRemove: (stroke) => isLikelyPalmStroke(stroke, penAt) }),
+      ])));
+    }
+    wasPenSeen.current = pen.penSeen;
+  }, [pen.penSeen, pen.mode]);
   const paperRef = useRef<HTMLElement>(null);
   const [cellsWidth, setCellsWidth] = useState(0);
 
@@ -290,7 +301,7 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
           disabled={!activeCell || !strokesByCell.get(activeCell)?.length}>Xoá ô đang viết</button>
         <button type="button" className="btn ghost sm" onClick={clearPage} disabled={!ink.strokes.length}>🗑 Xoá hết</button>
         {isPenOnly(pen) ? (
-          <button type="button" className="btn ghost sm nb-pen-chip" onClick={() => penInput.setMode('all')}
+          <button type="button" className="btn ghost sm nb-pen-chip" onClick={() => { penInput.setMode('all'); penInput.forgetPen(); }}
             title="Đang dùng bút: chạm tay vào ô viết sẽ không vẽ (chống tì tay). Bấm để cho phép viết bằng tay.">✏️ Chỉ nhận bút</button>
         ) : null}
         <details className="nb-settings" ref={settingsRef}>
@@ -326,7 +337,7 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
                 {(Object.keys(SIZE_LABELS) as CellSize[]).map((value) => <option key={value} value={value}>{SIZE_LABELS[value]}</option>)}
               </select></label>
             <label className="nb-setting"><span>Bút cảm ứng (iPad, máy tính bảng)</span>
-              <select value={pen.mode} onChange={(event) => penInput.setMode(event.target.value as PenMode)}>
+              <select value={pen.mode} onChange={(event) => { const next = event.target.value as PenMode; penInput.setMode(next); if (next === 'all') penInput.forgetPen(); }}>
                 <option value="auto">Tự nhận — dùng bút rồi thì bỏ qua chạm tay</option>
                 <option value="pen">Chỉ nhận bút</option>
                 <option value="all">Nhận cả bút và tay</option>

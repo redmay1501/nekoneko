@@ -65,7 +65,9 @@ export function WritingPad({ character, reading, expectedStrokes, note }: Writin
     // Chống tì tay: đã dùng bút thì chạm tay vào khung không vẽ; đang vẽ thì ngón / tay thứ hai bị bỏ qua.
     if (event.pointerType === 'pen') penInput.notePen();
     const { mode, penSeen } = penInput.getSnapshot();
-    if (decidePointer({ pointerType: event.pointerType, mode, penSeen, activePointerType: isDrawingRef.current ? 'touch' : null }) === 'ignore') return;
+    if (decidePointer({
+      pointerType: event.pointerType, mode, penSeen, activePointerType: isDrawingRef.current ? 'touch' : null, contactWidth: event.width, contactHeight: event.height,
+    }) === 'ignore') return;
     isDrawingRef.current = true;
     setStrokeCount((count) => count + 1);
     setCheckMessage('');

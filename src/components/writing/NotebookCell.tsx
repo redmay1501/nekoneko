@@ -89,6 +89,8 @@ function NotebookCellView({ cellId, glyph, hasGhost, guide, showGrid, isActive, 
   const [live, setLive] = useState<InkPoint[] | null>(null);
   const pointsRef = useRef<InkPoint[]>([]);
   const pointerRef = useRef<number | null>(null);
+  const pointerTypeRef = useRef('mouse');
+  const startedAtRef = useRef(0);
 
   function pointOf(event: PointerEvent<SVGSVGElement>): InkPoint {
     return normalizePoint(event.clientX, event.clientY, event.currentTarget.getBoundingClientRect());
@@ -105,12 +107,16 @@ function NotebookCellView({ cellId, glyph, hasGhost, guide, showGrid, isActive, 
     if (event.pointerType === 'mouse' && event.button > 0) return; // chỉ nút chính của chuột
     if (event.pointerType === 'pen') penInput.notePen();
     const { mode, penSeen } = penInput.getSnapshot();
-    const decision = decidePointer({ pointerType: event.pointerType, mode, penSeen, activePointerType: activeStrokes.current() });
+    const decision = decidePointer({
+      pointerType: event.pointerType, mode, penSeen, activePointerType: activeStrokes.current(), contactWidth: event.width, contactHeight: event.height,
+    });
     event.preventDefault();
     if (decision === 'ignore') return; // tì tay khi đang dùng bút, hoặc ngón thứ hai
     if (decision === 'replace') activeStrokes.cancelCurrent();
     try { event.currentTarget.setPointerCapture(event.pointerId); } catch { /* Safari có thể từ chối với con trỏ đã kết thúc */ }
     pointerRef.current = event.pointerId;
+    pointerTypeRef.current = event.pointerType;
+    startedAtRef.current = Date.now();
     activeStrokes.begin(event.pointerType, cancel);
     pointsRef.current = [pointOf(event)];
     setLive(pointsRef.current);
@@ -135,7 +141,7 @@ function NotebookCellView({ cellId, glyph, hasGhost, guide, showGrid, isActive, 
     pointerRef.current = null;
     activeStrokes.end(cancel);
     // pointercancel (Safari huỷ thao tác) vẫn giữ phần đã vẽ — người học thấy gì thì được nấy.
-    if (pointsRef.current.length) onStroke({ cellId, points: pointsRef.current });
+    if (pointsRef.current.length) onStroke({ cellId, points: pointsRef.current, pointerType: pointerTypeRef.current, at: startedAtRef.current });
     pointsRef.current = [];
     setLive(null);
   }

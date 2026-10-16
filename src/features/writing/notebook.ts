@@ -196,28 +196,24 @@ export function buildNotebooks(content: {
   ].filter((notebook) => notebook.pages.length > 0);
 }
 
-export const WORD_BOX_GAP = 8;
+/** Sổ Từ vựng kiểu vở kẻ dòng: số dòng viết mỗi từ ('auto' = 2 trên máy tính / iPad, 3 trên điện thoại). */
+export const VOCAB_LINE_OPTIONS = [1, 2, 3, 4] as const;
+export type VocabLines = 'auto' | (typeof VOCAB_LINE_OPTIONS)[number];
 
 /**
- * Dòng từ vựng: mỗi ô là MỘT LẦN VIẾT cả từ (ô chữ nhật rộng theo số chữ, cao bằng ô của sổ chữ). Ô đầu là mẫu.
- *  - Đầy khung: kín `rows` hàng (máy tính / iPad 2, điện thoại 3), luôn có ít nhất mẫu + 2 lần viết.
- *  - Số lần cố định: mẫu + N lần.
- *  - "Nửa đồ": chữ mờ ở hàng đầu (ít nhất một ô), các hàng sau tự viết.
- * Từ dài hơn cả khung → một ô mỗi hàng, ô thấp lại cho vừa bề ngang.
+ * Dòng từ vựng: ô nhỏ đầu dòng (từ + nghĩa) rồi `lines` dòng kẻ để tự viết.
+ * "Nửa đồ": chữ mờ lặp lại trên DÒNG ĐẦU; "Đồ hết": mọi dòng; "Tự viết": không dòng nào.
  */
-export function wordBoxes(input: { width: number; unitPx: number; wordLength: number; rows: number; repeats: RepeatSetting }):
-  { boxesPerLine: number; total: number; aspect: number; ghostLimit: (mode: GhostMode) => number } {
-  const length = Math.max(1, input.wordLength);
-  const unit = Math.max(24, input.unitPx);
-  const width = input.width > 0 ? input.width : unit * length;
-  const boxesPerLine = Math.max(1, Math.floor((width + WORD_BOX_GAP) / (unit * length + WORD_BOX_GAP)));
-  // Ô giãn cho kín hàng: bề rộng thật / chiều cao (giữ chiều cao ≈ một ô chữ).
-  const boxWidth = (width - (boxesPerLine - 1) * WORD_BOX_GAP) / boxesPerLine;
-  const aspect = Math.max(1, Math.round((boxWidth / unit) * 100) / 100);
-  const total = input.repeats === 'auto' ? Math.max(3, input.rows * boxesPerLine) : input.repeats + 1;
-  const ghostLimit = (mode: GhostMode) => mode === 'all' ? total : mode === 'none' ? 1
-    : input.repeats === 'auto' ? Math.min(total, Math.max(2, boxesPerLine)) : 1 + Math.ceil(input.repeats / 2);
-  return { boxesPerLine, total, aspect, ghostLimit };
+export function wordLines(input: { setting: VocabLines; autoRows: number; ghost: GhostMode }): { lines: number; ghostLines: number } {
+  const lines = input.setting === 'auto' ? input.autoRows : input.setting;
+  const ghostLines = input.ghost === 'all' ? lines : input.ghost === 'none' ? 0 : 1;
+  return { lines, ghostLines };
+}
+
+/** Số lần chữ mờ lặp lại trên một dòng kẻ (dòng rộng `aspect` lần chiều cao, mỗi chữ ≈ 0,62 chiều cao, khe ≈ 1 chữ). */
+export function ghostCopies(aspect: number, wordLength: number): number {
+  const wordWidth = Math.max(1, wordLength) * 0.62;
+  return Math.max(1, Math.floor((aspect + 0.62) / (wordWidth + 0.62)));
 }
 
 export function findNotebookPage(notebooks: readonly Notebook[], pageId: string): NotebookPage | undefined {

@@ -1376,9 +1376,17 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 @media (max-width:560px){.nb-foot>.btn{flex:1 1 40%} .nb-foot>.btn:nth-child(2){order:3;flex-basis:100%}}
 /* Sổ Từ vựng: cụm = cả từ, mỗi chữ một ô; khe giữa các cụm rộng hơn khe giữa các chữ. */
 .nb-word-legend{display:flex;flex-wrap:wrap;gap:2px 14px;margin-top:6px;font-size:13px;color:var(--ink-2)}
-.nb-word-boxes{gap:8px}
-.nb-word-boxes>.nb-cell{width:100%;height:auto}
-.nb-word-model{cursor:default;touch-action:auto;border:2px solid #D2B8B0;background:#FFF8F5;border-radius:6px}
+/* Sổ Từ vựng kiểu vở kẻ dòng: ô nhỏ (từ + nghĩa) rồi các dòng kẻ để tự viết. */
+.nb-vocab-row{display:grid;grid-template-columns:176px minmax(0,1fr);gap:14px;align-items:start}
+.nb-vocab-row.is-narrow{grid-template-columns:minmax(0,1fr);gap:8px}
+.nb-vocab-label{display:flex;flex-direction:column;gap:2px;padding:8px 10px;border-radius:8px;border:1.5px solid #E2CFC9;background:#FFF8F5;min-width:0}
+.nb-vocab-row.is-narrow .nb-vocab-label{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:2px 10px}
+.nb-vocab-word{font-family:var(--font-learn);font-size:22px;font-weight:600;line-height:1.25;overflow-wrap:anywhere}
+.nb-vocab-reading{font-size:13px;color:var(--ink-2)}
+.nb-vocab-meaning{font-size:13px;color:var(--ink-2);line-height:1.35}
+.nb-vocab-lines{display:flex;flex-direction:column;gap:6px;min-width:0}
+.nb-vocab-lines>.nb-line{display:block;width:100%;height:auto;border:0;border-bottom:1.5px solid #E2CFC9;border-radius:0;background:transparent}
+.nb-vocab-lines>.nb-line.is-active{border-bottom-color:var(--sakura);box-shadow:0 3px 0 -1px rgba(255,91,115,.18)}
 /* In: chỉ tờ luyện (portal ở <body>), A4, mỗi trang sổ một tờ giấy. Màn hình thường không thấy. */
 .nb-print-root{display:none}
 @media print{
@@ -1395,7 +1403,11 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
   .nb-sheet-cell{width:13mm;height:13mm;border:.3mm solid #888;flex:0 0 auto}
   .nb-sheet-cell.is-sample{border-width:.5mm}
   .nb-sheet-words{gap:2.5mm 3mm}
-  .nb-sheet-word-box{height:13mm}
+  .nb-sheet-vocab{display:grid;grid-template-columns:40mm 1fr;gap:4mm;align-items:start}
+  .nb-sheet-vocab-label{display:flex;flex-direction:column;gap:.5mm;padding:1.5mm 2mm;border:.3mm solid #999;border-radius:1.5mm;font-size:8.5pt}
+  .nb-sheet-vocab-label b{font-size:12pt}
+  .nb-sheet-vocab-lines{display:flex;flex-direction:column;gap:1.5mm}
+  .nb-sheet-line{display:block;width:140mm;height:12mm;border-bottom:.35mm solid #888}
   .nb-sheet .nb-order-numbers text{fill:#c33;stroke:#fff}
   .nb-sheet-foot{margin-top:4mm;font-size:8pt;color:#888;text-align:right}
   .nb-sheet .nb-grid{stroke:#bbb}

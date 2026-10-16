@@ -19,12 +19,26 @@ interface NotebookCellProps {
   label: string;
   /** Ô từ vựng: rộng / cao (1 = ô vuông). Ô chữ nhật chứa cả từ; viewBox và CSS aspect-ratio cùng tỉ lệ nên nét không lệch. */
   aspect?: number;
+  /** Dòng kẻ của sổ Từ vựng: chữ mờ lặp lại `ghostCopies` lần dọc dòng (thay vì một chữ giữa ô). */
+  ghostCopies?: number;
 }
 
 /** Lưới ô tập viết kiểu vở Nhật: chữ thập nét đứt ở giữa (田). Ô từ vựng (chữ nhật): chỉ đường ngang giữa. */
 export function CellGrid({ aspect = 1 }: { aspect?: number }) {
   if (aspect > 1) return <path className="nb-grid" d={`M3 50H${100 * aspect - 3}`} />;
   return <path className="nb-grid" d="M50 3V97M3 50H97" />;
+}
+
+/** Chữ mờ lặp lại dọc một dòng kẻ (sổ Từ vựng) — mỗi chữ ≈ 0,62 chiều cao dòng, cách nhau một chữ. */
+export function LineGhost({ word, copies }: { word: string; copies: number }) {
+  const step = (Math.max(1, [...word].length) + 1) * 62;
+  return (
+    <g className="nb-ghost-text">
+      {Array.from({ length: copies }, (_, index) => (
+        <text key={index} x={24 + index * step} y="54" dominantBaseline="central" fontSize="62">{word}</text>
+      ))}
+    </g>
+  );
 }
 
 /** Cả từ trong một ô chữ nhật — chữ in (mờ để đồ, hoặc đậm làm mẫu), không đánh số nét. */
@@ -68,7 +82,7 @@ export function CellModel({ glyph, guide }: { glyph: string; guide: StrokeOrderD
  * nét vẽ lại bằng SVG theo cỡ hiện tại → cuộn trang, đổi cỡ, xoay iPad không làm lệch nét.
  * Chuột, ngón tay và bút đều viết được; touch-action: none chỉ trong ô (cuộn trang bằng lề / chữ mẫu).
  */
-function NotebookCellView({ cellId, glyph, hasGhost, guide, showGrid, isActive, strokes, onStroke, onFocusCell, label, aspect = 1 }: NotebookCellProps) {
+function NotebookCellView({ cellId, glyph, hasGhost, guide, showGrid, isActive, strokes, onStroke, onFocusCell, label, aspect = 1, ghostCopies }: NotebookCellProps) {
   const [live, setLive] = useState<InkPoint[] | null>(null);
   const pointsRef = useRef<InkPoint[]>([]);
   const pointerRef = useRef<number | null>(null);
@@ -109,11 +123,12 @@ function NotebookCellView({ cellId, glyph, hasGhost, guide, showGrid, isActive, 
   }
 
   return (
-    <svg className={`nb-cell ${isActive ? 'is-active' : ''}`} viewBox={`0 0 ${100 * aspect} 100`} role="img" aria-label={label}
+    <svg className={`nb-cell ${ghostCopies !== undefined ? 'nb-line' : ''} ${isActive ? 'is-active' : ''}`} viewBox={`0 0 ${100 * aspect} 100`} role="img" aria-label={label}
       style={aspect !== 1 ? { aspectRatio: `${aspect} / 1` } : undefined}
       onPointerDown={start} onPointerMove={move} onPointerUp={end} onPointerCancel={end} onContextMenu={(event) => event.preventDefault()}>
       {showGrid ? <CellGrid aspect={aspect} /> : null}
-      {hasGhost ? (aspect !== 1 ? <WordText word={glyph} aspect={aspect} className="nb-ghost-text" /> : <CellGhost glyph={glyph} guide={guide} />) : null}
+      {hasGhost ? (ghostCopies !== undefined ? <LineGhost word={glyph} copies={ghostCopies} />
+        : aspect !== 1 ? <WordText word={glyph} aspect={aspect} className="nb-ghost-text" /> : <CellGhost glyph={glyph} guide={guide} />) : null}
       <g className="nb-ink">
         {strokes.map((stroke, index) => <path key={index} d={strokePath(stroke.points, 100, 100 * aspect)} />)}
         {live ? <path d={strokePath(live, 100, 100 * aspect)} /> : null}
@@ -124,6 +139,6 @@ function NotebookCellView({ cellId, glyph, hasGhost, guide, showGrid, isActive, 
 
 /** Chỉ vẽ lại ô có nét / trạng thái thay đổi (một trang có thể có hơn 100 ô). */
 export const NotebookCell = memo(NotebookCellView, (previous, next) =>
-  previous.glyph === next.glyph && previous.aspect === next.aspect && previous.hasGhost === next.hasGhost && previous.guide === next.guide && previous.showGrid === next.showGrid
+  previous.glyph === next.glyph && previous.aspect === next.aspect && previous.ghostCopies === next.ghostCopies && previous.hasGhost === next.hasGhost && previous.guide === next.guide && previous.showGrid === next.showGrid
   && previous.isActive === next.isActive && previous.onStroke === next.onStroke && previous.onFocusCell === next.onFocusCell
   && previous.strokes.length === next.strokes.length && previous.strokes.every((stroke, index) => stroke === next.strokes[index]));

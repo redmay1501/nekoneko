@@ -6,11 +6,11 @@ import { preloadStrokeOrders, type StrokeOrderData } from '@/features/learning/s
 import { EMPTY_INK, type InkAction, inkReducer, type InkState, type InkStroke } from '@/features/writing/ink';
 import {
   DEFAULT_REPEATS, fillRepeats, type GhostMode, gridColumns, isGhostCell, type Notebook, type NotebookId, type NotebookPage, PRINT_AUTO_REPEATS,
-  REPEAT_OPTIONS, type RepeatSetting, wordBoxes,
+  REPEAT_OPTIONS, type RepeatSetting, ghostCopies, VOCAB_LINE_OPTIONS, type VocabLines, wordLines,
 } from '@/features/writing/notebook';
 import type { PageProgress } from '@/features/writing/notebook-progress';
 import { postJson } from '@/lib/api/api-client';
-import { CellGhost, CellGrid, CellModel, NotebookCell, WordText } from './NotebookCell';
+import { CellGhost, CellGrid, CellModel, LineGhost, NotebookCell } from './NotebookCell';
 
 type CellSize = 'nho' | 'vua' | 'lon';
 interface NotebookSettings {
@@ -20,9 +20,11 @@ interface NotebookSettings {
   cellSize: CellSize;
   /** Sổ Từ vựng: viết bằng kana hay chữ Kanji (từ không có Kanji thì luôn là kana). */
   vocabForm: VocabForm;
+  /** Sổ Từ vựng: số dòng kẻ để viết mỗi từ. */
+  vocabLines: VocabLines;
 }
 type VocabForm = 'kana' | 'kanji';
-const DEFAULT_SETTINGS: NotebookSettings = { repeats: DEFAULT_REPEATS, ghost: 'half', showGrid: true, cellSize: 'vua', vocabForm: 'kana' };
+const DEFAULT_SETTINGS: NotebookSettings = { repeats: DEFAULT_REPEATS, ghost: 'half', showGrid: true, cellSize: 'vua', vocabForm: 'kana', vocabLines: 'auto' };
 const SETTINGS_KEY = 'neko-writing-notebook-settings';
 const GHOST_LABELS: Record<GhostMode, string> = { all: 'Đồ chữ mờ', half: 'Nửa đồ, nửa tự viết', none: 'Tự viết' };
 const SIZE_LABELS: Record<CellSize, string> = { nho: 'Nhỏ', vua: 'Vừa', lon: 'Lớn' };
@@ -45,6 +47,7 @@ function readSettings(): NotebookSettings {
       showGrid: typeof saved.showGrid === 'boolean' ? saved.showGrid : DEFAULT_SETTINGS.showGrid,
       cellSize: saved.cellSize && saved.cellSize in SIZE_LABELS ? saved.cellSize : DEFAULT_SETTINGS.cellSize,
       vocabForm: saved.vocabForm === 'kanji' ? 'kanji' : 'kana',
+      vocabLines: (VOCAB_LINE_OPTIONS as readonly unknown[]).includes(saved.vocabLines) ? saved.vocabLines! : 'auto',
     };
   } catch {
     return DEFAULT_SETTINGS;
@@ -287,11 +290,19 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
         <details className="nb-settings" ref={settingsRef}>
           <summary className="btn ghost sm">⚙️ Tuỳ chỉnh</summary>
           <div className="nb-settings-panel">
-            <label className="nb-setting"><span>{notebook.id === 'tu-vung' ? 'Số lần viết mỗi từ' : 'Số ô mỗi chữ'}</span>
-              <select value={settings.repeats} onChange={(event) => setSettings((current) => ({ ...current, repeats: event.target.value === 'auto' ? 'auto' : Number(event.target.value) }))}>
-                <option value="auto">{notebook.id === 'tu-vung' ? `Đầy khung (${layout.rows} hàng)` : `Đầy khung (${layout.rows} hàng · ${fillRepeats(layout.columns).repeats} ô)`}</option>
-                {REPEAT_OPTIONS.map((value) => <option key={value} value={value}>{value} {notebook.id === 'tu-vung' ? 'lần' : 'ô'}</option>)}
-              </select></label>
+            {notebook.id === 'tu-vung' ? (
+              <label className="nb-setting"><span>Số dòng viết mỗi từ</span>
+                <select value={settings.vocabLines} onChange={(event) => setSettings((current) => ({ ...current, vocabLines: event.target.value === 'auto' ? 'auto' : Number(event.target.value) as VocabLines }))}>
+                  <option value="auto">Tự động ({layout.rows} dòng)</option>
+                  {VOCAB_LINE_OPTIONS.map((value) => <option key={value} value={value}>{value} dòng</option>)}
+                </select></label>
+            ) : (
+              <label className="nb-setting"><span>Số ô mỗi chữ</span>
+                <select value={settings.repeats} onChange={(event) => setSettings((current) => ({ ...current, repeats: event.target.value === 'auto' ? 'auto' : Number(event.target.value) }))}>
+                  <option value="auto">Đầy khung ({layout.rows} hàng · {fillRepeats(layout.columns).repeats} ô)</option>
+                  {REPEAT_OPTIONS.map((value) => <option key={value} value={value}>{value} ô</option>)}
+                </select></label>
+            )}
             <label className="nb-setting"><span>Chữ mờ</span>
               <select value={settings.ghost} onChange={(event) => setSettings((current) => ({ ...current, ghost: event.target.value as GhostMode }))}>
                 {(Object.keys(GHOST_LABELS) as GhostMode[]).map((value) => <option key={value} value={value}>{GHOST_LABELS[value]}</option>)}
@@ -323,18 +334,14 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
           <div>
             <h2 className="jp">{page.title}</h2>
             <p className="tiny muted">{page.subtitle}</p>
-            {notebook.id === 'tu-vung' ? (
-              <ul className="nb-word-legend">
-                {page.rows.map((row, index) => <li key={index}><b className="jp">{row.word?.kanji?.join('') ?? row.glyph}</b>{row.word?.kanji ? <span className="jp"> {row.glyph}</span> : null} — {row.meaning}</li>)}
-              </ul>
-            ) : null}
           </div>
           <span className="nb-page-no">Trang {page.number}/{notebook.pages.length}</span>
         </header>
         {page.rows.map((row, rowIndex) => row.word ? (
-          <WordRowView key={`${page.id}-${rowIndex}`} word={(settings.vocabForm === 'kanji' && row.word.kanji ? row.word.kanji : row.word.kana).join('')}
-            rowId={`${page.id}-${rowIndex}-${settings.vocabForm === 'kanji' && row.word.kanji ? 'k' : 'h'}`} label={`${row.word.kanji?.join('') ?? row.glyph} — ${row.meaning}`}
-            width={cellsWidth} unitPx={layout.unitPx} rows={layout.rows} repeats={settings.repeats} ghost={settings.ghost} showGrid={settings.showGrid}
+          <WordLinesRow key={`${page.id}-${rowIndex}`} word={(settings.vocabForm === 'kanji' && row.word.kanji ? row.word.kanji : row.word.kana).join('')}
+            reading={settings.vocabForm === 'kanji' && row.word.kanji ? row.word.kana.join('') : row.word.kanji?.join('') ?? ''} meaning={row.meaning ?? ''}
+            rowId={`${page.id}-${rowIndex}-${settings.vocabForm === 'kanji' && row.word.kanji ? 'k' : 'h'}`}
+            width={cellsWidth} lineHeight={layout.unitPx} autoRows={layout.rows} setting={settings.vocabLines} ghost={settings.ghost} showGrid={settings.showGrid}
             activeCell={activeCell} strokesByCell={strokesByCell} noStrokes={noStrokes} onStroke={handleStroke} onFocusCell={setActiveCell} />
         ) : (
           <NotebookRowView key={`${page.id}-${rowIndex}`} row={row} rowId={`${page.id}-${rowIndex}`} repeats={layout.repeats} columns={layout.columns} ghost={settings.ghost}
@@ -356,7 +363,7 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
 
       {printScope ? createPortal(
         <PrintSheets pages={printScope === 'notebook' ? notebook.pages : [page]} notebookTitle={notebook.title} repeats={settings.repeats === 'auto' ? PRINT_AUTO_REPEATS : settings.repeats}
-          wordRepeats={settings.repeats === 'auto' ? null : settings.repeats} vocabForm={settings.vocabForm} ghost={settings.ghost} showGrid={settings.showGrid} guides={guides} />,
+          vocabLines={settings.vocabLines} vocabForm={settings.vocabForm} ghost={settings.ghost} showGrid={settings.showGrid} guides={guides} />,
         document.body,
       ) : null}
     </section>
@@ -395,8 +402,8 @@ function NotebookRowView({ row, rowId, repeats, columns, ghost, showGrid, guide,
 }
 
 /** Tờ in A4: chữ mẫu + ô có chữ mờ / ô trống theo tuỳ chỉnh — để viết tay trên giấy (không in nét đã viết trên màn hình). */
-function PrintSheets({ pages, notebookTitle, repeats, wordRepeats, vocabForm, ghost, showGrid, guides }: {
-  pages: NotebookPage[]; notebookTitle: string; repeats: number; wordRepeats: number | null; vocabForm: VocabForm; ghost: GhostMode; showGrid: boolean;
+function PrintSheets({ pages, notebookTitle, repeats, vocabLines, vocabForm, ghost, showGrid, guides }: {
+  pages: NotebookPage[]; notebookTitle: string; repeats: number; vocabLines: VocabLines; vocabForm: VocabForm; ghost: GhostMode; showGrid: boolean;
   guides: Record<string, StrokeOrderData>;
 }) {
   return (
@@ -407,23 +414,20 @@ function PrintSheets({ pages, notebookTitle, repeats, wordRepeats, vocabForm, gh
           {page.rows.map((row, rowIndex) => {
             if (row.word) {
               const word = (vocabForm === 'kanji' && row.word.kanji ? row.word.kanji : row.word.kana).join('');
-              const length = [...word].length;
-              // Một dòng A4 ≈ 182 mm, ô cao 13 mm, mỗi chữ ≈ 11 mm → số ô vừa 2 dòng khi "Đầy khung".
-              const perLine = Math.max(1, Math.floor(182 / (length * 11 + 3)));
-              const boxes = (wordRepeats ?? Math.max(2, 2 * perLine - 1)) + 1;
-              const box = (index: number, kind: 'model' | 'ghost' | 'empty') => (
-                <svg key={index} className={`nb-sheet-cell nb-sheet-word-box ${kind === 'model' ? 'is-sample' : ''}`} viewBox={`0 0 ${100 * length * 0.85} 100`}
-                  style={{ width: `${length * 11}mm` }}>
-                  {showGrid ? <CellGrid aspect={length * 0.85} /> : null}
-                  {kind === 'empty' ? null : <WordText word={word} aspect={length * 0.85} className={kind === 'model' ? 'nb-model-text' : 'nb-ghost-text'} />}
-                </svg>
-              );
-              const ghostUntil = ghost === 'all' ? boxes : ghost === 'none' ? 1 : wordRepeats === null ? Math.max(2, perLine) : 1 + Math.ceil(wordRepeats / 2);
+              const reading = vocabForm === 'kanji' && row.word.kanji ? row.word.kana.join('') : row.word.kanji?.join('') ?? '';
+              const { lines, ghostLines } = wordLines({ setting: vocabLines, autoRows: 2, ghost });
+              // Dòng in: 140 mm × 12 mm → tỉ lệ ≈ 11,7.
+              const aspect = 140 / 12;
               return (
-                <div key={rowIndex} className="nb-sheet-row">
-                  <p className="nb-sheet-caption"><b className="jp">{row.word.kanji?.join('') ?? row.glyph}</b>{row.word.kanji ? <span className="jp"> {row.glyph}</span> : null} · {row.meaning}</p>
-                  <div className="nb-sheet-cells nb-sheet-words">
-                    {Array.from({ length: boxes }, (_, index) => box(index, index === 0 ? 'model' : index < ghostUntil ? 'ghost' : 'empty'))}
+                <div key={rowIndex} className="nb-sheet-row nb-sheet-vocab">
+                  <div className="nb-sheet-vocab-label"><b className="jp">{word}</b>{reading ? <span className="jp">{reading}</span> : null}<span>{row.meaning}</span></div>
+                  <div className="nb-sheet-vocab-lines">
+                    {Array.from({ length: lines }, (_, index) => (
+                      <svg key={index} className="nb-sheet-line" viewBox={`0 0 ${100 * aspect} 100`}>
+                        {showGrid ? <CellGrid aspect={aspect} /> : null}
+                        {index < ghostLines ? <LineGhost word={word} copies={ghostCopies(aspect, [...word].length)} /> : null}
+                      </svg>
+                    ))}
                   </div>
                 </div>
               );
@@ -448,29 +452,38 @@ function PrintSheets({ pages, notebookTitle, repeats, wordRepeats, vocabForm, gh
   );
 }
 
-/** Dòng từ vựng: mỗi ô là một lần viết CẢ TỪ (ô chữ nhật). Ô đầu là mẫu đậm — không đánh số nét (xem wordBoxes). */
-function WordRowView({ word, rowId, label, width, unitPx, rows, repeats, ghost, showGrid, activeCell, strokesByCell, noStrokes, onStroke, onFocusCell }: {
-  word: string; rowId: string; label: string; width: number; unitPx: number; rows: number; repeats: RepeatSetting; ghost: GhostMode; showGrid: boolean;
-  activeCell: string | null; strokesByCell: Map<string, InkStroke[]>; noStrokes: InkStroke[];
+const VOCAB_LABEL_PX = 176;
+const VOCAB_NARROW_PX = 560;
+
+/**
+ * Dòng từ vựng kiểu vở kẻ dòng: ô nhỏ đầu dòng (từ, cách đọc, nghĩa tiếng Việt) rồi các dòng kẻ chạy hết bề ngang
+ * để tự viết. Màn hẹp (điện thoại): ô chữ ở trên, dòng kẻ ở dưới. Mỗi dòng là một vùng vẽ riêng (toạ độ chuẩn hoá).
+ */
+function WordLinesRow({ word, reading, meaning, rowId, width, lineHeight, autoRows, setting, ghost, showGrid, activeCell, strokesByCell, noStrokes, onStroke, onFocusCell }: {
+  word: string; reading: string; meaning: string; rowId: string; width: number; lineHeight: number; autoRows: number; setting: VocabLines;
+  ghost: GhostMode; showGrid: boolean; activeCell: string | null; strokesByCell: Map<string, InkStroke[]>; noStrokes: InkStroke[];
   onStroke: (stroke: InkStroke) => void; onFocusCell: (cellId: string) => void;
 }) {
-  const { boxesPerLine, total, aspect, ghostLimit } = wordBoxes({ width, unitPx, wordLength: [...word].length, rows, repeats });
-  const ghostUntil = ghostLimit(ghost);
+  const isNarrow = width > 0 && width < VOCAB_NARROW_PX;
+  const lineWidth = width > 0 ? (isNarrow ? width : width - VOCAB_LABEL_PX - 14) : lineHeight * 10;
+  const aspect = Math.max(2, Math.round((lineWidth / Math.max(40, lineHeight)) * 100) / 100);
+  const { lines, ghostLines } = wordLines({ setting, autoRows, ghost });
+  const copies = ghostCopies(aspect, [...word].length);
+  const label = `${word}${reading ? ` (${reading})` : ''} — ${meaning}`;
   return (
-    <section className="nb-row" aria-label={`Luyện viết từ ${label}`}>
-      <div className="nb-cells nb-word-boxes" style={{ gridTemplateColumns: `repeat(${boxesPerLine}, minmax(0, 1fr))` }}>
-        <svg className="nb-cell nb-word-model" viewBox={`0 0 ${100 * aspect} 100`} style={{ aspectRatio: `${aspect} / 1` }} role="img"
-          aria-label={`Mẫu từ ${label}`} onContextMenu={(event) => event.preventDefault()}>
-          {showGrid ? <CellGrid aspect={aspect} /> : null}
-          <WordText word={word} aspect={aspect} className="nb-model-text" />
-        </svg>
-        {Array.from({ length: total - 1 }, (_, index) => {
-          const cellId = `${rowId}-${index}`;
-          const hasGhost = index + 1 < ghostUntil;
+    <section className={`nb-row nb-vocab-row ${isNarrow ? 'is-narrow' : ''}`} aria-label={`Luyện viết từ ${label}`}>
+      <div className="nb-vocab-label">
+        <b className="jp nb-vocab-word">{word}</b>
+        {reading ? <span className="jp nb-vocab-reading">{reading}</span> : null}
+        <span className="nb-vocab-meaning">{meaning}</span>
+      </div>
+      <div className="nb-vocab-lines">
+        {Array.from({ length: lines }, (_, index) => {
+          const cellId = `${rowId}-dong-${index}`;
           return (
-            <NotebookCell key={cellId} cellId={cellId} glyph={word} aspect={aspect} hasGhost={hasGhost} guide={null} showGrid={showGrid}
-              isActive={activeCell === cellId} strokes={strokesByCell.get(cellId) ?? noStrokes} onStroke={onStroke} onFocusCell={onFocusCell}
-              label={`Lần viết ${index + 1} từ ${label}${hasGhost ? ' — có chữ mờ' : ''}`} />
+            <NotebookCell key={cellId} cellId={cellId} glyph={word} aspect={aspect} ghostCopies={copies} hasGhost={index < ghostLines} guide={null}
+              showGrid={showGrid} isActive={activeCell === cellId} strokes={strokesByCell.get(cellId) ?? noStrokes} onStroke={onStroke}
+              onFocusCell={onFocusCell} label={`Dòng ${index + 1} để viết từ ${label}${index < ghostLines ? ' — có chữ mờ' : ''}`} />
           );
         })}
       </div>

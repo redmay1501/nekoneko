@@ -13,6 +13,8 @@ export interface InkState {
   strokes: InkStroke[];
   /** Nét vừa hoàn tác — "Làm lại" đưa về. Viết nét mới thì xoá danh sách này. */
   undone: InkStroke[];
+  /** Nét trước khi bấm "Xoá hết" — "Hoàn tác" ngay sau đó đưa cả trang về. */
+  cleared?: InkStroke[];
 }
 
 export const EMPTY_INK: InkState = { strokes: [], undone: [] };
@@ -29,6 +31,7 @@ export function inkReducer(state: InkState, action: InkAction): InkState {
     case 'add':
       return action.stroke.points.length ? { strokes: [...state.strokes, action.stroke], undone: [] } : state;
     case 'undo': {
+      if (!state.strokes.length && state.cleared?.length) return { strokes: state.cleared, undone: [] };
       const last = state.strokes.at(-1);
       return last ? { strokes: state.strokes.slice(0, -1), undone: [...state.undone, last] } : state;
     }
@@ -39,7 +42,7 @@ export function inkReducer(state: InkState, action: InkAction): InkState {
     case 'clear-cell':
       return { strokes: state.strokes.filter((stroke) => stroke.cellId !== action.cellId), undone: [] };
     case 'clear-all':
-      return EMPTY_INK;
+      return state.strokes.length ? { strokes: [], undone: [], cleared: state.strokes } : state;
   }
 }
 

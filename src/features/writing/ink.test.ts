@@ -23,7 +23,16 @@ describe('inkReducer', () => {
     state = inkReducer(state, { type: 'add', stroke: stroke('b') });
     state = inkReducer(state, { type: 'add', stroke: stroke('a', 0.3) });
     expect(inkReducer(state, { type: 'clear-cell', cellId: 'a' }).strokes.map((item) => item.cellId)).toEqual(['b']);
-    expect(inkReducer(state, { type: 'clear-all' })).toEqual(EMPTY_INK);
+    expect(inkReducer(state, { type: 'clear-all' }).strokes).toEqual([]);
+  });
+  it('Xoá hết rồi Hoàn tác → cả trang trở lại; viết nét mới thì không lấy lại được nữa', () => {
+    let state = inkReducer(EMPTY_INK, { type: 'add', stroke: stroke('a') });
+    state = inkReducer(state, { type: 'add', stroke: stroke('b') });
+    const cleared = inkReducer(state, { type: 'clear-all' });
+    expect(cleared.strokes).toEqual([]);
+    expect(inkReducer(cleared, { type: 'undo' }).strokes.map((item) => item.cellId)).toEqual(['a', 'b']);
+    const rewritten = inkReducer(cleared, { type: 'add', stroke: stroke('c') });
+    expect(inkReducer(inkReducer(rewritten, { type: 'undo' }), { type: 'undo' }).strokes).toEqual([]);
   });
   it('hoàn tác khi chưa có nét → không đổi; nét rỗng bị bỏ', () => {
     expect(inkReducer(EMPTY_INK, { type: 'undo' })).toBe(EMPTY_INK);

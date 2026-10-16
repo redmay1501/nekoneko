@@ -71,6 +71,22 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
   const startedRef = useRef(new Set<string>());
   // Chỉ ghi URL sau khi người học tự chọn sổ / lật trang — tab đang ẩn không được đổi ?muc= của tab khác.
   const shouldSyncUrlRef = useRef(false);
+  const settingsRef = useRef<HTMLDetailsElement>(null);
+
+  // Bảng Tuỳ chỉnh: bấm ra ngoài hoặc nhấn Esc thì đóng.
+  useEffect(() => {
+    function closeOnOutside(event: PointerEvent) {
+      const panel = settingsRef.current;
+      if (panel?.open && !panel.contains(event.target as Node)) panel.open = false;
+    }
+    function closeOnEscape(event: KeyboardEvent) {
+      const panel = settingsRef.current;
+      if (event.key === 'Escape' && panel?.open) { panel.open = false; panel.querySelector('summary')?.focus(); }
+    }
+    document.addEventListener('pointerdown', closeOnOutside);
+    document.addEventListener('keydown', closeOnEscape);
+    return () => { document.removeEventListener('pointerdown', closeOnOutside); document.removeEventListener('keydown', closeOnEscape); };
+  }, []);
 
   const notebook = notebooks.find((item) => item.id === notebookId) ?? null;
   const page: NotebookPage | null = notebook ? notebook.pages[Math.min(pageIndex, notebook.pages.length - 1)] : null;
@@ -104,6 +120,7 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
   // In: dựng tờ in → gọi hộp thoại in của trình duyệt → dọn khi in xong.
   useEffect(() => {
     if (!printScope) return;
+    if (settingsRef.current) settingsRef.current.open = false;
     const done = () => setPrintScope(null);
     window.addEventListener('afterprint', done);
     const frame = window.requestAnimationFrame(() => window.print());
@@ -170,9 +187,10 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
     if (await sendProgress(page.id, isDone ? 'uncomplete' : 'complete')) setMessage(isDone ? 'Đã bỏ đánh dấu "luyện xong".' : 'Đã đánh dấu trang này là luyện xong 🌸');
   }
 
-  function resetPage() {
+  function clearPage() {
     if (!page || !ink.strokes.length) return;
-    if (window.confirm('Xoá mọi nét đã viết trên trang này để luyện lại từ đầu?')) dispatchInk({ type: 'clear-all' });
+    dispatchInk({ type: 'clear-all' });
+    setMessage('Đã xoá hết nét trên trang. Bấm "Hoàn tác" nếu lỡ tay.');
   }
 
   const doneCount = (target: Notebook) => target.pages.filter((item) => progress[item.id]?.state === 'done').length;
@@ -234,12 +252,12 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
       </details>
 
       <div className="nb-tools" role="toolbar" aria-label="Công cụ viết">
-        <button type="button" className="btn ghost sm" onClick={() => dispatchInk({ type: 'undo' })} disabled={!ink.strokes.length}>↶ Hoàn tác</button>
+        <button type="button" className="btn ghost sm" onClick={() => dispatchInk({ type: 'undo' })} disabled={!ink.strokes.length && !ink.cleared?.length}>↶ Hoàn tác</button>
         <button type="button" className="btn ghost sm" onClick={() => dispatchInk({ type: 'redo' })} disabled={!ink.undone.length}>↷ Làm lại</button>
         <button type="button" className="btn ghost sm" onClick={() => activeCell && dispatchInk({ type: 'clear-cell', cellId: activeCell })}
           disabled={!activeCell || !strokesByCell.get(activeCell)?.length}>Xoá ô đang viết</button>
-        <button type="button" className="btn ghost sm" onClick={resetPage} disabled={!ink.strokes.length}>Luyện lại trang</button>
-        <details className="nb-settings">
+        <button type="button" className="btn ghost sm" onClick={clearPage} disabled={!ink.strokes.length}>🗑 Xoá hết</button>
+        <details className="nb-settings" ref={settingsRef}>
           <summary className="btn ghost sm">⚙️ Tuỳ chỉnh</summary>
           <div className="nb-settings-panel">
             <label className="nb-setting"><span>Số ô mỗi chữ</span>

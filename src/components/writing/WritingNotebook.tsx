@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { isLikelyPalmStroke, isPenOnly, penInput, type PenMode, pointerDiagnostics } from '@/features/writing/pen-input';
 import { createPortal } from 'react-dom';
+import { AudioButton } from '@/components/common/AudioButton';
 import { preloadStrokeOrders, type StrokeOrderData } from '@/features/learning/stroke-order';
 import { dropEmptyEraseStep, EMPTY_INK, ERASER_RADIUS, type InkAction, type InkPoint, inkReducer, type InkState, type InkStroke, strokeHitsPoint } from '@/features/writing/ink';
 import {
@@ -418,6 +419,7 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
         {page.rows.map((row, rowIndex) => row.word ? (
           <WordLinesRow key={`${page.id}-${rowIndex}`} word={(settings.vocabForm === 'kanji' && row.word.kanji ? row.word.kanji : row.word.kana).join('')}
             reading={settings.vocabForm === 'kanji' && row.word.kanji ? row.word.kana.join('') : row.word.kanji?.join('') ?? ''} meaning={row.meaning ?? ''}
+            speech={row.speech}
             rowId={`${page.id}-${rowIndex}-${settings.vocabForm === 'kanji' && row.word.kanji ? 'k' : 'h'}`}
             width={cellsWidth} lineHeight={layout.unitPx} autoRows={layout.rows} setting={settings.vocabLines} ghost={settings.ghost} showGrid={settings.showGrid}
             activeCell={activeCell} strokesByCell={strokesByCell} noStrokes={noStrokes} onStroke={handleStroke} onFocusCell={setActiveCell} eraser={{ tool, erase, eraseStart }} />
@@ -467,12 +469,16 @@ function NotebookRowView({ row, rowId, repeats, columns, ghost, showGrid, guide,
       {/* Đúng `columns` cột, ô giãn đều cho kín bề rộng khung (không chừa khoảng trống bên phải). */}
       <div className="nb-cells" style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}>
         {/* Ô đầu dòng: chữ mẫu (đậm, không viết vào) — rồi các ô lặp lại trên cùng dòng. */}
-        <svg className="nb-cell nb-cell-sample" viewBox="0 0 100 100" role="img"
-          aria-label={guide ? `Chữ mẫu ${row.glyph}: ${guide.strokes.length} nét, có đánh số thứ tự` : `Chữ mẫu ${row.glyph}`}
-          onContextMenu={(event) => event.preventDefault()}>
-          {showGrid ? <CellGrid /> : null}
-          <CellModel glyph={row.glyph} guide={guide} />
-        </svg>
+        {/* Ô mẫu + nút 🔊 ở góc (bấm nghe đọc chữ) — nút nằm trong ô mẫu nên không che chỗ viết. */}
+        <span className="nb-sample-wrap">
+          <svg className="nb-cell nb-cell-sample" viewBox="0 0 100 100" role="img"
+            aria-label={guide ? `Chữ mẫu ${row.glyph}: ${guide.strokes.length} nét, có đánh số thứ tự` : `Chữ mẫu ${row.glyph}`}
+            onContextMenu={(event) => event.preventDefault()}>
+            {showGrid ? <CellGrid /> : null}
+            <CellModel glyph={row.glyph} guide={guide} />
+          </svg>
+          <AudioButton text={row.speech} label={`Nghe ${row.glyph}`} className="nb-listen" />
+        </span>
         {Array.from({ length: repeats }, (_, index) => {
           const cellId = `${rowId}-${index}`;
           return (
@@ -545,8 +551,8 @@ const VOCAB_NARROW_PX = 560;
  * Dòng từ vựng kiểu vở kẻ dòng: ô nhỏ đầu dòng (từ, cách đọc, nghĩa tiếng Việt) rồi các dòng kẻ chạy hết bề ngang
  * để tự viết. Màn hẹp (điện thoại): ô chữ ở trên, dòng kẻ ở dưới. Mỗi dòng là một vùng vẽ riêng (toạ độ chuẩn hoá).
  */
-function WordLinesRow({ word, reading, meaning, rowId, width, lineHeight, autoRows, setting, ghost, showGrid, activeCell, strokesByCell, noStrokes, onStroke, onFocusCell, eraser }: {
-  word: string; reading: string; meaning: string; rowId: string; width: number; lineHeight: number; autoRows: number; setting: VocabLines;
+function WordLinesRow({ word, reading, meaning, speech, rowId, width, lineHeight, autoRows, setting, ghost, showGrid, activeCell, strokesByCell, noStrokes, onStroke, onFocusCell, eraser }: {
+  word: string; reading: string; meaning: string; speech: string; rowId: string; width: number; lineHeight: number; autoRows: number; setting: VocabLines;
   ghost: GhostMode; showGrid: boolean; activeCell: string | null; strokesByCell: Map<string, InkStroke[]>; noStrokes: InkStroke[];
   onStroke: (stroke: InkStroke) => void; onFocusCell: (cellId: string) => void; eraser: EraserProps;
 }) {
@@ -559,6 +565,7 @@ function WordLinesRow({ word, reading, meaning, rowId, width, lineHeight, autoRo
   return (
     <section className={`nb-row nb-vocab-row ${isNarrow ? 'is-narrow' : ''}`} aria-label={`Luyện viết từ ${label}`}>
       <div className="nb-vocab-label">
+        <AudioButton text={speech} label={`Nghe ${word}`} className="nb-listen" />
         <b className="jp nb-vocab-word">{word}</b>
         {reading ? <span className="jp nb-vocab-reading">{reading}</span> : null}
         <span className="nb-vocab-meaning">{meaning}</span>

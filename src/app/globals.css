@@ -1380,6 +1380,15 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 .nb-cell-sample{cursor:default;touch-action:auto;border:2px solid #D2B8B0;background:#FFF8F5;
   grid-row:span 2;grid-column:span 2}
 .nb-cells>.nb-cell-sample{height:100%}
+/* Ô mẫu đầu dòng (chiếm 2×2 chỗ) + nút 🔊 ở góc trên phải. */
+.nb-sample-wrap{position:relative;grid-row:span 2;grid-column:span 2}
+.nb-sample-wrap>.nb-cell-sample{display:block;width:100%;height:100%;aspect-ratio:1/1}
+.nb-listen{position:absolute;top:4px;right:4px;display:grid;place-items:center;width:30px;height:30px;border-radius:999px;
+  background:rgba(255,255,255,.9);border:1.5px solid #F3C1CB;box-shadow:0 1px 3px rgba(96,72,66,.12)}
+.nb-listen:hover{background:#FFF1F4}
+.nb-listen.is-speaking{background:var(--sakura);border-color:var(--sakura)}
+.nb-listen .emoji-icon{width:18px;height:18px}
+.nb-vocab-label{position:relative;padding-right:40px}
 .nb-order-numbers text{font-family:var(--font-vi);font-size:10px;font-weight:800;fill:#FF5B73;paint-order:stroke;stroke:#FFF8F5;stroke-width:2.2px}
 .nb-grid{fill:none;stroke:#F0DDD8;stroke-width:1;stroke-dasharray:3 3;vector-effect:non-scaling-stroke}
 .nb-ghost path{fill:none;stroke:#EFE4E0;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}

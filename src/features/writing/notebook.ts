@@ -20,6 +20,8 @@ export interface NotebookRow {
   reading?: string;
   strokeCount: number | null;
   hasStrokeOrder: boolean;
+  /** Chữ Nhật để đọc khi bấm 🔊 ở ô đầu dòng (kana: chính chữ; Kanji: chữ; bộ thủ: tên tiếng Nhật; từ vựng: cách đọc kana). */
+  speech: string;
   /** Sổ Từ vựng: một dòng là một TỪ — viết mỗi chữ một ô, theo cách viết kana hoặc chữ Kanji. */
   word?: { kana: string[]; kanji: string[] | null; meaning: string };
 }
@@ -68,7 +70,7 @@ function strokeInfo(glyph: string): Pick<NotebookRow, 'strokeCount' | 'hasStroke
 
 function kanaNotebook(kana: readonly KanaContent[], script: 'hiragana' | 'katakana'): Notebook {
   const glyphOf = (item: KanaContent) => (script === 'hiragana' ? item.hiragana : item.katakana);
-  const rowOf = (item: KanaContent): NotebookRow => ({ glyph: glyphOf(item), label: item.romaji, ...strokeInfo(glyphOf(item)) });
+  const rowOf = (item: KanaContent): NotebookRow => ({ glyph: glyphOf(item), label: item.romaji, speech: glyphOf(item), ...strokeInfo(glyphOf(item)) });
   const pages: Array<Omit<NotebookPage, 'id' | 'number' | 'notebookId'>> = [];
   const single = kana.filter((item) => [...item.hiragana].length === 1);
   for (const group of KANA_ROWS) {
@@ -114,7 +116,7 @@ function kanjiNotebook(kanji: readonly KanjiContent[]): Notebook {
     id: `kanji-${index + 1}`, notebookId: 'kanji', number: index + 1,
     title: items.map((item) => item.character).join(' '), subtitle: `Kanji N5 · ${dayRange(items)}`,
     rows: items.map((item) => ({
-      glyph: item.character, label: item.hanViet, meaning: item.meaning,
+      glyph: item.character, label: item.hanViet, meaning: item.meaning, speech: item.character,
       reading: [item.onReading, item.kunReading].filter(Boolean).join(' · '),
       ...strokeInfo(item.character),
       // Số nét trong dữ liệu Kanji dùng khi KanjiVG không có chữ.
@@ -130,7 +132,9 @@ function radicalNotebook(radicals: readonly RadicalContent[]): Notebook {
     title: items.map((item) => primaryRadicalGlyph(item.radical)).join(' '), subtitle: `Bộ thủ · ${dayRange(items)}`,
     rows: items.map((item) => {
       const glyph = primaryRadicalGlyph(item.radical);
-      return { glyph, label: item.nameJp.split(' / ')[0], meaning: item.meaning, ...strokeInfo(glyph) };
+      const name = item.nameJp.split(' / ')[0].trim();
+      // Tên bộ có kana / Kanji → đọc tên; không có → đọc chính chữ.
+      return { glyph, label: name, meaning: item.meaning, speech: /[぀-ヿ一-鿿]/.test(name) ? name.replace(/[（(].*$/, '').trim() : glyph, ...strokeInfo(glyph) };
     }),
   }));
   return { id: 'bo-thu', title: 'Bộ thủ', description: `${radicals.length} bộ thủ trong app, mỗi trang ${RADICALS_PER_PAGE} bộ.`, pages };
@@ -173,7 +177,7 @@ function vocabularyNotebook(vocabulary: readonly VocabularyContent[]): Notebook 
           const kana = writingFormOf(item.kana);
           const kanji = item.kanji ? writingFormOf(item.kanji) : [];
           return {
-            glyph: kana.join(''), label: kanji.length ? kanji.join('') : '', meaning: item.meaning,
+            glyph: kana.join(''), label: kanji.length ? kanji.join('') : '', meaning: item.meaning, speech: kana.join(''),
             strokeCount: null, hasStrokeOrder: kana.every(hasStrokeOrder),
             word: { kana, kanji: kanji.length && kanji.join('') !== kana.join('') ? kanji : null, meaning: item.meaning },
           };

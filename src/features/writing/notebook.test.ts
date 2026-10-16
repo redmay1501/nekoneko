@@ -135,3 +135,15 @@ describe('Sổ Từ vựng', () => {
     expect(notebookRecordKey('kanji', 'kanji-3')).toBe('viet-kanji:kanji-3');
   });
 });
+
+describe('nút 🔊 ở ô đầu dòng — chữ được đọc', () => {
+  it('kana đọc chính chữ, Kanji đọc chữ, từ vựng đọc kana, bộ thủ đọc tên tiếng Nhật (hoặc chữ)', () => {
+    expect(byId.hiragana.pages[0].rows[0].speech).toBe('あ');
+    expect(byId.katakana.pages[0].rows[0].speech).toBe('ア');
+    const kanjiRow = byId.kanji.pages[0].rows[0];
+    expect(kanjiRow.speech).toBe(kanjiRow.glyph);
+    const sensei = byId['tu-vung'].pages.flatMap((page) => page.rows).find((row) => row.word?.kanji?.join('') === '先生')!;
+    expect(sensei.speech).toBe('せんせい');
+    for (const row of byId['bo-thu'].pages.flatMap((page) => page.rows)) expect(row.speech).toMatch(/[぀-ヿ一-鿿⺀-⿕]/);
+  });
+});

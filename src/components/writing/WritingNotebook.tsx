@@ -452,7 +452,7 @@ function PrintSheets({ pages, notebookTitle, repeats, vocabLines, vocabForm, gho
   );
 }
 
-const VOCAB_LABEL_PX = 148;
+const VOCAB_LABEL_PX = 176;
 const VOCAB_NARROW_PX = 560;
 
 /**

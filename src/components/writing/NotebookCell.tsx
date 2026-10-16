@@ -29,13 +29,15 @@ export function CellGrid({ aspect = 1 }: { aspect?: number }) {
   return <path className="nb-grid" d="M50 3V97M3 50H97" />;
 }
 
-/** Chữ mờ lặp lại dọc một dòng kẻ (sổ Từ vựng) — mỗi chữ ≈ 0,62 chiều cao dòng, cách nhau một chữ. */
+/** Chữ mờ lặp lại dọc một dòng kẻ (sổ Từ vựng) — mỗi chữ ≈ LINE_GHOST_SIZE chiều cao dòng, cách nhau một chữ. */
+export const LINE_GHOST_SIZE = 0.4;
 export function LineGhost({ word, copies }: { word: string; copies: number }) {
-  const step = (Math.max(1, [...word].length) + 1) * 62;
+  const fontSize = 100 * LINE_GHOST_SIZE;
+  const step = (Math.max(1, [...word].length) + 1) * fontSize;
   return (
     <g className="nb-ghost-text">
       {Array.from({ length: copies }, (_, index) => (
-        <text key={index} x={24 + index * step} y="54" dominantBaseline="central" fontSize="62">{word}</text>
+        <text key={index} x={20 + index * step} y="50" dominantBaseline="central" fontSize={fontSize}>{word}</text>
       ))}
     </g>
   );

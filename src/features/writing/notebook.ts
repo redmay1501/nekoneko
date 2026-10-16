@@ -210,10 +210,13 @@ export function wordLines(input: { setting: VocabLines; autoRows: number; ghost:
   return { lines, ghostLines };
 }
 
-/** Số lần chữ mờ lặp lại trên một dòng kẻ (dòng rộng `aspect` lần chiều cao, mỗi chữ ≈ 0,62 chiều cao, khe ≈ 1 chữ). */
+/** Cỡ chữ mờ trên dòng kẻ so với chiều cao dòng — khớp LINE_GHOST_SIZE trong NotebookCell. */
+export const LINE_GHOST_RATIO = 0.4;
+
+/** Số lần chữ mờ lặp lại trên một dòng kẻ (dòng rộng `aspect` lần chiều cao, khe giữa hai lần ≈ 1 chữ, chừa lề hai đầu). */
 export function ghostCopies(aspect: number, wordLength: number): number {
-  const wordWidth = Math.max(1, wordLength) * 0.62;
-  return Math.max(1, Math.floor((aspect + 0.62) / (wordWidth + 0.62)));
+  const wordWidth = Math.max(1, wordLength) * LINE_GHOST_RATIO;
+  return Math.max(1, Math.floor((aspect - 0.4 + LINE_GHOST_RATIO) / (wordWidth + LINE_GHOST_RATIO)));
 }
 
 export function findNotebookPage(notebooks: readonly Notebook[], pageId: string): NotebookPage | undefined {

@@ -120,9 +120,14 @@ describe('Sổ Từ vựng', () => {
     expect(wordLines({ setting: 4, autoRows: 2, ghost: 'all' })).toEqual({ lines: 4, ghostLines: 4 });
   });
   it('chữ mờ lặp lại vừa bề dài dòng', () => {
-    expect(ghostCopies(14, 2)).toBe(7);
-    expect(ghostCopies(14, 9)).toBe(2);
+    expect(ghostCopies(14, 2)).toBe(11);
+    expect(ghostCopies(14, 9)).toBe(3);
     expect(ghostCopies(3, 9)).toBe(1);
+    // mọi bản sao nằm trọn trong dòng: lề 0,2 + n × (chữ + khe) − khe ≤ bề rộng
+    for (const [aspect, length] of [[14, 2], [14, 9], [8.4, 4], [4.3, 3]] as const) {
+      const copies = ghostCopies(aspect, length);
+      expect(0.2 + copies * (length * 0.4 + 0.4) - 0.4).toBeLessThanOrEqual(aspect);
+    }
   });
   it('tiến độ: tiền tố chia theo từng 40 trang (≤ 40 bản ghi mỗi loại)', () => {
     expect(notebookRecordKey('tu-vung', 'tu-vung-1')).toBe('viet-tu1:tu-vung-1');

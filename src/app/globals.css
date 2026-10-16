@@ -1377,13 +1377,13 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 /* Sổ Từ vựng: cụm = cả từ, mỗi chữ một ô; khe giữa các cụm rộng hơn khe giữa các chữ. */
 .nb-word-legend{display:flex;flex-wrap:wrap;gap:2px 14px;margin-top:6px;font-size:13px;color:var(--ink-2)}
 /* Sổ Từ vựng kiểu vở kẻ dòng: ô nhỏ (từ + nghĩa) rồi các dòng kẻ để tự viết. */
-.nb-vocab-row{display:grid;grid-template-columns:148px minmax(0,1fr);gap:14px;align-items:start}
+.nb-vocab-row{display:grid;grid-template-columns:176px minmax(0,1fr);gap:14px;align-items:start}
 .nb-vocab-row.is-narrow{grid-template-columns:minmax(0,1fr);gap:8px}
-.nb-vocab-label{display:flex;flex-direction:column;gap:1px;padding:6px 9px;border-radius:8px;border:1.5px solid #E2CFC9;background:#FFF8F5;min-width:0}
+.nb-vocab-label{display:flex;flex-direction:column;gap:2px;padding:8px 10px;border-radius:8px;border:1.5px solid #E2CFC9;background:#FFF8F5;min-width:0}
 .nb-vocab-row.is-narrow .nb-vocab-label{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:2px 10px}
-.nb-vocab-word{font-family:var(--font-learn);font-size:16px;font-weight:600;line-height:1.3;overflow-wrap:anywhere}
-.nb-vocab-reading{font-size:11.5px;color:var(--ink-2)}
-.nb-vocab-meaning{font-size:12px;color:var(--ink-2);line-height:1.35}
+.nb-vocab-word{font-family:var(--font-learn);font-size:22px;font-weight:600;line-height:1.25;overflow-wrap:anywhere}
+.nb-vocab-reading{font-size:13px;color:var(--ink-2)}
+.nb-vocab-meaning{font-size:13px;color:var(--ink-2);line-height:1.35}
 .nb-vocab-lines{display:flex;flex-direction:column;gap:6px;min-width:0}
 .nb-vocab-lines>.nb-line{display:block;width:100%;height:auto;border:0;border-bottom:1.5px solid #E2CFC9;border-radius:0;background:transparent}
 .nb-vocab-lines>.nb-line.is-active{border-bottom-color:var(--sakura);box-shadow:0 3px 0 -1px rgba(255,91,115,.18)}

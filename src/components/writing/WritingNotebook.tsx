@@ -2,8 +2,6 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { StrokeOrder } from '@/components/learning/StrokeOrder';
-import { AudioButton } from '@/components/common/AudioButton';
 import { preloadStrokeOrders, type StrokeOrderData } from '@/features/learning/stroke-order';
 import { EMPTY_INK, type InkAction, inkReducer, type InkState, type InkStroke } from '@/features/writing/ink';
 import {
@@ -11,7 +9,7 @@ import {
 } from '@/features/writing/notebook';
 import type { PageProgress } from '@/features/writing/notebook-progress';
 import { postJson } from '@/lib/api/api-client';
-import { CellGhost, CellGrid, NotebookCell } from './NotebookCell';
+import { CellGhost, CellGrid, CellModel, NotebookCell } from './NotebookCell';
 
 type CellSize = 'nho' | 'vua' | 'lon';
 interface NotebookSettings {
@@ -321,28 +319,17 @@ function NotebookRowView({ row, rowId, repeats, ghost, showGrid, guide, activeCe
   activeCell: string | null; strokesByCell: Map<string, InkStroke[]>; noStrokes: InkStroke[];
   onStroke: (stroke: InkStroke) => void; onFocusCell: (cellId: string) => void;
 }) {
-  const [isShowingOrder, setIsShowingOrder] = useState(false);
+  const description = [row.glyph, row.label, row.meaning, row.reading, row.strokeCount ? `${row.strokeCount} nét` : ''].filter(Boolean).join(' · ');
   return (
-    <section className="nb-row" aria-label={`Luyện chữ ${row.glyph}`}>
-      <div className="nb-row-info">
-        <b className="jp nb-row-glyph">{row.glyph}</b>
-        <span className="sm">{row.label}</span>
-        {row.meaning ? <span className="sm soft">· {row.meaning}</span> : null}
-        {row.reading ? <span className="tiny muted jp">· {row.reading}</span> : null}
-        <span className="tiny muted">· {row.strokeCount ? `${row.strokeCount} nét` : 'chưa có dữ liệu số nét'}</span>
-        <AudioButton text={row.glyph} />
-        {row.hasStrokeOrder && [...row.glyph].length === 1 ? (
-          <button type="button" className="btn ghost sm" aria-expanded={isShowingOrder} onClick={() => setIsShowingOrder((value) => !value)}>
-            {isShowingOrder ? 'Ẩn thứ tự nét' : 'Xem thứ tự nét'}
-          </button>
-        ) : row.hasStrokeOrder ? null : <span className="tiny muted">Chưa có dữ liệu thứ tự nét</span>}
-      </div>
-      {isShowingOrder ? <div className="nb-order"><StrokeOrder character={row.glyph} size={140} /></div> : null}
+    // Vùng viết chỉ có ô: không chữ, không nút → chạm / vuốt trên điện thoại không bôi chọn nhầm thứ khác.
+    <section className="nb-row" aria-label={`Luyện chữ ${description}`}>
       <div className="nb-cells">
         {/* Ô đầu dòng: chữ mẫu (đậm, không viết vào) — rồi các ô lặp lại trên cùng dòng. */}
-        <svg className="nb-cell nb-cell-sample" viewBox="0 0 100 100" role="img" aria-label={`Chữ mẫu ${row.glyph}`}>
+        <svg className="nb-cell nb-cell-sample" viewBox="0 0 100 100" role="img"
+          aria-label={guide ? `Chữ mẫu ${row.glyph}: ${guide.strokes.length} nét, có đánh số thứ tự` : `Chữ mẫu ${row.glyph}`}
+          onContextMenu={(event) => event.preventDefault()}>
           {showGrid ? <CellGrid /> : null}
-          <CellGhost glyph={row.glyph} guide={guide} className="nb-model" />
+          <CellModel glyph={row.glyph} guide={guide} />
         </svg>
         {Array.from({ length: repeats }, (_, index) => {
           const cellId = `${rowId}-${index}`;

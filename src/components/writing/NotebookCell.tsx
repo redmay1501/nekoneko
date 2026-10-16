@@ -37,6 +37,23 @@ export function CellGhost({ glyph, guide, className = 'nb-ghost' }: { glyph: str
 }
 
 /**
+ * Ô giới thiệu đầu dòng: chữ mẫu vẽ từng nét theo KanjiVG, đánh số thứ tự nét ở điểm đầu mỗi nét.
+ * Chữ không có dữ liệu nét (âm ghép きゃ…) → chữ in, không đánh số (không đoán thứ tự).
+ */
+export function CellModel({ glyph, guide }: { glyph: string; guide: StrokeOrderData | null }) {
+  if (!guide) return <CellGhost glyph={glyph} guide={null} className="nb-model" />;
+  const scale = 100 / STROKE_ORDER_BOX;
+  return (
+    <g transform={`scale(${scale})`}>
+      <g className="nb-model">{guide.strokes.map((path, index) => <path key={index} d={path} />)}</g>
+      <g className="nb-order-numbers">
+        {guide.labels.map(([x, y], index) => <text key={index} x={x} y={y}>{index + 1}</text>)}
+      </g>
+    </g>
+  );
+}
+
+/**
  * Một ô viết: SVG riêng (không dùng một canvas cho cả trang). Toạ độ chuẩn hoá 0–1 đo lại ở MỖI sự kiện con trỏ,
  * nét vẽ lại bằng SVG theo cỡ hiện tại → cuộn trang, đổi cỡ, xoay iPad không làm lệch nét.
  * Chuột, ngón tay và bút đều viết được; touch-action: none chỉ trong ô (cuộn trang bằng lề / chữ mẫu).
@@ -83,7 +100,7 @@ function NotebookCellView({ cellId, glyph, hasGhost, guide, showGrid, isActive, 
 
   return (
     <svg className={`nb-cell ${isActive ? 'is-active' : ''}`} viewBox="0 0 100 100" role="img" aria-label={label}
-      onPointerDown={start} onPointerMove={move} onPointerUp={end} onPointerCancel={end}>
+      onPointerDown={start} onPointerMove={move} onPointerUp={end} onPointerCancel={end} onContextMenu={(event) => event.preventDefault()}>
       {showGrid ? <CellGrid /> : null}
       {hasGhost ? <CellGhost glyph={glyph} guide={guide} /> : null}
       <g className="nb-ink">

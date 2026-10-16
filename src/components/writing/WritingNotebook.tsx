@@ -1,6 +1,7 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
+import { isPenOnly, penInput, type PenMode } from '@/features/writing/pen-input';
 import { createPortal } from 'react-dom';
 import { preloadStrokeOrders, type StrokeOrderData } from '@/features/learning/stroke-order';
 import { EMPTY_INK, type InkAction, inkReducer, type InkState, type InkStroke } from '@/features/writing/ink';
@@ -81,6 +82,7 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
   // Chỉ ghi URL sau khi người học tự chọn sổ / lật trang — tab đang ẩn không được đổi ?muc= của tab khác.
   const shouldSyncUrlRef = useRef(false);
   const settingsRef = useRef<HTMLDetailsElement>(null);
+  const pen = useSyncExternalStore(penInput.subscribe, penInput.getSnapshot, penInput.getServerSnapshot);
   const paperRef = useRef<HTMLElement>(null);
   const [cellsWidth, setCellsWidth] = useState(0);
 
@@ -287,6 +289,10 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
         <button type="button" className="btn ghost sm" onClick={() => activeCell && dispatchInk({ type: 'clear-cell', cellId: activeCell })}
           disabled={!activeCell || !strokesByCell.get(activeCell)?.length}>Xoá ô đang viết</button>
         <button type="button" className="btn ghost sm" onClick={clearPage} disabled={!ink.strokes.length}>🗑 Xoá hết</button>
+        {isPenOnly(pen) ? (
+          <button type="button" className="btn ghost sm nb-pen-chip" onClick={() => penInput.setMode('all')}
+            title="Đang dùng bút: chạm tay vào ô viết sẽ không vẽ (chống tì tay). Bấm để cho phép viết bằng tay.">✏️ Chỉ nhận bút</button>
+        ) : null}
         <details className="nb-settings" ref={settingsRef}>
           <summary className="btn ghost sm">⚙️ Tuỳ chỉnh</summary>
           <div className="nb-settings-panel">
@@ -318,6 +324,12 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
             <label className="nb-setting"><span>Cỡ ô</span>
               <select value={settings.cellSize} onChange={(event) => setSettings((current) => ({ ...current, cellSize: event.target.value as CellSize }))}>
                 {(Object.keys(SIZE_LABELS) as CellSize[]).map((value) => <option key={value} value={value}>{SIZE_LABELS[value]}</option>)}
+              </select></label>
+            <label className="nb-setting"><span>Bút cảm ứng (iPad, máy tính bảng)</span>
+              <select value={pen.mode} onChange={(event) => penInput.setMode(event.target.value as PenMode)}>
+                <option value="auto">Tự nhận — dùng bút rồi thì bỏ qua chạm tay</option>
+                <option value="pen">Chỉ nhận bút</option>
+                <option value="all">Nhận cả bút và tay</option>
               </select></label>
             <label className="nb-setting nb-check"><input type="checkbox" checked={settings.showGrid} onChange={(event) => setSettings((current) => ({ ...current, showGrid: event.target.checked }))} /> Đường kẻ hướng dẫn trong ô</label>
             <div className="nb-setting"><span>In / lưu PDF (khổ A4, ô trống để viết tay)</span>

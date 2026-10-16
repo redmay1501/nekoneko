@@ -1,6 +1,7 @@
 'use client';
 
-import { memo, type PointerEvent, useRef, useState } from 'react';
+import { memo, type PointerEvent, useCallback, useRef, useState } from 'react';
+import { activeStrokes, decidePointer, penInput } from '@/features/writing/pen-input';
 import { type InkPoint, type InkStroke, normalizePoint, shouldAddPoint, strokePath } from '@/features/writing/ink';
 import { STROKE_ORDER_BOX, type StrokeOrderData } from '@/features/learning/stroke-order';
 
@@ -93,11 +94,24 @@ function NotebookCellView({ cellId, glyph, hasGhost, guide, showGrid, isActive, 
     return normalizePoint(event.clientX, event.clientY, event.currentTarget.getBoundingClientRect());
   }
 
+  // Huỷ nét đang vẽ dở của ô này mà không lưu (lòng bàn tay bị bút "giành" lại).
+  const cancel = useCallback(() => {
+    pointerRef.current = null;
+    pointsRef.current = [];
+    setLive(null);
+  }, []);
+
   function start(event: PointerEvent<SVGSVGElement>) {
-    if (event.button > 0 || pointerRef.current !== null) return; // chỉ nút chính; một ngón / một bút mỗi lúc
+    if (event.pointerType === 'mouse' && event.button > 0) return; // chỉ nút chính của chuột
+    if (event.pointerType === 'pen') penInput.notePen();
+    const { mode, penSeen } = penInput.getSnapshot();
+    const decision = decidePointer({ pointerType: event.pointerType, mode, penSeen, activePointerType: activeStrokes.current() });
     event.preventDefault();
-    event.currentTarget.setPointerCapture(event.pointerId);
+    if (decision === 'ignore') return; // tì tay khi đang dùng bút, hoặc ngón thứ hai
+    if (decision === 'replace') activeStrokes.cancelCurrent();
+    try { event.currentTarget.setPointerCapture(event.pointerId); } catch { /* Safari có thể từ chối với con trỏ đã kết thúc */ }
     pointerRef.current = event.pointerId;
+    activeStrokes.begin(event.pointerType, cancel);
     pointsRef.current = [pointOf(event)];
     setLive(pointsRef.current);
     onFocusCell(cellId);
@@ -119,6 +133,8 @@ function NotebookCellView({ cellId, glyph, hasGhost, guide, showGrid, isActive, 
   function end(event: PointerEvent<SVGSVGElement>) {
     if (pointerRef.current !== event.pointerId) return;
     pointerRef.current = null;
+    activeStrokes.end(cancel);
+    // pointercancel (Safari huỷ thao tác) vẫn giữ phần đã vẽ — người học thấy gì thì được nấy.
     if (pointsRef.current.length) onStroke({ cellId, points: pointsRef.current });
     pointsRef.current = [];
     setLive(null);

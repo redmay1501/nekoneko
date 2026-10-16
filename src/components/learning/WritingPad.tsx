@@ -7,6 +7,7 @@ import {
   loadStrokeOrder, strokeCountOf,
 } from '@/features/learning/stroke-order';
 import { StrokeOrder } from './StrokeOrder';
+import { decidePointer, penInput } from '@/features/writing/pen-input';
 
 const CANVAS_SIZE = 600;
 const STROKE_WIDTH = 16;
@@ -61,10 +62,14 @@ export function WritingPad({ character, reading, expectedStrokes, note }: Writin
   function startStroke(event: PointerEvent<HTMLCanvasElement>) {
     const context = event.currentTarget.getContext('2d');
     if (!context) return;
+    // Chống tì tay: đã dùng bút thì chạm tay vào khung không vẽ; đang vẽ thì ngón / tay thứ hai bị bỏ qua.
+    if (event.pointerType === 'pen') penInput.notePen();
+    const { mode, penSeen } = penInput.getSnapshot();
+    if (decidePointer({ pointerType: event.pointerType, mode, penSeen, activePointerType: isDrawingRef.current ? 'touch' : null }) === 'ignore') return;
     isDrawingRef.current = true;
     setStrokeCount((count) => count + 1);
     setCheckMessage('');
-    event.currentTarget.setPointerCapture(event.pointerId);
+    try { event.currentTarget.setPointerCapture(event.pointerId); } catch { /* Safari có thể từ chối */ }
     const point = canvasPoint(event);
     strokesRef.current.push([toGuideSpace(point)]);
     context.beginPath();

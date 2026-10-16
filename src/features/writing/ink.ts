@@ -53,9 +53,10 @@ export function normalizePoint(clientX: number, clientY: number, rect: { left: n
 }
 
 /** Đường SVG mượt (đường cong qua trung điểm) trong hệ toạ độ `size` × `size`. Một điểm → chấm tròn nhỏ. */
-export function strokePath(points: readonly InkPoint[], size = 100): string {
+export function strokePath(points: readonly InkPoint[], size = 100, width = size): string {
   if (!points.length) return '';
-  const scaled = points.map(([x, y]) => [x * size, y * size] as const);
+  // Ô chữ nhật (ô từ vựng): x theo bề ngang `width`, y theo `size` — toạ độ chuẩn hoá vẫn 0–1 theo từng chiều.
+  const scaled = points.map(([x, y]) => [x * width, y * size] as const);
   const fixed = (value: number) => Math.round(value * 10) / 10;
   if (scaled.length === 1) {
     const [x, y] = scaled[0];

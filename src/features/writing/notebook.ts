@@ -196,28 +196,28 @@ export function buildNotebooks(content: {
   ].filter((notebook) => notebook.pages.length > 0);
 }
 
+export const WORD_BOX_GAP = 8;
+
 /**
- * Dòng từ vựng kiểu giấy ô vuông (genkō yōshi): cả từ viết NỐI TIẾP, mỗi chữ một ô, hết hàng thì xuống hàng — ô cùng cỡ,
- * cùng số cột với các sổ chữ nên hàng nào cũng kín. L ô đầu là mẫu; sau đó lặp lại từ.
- *  - Đầy khung: kín `rows` hàng, nhưng luôn đủ chỗ cho mẫu + ít nhất 2 lần viết (từ dài trên điện thoại → thêm hàng).
- *  - Số lần cố định: mẫu + N lần viết.
- *  - "Nửa đồ": chữ mờ đúng hết hàng đầu (ít nhất một lần viết trọn từ), phần sau tự viết.
+ * Dòng từ vựng: mỗi ô là MỘT LẦN VIẾT cả từ (ô chữ nhật rộng theo số chữ, cao bằng ô của sổ chữ). Ô đầu là mẫu.
+ *  - Đầy khung: kín `rows` hàng (máy tính / iPad 2, điện thoại 3), luôn có ít nhất mẫu + 2 lần viết.
+ *  - Số lần cố định: mẫu + N lần.
+ *  - "Nửa đồ": chữ mờ ở hàng đầu (ít nhất một ô), các hàng sau tự viết.
+ * Từ dài hơn cả khung → một ô mỗi hàng, ô thấp lại cho vừa bề ngang.
  */
-export function wordCells(input: { columns: number; rows: number; wordLength: number; repeats: RepeatSetting }):
-  { total: number; ghostLimit: (mode: GhostMode) => number } {
+export function wordBoxes(input: { width: number; unitPx: number; wordLength: number; rows: number; repeats: RepeatSetting }):
+  { boxesPerLine: number; total: number; aspect: number; ghostLimit: (mode: GhostMode) => number } {
   const length = Math.max(1, input.wordLength);
-  const columns = Math.max(1, input.columns);
-  const total = input.repeats === 'auto'
-    ? Math.max(input.rows, Math.ceil((length * 3) / columns)) * columns
-    : length * (input.repeats + 1);
-  const ghostLimit = (mode: GhostMode) => {
-    if (mode === 'all') return total;
-    if (mode === 'none') return length;
-    // Đầy khung: chữ mờ đúng hết hàng đầu (từ dài hơn một hàng → ít nhất trọn một lần viết sau mẫu).
-    const limit = input.repeats === 'auto' ? Math.max(columns, 2 * length) : length * (1 + Math.ceil(input.repeats / 2));
-    return Math.min(total, limit);
-  };
-  return { total, ghostLimit };
+  const unit = Math.max(24, input.unitPx);
+  const width = input.width > 0 ? input.width : unit * length;
+  const boxesPerLine = Math.max(1, Math.floor((width + WORD_BOX_GAP) / (unit * length + WORD_BOX_GAP)));
+  // Ô giãn cho kín hàng: bề rộng thật / chiều cao (giữ chiều cao ≈ một ô chữ).
+  const boxWidth = (width - (boxesPerLine - 1) * WORD_BOX_GAP) / boxesPerLine;
+  const aspect = Math.max(1, Math.round((boxWidth / unit) * 100) / 100);
+  const total = input.repeats === 'auto' ? Math.max(3, input.rows * boxesPerLine) : input.repeats + 1;
+  const ghostLimit = (mode: GhostMode) => mode === 'all' ? total : mode === 'none' ? 1
+    : input.repeats === 'auto' ? Math.min(total, Math.max(2, boxesPerLine)) : 1 + Math.ceil(input.repeats / 2);
+  return { boxesPerLine, total, aspect, ghostLimit };
 }
 
 export function findNotebookPage(notebooks: readonly Notebook[], pageId: string): NotebookPage | undefined {

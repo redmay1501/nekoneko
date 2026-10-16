@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { loadSeedContent } from '@/lib/data/seed-content';
-import { buildNotebooks, DEFAULT_REPEATS, fillRepeats, findNotebookPage, gridColumns, isGhostCell, KANJI_PER_PAGE, REPEAT_OPTIONS, wordCells, writingFormOf } from './notebook';
+import { buildNotebooks, DEFAULT_REPEATS, fillRepeats, findNotebookPage, gridColumns, isGhostCell, KANJI_PER_PAGE, REPEAT_OPTIONS, wordBoxes, writingFormOf } from './notebook';
 import { notebookRecordKey } from './notebook-progress';
 
 const content = loadSeedContent();
@@ -114,24 +114,24 @@ describe('Sổ Từ vựng', () => {
       expect([...(row.word!.kana), ...(row.word!.kanji ?? [])].join('')).not.toMatch(/[\s/〜~[\]()]/);
     }
   });
-  it('viết nối tiếp: kín đúng số hàng, mọi từ cùng số cột (ô cùng cỡ)', () => {
-    expect(wordCells({ columns: 15, rows: 2, wordLength: 2, repeats: 'auto' }).total).toBe(30);
-    expect(wordCells({ columns: 15, rows: 2, wordLength: 9, repeats: 'auto' }).total).toBe(30);
+  it('mỗi ô là một lần viết cả từ; kín đúng số hàng', () => {
+    const pc = wordBoxes({ width: 1060, unitPx: 65, wordLength: 2, rows: 2, repeats: 'auto' });
+    expect(pc.boxesPerLine).toBe(7);
+    expect(pc.total).toBe(14);
+    expect(pc.boxesPerLine * pc.aspect * 65 + (pc.boxesPerLine - 1) * 8).toBeCloseTo(1060, -1);
   });
-  it('từ dài trên điện thoại → thêm hàng để đủ mẫu + 2 lần viết', () => {
-    expect(wordCells({ columns: 4, rows: 3, wordLength: 9, repeats: 'auto' }).total).toBe(28);
-    expect(wordCells({ columns: 4, rows: 3, wordLength: 2, repeats: 'auto' }).total).toBe(12);
+  it('từ dài: ô rộng theo số chữ; dài hơn khung → một ô mỗi hàng', () => {
+    expect(wordBoxes({ width: 1060, unitPx: 65, wordLength: 9, rows: 2, repeats: 'auto' })).toMatchObject({ boxesPerLine: 1, total: 3 });
+    expect(wordBoxes({ width: 330, unitPx: 78, wordLength: 2, rows: 3, repeats: 'auto' })).toMatchObject({ boxesPerLine: 2, total: 6 });
   });
-  it('số lần cố định: mẫu + N lần', () => {
-    expect(wordCells({ columns: 15, rows: 2, wordLength: 3, repeats: 4 }).total).toBe(15);
+  it('số lần cố định: mẫu + N', () => {
+    expect(wordBoxes({ width: 1060, unitPx: 65, wordLength: 3, rows: 2, repeats: 6 }).total).toBe(7);
   });
-  it('nửa đồ: chữ mờ hết hàng đầu (tròn từ), phần sau tự viết', () => {
-    const short = wordCells({ columns: 15, rows: 2, wordLength: 3, repeats: 'auto' });
-    expect(short.ghostLimit('half')).toBe(15);
-    expect(wordCells({ columns: 15, rows: 2, wordLength: 2, repeats: 'auto' }).ghostLimit('half')).toBe(15);
-    expect(short.ghostLimit('none')).toBe(3);
-    expect(short.ghostLimit('all')).toBe(30);
-    expect(wordCells({ columns: 15, rows: 2, wordLength: 9, repeats: 'auto' }).ghostLimit('half')).toBe(18);
+  it('nửa đồ: chữ mờ ở hàng đầu, sau đó tự viết', () => {
+    const pc = wordBoxes({ width: 1060, unitPx: 65, wordLength: 2, rows: 2, repeats: 'auto' });
+    expect(pc.ghostLimit('half')).toBe(7);
+    expect(pc.ghostLimit('none')).toBe(1);
+    expect(pc.ghostLimit('all')).toBe(14);
   });
   it('tiến độ: tiền tố chia theo từng 40 trang (≤ 40 bản ghi mỗi loại)', () => {
     expect(notebookRecordKey('tu-vung', 'tu-vung-1')).toBe('viet-tu1:tu-vung-1');

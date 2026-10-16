@@ -1,0 +1,160 @@
+import type { KanaContent, KanjiContent, RadicalContent } from '@/types/content';
+import { primaryRadicalGlyph } from '@/features/learning/knowledge-catalog';
+import { hasStrokeOrder, strokeCountOf } from '@/features/learning/stroke-order';
+
+/**
+ * SỔ LUYỆN VIẾT — vở tập viết: mỗi trang vài dòng, mỗi dòng MỘT chữ (chữ mẫu + nhiều ô lặp lại).
+ * Dựng hoàn toàn từ nội dung có sẵn (bảng kana, Kanji N5, bộ thủ) — không thêm chữ nào ngoài dữ liệu.
+ *  - Hiragana / Katakana: theo hàng あ行, か行… (bảng 50 âm), rồi âm đục, rồi âm ghép (mỗi trang hai hàng).
+ *  - Kanji / Bộ thủ: theo thứ tự lộ trình (ngày học), mỗi trang KANJI_PER_PAGE chữ.
+ * Thứ tự nét chỉ báo "có" khi chữ nằm trong dữ liệu KanjiVG (stroke-order.ts) — không đoán.
+ */
+export type NotebookId = 'hiragana' | 'katakana' | 'kanji' | 'bo-thu';
+
+export interface NotebookRow {
+  /** Chữ để viết (một ký tự, hoặc hai với âm ghép きゃ). */
+  glyph: string;
+  /** Dòng phụ dưới chữ mẫu: romaji với kana, âm Hán Việt với Kanji, tên với bộ thủ. */
+  label: string;
+  meaning?: string;
+  reading?: string;
+  strokeCount: number | null;
+  hasStrokeOrder: boolean;
+}
+
+export interface NotebookPage {
+  /** Mã ổn định để lưu tiến độ: "<sổ>-<số thứ tự>" (ví dụ hiragana-3). */
+  id: string;
+  notebookId: NotebookId;
+  number: number;
+  title: string;
+  subtitle: string;
+  rows: NotebookRow[];
+}
+
+export interface Notebook {
+  id: NotebookId;
+  title: string;
+  description: string;
+  pages: NotebookPage[];
+}
+
+export const KANJI_PER_PAGE = 5;
+export const RADICALS_PER_PAGE = 6;
+const YOUON_ROWS_PER_PAGE = 2;
+
+/** Bảng 50 âm + âm đục theo hàng (chỉ để XẾP NHÓM — chữ thật lấy từ dữ liệu kana). */
+const KANA_ROWS: ReadonlyArray<{ id: string; label: string; chars: string }> = [
+  { id: 'a', label: 'あ行', chars: 'あいうえお' }, { id: 'ka', label: 'か行', chars: 'かきくけこ' },
+  { id: 'sa', label: 'さ行', chars: 'さしすせそ' }, { id: 'ta', label: 'た行', chars: 'たちつてと' },
+  { id: 'na', label: 'な行', chars: 'なにぬねの' }, { id: 'ha', label: 'は行', chars: 'はひふへほ' },
+  { id: 'ma', label: 'ま行', chars: 'まみむめも' }, { id: 'ya', label: 'や行', chars: 'やゆよ' },
+  { id: 'ra', label: 'ら行', chars: 'らりるれろ' }, { id: 'wa', label: 'わ行 · ん', chars: 'わをん' },
+  { id: 'ga', label: 'が行', chars: 'がぎぐげご' }, { id: 'za', label: 'ざ行', chars: 'ざじずぜぞ' },
+  { id: 'da', label: 'だ行', chars: 'だぢづでど' }, { id: 'ba', label: 'ば行', chars: 'ばびぶべぼ' },
+  { id: 'pa', label: 'ぱ行', chars: 'ぱぴぷぺぽ' },
+];
+const rowOfHiragana = (character: string) => KANA_ROWS.find((row) => row.chars.includes(character));
+
+const toKatakanaLabel = (label: string) => label.replace(/[ぁ-ゖ]/g, (character) => String.fromCharCode(character.charCodeAt(0) + 0x60));
+
+function strokeInfo(glyph: string): Pick<NotebookRow, 'strokeCount' | 'hasStrokeOrder'> {
+  const characters = [...glyph];
+  const isKnown = characters.every(hasStrokeOrder);
+  return { hasStrokeOrder: isKnown, strokeCount: isKnown ? characters.reduce((sum, character) => sum + (strokeCountOf(character) ?? 0), 0) : null };
+}
+
+function kanaNotebook(kana: readonly KanaContent[], script: 'hiragana' | 'katakana'): Notebook {
+  const glyphOf = (item: KanaContent) => (script === 'hiragana' ? item.hiragana : item.katakana);
+  const rowOf = (item: KanaContent): NotebookRow => ({ glyph: glyphOf(item), label: item.romaji, ...strokeInfo(glyphOf(item)) });
+  const pages: Array<Omit<NotebookPage, 'id' | 'number' | 'notebookId'>> = [];
+  const single = kana.filter((item) => [...item.hiragana].length === 1);
+  for (const group of KANA_ROWS) {
+    const items = single.filter((item) => rowOfHiragana(item.hiragana)?.id === group.id);
+    if (!items.length) continue;
+    const label = script === 'hiragana' ? group.label : toKatakanaLabel(group.label);
+    pages.push({ title: `Hàng ${label}`, subtitle: items.map((item) => item.romaji).join(' · '), rows: items.map(rowOf) });
+  }
+  // Âm ghép (きゃ…): gom theo chữ đầu, mỗi trang hai hàng.
+  const youonGroups = new Map<string, KanaContent[]>();
+  for (const item of kana.filter((entry) => [...entry.hiragana].length > 1)) {
+    const head = item.hiragana[0];
+    youonGroups.set(head, [...(youonGroups.get(head) ?? []), item]);
+  }
+  const groups = [...youonGroups.values()];
+  for (let index = 0; index < groups.length; index += YOUON_ROWS_PER_PAGE) {
+    const pageGroups = groups.slice(index, index + YOUON_ROWS_PER_PAGE);
+    const items = pageGroups.flat();
+    pages.push({ title: `Âm ghép ${pageGroups.map((group) => glyphOf(group[0]).slice(0, 1)).join(' · ')}`, subtitle: items.map((item) => item.romaji).join(' · '), rows: items.map(rowOf) });
+  }
+  return {
+    id: script,
+    title: script === 'hiragana' ? 'Hiragana' : 'Katakana',
+    description: script === 'hiragana' ? 'Bảng chữ mềm — theo hàng あ行, か行…, âm đục và âm ghép.' : 'Bảng chữ cứng — theo hàng ア行, カ行…, âm đục và âm ghép.',
+    pages: pages.map((page, index) => ({ ...page, id: `${script}-${index + 1}`, notebookId: script, number: index + 1 })),
+  };
+}
+
+const byDay = <T extends { day: number | null; id: number }>(left: T, right: T) => (left.day ?? 999) - (right.day ?? 999) || left.id - right.id;
+const dayRange = (items: ReadonlyArray<{ day: number | null }>) => {
+  const days = items.map((item) => item.day).filter((day): day is number => day !== null);
+  if (!days.length) return 'chưa gắn ngày';
+  const [first, last] = [Math.min(...days), Math.max(...days)];
+  return first === last ? `ngày ${first}` : `ngày ${first}–${last}`;
+};
+
+function chunked<T>(items: readonly T[], size: number): T[][] {
+  return Array.from({ length: Math.ceil(items.length / size) }, (_, index) => items.slice(index * size, index * size + size));
+}
+
+function kanjiNotebook(kanji: readonly KanjiContent[]): Notebook {
+  const pages = chunked([...kanji].sort(byDay), KANJI_PER_PAGE).map((items, index): NotebookPage => ({
+    id: `kanji-${index + 1}`, notebookId: 'kanji', number: index + 1,
+    title: items.map((item) => item.character).join(' '), subtitle: `Kanji N5 · ${dayRange(items)}`,
+    rows: items.map((item) => ({
+      glyph: item.character, label: item.hanViet, meaning: item.meaning,
+      reading: [item.onReading, item.kunReading].filter(Boolean).join(' · '),
+      ...strokeInfo(item.character),
+      // Số nét trong dữ liệu Kanji dùng khi KanjiVG không có chữ.
+      ...(hasStrokeOrder(item.character) ? {} : { strokeCount: item.strokes }),
+    })),
+  }));
+  return { id: 'kanji', title: 'Kanji N5', description: `${kanji.length} chữ theo thứ tự lộ trình, mỗi trang ${KANJI_PER_PAGE} chữ — kèm âm Hán Việt, nghĩa, âm đọc.`, pages };
+}
+
+function radicalNotebook(radicals: readonly RadicalContent[]): Notebook {
+  const pages = chunked([...radicals].sort(byDay), RADICALS_PER_PAGE).map((items, index): NotebookPage => ({
+    id: `bo-thu-${index + 1}`, notebookId: 'bo-thu', number: index + 1,
+    title: items.map((item) => primaryRadicalGlyph(item.radical)).join(' '), subtitle: `Bộ thủ · ${dayRange(items)}`,
+    rows: items.map((item) => {
+      const glyph = primaryRadicalGlyph(item.radical);
+      return { glyph, label: item.nameJp.split(' / ')[0], meaning: item.meaning, ...strokeInfo(glyph) };
+    }),
+  }));
+  return { id: 'bo-thu', title: 'Bộ thủ', description: `${radicals.length} bộ thủ trong app, mỗi trang ${RADICALS_PER_PAGE} bộ.`, pages };
+}
+
+export function buildNotebooks(content: { kana: readonly KanaContent[]; kanji: readonly KanjiContent[]; radicals: readonly RadicalContent[] }): Notebook[] {
+  return [
+    kanaNotebook(content.kana, 'hiragana'),
+    kanaNotebook(content.kana, 'katakana'),
+    kanjiNotebook(content.kanji),
+    radicalNotebook(content.radicals),
+  ].filter((notebook) => notebook.pages.length > 0);
+}
+
+export function findNotebookPage(notebooks: readonly Notebook[], pageId: string): NotebookPage | undefined {
+  return notebooks.flatMap((notebook) => notebook.pages).find((page) => page.id === pageId);
+}
+
+/** Số ô lặp lại mỗi chữ (người học chọn). */
+export const REPEAT_OPTIONS = [4, 6, 8, 10, 12] as const;
+export const DEFAULT_REPEATS = 8;
+
+export type GhostMode = 'all' | 'half' | 'none';
+/** Ô thứ `index` (0-based) có chữ mờ để đồ theo không: đồ hết · nửa đầu đồ, nửa sau tự viết · tự viết hết. */
+export function isGhostCell(index: number, repeats: number, mode: GhostMode): boolean {
+  if (mode === 'all') return true;
+  if (mode === 'none') return false;
+  return index < Math.ceil(repeats / 2);
+}

@@ -346,10 +346,10 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
           <button type="button" className={tool === 'eraser' ? 'on' : ''} aria-pressed={tool === 'eraser'} onClick={() => setTool('eraser')}
             title="Quẹt qua nét viết sai để xoá cả nét. Hoàn tác để lấy lại.">🧽 Tẩy</button>
         </span>
-        <button type="button" className="btn ghost sm" onClick={() => dispatchInk({ type: 'undo' })} disabled={!ink.past.length}>↶ Hoàn tác</button>
-        <button type="button" className="btn ghost sm" onClick={() => dispatchInk({ type: 'redo' })} disabled={!ink.future.length}>↷ Làm lại</button>
-        <button type="button" className="btn ghost sm" onClick={() => activeCell && dispatchInk({ type: 'clear-cell', cellId: activeCell })}
-          disabled={!activeCell || !strokesByCell.get(activeCell)?.length}>Xoá ô đang viết</button>
+        <button type="button" className="btn ghost sm nb-icon-btn" onClick={() => dispatchInk({ type: 'undo' })} disabled={!ink.past.length}
+          aria-label="Hoàn tác" title="Hoàn tác"><HistoryIcon direction="undo" /></button>
+        <button type="button" className="btn ghost sm nb-icon-btn" onClick={() => dispatchInk({ type: 'redo' })} disabled={!ink.future.length}
+          aria-label="Làm lại" title="Làm lại"><HistoryIcon direction="redo" /></button>
         <button type="button" className="btn ghost sm" onClick={clearPage} disabled={!ink.strokes.length}>🗑 Xoá hết</button>
         {/* Trạng thái bút: nhãn, KHÔNG phải nút (chạm nhầm / tì tay vào không được tắt chống tì tay). Đổi chế độ ở ⚙️ Tuỳ chỉnh. */}
         {isPenOnly(pen) ? (
@@ -602,5 +602,16 @@ function PenDiagnostics() {
         </table>
       ) : <p className="tiny muted" style={{ fontWeight: 400 }}>Chưa có lần chạm nào vào ô viết.</p>}
     </details>
+  );
+}
+
+/** Mũi tên cong Hoàn tác / Làm lại — vẽ SVG cho rõ ở mọi font (ký tự ↶ ↷ hiển thị rất nhỏ trên nhiều máy). */
+function HistoryIcon({ direction }: { direction: 'undo' | 'redo' }) {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"
+      aria-hidden="true" style={direction === 'redo' ? { transform: 'scaleX(-1)' } : undefined}>
+      <path d="M9 14 4 9l5-5" />
+      <path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11" />
+    </svg>
   );
 }

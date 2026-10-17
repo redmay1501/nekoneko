@@ -1666,3 +1666,13 @@ a.garden-tree:hover .garden-tree-tag{background:#fff;box-shadow:0 0 0 2px #F3B67
 .quiz-option.is-wrong{border-color:#F7A8B6;background:linear-gradient(180deg,#FFF8F9,#FFE9ED);color:#A9475A;box-shadow:0 3px 0 #FFC4CE}
 .quiz-option.is-wrong .quiz-option-key{background:#E24159;color:#fff}
 .quiz-option:disabled:not(.is-correct):not(.is-wrong){opacity:.6}
+
+/* ============ NHÓM LỰA CHỌN (components/common/SegmentedChoice) — thay radio gốc ============ */
+.segmented{display:flex;flex-wrap:wrap;gap:6px;padding:5px;border-radius:999px;background:#FBF3EF;box-shadow:inset 0 1px 3px rgba(150,80,70,.08)}
+.segmented-option{flex:1 1 auto;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:6px 14px;border:0;
+  border-radius:999px;background:transparent;color:#8E7069;font:inherit;font-size:13.5px;font-weight:700;cursor:pointer;white-space:nowrap;
+  transition:background .15s ease,color .15s ease,box-shadow .15s ease,transform .12s ease}
+.segmented-option:hover:not(.is-selected){background:rgba(255,255,255,.75);color:#C95A6C}
+.segmented-option:active{transform:scale(.97)}
+.segmented-option.is-selected{color:#fff;background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,0) 60%),linear-gradient(180deg,#FF9EAC,#F2667C);
+  box-shadow:inset 0 -2px 0 rgba(0,0,0,.1),0 4px 10px rgba(242,102,124,.28)}

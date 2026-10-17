@@ -3,6 +3,7 @@
 import { useSpeech } from '@/hooks/useSpeech';
 import type { VoiceGender } from '@/lib/speech/japanese-voices';
 import { EmojiIcon } from './EmojiIcon';
+import { SegmentedChoice } from './SegmentedChoice';
 
 const VOICE_OPTIONS: { gender: VoiceGender; emoji: string; label: string }[] = [
   { gender: 'female', emoji: '👩', label: 'Giọng nữ' },
@@ -13,7 +14,6 @@ const GENDER_LABEL: Record<VoiceGender, string> = { female: 'nữ', male: 'nam' 
 
 interface VoiceSettingProps {
   voiceGender: VoiceGender;
-  isDisabled: boolean;
   onChange: (voiceGender: VoiceGender) => void;
 }
 
@@ -21,7 +21,7 @@ interface VoiceSettingProps {
  * Cài đặt giọng đọc tiếng Nhật: chọn nam/nữ, nghe thử, và nói rõ máy đang dùng giọng nào.
  * Giọng là của máy người học (Web Speech API) — máy thiếu giọng thì hướng dẫn cách thêm.
  */
-export function VoiceSetting({ voiceGender, isDisabled, onChange }: VoiceSettingProps) {
+export function VoiceSetting({ voiceGender, onChange }: VoiceSettingProps) {
   const { speak, isSupported, voiceChoice, hasVoiceList } = useSpeech();
 
   return (
@@ -30,14 +30,10 @@ export function VoiceSetting({ voiceGender, isDisabled, onChange }: VoiceSetting
         <b className="sm">Giọng đọc tiếng Nhật</b>
         <button type="button" className="btn ghost sm" onClick={() => speak(SAMPLE_TEXT)} disabled={!isSupported}><EmojiIcon emoji="🔊" size={18} /> Nghe thử</button>
       </div>
-      <fieldset className="radio-group mt-2" disabled={isDisabled} aria-label="Giọng đọc tiếng Nhật">
-        {VOICE_OPTIONS.map((option) => (
-          <label key={option.gender}>
-            <input type="radio" name="voice-gender" checked={voiceGender === option.gender} onChange={() => onChange(option.gender)} />
-            <EmojiIcon emoji={option.emoji} size={18} /> {option.label}
-          </label>
-        ))}
-      </fieldset>
+      <div className="mt-2">
+        <SegmentedChoice label="Giọng đọc tiếng Nhật" value={voiceGender} onChange={onChange}
+          options={VOICE_OPTIONS.map((option) => ({ value: option.gender, label: <><EmojiIcon emoji={option.emoji} size={18} /> {option.label}</> }))} />
+      </div>
       <VoiceStatus isSupported={isSupported} hasVoiceList={hasVoiceList} voiceGender={voiceGender}
         voiceName={voiceChoice?.voice.name ?? null} matchesPreference={voiceChoice?.matchesPreference ?? false} />
     </div>

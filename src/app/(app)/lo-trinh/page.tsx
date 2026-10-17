@@ -1,3 +1,4 @@
+import { RoadmapBackdrop } from '@/components/roadmap/RoadmapBackdrop';
 import Link from 'next/link';
 import { ProgressBar } from '@/components/common/ProgressBar';
 import { JourneyMap } from '@/components/roadmap/JourneyMap';
@@ -18,7 +19,8 @@ export default async function RoadmapPage() {
   const daysLeft = JOURNEY_TOTAL_DAYS - completedDays;
 
   return (
-    <>
+    <div className="roadmap-page">
+      <RoadmapBackdrop />
       <div className="between mb-1">
         <h1>Lộ trình JLPT N5</h1>
         <span className="chip pink">Ngày {journeyDay} / {JOURNEY_TOTAL_DAYS}</span>
@@ -62,6 +64,6 @@ export default async function RoadmapPage() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

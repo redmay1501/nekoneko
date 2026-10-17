@@ -1,4 +1,4 @@
-import { HeroAnimal } from '@/components/common/HeroAnimal';
+import { HeroAnimal, STUDY_ANIMAL_SIZE } from '@/components/common/HeroAnimal';
 import { LessonVocabularyList, KANA_PERIOD_TAB } from '@/components/learning/LessonVocabularyList';
 import { TestPicker } from '@/components/learning/TestPicker';
 import { itemsOfType } from '@/features/learning/knowledge-catalog';
@@ -25,7 +25,7 @@ export default async function VocabularyPage() {
       <p className="soft sm" style={{ margin: '4px 0 12px' }}>
         {total} từ: theo Minna no Nihongo I bài 1–25, cộng từ N5 bổ sung và từ của giai đoạn bảng chữ cái.
       </p>
-        <HeroAnimal src="/animations/vocab-cat.json" stillFrame={60} />
+        <HeroAnimal src="/animations/vocab-cat.json" stillFrame={60} minSize={STUDY_ANIMAL_SIZE} />
       </div>
       <TestPicker groups={testGroups} unit="từ" partUnit="bài" />
       <LessonVocabularyList rows={rows} lessons={catalog.content.lessons} currentTab={currentTab} />

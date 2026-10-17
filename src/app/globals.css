@@ -1526,3 +1526,38 @@ a.garden-tree:hover .garden-tree-tag{background:#fff;box-shadow:0 0 0 2px #F3B67
   .garden-tree-tag b{font-size:11.5px}
   .garden-scene-sun{width:40px;height:40px;top:14px}
 }
+
+/* ============ LỘ TRÌNH: NỀN ĐỘNG BÃI BIỂN + CÂY (components/roadmap/RoadmapBackdrop) ============
+   Nền cố định sau lưng (nội dung cuộn trên nó); lớp sáng mờ phía trên để chữ dễ đọc; cây đứng trên cát ở hai góc dưới. */
+.roadmap-page{position:relative}
+.roadmap-page>:not(.roadmap-backdrop){position:relative;z-index:1}
+.roadmap-backdrop{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+@media (min-width:1200px){.roadmap-backdrop{left:calc(var(--sidebar) + 14px)}}
+.roadmap-backdrop-scene{position:absolute;inset:0}
+.roadmap-backdrop-wash{position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,253,248,.62) 0%,rgba(255,253,248,.35) 38%,rgba(255,253,248,.08) 70%,rgba(255,253,248,0) 100%)}
+.roadmap-tree{position:absolute;bottom:1.5vh}
+.roadmap-tree-palm{left:1%;width:min(30vh,270px);aspect-ratio:1/1}
+.roadmap-tree-wind{right:1%;width:min(34vh,300px);aspect-ratio:881/774}
+@media (max-width:767px){
+  .roadmap-tree-palm{width:min(22vh,150px)} .roadmap-tree-wind{width:min(24vh,170px)}
+}
+/* Bản đồ trong mờ để thấy biển phía sau. */
+.roadmap-page .map-wrap{background:rgba(255,255,255,.52);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+
+/* ============ TRANG CHI TIẾT NGÀY: CỤM CÂY Ở GÓC THẺ "NGÀY N" (components/roadmap/DayGrove) ============ */
+.dayhero.has-grove{position:relative}
+.dayhero.has-grove>p{max-width:calc(100% - 300px)}
+.day-grove{position:absolute;right:10px;bottom:0;display:flex;align-items:flex-end;pointer-events:none}
+.day-grove-tree{flex:0 0 auto}
+.day-grove-palm{width:118px;height:118px;margin-right:-34px;margin-bottom:-6px}
+.day-grove-autumn{width:150px;height:150px;margin-bottom:-14px;position:relative;z-index:1}
+.day-grove-wind{width:126px;aspect-ratio:881/774;margin-left:-40px;margin-bottom:-2px}
+@media (max-width:899px){
+  .dayhero.has-grove>p{max-width:calc(100% - 210px)}
+  .day-grove-palm{width:84px;height:84px;margin-right:-24px} .day-grove-autumn{width:108px;height:108px;margin-bottom:-10px} .day-grove-wind{width:92px;margin-left:-28px}
+}
+@media (max-width:560px){
+  .dayhero.has-grove>p{max-width:none}
+  .day-grove{top:46px;bottom:auto;right:6px}
+  .day-grove-palm{width:62px;height:62px;margin-right:-20px} .day-grove-autumn{display:none} .day-grove-wind{width:70px;margin-left:-6px}
+}

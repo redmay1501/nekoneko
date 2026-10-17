@@ -1,3 +1,4 @@
+import { DayGrove } from '@/components/roadmap/DayGrove';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { DayKnowledgeBlock } from '@/components/roadmap/DayKnowledgeBlock';
@@ -31,7 +32,8 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
     <>
       <DayPicker days={buildDayStatuses(catalog, memoryViews, journeyDay)} day={day} today={journeyDay} />
 
-      <section className="dayhero">
+      <section className="dayhero has-grove">
+        <DayGrove />
         <div className="row wrap" style={{ gap: 7 }}>
           <span className="chip" style={{ background: 'rgba(255,255,255,.7)' }}><EmojiIcon emoji={stage.emoji} size={16} /> {stage.name}</span>
           <span className="chip" style={{ background: 'rgba(255,255,255,.7)' }}>Tuần {dayInfo.week}</span>

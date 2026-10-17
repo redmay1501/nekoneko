@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { RatingCat } from '@/components/common/RatingCat';
 import { type CSSProperties, useEffect, useState } from 'react';
+import { LottieAnimation } from '@/components/common/LottieAnimation';
 import { NekoButton } from '@/components/common/NekoButton';
 import { useSpeech } from '@/hooks/useSpeech';
 import { useEnterToContinue } from '@/hooks/useEnterToContinue';
@@ -122,8 +123,28 @@ export function MatchGame({ pool, scope, recordsByPairs, unit }: MatchGameProps)
   if (!round) {
     return (
       <div className="card center match-start">
-        <div style={{ fontSize: 44 }} aria-hidden="true">🃏</div>
-        <p className="mt-2">Tìm từng cặp <b>{unit} ↔ nghĩa</b> trong lưới ô vuông — nhanh và không sai.</p>
+        <div className="match-intro">
+          <LottieAnimation src="/animations/lurking-cat.json" className="match-intro-cat" stillFrame={20} />
+          <div className="match-intro-text">
+            <h2>Ghép thẻ</h2>
+            <p className="sm soft">Tìm từng cặp <b>{unit} ↔ nghĩa</b> — nhanh và không sai để được 5 sao.</p>
+          </div>
+        </div>
+        {/* Ví dụ ghép bằng chính 2 mục đầu của phần đang chọn (nội dung học thật, không phải hình minh hoạ). */}
+        <div className="match-demo" aria-hidden="true">
+          {pool.slice(0, 2).map((card) => (
+            <div key={card.contentKey} className="match-demo-pair">
+              <span className="match-tile face jp">{card.face}</span>
+              <span className="match-demo-link">↔</span>
+              <span className="match-tile answer">{card.answer}</span>
+            </div>
+          ))}
+        </div>
+        <ol className="match-steps">
+          <li><b>1</b> Chạm một ô chữ Nhật</li>
+          <li><b>2</b> Chạm ô nghĩa của nó</li>
+          <li><b>3</b> Ghép hết, không sai = ★★★★★</li>
+        </ol>
         <div className="match-size mt-3" role="radiogroup" aria-label="Cỡ bàn">
           {BOARD_SIZES.map((size) => (
             <button key={size} type="button" role="radio" aria-checked={pairs === size} disabled={pool.length < size}

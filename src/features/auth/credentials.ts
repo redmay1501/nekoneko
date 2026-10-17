@@ -6,8 +6,8 @@
  * "Confirm email" bật, "Minimum password length" = MIN_SIGN_UP_PASSWORD_LENGTH, CAPTCHA, rate limit — xem docs/AUTH_SECURITY.md.
  */
 
-/** "Trên 6 ký tự" → tối thiểu 7. Chỉ áp cho ĐĂNG KÝ: tài khoản cũ đặt mật khẩu 6 ký tự vẫn đăng nhập được. */
-export const MIN_SIGN_UP_PASSWORD_LENGTH = 7;
+/** Mật khẩu đăng ký / đặt lại: từ 6 ký tự trở lên (quyết định 18/10/2026 — khớp mặc định của Supabase Auth). */
+export const MIN_SIGN_UP_PASSWORD_LENGTH = 6;
 export const MAX_PASSWORD_LENGTH = 72; // giới hạn của bcrypt mà Supabase Auth dùng
 export const MAX_DISPLAY_NAME_LENGTH = 40;
 

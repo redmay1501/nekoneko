@@ -3,7 +3,6 @@ import { BrandLogo } from '@/components/common/BrandLogo';
 import { APP_NAME } from '@/config/brand';
 import { isDemoMode } from '@/config/env';
 import { callbackErrorMessage } from '@/features/auth/credentials';
-import { getAuthProviders } from '@/features/auth/auth-providers';
 import { SignInForm } from './SignInForm';
 
 /** Bố cục "thẻ khớp khung tranh" chỉ cho máy tính có chuột — phải giống hệt điều kiện @media trong globals.css (.login-*). */
@@ -17,7 +16,8 @@ const DESKTOP_LOGIN_MEDIA = '(min-width: 1100px) and (hover: hover) and (pointer
  */
 export default async function SignInPage({ searchParams }: { searchParams: Promise<{ tiep?: string; loi?: string }> }) {
   const { tiep, loi } = await searchParams;
-  const providers = await getAuthProviders();
+  // Tạm thời KHÔNG dùng đăng nhập bằng Google (quyết định 18/10/2026) — nút ẩn kể cả khi Supabase đã bật Google.
+  // Muốn mở lại: isGoogleEnabled={(await getAuthProviders()).google} (src/features/auth/auth-providers.ts).
   return (
     <main className="login-page">
       <div className="login-scene">
@@ -43,7 +43,7 @@ export default async function SignInPage({ searchParams }: { searchParams: Promi
             </div>
           ) : (
             <SignInForm redirectTo={tiep && tiep.startsWith('/') && !tiep.startsWith('//') ? tiep : '/'} initialMessage={callbackErrorMessage(loi)}
-              isGoogleEnabled={providers.google} turnstileSiteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || null} />
+              isGoogleEnabled={false} turnstileSiteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || null} />
           )}
         </section>
       </div>

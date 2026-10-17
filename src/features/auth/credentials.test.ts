@@ -16,9 +16,9 @@ describe('kiểm tra email', () => {
 });
 
 describe('kiểm tra mật khẩu', () => {
-  it('đăng ký: tối thiểu 7 ký tự ("trên 6 ký tự"), không dấu cách đầu/cuối', () => {
-    expect(passwordError('123456', 'sign-up')).toMatch(/7 ký tự/);
-    expect(passwordError('1234567', 'sign-up')).toBeNull();
+  it('đăng ký: từ 6 ký tự trở lên, không dấu cách đầu/cuối', () => {
+    expect(passwordError('12345', 'sign-up')).toMatch(/6 ký tự/);
+    expect(passwordError('123456', 'sign-up')).toBeNull();
     expect(passwordError(' 1234567', 'sign-up')).toMatch(/dấu cách/);
     expect(passwordError('1234567 ', 'sign-up')).toMatch(/dấu cách/);
     expect(passwordError('', 'sign-up')).toMatch(/nhập mật khẩu/);

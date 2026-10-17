@@ -6,6 +6,7 @@ import { toKnowledgeListEntries } from '@/features/learning/knowledge-list';
 import { GARDEN_STAGES, STATUS_PRESENTATION } from '@/features/memory/memory-rules';
 import { buildMemoryOverview, forgettingRadarList, joinWithKnowledge, pickGardenPlants, viewsWithStatus } from '@/features/memory/memory-overview';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
+import { GardenScene } from '@/components/garden/GardenScene';
 
 const GARDEN_VISIBLE_PLANTS = 60;
 const BLOOM_PREVIEW = 8;
@@ -26,6 +27,7 @@ export default async function GardenPage() {
       <p className="soft sm" style={{ margin: '4px 0 14px' }}>
         Mỗi thứ bạn giữ lại được là một cái cây. Vườn này không phải trang trí — nó chính là trí nhớ của bạn.
       </p>
+      <GardenScene planted={learned.length} mastered={overview.counts.mastered} fading={overview.counts.fading} />
       <div className="garden">
         {/* Chú giải: hàng nhãn co giãn theo chữ (trước đây ép vào ô cây 58px → chữ vỡ 3 dòng, ô cao thấp lệch nhau). */}
         <ul className="garden-legend mb-3.5" aria-label="Các giai đoạn của cây">

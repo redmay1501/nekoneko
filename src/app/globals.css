@@ -1490,3 +1490,39 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 .loading-runner-label{font-size:13px;color:var(--ink-3)}
 /* Vết chân mèo khi bấm nút (PawClickEffect) — lớp nổi, không chặn bấm. */
 .paw-click{position:fixed;z-index:1001;width:64px;height:64px;pointer-events:none}
+
+/* ============ PHONG CẢNH VƯỜN TRI THỨC (components/garden/GardenScene) ============
+   Trời + mặt trời + hai lớp đồi + ba cây Lottie đứng trên mặt cỏ; nhãn số liệu nằm trên nền cỏ dưới mỗi cây. */
+.garden-scene{position:relative;isolation:isolate;overflow:hidden;height:280px;margin:0 0 14px;border-radius:26px;
+  background:linear-gradient(180deg,#E3F2FC 0%,#F2F8F4 58%,#FFF8EE 100%);border:1px solid rgba(255,255,255,.8);box-shadow:0 10px 30px rgba(90,120,80,.08)}
+.garden-scene-sun{position:absolute;top:22px;right:24%;width:54px;height:54px;border-radius:50%;
+  background:radial-gradient(circle,#FFF4C2 0%,#FFE08A 55%,rgba(255,224,138,0) 72%);z-index:-1}
+.garden-scene-hill{position:absolute;left:-10%;right:-10%;border-radius:50% 50% 0 0;z-index:-1}
+.garden-scene-hill-back{bottom:34px;height:130px;left:-25%;right:30%;background:linear-gradient(180deg,#D3EAC8,#C2E1B4)}
+.garden-scene-hill-back-2{bottom:30px;height:105px;left:40%;right:-30%;background:linear-gradient(180deg,#CBE6BE,#BADDAB)}
+.garden-scene-hill-front{bottom:-40px;height:110px;background:linear-gradient(180deg,#B9DFA8 0%,#A6D497 60%,#9BCB8B 100%)}
+.garden-tree{position:absolute;bottom:34px;margin:0;display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit}
+.garden-tree-art{display:block}
+.garden-tree-palm{left:3%}
+.garden-tree-palm .garden-tree-art{width:210px;height:210px;margin-bottom:-20px}
+.garden-tree-autumn{left:50%;transform:translateX(-42%)}
+.garden-tree-autumn .garden-tree-art{width:260px;height:260px;margin-bottom:-28px}
+.garden-tree-wind{right:2%}
+.garden-tree-wind .garden-tree-art{width:250px;aspect-ratio:881/774;height:auto;margin-bottom:-10px}
+.garden-tree-tag{position:relative;z-index:1;display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;white-space:nowrap;
+  font-size:12px;color:#3E5A36;background:rgba(255,255,255,.86);box-shadow:0 2px 6px rgba(60,90,50,.12)}
+.garden-tree-tag b{font-size:13px}
+a.garden-tree:hover .garden-tree-tag{background:#fff;box-shadow:0 0 0 2px #F3B67A}
+@media (max-width:560px){
+  .garden-scene{height:200px;border-radius:20px}
+  .garden-tree-tag .tag-words{display:none}
+  .garden-tree{bottom:26px}
+  .garden-tree-palm{left:0}
+  .garden-tree-palm .garden-tree-art{width:120px;height:120px;margin-bottom:-12px}
+  .garden-tree-autumn .garden-tree-art{width:160px;height:160px;margin-bottom:-18px}
+  .garden-tree-wind{right:0}
+  .garden-tree-wind .garden-tree-art{width:136px;margin-bottom:-6px}
+  .garden-tree-tag{font-size:10.5px;padding:2px 7px}
+  .garden-tree-tag b{font-size:11.5px}
+  .garden-scene-sun{width:40px;height:40px;top:14px}
+}

@@ -2939,22 +2939,42 @@ update public.lessons as t set day_range = v.day_range, day_count = v.day_count,
 update public.study_resources set how_to = 'Ngày 86 và 88 ôn lại trong app những câu còn mờ. App không chứa đề giấy 120 phút.' where id = 8 and how_to = 'Ngày 84 và 88 ôn lại trong app những câu còn mờ. App không chứa đề giấy 120 phút.';
 
 -- Tiến độ: ngày cũ → ngày mới (ngày 1–14 không đổi).
-create temporary table _journey_day_map (old_day int primary key, new_day int not null) on commit drop;
-insert into _journey_day_map values
+-- Không dùng bảng tạm (SQL Editor của Supabase có thể commit giữa các câu lệnh → bảng tạm "on commit drop" biến mất).
+-- Chạy lại cả file nhiều lần vẫn an toàn: phần đổi tiến độ chỉ chạy MỘT lần, đánh dấu trong journey_plan_versions.
+create table if not exists public.journey_plan_versions (
+  version     text primary key,
+  applied_at  timestamptz not null default now()
+);
+alter table public.journey_plan_versions enable row level security;
+
+drop table if exists public._journey_day_map;
+create table public._journey_day_map (old_day int primary key, new_day int not null);
+insert into public._journey_day_map values
   (15, 18), (16, 18), (17, 20), (18, 20), (19, 23), (20, 23), (21, 27), (22, 27), (23, 27), (24, 31), (25, 31), (26, 34), (27, 34), (28, 37), (29, 37), (30, 37), (31, 39), (32, 39), (33, 42), (34, 42), (35, 46), (36, 46), (37, 46), (38, 48), (39, 48), (40, 51), (41, 51), (42, 53), (43, 53), (44, 53), (45, 56), (46, 56), (47, 56), (48, 58), (49, 58), (50, 58), (51, 60), (52, 60), (53, 62), (54, 62), (55, 62), (56, 65), (57, 65), (58, 65), (59, 67), (60, 67), (61, 67), (62, 69), (63, 69), (64, 69), (65, 69), (66, 71), (67, 71), (68, 74), (69, 74), (70, 76), (71, 76), (72, 76), (73, 77), (74, 77), (75, 79), (76, 79), (77, 81), (78, 82), (79, 83), (80, 83), (81, 84), (82, 85), (83, 85), (84, 86), (85, 87), (86, 87), (87, 88), (88, 88), (89, 89), (90, 90);
 
-update public.profiles as p set current_day = m.new_day from _journey_day_map m where p.current_day = m.old_day;
+update public.profiles as p set current_day = m.new_day
+  from public._journey_day_map m
+  where p.current_day = m.old_day
+    and not exists (select 1 from public.journey_plan_versions where version = 'roadmap-replan-v2');
 
 -- Nhật ký ngày đã xong: dời sang ngày mới; nhiều ngày cũ gộp vào một ngày mới → giữ lần xong SỚM nhất.
 -- Ngày mới chỉ được coi là xong khi MỌI ngày cũ gộp vào nó đã xong (không tự đánh dấu phần chưa học).
-create temporary table _moved_completions on commit drop as
+drop table if exists public._journey_moved_completions;
+create table public._journey_moved_completions as
   select c.user_id, m.new_day as day, min(c.method) as method, min(c.completed_at) as completed_at
-  from public.journey_day_completions c join _journey_day_map m on m.old_day = c.day
+  from public.journey_day_completions c join public._journey_day_map m on m.old_day = c.day
+  where not exists (select 1 from public.journey_plan_versions where version = 'roadmap-replan-v2')
   group by c.user_id, m.new_day
-  having count(*) = (select count(*) from _journey_day_map m2 where m2.new_day = m.new_day);
-delete from public.journey_day_completions c using _journey_day_map m where c.day = m.old_day;
+  having count(*) = (select count(*) from public._journey_day_map m2 where m2.new_day = m.new_day);
+delete from public.journey_day_completions c using public._journey_day_map m
+  where c.day = m.old_day
+    and not exists (select 1 from public.journey_plan_versions where version = 'roadmap-replan-v2');
 insert into public.journey_day_completions (user_id, day, method, completed_at)
-  select user_id, day, method, completed_at from _moved_completions
+  select user_id, day, method, completed_at from public._journey_moved_completions
   on conflict (user_id, day) do nothing;
+
+insert into public.journey_plan_versions (version) values ('roadmap-replan-v2') on conflict (version) do nothing;
+drop table public._journey_moved_completions;
+drop table public._journey_day_map;
 
 commit;

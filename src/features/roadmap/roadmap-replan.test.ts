@@ -110,8 +110,15 @@ describe('cách đọc của Kanji trong từ (suy từ dữ liệu, không đo�
 
 describe('migration Supabase giữ trí nhớ và tiến độ', () => {
   const sql = readFileSync(join(process.cwd(), 'supabase/migrations/20261018000001_roadmap_replan_v2.sql'), 'utf8');
-  const mapping = [...sql.match(/insert into _journey_day_map values\s*([^;]+);/)![1].matchAll(/\((\d+), (\d+)\)/g)]
+  const mapping = [...sql.match(/insert into public\._journey_day_map values\s*([^;]+);/)![1].matchAll(/\((\d+), (\d+)\)/g)]
     .map(([, from, to]) => [Number(from), Number(to)] as const);
+
+  it('chạy lại cả file vẫn an toàn: không dùng bảng tạm, đổi tiến độ chỉ một lần', () => {
+    expect(sql).not.toMatch(/create temporary table/i);
+    const guarded = sql.split('\n').filter((line) => /update public\.profiles|delete from public\.journey_day_completions/.test(line));
+    expect(guarded.length).toBe(2);
+    expect(sql.match(/not exists \(select 1 from public\.journey_plan_versions where version = 'roadmap-replan-v2'\)/g)?.length).toBe(3);
+  });
 
   it('không đụng bảng trí nhớ (memory_items, review_events, learning_sessions, session_items)', () => {
     const code = sql.split('\n').filter((line) => !line.trimStart().startsWith('--')).join('\n');

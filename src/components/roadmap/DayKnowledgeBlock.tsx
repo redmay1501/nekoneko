@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { KnowledgeChipButton } from '@/components/learning/KnowledgeChipButton';
+import { CollapsibleStep } from './CollapsibleStep';
 import { DayVocabularyList } from './DayVocabularyList';
 import { KanaLessonTable } from './KanaLessonTable';
 import { canRomanize, patternRomaji, sentenceRomaji } from '@/lib/utils/romaji';
@@ -10,16 +11,6 @@ import type { DayPlanView } from '@/features/roadmap/day-plan';
 import { firstMeaning } from '@/lib/utils/text';
 
 const CHIP_STYLE = { background: '#fff', border: '1px solid var(--line)', padding: '8px 12px' } as const;
-
-/** Tiêu đề một phần kiến thức + lối vào thẻ học / kiểm tra của đúng phần đó trong luồng học theo ngày. */
-function StepHeading({ label, note, day, step }: { label: string; note?: string; day: number; step: string }) {
-  return (
-    <div className="day-step-head">
-      <p className="day-step-label">{label}{note ? <span className="tiny muted"> · {note}</span> : null}</p>
-      <Link className="day-step-link" href={`/lo-trinh/ngay/${day}/hoc?buoc=${step}`}>Thẻ & kiểm tra →</Link>
-    </div>
-  );
-}
 
 /** Kiến thức thật của một ngày, bấm được để xem kỹ. */
 export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
@@ -75,16 +66,17 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
     knowledge.kana.length && 'kana', knowledge.radicals.length && 'radical', knowledge.vocabulary.length && 'vocabulary',
     knowledge.kanji.length && 'kanji', knowledge.grammar.length && 'grammar',
   ].filter(Boolean);
+  const stepHref = (step: string) => `/lo-trinh/ngay/${plan.day}/hoc?buoc=${step}`;
   const number = (step: string) => '①②③④⑤'[steps.indexOf(step)];
   return (
     <>
       {knowledge.kana.length ? (
-        <StepHeading label={`${number('kana')} Chữ cái`} note={`${knowledge.kana.length} chữ`} day={plan.day} step="chu-cai" />
+        <CollapsibleStep step="chu-cai" label={`${number('kana')} Chữ cái`} note={`${knowledge.kana.length} chữ`} href={stepHref('chu-cai')}>
+          {plan.kanaLesson ? <div className="mt-2.5"><KanaLessonTable lesson={plan.kanaLesson} /></div> : null}
+        </CollapsibleStep>
       ) : null}
-      {plan.kanaLesson ? <div className="mt-2.5"><KanaLessonTable lesson={plan.kanaLesson} /></div> : null}
       {knowledge.radicals.length ? (
-        <>
-          <StepHeading label={`${number('radical')} Bộ thủ`} note="nhận diện mặt chữ — không cần viết nhiều lần" day={plan.day} step="bo-thu" />
+        <CollapsibleStep label={`${number('radical')} Bộ thủ`} note="nhận diện mặt chữ — không cần viết nhiều lần" step="bo-thu" href={stepHref('bo-thu')}>
           <div className="kgrid">
             {knowledge.radicals.map((radical) => (
               <KnowledgeChipButton key={`r${radical.id}`} contentKey={toContentKey('radical', radical.id)} className="kcard"
@@ -95,17 +87,15 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
               </KnowledgeChipButton>
             ))}
           </div>
-        </>
+        </CollapsibleStep>
       ) : null}
       {knowledge.vocabulary.length ? (
-        <>
-          <StepHeading label={`${number('vocabulary')} Từ vựng`} day={plan.day} step="tu-vung" />
+        <CollapsibleStep label={`${number('vocabulary')} Từ vựng`} step="tu-vung" href={stepHref('tu-vung')}>
           <DayVocabularyList words={knowledge.vocabulary} />
-        </>
+        </CollapsibleStep>
       ) : null}
       {knowledge.kanji.length ? (
-        <>
-          <StepHeading label={`${number('kanji')} ${knowledge.vocabulary.length ? 'Kanji trong từ hôm nay' : 'Kanji N5 — học qua từ ví dụ'}`} note={`${knowledge.kanji.length} chữ`} day={plan.day} step="kanji" />
+        <CollapsibleStep label={`${number('kanji')} ${knowledge.vocabulary.length ? 'Kanji trong từ hôm nay' : 'Kanji N5 — học qua từ ví dụ'}`} note={`${knowledge.kanji.length} chữ`} step="kanji" href={stepHref('kanji')}>
           <div className="stack mt-2.5" style={{ gap: 7 }}>
             {knowledge.kanji.map((kanji) => {
               const context = plan.kanjiContext[kanji.id];
@@ -131,11 +121,10 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
               );
             })}
           </div>
-        </>
+        </CollapsibleStep>
       ) : null}
       {knowledge.grammar.length ? (
-        <>
-          <StepHeading label={`${number('grammar')} Ngữ pháp`} note={`${knowledge.grammar.length} mẫu câu`} day={plan.day} step="ngu-phap" />
+        <CollapsibleStep label={`${number('grammar')} Ngữ pháp`} note={`${knowledge.grammar.length} mẫu câu`} step="ngu-phap" href={stepHref('ngu-phap')}>
           <div className="stack mt-2.5" style={{ gap: 7 }}>
             {knowledge.grammar.map((pattern) => (
               <KnowledgeChipButton key={pattern.id} contentKey={toContentKey('grammar', pattern.id)} className="list-row" style={{ padding: '10px 12px' }}>
@@ -152,7 +141,7 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
               </KnowledgeChipButton>
             ))}
           </div>
-        </>
+        </CollapsibleStep>
       ) : null}
     </>
   );

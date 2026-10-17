@@ -26,6 +26,8 @@ interface AppShellProps {
 }
 
 const PRODUCTION_ENVIRONMENT = 'production';
+/** Hoa rơi chỉ ở trang chủ — trang học không có lớp trang trí nào phủ lên nội dung. */
+const HOME_ONLY = ['/'] as const;
 
 /** Khung ứng dụng: thanh bên (desktop) · thanh trên · nội dung · thanh dưới (mobile) · khay trượt. */
 export function AppShell({ displayName, level, recallDays, dailyMinutes, isGentleMode, shouldAutoplayAudio, voiceGender, isDemo, isAdmin = false, children }: AppShellProps) {
@@ -36,7 +38,7 @@ export function AppShell({ displayName, level, recallDays, dailyMinutes, isGentl
     <AdminFlagProvider isAdmin={isAdmin}>
     <div className="app-root">
       <SpeechPreferenceSync voiceGender={voiceGender} autoplayAudio={shouldAutoplayAudio} />
-      <SakuraFall />
+      <SakuraFall paths={HOME_ONLY} />
       <ScrollScenes />
       <KnowledgePrefetcher />
       <Sidebar />

@@ -15,12 +15,12 @@ export function DayCompletionCard({ day, completion }: { day: number; completion
           <ProgressBar percent={percentOf(completion.metCount, completion.totalCount)} variant="thin-mint" label={`Đã gặp kiến thức ngày ${day}`} className="my-2" />
           <p className="tiny muted">
             {remainingKnowledgeCount(completion) > 0
-              ? `Trong app còn ${remainingKnowledgeCount(completion)} mục · khoảng ${estimateMinutesToFinishDay(completion)} phút. Học hết rồi bấm Hoàn thành để sang ngày tiếp theo.`
-              : 'Bạn đã học hết kiến thức của ngày. Thấy thuộc rồi thì bấm Hoàn thành ngày bên dưới.'}
+              ? `Trong app còn ${remainingKnowledgeCount(completion)} mục · khoảng ${estimateMinutesToFinishDay(completion)} phút. Học hết rồi bấm Hoàn thành ngày ở phía trên để sang ngày tiếp theo.`
+              : 'Bạn đã học hết kiến thức của ngày. Khi đã sẵn sàng, hãy bấm Hoàn thành ngày ở phía trên.'}
           </p>
         </>
       ) : (
-        <p className="tiny muted mt-1">Hôm nay không có kiến thức mới. Ôn xong thì bấm hoàn thành để sang ngày tiếp theo nhé.</p>
+        <p className="tiny muted mt-1">Hôm nay không có kiến thức mới. Ôn xong thì bấm Hoàn thành ngày ở phía trên để sang ngày tiếp theo nhé.</p>
       )}
     </div>
   );

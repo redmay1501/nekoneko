@@ -458,16 +458,16 @@ html.sheet-open,html.sheet-open body{overflow:hidden}
 /* ============ MỘT NGÀY HỌC ============ */
 /* Dải ngày: đủ 90 ngày, vuốt ngang tự nhiên; overscroll-behavior giữ cú vuốt trong dải (không kéo trang / không "lùi trang"). */
 .daypicker{min-width:0}
-.daypicker-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.daypicker-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px}
+/* Bộ chọn ngày sát phần nội dung ngày (không để khoảng trống lớn). */
+.daypicker+.dayhero{margin-top:4px}
 .daystrip{min-width:0;display:flex;gap:7px;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;
   touch-action:pan-x pan-y;scroll-snap-type:x proximity;padding:4px 2px 8px;scrollbar-width:none}
 .daystrip::-webkit-scrollbar{display:none}
 @media (hover:hover) and (pointer:fine){.daystrip{scrollbar-width:thin;scrollbar-color:#F3D6DC transparent}.daystrip::-webkit-scrollbar{display:block;height:6px}.daystrip::-webkit-scrollbar-thumb{background:#F3D6DC;border-radius:99px}}
 .daypicker-open{flex:0 0 auto;white-space:nowrap}
 .daychip{scroll-snap-align:center}
-.daychip.is-done{background:#F1FAF4;border-color:#CFEBD6}
-.daychip.is-partial{background:#FFF7E8;border-color:#F6DDB0}
-.daychip.is-today:not(.on){box-shadow:inset 0 0 0 2px var(--sakura)}
+.daychip.is-today:not(.on){box-shadow:inset 0 0 0 2px var(--sakura),0 3px 0 #FFC4CE}
 .daypick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:6px}
 .daygrid-cell{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:48px;border-radius:12px;
   border:1.5px solid var(--line);background:#fff;color:var(--ink);font-size:15px}
@@ -479,13 +479,20 @@ html.sheet-open,html.sheet-open body{overflow:hidden}
 .daygrid-cell.on>.dot{background:#fff}
 .daygrid-legend{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
 .daygrid-legend .dot{margin-left:6px}
-.daychip{flex:0 0 auto;width:52px;padding:8px 0;border-radius:15px;text-align:center;
-  background:#fff;border:1px solid var(--line)}
+/* Ô chọn ngày: viên bo tròn nổi khối nhẹ (mặt sáng → đậm, gờ dưới), nhấc lên khi rê chuột — trạng thái giữ màu riêng. */
+.daychip{flex:0 0 auto;width:54px;padding:8px 0 7px;border-radius:16px;text-align:center;color:var(--ink);
+  background:linear-gradient(180deg,#fff,#FBF6F3);border:1.5px solid #F1E4DE;box-shadow:0 3px 0 #EFE2DB,0 5px 10px rgba(150,80,70,.06);
+  transition:transform .14s cubic-bezier(.3,1.4,.5,1),box-shadow .14s ease}
+.daychip:hover{transform:translateY(-2px);box-shadow:0 5px 0 #EFE2DB,0 8px 14px rgba(150,80,70,.08)}
+.daychip:active{transform:translateY(2px);box-shadow:0 1px 0 #EFE2DB}
 .daychip b{display:block;font-size:15px;line-height:1.1}
 .daychip span{font-size:9.5px;color:var(--ink-3)}
-.daychip.on{background:var(--sakura);border-color:var(--sakura);color:#fff}
-.daychip.on span{color:rgba(255,255,255,.85)}
-.daychip.past{background:#FBF6F3}
+.daychip.is-done{background:linear-gradient(180deg,#F6FCF8,#E7F6EC);border-color:#CFEBD6;box-shadow:0 3px 0 #C7E6D0}
+.daychip.is-partial{background:linear-gradient(180deg,#FFFBF2,#FFF1D9);border-color:#F6DDB0;box-shadow:0 3px 0 #F1D49E}
+.daychip.on{color:#fff;border-color:transparent;background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,0) 60%),linear-gradient(180deg,#FF9EAC,#F2667C);
+  box-shadow:0 3px 0 #CF4A61,0 6px 14px rgba(242,102,124,.3)}
+.daychip.on span{color:rgba(255,255,255,.88)}
+.daychip.past{background:linear-gradient(180deg,#fff,#FBF6F3)}
 
 .dayhero{border-radius:var(--r-l);padding:18px;border:1px solid #FBE3E8;
   background:linear-gradient(160deg,#FFF1F4 0%,#FFF8F1 55%,#F4F8EF 100%)}
@@ -1598,24 +1605,6 @@ a.garden-tree:hover .garden-tree-tag{background:#fff;box-shadow:0 0 0 2px #F3B67
   box-shadow:inset 0 0 0 1.5px var(--stage),0 2px 0 var(--stage)}
 .roadmap-finish{background:linear-gradient(180deg,#FFF8E6,#FFF0CC);border-color:#F5DFA6;border-bottom:4px solid #F5C451}
 
-/* ============ TRANG CHI TIẾT NGÀY: CỤM CÂY Ở GÓC THẺ "NGÀY N" (components/roadmap/DayGrove) ============ */
-.dayhero.has-grove{position:relative}
-.dayhero.has-grove>p{max-width:calc(100% - 300px)}
-.day-grove{position:absolute;right:10px;bottom:0;display:flex;align-items:flex-end;pointer-events:none}
-.day-grove-tree{flex:0 0 auto}
-.day-grove-palm{width:118px;height:118px;margin-right:-34px;margin-bottom:-6px}
-.day-grove-autumn{width:150px;height:150px;margin-bottom:-14px;position:relative;z-index:1}
-.day-grove-wind{width:126px;aspect-ratio:881/774;margin-left:-40px;margin-bottom:-2px}
-@media (max-width:899px){
-  .dayhero.has-grove>p{max-width:calc(100% - 210px)}
-  .day-grove-palm{width:84px;height:84px;margin-right:-24px} .day-grove-autumn{width:108px;height:108px;margin-bottom:-10px} .day-grove-wind{width:92px;margin-left:-28px}
-}
-@media (max-width:560px){
-  .dayhero.has-grove>p{max-width:none}
-  .day-grove{top:46px;bottom:auto;right:6px}
-  .day-grove-palm{width:62px;height:62px;margin-right:-20px} .day-grove-autumn{display:none} .day-grove-wind{width:70px;margin-left:-6px}
-}
-
 /* ============ KANJI TRONG TỪ HÔM NAY (components/roadmap/DayKnowledgeBlock) ============
    Chữ to bên trái; bên phải: Hán Việt, nghĩa, từ của ngày chứa chữ (+ cách đọc trong từ), từ đã gặp trước. */
 .kanji-row{align-items:flex-start}
@@ -1698,3 +1687,13 @@ a.garden-tree:hover .garden-tree-tag{background:#fff;box-shadow:0 0 0 2px #F3B67
 /* Tiêu đề trang học + số đã học (20/104) đứng NGAY cạnh nhau, xuống dòng gọn khi hẹp. */
 .title-count{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px}
 .title-count h1{margin:0}
+
+/* Nhóm "Kiến thức của ngày" thu gọn / mở rộng (components/roadmap/CollapsibleStep) */
+.day-step-toggle{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:2px 10px 2px 4px;border:0;border-radius:999px;background:none;
+  font:inherit;color:var(--ink-2);cursor:pointer;transition:background .15s ease}
+.day-step-toggle:hover{background:#FFF1F4}
+.day-step-toggle .day-step-label{margin:0}
+.day-step-chevron{flex:0 0 auto;color:var(--sakura-deep,#C95A6C);transition:transform .2s ease}
+.day-step.is-collapsed .day-step-chevron{transform:rotate(-90deg)}
+.day-step-head{align-items:center}
+.flashcard-end{margin-top:12px;padding:12px;border-radius:16px;background:#FFF8F2;border:1px dashed #F3D9CF;text-align:center}

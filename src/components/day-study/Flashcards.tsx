@@ -14,13 +14,15 @@ interface FlashcardsProps<T extends { key: string }> {
   footer?: (card: T) => ReactNode;
   marked: ReadonlySet<string>;
   onToggleMark: (key: string) => void;
+  /** Ở thẻ CUỐI: nút đi tiếp (sang bài ôn của bước / bước sau) thay cho nút "Sau" bị mờ. */
+  endActions?: ReactNode;
 }
 
 /**
  * Thẻ lật: mặt trước (chữ / từ / mẫu) → chạm để lật xem nghĩa, cách đọc, ví dụ. Trước / Sau, phím ← → và Space.
  * XEM thẻ không ghi trí nhớ (chỉ trả lời quiz mới ghi) — "Đánh dấu ôn" đưa mục vào bước Ôn tập.
  */
-export function Flashcards<T extends { key: string }>({ cards, unit, front, back, audioText, footer, marked, onToggleMark }: FlashcardsProps<T>) {
+export function Flashcards<T extends { key: string }>({ cards, unit, front, back, audioText, footer, marked, onToggleMark, endActions }: FlashcardsProps<T>) {
   const [index, setIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const card = cards[Math.min(index, cards.length - 1)];
@@ -67,8 +69,11 @@ export function Flashcards<T extends { key: string }>({ cards, unit, front, back
       {footer ? footer(card) : null}
       <div className="flashcard-nav">
         <button type="button" className="btn ghost" onClick={() => go(-1)} disabled={index === 0}>← Trước</button>
-        <button type="button" className="btn" onClick={() => go(1)} disabled={index >= cards.length - 1}>Sau →</button>
+        {index >= cards.length - 1 && endActions ? null : (
+          <button type="button" className="btn" onClick={() => go(1)} disabled={index >= cards.length - 1}>Sau →</button>
+        )}
       </div>
+      {index >= cards.length - 1 && endActions ? <div className="flashcard-end">{endActions}</div> : null}
     </section>
   );
 }

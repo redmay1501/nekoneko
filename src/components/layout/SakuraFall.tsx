@@ -5,8 +5,6 @@ import { type CSSProperties, useEffect, useState } from 'react';
 
 /** Ít cánh hơn = ít lớp phải vẽ khi cuộn; 10 vẫn đủ cảm giác hoa rơi. */
 const PETAL_COUNT = 10;
-/** Màn cần tập trung (đang làm bài) thì không rơi hoa — tránh phân tán. */
-const FOCUS_PATH_PREFIXES = ['/hoc/', '/tri-nho/cuu/', '/gap-lai', '/kham-pha', '/thuc-hanh'];
 
 /** Đa số là bông hoa 5 cánh; thỉnh thoảng một cánh rời bay theo — như cây anh đào thật. */
 const LOOSE_PETAL_RATIO = 0.3;
@@ -42,8 +40,13 @@ function createPetals(): Petal[] {
   });
 }
 
-/** Hoa anh đào rơi nhẹ trên nền — chỉ trang trí: không nhận chuột, ẩn với trình đọc màn hình. */
-export function SakuraFall() {
+/**
+ * Hoa anh đào rơi nhẹ — chỉ trang trí: không nhận chuột, ẩn với trình đọc màn hình, tắt khi "giảm chuyển động".
+ * `paths`: chỉ rơi ở đúng các trang này (khung app truyền ['/'] — hoa rơi tập trung ở trang chủ, không bao giờ phủ lên
+ * chữ / nút ở trang học). Không truyền thì rơi ở mọi trang của layout đó (trang đăng nhập).
+ * Một instance duy nhất trong layout, cánh hoa tạo một lần khi mount — đổi trang không tạo thêm hoạt ảnh.
+ */
+export function SakuraFall({ paths }: { paths?: readonly string[] }) {
   const pathname = usePathname();
   const [petals, setPetals] = useState<Petal[]>([]);
 
@@ -57,7 +60,7 @@ export function SakuraFall() {
     return () => document.removeEventListener('visibilitychange', onVisibility);
   }, []);
 
-  if (FOCUS_PATH_PREFIXES.some((prefix) => pathname.startsWith(prefix))) return null;
+  if (paths && !paths.includes(pathname)) return null;
 
   return (
     <div className={`sakura-fall${isHidden ? ' paused' : ''}`} aria-hidden="true">

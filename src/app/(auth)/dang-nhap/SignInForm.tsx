@@ -1,43 +1,102 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { type FormEvent, useState } from 'react';
-import { USER_MESSAGES } from '@/lib/constants/messages';
+import { type FormEvent, useEffect, useState } from 'react';
+import {
+  type AuthMode, type CredentialErrors, type CredentialField, MIN_SIGN_UP_PASSWORD_LENGTH, authErrorMessage, emailError,
+  normalizeEmail, validateCredentials,
+} from '@/features/auth/credentials';
 import { createBrowserSupabaseClient } from '@/lib/supabase/client';
 import { startNavigation } from '@/stores/navigation-progress-store';
+import { TurnstileWidget } from './TurnstileWidget';
 
-type FormMode = 'sign-in' | 'sign-up';
-const MIN_PASSWORD_LENGTH = 6;
+/** Chờ chừng này giây giữa hai lần gửi email (đăng ký / gửi lại xác nhận / quên mật khẩu) — chặn bấm liên tục. */
+const EMAIL_COOLDOWN_SECONDS = 60;
 
-/** Đăng nhập bằng email/mật khẩu hoặc Google (Supabase Auth). */
-export function SignInForm({ redirectTo, hasConfirmationError }: { redirectTo: string; hasConfirmationError: boolean }) {
+interface SignInFormProps {
+  redirectTo: string;
+  /** Câu báo lỗi từ trang callback (huỷ Google, link xác nhận hết hạn…). */
+  initialMessage: string | null;
+  /** Google chỉ hiện khi đã bật thật trong Supabase Auth. */
+  isGoogleEnabled: boolean;
+  /** Có khoá Turnstile thì hiện ô xác minh; token gửi kèm mọi yêu cầu tới Supabase Auth. */
+  turnstileSiteKey: string | null;
+}
+
+/** Đăng nhập / đăng ký bằng email + mật khẩu hoặc Google (Supabase Auth). Kiểm tra từng ô trước khi gửi. */
+export function SignInForm({ redirectTo, initialMessage, isGoogleEnabled, turnstileSiteKey }: SignInFormProps) {
   const router = useRouter();
-  const [mode, setMode] = useState<FormMode>('sign-in');
+  const [mode, setMode] = useState<AuthMode>('sign-in');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
-  const [message, setMessage] = useState<string | null>(hasConfirmationError ? 'Liên kết xác nhận đã hết hạn. Bạn đăng nhập lại nhé.' : null);
+  const [errors, setErrors] = useState<CredentialErrors>({});
+  const [message, setMessage] = useState<string | null>(initialMessage);
   const [isBusy, setIsBusy] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  /** Email vừa đăng ký nhưng chưa xác nhận — hiện nút "Gửi lại email xác nhận". */
+  const [pendingEmail, setPendingEmail] = useState<string | null>(null);
+  const [cooldown, setCooldown] = useState(0);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaResetKey, setCaptchaResetKey] = useState(0);
+
+  useEffect(() => {
+    if (cooldown <= 0) return undefined;
+    const timer = window.setTimeout(() => setCooldown((value) => value - 1), 1000);
+    return () => window.clearTimeout(timer);
+  }, [cooldown]);
 
   const callbackUrl = () => `${window.location.origin}/auth/callback?tiep=${encodeURIComponent(redirectTo)}`;
+  const isCaptchaMissing = Boolean(turnstileSiteKey) && !captchaToken;
+  /** Token CAPTCHA dùng một lần — sau mỗi yêu cầu xin token mới. */
+  const takeCaptchaToken = () => {
+    const token = captchaToken ?? undefined;
+    if (turnstileSiteKey) setCaptchaResetKey((key) => key + 1);
+    return token;
+  };
+
+  function switchMode(next: AuthMode) {
+    setMode(next);
+    setErrors({});
+    setMessage(null);
+  }
+
+  function clearFieldError(field: CredentialField) {
+    if (errors[field]) setErrors((current) => ({ ...current, [field]: undefined }));
+  }
 
   async function submit(event: FormEvent) {
     event.preventDefault();
-    setIsBusy(true);
+    if (isBusy) return;
+    const found = validateCredentials({ email, password, displayName }, mode);
+    setErrors(found);
     setMessage(null);
+    if (Object.keys(found).length) return;
+    if (mode === 'sign-up' && cooldown > 0) { setMessage(`Đợi ${cooldown} giây rồi thử lại nhé.`); return; }
+    if (isCaptchaMissing) { setMessage('Hoàn tất ô xác minh bên dưới trước nhé.'); return; }
+
+    setIsBusy(true);
     const supabase = createBrowserSupabaseClient();
+    const cleanEmail = normalizeEmail(email);
+    const captcha = takeCaptchaToken();
     const result = mode === 'sign-in'
-      ? await supabase.auth.signInWithPassword({ email, password })
-      : await supabase.auth.signUp({ email, password, options: { data: { display_name: displayName }, emailRedirectTo: callbackUrl() } });
+      ? await supabase.auth.signInWithPassword({ email: cleanEmail, password, options: { captchaToken: captcha } })
+      : await supabase.auth.signUp({
+        email: cleanEmail, password,
+        options: { data: { display_name: displayName.trim() }, emailRedirectTo: callbackUrl(), captchaToken: captcha },
+      });
     if (result.error) {
       setIsBusy(false);
-      setMessage(mode === 'sign-in' ? 'Email hoặc mật khẩu chưa đúng. Bạn thử lại nhé.' : USER_MESSAGES.GENERIC_ERROR);
+      setMessage(authErrorMessage(result.error, mode));
+      if (result.error.code === 'email_not_confirmed') setPendingEmail(cleanEmail);
+      if (mode === 'sign-up') setCooldown(EMAIL_COOLDOWN_SECONDS);
       return;
     }
     if (mode === 'sign-up' && !result.data.session) {
       setIsBusy(false);
-      setMessage('Mình đã gửi email xác nhận. Mở email và bấm vào liên kết để bắt đầu nhé 🌸');
+      setPendingEmail(cleanEmail);
+      setCooldown(EMAIL_COOLDOWN_SECONDS);
+      setMessage('Neko đã gửi email xác nhận. Mở email và bấm vào liên kết để bắt đầu học nhé 🌸');
       return;
     }
     // Đăng nhập xong: giữ nút ở trạng thái bận cho tới khi trang học mở ra.
@@ -46,29 +105,59 @@ export function SignInForm({ redirectTo, hasConfirmationError }: { redirectTo: s
     router.refresh();
   }
 
-  async function sendResetLink() {
-    if (!email.includes('@')) { setMessage('Nhập email của bạn trước, rồi bấm "Quên mật khẩu?" nhé.'); return; }
+  async function resendConfirmation() {
+    if (!pendingEmail || cooldown > 0 || isBusy) return;
+    if (isCaptchaMissing) { setMessage('Hoàn tất ô xác minh bên dưới trước nhé.'); return; }
     setIsBusy(true);
-    const { error } = await createBrowserSupabaseClient().auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/dat-lai-mat-khau` });
+    const { error } = await createBrowserSupabaseClient().auth.resend({
+      type: 'signup', email: pendingEmail, options: { emailRedirectTo: callbackUrl(), captchaToken: takeCaptchaToken() },
+    });
     setIsBusy(false);
+    setCooldown(EMAIL_COOLDOWN_SECONDS);
     // Không cho biết email có tài khoản hay không.
-    setMessage(error?.status === 429 ? 'Bạn vừa yêu cầu rồi — đợi một lúc rồi thử lại nhé.'
+    setMessage(error ? authErrorMessage(error, 'resend') : 'Nếu email này đang chờ xác nhận, Neko đã gửi lại thư. Kiểm tra cả mục Spam nhé.');
+  }
+
+  async function sendResetLink() {
+    const problem = emailError(email);
+    if (problem) { setErrors({ email: problem }); setMessage('Nhập email của bạn trước, rồi bấm "Quên mật khẩu?" nhé.'); return; }
+    if (cooldown > 0 || isBusy) { setMessage(`Đợi ${cooldown} giây rồi thử lại nhé.`); return; }
+    if (isCaptchaMissing) { setMessage('Hoàn tất ô xác minh bên dưới trước nhé.'); return; }
+    setIsBusy(true);
+    const { error } = await createBrowserSupabaseClient().auth.resetPasswordForEmail(normalizeEmail(email), {
+      redirectTo: `${window.location.origin}/dat-lai-mat-khau`, captchaToken: takeCaptchaToken(),
+    });
+    setIsBusy(false);
+    setCooldown(EMAIL_COOLDOWN_SECONDS);
+    // Không cho biết email có tài khoản hay không.
+    setMessage(error?.status === 429 || error?.code === 'captcha_failed' ? authErrorMessage(error, 'reset')
       : 'Nếu email này có tài khoản, Neko đã gửi liên kết đặt lại mật khẩu. Mở email trên chính trình duyệt này nhé 🌸');
   }
 
   async function signInWithGoogle() {
-    const supabase = createBrowserSupabaseClient();
-    const { error } = await supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: callbackUrl() } });
-    if (error) setMessage(USER_MESSAGES.GENERIC_ERROR);
+    if (isBusy) return;
+    setIsBusy(true);
+    setMessage(null);
+    const { error } = await createBrowserSupabaseClient().auth.signInWithOAuth({ provider: 'google', options: { redirectTo: callbackUrl() } });
+    // Thành công thì trình duyệt chuyển sang Google — giữ trạng thái bận; lỗi thì mở lại form.
+    if (error) {
+      setIsBusy(false);
+      setMessage('Chưa mở được đăng nhập Google. Bạn thử lại, hoặc đăng nhập bằng email nhé.');
+    }
   }
 
+  const fieldError = (field: CredentialField) => errors[field]
+    ? <span id={`login-${field}-error`} className="login-field-error" role="alert">{errors[field]}</span> : null;
+  const invalidProps = (field: CredentialField) => (errors[field]
+    ? { 'aria-invalid': true, 'aria-describedby': `login-${field}-error` } : {});
+
   return (
-    <form className="login-form" onSubmit={submit}>
+    <form className="login-form" onSubmit={submit} noValidate>
       <div className="login-tabs" role="tablist" aria-label="Đăng nhập hoặc tạo tài khoản">
-        <button type="button" role="tab" aria-selected={mode === 'sign-in'} className={mode === 'sign-in' ? 'on' : ''} onClick={() => setMode('sign-in')}>
+        <button type="button" role="tab" aria-selected={mode === 'sign-in'} className={mode === 'sign-in' ? 'on' : ''} onClick={() => switchMode('sign-in')}>
           <MailIcon /> Đăng nhập
         </button>
-        <button type="button" role="tab" aria-selected={mode === 'sign-up'} className={mode === 'sign-up' ? 'on' : ''} onClick={() => setMode('sign-up')}>
+        <button type="button" role="tab" aria-selected={mode === 'sign-up'} className={mode === 'sign-up' ? 'on' : ''} onClick={() => switchMode('sign-up')}>
           <UserIcon /> Đăng ký
         </button>
       </div>
@@ -76,43 +165,60 @@ export function SignInForm({ redirectTo, hasConfirmationError }: { redirectTo: s
       {mode === 'sign-up' ? (
         <label className="login-field">
           <span>Tên của bạn</span>
-          <span className="login-input"><UserIcon />
-            <input value={displayName} onChange={(event) => setDisplayName(event.target.value)} required autoComplete="nickname" placeholder="Bạn muốn Neko gọi bạn là gì?" />
+          <span className={`login-input ${errors.displayName ? 'is-invalid' : ''}`}><UserIcon />
+            <input value={displayName} onChange={(event) => { setDisplayName(event.target.value); clearFieldError('displayName'); }}
+              autoComplete="nickname" placeholder="Bạn muốn Neko gọi bạn là gì?" maxLength={60} {...invalidProps('displayName')} />
           </span>
+          {fieldError('displayName')}
         </label>
       ) : null}
       <label className="login-field">
         <span>Email</span>
-        <span className="login-input"><MailIcon />
-          <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required autoComplete="email" placeholder="Nhập email của bạn" />
+        <span className={`login-input ${errors.email ? 'is-invalid' : ''}`}><MailIcon />
+          <input type="email" inputMode="email" value={email} onChange={(event) => { setEmail(event.target.value); clearFieldError('email'); }}
+            onBlur={() => { if (email.trim()) setErrors((current) => ({ ...current, email: emailError(email) ?? undefined })); }}
+            autoComplete="email" placeholder="Nhập email của bạn" {...invalidProps('email')} />
         </span>
+        {fieldError('email')}
       </label>
       <label className="login-field">
         <span>Mật khẩu</span>
-        <span className="login-input"><LockIcon />
-          <input type={isPasswordVisible ? 'text' : 'password'} value={password} minLength={MIN_PASSWORD_LENGTH}
-            onChange={(event) => setPassword(event.target.value)} required autoComplete={mode === 'sign-in' ? 'current-password' : 'new-password'}
-            placeholder={mode === 'sign-in' ? 'Nhập mật khẩu' : `Ít nhất ${MIN_PASSWORD_LENGTH} ký tự`} />
+        <span className={`login-input ${errors.password ? 'is-invalid' : ''}`}><LockIcon />
+          <input type={isPasswordVisible ? 'text' : 'password'} value={password}
+            onChange={(event) => { setPassword(event.target.value); clearFieldError('password'); }}
+            autoComplete={mode === 'sign-in' ? 'current-password' : 'new-password'}
+            placeholder={mode === 'sign-in' ? 'Nhập mật khẩu' : `Ít nhất ${MIN_SIGN_UP_PASSWORD_LENGTH} ký tự`} {...invalidProps('password')} />
           <button type="button" className="login-eye" onClick={() => setIsPasswordVisible((value) => !value)}
             aria-label={isPasswordVisible ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'} aria-pressed={isPasswordVisible}>
             <EyeIcon isOpen={isPasswordVisible} />
           </button>
         </span>
+        {fieldError('password')}
       </label>
 
       {mode === 'sign-in' ? (
         <button type="button" className="login-forgot" onClick={sendResetLink} disabled={isBusy}>Quên mật khẩu?</button>
       ) : null}
+      {turnstileSiteKey ? <TurnstileWidget siteKey={turnstileSiteKey} onToken={setCaptchaToken} resetKey={captchaResetKey} /> : null}
       {message ? <p className="login-message" role="status">{message}</p> : null}
+      {pendingEmail ? (
+        <button type="button" className="login-forgot" onClick={resendConfirmation} disabled={isBusy || cooldown > 0}>
+          {cooldown > 0 ? `Gửi lại email xác nhận (${cooldown}s)` : 'Gửi lại email xác nhận'}
+        </button>
+      ) : null}
 
       <button type="submit" className="login-submit" disabled={isBusy} aria-busy={isBusy}>
         <PawIcon /> {mode === 'sign-in' ? 'Đăng nhập' : 'Tạo tài khoản'} <ArrowIcon />
       </button>
 
-      <div className="login-divider"><span>hoặc đăng nhập với</span></div>
-      <button type="button" className="login-social" onClick={signInWithGoogle} disabled={isBusy}>
-        <GoogleIcon /> Google
-      </button>
+      {isGoogleEnabled ? (
+        <>
+          <div className="login-divider"><span>hoặc {mode === 'sign-in' ? 'đăng nhập' : 'đăng ký'} với</span></div>
+          <button type="button" className="login-social" onClick={signInWithGoogle} disabled={isBusy} aria-busy={isBusy}>
+            <GoogleIcon /> Google
+          </button>
+        </>
+      ) : null}
     </form>
   );
 }

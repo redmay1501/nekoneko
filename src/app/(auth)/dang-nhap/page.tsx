@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { BrandLogo } from '@/components/common/BrandLogo';
 import { APP_NAME } from '@/config/brand';
 import { isDemoMode } from '@/config/env';
+import { callbackErrorMessage } from '@/features/auth/credentials';
+import { getAuthProviders } from '@/features/auth/auth-providers';
 import { SignInForm } from './SignInForm';
 
 /** Bố cục "thẻ khớp khung tranh" chỉ cho máy tính có chuột — phải giống hệt điều kiện @media trong globals.css (.login-*). */
@@ -15,6 +17,7 @@ const DESKTOP_LOGIN_MEDIA = '(min-width: 1100px) and (hover: hover) and (pointer
  */
 export default async function SignInPage({ searchParams }: { searchParams: Promise<{ tiep?: string; loi?: string }> }) {
   const { tiep, loi } = await searchParams;
+  const providers = await getAuthProviders();
   return (
     <main className="login-page">
       <div className="login-scene">
@@ -39,7 +42,8 @@ export default async function SignInPage({ searchParams }: { searchParams: Promi
               <Link className="login-submit" href="/">🐾 Vào học ngay</Link>
             </div>
           ) : (
-            <SignInForm redirectTo={tiep && tiep.startsWith('/') && !tiep.startsWith('//') ? tiep : '/'} hasConfirmationError={loi === 'xac-nhan'} />
+            <SignInForm redirectTo={tiep && tiep.startsWith('/') && !tiep.startsWith('//') ? tiep : '/'} initialMessage={callbackErrorMessage(loi)}
+              isGoogleEnabled={providers.google} turnstileSiteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || null} />
           )}
         </section>
       </div>

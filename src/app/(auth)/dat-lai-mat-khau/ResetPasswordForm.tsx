@@ -2,10 +2,10 @@
 
 import Link from 'next/link';
 import { type FormEvent, useEffect, useState } from 'react';
+import { MIN_SIGN_UP_PASSWORD_LENGTH, passwordError } from '@/features/auth/credentials';
 import { parseRecoveryLink } from '@/features/auth/recovery-link';
 import { createBrowserSupabaseClient } from '@/lib/supabase/client';
 
-const MIN_PASSWORD_LENGTH = 6;
 type Stage = 'checking' | 'ready' | 'invalid' | 'done';
 
 /**
@@ -47,7 +47,8 @@ export function ResetPasswordForm() {
 
   async function submit(event: FormEvent) {
     event.preventDefault();
-    if (password.length < MIN_PASSWORD_LENGTH) { setMessage(`Mật khẩu cần ít nhất ${MIN_PASSWORD_LENGTH} ký tự.`); return; }
+    const problem = passwordError(password, 'sign-up');
+    if (problem) { setMessage(problem); return; }
     if (password !== confirm) { setMessage('Hai ô mật khẩu chưa khớp.'); return; }
     setIsBusy(true);
     setMessage(null);
@@ -85,14 +86,14 @@ export function ResetPasswordForm() {
       <label className="login-field">
         <span>Mật khẩu mới</span>
         <span className="login-input">
-          <input type="password" value={password} minLength={MIN_PASSWORD_LENGTH} onChange={(event) => setPassword(event.target.value)}
-            required autoComplete="new-password" placeholder={`Ít nhất ${MIN_PASSWORD_LENGTH} ký tự`} />
+          <input type="password" value={password} minLength={MIN_SIGN_UP_PASSWORD_LENGTH} onChange={(event) => setPassword(event.target.value)}
+            required autoComplete="new-password" placeholder={`Ít nhất ${MIN_SIGN_UP_PASSWORD_LENGTH} ký tự`} />
         </span>
       </label>
       <label className="login-field">
         <span>Nhập lại mật khẩu mới</span>
         <span className="login-input">
-          <input type="password" value={confirm} minLength={MIN_PASSWORD_LENGTH} onChange={(event) => setConfirm(event.target.value)}
+          <input type="password" value={confirm} minLength={MIN_SIGN_UP_PASSWORD_LENGTH} onChange={(event) => setConfirm(event.target.value)}
             required autoComplete="new-password" />
         </span>
       </label>

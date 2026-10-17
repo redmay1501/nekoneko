@@ -816,6 +816,10 @@ input[type="radio"]{appearance:auto;-webkit-appearance:radio;width:18px;height:1
 .login-eye:hover{background:#FFF0F2;color:#F07B8C}
 .login-forgot{align-self:flex-end;margin-top:-.3em;font-size:.82em;font-weight:600;color:#C2566A;text-decoration:underline;text-underline-offset:2px}
 .login-forgot:disabled{opacity:.6}
+.login-field-error{display:block;margin:.35em 1.1em 0;color:#C2415A;font-size:.8em;font-weight:600;line-height:1.35}
+.login-input.is-invalid{border-color:#F2798C;box-shadow:0 0 0 3px rgba(242,121,140,.14)}
+.login-captcha{display:flex;justify-content:center}
+.login-captcha:empty{display:none}
 .login-message{margin:0;padding:.6em .9em;border-radius:16px;background:#FFF1F3;color:#B4475A;font-size:.85em;line-height:1.45}
 .login-submit{position:relative;display:flex;align-items:center;justify-content:center;gap:.5em;min-height:3.25em;margin-top:.2em;
   border-radius:999px;overflow:hidden;color:#fff;font-size:1.04em;font-weight:700;letter-spacing:.01em;text-decoration:none;

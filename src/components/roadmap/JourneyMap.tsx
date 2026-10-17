@@ -12,7 +12,10 @@ const TORII_SIZE = 42;
 
 interface JourneyMapProps {
   currentDay: number;
+  /** Ngày người học bắt đầu (profiles.start_date — ghi khi tạo tài khoản, không suy ra từ hôm nay). */
   startDateLabel: string;
+  /** Nội dung ngày 1 của lộ trình (từ dữ liệu, vd. "Hiragana: hàng あ・か"). */
+  firstDayTitle: string;
   isJourneyComplete: boolean;
   /** Ngày (đã qua) còn kiến thức chưa học — vẽ "còn học bù" thay vì "đã xong". */
   unfinishedDays?: number[];
@@ -33,7 +36,7 @@ const DOT_GRADIENTS = {
  * torii đầu mỗi chặng, sakura mỗi tuần, Phú Sĩ cuối đường.
  * Toạ độ do journey-map-layout.ts tính — component chỉ vẽ.
  */
-export function JourneyMap({ currentDay, startDateLabel, isJourneyComplete, unfinishedDays = [] }: JourneyMapProps) {
+export function JourneyMap({ currentDay, startDateLabel, firstDayTitle, isJourneyComplete, unfinishedDays = [] }: JourneyMapProps) {
   const router = useRouter();
   const unfinished = new Set(unfinishedDays);
   const { width, height, pathData, nodes, stageBanners, finish } = buildJourneyMapLayout(currentDay, isJourneyComplete, (day) => !unfinished.has(day));
@@ -73,9 +76,9 @@ export function JourneyMap({ currentDay, startDateLabel, isJourneyComplete, unfi
         <path d={pathData} stroke="#FFF7EC" strokeWidth="20" fill="none" strokeLinecap="round" strokeLinejoin="round" />
         <path d={pathData} stroke="#F0C994" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeDasharray="1 13" />
         <g transform={`translate(${width / 2 - 110},18)`}>
-          <rect x="22" y="0" width="176" height="52" rx="18" fill="#FFFFFF" opacity=".82" />
-          <text x="110" y="22" textAnchor="middle" fontSize="15" fontWeight="800" fill="#5E5A57" fontFamily={FONT}>Bắt đầu từ đây</text>
-          <text x="110" y="41" textAnchor="middle" fontSize="11.5" fill="#8E8781" fontFamily={FONT}>{startDateLabel} · あいうえお</text>
+          <rect x="0" y="0" width="220" height="52" rx="18" fill="#FFFFFF" opacity=".86" />
+          <text x="110" y="22" textAnchor="middle" fontSize="14" fontWeight="800" fill="#5E5A57" fontFamily={FONT}>Ngày bắt đầu học: {startDateLabel}</text>
+          <text x="110" y="41" textAnchor="middle" fontSize="11.5" fill="#8E8781" fontFamily={FONT}>Ngày 1 · {firstDayTitle}</text>
         </g>
 
         {nodes.filter((node) => node.isWeekMark).map((node) => (
@@ -107,7 +110,8 @@ export function JourneyMap({ currentDay, startDateLabel, isJourneyComplete, unfi
               <circle className="touch-target" cx={node.x} cy={node.y} r="22" fill="transparent" />
               {/* Chấm 3D: đế đậm lệch xuống + mặt chuyển màu + vệt bóng sáng; số có bóng đổ 1px. */}
               <g className="day-face">
-                <circle className="day-lip" cx={node.x} cy={node.y + 2.6} r={node.radius} />
+                <ellipse className="day-shadow" cx={node.x} cy={node.y + node.radius + 2.5} rx={node.radius * 0.9} ry={node.radius * 0.3} />
+                <circle className="day-lip" cx={node.x} cy={node.y + 3} r={node.radius} />
                 <circle className="hit day-dot" cx={node.x} cy={node.y} r={node.radius} fill={`url(#dot-${node.state})`} />
                 <ellipse className="day-gloss" cx={node.x} cy={node.y - node.radius * 0.5} rx={node.radius * 0.62} ry={node.radius * 0.26} />
                 <text className="day-number-shadow" x={node.x} y={node.y + 1.2} textAnchor="middle" dominantBaseline="central" fontFamily={FONT}>{node.day}</text>

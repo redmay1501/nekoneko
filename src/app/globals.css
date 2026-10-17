@@ -1476,10 +1476,13 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 @media print{.splash{display:none!important}}
 
 /* Mèo (Lottie loader-cat, khung 280×200) ngồi trên mép trên thẻ "Học hôm nay": chân mèo ở 85% chiều cao khung
-   → đẩy khung lên 85% để chân mèo chạm mép thẻ; đuôi thòng xuống mặt thẻ. */
-.dash-today-cat{position:absolute;z-index:2;right:96px;top:calc(var(--cat-h) * -0.85);width:calc(var(--cat-h) * 1.4);height:var(--cat-h);
+   → đẩy khung lên ~80% để chân mèo ngồi hẳn lên mép thẻ; đuôi thòng xuống mặt thẻ. */
+.dash-today-cat{position:absolute;z-index:2;right:96px;top:calc(var(--cat-h) * -0.8);width:calc(var(--cat-h) * 1.4);height:var(--cat-h);
   --cat-h:160px;pointer-events:none}
 .dash-today-cat svg{overflow:visible}
+/* lottie-web luôn cắt nhóm gốc theo đúng khung animation (clip-path = hình chữ nhật 280×200) → đuôi đã xoay thòng xuống
+   bị cắt ngang ở mép khung (trông như thẻ che mất đuôi). CSS clip-path thắng thuộc tính SVG → bỏ cắt cho mèo này. */
+.dash-today-cat svg > g{clip-path:none}
 @media (max-width:767px){.dash-today-cat{--cat-h:120px;right:70px} .dash-today{margin-top:76px}}
 /* Mèo trong thùng (Lottie cat-in-box) ở đầu hộp chào mỗi ngày. */
 .daily-greeting-cat{width:170px;height:170px;margin:4px auto -10px}
@@ -1584,7 +1587,9 @@ a.garden-tree:hover .garden-tree-tag{background:#fff;box-shadow:0 0 0 2px #F3B67
 .daynode.is-partial .day-number-shadow{fill:#FFD3DB}
 .daynode.is-today .day-lip{fill:#A92B44}
 .daynode.is-today .day-number-shadow{fill:#A92B44;font-size:14.5px}
-.daynode.is-upcoming .day-dot{stroke:#E9DCD5;stroke-width:1.4} .daynode.is-upcoming .day-lip{fill:#DCCBC1}
+.daynode.is-upcoming .day-dot{stroke:#E2D2C9;stroke-width:1.5} .daynode.is-upcoming .day-lip{fill:#D3BEB1}
+/* Bóng đổ mềm dưới mỗi chấm (elip — rẻ hơn filter khi có 90 chấm) cho chấm trắng "nổi" khỏi nền cát. */
+.daynode .day-shadow{fill:rgba(150,95,55,.2);pointer-events:none}
 .daynode.is-upcoming .day-number-shadow{fill:#fff}
 .daynode .day-badge circle{fill:#4FC491}
 .stage-banner text{paint-order:stroke;stroke:#fff;stroke-width:3px}

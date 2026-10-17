@@ -27,7 +27,8 @@ export default async function RoadmapPage() {
       <p className="soft sm mb-4">
         Một con đường, bốn chặng, kết thúc ở kỳ thi. Chạm vào một ngày bất kỳ để xem việc cần làm. Học xong ngày nào, bấm Hoàn thành là ngày sau mở ngay — nghỉ vài hôm cũng không bị trôi lộ trình.
       </p>
-      <JourneyMap currentDay={journeyDay} startDateLabel={formatVietnameseDate(profile.startDate)} isJourneyComplete={journey.isJourneyComplete}
+      <JourneyMap currentDay={journeyDay} startDateLabel={formatVietnameseDate(profile.startDate)}
+        firstDayTitle={(catalog.content.journeyDays[0]?.title ?? '').replace(/\s*\(.*?\)\s*$/, '')} isJourneyComplete={journey.isJourneyComplete}
         unfinishedDays={unfinishedDays} />
 
       <div className="sec-h"><h2>Bốn chặng đường</h2></div>

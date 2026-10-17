@@ -18,6 +18,8 @@ interface LottieAnimationProps {
   viewBox?: string;
   /** Chạy từ đầu tới khung này rồi dừng (ví dụ: số sao của mèo chấm điểm). Bỏ trống = chạy cả animation. */
   playTo?: number;
+  /** Chỉ lặp đúng đoạn [từ, tới] (vd. mèo ngồi trên thùng, không lặp tới đoạn chui vào thùng). */
+  loopSegment?: [number, number];
   /** contain (mặc định): vừa khung · cover: phủ kín khung, cắt bớt mép (dùng làm nền). */
   fit?: 'contain' | 'cover';
 }
@@ -30,7 +32,7 @@ type LottiePlayer = { destroy: () => void; play: () => void; pause: () => void; 
  *  - Ra khỏi màn hình thì tạm dừng (IntersectionObserver) cho đỡ tốn pin; vào lại thì chạy tiếp.
  *  - "Giảm chuyển động" → đứng yên ở `stillFrame`. Tải lỗi → để trống, không ảnh hưởng trang.
  */
-export function LottieAnimation({ src, className = '', hideLayers, stillFrame = 0, player: playerKind = 'light', loop = true, viewBox, playTo, fit = 'contain' }: LottieAnimationProps) {
+export function LottieAnimation({ src, className = '', hideLayers, stillFrame = 0, player: playerKind = 'light', loop = true, viewBox, playTo, loopSegment, fit = 'contain' }: LottieAnimationProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const hidden = hideLayers?.join('|') ?? '';
 
@@ -51,10 +53,11 @@ export function LottieAnimation({ src, className = '', hideLayers, stillFrame = 
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const isOnce = !loop || playTo !== undefined;
         player = lottie.loadAnimation({
-          container, renderer: 'svg', loop: !isOnce, autoplay: !reduceMotion && playTo === undefined, animationData: data,
+          container, renderer: 'svg', loop: !isOnce, autoplay: !reduceMotion && playTo === undefined && !loopSegment, animationData: data,
           rendererSettings: { preserveAspectRatio: fit === 'cover' ? 'xMidYMid slice' : 'xMidYMid meet', ...(viewBox ? { viewBoxSize: viewBox } : {}) },
         }) as LottiePlayer;
         if (reduceMotion) { player.goToAndStop(playTo ?? stillFrame, true); return; }
+        if (loopSegment) { (player as LottiePlayer & { playSegments: (segment: [number, number], force: boolean) => void }).playSegments(loopSegment, true); return; }
         if (playTo !== undefined) { (player as LottiePlayer & { playSegments: (segment: [number, number], force: boolean) => void }).playSegments([0, playTo], true); return; }
         if (isOnce) return;
         observer = new IntersectionObserver(([entry]) => { if (entry?.isIntersecting) player?.play(); else player?.pause(); });
@@ -68,7 +71,7 @@ export function LottieAnimation({ src, className = '', hideLayers, stillFrame = 
       observer?.disconnect();
       player?.destroy();
     };
-  }, [src, hidden, stillFrame, playerKind, loop, viewBox, playTo, fit]);
+  }, [src, hidden, stillFrame, playerKind, loop, viewBox, playTo, fit, loopSegment?.[0], loopSegment?.[1]]); // eslint-disable-line react-hooks/exhaustive-deps -- so sánh theo giá trị đoạn
 
   return <div ref={containerRef} className={className} aria-hidden="true" />;
 }

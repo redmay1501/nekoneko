@@ -45,7 +45,8 @@ export function DailyGreetingDialog({ greeting, displayName }: { greeting: Daily
   return (
     <ModalPortal className="welcome daily-greeting" labelledBy="daily-greeting-title" onEscape={close}>
       <div className="center">
-        <LottieAnimation src="/animations/cat-in-box.json" className="daily-greeting-cat" stillFrame={40} />
+        {/* Chỉ lặp đoạn mèo ngồi trên thùng (frame 0–20): đoạn sau của animation mèo chui dần vào thùng — trông như mèo co lại. */}
+        <LottieAnimation src="/animations/cat-in-box.json" className="daily-greeting-cat" stillFrame={10} loopSegment={[0, 20]} />
         <h2 id="daily-greeting-title" className="mt-2">{salutation}, {displayName}! 🌸</h2>
         <p className="soft mt-2">{greeting.message}</p>
         {greeting.todayLine ? <p className="chip mint mt-3" style={{ display: 'inline-flex' }}>{greeting.todayLine}</p> : null}

@@ -8,13 +8,14 @@ import { buildDayStatuses, completedDayCount } from '@/features/roadmap/journey-
 import { formatVietnameseDate } from '@/lib/utils/format';
 import { percentOf } from '@/lib/utils/text';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
+import { StartingPointButton } from '@/components/roadmap/StartingPointButton';
 
 /** SC-11 · Lộ trình 90 ngày — một con đường, bốn chặng, kết thúc ở kỳ thi. */
 export default async function RoadmapPage() {
-  const { journeyDay, journey, profile, catalog, memoryViews } = await getLearnerContext();
+  const { journeyDay, journey, profile, catalog, memoryViews, completedJourneyDays } = await getLearnerContext();
+  const dayStatuses = buildDayStatuses(catalog, memoryViews, journeyDay, completedJourneyDays);
   // Ngày đã qua mà còn kiến thức chưa học (đã bấm Hoàn thành nhưng phần còn lại chuyển sang Học bù).
-  const unfinishedDays = buildDayStatuses(catalog, memoryViews, journeyDay)
-    .filter((entry) => entry.day < journeyDay && entry.status !== 'done').map((entry) => entry.day);
+  const unfinishedDays = dayStatuses.filter((entry) => entry.day < journeyDay && entry.status !== 'done').map((entry) => entry.day);
   const completedDays = completedDayCount(journey);
   const daysLeft = JOURNEY_TOTAL_DAYS - completedDays;
 
@@ -27,8 +28,8 @@ export default async function RoadmapPage() {
       <p className="soft sm mb-4">
         Một con đường, bốn chặng, kết thúc ở kỳ thi. Chạm vào một ngày bất kỳ để xem việc cần làm. Học xong ngày nào, bấm Hoàn thành là ngày sau mở ngay — nghỉ vài hôm cũng không bị trôi lộ trình.
       </p>
-      <JourneyMap currentDay={journeyDay} startDateLabel={formatVietnameseDate(profile.startDate)}
-        firstDayTitle={(catalog.content.journeyDays[0]?.title ?? '').replace(/\s*\(.*?\)\s*$/, '')} isJourneyComplete={journey.isJourneyComplete}
+      <StartingPointButton days={dayStatuses} currentDay={journeyDay} />
+      <JourneyMap currentDay={journeyDay} startDateLabel={formatVietnameseDate(profile.startDate)} isJourneyComplete={journey.isJourneyComplete}
         unfinishedDays={unfinishedDays} />
 
       <div className="sec-h"><h2>Bốn chặng đường</h2></div>

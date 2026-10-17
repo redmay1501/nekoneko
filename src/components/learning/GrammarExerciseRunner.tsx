@@ -1,9 +1,11 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useReducer, useRef, useState, type RefObject } from 'react';
 import { AudioButton } from '@/components/common/AudioButton';
 import { useEnterToContinue } from '@/hooks/useEnterToContinue';
+import { useScrollToAnswerFeedback } from '@/hooks/useScrollToAnswerFeedback';
 import { type GrammarExercise, GRAMMAR_EXERCISE_KINDS, isExerciseCorrect, whyWrong } from '@/features/learning/grammar-exercises';
+import { createGrammarRunnerState, grammarRunnerReducer } from './grammar-exercise-runner-state';
 
 export type GrammarRunMode = 'luyen-tap' | 'kiem-tra';
 
@@ -17,36 +19,25 @@ const KIND_LABEL = Object.fromEntries(GRAMMAR_EXERCISE_KINDS.map((kind) => [kind
  * Chấm trong trình duyệt, KHÔNG ghi trí nhớ (Memory Engine chỉ đổi qua phiên học / ôn tập).
  */
 export function GrammarExerciseRunner({ exercises, mode, title }: { exercises: GrammarExercise[]; mode: GrammarRunMode; title: string }) {
-  const [index, setIndex] = useState(0);
-  const [answers, setAnswers] = useState<Array<string | null>>(() => exercises.map(() => null));
-  const [isRevealed, setIsRevealed] = useState(false); // luyện tập: câu hiện tại đã xem đáp án
-  const [isSubmitted, setIsSubmitted] = useState(false); // kiểm tra: đã nộp bài
-  const [isFinished, setIsFinished] = useState(false); // luyện tập: đã qua câu cuối
+  const [state, dispatch] = useReducer(grammarRunnerReducer, exercises.length, createGrammarRunnerState);
+  const { index, answers, isRevealed, isSubmitted, isFinished } = state;
   const exercise = exercises[index];
   const answer = answers[index];
+  const nextButtonRef = useRef<HTMLButtonElement>(null);
+  useScrollToAnswerFeedback(nextButtonRef, mode === 'luyen-tap' ? answer : null);
 
-  function setAnswer(value: string | null) {
-    setAnswers((current) => current.map((entry, position) => (position === index ? value : entry)));
+  function setAnswer(value: string | null, reveal = false) {
+    dispatch({ type: 'answer', value, reveal });
   }
   function choose(value: string) {
     if (mode === 'luyen-tap' && isRevealed) return;
-    setAnswer(value);
-    if (mode === 'luyen-tap') setIsRevealed(true);
+    setAnswer(value, mode === 'luyen-tap');
   }
   function next() {
-    if (index + 1 >= exercises.length) {
-      if (mode === 'luyen-tap') setIsFinished(true);
-      return;
-    }
-    setIndex(index + 1);
-    setIsRevealed(false);
+    dispatch({ type: 'next', length: exercises.length, training: mode === 'luyen-tap' });
   }
   function restart() {
-    setIndex(0);
-    setAnswers(exercises.map(() => null));
-    setIsRevealed(false);
-    setIsSubmitted(false);
-    setIsFinished(false);
+    dispatch({ type: 'restart', length: exercises.length });
   }
 
   useEnterToContinue(mode === 'luyen-tap' && isRevealed && !isFinished, next);
@@ -54,23 +45,10 @@ export function GrammarExerciseRunner({ exercises, mode, title }: { exercises: G
   if (!exercises.length) return <p className="card tight sm soft">Phần này chưa có bài tập.</p>;
 
   const answeredCount = answers.filter((value) => value !== null).length;
-  const correctCount = exercises.filter((entry, position) => isExerciseCorrect(entry, answers[position])).length;
 
   if ((mode === 'kiem-tra' && isSubmitted) || (mode === 'luyen-tap' && isFinished)) {
     return (
-      <section className="card gx-result" aria-live="polite">
-        <p className="chip mint">{mode === 'kiem-tra' ? 'Đã nộp bài' : 'Luyện xong'}</p>
-        <p className="study-result-score">{correctCount}/{exercises.length} câu đúng</p>
-        {mode === 'kiem-tra' && answeredCount < exercises.length ? (
-          <p className="sm soft">{exercises.length - answeredCount} câu bỏ trống được tính là sai.</p>
-        ) : null}
-        <button type="button" className="btn ghost mt-3" onClick={restart}>↻ Làm lại</button>
-        {mode === 'kiem-tra' ? (
-          <ol className="gx-review mt-4">
-            {exercises.map((entry, position) => <ReviewItem key={entry.id} exercise={entry} answer={answers[position]} number={position + 1} />)}
-          </ol>
-        ) : null}
-      </section>
+      <GrammarExerciseResults mode={mode} exercises={exercises} answers={answers} onRestart={restart} />
     );
   }
 
@@ -81,16 +59,16 @@ export function GrammarExerciseRunner({ exercises, mode, title }: { exercises: G
         <span className="tiny muted">Câu {index + 1}/{exercises.length} · {KIND_LABEL[exercise.kind]}</span>
         <span className="chip lav jp">{exercise.pattern}</span>
       </div>
-      <div className="study-progress" aria-hidden="true"><span style={{ width: `${(index / exercises.length) * 100}%` }} /></div>
+      <div className="study-progress" aria-hidden="true"><span style={{ width: `${((index + 1) / exercises.length) * 100}%` }} /></div>
       <p className={`study-prompt ${exercise.isPromptJapanese ? 'jp' : ''}`}>{exercise.prompt}</p>
-      {exercise.kind === 'nhat-viet' || exercise.kind === 'tro-tu' ? (
-        <div className="center"><AudioButton text={exercise.kind === 'tro-tu' ? exercise.sentence.reading || exercise.sentence.jp : exercise.sentence.reading || exercise.prompt}
+      {exercise.kind === 'nhat-viet' || exercise.kind === 'tro-tu' || exercise.kind === 'dien-tu' ? (
+        <div className="center"><AudioButton text={exercise.kind === 'tro-tu' || exercise.kind === 'dien-tu' ? exercise.sentence.reading || exercise.sentence.jp : exercise.sentence.reading || exercise.prompt}
           label="Nghe câu" className="btn ghost sm" /></div>
       ) : null}
 
       {exercise.kind === 'sap-xep' ? (
         <OrderPieces key={exercise.id} exercise={exercise} value={answer} isLocked={showFeedback} onChange={setAnswer}
-          onComplete={(value) => { setAnswer(value); if (mode === 'luyen-tap') setIsRevealed(true); }} />
+          onComplete={(value) => setAnswer(value, mode === 'luyen-tap')} />
       ) : (
         <div className="quiz-options mt-3" role="group" aria-label="Chọn đáp án">
           {exercise.options.map((option, position) => {
@@ -110,22 +88,47 @@ export function GrammarExerciseRunner({ exercises, mode, title }: { exercises: G
       )}
 
       {showFeedback ? (
-        <Feedback exercise={exercise} answer={answer} onNext={next} isLast={index + 1 === exercises.length} />
+        <Feedback exercise={exercise} answer={answer} onNext={next} isLast={index + 1 === exercises.length} nextButtonRef={nextButtonRef} />
       ) : null}
 
       {mode === 'kiem-tra' ? (
         <div className="gx-test-nav">
-          <button type="button" className="btn ghost sm" onClick={() => setIndex(index - 1)} disabled={index === 0}>← Câu trước</button>
+          <button type="button" className="btn ghost sm" onClick={() => dispatch({ type: 'previous' })} disabled={index === 0}>← Câu trước</button>
           {index + 1 < exercises.length ? (
-            <button type="button" className="btn sm" onClick={() => setIndex(index + 1)}>Câu sau →</button>
+            <button type="button" className="btn sm" onClick={next}>Câu sau →</button>
           ) : (
             <button type="button" className="btn sm" onClick={() => {
               const missing = exercises.length - answeredCount;
               if (missing && !window.confirm(`Còn ${missing} câu chưa trả lời — các câu này sẽ tính là sai. Nộp bài?`)) return;
-              setIsSubmitted(true);
+              dispatch({ type: 'submit' });
             }}>Nộp bài ({answeredCount}/{exercises.length})</button>
           )}
         </div>
+      ) : null}
+    </section>
+  );
+}
+
+export function GrammarExerciseResults({ mode, exercises, answers, onRestart }: {
+  mode: GrammarRunMode;
+  exercises: GrammarExercise[];
+  answers: Array<string | null>;
+  onRestart: () => void;
+}) {
+  const answeredCount = answers.filter((value) => value !== null).length;
+  const correctCount = exercises.filter((entry, position) => isExerciseCorrect(entry, answers[position])).length;
+  return (
+    <section className="card gx-result" aria-live="polite">
+      <p className="chip mint">{mode === 'kiem-tra' ? 'Đã nộp bài' : 'Luyện xong'}</p>
+      <p className="study-result-score">{correctCount}/{exercises.length} câu đúng</p>
+      {mode === 'kiem-tra' && answeredCount < exercises.length ? (
+        <p className="sm soft">{exercises.length - answeredCount} câu bỏ trống được tính là sai.</p>
+      ) : null}
+      <button type="button" className="btn ghost mt-3" onClick={onRestart}>↻ Làm lại</button>
+      {mode === 'kiem-tra' ? (
+        <ol className="gx-review mt-4">
+          {exercises.map((entry, position) => <ReviewItem key={entry.id} exercise={entry} answer={answers[position]} number={position + 1} />)}
+        </ol>
       ) : null}
     </section>
   );
@@ -179,16 +182,18 @@ function OrderPieces({ exercise, value, isLocked, onChange, onComplete }: {
   );
 }
 
-function Feedback({ exercise, answer, onNext, isLast }: { exercise: GrammarExercise; answer: string | null; onNext: () => void; isLast: boolean }) {
+function Feedback({ exercise, answer, onNext, isLast, nextButtonRef }: { exercise: GrammarExercise; answer: string | null; onNext: () => void; isLast: boolean; nextButtonRef: RefObject<HTMLButtonElement | null> }) {
   const isCorrect = isExerciseCorrect(exercise, answer);
   const wrongReason = answer !== null ? whyWrong(exercise, answer) : null;
+  const correctAnswer = exercise.kind === 'sap-xep' ? exercise.sentence.jp : exercise.answer;
   return (
     <div className={`feedback ${isCorrect ? '' : 'miss'}`}>
       <p>{isCorrect ? 'Đúng rồi! 🎉' : 'Chưa đúng — xem giải thích nhé.'}</p>
+      {!isCorrect ? <p className="sm mt-1">Đáp án chính xác: <b className={exercise.kind === 'nhat-viet' ? '' : 'jp'}>{correctAnswer}</b></p> : null}
       <SentenceLine exercise={exercise} />
       {wrongReason ? <p className="sm mt-1">✗ {wrongReason}</p> : null}
       <p className="sm mt-1">✓ {exercise.explanation}</p>
-      <button type="button" className="btn block mt-3" onClick={onNext}>{isLast ? 'Xem kết quả' : 'Câu tiếp theo'}</button>
+      <button ref={nextButtonRef} type="button" className="btn block mt-3" onClick={onNext}>{isLast ? 'Xem kết quả' : 'Câu tiếp theo'}</button>
     </div>
   );
 }
@@ -213,9 +218,8 @@ function ReviewItem({ exercise, answer, number }: { exercise: GrammarExercise; a
     <li className={`gx-review-item ${isCorrect ? 'is-correct' : 'is-wrong'}`}>
       <div className="between"><b className="sm">Câu {number} · {KIND_LABEL[exercise.kind]}</b><span className="sm">{isCorrect ? '✓ Đúng' : answer === null ? '— Bỏ trống' : '✗ Sai'}</span></div>
       <p className={`sm mt-1 ${exercise.isPromptJapanese ? 'jp' : ''}`}>{exercise.prompt}</p>
-      {!isCorrect ? (
-        <p className="sm mt-1">Bạn chọn: <b className={exercise.kind === 'nhat-viet' ? '' : 'jp'}>{answer ?? '(chưa trả lời)'}</b> · Đáp án: <b className={exercise.kind === 'nhat-viet' ? '' : 'jp'}>{exercise.kind === 'sap-xep' ? exercise.sentence.jp : exercise.answer}</b></p>
-      ) : null}
+      {!isCorrect ? <p className="sm mt-1">Bạn chọn: <b className={exercise.kind === 'nhat-viet' ? '' : 'jp'}>{answer ?? '(chưa trả lời)'}</b></p> : null}
+      <p className="sm mt-1">Đáp án chính xác: <b className={exercise.kind === 'nhat-viet' ? '' : 'jp'}>{exercise.kind === 'sap-xep' ? exercise.sentence.jp : exercise.answer}</b></p>
       {reason ? <p className="tiny mt-1">✗ {reason}</p> : null}
       <p className="tiny muted mt-1">✓ {exercise.explanation}</p>
     </li>

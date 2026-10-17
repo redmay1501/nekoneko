@@ -153,6 +153,22 @@ export class SupabaseDataSource implements LearningDataSource {
     return { hasAdvanced: result.advanced, currentDay: result.current_day, isJourneyComplete: result.journey_completed };
   }
 
+  async setJourneyStartingPoint(userId: string, completedThroughDay: number): Promise<JourneyAdvanceResult> {
+    const { data, error } = await this.getAdminClient().rpc('set_journey_starting_point', {
+      p_user_id: userId,
+      p_completed_through_day: completedThroughDay,
+    });
+    throwIfError(error, 'khôi phục vị trí lộ trình');
+    const result = data as { advanced: boolean; current_day: number; journey_completed: boolean };
+    return { hasAdvanced: result.advanced, currentDay: result.current_day, isJourneyComplete: result.journey_completed };
+  }
+
+  async listJourneyCompletionDays(userId: string): Promise<number[]> {
+    const { data, error } = await this.userClient.from('journey_day_completions').select('day').eq('user_id', userId);
+    throwIfError(error, 'đọc ngày lộ trình đã hoàn thành');
+    return (data ?? []).map((row) => Number(row.day));
+  }
+
   async getSettings(userId: string): Promise<LearnerSettings> {
     const { data, error } = await this.userClient.from('user_settings').select('*').eq('user_id', userId).maybeSingle();
     throwIfError(error, 'đọc cài đặt');

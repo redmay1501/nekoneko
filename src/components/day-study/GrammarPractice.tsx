@@ -1,8 +1,9 @@
 'use client';
 
-import { type FormEvent, useMemo, useState } from 'react';
+import { type FormEvent, useMemo, useRef, useState } from 'react';
 import { AudioButton } from '@/components/common/AudioButton';
 import { useEnterToContinue } from '@/hooks/useEnterToContinue';
+import { useScrollToAnswerFeedback } from '@/hooks/useScrollToAnswerFeedback';
 import { shuffle } from '@/features/games/match-game';
 import { orderTokens } from '@/features/learning/day-study-quiz';
 import type { StudyGrammarCard, StudyGrammarExample } from '@/features/learning/day-study';
@@ -35,6 +36,8 @@ export function GrammarPractice({ cards, kind, onRestart }: { cards: readonly St
   const [typed, setTyped] = useState('');
   const [placed, setPlaced] = useState<Piece[]>([]);
   const item = items[index];
+  const nextButtonRef = useRef<HTMLButtonElement>(null);
+  useScrollToAnswerFeedback(nextButtonRef, result);
   const pieces = useMemo(() => (item ? shuffle(item.tokens.map((text, position) => ({ index: position, text }))) : []), [item]);
 
   function check(isCorrect: boolean) {
@@ -120,7 +123,7 @@ export function GrammarPractice({ cards, kind, onRestart }: { cards: readonly St
             <AudioButton text={item.example.reading || item.example.jp} />
           </div>
           {item.example.romaji ? <p className="romaji">{item.example.romaji}</p> : null}
-          <button type="button" className="btn block mt-3" onClick={next}>{index + 1 === items.length ? 'Xem kết quả' : 'Câu tiếp theo'}</button>
+          <button ref={nextButtonRef} type="button" className="btn block mt-3" onClick={next}>{index + 1 === items.length ? 'Xem kết quả' : 'Câu tiếp theo'}</button>
         </div>
       ) : null}
     </section>

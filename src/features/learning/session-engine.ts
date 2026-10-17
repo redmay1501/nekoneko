@@ -55,6 +55,8 @@ export interface BuildLearningSessionInput {
   catalog: KnowledgeCatalog;
   memoryViews: ReadonlyMap<ContentKey, MemoryView>;
   journeyDay: number;
+  /** Ngày người học đã chủ động hoàn thành hoặc bỏ qua; không đưa kiến thức các ngày này vào học bù. */
+  completedJourneyDays?: readonly number[];
   /** Chế độ "focus": đúng những kiến thức người học chọn (đã lọc hợp lệ, tối đa MAX_FOCUS_ITEMS). */
   focusKeys?: readonly ContentKey[];
 }
@@ -155,30 +157,32 @@ export function unmetKnowledgeOfDay(
 }
 
 /**
- * HỌC BÙ (BACKLOG): kiến thức của các ngày TRƯỚC ngày đang học mà người học chưa gặp lần nào — ví dụ bấm
- * "Hoàn thành ngày" khi còn sót, hoặc bỏ dở. Suy ra từ trí nhớ (không có bảng riêng) nên không bao giờ mất:
- * còn chưa gặp thì vẫn nằm đây. Ngày cũ nhất trước, trong ngày theo thứ tự cố định.
+ * HỌC BÙ (BACKLOG): kiến thức chưa gặp của các ngày trước mà người học CHƯA xác nhận hoàn thành / bỏ qua.
+ * Những ngày đã được xác nhận thì không quay lại thành học bù; kiến thức đã học vẫn được Memory Engine nhắc ôn đúng hạn.
  */
 export function backlogKnowledge(
   catalog: KnowledgeCatalog,
   memoryViews: ReadonlyMap<ContentKey, MemoryView>,
   journeyDay: number,
+  completedJourneyDays: readonly number[] = [],
 ): KnowledgeItem[] {
+  const completed = new Set(completedJourneyDays);
   const unmet = itemsScheduledUpTo(catalog, journeyDay - 1)
-    .filter((item) => (memoryViews.get(item.key)?.encounterCount ?? 0) < MIN_ENCOUNTERS_TO_COUNT_AS_MET);
+    .filter((item) => !completed.has(item.day ?? 0)
+      && (memoryViews.get(item.key)?.encounterCount ?? 0) < MIN_ENCOUNTERS_TO_COUNT_AS_MET);
   const days = [...new Set(unmet.map((item) => item.day ?? 0))].sort((left, right) => left - right);
   return days.flatMap((day) => orderDayKnowledge(unmet.filter((item) => (item.day ?? 0) === day)));
 }
 
 /**
  * Kiến thức mới của phiên, theo hai nhóm học riêng (mỗi nhóm giới thiệu xong mới luyện):
- *  1. học bù — tối đa backlogPerSession thứ của ngày cũ;
+ *  1. học bù — tối đa backlogPerSession thứ của ngày cũ chưa được xác nhận hoàn thành / bỏ qua;
  *  2. hôm nay — phần KẾ TIẾP của ngày đang học, không chọn ngẫu nhiên (dừng ở đâu lần sau học tiếp đúng chỗ đó).
  */
 function selectDiscoverGroups(input: BuildLearningSessionInput, count: number, excluded: Set<ContentKey>): { phase: SessionPhase; items: KnowledgeItem[] }[] {
-  const { catalog, memoryViews, journeyDay, mode } = input;
+  const { catalog, memoryViews, journeyDay, mode, completedJourneyDays } = input;
   const config = SESSION_MODE_CONFIG[mode];
-  const backlog = backlogKnowledge(catalog, memoryViews, journeyDay).filter((item) => !excluded.has(item.key)).slice(0, config.backlogPerSession);
+  const backlog = backlogKnowledge(catalog, memoryViews, journeyDay, completedJourneyDays).filter((item) => !excluded.has(item.key)).slice(0, config.backlogPerSession);
   if (config.newKnowledgeScope === 'backlog-only') return [{ phase: 'backlog', items: backlog }];
   const unmet = unmetKnowledgeOfDay(catalog, memoryViews, journeyDay).filter((item) => !excluded.has(item.key));
   const today = config.newKnowledgeScope === 'rest-of-day' ? unmet : unmet.slice(0, Math.max(0, count));

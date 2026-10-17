@@ -32,7 +32,7 @@ export default async function TinyWinPage({ searchParams }: { searchParams: Prom
   // Vừa gặp ≥ 3 từ vựng (đã thành "đã học") → gợi ý thử Ghép thẻ, không bắt buộc.
   const learnedWordsThisSession = finished.encounteredKeys
     .filter((key) => key.startsWith('vocabulary-') && context.memoryViews.get(key)?.isLearned).length;
-  const backlogCount = backlogKnowledge(context.catalog, context.memoryViews, context.journeyDay).length;
+  const backlogCount = backlogKnowledge(context.catalog, context.memoryViews, context.journeyDay, context.completedJourneyDays).length;
   // Gợi ý bước tiếp theo theo ngày đang học: còn kiến thức thì học tiếp; học hết rồi thì mời hoàn thành ngày.
   const dayCompletion = getDayCompletionProgress(context.catalog, context.memoryViews, context.journeyDay);
   const remainingToday = remainingKnowledgeCount(dayCompletion);

@@ -22,6 +22,8 @@ export interface LearnerContext {
   /** Ngày lộ trình đang học (= journey.currentDay). */
   journeyDay: number;
   journey: JourneyPosition;
+  /** Ngày đã hoàn thành hoặc được người học khai báo đã học trước ở tài khoản mới. */
+  completedJourneyDays: number[];
   memoryRecords: Map<ContentKey, MemoryRecord>;
   memoryViews: Map<ContentKey, MemoryView>;
   /** Số ngày có ôn trong 30 ngày qua. */
@@ -40,12 +42,13 @@ export const getLearnerContext = cache(async (): Promise<LearnerContext> => {
   const source = await getLearningDataSource();
   const now = new Date();
   // Mọi lượt đọc độc lập chạy song song: database ở xa (mỗi lượt ~100ms), chạy nối tiếp là người học phải chờ.
-  const [profile, settings, content, existingMemory, recallDates] = await Promise.all([
+  const [profile, settings, content, existingMemory, recallDates, completedJourneyDays] = await Promise.all([
     source.getProfile(learner.userId),
     source.getSettings(learner.userId),
     source.getContent(),
     source.listMemoryRecords(learner.userId),
     source.listRecallDates(learner.userId),
+    source.listJourneyCompletionDays(learner.userId),
   ]);
   const catalog = getKnowledgeCatalog(content);
   const streak = summarizeRecallDates(recallDates, now);
@@ -57,7 +60,7 @@ export const getLearnerContext = cache(async (): Promise<LearnerContext> => {
   const journeyDay = journey.currentDay;
   const memoryRecords = await seedScheduledMemory(source, learner.userId, existingMemory, catalog, journeyDay, now);
   return {
-    learner, source, profile, settings, catalog, journeyDay, journey, memoryRecords, recallDays: streak.recallDays, streak, now,
+    learner, source, profile, settings, catalog, journeyDay, journey, completedJourneyDays, memoryRecords, recallDays: streak.recallDays, streak, now,
     memoryViews: buildMemoryViews(catalog, memoryRecords, now),
   };
 });

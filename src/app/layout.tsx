@@ -22,10 +22,12 @@ export const viewport: Viewport = {
   themeColor: '#FFFDF8',
 };
 
+// Một số extension (Monica / tiện ích coupon) tự chèn thuộc tính vào html/body trước hydration.
+// Chỉ bỏ qua sai khác thuộc tính ở hai thẻ gốc; các sai khác trong nội dung ứng dụng vẫn được báo.
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="vi">
-      <body>
+    <html lang="vi" suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <a href="#noi-dung" className="sr-only focus:not-sr-only">Bỏ qua tới nội dung</a>
         <SplashScreen />
         <PawHoverEffect />

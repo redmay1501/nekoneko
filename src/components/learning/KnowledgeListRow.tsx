@@ -37,7 +37,6 @@ function RowBody({ row, presentation }: { row: KnowledgeListRowData; presentatio
   return (
     <>
       {row.hideFace ? null : <span className="big jp" style={row.faceSize ? { fontSize: row.faceSize } : undefined}>{row.face}</span>}
-      {row.image ? <ContentImageView image={row.image} size={44} className="list-row-image" /> : null}
       <span className="mid">
         <b className={row.hideFace ? 'jp' : undefined} style={row.hideFace ? { fontSize: 15 } : undefined}>{row.title}</b>
         {/* Romaji ngay dưới phần tiếng Nhật: dưới mẫu câu (ngữ pháp), dưới cách đọc kana (Kanji, từ vựng). */}
@@ -45,6 +44,7 @@ function RowBody({ row, presentation }: { row: KnowledgeListRowData; presentatio
         <span className={row.hideFace ? undefined : 'jp'}>{row.subtitle}</span>
         {!row.hideFace && row.romaji ? <span className="romaji">{row.romaji}</span> : null}
       </span>
+      {row.image ? <ContentImageView image={row.image} size={44} className="list-row-image" /> : null}
       <span className="end">
         <span className="tiny" style={{ color: presentation.color }} title={presentation.label}>
           <EmojiIcon emoji={presentation.emoji} size={16} style={{ verticalAlign: '-3px' }} />{row.showStatusLabel ? ` ${presentation.label}` : ''}

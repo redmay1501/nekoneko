@@ -125,6 +125,10 @@ export interface LearningDataSource {
    * đang học (bấm hai lần, hai tab…) — nên không bao giờ nhảy cóc.
    */
   advanceJourneyDay(userId: string, fromDay: number, method: JourneyCompletionMethod): Promise<JourneyAdvanceResult>;
+  /** Khai báo đã học trước ở tài khoản cũ; chỉ chấp nhận cho hồ sơ mới chưa có hoạt động. */
+  setJourneyStartingPoint(userId: string, completedThroughDay: number): Promise<JourneyAdvanceResult>;
+  /** Các ngày đã được xác nhận hoàn tất trong lộ trình, gồm cả ngày khai báo học trước. */
+  listJourneyCompletionDays(userId: string): Promise<number[]>;
 
   listMemoryRecords(userId: string): Promise<MemoryRecord[]>;
   /** Một bản ghi — đọc lại khi ghi bị từ chối vì xung đột. */

@@ -15,15 +15,14 @@ export default async function GrammarPage() {
         112 mẫu câu theo Minna bài 1–25. Mỗi mẫu đi kèm một câu thật để bạn dùng được ngay.
       </p>
       <div className="row wrap" style={{ gap: 8 }}>
-        <Link href="/hoc-tap/ngu-phap/luyen-tap?che-do=luyen-tap" className="btn sm">📝 Luyện tập theo bài</Link>
-        <Link href="/hoc-tap/ngu-phap/luyen-tap?che-do=kiem-tra" className="btn ghost sm">✅ Kiểm tra theo bài</Link>
+        <Link href="/hoc-tap/ngu-phap/luyen-tap" className="btn sm">📝 Luyện tập ngữ pháp</Link>
       </div>
       {grammarGroups(catalog, memoryViews).map((group) => {
         return (
         <section key={group.lesson} data-reveal>
           <div className="sec-h"><h2 style={{ fontSize: 15 }}>{group.lesson}</h2>
             <span className="tiny muted">{group.rows.length} mẫu{Number.isFinite(lessonNumber(group.lesson)) ? (
-              <> · <Link className="link" href={`/hoc-tap/ngu-phap/luyen-tap?bai=${lessonNumber(group.lesson)}&che-do=luyen-tap`}>Luyện bài này</Link></>
+              <> · <Link className="link" href={`/hoc-tap/ngu-phap/luyen-tap?pham=theo-bai&bai=${lessonNumber(group.lesson)}`}>Luyện bài này</Link></>
             ) : null}</span></div>
           <div className="list-grid stack" style={{ gap: 9 }}>
             {group.rows.map((row) => <KnowledgeListRow key={row.contentKey} row={row} />)}

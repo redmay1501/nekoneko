@@ -18,3 +18,9 @@ export async function completeJourneyDayManually(day: number): Promise<JourneyAd
   }
   return context.source.advanceJourneyDay(context.learner.userId, day, JOURNEY_COMPLETION_METHODS.MANUAL);
 }
+
+/** Chọn ngày cuối đã hoàn thành và đặt lộ trình tiếp tục từ ngày kế tiếp. */
+export async function setJourneyStartingPoint(completedThroughDay: number): Promise<JourneyAdvanceResult> {
+  const context = await getLearnerContext();
+  return context.source.setJourneyStartingPoint(context.learner.userId, completedThroughDay);
+}

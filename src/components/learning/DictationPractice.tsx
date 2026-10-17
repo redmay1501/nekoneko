@@ -1,7 +1,8 @@
 'use client';
 
-import { type FormEvent, useState } from 'react';
+import { type FormEvent, useRef, useState } from 'react';
 import { AudioButton } from '@/components/common/AudioButton';
+import { useScrollToAnswerFeedback } from '@/hooks/useScrollToAnswerFeedback';
 import type { DictationItem } from '@/features/learning/skill-practice';
 import { answerVocabularyCheck } from '@/features/memory/memory-api';
 import { type JapaneseComparison, compareJapanese } from '@/lib/utils/japanese-text';
@@ -26,6 +27,8 @@ export function DictationPractice({ words, sentences }: { words: DictationItem[]
   const [showHint, setShowHint] = useState(false);
   const [current, setCurrent] = useState<Result | null>(null);
   const [results, setResults] = useState<Result[]>([]);
+  const nextButtonRef = useRef<HTMLButtonElement>(null);
+  useScrollToAnswerFeedback(nextButtonRef, current);
   const items = mode === 'words' ? words : sentences;
 
   function switchMode(next: Mode) {
@@ -130,7 +133,7 @@ export function DictationPractice({ words, sentences }: { words: DictationItem[]
             ))}
           </p>
           {!current.comparison.isCorrect ? <p className="tiny muted mt-1">Đáp án: <span className="jp">{item.display}</span></p> : null}
-          <button type="button" className="btn block mt-2.5" onClick={next} autoFocus>{index + 1 === items.length ? 'Xem kết quả' : 'Câu tiếp'}</button>
+          <button ref={nextButtonRef} type="button" className="btn block mt-2.5" onClick={next}>{index + 1 === items.length ? 'Xem kết quả' : 'Câu tiếp'}</button>
         </div>
       ) : null}
     </section>

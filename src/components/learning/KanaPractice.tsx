@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { KANA_GROUPS } from '@/features/learning/knowledge-filters';
 import type { KanaCell, KanaPracticeData, KanaWritingChoice } from '@/features/learning/kana-practice';
 import { STATUS_PRESENTATION } from '@/features/memory/memory-rules';
+import { ScrollToElementOnChange } from '@/components/common/ScrollToElementOnChange';
 import { AssessmentQuiz } from './AssessmentQuiz';
 import { KnowledgeChipButton } from './KnowledgeChipButton';
 import { WritingPad } from './WritingPad';
@@ -137,8 +138,11 @@ function KanaListening({ cells }: { cells: KanaCell[] }) {
             className={`chip ${option.id === range.id ? 'pink' : ''}`} onClick={() => choose(option.id)}>{option.label}</button>
         ))}
       </div>
-      <AssessmentQuiz key={round} title="Luyện nghe" description="Nghe âm, chọn chữ bạn nghe được. Cuối bài có điểm và nút làm lại."
-        questions={questions} emptyMessage="Phần này chưa đủ chữ để luyện nghe." audioLabel="Nghe chữ Nhật" />
+      <ScrollToElementOnChange targetId="kana-listening-quiz" trigger={rangeId} />
+      <div id="kana-listening-quiz">
+        <AssessmentQuiz key={round} title="Luyện nghe" description="Nghe âm, chọn chữ bạn nghe được. Cuối bài có điểm và nút làm lại."
+          questions={questions} emptyMessage="Phần này chưa đủ chữ để luyện nghe." audioLabel="Nghe chữ Nhật" />
+      </div>
       <p className="center mt-2.5">
         <button type="button" className="btn ghost sm" onClick={() => choose(range.id)}>↻ Bài khác</button>
       </p>

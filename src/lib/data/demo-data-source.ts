@@ -48,6 +48,7 @@ interface DemoStore {
   sessions: Map<string, StoredSession>;
   settings: Map<string, LearnerSettings>;
   journeys: Map<string, { currentDay: number; completedAt: string | null }>;
+  journeyCompletions: Map<string, number[]>;
 }
 
 const DEFAULT_SETTINGS: LearnerSettings = {
@@ -85,6 +86,7 @@ function createDemoStore(): DemoStore {
     sessions: new Map(),
     settings: new Map([[DEMO_LEARNER.userId, { ...DEFAULT_SETTINGS }]]),
     journeys: new Map([[DEMO_LEARNER.userId, { currentDay: DEMO_LEARNER.journeyDay, completedAt: null }]]),
+    journeyCompletions: new Map([[DEMO_LEARNER.userId, Array.from({ length: DEMO_LEARNER.journeyDay - 1 }, (_, index) => index + 1)]]),
   };
 }
 
@@ -138,10 +140,28 @@ export class DemoDataSource implements LearningDataSource {
     const journey = journeyOf(userId);
     const hasAdvanced = journey.currentDay === fromDay && journey.completedAt === null;
     if (hasAdvanced) {
+      const completions = demoStore().journeyCompletions.get(userId) ?? [];
+      demoStore().journeyCompletions.set(userId, [...new Set([...completions, fromDay])].sort((a, b) => a - b));
       if (fromDay >= JOURNEY_TOTAL_DAYS) journey.completedAt = new Date().toISOString();
       else journey.currentDay = fromDay + 1;
     }
     return { hasAdvanced, currentDay: journey.currentDay, isJourneyComplete: journey.completedAt !== null };
+  }
+
+  async setJourneyStartingPoint(userId: string, completedThroughDay: number): Promise<JourneyAdvanceResult> {
+    const journey = journeyOf(userId);
+    const store = demoStore();
+    const hasAdvanced = Number.isInteger(completedThroughDay) && completedThroughDay >= 1 && completedThroughDay < JOURNEY_TOTAL_DAYS;
+    if (hasAdvanced) {
+      journey.currentDay = completedThroughDay + 1;
+      journey.completedAt = null;
+      store.journeyCompletions.set(userId, Array.from({ length: completedThroughDay }, (_, index) => index + 1));
+    }
+    return { hasAdvanced, currentDay: journey.currentDay, isJourneyComplete: journey.completedAt !== null };
+  }
+
+  async listJourneyCompletionDays(userId: string): Promise<number[]> {
+    return [...(demoStore().journeyCompletions.get(userId) ?? [])];
   }
 
   async getSettings(userId: string): Promise<LearnerSettings> {

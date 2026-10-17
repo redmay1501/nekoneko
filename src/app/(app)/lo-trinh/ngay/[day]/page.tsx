@@ -18,7 +18,7 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
   const requestedDay = Number((await params).day);
   if (!Number.isInteger(requestedDay) || requestedDay < 1 || requestedDay > JOURNEY_TOTAL_DAYS) notFound();
 
-  const { catalog, journeyDay, journey, memoryViews } = await getLearnerContext();
+  const { catalog, journeyDay, journey, memoryViews, completedJourneyDays } = await getLearnerContext();
   const plan = buildDayPlan(catalog, requestedDay, journey);
   const completion = getDayCompletionProgress(catalog, memoryViews, plan.day);
   const { day, journeyDay: dayInfo, stage } = plan;
@@ -29,7 +29,7 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
 
   return (
     <>
-      <DayPicker days={buildDayStatuses(catalog, memoryViews, journeyDay)} day={day} today={journeyDay} />
+      <DayPicker days={buildDayStatuses(catalog, memoryViews, journeyDay, completedJourneyDays)} day={day} today={journeyDay} />
 
       <section className="dayhero">
         <div className="row wrap" style={{ gap: 7 }}>
@@ -38,7 +38,7 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
           {dayInfo.minna && dayInfo.minna !== '—' ? <span className="chip lav">{dayInfo.minna}</span> : null}
           {plan.relation === 'today' ? <span className="chip pink">Hôm nay</span> : null}
           {plan.relation === 'past' ? (
-            completion.hasNewKnowledge && completion.metCount < completion.totalCount
+            !completedJourneyDays.includes(day) && completion.hasNewKnowledge && completion.metCount < completion.totalCount
               // Đã bấm Hoàn thành nhưng còn kiến thức chưa học → nói thật, phần đó nằm ở Học bù.
               ? <span className="chip">Đã qua · còn {completion.totalCount - completion.metCount} mục học bù</span>
               : <span className="chip mint">✓ Đã xong</span>

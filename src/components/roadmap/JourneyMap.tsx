@@ -14,8 +14,6 @@ interface JourneyMapProps {
   currentDay: number;
   /** Ngày người học bắt đầu (profiles.start_date — ghi khi tạo tài khoản, không suy ra từ hôm nay). */
   startDateLabel: string;
-  /** Nội dung ngày 1 của lộ trình (từ dữ liệu, vd. "Hiragana: hàng あ・か"). */
-  firstDayTitle: string;
   isJourneyComplete: boolean;
   /** Ngày (đã qua) còn kiến thức chưa học — vẽ "còn học bù" thay vì "đã xong". */
   unfinishedDays?: number[];
@@ -36,10 +34,11 @@ const DOT_GRADIENTS = {
  * torii đầu mỗi chặng, sakura mỗi tuần, Phú Sĩ cuối đường.
  * Toạ độ do journey-map-layout.ts tính — component chỉ vẽ.
  */
-export function JourneyMap({ currentDay, startDateLabel, firstDayTitle, isJourneyComplete, unfinishedDays = [] }: JourneyMapProps) {
+export function JourneyMap({ currentDay, startDateLabel, isJourneyComplete, unfinishedDays = [] }: JourneyMapProps) {
   const router = useRouter();
   const unfinished = new Set(unfinishedDays);
   const { width, height, pathData, nodes, stageBanners, finish } = buildJourneyMapLayout(currentDay, isJourneyComplete, (day) => !unfinished.has(day));
+  const readableStartDate = startDateLabel.replaceAll('/', '-');
   const openDay = (day: number) => {
     startNavigation();
     router.push(`/lo-trinh/ngay/${day}`);
@@ -55,8 +54,8 @@ export function JourneyMap({ currentDay, startDateLabel, firstDayTitle, isJourne
       <div className="map-scene" aria-hidden="true">
         <LottieAnimation src="/animations/roadmap-beach.json" className="map-scene-beach" fit="cover" stillFrame={0} />
         <LottieAnimation src="/animations/garden-palm.json" className="map-scene-tree map-scene-palm" stillFrame={30} />
-        <LottieAnimation src="/animations/garden-wind-tree.json" className="map-scene-tree map-scene-wind" stillFrame={120} />
       </div>
+      <LottieAnimation src="/animations/garden-wind-tree.json" className="map-scene-tree map-scene-wind" stillFrame={120} />
       <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Bản đồ 90 ngày">
         <defs>
           {Object.entries(DOT_GRADIENTS).map(([state, [top, bottom]]) => (
@@ -66,8 +65,8 @@ export function JourneyMap({ currentDay, startDateLabel, firstDayTitle, isJourne
             </linearGradient>
           ))}
           <linearGradient id="banner-face" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#FFFFFF" />
-            <stop offset="1" stopColor="#FFF1E8" />
+            <stop offset="0" stopColor="#FFF9ED" />
+            <stop offset="1" stopColor="#F5E2C4" />
           </linearGradient>
         </defs>
         <path d={`M0 ${height - 70} Q100 ${height - 120} 200 ${height - 72} T400 ${height - 78} L400 ${height} L0 ${height} Z`} fill="#EFC994" opacity=".45" />
@@ -75,10 +74,15 @@ export function JourneyMap({ currentDay, startDateLabel, firstDayTitle, isJourne
         <path d={pathData} transform="translate(0,4)" stroke="rgba(176,120,62,.22)" strokeWidth="22" fill="none" strokeLinecap="round" strokeLinejoin="round" />
         <path d={pathData} stroke="#FFF7EC" strokeWidth="20" fill="none" strokeLinecap="round" strokeLinejoin="round" />
         <path d={pathData} stroke="#F0C994" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeDasharray="1 13" />
-        <g transform={`translate(${width / 2 - 110},18)`}>
-          <rect x="0" y="0" width="220" height="52" rx="18" fill="#FFFFFF" opacity=".86" />
-          <text x="110" y="22" textAnchor="middle" fontSize="14" fontWeight="800" fill="#5E5A57" fontFamily={FONT}>Ngày bắt đầu học: {startDateLabel}</text>
-          <text x="110" y="41" textAnchor="middle" fontSize="11.5" fill="#8E8781" fontFamily={FONT}>Ngày 1 · {firstDayTitle}</text>
+        <g transform={`translate(${width / 2 - 105},22)`}>
+          <rect x="2" y="5" width="210" height="58" rx="21" fill="#A76E69" opacity=".2" />
+          <rect width="210" height="58" rx="21" fill="#FFF6E9" stroke="#D9AB9A" strokeWidth="1.5" />
+          <circle cx="30" cy="29" r="18" fill="#FFE3E6" />
+          <rect x="19" y="19" width="22" height="21" rx="4" fill="#FFFDF8" stroke="#D9536E" strokeWidth="1.5" />
+          <path d="M19 25h22M25 17v5M35 17v5" fill="none" stroke="#D9536E" strokeWidth="1.8" strokeLinecap="round" />
+          <path d="M24 30h2m3 0h2m3 0h2m-12 4h2m3 0h2m3 0h2" stroke="#D99A91" strokeWidth="1.5" strokeLinecap="round" />
+          <text x="58" y="24" fontSize="9.5" fontWeight="800" letterSpacing="1" fill="#9E7167" fontFamily={FONT}>HÀNH TRÌNH BẮT ĐẦU</text>
+          <text x="58" y="45" fontSize="16" fontWeight="900" fill="#D9536E" fontFamily={FONT}>{readableStartDate}</text>
         </g>
 
         {nodes.filter((node) => node.isWeekMark).map((node) => (
@@ -90,7 +94,7 @@ export function JourneyMap({ currentDay, startDateLabel, firstDayTitle, isJourne
             <g transform={`translate(${x},${y})`} className="stage-banner">
               <rect y="3" width="192" height="26" rx="13" fill={stage.color} />
               <rect width="192" height="26" rx="13" fill="url(#banner-face)" stroke={stage.color} strokeWidth="1.5" />
-              <rect x="10" y="3" width="172" height="8" rx="4" fill="#FFFFFF" opacity=".7" />
+              <rect x="10" y="3" width="172" height="8" rx="4" fill="#FFFFFF" opacity=".3" />
               <text x="96" y="18" textAnchor="middle" fontSize="12" fontWeight="700" fill="#5E5A57" fontFamily={FONT}>
                 {stage.emoji} {stage.name} · ngày {stage.from}–{stage.to}
               </text>

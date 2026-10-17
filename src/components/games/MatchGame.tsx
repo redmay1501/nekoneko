@@ -166,7 +166,6 @@ export function MatchGame({ pool, scope, recordsByPairs, unit }: MatchGameProps)
     return (
       <div className="card center match-result" role="status" aria-live="polite">
         <RatingCat stars={starsOf(accuracy)} />
-        <p className="match-star-count" aria-hidden="true">{'★'.repeat(starsOf(accuracy))}<span>{'★'.repeat(5 - starsOf(accuracy))}</span> {starsOf(accuracy)}/5</p>
         <h2 className="mt-1.5">{accuracy === 100 ? 'Hoàn hảo!' : accuracy >= 75 ? 'Giỏi lắm!' : 'Xong ván!'}</h2>
         <div className="match-stats mt-3">
           <span><b>{finished.pairs}/{finished.pairs}</b> cặp</span>

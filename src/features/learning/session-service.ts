@@ -73,6 +73,7 @@ export async function startLearningSession(mode: SessionMode, requestedFocusKeys
     catalog: context.catalog,
     memoryViews: context.memoryViews,
     journeyDay: context.journeyDay,
+    completedJourneyDays: context.completedJourneyDays,
     focusKeys,
   });
   const sessionId = await context.source.createSession(context.learner.userId, plan, context.journeyDay);

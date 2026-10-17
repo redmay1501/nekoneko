@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AudioButton } from '@/components/common/AudioButton';
 import { useEnterToContinue } from '@/hooks/useEnterToContinue';
+import { useScrollToAnswerFeedback } from '@/hooks/useScrollToAnswerFeedback';
 import { stopSpeech, useSpeech } from '@/hooks/useSpeech';
 import { useSpeechPreferenceStore } from '@/stores/speech-preference-store';
 import { ListenControls } from './ListenControls';
@@ -41,6 +42,8 @@ export function AssessmentQuiz({
   const isListening = Boolean(question?.audioText && !question.prompt);
   const { speak } = useSpeech();
   const autoplayAudio = useSpeechPreferenceStore((store) => store.autoplayAudio);
+  const nextButtonRef = useRef<HTMLButtonElement>(null);
+  useScrollToAnswerFeedback(nextButtonRef, chosenAnswer);
 
   // Sang câu mới: dừng câu cũ đang đọc dở; bài nghe thì tự đọc câu mới (nếu người học bật tự phát). Rời bài → dừng.
   useEffect(() => {
@@ -120,7 +123,7 @@ export function AssessmentQuiz({
             <div className={`feedback ${chosenAnswer === question.answer ? '' : 'miss'}`}>
               <p>{chosenAnswer === question.answer ? 'Đúng rồi, tốt lắm!' : 'Không sao, mình nhớ dần nhé.'}</p>
               {chosenAnswer !== question.answer ? <p className="sm mt-1">Đáp án: <b>{question.answer}</b></p> : null}
-              <button type="button" className="btn block mt-3" onClick={continueQuiz}>
+              <button ref={nextButtonRef} type="button" className="btn block mt-3" onClick={continueQuiz}>
                 {questionIndex + 1 === questions.length ? 'Xem kết quả' : 'Câu tiếp theo'}
               </button>
             </div>

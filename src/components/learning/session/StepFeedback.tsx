@@ -1,6 +1,8 @@
+import { useRef } from 'react';
 import { NokoMessage } from '@/components/common/NokoMessage';
 import type { StepAnswerFeedback } from '@/features/learning/session-types';
 import { AnimatedEmoji } from '@/components/common/EmojiIcon';
+import { useScrollToAnswerFeedback } from '@/hooks/useScrollToAnswerFeedback';
 
 interface StepFeedbackProps {
   kind: 'recall' | 'practice' | 'use';
@@ -17,10 +19,12 @@ interface StepFeedbackProps {
 export function StepFeedback({ kind, feedback, isBusy, onContinue, compact = false }: StepFeedbackProps) {
   const isCorrect = feedback.isCorrect === true;
   const memory = feedback.memory;
+  const nextButtonRef = useRef<HTMLButtonElement>(null);
+  useScrollToAnswerFeedback(nextButtonRef, feedback);
   if (compact) {
     return (
       <div className={`feedback daily-feedback ${isCorrect ? '' : 'miss'}`} aria-live="polite">
-        <button type="button" className="btn block" onClick={onContinue} disabled={isBusy} aria-busy={isBusy}>Tiếp tục</button>
+        <button ref={nextButtonRef} type="button" className="btn block" onClick={onContinue} disabled={isBusy} aria-busy={isBusy}>Tiếp tục</button>
         <p className="sm mt-2">
           {isCorrect ? 'Đúng rồi, bạn nhớ tốt lắm!' : 'Không sao, mình nhớ dần nhé.'}
           {feedback.correctAnswer ? <> Đáp án: <b className="jp">{feedback.correctAnswer}</b>.</> : null}
@@ -62,7 +66,7 @@ export function StepFeedback({ kind, feedback, isBusy, onContinue, compact = fal
         </>
       ) : null}
       <NokoMessage state={isCorrect ? 'correct' : 'wrong'} className="mt-3" />
-      <button type="button" className="btn block mt-3" onClick={onContinue} disabled={isBusy} aria-busy={isBusy}>Tiếp tục</button>
+      <button ref={nextButtonRef} type="button" className="btn block mt-3" onClick={onContinue} disabled={isBusy} aria-busy={isBusy}>Tiếp tục</button>
     </div>
   );
 }

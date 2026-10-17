@@ -48,7 +48,7 @@ export function DayPicker({ days, day, today }: DayPickerProps) {
             aria-current={entry.day === day ? 'page' : undefined}
             className={`daychip is-${entry.status} ${entry.day === day ? 'on' : ''} ${entry.day === today ? 'is-today' : ''}`}>
             <b>{entry.day}</b>
-            <span>{entry.day === today ? 'hôm nay' : entry.week ? `T${entry.week}` : ''}</span>
+            <span>{entry.day === today ? '♥ Hôm nay' : entry.week ? `T${entry.week}` : ''}</span>
           </Link>
         ))}
       </div>
@@ -80,6 +80,7 @@ function DayGridSheet({ days, day, today, onClose }: DayPickerProps & { onClose:
                   aria-current={entry.day === day ? 'page' : undefined}
                   aria-label={`Ngày ${entry.day} — ${STATUS_LABEL[entry.status]}${entry.day === today ? ', hôm nay' : ''}`}
                   className={`daygrid-cell is-${entry.status} ${entry.day === day ? 'on' : ''} ${entry.day === today ? 'is-today' : ''}`}>
+                  {entry.day === today ? <span className="daygrid-today" aria-hidden="true">♥</span> : null}
                   <b>{entry.day}</b>
                   <span className="dot" aria-hidden="true" />
                 </Link>

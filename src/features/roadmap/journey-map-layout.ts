@@ -9,7 +9,7 @@ export const JOURNEY_MAP = {
   WIDTH: 400,
   COLUMNS: 3,
   ROW_GAP: 58,
-  TOP: 250,
+  TOP: 150,
   BOTTOM_SPACE: 120,
   SIDE_MARGIN: 70,
 } as const;
@@ -20,7 +20,7 @@ export interface JourneyNode {
   y: number;
   radius: number;
   /**
-   * done = đã qua và đã học hết kiến thức của ngày (hoặc ngày ôn đã qua) · partial = đã qua nhưng còn kiến thức học bù ·
+   * done = đã qua và người học đã xác nhận xong/bỏ qua ngày (hoặc ngày ôn đã qua) · partial = đã qua nhưng chưa xác nhận, còn học bù ·
    * today = ngày đang học · upcoming = chưa tới. "Đã qua" chỉ do người học bấm Hoàn thành — không theo ngày lịch.
    */
   state: 'done' | 'partial' | 'today' | 'upcoming';

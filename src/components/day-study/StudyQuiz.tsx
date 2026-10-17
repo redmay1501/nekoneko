@@ -1,8 +1,9 @@
 'use client';
 
-import { type FormEvent, useState } from 'react';
+import { type FormEvent, useRef, useState } from 'react';
 import { AudioButton } from '@/components/common/AudioButton';
 import { useEnterToContinue } from '@/hooks/useEnterToContinue';
+import { useScrollToAnswerFeedback } from '@/hooks/useScrollToAnswerFeedback';
 import { createRequestId, postJson } from '@/lib/api/api-client';
 import { compareJapanese } from '@/lib/utils/japanese-text';
 import { fitTextStyle } from '@/lib/utils/fit-text';
@@ -40,6 +41,8 @@ export function StudyQuiz({ questions, unit, isRecorded = true, onRestart, onRet
   const [answered, setAnswered] = useState<Answered[]>([]);
   const question = questions[index];
   const isDone = index >= questions.length;
+  const nextButtonRef = useRef<HTMLButtonElement>(null);
+  useScrollToAnswerFeedback(nextButtonRef, given);
 
   function submit(value: string) {
     if (!question || given !== null) return;
@@ -140,7 +143,7 @@ export function StudyQuiz({ questions, unit, isRecorded = true, onRestart, onRet
         <div className={`feedback ${isCorrect ? '' : 'miss'}`}>
           <p>{isCorrect ? 'Đúng rồi! 🎉' : 'Chưa đúng — không sao, nhớ dần nhé.'}</p>
           {!isCorrect ? <p className="sm mt-1">Đáp án: <b className={question.optionsAreJapanese ? 'jp' : ''}>{label(question, question.answer)}</b></p> : null}
-          <button type="button" className="btn block mt-3" onClick={next}>{index + 1 === questions.length ? 'Xem kết quả' : 'Câu tiếp theo'}</button>
+          <button ref={nextButtonRef} type="button" className="btn block mt-3" onClick={next}>{index + 1 === questions.length ? 'Xem kết quả' : 'Câu tiếp theo'}</button>
         </div>
       ) : null}
     </section>

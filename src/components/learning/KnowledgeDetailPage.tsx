@@ -36,8 +36,8 @@ export async function KnowledgeDetailPage({ contentType, rawId, backHref, backLa
       ) : null}
       {item.type === 'grammar' ? (
         <div className="row wrap mt-3" style={{ gap: 8 }}>
-          <Link className="btn sm" href={`/hoc-tap/ngu-phap/luyen-tap?mau=${item.id}&che-do=luyen-tap&so-cau=tat-ca`}>📝 Luyện mẫu này</Link>
-          <Link className="btn ghost sm" href={`/hoc-tap/ngu-phap/luyen-tap?bai=${lessonNumber(item.content.lesson)}&che-do=kiem-tra`}>✅ Kiểm tra cả bài</Link>
+          <Link className="btn sm" href={`/hoc-tap/ngu-phap/luyen-tap?mau=${item.id}`}>📝 Luyện mẫu này</Link>
+          <Link className="btn ghost sm" href={`/hoc-tap/ngu-phap/luyen-tap?pham=theo-bai&bai=${lessonNumber(item.content.lesson)}`}>Luyện cả bài</Link>
         </div>
       ) : null}
     </div>

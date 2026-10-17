@@ -1,30 +1,26 @@
-# Bài tập ngữ pháp — trạng thái & cách bổ sung
+# Bài tập ngữ pháp
 
-## Đang có (18/10/2026)
+Luồng `/hoc-tap/ngu-phap/luyen-tap` dùng ngân hàng tĩnh `content/seed/grammar-question-bank.json`, được chuyển từ
+`content/seed/grammar-question-bank.csv`. Mỗi mẫu có đúng 10 câu; trang chọn theo bài Minna hoặc theo mẫu, không cộng
+câu tự sinh của engine cũ vào ngân hàng.
 
-`src/features/learning/grammar-exercises.ts` sinh bài tập **từ dữ liệu thật** của 112 mẫu (`exampleJp` + `example2Jp`,
-`usage`, `commonMistake`) — không có câu bịa:
+| Dạng hiển thị | Số câu | Nhãn trong CSV |
+|---|---:|---|
+| Nhật → Việt | 337 | `Nhật → Việt` |
+| Việt → Nhật | 336 | `Việt → Nhật` |
+| Điền từ / cấu trúc | 447 | `Điền cấu trúc/từ` (347) + `Điền từ theo câu` (100) |
+| **Tổng** | **1.120** | |
 
-| Dạng | Số câu | Nguồn |
-|---|---|---|
-| Chọn nghĩa (Nhật → Việt) | 224 | câu ví dụ; đáp án nhiễu = câu của mẫu khác, ưu tiên cùng bài |
-| Chọn câu tiếng Nhật (Việt → Nhật) | 224 | như trên |
-| Chọn trợ từ | 102 | chỉ khi trợ từ nằm trong chính mẫu câu và câu có đúng một chỗ trống; trợ từ nhiễu là trợ từ chắc chắn sai ở vị trí đó |
-| Sắp xếp câu | 209 | câu ≥ 3 mảnh |
-| **Tổng** | **759** | |
+`GrammarExerciseRunner` dùng lại cho luyện tập và kiểm tra. Luyện tập hiện phản hồi sau khi chọn đáp án; kiểm tra chỉ
+hiện kết quả sau khi nộp. Câu hỏi và lựa chọn được trộn tất định, đáp án đi theo đúng lựa chọn. Không ghi vào Memory Engine.
 
-Số bài mỗi mẫu: 8 bài (49 mẫu) · 7 (2) · 6 (52) · 5 (5) · 4 (4). **Chưa đạt ~10 bài/mẫu** vì mỗi mẫu mới có 2 câu ví dụ.
-Kiểm tra chất lượng tự động: `grammar-exercises.test.ts` (không trùng, đúng một đáp án đúng, 4 lựa chọn khác nhau,
-trợ từ ghép lại đúng câu gốc, liên kết đúng mẫu + bài, bỏ trống không bao giờ tính đúng).
+Kiểm tra tự động: `src/features/learning/grammar-question-bank.test.ts` kiểm số câu mỗi mẫu, ID, lựa chọn, đáp án,
+dạng bài và lọc bài/mẫu. `src/components/learning/grammar-exercise-runner-state.test.ts` kiểm trả lời, chuyển câu, nộp
+bài và làm lại.
 
-## Để đạt ~10 bài/mẫu
+## Kiểm duyệt nội dung
 
-Mỗi mẫu cần thêm **1–2 câu ví dụ** (câu + cách đọc + nghĩa). Mỗi câu mới tự sinh thêm 3–4 bài (nghĩa, câu Nhật,
-trợ từ nếu có, sắp xếp). Đề xuất:
-
-1. Soạn câu mới (tự biên soạn, không chép sách) trong `content/seed/grammar-notes.json` — thêm trường `examples`
-   (mảng `{ jp, reading, vi }`) cho từng mẫu; bộ sinh đọc thêm các câu này (sửa nhỏ ở `sentencesOf`).
-2. Mỗi câu chỉ dùng từ vựng / Kanji đã học tới bài đó (test có thể kiểm như `reading-passages.test.ts`).
-3. Người biết tiếng Nhật duyệt trước khi seed. 112 mẫu × 2 câu ≈ 224 câu.
-
-Không nhân bản câu (đổi một từ) để đủ số — test hiện có sẽ báo trùng.
+Trạng thái duyệt trong CSV/JSON được giữ nguyên. Hiện cả 1.120 câu đều ghi **“Cần rà soát ngôn ngữ và đáp án”**; chưa
+có xác nhận chuyên gia tiếng Nhật. Các cờ rà soát tự động và ví dụ được ghi riêng trong
+[`GRAMMAR_QUESTION_BANK_REVIEW.md`](GRAMMAR_QUESTION_BANK_REVIEW.md). Không sửa trực tiếp `n5-content.json` hoặc
+`grammar-notes.json` để đưa ngân hàng vào luồng này.

@@ -119,11 +119,14 @@ export function buildDayStatuses(
   catalog: KnowledgeCatalog,
   views: ReadonlyMap<ContentKey, MemoryView>,
   currentDay: number,
+  completedJourneyDays: readonly number[] = [],
 ): DayStatusView[] {
+  const completed = new Set(completedJourneyDays);
   return catalog.content.journeyDays.map((journeyDay, index) => {
     const day = index + 1;
     const progress = getDayCompletionProgress(catalog, views, day);
-    const status: DayStatus = !progress.hasNewKnowledge ? (day < currentDay ? 'done' : 'todo')
+    const status: DayStatus = completed.has(day) ? 'done'
+      : !progress.hasNewKnowledge ? (day < currentDay ? 'done' : 'todo')
       : progress.isAllKnowledgeMet ? 'done' : progress.metCount > 0 ? 'partial' : 'todo';
     return { day, week: journeyDay.week, status };
   });

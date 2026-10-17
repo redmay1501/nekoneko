@@ -2,7 +2,7 @@
 
 import { fitTextStyle } from '@/lib/utils/fit-text';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { AudioButton } from '@/components/common/AudioButton';
 import { NokoMessage } from '@/components/common/NokoMessage';
 import { ErrorState } from '@/components/common/StateViews';
@@ -11,6 +11,7 @@ import { ProgressBar } from '@/components/common/ProgressBar';
 import { useRescueKnowledge } from '@/features/memory/hooks/useRescueKnowledge';
 import type { RescueView } from '@/features/memory/rescue-view';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
+import { useScrollToAnswerFeedback } from '@/hooks/useScrollToAnswerFeedback';
 
 const STEP_LABELS = ['Sắp quên', 'Gợi ý', 'Nhớ lại', 'Ngữ cảnh', 'Đã cứu'] as const;
 const STEP = { AT_RISK: 0, HINT: 1, RECALL: 2, CONTEXT: 3, RESCUED: 4 } as const;
@@ -20,6 +21,8 @@ type RescueStep = (typeof STEP)[keyof typeof STEP];
 export function RescueFlow({ view }: { view: RescueView }) {
   const [step, setStep] = useState<RescueStep>(STEP.AT_RISK);
   const [chosenMeaning, setChosenMeaning] = useState<string | null>(null);
+  const nextButtonRef = useRef<HTMLButtonElement>(null);
+  useScrollToAnswerFeedback(nextButtonRef, chosenMeaning);
   const rescue = useRescueKnowledge(view.contentKey);
 
   const goToContext = () => setStep(STEP.CONTEXT);
@@ -92,7 +95,7 @@ export function RescueFlow({ view }: { view: RescueView }) {
               ) : (
                 <><b>Chưa nhớ cũng không sao.</b><p className="sm mt-1">Mình xem nó trong một câu thật nhé.</p></>
               )}
-              <button type="button" className="btn block mt-3" onClick={goToContext}>Tiếp tục</button>
+              <button ref={nextButtonRef} type="button" className="btn block mt-3" onClick={goToContext}>Tiếp tục</button>
             </div>
           ) : null}
         </div>

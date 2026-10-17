@@ -467,18 +467,23 @@ html.sheet-open,html.sheet-open body{overflow:hidden}
 @media (hover:hover) and (pointer:fine){.daystrip{scrollbar-width:thin;scrollbar-color:#F3D6DC transparent}.daystrip::-webkit-scrollbar{display:block;height:6px}.daystrip::-webkit-scrollbar-thumb{background:#F3D6DC;border-radius:99px}}
 .daypicker-open{flex:0 0 auto;white-space:nowrap}
 .daychip{scroll-snap-align:center}
-.daychip.is-today:not(.on){box-shadow:inset 0 0 0 2px var(--sakura),0 3px 0 #FFC4CE}
+.daychip.is-today:not(.on) span{color:#D94F67}
 .daypick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:6px}
 .daygrid-cell{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:48px;border-radius:var(--r-s);overflow:hidden;
   border:1.5px solid var(--line);background:#fff;color:var(--ink);font-size:15px}
 .daygrid-cell.on{border-color:var(--sakura);background:var(--sakura);color:#fff}
-.daygrid-cell.is-today:not(.on){border-color:var(--sakura)}
+.daygrid-cell.is-today:not(.on){border-color:var(--line)}
+.daygrid-today{position:absolute;top:2px;right:5px;color:#D94F67;font-size:10px;line-height:1}
+.daygrid-cell.on .daygrid-today{color:#fff}
 .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#E5DCD8;vertical-align:middle}
 .dot.is-done,.is-done>.dot{background:#5DB37A}
 .dot.is-partial,.is-partial>.dot{background:#E8A93B}
 .daygrid-cell.on>.dot{background:#fff}
 .daygrid-legend{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
 .daygrid-legend .dot{margin-left:6px}
+.starting-point-sheet{display:flex;flex-direction:column;overflow:hidden;padding-bottom:0}
+.starting-point-calendar{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-bottom:8px}
+.starting-point-footer{flex:0 0 auto;padding:10px 0 calc(22px + var(--safe-b));background:#fff;border-top:1px solid var(--line)}
 /* Ô chọn ngày: viên bo tròn nổi khối nhẹ (mặt sáng → đậm, gờ dưới), nhấc lên khi rê chuột — trạng thái giữ màu riêng. */
 .daychip{flex:0 0 auto;width:54px;padding:8px 0 7px;border-radius:16px;text-align:center;color:var(--ink);
   background:linear-gradient(180deg,#fff,#FBF6F3);border:1.5px solid #F1E4DE;box-shadow:0 3px 0 #EFE2DB,0 5px 10px rgba(150,80,70,.06);
@@ -489,8 +494,10 @@ html.sheet-open,html.sheet-open body{overflow:hidden}
 .daychip span{font-size:9.5px;color:var(--ink-3)}
 .daychip.is-done{background:linear-gradient(180deg,#F6FCF8,#E7F6EC);border-color:#CFEBD6;box-shadow:0 3px 0 #C7E6D0}
 .daychip.is-partial{background:linear-gradient(180deg,#FFFBF2,#FFF1D9);border-color:#F6DDB0;box-shadow:0 3px 0 #F1D49E}
-.daychip.on{color:#fff;border-color:transparent;background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,0) 60%),linear-gradient(180deg,#FF9EAC,#F2667C);
-  box-shadow:0 3px 0 #CF4A61,0 6px 14px rgba(242,102,124,.3)}
+.daychip.on{color:#fff;border:0;background:linear-gradient(180deg,#FF9EAC,#F2667C);
+  box-shadow:none}
+.daychip.on:hover,.daychip.on:active{box-shadow:none}
+.daychip.on:focus-visible,.daygrid-cell.on:focus-visible{outline-color:#fff}
 .daychip.on span{color:rgba(255,255,255,.88)}
 .daychip.past{background:linear-gradient(180deg,#fff,#FBF6F3)}
 
@@ -1505,8 +1512,6 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 /* Mèo chấm điểm 1–5 sao (kết quả trò chơi). */
 .rating-cat{width:min(220px,62vw);aspect-ratio:1134/1200;margin:-6px auto 0}
 .rating-cat-art{width:100%;height:100%}
-.match-star-count{margin:0;font-size:18px;letter-spacing:2px;color:#F5B400;font-weight:800}
-.match-star-count span{color:#E4DCD8}
 /* Hình "đang xử lý" sau khi hoàn thành (cậu bé chạy, đã cắt khung). */
 .loading-runner{display:flex;flex-direction:column;align-items:center;gap:4px}
 .loading-runner-art{width:150px;aspect-ratio:550/460}
@@ -1561,7 +1566,7 @@ a.garden-tree:hover .garden-tree-tag{background:#fff;box-shadow:0 0 0 2px #F3B67
 /* ============ LỘ TRÌNH: BÃI BIỂN TRONG BẢN ĐỒ + CHẤM NGÀY 3D (components/roadmap/JourneyMap) ============
    Cảnh biển Lottie chỉ nằm ở đầu khung bản đồ (tỉ lệ 600/400 theo bề ngang bản đồ); phần dưới là bờ cát có gợn sóng nhẹ.
    Chấm ngày, băng rôn chặng, chip ngày và thẻ chặng dùng kiểu khối 3D như nút bấm: mặt sáng → đậm, đế đậm lệch xuống, vệt bóng. */
-.map-wrap{border:3px solid #fff;box-shadow:0 14px 34px rgba(176,120,62,.18),0 3px 8px rgba(60,30,30,.06);
+.map-wrap{border:1px solid #E8C5B8;box-shadow:0 5px 0 #D4A69A,0 12px 24px rgba(112,75,59,.16),inset 0 1px 0 rgba(255,255,255,.78);
   background:linear-gradient(180deg,#F5D8AA 0%,#F8E2BF 18%,#FBEBD4 60%,#F7E3C4 100%)}
 .map-wrap>svg{position:relative;z-index:1}
 .map-scene{position:absolute;top:0;left:0;right:0;aspect-ratio:600/400;z-index:0;pointer-events:none}
@@ -1569,7 +1574,7 @@ a.garden-tree:hover .garden-tree-tag{background:#fff;box-shadow:0 0 0 2px #F3B67
 .map-scene::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:14%;background:linear-gradient(180deg,rgba(245,216,170,0),#F5D8AA)}
 .map-scene-tree{position:absolute;z-index:1}
 .map-scene-palm{left:-3%;bottom:4%;width:30%;aspect-ratio:1/1}
-.map-scene-wind{right:-2%;bottom:6%;width:27%;aspect-ratio:881/774}
+.map-scene-wind{right:1%;bottom:48px;width:42%;aspect-ratio:881/774;z-index:0;pointer-events:none}
 .map-legend{position:relative;z-index:1;margin:0 10px 10px;border-radius:18px;background:rgba(255,255,255,.78);box-shadow:0 3px 10px rgba(176,120,62,.12)}
 .legend-dot{box-shadow:inset 0 -2px 0 rgba(0,0,0,.12),0 2px 3px rgba(60,30,30,.12)}
 .legend-dot.is-done{background:linear-gradient(180deg,#FF9EAC,#F2667C)}

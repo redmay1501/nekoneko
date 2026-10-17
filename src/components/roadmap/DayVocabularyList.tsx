@@ -30,12 +30,12 @@ export function DayVocabularyList({ words, title = 'Từ vựng' }: { words: Voc
       {words.map((word) => (
         <KnowledgeChipButton key={word.id} contentKey={toContentKey('vocabulary', word.id)} className="list-row" style={{ padding: '9px 12px' }}
           label={`${word.kanji || word.kana} — ${firstMeaning(word.meaning)}`}>
-          <ContentImageView image={learnerImageOf('vocabulary', word)} size={44} className="list-row-image" />
           <span className="mid">
             <b className="jp" style={{ fontSize: 15 }}>{word.kanji || word.kana}</b>
             <WordReading word={word} />
             <span>{firstMeaning(word.meaning)}</span>
           </span>
+          <ContentImageView image={learnerImageOf('vocabulary', word)} size={44} className="list-row-image" />
           <span className="end"><span className="tiny muted" aria-hidden="true">›</span></span>
         </KnowledgeChipButton>
       ))}

@@ -8,6 +8,7 @@ import { SkeletonScreen } from '@/components/common/Skeleton';
 import { ErrorState } from '@/components/common/StateViews';
 import { useLearningSession } from '@/features/learning/hooks/useLearningSession';
 import { useEnterToContinue } from '@/hooks/useEnterToContinue';
+import { ScrollToElementOnChange } from '@/components/common/ScrollToElementOnChange';
 import { SESSION_MODES, type SessionMode } from '@/features/learning/session-modes';
 import type { PublicSessionStep } from '@/features/learning/session-types';
 import { SessionCheckpoint } from './session/SessionCheckpoint';
@@ -65,7 +66,9 @@ export function LearningSession({ mode, focusKeys }: { mode: SessionMode; focusK
 
   return (
     // Mọi chế độ dùng CÙNG một bố cục: phản hồi + nút "Tiếp tục" ngay dưới câu hỏi (trong tầm ngón cái), không ở cuối trang.
-    <div className="session daily-session">
+    <>
+    <ScrollToElementOnChange targetId="learning-session-area" trigger={`${mode}:${focusKeys?.join(',') ?? 'default'}`} />
+    <div id="learning-session-area" className="session daily-session">
       <SessionHeader mode={mode} />
       <SessionPhaseBar steps={session.steps} currentIndex={stepIndex} />
       <SessionProgress steps={session.steps} currentIndex={stepIndex} />
@@ -95,6 +98,7 @@ export function LearningSession({ mode, focusKeys }: { mode: SessionMode; focusK
       )}
       {learning.error ? <p className="sm center mt-3" role="alert">{learning.error.message}</p> : null}
     </div>
+    </>
   );
 }
 

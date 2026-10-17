@@ -33,7 +33,7 @@ const HERO_KANA: ReadonlyArray<[string, number, number, number]> = [
  * Mọi con số đều là dữ liệu thật của người học.
  */
 export default async function HomePage() {
-  const { catalog, memoryViews, journeyDay, journey, profile, settings, streak, now } = await getLearnerContext();
+  const { catalog, memoryViews, journeyDay, journey, profile, settings, streak, now, completedJourneyDays } = await getLearnerContext();
   const dayCompletion = getDayCompletionProgress(catalog, memoryViews, journeyDay);
   const dailyMinutes = displayedDailyMinutes(settings.dailyMinutes, SESSION_MODE_CONFIG.daily.targetMinutes);
   const overview = buildMemoryOverview(memoryViews);
@@ -44,7 +44,7 @@ export default async function HomePage() {
   const isSameAppDay = (iso: string | null) => iso !== null && appDateKey(new Date(iso)) === appDateKey(now);
   const shouldGreet = settings.welcomedAt !== null && !isSameAppDay(settings.welcomedAt) && !isSameAppDay(settings.greetedAt);
   const resumable = shouldGreet ? await findResumableSession(SESSION_MODES.DAILY) : null;
-  const plan = previewSessionPlan({ mode: SESSION_MODES.DAILY, catalog, memoryViews, journeyDay });
+  const plan = previewSessionPlan({ mode: SESSION_MODES.DAILY, catalog, memoryViews, journeyDay, completedJourneyDays });
 
   return (
     <div className="dash">

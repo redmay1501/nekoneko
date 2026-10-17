@@ -656,7 +656,7 @@ input[type="radio"]{appearance:auto;-webkit-appearance:radio;width:18px;height:1
 /* Hai thẻ chính: cao theo nội dung (không kéo giãn bằng nhau → không có khoảng trống). */
 .dash-top{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px;align-items:start}
 /* Học hôm nay */
-.dash-today{display:flex;align-items:flex-start;gap:10px;padding:14px 16px;background:linear-gradient(135deg,rgba(255,255,255,.76),rgba(255,247,244,.62))}
+.dash-today{position:relative;display:flex;align-items:flex-start;gap:10px;padding:14px 16px;background:linear-gradient(135deg,rgba(255,255,255,.76),rgba(255,247,244,.62))}
 .dash-today-mascot{width:76px;height:76px;object-fit:contain;flex:0 0 auto}
 .dash-today-body{flex:1;min-width:0}
 .dash-plan{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
@@ -1454,3 +1454,12 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 .splash-cat{width:min(240px,56vw);aspect-ratio:1/1}
 @keyframes splash-auto-hide{to{opacity:0;visibility:hidden;pointer-events:none}}
 @media print{.splash{display:none!important}}
+
+/* Mèo (Lottie loader-cat, khung 280×200) ngồi trên mép trên thẻ "Học hôm nay": chân mèo ở 85% chiều cao khung
+   → đẩy khung lên 85% để chân mèo chạm mép thẻ; đuôi thòng xuống mặt thẻ. */
+.dash-today-cat{position:absolute;z-index:2;right:96px;top:calc(var(--cat-h) * -0.85);width:calc(var(--cat-h) * 1.4);height:var(--cat-h);
+  --cat-h:92px;pointer-events:none}
+.dash-today-cat svg{overflow:visible}
+@media (max-width:767px){.dash-today-cat{--cat-h:74px;right:84px}}
+/* Mèo trong thùng (Lottie cat-in-box) ở đầu hộp chào mỗi ngày. */
+.daily-greeting-cat{width:132px;height:132px;margin:4px auto -6px}

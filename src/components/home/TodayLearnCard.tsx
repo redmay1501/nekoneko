@@ -6,6 +6,7 @@ import { EmojiIcon } from '@/components/common/EmojiIcon';
 import type { SessionPlanPreview } from '@/features/learning/session-engine';
 import { SESSION_PHASES, SESSION_PHASE_INFO, type SessionPhase } from '@/features/learning/session-types';
 import type { ReactNode } from 'react';
+import { LottieAnimation } from '@/components/common/LottieAnimation';
 
 interface TodayLearnCardProps {
   journeyDay: number;
@@ -34,6 +35,9 @@ export function TodayLearnCard(props: TodayLearnCardProps) {
   const planParts = SESSION_PHASES.filter((phase) => plan[phase] > 0);
   return (
     <section className="dash-card dash-today" aria-labelledby="dash-today-title">
+      {/* Mèo ngồi trên mép thẻ, đuôi thòng xuống mặt thẻ — public/animations/loader-cat.json đã xoay đuôi 100° quanh gốc
+          đuôi và ẩn bóng đổ dưới đất (bản gốc: docs/Loader cat.json). */}
+      <LottieAnimation src="/animations/loader-cat.json" className="dash-today-cat" stillFrame={8} />
       <Image src="/illustrations/home-study.webp" alt="" width={420} height={350} sizes="(max-width: 767px) 88px, 94px" className="dash-today-mascot" />
       <div className="dash-today-body">
         <h2 id="dash-today-title">{isReadyToComplete ? `Đã học hết ngày ${journeyDay} 🎉` : 'Học hôm nay'}</h2>

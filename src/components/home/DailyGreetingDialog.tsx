@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState, useSyncExternalStore } from 'react';
 import { AudioButton } from '@/components/common/AudioButton';
 import { ModalPortal } from '@/components/common/ModalPortal';
-import { SpriteIcon } from '@/components/common/SpriteIcon';
+import { LottieAnimation } from '@/components/common/LottieAnimation';
 import type { DailyGreeting } from '@/features/home/daily-greeting';
 import { startNavigation } from '@/stores/navigation-progress-store';
 import { updateSettings } from '@/features/progress/settings-api';
@@ -45,7 +45,7 @@ export function DailyGreetingDialog({ greeting, displayName }: { greeting: Daily
   return (
     <ModalPortal className="welcome daily-greeting" labelledBy="daily-greeting-title" onEscape={close}>
       <div className="center">
-        <SpriteIcon name="noko" size={84} className="mx-auto" />
+        <LottieAnimation src="/animations/cat-in-box.json" className="daily-greeting-cat" stillFrame={40} />
         <h2 id="daily-greeting-title" className="mt-2">{salutation}, {displayName}! 🌸</h2>
         <p className="soft mt-2">{greeting.message}</p>
         {greeting.todayLine ? <p className="chip mint mt-3" style={{ display: 'inline-flex' }}>{greeting.todayLine}</p> : null}

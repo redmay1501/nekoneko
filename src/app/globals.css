@@ -1443,3 +1443,15 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
   .nb-sheet .nb-ghost path{stroke:#d6d6d6} .nb-sheet .nb-ghost-text{fill:#d6d6d6}
   .nb-sheet .nb-model path{stroke:#222}
 }
+
+/* ============ MÀN LOADING KHI MỚI VÀO WEB (components/layout/SplashScreen) ============ */
+.splash{position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  background:radial-gradient(circle at 50% 42%,#FFFFFF 0%,#FFF4F6 45%,#FFE6EC 100%);
+  transition:opacity .35s ease,visibility .35s ease;
+  /* Phòng khi JavaScript lỗi: tự ẩn sau 6 giây, không bao giờ che kẹt trang. */
+  animation:splash-auto-hide .35s ease 6s forwards}
+.splash.is-fading{opacity:0;visibility:hidden;pointer-events:none}
+.splash-cat{width:min(240px,56vw);aspect-ratio:1/1}
+.splash-text{margin:0;font-weight:800;font-size:15px;letter-spacing:.02em;color:var(--sakura-deep)}
+@keyframes splash-auto-hide{to{opacity:0;visibility:hidden;pointer-events:none}}
+@media print{.splash{display:none!important}}

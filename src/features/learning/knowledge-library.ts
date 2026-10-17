@@ -24,12 +24,22 @@ export function radicalRows(catalog: KnowledgeCatalog, views: Views): KnowledgeL
   }));
 }
 
-export function kanjiRows(catalog: KnowledgeCatalog, views: Views): KnowledgeListRowData[] {
-  return itemsOfType(catalog, 'kanji').map((item) => ({
-    contentKey: item.key, face: item.face, title: `${item.content.hanViet} · ${item.content.meaning}`,
-    subtitle: `${item.content.onReading} ・ ${item.content.kunReading || '—'}`,
-    romaji: kanjiReadingRomaji(item.content.onReading, item.content.kunReading), ...memoryOf(views, item.key),
-  }));
+/** Kanji học trong bài nào (lộ trình: Kanji học cùng ngày với từ chứa nó) — để xếp danh sách Kanji theo bài. */
+export function kanjiLessonLabel(catalog: KnowledgeCatalog, day: number | null): string {
+  const minna = day ? catalog.content.journeyDays[day - 1]?.minna ?? '' : '';
+  const lesson = /^Bài (\d+)/.exec(minna);
+  return lesson ? `Bài ${lesson[1]}` : 'Kanji N5 bổ sung';
+}
+
+export function kanjiRows(catalog: KnowledgeCatalog, views: Views): Array<KnowledgeListRowData & { group: string; day: number }> {
+  return itemsOfType(catalog, 'kanji')
+    .sort((left, right) => (left.day ?? 999) - (right.day ?? 999) || left.id - right.id)
+    .map((item) => ({
+      contentKey: item.key, face: item.face, title: `${item.content.hanViet} · ${item.content.meaning}`,
+      subtitle: `${item.content.onReading} ・ ${item.content.kunReading || '—'}`,
+      romaji: kanjiReadingRomaji(item.content.onReading, item.content.kunReading), ...memoryOf(views, item.key),
+      group: kanjiLessonLabel(catalog, item.day), day: item.day ?? 999,
+    }));
 }
 
 export function vocabularyRows(catalog: KnowledgeCatalog, views: Views) {

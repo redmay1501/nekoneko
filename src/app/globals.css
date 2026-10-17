@@ -1694,3 +1694,7 @@ a.garden-tree:hover .garden-tree-tag{background:#fff;box-shadow:0 0 0 2px #F3B67
 .gx-review-item.is-correct{border-color:#BFE5C8;background:#F6FCF7}
 .gx-review-item.is-wrong{border-color:#FFD3DB;background:#FFF8F9}
 .gx-result{text-align:center}
+
+/* Tiêu đề trang học + số đã học (20/104) đứng NGAY cạnh nhau, xuống dòng gọn khi hẹp. */
+.title-count{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px}
+.title-count h1{margin:0}

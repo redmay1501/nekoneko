@@ -16,17 +16,20 @@ interface TestPickerProps {
 }
 
 const COUNT_STORAGE_KEY = 'test-picker:count';
+/** Phạm vi kiểm tra: toàn bộ · chỉ thứ đã học (đã gặp trong phiên học) · tự chọn bài / nhóm. */
+type Scope = 'all' | 'learned' | 'pick';
 const DEFAULT_COUNT = 20;
 const ALL = ALL_QUESTIONS;
 
 /**
- * MỘT nút "Kiểm tra" → bảng chọn THEO BÀI / NHÓM (chọn một hay nhiều, không phải chọn từng chữ) → chọn số câu
+ * MỘT nút "Kiểm tra" → chọn phạm vi: TOÀN BỘ · ĐÃ HỌC · theo bài / nhóm (chọn một hay nhiều) → chọn số câu
  * (10 · 20 · 30 · 50 · tất cả) → bắt đầu. Câu hỏi lấy ngẫu nhiên trong các bài đã chọn.
  * Bài kiểm tra là phiên "Học theo lựa chọn": thứ đã học được hỏi lại (ghi trí nhớ thật); thứ chưa học được giới thiệu trước.
  */
 export function TestPicker({ groups, unit, partUnit = 'nhóm' }: TestPickerProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [scope, setScope] = useState<Scope>('all');
   const [picked, setPicked] = useState<Set<string>>(new Set());
   const [onlyLearned, setOnlyLearned] = useState(false);
   const isAllPicked = picked.size === groups.length;
@@ -50,9 +53,12 @@ export function TestPicker({ groups, unit, partUnit = 'nhóm' }: TestPickerProps
     return next;
   });
 
-  const entries = groups.filter((group) => picked.has(group.id)).flatMap((group) => group.entries);
-  const pool = (onlyLearned ? entries.filter((entry) => entry.isLearned) : entries).map((entry) => entry.key);
-  const hasLearned = groups.some((group) => group.entries.some((entry) => entry.isLearned));
+  const allEntries = groups.flatMap((group) => group.entries);
+  const learnedCount = allEntries.filter((entry) => entry.isLearned).length;
+  const entries = scope === 'pick' ? groups.filter((group) => picked.has(group.id)).flatMap((group) => group.entries) : allEntries;
+  const isLearnedOnly = scope === 'learned' || (scope === 'pick' && onlyLearned);
+  const pool = (isLearnedOnly ? entries.filter((entry) => entry.isLearned) : entries).map((entry) => entry.key);
+  const hasLearned = learnedCount > 0;
   const allLimit = questionCountFor(ALL_QUESTIONS, pool.length);
   // Cùng một số cho nút, ghi chú và số mục gửi đi → phiên có đúng chừng đó câu hỏi.
   const questionCount = questionCountFor(count, pool.length);
@@ -66,8 +72,16 @@ export function TestPicker({ groups, unit, partUnit = 'nhóm' }: TestPickerProps
       {isOpen ? (
         <ModalPortal className="sheet on test-picker" labelledBy="test-picker-title" onEscape={() => setIsOpen(false)}>
           <button type="button" className="sheet-close" onClick={() => setIsOpen(false)} aria-label="Đóng">✕</button>
-          <h2 id="test-picker-title" style={{ fontSize: 18 }}>Kiểm tra {unit} theo {partUnit}</h2>
-          <p className="sm soft mt-1">Chọn một hay nhiều {partUnit}, rồi chọn số câu mỗi lần.</p>
+          <h2 id="test-picker-title" style={{ fontSize: 18 }}>Kiểm tra {unit}</h2>
+          <p className="sm soft mt-1">Chọn phạm vi, rồi chọn số câu mỗi lần.</p>
+          <div className="segmented mt-2.5" role="radiogroup" aria-label="Phạm vi kiểm tra">
+            {([['all', `Toàn bộ (${allEntries.length})`], ['learned', `Đã học (${learnedCount})`], ['pick', `Chọn theo ${partUnit}`]] as const).map(([id, label]) => (
+              <button key={id} type="button" role="radio" aria-checked={scope === id} className={`segmented-option${scope === id ? ' is-selected' : ''}`}
+                onClick={() => setScope(id)}>{label}</button>
+            ))}
+          </div>
+          {scope === 'learned' && !hasLearned ? <p className="sm soft mt-2">Bạn chưa học {unit} nào — học trong phiên “Học hôm nay” trước nhé.</p> : null}
+          {scope === 'pick' ? (<>
           <div className="row wrap mt-2.5" style={{ gap: 8 }}>
             <button type="button" className={`chip ${isAllPicked ? 'pink' : ''}`}
               onClick={() => setPicked(isAllPicked ? new Set() : new Set(groups.map((group) => group.id)))}>
@@ -92,6 +106,7 @@ export function TestPicker({ groups, unit, partUnit = 'nhóm' }: TestPickerProps
               );
             })}
           </div>
+          </>) : null}
           <div className="test-start">
             {pool.length ? (
               <div className="test-count" role="radiogroup" aria-label="Số câu mỗi lần">
@@ -108,7 +123,7 @@ export function TestPicker({ groups, unit, partUnit = 'nhóm' }: TestPickerProps
             ) : null}
             {pool.length ? (
               <p className="tiny muted mb-1.5">
-                Đã chọn {picked.size} {partUnit} · {pool.length} {unit}{questionCount < pool.length ? ` — lấy ngẫu nhiên ${questionCount}, lần sau ra ${unit} khác` : ''}.
+                {scope === 'pick' ? `Đã chọn ${picked.size} ${partUnit} · ` : scope === 'learned' ? 'Đã học · ' : 'Toàn bộ · '}{pool.length} {unit}{questionCount < pool.length ? ` — lấy ngẫu nhiên ${questionCount}, lần sau ra ${unit} khác` : ''}.
                 {count !== ALL && count > pool.length ? ` Phạm vi chỉ có ${pool.length} ${unit} nên bài có ${questionCount} câu.` : ''}
               </p>
             ) : null}
@@ -116,7 +131,7 @@ export function TestPicker({ groups, unit, partUnit = 'nhóm' }: TestPickerProps
               <button type="button" className="btn block" onClick={start}>▶ Bắt đầu kiểm tra · {questionCount} câu</button>
             ) : (
               <button type="button" className="btn block" disabled>
-                {picked.size && onlyLearned ? `Các ${partUnit} này chưa có ${unit} đã học` : `Chọn ít nhất một ${partUnit}`}
+                {scope === 'learned' ? `Chưa có ${unit} đã học` : picked.size && onlyLearned ? `Các ${partUnit} này chưa có ${unit} đã học` : `Chọn ít nhất một ${partUnit}`}
               </button>
             )}
           </div>

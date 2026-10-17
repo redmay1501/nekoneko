@@ -10,7 +10,7 @@ export default async function GrammarPage() {
   const { learned, total } = countLearnedOfType(catalog, memoryViews, 'grammar');
   return (
     <>
-      <div className="between"><h1>Ngữ pháp N5</h1><span className="chip pink">{learned}/{total}</span></div>
+      <div className="title-count"><h1>Ngữ pháp N5</h1><span className="chip pink">{learned}/{total}</span></div>
       <p className="soft sm" style={{ margin: '4px 0 14px' }}>
         112 mẫu câu theo Minna bài 1–25. Mỗi mẫu đi kèm một câu thật để bạn dùng được ngay.
       </p>

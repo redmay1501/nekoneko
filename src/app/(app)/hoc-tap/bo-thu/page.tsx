@@ -34,7 +34,7 @@ export default async function RadicalsPage() {
   const testGroups = buildTestGroups('radical', itemsOfType(catalog, 'radical').filter((item) => item.day !== null), memoryViews);
   return (
     <>
-      <div className="between"><h1>Bộ thủ</h1><span className="chip lav">{learned}/{scheduled.length}</span></div>
+      <div className="title-count"><h1>Bộ thủ</h1><span className="chip lav">{learned}/{scheduled.length}</span></div>
       <p className="soft sm" style={{ margin: '4px 0 12px' }}>
         Bộ thủ là mảnh ghép tạo nên Kanji. Không cần học thuộc trước — khi gặp Kanji mới, nhìn bộ thủ để đoán nghĩa và nhớ lâu hơn.
       </p>

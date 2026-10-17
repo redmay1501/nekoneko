@@ -29,6 +29,11 @@ export async function KnowledgeDetailPage({ contentType, rawId, backHref, backLa
     <div className="session">
       <Link className="link" href={backHref}>← {backLabel}</Link>
       <div className="card mt-2" data-reveal="light"><KnowledgeDetailContent detail={buildKnowledgeDetail(item, memory, catalog)} /></div>
+      {item.type === 'kanji' ? (
+        <div className="row wrap mt-3" style={{ gap: 8 }}>
+          <Link className="btn sm" href={`/luyen-tap/viet?muc=kanji&chu=${encodeURIComponent(item.content.character)}`}>✍️ Luyện viết chữ này</Link>
+        </div>
+      ) : null}
       {item.type === 'grammar' ? (
         <div className="row wrap mt-3" style={{ gap: 8 }}>
           <Link className="btn sm" href={`/hoc-tap/ngu-phap/luyen-tap?mau=${item.id}&che-do=luyen-tap&so-cau=tat-ca`}>📝 Luyện mẫu này</Link>

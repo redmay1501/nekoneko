@@ -23,7 +23,7 @@ export default async function GardenPage() {
 
   return (
     <>
-      <div className="between"><h1>Vườn tri thức</h1><span className="chip mint">{learned.length} cây</span></div>
+      <div className="title-count"><h1>Vườn tri thức</h1><span className="chip mint">{learned.length} cây</span></div>
       <p className="soft sm" style={{ margin: '4px 0 14px' }}>
         Mỗi thứ bạn giữ lại được là một cái cây. Vườn này không phải trang trí — nó chính là trí nhớ của bạn.
       </p>

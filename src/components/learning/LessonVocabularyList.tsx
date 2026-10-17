@@ -26,11 +26,16 @@ const tabOfRow = (row: VocabularyRowData) => {
  */
 export function LessonVocabularyList({ rows, lessons, currentTab }: { rows: VocabularyRowData[]; lessons: LessonContent[]; currentTab: string }) {
   const [tab, setTab] = useState(currentTab);
+  /** "Chỉ từ đã học" — giữ nguyên khi đổi bài (kết hợp với lọc theo bài). */
+  const [isLearnedOnly, setIsLearnedOnly] = useState(false);
   const [shownCount, setShownCount] = useState(PAGE_SIZE);
   const activeTabRef = useRef<HTMLButtonElement>(null);
   const sortedLessons = [...lessons].sort((left, right) => lessonNumber(left.id) - lessonNumber(right.id));
   const hasKanaPeriod = rows.some((row) => tabOfRow(row) === KANA_PERIOD_TAB);
-  const visibleRows = tab === ALL_TAB ? rows : rows.filter((row) => tabOfRow(row) === tab);
+  const tabRows = tab === ALL_TAB ? rows : rows.filter((row) => tabOfRow(row) === tab);
+  // Đã học = đã gặp trong phiên học (trạng thái khác "new"); mở trang hay xem thẻ không làm từ thành "đã học".
+  const visibleRows = isLearnedOnly ? tabRows.filter((row) => row.status !== 'new') : tabRows;
+  const learnedCount = rows.filter((row) => row.status !== 'new').length;
   const lesson = sortedLessons.find((candidate) => candidate.id === tab);
 
   useEffect(() => {
@@ -48,8 +53,14 @@ export function LessonVocabularyList({ rows, lessons, currentTab }: { rows: Voca
     <>
       <div className="pill-tabs" role="tablist" aria-label="Lọc theo bài">
         {tabButton(ALL_TAB, 'Tất cả')}
-        {hasKanaPeriod ? tabButton(KANA_PERIOD_TAB, 'Chữ cái') : null}
+        {hasKanaPeriod ? tabButton(KANA_PERIOD_TAB, 'Chào hỏi & Katakana') : null}
         {sortedLessons.map((candidate) => tabButton(candidate.id, candidate.id))}
+      </div>
+      <div className="row wrap mt-2.5" style={{ gap: 8 }}>
+        <button type="button" role="switch" aria-checked={isLearnedOnly} className={`chip ${isLearnedOnly ? 'pink' : ''}`}
+          onClick={() => { setIsLearnedOnly((value) => !value); setShownCount(PAGE_SIZE); }}>
+          {isLearnedOnly ? '✓ ' : ''}Chỉ từ đã học ({learnedCount})
+        </button>
       </div>
       <div className="mt-3">
         {lesson ? (
@@ -64,7 +75,10 @@ export function LessonVocabularyList({ rows, lessons, currentTab }: { rows: Voca
         ) : tab === KANA_PERIOD_TAB ? (
           <p className="sm soft mb-3">Từ chào hỏi và từ Katakana học trong hai tuần bảng chữ cái (ngày 6–13).</p>
         ) : null}
-        <div key={tab} className="list-grid stack" style={{ gap: 9 }} data-reveal-stagger>
+        {!visibleRows.length ? (
+          <p className="soft center">{isLearnedOnly ? 'Phần này chưa có từ nào bạn đã học.' : 'Phần này chưa có từ.'}</p>
+        ) : null}
+        <div key={`${tab}:${isLearnedOnly}`} className="list-grid stack" style={{ gap: 9 }} data-reveal-stagger>
           {visibleRows.slice(0, shownCount).map((row) => (
             <KnowledgeListRow key={row.contentKey} row={row} />
           ))}

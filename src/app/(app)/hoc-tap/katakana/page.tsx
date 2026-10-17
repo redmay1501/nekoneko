@@ -16,7 +16,7 @@ export default async function KatakanaPage({ searchParams }: { searchParams: Pro
   return (
     <>
       <div className="page-hero-cat">
-      <div className="between">
+      <div className="title-count">
         <h1>Katakana</h1>
         <span className="chip mint">{data.learnedCount}/{data.cells.length}</span>
       </div>

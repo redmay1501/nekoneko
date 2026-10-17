@@ -4,6 +4,7 @@ import { SvgSprite } from '@/components/common/SvgSprite';
 import { APP_NAME, APP_TAGLINE } from '@/config/brand';
 import { NavigationProgress } from '@/components/layout/NavigationProgress';
 import { SplashScreen } from '@/components/layout/SplashScreen';
+import { PawClickEffect } from '@/components/layout/PawClickEffect';
 import { Providers } from './providers';
 import './fonts.css';
 import './globals.css';
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <a href="#noi-dung" className="sr-only focus:not-sr-only">Bỏ qua tới nội dung</a>
         <SplashScreen />
+        <PawClickEffect />
         <SvgSprite />
         {/* useSearchParams cần Suspense để không kéo cả trang sang render phía trình duyệt. */}
         <Suspense fallback={null}><NavigationProgress /></Suspense>

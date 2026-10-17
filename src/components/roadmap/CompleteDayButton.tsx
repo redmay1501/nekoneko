@@ -1,5 +1,6 @@
 'use client';
 
+import { LoadingRunner } from '@/components/common/LoadingRunner';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -57,6 +58,7 @@ export function CompleteDayButton({ day, remainingCount = 0, isPrimary = false }
         </button>
         <button type="button" className="btn quiet sm" disabled={isBusy} onClick={() => setIsConfirming(false)}>Chưa</button>
       </div>
+      {isBusy ? <LoadingRunner className="mt-2.5" label={isLastDay ? 'Đang khép lại lộ trình…' : `Đang mở ngày ${day + 1}…`} /> : null}
       {mutation.isError ? <p className="sm mt-2" role="alert">{mutation.error.message}</p> : null}
     </div>
   );

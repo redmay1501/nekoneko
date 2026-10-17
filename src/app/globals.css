@@ -1458,17 +1458,35 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 /* Mèo (Lottie loader-cat, khung 280×200) ngồi trên mép trên thẻ "Học hôm nay": chân mèo ở 85% chiều cao khung
    → đẩy khung lên 85% để chân mèo chạm mép thẻ; đuôi thòng xuống mặt thẻ. */
 .dash-today-cat{position:absolute;z-index:2;right:96px;top:calc(var(--cat-h) * -0.85);width:calc(var(--cat-h) * 1.4);height:var(--cat-h);
-  --cat-h:130px;pointer-events:none}
+  --cat-h:160px;pointer-events:none}
 .dash-today-cat svg{overflow:visible}
-@media (max-width:767px){.dash-today-cat{--cat-h:100px;right:78px} .dash-today{margin-top:56px}}
+@media (max-width:767px){.dash-today-cat{--cat-h:120px;right:70px} .dash-today{margin-top:76px}}
 /* Mèo trong thùng (Lottie cat-in-box) ở đầu hộp chào mỗi ngày. */
-.daily-greeting-cat{width:132px;height:132px;margin:4px auto -6px}
+.daily-greeting-cat{width:170px;height:170px;margin:4px auto -10px}
 
 /* Mèo Lottie ở đầu trang / đầu mục (Trò chơi, Video, Nghe và gõ): trang trí NỔI — đặt tuyệt đối ở góc phải nên không
    chiếm chỗ, không đẩy giãn bố cục (khoảng cách các phần giữ nguyên như khi chưa có mèo). Chữ chỉ chừa lề phải để không bị che. */
-.page-hero-cat{position:relative;padding-right:var(--hero-cat-room,112px)}
-.page-hero-cat-art{position:absolute;right:0;top:50%;width:var(--hero-cat-size,104px);height:var(--hero-cat-size,104px);
-  transform:translateY(-50%);pointer-events:none;z-index:1}
-@media (max-width:560px){.page-hero-cat{--hero-cat-room:70px;--hero-cat-size:64px}}
+.page-hero-cat{position:relative;padding-right:var(--hero-cat-room,150px)}
+.page-hero-cat-art{position:absolute;right:0;bottom:-4px;width:var(--hero-cat-size,140px);height:var(--hero-cat-size,140px);
+  pointer-events:none;z-index:1}
+/* Chân con vật nằm ở đáy phần đầu trang → phần dư vươn LÊN khoảng trống phía trên, không bao giờ đè nội dung bên dưới.
+   Cỡ do HeroAnimal tự đo theo chỗ trống (tối đa 140px, điện thoại 86px). */
+.page-hero-cat-art-inner{width:100%;height:100%}
+@media (max-width:560px){.page-hero-cat{--hero-cat-room:92px;--hero-cat-size:86px}}
 /* Trang 404: mèo Luna (khung 723×442). */
 .not-found-cat{width:min(420px,88vw);aspect-ratio:723/442;margin:0 auto}
+
+/* Mèo ma ở thẻ "Gặp lại kiến thức" (thay ảnh minh hoạ). */
+.dash-review-cat{width:104px;height:104px;margin:-14px -6px -10px -10px}
+@media (max-width:767px){.dash-review-cat{width:84px;height:84px;margin:0;top:0;right:2px}}
+/* Mèo chấm điểm 1–5 sao (kết quả trò chơi). */
+.rating-cat{width:min(220px,62vw);aspect-ratio:1134/1200;margin:-6px auto 0}
+.rating-cat-art{width:100%;height:100%}
+.match-star-count{margin:0;font-size:18px;letter-spacing:2px;color:#F5B400;font-weight:800}
+.match-star-count span{color:#E4DCD8}
+/* Hình "đang xử lý" sau khi hoàn thành (cậu bé chạy, đã cắt khung). */
+.loading-runner{display:flex;flex-direction:column;align-items:center;gap:4px}
+.loading-runner-art{width:110px;aspect-ratio:550/460}
+.loading-runner-label{font-size:13px;color:var(--ink-3)}
+/* Vết chân mèo khi bấm nút (PawClickEffect) — lớp nổi, không chặn bấm. */
+.paw-click{position:fixed;z-index:1001;width:64px;height:64px;pointer-events:none}

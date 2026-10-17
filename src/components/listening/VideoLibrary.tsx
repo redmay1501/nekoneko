@@ -1,6 +1,6 @@
 'use client';
 
-import { LottieAnimation } from '@/components/common/LottieAnimation';
+import { HeroAnimal } from '@/components/common/HeroAnimal';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import {
@@ -41,7 +41,7 @@ export function VideoLibrary({ videos, sources, topics, watchedIds }: VideoLibra
         còn lại ↗ mở trang NHK có lời thoại song ngữ. Đã xem {watched.size}/{videos.length}.
       </p>
         {/* Mèo ôm TV có cá bơi (Lottie, đã ẩn khung nền trắng của bản gốc) — trang trí. */}
-        <LottieAnimation src="/animations/cat-tv.json" className="page-hero-cat-art" stillFrame={60} />
+        <HeroAnimal src="/animations/cat-tv.json" stillFrame={60} />
       </div>
       <div className="chip-scroll" role="group" aria-label="Cách xem">
         {([[null, `Tất cả · ${videos.length}`, videos.length], ['in-app', `▶ Xem trong app · ${inAppCount}`, inAppCount], ['animation', `🎨 Hoạt hình · ${animationCount}`, animationCount]] as const)

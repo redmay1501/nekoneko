@@ -12,6 +12,12 @@ interface LottieAnimationProps {
   stillFrame?: number;
   /** 'light' (mặc định, nhẹ — chỉ hình vẽ) hoặc 'svg' (đầy đủ hơn, vẽ được lớp chữ — ví dụ chữ Z của mèo ngủ ở trang 404). */
   player?: 'light' | 'svg';
+  /** Lặp lại (mặc định có). Không lặp: chạy một lần rồi giữ khung cuối. */
+  loop?: boolean;
+  /** Cắt khung: 'x y rộng cao' theo toạ độ của tệp — cho tệp có nhân vật nhỏ trong khung lớn. */
+  viewBox?: string;
+  /** Chạy từ đầu tới khung này rồi dừng (ví dụ: số sao của mèo chấm điểm). Bỏ trống = chạy cả animation. */
+  playTo?: number;
 }
 
 type LottiePlayer = { destroy: () => void; play: () => void; pause: () => void; goToAndStop: (frame: number, isFrame?: boolean) => void };
@@ -22,7 +28,7 @@ type LottiePlayer = { destroy: () => void; play: () => void; pause: () => void; 
  *  - Ra khỏi màn hình thì tạm dừng (IntersectionObserver) cho đỡ tốn pin; vào lại thì chạy tiếp.
  *  - "Giảm chuyển động" → đứng yên ở `stillFrame`. Tải lỗi → để trống, không ảnh hưởng trang.
  */
-export function LottieAnimation({ src, className = '', hideLayers, stillFrame = 0, player: playerKind = 'light' }: LottieAnimationProps) {
+export function LottieAnimation({ src, className = '', hideLayers, stillFrame = 0, player: playerKind = 'light', loop = true, viewBox, playTo }: LottieAnimationProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const hidden = hideLayers?.join('|') ?? '';
 
@@ -41,11 +47,14 @@ export function LottieAnimation({ src, className = '', hideLayers, stillFrame = 
         const hiddenNames = new Set(hidden ? hidden.split('|') : []);
         for (const layer of data.layers ?? []) if (hiddenNames.has(layer.nm)) layer.hd = true;
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const isOnce = !loop || playTo !== undefined;
         player = lottie.loadAnimation({
-          container, renderer: 'svg', loop: true, autoplay: !reduceMotion, animationData: data,
-          rendererSettings: { preserveAspectRatio: 'xMidYMid meet' },
+          container, renderer: 'svg', loop: !isOnce, autoplay: !reduceMotion && playTo === undefined, animationData: data,
+          rendererSettings: { preserveAspectRatio: 'xMidYMid meet', ...(viewBox ? { viewBoxSize: viewBox } : {}) },
         }) as LottiePlayer;
-        if (reduceMotion) { player.goToAndStop(stillFrame, true); return; }
+        if (reduceMotion) { player.goToAndStop(playTo ?? stillFrame, true); return; }
+        if (playTo !== undefined) { (player as LottiePlayer & { playSegments: (segment: [number, number], force: boolean) => void }).playSegments([0, playTo], true); return; }
+        if (isOnce) return;
         observer = new IntersectionObserver(([entry]) => { if (entry?.isIntersecting) player?.play(); else player?.pause(); });
         observer.observe(container);
       } catch {
@@ -57,7 +66,7 @@ export function LottieAnimation({ src, className = '', hideLayers, stillFrame = 
       observer?.disconnect();
       player?.destroy();
     };
-  }, [src, hidden, stillFrame, playerKind]);
+  }, [src, hidden, stillFrame, playerKind, loop, viewBox, playTo]);
 
   return <div ref={containerRef} className={className} aria-hidden="true" />;
 }

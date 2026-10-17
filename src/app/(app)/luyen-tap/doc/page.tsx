@@ -1,3 +1,4 @@
+import { HeroAnimal } from '@/components/common/HeroAnimal';
 import Link from 'next/link';
 import { NekoButton } from '@/components/common/NekoButton';
 import { EmptyState } from '@/components/common/StateViews';
@@ -14,10 +15,13 @@ export default async function ReadingPage() {
   const suggested = list.items.find((item) => item.id === list.suggestedId);
   return (
     <>
+      <div className="page-hero-cat">
       <h1>Đọc hiểu</h1>
       <p className="soft sm" style={{ margin: '4px 0 12px' }}>
         {list.items.length} bài đọc theo bài Minna · đã làm <b>{list.doneCount}/{list.items.length}</b>. Đọc to, rồi trả lời câu hỏi.
       </p>
+        <HeroAnimal src="/animations/reading-giraffe.json" stillFrame={45} />
+      </div>
       {suggested ? (
         <div className="card tight reading-next">
           <span className="sm">Làm tiếp: <b>{suggested.lesson} — {suggested.title}</b></span>

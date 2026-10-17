@@ -1,5 +1,6 @@
 'use client';
 
+import { LoadingRunner } from '@/components/common/LoadingRunner';
 import Link from 'next/link';
 import { NokoMessage } from '@/components/common/NokoMessage';
 import { SessionCardSkeleton } from '@/components/common/PageSkeletons';
@@ -116,7 +117,7 @@ function SessionWrapUp({ steps, upToIndex, hasError, onRetry }: {
           <button type="button" className="btn block mt-3" onClick={onRetry}>Thử lại</button>
         </>
       ) : (
-        <p className="sm muted mt-3" aria-busy="true">Noko đang lưu và tổng kết cho bạn… 🐾</p>
+        <LoadingRunner className="mt-3" label="Noko đang lưu và tổng kết cho bạn…" />
       )}
     </div>
   );

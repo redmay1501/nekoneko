@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { RatingCat } from '@/components/common/RatingCat';
 import { type CSSProperties, useEffect, useState } from 'react';
 import { NekoButton } from '@/components/common/NekoButton';
 import { useSpeech } from '@/hooks/useSpeech';
@@ -143,9 +144,8 @@ export function MatchGame({ pool, scope, recordsByPairs, unit }: MatchGameProps)
     const accuracy = accuracyOf(finished);
     return (
       <div className="card center match-result" role="status" aria-live="polite">
-        <div className="match-stars" aria-label={`${starsOf(accuracy)}/3 sao`}>
-          {[1, 2, 3].map((star) => <span key={star} className={star <= starsOf(accuracy) ? 'on' : ''} style={{ '--i': star } as CSSProperties}>★</span>)}
-        </div>
+        <RatingCat stars={starsOf(accuracy)} />
+        <p className="match-star-count" aria-hidden="true">{'★'.repeat(starsOf(accuracy))}<span>{'★'.repeat(5 - starsOf(accuracy))}</span> {starsOf(accuracy)}/5</p>
         <h2 className="mt-1.5">{accuracy === 100 ? 'Hoàn hảo!' : accuracy >= 75 ? 'Giỏi lắm!' : 'Xong ván!'}</h2>
         <div className="match-stats mt-3">
           <span><b>{finished.pairs}/{finished.pairs}</b> cặp</span>
@@ -227,7 +227,7 @@ function RecordLine({ record }: { record: GameRecord | null }) {
   );
 }
 
-/** 3 sao: 100% · 2 sao: ≥ 75% · 1 sao: còn lại — mục tiêu rõ để muốn chơi lại. */
-function starsOf(accuracy: number): number {
-  return accuracy === 100 ? 3 : accuracy >= 75 ? 2 : 1;
+/** 5 sao: 100% · 4: ≥ 90% · 3: ≥ 75% · 2: ≥ 50% · 1: còn lại — mục tiêu rõ để muốn chơi lại. */
+export function starsOf(accuracy: number): number {
+  return accuracy === 100 ? 5 : accuracy >= 90 ? 4 : accuracy >= 75 ? 3 : accuracy >= 50 ? 2 : 1;
 }

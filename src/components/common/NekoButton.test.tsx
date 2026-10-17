@@ -13,10 +13,11 @@ describe('NekoButton', () => {
     for (const pose of Object.values(NEKO_BUTTON_POSES)) expect(existsSync(`public${pose.src}`)).toBe(true);
   });
 
-  it('liên kết: giữ đường dẫn, có mèo, chữ và icon là code (không phải ảnh)', () => {
+  it('liên kết: giữ đường dẫn, mặc định không có mèo trên nút, chữ và icon là code (không phải ảnh)', () => {
     const html = renderToStaticMarkup(<NekoButton href="/hoc/daily" leftIcon={<svg />}>Bắt đầu học</NekoButton>);
     expect(html).toContain('href="/hoc/daily"');
-    expect(html).toContain('neko-btn-cat');
+    expect(html).not.toContain('neko-btn-cat');
+    expect(renderToStaticMarkup(<NekoButton catPose="peek">Có mèo</NekoButton>)).toContain('neko-btn-cat');
     expect(html).toContain('neko-btn-primary');
     expect(html).toMatch(/<span class="neko-btn-label">Bắt đầu học<\/span>/);
   });

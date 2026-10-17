@@ -6,7 +6,7 @@ import { buildDictationPools, buildWritingPractice } from '@/features/learning/s
 import { knowledgeGroups } from '@/features/learning/study-actions';
 import { getLearnerContext } from '@/features/learning/learner-context';
 import { WritingNotebook } from '@/components/writing/WritingNotebook';
-import { LottieAnimation } from '@/components/common/LottieAnimation';
+import { HeroAnimal } from '@/components/common/HeroAnimal';
 import { buildNotebooks } from '@/features/writing/notebook';
 import { notebookProgressMap } from '@/features/writing/notebook-progress';
 
@@ -37,7 +37,7 @@ export default async function WritingPage({ searchParams }: { searchParams: Prom
               <div className="page-hero-cat">
                 <p className="soft sm mb-2.5">Nghe từ hoặc câu, rồi gõ lại bằng tiếng Nhật (kana hoặc chữ Hán).</p>
                 {/* Mèo gõ laptop (Lottie) — trang trí. */}
-                <LottieAnimation src="/animations/cat-typing.json" className="page-hero-cat-art" stillFrame={40} />
+                <HeroAnimal src="/animations/cat-typing.json" stillFrame={40} />
               </div>
               <DictationPanel pools={buildDictationPools(catalog, memoryViews, journeyDay)} initialRange={params['pham-vi']} />
             </>

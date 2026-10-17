@@ -1,3 +1,4 @@
+import { HeroAnimal } from '@/components/common/HeroAnimal';
 import { KanaPractice } from '@/components/learning/KanaPractice';
 import { TestPicker } from '@/components/learning/TestPicker';
 import { itemsOfType } from '@/features/learning/knowledge-catalog';
@@ -14,11 +15,14 @@ export default async function HiraganaPage({ searchParams }: { searchParams: Pro
   const testGroups = buildTestGroups('hiragana', itemsOfType(catalog, 'hiragana'), memoryViews);
   return (
     <>
+      <div className="page-hero-cat">
       <div className="between">
         <h1>Hiragana</h1>
         <span className="chip mint">{data.learnedCount}/{data.cells.length}</span>
       </div>
       <p className="soft sm" style={{ margin: '4px 0 12px' }}>Mỗi chữ đều có: học → nghe → nhận diện → luyện viết → kiểm tra → gặp lại.</p>
+        <HeroAnimal src="/animations/kana-cat.json" stillFrame={90} />
+      </div>
       <TestPicker groups={testGroups} unit="chữ" />
       <KanaPractice key={viet ?? ''} data={data} initialWriting={viet} />
     </>

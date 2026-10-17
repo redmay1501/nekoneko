@@ -5,7 +5,8 @@ import Link from 'next/link';
 import type { MouseEvent, ReactNode } from 'react';
 
 /**
- * NekoButton — nút 3D dạng viên thuốc có mascot mèo ngồi vắt trên mép trên.
+ * NekoButton — nút 3D dạng viên thuốc. Mặc định KHÔNG còn mèo ngồi trên nút (bấm nút đã có vết chân mèo — PawClickEffect);
+ * vẫn bật lại được bằng catPose="peek".
  *
  * Thân nút, chữ, icon là code (responsive, bấm được thật); chỉ con mèo là ảnh. Mèo nằm TRONG nút nên lún theo khi bấm,
  * và không chắn chữ: phần chữ chừa chỗ bên phải cho mèo.
@@ -46,7 +47,7 @@ function Spinner() {
 }
 
 export function NekoButton(props: NekoButtonProps) {
-  const { variant = 'primary', size = 'md', catPose = 'peek', leftIcon, loading = false, disabled = false, fullWidth = false, className, children } = props;
+  const { variant = 'primary', size = 'md', catPose = 'none', leftIcon, loading = false, disabled = false, fullWidth = false, className, children } = props;
   const pose = catPose === 'none' ? null : NEKO_BUTTON_POSES[catPose];
   const isInactive = disabled || loading;
   const classes = [

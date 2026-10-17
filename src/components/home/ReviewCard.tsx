@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import { LottieAnimation } from '@/components/common/LottieAnimation';
 import { NekoButton } from '@/components/common/NekoButton';
 
 interface ReviewCardProps {
@@ -19,7 +19,8 @@ export function ReviewCard({ atRiskCount, learnedCount }: ReviewCardProps) {
   const subtitle = atRiskCount > 0 ? `${atRiskCount} mục đang chờ bạn` : hasLearned ? 'Chưa có gì sắp quên 🌸' : 'Học bài đầu tiên để mở';
   return (
     <section className="dash-card dash-review" aria-labelledby="dash-review-title">
-      <Image src="/illustrations/home-study2.webp" alt="" width={420} height={366} sizes="80px" className="dash-review-mascot" />
+      {/* Mèo ma xách bí ngô (Lottie go.json) — trang trí. */}
+      <LottieAnimation src="/animations/review-ghost-cat.json" className="dash-review-mascot dash-review-cat" stillFrame={28} />
       <div className="dash-review-body">
         <h2 id="dash-review-title">Gặp lại kiến thức</h2>
         <p className="dash-meta">{subtitle}</p>

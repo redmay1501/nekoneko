@@ -16,8 +16,12 @@ ngày 1–5 chuyển sang ngày 8–12 (lúc đã đọc được toàn bộ Hir
 ── VOCABULARY_TIP_CLEANUP (2026-10-12) ─────────────────────────────
 "Mẹo nhớ" chỉ hiện khi thật sự giúp nhớ. Bỏ các mẹo lấp chỗ trống (không cho thêm cách nhớ nào): "học thuộc cả cụm",
 "không cần mẹo", "đọc thẳng âm Hán Việt / từ tiếng Anh". Từ không còn mẹo thì giao diện ẩn hẳn mục Mẹo nhớ.
+
+── ROADMAP_REPLAN_V2 (2026-10-18) — xem docs/ROADMAP_REPLAN.md và chú thích ở hàm _apply_roadmap_replan_v2.
+Chữ cái (1–14) → bộ thủ gọn trong 3 ngày (15–17) → Minna bài 1–25 đúng thứ tự, mỗi bài 1–4 ngày (18–81, xen 7 ngày ôn)
+→ tổng ôn & thi thử (82–90). Kanji học CÙNG NGÀY với từ đầu tiên chứa nó, không theo danh sách riêng.
 """
-import json, os, re
+import json, math, os, re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONTENT = os.path.join(ROOT, "content", "seed", "n5-content.json")
@@ -260,12 +264,303 @@ def _apply_vocabulary_tip_cleanup(data):
             word["tip"] = ""
 
 
+# ── ROADMAP_REPLAN_V2 (2026-10-18) ───────────────────────────────────
+# Quyết định của chủ sản phẩm (docs/ROADMAP_REPLAN.md, đã duyệt):
+#  1. Ngày 1–14 chữ cái: giữ nguyên.
+#  2. 45 bộ thủ học gọn trong 3 ngày (15 bộ/ngày, giữ thứ tự cũ), mục tiêu nhận diện — không có ngày ôn bộ thủ riêng.
+#  3. Minna bài 1 → 25 đúng thứ tự. Một bài kéo dài 1–4 ngày theo khối lượng THẬT:
+#     số ngày = max(⌈từ/20⌉, ⌈Kanji mới/6⌉, ⌈mẫu câu/3⌉); ngày dư (do bộ thủ gọn lại) dành cho bài có tải/ngày nặng nhất.
+#     Từ giữ thứ tự giáo trình, cắt thành nhóm liền nhau cho tải mỗi ngày (từ + 2 × Kanji mới) cân nhất.
+#  4. Kanji KHÔNG theo danh sách riêng: mỗi Kanji học đúng ngày có từ ĐẦU TIÊN chứa nó. 14 Kanji N5 không có trong từ nào
+#     của giáo trình học ở ngày đầu giai đoạn tổng ôn, qua chính các từ ví dụ trong dữ liệu Kanji.
+#  5. Một ngày ôn sau khoảng 8 ngày học (đúng ranh giới bài) + một ngày ôn cuối giáo trình; tổng ôn & thi thử 9 ngày
+#     (gộp các ngày ôn gần nhau của Excel, bỏ "Tổng duyệt trước đề 2").
+# Việc của ngày: việc tự làm của bài (耳 nghe, 読 đọc…) đi theo phần tương ứng của bài; việc 部 / 漢 / 文 / 語 dựng lại từ
+# dữ liệu (không viết nội dung mới); ngày ôn dùng đúng câu chữ của ngày ôn trong Excel; ngày tổng ôn gộp các ngày Excel cũ.
+# Chỉ đổi cột day (cùng id) → trí nhớ người học (theo id) không bị đụng.
+ROADMAP_REPLAN_V2 = "roadmap-replan-v2"
+KANA_DAYS = 14
+RADICAL_DAYS = 3
+MAX_WORDS_PER_DAY, MAX_NEW_KANJI_PER_DAY, MAX_GRAMMAR_PER_DAY = 20, 6, 3
+REVIEW_AFTER_STUDY_DAYS = 8
+FINAL_STAGE = [  # (tiêu đề, các ngày Excel cũ được gộp vào)
+    ("Kanji N5 còn lại & tổng ôn Kanji", [78]),
+    ("Tổng ôn trợ từ, tính từ & so sánh", [79, 80]),
+    (None, [81]),
+    ("Luyện dạng đề: Chữ Hán – Từ vựng – Ngữ pháp – Đọc hiểu", [82, 83]),
+    (None, [84]),
+    ("Chữa đề số 1 + vá lỗ hổng phần yếu nhất", [85, 86]),
+    (None, [88]),
+    (None, [89]),
+    (None, [90]),
+]
+SELF_TASK_GLYPHS = ("耳", "読", "✎", "?", "話", "📝")
+LESSON_WARMUP = "Ôn nhanh nội dung hôm qua: đọc lại Kanji và mẫu ngữ pháp cũ, không nhìn đáp án."  # câu của Excel
+MINUTES = {"warmup": 5, "word": 2, "kanji": 4, "review_kanji": 3, "pattern": 10, "radical": 3, "review": {"部": 10, "漢": 20, "文": 25, "語": 20, "耳読": 25}}
+
+
+def _lesson_no(text):
+    m = re.search(r"\d+", text or "")
+    return int(m.group()) if m and (text or "").strip().upper().startswith("BÀI") else None
+
+
+def _kanji_chars(word, known):
+    return [c for c in dict.fromkeys(word.get("kanji") or "") if c in known]
+
+
+def _split_words(words, parts, seen, known):
+    """Cắt từ (giữ thứ tự) thành `parts` nhóm liền nhau, tải lớn nhất nhỏ nhất. Tải = từ + 2 × Kanji mới."""
+    seen = set(seen)
+    new_counts = []
+    for word in words:
+        fresh = [c for c in _kanji_chars(word, known) if c not in seen]
+        seen.update(fresh)
+        new_counts.append(len(fresh))
+
+    def load(a, b):
+        kanji = sum(new_counts[a:b])
+        over = kanji > MAX_NEW_KANJI_PER_DAY or (b - a) > MAX_WORDS_PER_DAY + 4
+        return (b - a) + 2 * kanji + (1000 if over else 0)
+
+    memo = {}
+
+    def best(i, k):
+        if (i, k) not in memo:
+            if k == 1:
+                memo[(i, k)] = (load(i, len(words)), (len(words),))
+            else:
+                memo[(i, k)] = min(((max(load(i, j), best(j, k - 1)[0]), (j,) + best(j, k - 1)[1])
+                                    for j in range(i + 1, len(words) - k + 2)), key=lambda r: r[0])
+        return memo[(i, k)]
+
+    groups, start = [], 0
+    for end in best(0, parts)[1]:
+        groups.append(words[start:end])
+        start = end
+    return groups
+
+
+def _task(day, label, minutes, body):
+    return {"day": day, "orderNo": 0, "label": label, "minutes": minutes, "body": body}
+
+
+def _kanji_line(kanji, words):
+    reading = " / ".join(x for x in [f"On: {kanji['onReading']}" if kanji["onReading"] else "", f"Kun: {kanji['kunReading']}" if kanji["kunReading"] else ""] if x)
+    lines = [f"• {kanji['character']} [{kanji['hanViet']}] {kanji['meaning']}" + (f" — {reading}" if reading else "")]
+    if words:
+        lines.append("   Trong từ hôm nay: " + " ・ ".join(f"{w['kanji']}（{w['kana']}）{w['meaning']}" for w in words))
+    elif kanji.get("words"):
+        lines.append(f"   Từ ví dụ: {kanji['words']}")
+    if kanji.get("tip"):
+        lines.append(f"   Mẹo: {kanji['tip']}")
+    return "\n".join(lines)
+
+
+def _apply_roadmap_replan_v2(data):
+    vocabulary, kanji_list, radicals, grammar = data["vocabulary"], data["kanji"], data["radicals"], data["grammar"]
+    old_days = {d["day"]: d for d in data["journeyDays"]}
+    old_tasks = {}
+    for task in sorted(data["dayTasks"], key=lambda t: (t["day"], t["orderNo"])):
+        old_tasks.setdefault(task["day"], []).append(task)
+    lessons = {_lesson_no(l["name"]) or index + 1: l for index, l in enumerate(data["lessons"])}
+    known = {k["character"] for k in kanji_list}
+    kanji_by_char = {k["character"]: k for k in kanji_list}
+    assert len(old_days) == 90, "lộ trình Excel phải có đủ 90 ngày"
+
+    # Ngày Excel cũ của từng bài (để mang việc tự làm theo phần của bài).
+    old_lesson_days = {}
+    for day in sorted(old_days):
+        number = _lesson_no(old_days[day]["minna"])
+        if number and day > KANA_DAYS:
+            old_lesson_days.setdefault(number, []).append(day)
+
+    plan = []  # mỗi phần tử: dict mô tả một ngày mới
+    # 1. Chữ cái — giữ nguyên.
+    for day in range(1, KANA_DAYS + 1):
+        plan.append({"kind": "kana", "old": day})
+    # 2. Bộ thủ — 3 ngày, thứ tự cũ.
+    ordered_radicals = sorted((r for r in radicals if r["day"]), key=lambda r: (r["day"], r["id"]))
+    per_day = math.ceil(len(ordered_radicals) / RADICAL_DAYS)
+    for index in range(RADICAL_DAYS):
+        plan.append({"kind": "radical", "part": index + 1, "radicals": ordered_radicals[index * per_day:(index + 1) * per_day]})
+
+    # 3. Bài 1–25: số ngày mỗi bài.
+    words_of, grammar_of, parts = {}, {}, {}
+    seen = set()
+    for number in sorted(old_lesson_days):
+        words_of[number] = sorted((w for w in vocabulary if _lesson_no(w["lesson"]) == number and w["day"] and w["day"] > KANA_DAYS),
+                                  key=lambda w: (w["day"], w["id"]))
+        grammar_of[number] = sorted((g for g in grammar if _lesson_no(g["lesson"]) == number), key=lambda g: (g["day"] or 0, g["id"]))
+        fresh = [c for w in words_of[number] for c in _kanji_chars(w, known) if c not in seen and not seen.add(c)]
+        need = max(math.ceil(len(words_of[number]) / MAX_WORDS_PER_DAY), math.ceil(len(fresh) / MAX_NEW_KANJI_PER_DAY),
+                   math.ceil(len(grammar_of[number]) / MAX_GRAMMAR_PER_DAY), 1)
+        parts[number] = [need, len(words_of[number]) + 2 * len(fresh)]
+    lesson_numbers = sorted(parts)
+    reviews_estimate = 7
+    spare = 90 - KANA_DAYS - RADICAL_DAYS - sum(n for n, _ in parts.values()) - reviews_estimate - len(FINAL_STAGE)
+    for _ in range(max(0, spare)):
+        heaviest = max(lesson_numbers, key=lambda n: parts[n][1] / parts[n][0])
+        parts[heaviest][0] += 1
+
+    seen = set()
+    since_review, review_from = 0, lesson_numbers[0]
+    for number in lesson_numbers:
+        count = parts[number][0]
+        groups = _split_words(words_of[number], count, seen, known)
+        sizes = [len(grammar_of[number]) // count + (1 if i < len(grammar_of[number]) % count else 0) for i in range(count)]
+        start = 0
+        for index, group in enumerate(groups):
+            fresh = []
+            for word in group:
+                for c in _kanji_chars(word, known):
+                    if c not in seen:
+                        seen.add(c)
+                        fresh.append(c)
+            plan.append({"kind": "lesson", "lesson": number, "part": index + 1, "parts": count, "words": group,
+                         "kanji": fresh, "grammar": grammar_of[number][start:start + sizes[index]]})
+            start += sizes[index]
+        since_review += count
+        if since_review >= REVIEW_AFTER_STUDY_DAYS and number != lesson_numbers[-1]:
+            plan.append({"kind": "review", "from": review_from, "to": number})
+            since_review, review_from = 0, number + 1
+    plan.append({"kind": "review", "from": review_from, "to": lesson_numbers[-1]})
+    # 4. Tổng ôn.
+    for title, merged in FINAL_STAGE:
+        plan.append({"kind": "final", "title": title, "merged": merged})
+    assert len(plan) == 90, f"lộ trình mới có {len(plan)} ngày, cần đúng 90 — chỉnh REVIEW_AFTER_STUDY_DAYS / FINAL_STAGE"
+
+    # ── Gán ngày cho kiến thức (cùng id, chỉ đổi cột day) ──
+    orphan_kanji = [k for k in kanji_list if k["character"] not in seen]
+    final_first_day = next(i for i, entry in enumerate(plan, 1) if entry["kind"] == "final")
+    for day, entry in enumerate(plan, 1):
+        if entry["kind"] == "radical":
+            for radical in entry["radicals"]:
+                radical["day"] = day
+        elif entry["kind"] == "lesson":
+            for word in entry["words"]:
+                word["day"] = day
+            for pattern in entry["grammar"]:
+                pattern["day"] = day
+            for char in entry["kanji"]:
+                kanji_by_char[char]["day"] = day
+    for kanji in orphan_kanji:
+        kanji["day"] = final_first_day
+
+    # ── Dựng lại journeyDays + dayTasks ──
+    journey, tasks = [], []
+    words_with = lambda char, words: [w for w in words if char in (w.get("kanji") or "")]
+    for day, entry in enumerate(plan, 1):
+        kind = entry["kind"]
+        day_tasks = []
+        row = {"day": day, "week": math.ceil(day / 7), "kanjiSummary": "—", "radicalSummary": "—", "grammarSummary": "—", "vocabSummary": "—"}
+        if kind == "kana":
+            old = old_days[entry["old"]]
+            row.update({k: old[k] for k in ("stage", "minna", "title", "kanjiSummary", "radicalSummary", "grammarSummary", "vocabSummary", "skill")})
+            day_tasks = [dict(t) for t in old_tasks.get(entry["old"], [])]
+        elif kind == "radical":
+            glyphs = [r["radical"].split(" / ")[0] for r in entry["radicals"]]
+            row.update({"stage": "Bộ thủ", "minna": "—", "title": f"Bộ thủ ({entry['part']}/{RADICAL_DAYS}): " + "・".join(glyphs),
+                        "radicalSummary": "、".join(r["radical"] for r in entry["radicals"]), "skill": "Nhận diện"})
+            warmup = "Ôn hàng Katakana hôm qua." if entry["part"] == 1 else "Ôn nhanh bộ thủ hôm qua: nhìn bộ nói nghĩa, không nhìn đáp án."
+            lines = [f"Học {len(entry['radicals'])} bộ thủ — nhớ mặt chữ, tên và nghĩa, tìm bộ trong Kanji. Không cần viết nhiều lần."]
+            for r in entry["radicals"]:
+                lines.append(f"• {r['radical']} ({r['nameJp']}) = {r['meaning']}" + (f" — có trong: {r['kanjiList']}" if r.get("kanjiList") else ""))
+                if r.get("tip"):
+                    lines.append(f"   Mẹo nhớ: {r['tip']}")
+            day_tasks = [_task(day, "◐  Khởi động", MINUTES["warmup"], warmup),
+                         _task(day, "部  Bộ thủ", MINUTES["radical"] * len(entry["radicals"]), "\n".join(lines))]
+        elif kind == "lesson":
+            number, lesson = entry["lesson"], lessons[entry["lesson"]]
+            title = re.sub(r"^BÀI\s*\d+\s*·\s*", "", lesson["name"]).strip()
+            row.update({"stage": "Minna", "minna": f"Bài {number} ({entry['part']}/{entry['parts']})", "title": title,
+                        "kanjiSummary": "、".join(entry["kanji"]) or "—",
+                        "grammarSummary": f"{len(entry['grammar'])} mẫu" if entry["grammar"] else "—",
+                        "vocabSummary": f"{len(entry['words'])} từ"})
+            first_lesson_day = plan[day - 2]["kind"] == "radical"
+            day_tasks.append(_task(day, "◐  Khởi động", MINUTES["warmup"],
+                                   "Ôn nhanh 45 bộ thủ: nhìn bộ nói nghĩa, không nhìn đáp án." if first_lesson_day else LESSON_WARMUP))
+            day_tasks.append(_task(day, "語  Từ vựng", MINUTES["word"] * len(entry["words"]) + 3,
+                                   f"Từ mới Minna bài {number}:\n" + "\n".join(f"• {w['kana']}" + (f"（{w['kanji']}）" if w["kanji"] else "") + f" = {w['meaning']}" for w in entry["words"])))
+            if entry["kanji"]:
+                body = [f"Học {len(entry['kanji'])} chữ Kanji ngay trong từ của hôm nay — nhớ cách đọc trong từ trước, chưa cần thuộc mọi âm đọc."]
+                body += [_kanji_line(kanji_by_char[c], words_with(c, entry["words"])) for c in entry["kanji"]]
+                day_tasks.append(_task(day, "漢  Kanji", MINUTES["kanji"] * len(entry["kanji"]), "\n".join(body)))
+            if entry["grammar"]:
+                body = [f"Minna bài {number} ({entry['part']}/{entry['parts']}) — {title}"]
+                for g in entry["grammar"]:
+                    body.append(f"• {g['pattern']}  ({g['usage']})")
+                    if g.get("exampleJp"):
+                        body.append(f"   Ví dụ: {g['exampleJp']}  = {g['exampleVi']}")
+                day_tasks.append(_task(day, "文  Ngữ pháp", MINUTES["pattern"] * len(entry["grammar"]), "\n".join(body)))
+            # Việc tự làm của bài (nghe, đọc…) theo phần tương ứng: ngày Excel thứ i của bài → phần ⌊i·n/m⌋.
+            olds = old_lesson_days[number]
+            mine = [olds[i] for i in range(len(olds)) if i * entry["parts"] // len(olds) == entry["part"] - 1]
+            skill = ""
+            for old in mine:
+                skill = skill or old_days[old]["skill"]
+                for t in old_tasks.get(old, []):
+                    if t["label"].strip().startswith(SELF_TASK_GLYPHS):
+                        day_tasks.append(dict(t))
+            row["skill"] = skill or old_days[olds[-1]]["skill"]
+        elif kind == "review":
+            span = f"bài {entry['from']}–{entry['to']}" if entry["from"] != entry["to"] else f"bài {entry['from']}"
+            row.update({"stage": "Minna", "minna": f"Ôn {span}", "title": f"Ôn tập — Minna {span}", "skill": "Nghe + Đọc"})
+            review_kanji = [k for k in kanji_list if k["character"] in {c for e in plan if e["kind"] == "lesson" and entry["from"] <= e["lesson"] <= entry["to"] for c in e["kanji"]}]
+            m = MINUTES["review"]
+            day_tasks.append(_task(day, "部  Bộ thủ", m["部"], "Ôn bộ thủ: nhìn bộ nói nghĩa, kể 1 Kanji chứa bộ đó."))
+            if review_kanji:
+                day_tasks.append(_task(day, "漢  Kanji", m["漢"], f"Ôn {len(review_kanji)} chữ Kanji của Minna {span} qua từ chứa nó: che nghĩa → đọc từ, che từ → nhớ chữ. Trong app, đánh dấu chữ còn mờ.\n"
+                                       + " ・ ".join(k["character"] for k in review_kanji)))
+            day_tasks.append(_task(day, "文  Ngữ pháp", m["文"], f"Làm phần 練習B và 練習C trong Minna {span}. Sau đó tự đặt 5 câu mới."))
+            day_tasks.append(_task(day, "語  Từ vựng", m["語"], f"Ôn lại toàn bộ từ vựng Minna {span}. Từ nào quên đánh dấu 'Đang học'."))
+            day_tasks.append(_task(day, "耳読  Nghe + Đọc", m["耳読"], f"Làm phần 問題 (nghe + đọc) cuối mỗi bài trong Minna {span}. Ghi lỗi sai vào cột Ghi chú."))
+        else:
+            olds = [old_days[d] for d in entry["merged"]]
+            row.update({"stage": olds[0]["stage"], "minna": olds[0]["minna"], "title": entry["title"] or olds[0]["title"], "skill": olds[0]["skill"]})
+            merged = {}
+            for old in entry["merged"]:
+                for t in old_tasks.get(old, []):
+                    if t["label"] in merged:
+                        merged[t["label"]]["body"] += "\n" + t["body"]
+                        merged[t["label"]]["minutes"] = max(merged[t["label"]]["minutes"], t["minutes"])
+                    else:
+                        merged[t["label"]] = dict(t)
+            day_tasks = list(merged.values())
+            if day == final_first_day and orphan_kanji:
+                body = [f"Học {len(orphan_kanji)} chữ Kanji N5 chưa gặp trong từ vựng giáo trình — qua các từ ví dụ của chính chữ đó."]
+                body += [_kanji_line(k, []) for k in orphan_kanji]
+                day_tasks.insert(0, _task(day, "漢  Kanji", MINUTES["review_kanji"] * len(orphan_kanji), "\n".join(body)))
+                row["kanjiSummary"] = "、".join(k["character"] for k in orphan_kanji)
+        for order, task in enumerate(day_tasks, 1):
+            task["day"], task["orderNo"] = day, order
+        row["minutes"] = sum(t["minutes"] for t in day_tasks)
+        journey.append(row)
+        tasks.extend(day_tasks)
+    data["journeyDays"], data["dayTasks"] = journey, tasks
+
+    # Tài liệu nhắc đúng ngày thi thử mới (Excel: "Ngày 84 và 88").
+    exam_days = [row["day"] for row in journey if "THI THỬ" in row["title"].upper()]
+    for resource in data.get("studyResources", []):
+        resource["howTo"] = re.sub(r"Ngày \d+ và \d+", f"Ngày {exam_days[0]} và {exam_days[1]}", resource["howTo"])
+
+    # ── Bảng bài: khoảng ngày thật ──
+    for number, lesson in lessons.items():
+        days = [d for d, e in enumerate(plan, 1) if e["kind"] == "lesson" and e["lesson"] == number]
+        if days:
+            lesson["dayRange"] = f"Ngày {days[0]}–{days[-1]}" if len(days) > 1 else f"Ngày {days[0]}"
+            lesson["dayCount"] = len(days)
+            # Excel ghi "14 từ" cho mọi bài — ghi số thật (sau khi bổ sung từ N5 và bỏ từ trùng).
+            lesson["vocabCount"] = f"{len(words_of[number])} từ"
+            lesson["grammarCount"] = f"{len(grammar_of[number])} mẫu"
+
+
 ADJUSTMENTS = [
     (KANA_FIRST_VOCABULARY, _apply_kana_first_vocabulary),
     (KANA_BY_ROW, _apply_kana_by_row),
     (VOCABULARY_DEDUPE, _apply_vocabulary_dedupe),
     (N5_VOCABULARY_SUPPLEMENT, _apply_n5_vocabulary_supplement),
     (VOCABULARY_TIP_CLEANUP, _apply_vocabulary_tip_cleanup),
+    (ROADMAP_REPLAN_V2, _apply_roadmap_replan_v2),
 ]
 
 

@@ -16,21 +16,26 @@ describe('trang ngày — từ vựng cần ôn, thời gian, việc Từ vựng
 
   it('ngày 7: 3 từ; ngày ôn theo khoảng bài: lấy đúng các bài đó', () => {
     expect(plan(7).reviewVocabulary.map((word) => word.kana)).toEqual(['はい', 'いいえ', 'わかりました']);
-    const day79 = plan(79).reviewVocabulary;
-    expect(day79.length).toBeGreaterThan(100);
-    expect(day79.every((word) => /\b([1-9]|10)\b/.test(word.lesson))).toBe(true);
+    // Tổng ôn trợ từ (ngày 83): "Ôn từ vựng Minna bài 1–10".
+    const day83 = plan(83).reviewVocabulary;
+    expect(day83.length).toBeGreaterThan(100);
+    expect(day83.every((word) => /\b([1-9]|10)\b/.test(word.lesson))).toBe(true);
+    // Ngày ôn giữa lộ trình (ngày 26): đúng từ của bài 1–3.
+    const day26 = plan(26).reviewVocabulary;
+    expect(day26.length).toBeGreaterThan(50);
+    expect(day26.every((word) => /\b[1-3]\b/.test(word.lesson))).toBe(true);
   });
 
   it('ghi chung chung ("ôn phần yếu") → không đoán danh sách', () => {
-    expect(plan(86).reviewVocabulary).toEqual([]);
+    expect(plan(87).reviewVocabulary).toEqual([]);
   });
 
   it('ngày có từ mới: việc "Từ vựng" chỉ nói số từ, không lặp danh sách, không "Trong sách…"', () => {
-    const day17 = plan(17);
-    const task = day17.tasks.find((item) => item.glyph === '語')!;
+    const day18 = plan(18);
+    const task = day18.tasks.find((item) => item.glyph === '語')!;
     expect(task.lines).toHaveLength(1);
-    expect(task.lines[0].text).toContain(`Học ${day17.knowledge.vocabulary.length} từ mới`);
-    expect(JSON.stringify(day17.tasks)).not.toContain('Trong sách');
+    expect(task.lines[0].text).toContain(`Học ${day18.knowledge.vocabulary.length} từ mới`);
+    expect(JSON.stringify(day18.tasks)).not.toContain('Trong sách');
   });
 
   it('thời gian tách trong app / tự làm, cộng lại bằng tổng', () => {

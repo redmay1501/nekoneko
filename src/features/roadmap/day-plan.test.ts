@@ -15,11 +15,12 @@ describe('buildDayPlan', () => {
     expect(plan.relation).toBe('past');
   });
 
-  // File Excel có 491 đầu việc; bỏ 5 việc học từ ở ngày 1–5 và 2 bài đọc nhanh ở ngày 7/14 (scripts/roadmap_adjustments.py) → 484.
-  it('tổng số đầu việc của 90 ngày = file lộ trình (491) trừ các điều chỉnh đã ghi', () => {
-    const total = Array.from({ length: 90 }, (_, index) => buildDayPlan(catalog, index + 1, AT_DAY_1).tasks.length)
-      .reduce((sum, count) => sum + count, 0);
-    expect(total).toBe(484);
+  // Lộ trình phân bổ lại (scripts/roadmap_adjustments.py — roadmap-replan-v2): ngày 1–14 giữ việc Excel; ngày 15–81 dựng từ dữ liệu
+  // + việc tự làm của bài; tổng ôn gộp ngày Excel. Mỗi ngày đều có việc, tổng 396.
+  it('mỗi ngày đều có việc; tổng số đầu việc của 90 ngày khớp dữ liệu', () => {
+    const counts = Array.from({ length: 90 }, (_, index) => buildDayPlan(catalog, index + 1, AT_DAY_1).tasks.length);
+    expect(counts.every((count) => count > 0)).toBe(true);
+    expect(counts.reduce((sum, count) => sum + count, 0)).toBe(396);
   });
 
   it('ngày ngoài khoảng 1–90 được kéo về trong khoảng', () => {
@@ -78,8 +79,8 @@ describe('lộ trình kana theo hàng âm (kana-by-row)', () => {
 describe('lộ trình ngày 15–90 (audit)', () => {
   const plans = Array.from({ length: 76 }, (_, index) => buildDayPlan(catalog, index + 15, AT_DAY_1));
 
-  it('dòng thời gian luôn theo thứ tự Từ vựng → Ngữ pháp → Bộ thủ → Kanji', () => {
-    const order = ['語', '文', '部', '漢'];
+  it('dòng thời gian luôn theo thứ tự Bộ thủ → Từ vựng → Kanji (ngay sau từ) → Ngữ pháp', () => {
+    const order = ['部', '語', '漢', '文'];
     for (const plan of plans) {
       const glyphs = plan.tasks.map((task) => task.glyph).filter((glyph) => order.includes(glyph));
       expect(glyphs).toEqual([...glyphs].sort((left, right) => order.indexOf(left) - order.indexOf(right)));
@@ -87,15 +88,17 @@ describe('lộ trình ngày 15–90 (audit)', () => {
   });
 
   it('ngày ôn giữa lộ trình gắn với kiến thức thật của các ngày học liền trước', () => {
-    const day21 = plans.find((plan) => plan.day === 21)!;
-    expect(day21.reviewWindow).toMatchObject({ from: 15, to: 20 });
-    const fromWeek = new Set(catalog.items.filter((item) => item.day! >= 15 && item.day! <= 20 && item.type !== 'hiragana' && item.type !== 'katakana').map((item) => item.key));
-    expect(new Set(day21.reviewWindow!.keys)).toEqual(fromWeek);
-    // "Kiểm tra lại toàn bộ từ vựng Minna bài 1–3" → đúng các từ bài 1–3.
-    expect(day21.reviewVocabulary.length).toBeGreaterThan(0);
-    for (const plan of plans.filter((entry) => !entry.hasNewKnowledge && entry.day < 78)) expect(plan.reviewWindow?.keys.length).toBeGreaterThan(0);
-    // Tổng ôn 78–90: không có "tuần" liền trước → giữ cách ôn chung.
-    expect(plans.find((plan) => plan.day === 79)!.reviewWindow).toBeNull();
+    // Ngày 26 (ôn bài 1–3) = kiến thức thật của ngày 15–25: bộ thủ 15–17 không có ngày ôn riêng nên được ôn cùng bài 1–3.
+    const day26 = plans.find((plan) => plan.day === 26)!;
+    expect(day26.reviewWindow).toMatchObject({ from: 15, to: 25 });
+    expect(day26.reviewWindow!.counts.map((entry) => entry.type)).toContain('radical');
+    const fromWeek = new Set(catalog.items.filter((item) => item.day! >= 15 && item.day! <= 25 && item.type !== 'hiragana' && item.type !== 'katakana').map((item) => item.key));
+    expect(new Set(day26.reviewWindow!.keys)).toEqual(fromWeek);
+    // "Ôn lại toàn bộ từ vựng Minna bài 1–3" → đúng các từ bài 1–3.
+    expect(day26.reviewVocabulary.length).toBeGreaterThan(0);
+    for (const plan of plans.filter((entry) => !entry.hasNewKnowledge && entry.day < 82)) expect(plan.reviewWindow?.keys.length).toBeGreaterThan(0);
+    // Tổng ôn 83–90: ôn theo chủ đề, không có "tuần" liền trước.
+    expect(plans.find((plan) => plan.day === 83)!.reviewWindow).toBeNull();
   });
 
   it('việc trong app không chỉ ra sách: phần làm trong app đứng trước, sách là tuỳ chọn', () => {
@@ -117,10 +120,10 @@ describe('lộ trình ngày 15–90 (audit)', () => {
 });
 
 describe('nút học lại của mọi ngày có kiến thức', () => {
-  it('ngày 1–77 đều có kiến thức của riêng ngày hoặc của tuần; chỉ tổng ôn / thi thử 78–90 không gắn', () => {
+  it('ngày 1–82 đều có kiến thức của riêng ngày hoặc của tuần; chỉ tổng ôn / thi thử 83–90 không gắn', () => {
     const plans = Array.from({ length: 90 }, (_, index) => buildDayPlan(catalog, index + 1, AT_DAY_1));
     const withoutOwnKnowledge = plans.filter((plan) => !plan.hasNewKnowledge && !plan.reviewWindow).map((plan) => plan.day);
-    expect(withoutOwnKnowledge).toEqual([78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90]);
+    expect(withoutOwnKnowledge).toEqual([83, 84, 85, 86, 87, 88, 89, 90]);
     expect(plans[13].knowledge.kana.length).toBeGreaterThan(0);
   });
 });

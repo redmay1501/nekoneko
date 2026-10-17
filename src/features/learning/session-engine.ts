@@ -110,10 +110,39 @@ function selectRecallItems(input: BuildLearningSessionInput, count: number, excl
 }
 
 /**
- * Thứ tự giới thiệu kiến thức mới trong một ngày: chữ cái → từ vựng → ngữ pháp → bộ thủ → Kanji.
- * Có vốn từ trước rồi mới học mẫu câu (câu ví dụ dùng chính các từ đó) và chữ Hán (bộ thủ ngay trước Kanji chứa nó).
+ * Thứ tự giới thiệu kiến thức mới trong một ngày: chữ cái → bộ thủ → từ vựng (mỗi Kanji mới đứng NGAY SAU từ đầu tiên
+ * chứa nó — gặp từ trước, rồi mới tách chữ Hán ra học) → ngữ pháp (câu ví dụ dùng chính các từ vừa học).
+ * Kanji của ngày không có từ nào chứa nó (14 Kanji N5 ở ngày tổng ôn) đứng sau từ vựng.
  */
-export const NEW_KNOWLEDGE_ORDER: readonly ContentType[] = ['hiragana', 'katakana', 'vocabulary', 'grammar', 'radical', 'kanji'];
+export const NEW_KNOWLEDGE_ORDER: readonly ContentType[] = ['hiragana', 'katakana', 'radical', 'vocabulary', 'kanji', 'grammar'];
+
+const byTypeThenId = (left: KnowledgeItem, right: KnowledgeItem) =>
+  NEW_KNOWLEDGE_ORDER.indexOf(left.type) - NEW_KNOWLEDGE_ORDER.indexOf(right.type) || left.id - right.id;
+
+/** Xếp kiến thức của MỘT ngày theo NEW_KNOWLEDGE_ORDER, rồi kéo từng Kanji lên ngay sau từ đầu tiên chứa nó. */
+export function orderDayKnowledge(items: readonly KnowledgeItem[]): KnowledgeItem[] {
+  const sorted = [...items].sort(byTypeThenId);
+  const kanji = sorted.filter((item) => item.type === 'kanji');
+  const placed = new Set<ContentKey>();
+  const result: KnowledgeItem[] = [];
+  for (const item of sorted) {
+    if (item.type === 'kanji') {
+      if (!placed.has(item.key)) { result.push(item); placed.add(item.key); }
+      continue;
+    }
+    result.push(item);
+    if (item.type !== 'vocabulary' || !item.content.kanji) continue;
+    // Theo thứ tự chữ trong từ (先生 → 先 rồi 生).
+    for (const character of item.content.kanji) {
+      const candidate = kanji.find((entry) => entry.type === 'kanji' && entry.content.character === character);
+      if (candidate && !placed.has(candidate.key)) {
+        result.push(candidate);
+        placed.add(candidate.key);
+      }
+    }
+  }
+  return result;
+}
 
 /** Kiến thức của ngày đang học mà người học CHƯA gặp, theo thứ tự cố định. */
 export function unmetKnowledgeOfDay(
@@ -121,10 +150,8 @@ export function unmetKnowledgeOfDay(
   memoryViews: ReadonlyMap<ContentKey, MemoryView>,
   journeyDay: number,
 ): KnowledgeItem[] {
-  return itemsScheduledOn(catalog, journeyDay)
-    .filter((item) => (memoryViews.get(item.key)?.encounterCount ?? 0) < MIN_ENCOUNTERS_TO_COUNT_AS_MET)
-    .sort((left, right) =>
-      NEW_KNOWLEDGE_ORDER.indexOf(left.type) - NEW_KNOWLEDGE_ORDER.indexOf(right.type) || left.id - right.id);
+  return orderDayKnowledge(itemsScheduledOn(catalog, journeyDay)
+    .filter((item) => (memoryViews.get(item.key)?.encounterCount ?? 0) < MIN_ENCOUNTERS_TO_COUNT_AS_MET));
 }
 
 /**
@@ -137,10 +164,10 @@ export function backlogKnowledge(
   memoryViews: ReadonlyMap<ContentKey, MemoryView>,
   journeyDay: number,
 ): KnowledgeItem[] {
-  return itemsScheduledUpTo(catalog, journeyDay - 1)
-    .filter((item) => (memoryViews.get(item.key)?.encounterCount ?? 0) < MIN_ENCOUNTERS_TO_COUNT_AS_MET)
-    .sort((left, right) => (left.day ?? 0) - (right.day ?? 0)
-      || NEW_KNOWLEDGE_ORDER.indexOf(left.type) - NEW_KNOWLEDGE_ORDER.indexOf(right.type) || left.id - right.id);
+  const unmet = itemsScheduledUpTo(catalog, journeyDay - 1)
+    .filter((item) => (memoryViews.get(item.key)?.encounterCount ?? 0) < MIN_ENCOUNTERS_TO_COUNT_AS_MET);
+  const days = [...new Set(unmet.map((item) => item.day ?? 0))].sort((left, right) => left - right);
+  return days.flatMap((day) => orderDayKnowledge(unmet.filter((item) => (item.day ?? 0) === day)));
 }
 
 /**

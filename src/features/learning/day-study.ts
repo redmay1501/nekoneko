@@ -4,6 +4,7 @@ import type { JourneyPosition } from '@/features/roadmap/journey-progress';
 import { canRomanize, kanjiReadingRomaji, patternRomaji, sentenceRomaji, vocabularyRomaji } from '@/lib/utils/romaji';
 import { primaryRadicalGlyph, itemsOfType, type KnowledgeCatalog } from './knowledge-catalog';
 import { kanaExampleWords, pickContextExample } from './context-index';
+import { kanjiContextOf } from './kanji-context';
 import { kanjiContainingRadical, radicalsOfKanji } from './knowledge-relations';
 import { type ContentKey, toContentKey } from './knowledge-types';
 import { type KanjiWord, kanjiReadingList, parseKanjiWords } from './study-grading';
@@ -81,10 +82,15 @@ export interface StudyKanjiCard {
   readingRomaji: string;
   readings: string[];
   strokes: number | null;
+  /** Từ chứa chữ: từ của CHÍNH ngày học trước (contextWordCount từ đầu), rồi từ ví dụ trong dữ liệu Kanji. */
   words: KanjiWord[];
+  /** Số từ đầu của `words` là từ của ngày học — bài "đọc từ" ưu tiên các từ này. */
+  contextWordCount: number;
+  /** Cách đọc của chữ trong từ của ngày (suy từ dữ liệu, null nếu không chắc) — bài "cách đọc" ưu tiên âm này. */
+  readingInWord: string | null;
   /** Bộ thủ tạo nên chữ (gợi ý ghi nhớ). */
   radicals: Array<{ glyph: string; meaning: string }>;
-  /** Từ vựng trong app có chứa chữ này. */
+  /** Từ đã học ở các ngày TRƯỚC có cùng chữ (không lấy từ của bài sau). */
   relatedVocab: Array<{ face: string; kana: string; meaning: string }>;
   tip: string;
   image: ContentImage | null;
@@ -180,15 +186,21 @@ export function buildDayStudy(
     image: learnerImageOf('radical', radical),
   }));
 
-  const kanji = knowledge.kanji.map((entry): StudyKanjiCard => ({
-    key: toContentKey('kanji', entry.id), character: entry.character, hanViet: entry.hanViet, meaning: entry.meaning,
-    onReading: entry.onReading, kunReading: entry.kunReading, readingRomaji: kanjiReadingRomaji(entry.onReading, entry.kunReading),
-    readings: kanjiReadingList(entry), strokes: entry.strokes, words: parseKanjiWords(entry.words), tip: entry.tip,
-    radicals: radicalsOfKanji(catalog, entry).map((radical) => ({ glyph: primaryRadicalGlyph(radical.radical), meaning: radical.meaning })),
-    relatedVocab: content.vocabulary.filter((word) => word.kanji.includes(entry.character)).slice(0, 4)
-      .map((word) => ({ face: word.kanji, kana: word.kana, meaning: word.meaning })),
-    image: learnerImageOf('kanji', entry),
-  }));
+  const kanji = knowledge.kanji.map((entry): StudyKanjiCard => {
+    // Kanji học trong từ của ngày (docs/ROADMAP_REPLAN.md): từ của hôm nay đứng đầu, rồi mới tới từ ví dụ của dữ liệu Kanji.
+    const context = kanjiContextOf(entry, content, day);
+    const todayWords: KanjiWord[] = context.today.map(({ word }) => ({ word: word.kanji, reading: word.kana, meaning: word.meaning }));
+    const examples = parseKanjiWords(entry.words).filter((example) => !todayWords.some((word) => word.word === example.word));
+    return {
+      key: toContentKey('kanji', entry.id), character: entry.character, hanViet: entry.hanViet, meaning: entry.meaning,
+      onReading: entry.onReading, kunReading: entry.kunReading, readingRomaji: kanjiReadingRomaji(entry.onReading, entry.kunReading),
+      readings: kanjiReadingList(entry), strokes: entry.strokes, words: [...todayWords, ...examples], contextWordCount: todayWords.length,
+      readingInWord: context.today.find((entry) => entry.reading)?.reading ?? null, tip: entry.tip,
+      radicals: radicalsOfKanji(catalog, entry).map((radical) => ({ glyph: primaryRadicalGlyph(radical.radical), meaning: radical.meaning })),
+      relatedVocab: context.earlier.map((word) => ({ face: word.kanji, kana: word.kana, meaning: word.meaning })),
+      image: learnerImageOf('kanji', entry),
+    };
+  });
 
   const studyKeys: ContentKey[] = [...kana, ...vocab, ...grammar, ...radicals, ...kanji].map((card) => card.key);
   const countLearned = (cards: Array<{ key: ContentKey }>) => cards.filter((card) => memoryViews.get(card.key)?.isLearned).length;

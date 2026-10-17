@@ -12,12 +12,15 @@ export interface JourneyStage {
   color: string;
 }
 
-/** Bốn chặng đường — giữ đúng prototype và prompt gốc. */
+/**
+ * Bốn chặng đường (lộ trình phân bổ lại 18/10/2026 — docs/ROADMAP_REPLAN.md):
+ * chữ cái → bộ thủ (3 ngày, nhận diện) → Minna bài 1–25 (Kanji học cùng từ chứa nó) → tổng ôn & thi thử.
+ */
 export const JOURNEY_STAGES: readonly JourneyStage[] = [
   { from: 1, to: 14, name: 'Bảng chữ cái', subtitle: 'Hiragana & Katakana', emoji: '🔤', color: '#FFC1CD' },
-  { from: 15, to: 45, name: 'Nền tảng', subtitle: 'Minna bài 1–13', emoji: '🌱', color: '#9FD3A6' },
-  { from: 46, to: 77, name: 'Xây dựng N5', subtitle: 'Minna bài 14–25', emoji: '🧱', color: '#B9CFE8' },
-  { from: 78, to: 90, name: 'Chinh phục N5', subtitle: 'Tổng ôn & thi thử', emoji: '🏯', color: '#D8C7F0' },
+  { from: 15, to: 17, name: 'Bộ thủ', subtitle: '45 bộ — nhận diện mặt chữ', emoji: '🧩', color: '#F6D58E' },
+  { from: 18, to: 81, name: 'Giáo trình', subtitle: 'Minna bài 1–25 · từ, Kanji, mẫu câu', emoji: '🌱', color: '#9FD3A6' },
+  { from: 82, to: 90, name: 'Chinh phục N5', subtitle: 'Tổng ôn & thi thử', emoji: '🏯', color: '#D8C7F0' },
 ];
 
 export function stageOfDay(day: number): JourneyStage {

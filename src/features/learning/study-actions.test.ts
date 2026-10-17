@@ -24,7 +24,11 @@ describe('Kiểm tra — nhóm để chọn', () => {
     const groups = buildTestGroups('kanji', kanji, new Map());
     expect(groups).toHaveLength(Math.ceil(kanji.length / 10));
     expect(groups.flatMap((group) => group.entries)).toHaveLength(kanji.length);
-    expect(groups[0].entries[0].caption).toBe('NHẬT');
+    // Theo thứ tự lộ trình: nhóm đầu là Kanji của bài 1 (học cùng từ), 14 chữ tổng ôn ở nhóm cuối.
+    const dayOf = new Map(kanji.map((item) => [item.key, item.day ?? 0]));
+    const days = groups.flatMap((group) => group.entries.map((entry) => dayOf.get(entry.key) ?? 0));
+    expect(days).toEqual([...days].sort((left, right) => left - right));
+    expect(days[0]).toBe(18);
   });
 
   it('Từ vựng: theo bài 1 → 25', () => {

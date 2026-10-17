@@ -1,3 +1,4 @@
+import { itemsScheduledOn } from './knowledge-catalog';
 import { describe, expect, it } from 'vitest';
 import { loadSeedContent } from '@/lib/data/seed-content';
 import { generateDemoMemoryRecords } from '@/features/memory/demo-memory-seed';
@@ -122,11 +123,18 @@ describe('buildLearningSession — dùng chung cho mọi chế độ', () => {
 describe('kiến thức mới đi theo chặng của ngày đang học', () => {
   const unmetDay23 = unmetKnowledgeOfDay(catalog, viewsDay23, 23);
 
-  it('ngày đang học (23) bắt đầu với 26 kiến thức chưa gặp (gồm từ N5 bổ sung), theo thứ tự bộ thủ → kanji → từ → ngữ pháp', () => {
-    expect(unmetDay23).toHaveLength(26);
-    const order = ['vocabulary', 'grammar', 'radical', 'kanji'];
-    const typeRanks = unmetDay23.map((item) => order.indexOf(item.type));
-    expect(typeRanks).toEqual([...typeRanks].sort((left, right) => left - right));
+  it('ngày đang học (23 — bài 3, phần 1/3) bắt đầu với đủ kiến thức chưa gặp của ngày: từ → (Kanji ngay sau từ chứa nó) → ngữ pháp', () => {
+    expect(unmetDay23).toHaveLength(itemsScheduledOn(catalog, 23).length);
+    expect(unmetDay23.length).toBe(19);
+    const order = ['vocabulary', 'grammar'];
+    const ranks = unmetDay23.filter((item) => item.type !== 'kanji').map((item) => order.indexOf(item.type));
+    expect(ranks).toEqual([...ranks].sort((left, right) => left - right));
+    // Kanji không bao giờ đứng trước từ cho nó ngữ cảnh: ngay trước nó là từ chứa chữ đó (hoặc Kanji khác của cùng từ).
+    unmetDay23.forEach((item, index) => {
+      if (item.type !== 'kanji') return;
+      const previousWord = unmetDay23.slice(0, index).reverse().find((entry) => entry.type === 'vocabulary');
+      expect(previousWord?.type === 'vocabulary' && previousWord.content.kanji.includes(item.content.character)).toBe(true);
+    });
   });
 
   it('Học hôm nay gồm TẤT CẢ kiến thức chưa gặp của ngày, theo thứ tự, từng chặng 5 thứ', () => {

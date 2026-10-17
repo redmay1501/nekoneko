@@ -256,17 +256,23 @@ function KanjiBack({ card }: { card: StudyKanjiCard }) {
         {card.kunReading ? <span><span className="tiny muted">Kun</span> <b className="jp">{card.kunReading}</b></span> : null}
       </span>
       {card.readingRomaji ? <span className="romaji">{card.readingRomaji}</span> : null}
-      {card.words.length ? (
+      {card.contextWordCount ? (
         <span className="flashcard-example">
-          <span className="tiny muted">Từ ghép</span>
-          {card.words.map((word) => <span key={word.word} className="sm"><b className="jp">{word.word}</b> <span className="jp soft">({word.reading})</span> {word.meaning}</span>)}
+          <span className="tiny muted">Trong từ hôm nay{card.readingInWord ? ` — ${card.character} đọc là ${card.readingInWord}` : ''}</span>
+          {card.words.slice(0, card.contextWordCount).map((word) => <span key={word.word} className="sm"><b className="jp">{word.word}</b> <span className="jp soft">({word.reading})</span> {word.meaning}</span>)}
+        </span>
+      ) : null}
+      {card.words.length > card.contextWordCount ? (
+        <span className="flashcard-example">
+          <span className="tiny muted">{card.contextWordCount ? 'Từ ghép khác' : 'Từ ghép'}</span>
+          {card.words.slice(card.contextWordCount).map((word) => <span key={word.word} className="sm"><b className="jp">{word.word}</b> <span className="jp soft">({word.reading})</span> {word.meaning}</span>)}
         </span>
       ) : null}
       {card.radicals.length ? (
         <span className="sm soft">Bộ thủ trong chữ: <span className="jp">{card.radicals.map((radical) => `${radical.glyph} (${radical.meaning.split(/[,;]/)[0].toLowerCase()})`).join(' + ')}</span></span>
       ) : null}
       {card.relatedVocab.length ? (
-        <span className="sm soft">Trong từ vựng: {card.relatedVocab.map((word) => `${word.face} (${word.kana})`).join(' · ')}</span>
+        <span className="sm soft">Đã gặp trong: {card.relatedVocab.map((word) => `${word.face} (${word.kana})`).join(' · ')}</span>
       ) : null}
       {card.tip ? <span className="sm flashcard-tip">💡 {card.tip}</span> : null}
     </>

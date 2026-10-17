@@ -69,11 +69,11 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
     );
   }
 
-  // Thứ tự học của ngày: Chữ cái → Từ vựng → Ngữ pháp → Bộ thủ → Kanji. Bộ thủ và Kanji là HAI phần riêng (nội dung, mục tiêu,
-  // trạng thái riêng) — bộ thủ chỉ hỗ trợ nhận ra / nhớ chữ, không thay cho Kanji. Số thứ tự đánh theo phần có trong ngày.
+  // Thứ tự học của ngày: Chữ cái → Bộ thủ → Từ vựng → Kanji → Ngữ pháp. Kanji học TRONG từ của ngày (docs/ROADMAP_REPLAN.md):
+  // mỗi chữ hiện cùng từ chứa nó, cách đọc trong từ đó và các từ đã gặp trước có cùng chữ. Số thứ tự đánh theo phần có trong ngày.
   const steps = [
-    knowledge.kana.length && 'kana', knowledge.vocabulary.length && 'vocabulary', knowledge.grammar.length && 'grammar',
-    knowledge.radicals.length && 'radical', knowledge.kanji.length && 'kanji',
+    knowledge.kana.length && 'kana', knowledge.radicals.length && 'radical', knowledge.vocabulary.length && 'vocabulary',
+    knowledge.kanji.length && 'kanji', knowledge.grammar.length && 'grammar',
   ].filter(Boolean);
   const number = (step: string) => '①②③④⑤'[steps.indexOf(step)];
   return (
@@ -82,10 +82,55 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
         <StepHeading label={`${number('kana')} Chữ cái`} note={`${knowledge.kana.length} chữ`} day={plan.day} step="chu-cai" />
       ) : null}
       {plan.kanaLesson ? <div className="mt-2.5"><KanaLessonTable lesson={plan.kanaLesson} /></div> : null}
+      {knowledge.radicals.length ? (
+        <>
+          <StepHeading label={`${number('radical')} Bộ thủ`} note="nhận diện mặt chữ — không cần viết nhiều lần" day={plan.day} step="bo-thu" />
+          <div className="kgrid">
+            {knowledge.radicals.map((radical) => (
+              <KnowledgeChipButton key={`r${radical.id}`} contentKey={toContentKey('radical', radical.id)} className="kcard"
+                style={{ background: '#F9F6FE', borderColor: '#E6DEF7' }}>
+                <span className="big">{primaryRadicalGlyph(radical.radical)}</span>
+                <b>Bộ {firstMeaning(radical.meaning)}</b>
+                <span>{radical.nameJp.split(' / ')[0]}</span>
+              </KnowledgeChipButton>
+            ))}
+          </div>
+        </>
+      ) : null}
       {knowledge.vocabulary.length ? (
         <>
           <StepHeading label={`${number('vocabulary')} Từ vựng`} day={plan.day} step="tu-vung" />
           <DayVocabularyList words={knowledge.vocabulary} />
+        </>
+      ) : null}
+      {knowledge.kanji.length ? (
+        <>
+          <StepHeading label={`${number('kanji')} ${knowledge.vocabulary.length ? 'Kanji trong từ hôm nay' : 'Kanji N5 — học qua từ ví dụ'}`} note={`${knowledge.kanji.length} chữ`} day={plan.day} step="kanji" />
+          <div className="stack mt-2.5" style={{ gap: 7 }}>
+            {knowledge.kanji.map((kanji) => {
+              const context = plan.kanjiContext[kanji.id];
+              return (
+                <KnowledgeChipButton key={`k${kanji.id}`} contentKey={toContentKey('kanji', kanji.id)} className="list-row kanji-row" style={{ padding: '10px 12px' }}>
+                  <span className="kanji-row-glyph jp" aria-hidden="true">{kanji.character}</span>
+                  <span className="mid">
+                    <b>{kanji.character} · {kanji.hanViet}</b>
+                    <span>{firstMeaning(kanji.meaning)}{kanji.strokes ? ` · ${kanji.strokes} nét` : ''}</span>
+                    {context?.today.map(({ word, reading }) => (
+                      <span key={word.id} className="kanji-row-word">
+                        <b className="jp">{word.kanji}</b> <span className="jp soft">（{word.kana}）</span> {word.meaning}
+                        {reading ? <span className="kanji-row-reading"> · <span className="jp">{kanji.character}</span> đọc là <b className="jp">{reading}</b></span> : null}
+                      </span>
+                    ))}
+                    {!context?.today.length && kanji.words ? <span className="tiny muted jp">Từ ví dụ: {kanji.words}</span> : null}
+                    {context?.earlier.length ? (
+                      <span className="tiny muted">Đã gặp trong: <span className="jp">{context.earlier.map((word) => word.kanji).join(' · ')}</span></span>
+                    ) : null}
+                  </span>
+                  <span className="end"><span className="tiny muted" aria-hidden="true">→</span></span>
+                </KnowledgeChipButton>
+              );
+            })}
+          </div>
         </>
       ) : null}
       {knowledge.grammar.length ? (
@@ -104,35 +149,6 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
                   <span>{pattern.exampleVi}</span>
                 </span>
                 <span className="end"><span className="tiny muted" aria-hidden="true">→</span></span>
-              </KnowledgeChipButton>
-            ))}
-          </div>
-        </>
-      ) : null}
-      {knowledge.radicals.length ? (
-        <>
-          <StepHeading label={`${number('radical')} Bộ thủ`} note="mảnh ghép giúp nhận ra chữ Hán" day={plan.day} step="bo-thu" />
-          <div className="kgrid">
-            {knowledge.radicals.map((radical) => (
-              <KnowledgeChipButton key={`r${radical.id}`} contentKey={toContentKey('radical', radical.id)} className="kcard"
-                style={{ background: '#F9F6FE', borderColor: '#E6DEF7' }}>
-                <span className="big">{primaryRadicalGlyph(radical.radical)}</span>
-                <b>Bộ {firstMeaning(radical.meaning)}</b>
-                <span>{radical.nameJp.split(' / ')[0]}</span>
-              </KnowledgeChipButton>
-            ))}
-          </div>
-        </>
-      ) : null}
-      {knowledge.kanji.length ? (
-        <>
-          <StepHeading label={`${number('kanji')} Kanji`} note={`${knowledge.kanji.length} chữ`} day={plan.day} step="kanji" />
-          <div className="kgrid">
-            {knowledge.kanji.map((kanji) => (
-              <KnowledgeChipButton key={`k${kanji.id}`} contentKey={toContentKey('kanji', kanji.id)} className="kcard">
-                <span className="big">{kanji.character}</span>
-                <b>{kanji.hanViet}</b>
-                <span>{firstMeaning(kanji.meaning)} · {kanji.strokes} nét</span>
               </KnowledgeChipButton>
             ))}
           </div>

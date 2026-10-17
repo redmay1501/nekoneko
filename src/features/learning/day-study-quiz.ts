@@ -125,15 +125,19 @@ export function buildKanjiQuiz(data: DayStudyData, kind: KanjiQuizId, cards: rea
         options: pickOptions(card.character, pool.map((other) => other.character), random), optionsAreJapanese: true, answer: card.character }];
     }
     if (kind === 'doc') {
-      if (!card.readings.length) return [];
-      const own = new Set(card.readings.map(readingKey));
-      const correct = card.readings[Math.floor(random() * card.readings.length)];
-      return [{ ...base, ask: 'reading', prompt: card.character, promptIsJapanese: true, hint: 'Chữ này đọc là…',
+      if (!card.readings.length && !card.readingInWord) return [];
+      const own = new Set([...card.readings, ...(card.readingInWord ? [card.readingInWord] : [])].map(readingKey));
+      // Ưu tiên cách đọc của chữ trong từ vừa học (không bắt thuộc mọi âm đọc ngay lần đầu).
+      const correct = card.readingInWord ?? card.readings[Math.floor(random() * card.readings.length)];
+      const contextWord = card.readingInWord ? card.words[0]?.word : undefined;
+      return [{ ...base, ask: 'reading', prompt: card.character, promptIsJapanese: true, hint: contextWord ? `Trong từ ${contextWord}, chữ này đọc là…` : 'Chữ này đọc là…',
         options: pickOptions(correct, pool.flatMap((other) => other.readings), random, (value) => own.has(readingKey(value))),
         optionsAreJapanese: true, answer: correct }];
     }
     if (!card.words.length) return [];
-    const word = card.words[Math.floor(random() * card.words.length)];
+    // Từ của chính ngày học trước; chỉ khi chữ không nằm trong từ nào của ngày mới dùng từ ví dụ của dữ liệu Kanji.
+    const candidates = card.contextWordCount ? card.words.slice(0, card.contextWordCount) : card.words;
+    const word = candidates[Math.floor(random() * candidates.length)];
     const own = new Set(card.words.filter((other) => other.word === word.word).map((other) => readingKey(other.reading)));
     return [{ ...base, id: `${kind}:${card.key}:${word.word}`, ask: 'word-reading', prompt: word.word, promptIsJapanese: true,
       hint: `${word.meaning} — đọc là…`, wordPrompt: word.word, audioText: word.reading,

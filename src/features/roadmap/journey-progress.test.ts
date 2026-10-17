@@ -102,15 +102,16 @@ describe('estimateMinutesToFinishDay', () => {
 });
 
 describe('buildDayStatuses', () => {
-  it('trạng thái theo kiến thức thật đã gặp; học bộ thủ không làm Kanji thành "đã học"', () => {
-    const day15 = itemsScheduledOn(catalog, 15);
-    const radicalKeys = day15.filter((item) => item.type === 'radical').map((item) => item.key);
-    const statuses = buildDayStatuses(catalog, freshViews(15, radicalKeys), 15);
+  it('trạng thái theo kiến thức thật đã gặp; gặp từ chưa làm Kanji của ngày thành "đã học"', () => {
+    const day18 = itemsScheduledOn(catalog, 18);
+    const wordKeys = day18.filter((item) => item.type === 'vocabulary').map((item) => item.key);
+    expect(day18.some((item) => item.type === 'kanji')).toBe(true);
+    const statuses = buildDayStatuses(catalog, freshViews(18, wordKeys), 18);
     expect(statuses).toHaveLength(90);
-    expect(statuses[14].status).toBe('partial');
-    expect(buildDayStatuses(catalog, freshViews(15, day15.map((item) => item.key)), 15)[14].status).toBe('done');
-    expect(statuses[15].status).toBe('todo');
-    // Ngày ôn (không có kiến thức mới): đã qua → done.
-    expect(buildDayStatuses(catalog, freshViews(30), 30)[20].status).toBe('done');
+    expect(statuses[17].status).toBe('partial');
+    expect(buildDayStatuses(catalog, freshViews(18, day18.map((item) => item.key)), 18)[17].status).toBe('done');
+    expect(statuses[18].status).toBe('todo');
+    // Ngày ôn (ngày 26, không có kiến thức mới): đã qua → done.
+    expect(buildDayStatuses(catalog, freshViews(30), 30)[25].status).toBe('done');
   });
 });

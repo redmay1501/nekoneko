@@ -3,9 +3,10 @@ import { pickDeterministic } from '@/lib/utils/deterministic-random';
 import { primaryRadicalGlyph, type KnowledgeCatalog } from '@/features/learning/knowledge-catalog';
 import { radicalsOfKanji } from '@/features/learning/knowledge-relations';
 import { type KanaLesson, buildKanaLesson } from './kana-lesson';
+import { type KanjiContext, kanjiContextOf } from '@/features/learning/kanji-context';
 import { lessonNumber } from '@/lib/utils/lesson';
 import type { ContentKey, ContentType, KnowledgeItem } from '@/features/learning/knowledge-types';
-import { JOURNEY_TOTAL_DAYS, clampJourneyDay, stageOfDay, type JourneyStage } from './journey';
+import { JOURNEY_STAGES, JOURNEY_TOTAL_DAYS, clampJourneyDay, stageOfDay, type JourneyStage } from './journey';
 import { type JourneyPosition, relationToCurrentDay } from './journey-progress';
 
 /**
@@ -17,6 +18,7 @@ export interface DayKnowledge {
   /** Chữ cái của ngày — Hiragana hoặc Katakana (Katakana = ngày Hiragana + 7), lấy từ danh mục kiến thức. */
   kana: KnowledgeItem[];
   radicals: RadicalContent[];
+  /** Kanji của ngày — theo thứ tự từ đầu tiên chứa nó trong ngày (Kanji học cùng từ). */
   kanji: KanjiContent[];
   grammar: GrammarContent[];
   vocabulary: VocabularyContent[];
@@ -78,9 +80,11 @@ export interface DayPlanView {
   reviewVocabulary: VocabularyContent[];
   /**
    * Ngày ôn giữa lộ trình: kiến thức THẬT của các ngày học ngay trước nó (từ sau ngày ôn trước tới hôm qua — đúng "tuần" mà
-   * ngày ôn nhắc tới, ví dụ ngày 21 → ngày 15–20). Ngày có kiến thức mới, hoặc ngay sau một ngày ôn khác (tổng ôn 78–90), là null.
+   * ngày ôn nhắc tới, ví dụ ngày 26 → ngày 18–25). Ngày có kiến thức mới, hoặc ngay sau một ngày ôn khác (tổng ôn 83–90), là null.
    */
   reviewWindow: { from: number; to: number; keys: ContentKey[]; counts: Array<{ type: ContentType; count: number }> } | null;
+  /** Mỗi Kanji của ngày (theo id): từ của hôm nay chứa nó (kèm cách đọc trong từ) và từ đã học trước đó có cùng chữ. */
+  kanjiContext: Record<number, KanjiContext>;
 }
 
 /** Màu theo ký hiệu đầu nhãn đầu việc trong file Excel (◐ ôn, 部 bộ thủ, 漢 kanji…). */
@@ -113,8 +117,11 @@ export function formatTaskBody(body: string): TaskLine[] {
  */
 const IN_APP_GLYPHS = new Set(['あ', '゛', 'ゃ', '語', '漢', '文', '部', '◐', '✓']);
 const VOCABULARY_GLYPH = '語';
-/** Thứ tự các loại việc trong ngày (ký hiệu đầu nhãn Excel); loại khác (✎ ? 耳 読…) đứng sau, giữ thứ tự gốc. */
-const TASK_ORDER = ['◐', 'あ', '゛', 'ゃ', '語', '文', '部', '漢'];
+/**
+ * Thứ tự các loại việc trong ngày (ký hiệu đầu nhãn Excel): Kanji ngay sau Từ vựng — chữ Hán học trong từ chứa nó —,
+ * rồi mới tới Ngữ pháp. Loại khác (✎ ? 耳 読…) đứng sau, giữ thứ tự gốc.
+ */
+const TASK_ORDER = ['◐', 'あ', '゛', 'ゃ', '部', '語', '漢', '文'];
 const taskRank = (task: DayTask) => {
   const rank = TASK_ORDER.indexOf(task.label.trim()[0] ?? '');
   return rank < 0 ? TASK_ORDER.length : rank;
@@ -200,7 +207,7 @@ export function buildDayPlan(catalog: KnowledgeCatalog, requestedDay: number, jo
   const knowledge: DayKnowledge = {
     kana: catalog.items.filter((item) => (item.type === 'hiragana' || item.type === 'katakana') && item.day === day),
     radicals: content.radicals.filter((radical) => radical.day === day),
-    kanji: content.kanji.filter((kanji) => kanji.day === day),
+    kanji: orderByFirstWord(content.kanji.filter((kanji) => kanji.day === day), content.vocabulary.filter((word) => word.day === day)),
     grammar: content.grammar.filter((pattern) => pattern.day === day),
     vocabulary: content.vocabulary.filter((word) => word.day === day),
   };
@@ -210,7 +217,7 @@ export function buildDayPlan(catalog: KnowledgeCatalog, requestedDay: number, jo
   const kanjiRadicals = firstKanji ? radicalsOfKanji(catalog, firstKanji) : [];
   const bridgeRadical = kanjiRadicals.find((radical) => (radical.day ?? JOURNEY_TOTAL_DAYS) < (firstKanji?.day ?? 0));
 
-  // Dòng thời gian theo thứ tự học: khởi động → chữ cái → từ vựng → ngữ pháp → bộ thủ → Kanji → việc tự làm (giữ thứ tự Excel trong cùng nhóm).
+  // Dòng thời gian theo thứ tự học: khởi động → chữ cái → bộ thủ → từ vựng → Kanji → ngữ pháp → việc tự làm (giữ thứ tự Excel trong cùng nhóm).
   tasks.sort((left, right) => taskRank(left) - taskRank(right) || left.orderNo - right.orderNo);
   const reviewVocabulary = knowledge.vocabulary.length ? [] : reviewVocabularyOf(tasks.find((task) => task.label.trim().startsWith(VOCABULARY_GLYPH)), content.vocabulary);
   const taskViews = tasks.map((task) => toTaskView(task, knowledge.vocabulary.length, reviewVocabulary.length, knowledge.grammar.length > 0));
@@ -245,13 +252,31 @@ export function buildDayPlan(catalog: KnowledgeCatalog, requestedDay: number, jo
     purpose: describePurpose(knowledge, journeyDay),
     reviewTopics: hasNewKnowledge ? [] : reviewTopicsBefore(catalog, day),
     reviewWindow: hasNewKnowledge ? null : reviewWindowOf(catalog, day),
+    kanjiContext: Object.fromEntries(knowledge.kanji.map((kanji) => [kanji.id, kanjiContextOf(kanji, content, day)])),
   };
 }
 
+const FINAL_STAGE = JOURNEY_STAGES[JOURNEY_STAGES.length - 1];
+
+/** Kanji theo thứ tự xuất hiện trong từ của ngày (chữ của từ đầu tiên trước); chữ không nằm trong từ nào đứng cuối. */
+function orderByFirstWord(kanji: KanjiContent[], words: readonly VocabularyContent[]): KanjiContent[] {
+  // Vị trí = (từ đầu tiên chứa chữ, vị trí chữ trong từ đó) → 先生 cho 先 rồi 生.
+  const position = (entry: KanjiContent) => {
+    const index = words.findIndex((word) => (word.kanji ?? '').includes(entry.character));
+    return index < 0 ? [words.length, 0] : [index, [...words[index].kanji].indexOf(entry.character)];
+  };
+  return [...kanji].sort((left, right) => {
+    const [leftWord, leftChar] = position(left);
+    const [rightWord, rightChar] = position(right);
+    return leftWord - rightWord || leftChar - rightChar || left.id - right.id;
+  });
+}
 const REVIEW_TYPE_ORDER: readonly ContentType[] = ['vocabulary', 'grammar', 'radical', 'kanji'];
 
 /** Kiến thức (không tính chữ cái) của các ngày học liền trước ngày ôn `day`. */
 export function reviewWindowOf(catalog: KnowledgeCatalog, day: number): DayPlanView['reviewWindow'] {
+  // Tổng ôn & thi thử: ôn theo chủ đề của ngày (trợ từ, chia động từ, đề…), không theo "tuần vừa học".
+  if (day > FINAL_STAGE.from) return null;
   const learnable = (item: KnowledgeItem) => !isKana(item) && item.day !== null;
   const hasKnowledge = (candidate: number) => catalog.items.some((item) => learnable(item) && item.day === candidate);
   let from = day;

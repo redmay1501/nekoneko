@@ -147,3 +147,12 @@ describe('nút 🔊 ở ô đầu dòng — chữ được đọc', () => {
     for (const row of byId['bo-thu'].pages.flatMap((page) => page.rows)) expect(row.speech).toMatch(/[぀-ヿ一-鿿⺀-⿕]/);
   });
 });
+
+describe('romaji', () => {
+  it('kana có romaji theo bảng chữ; từ vựng có romaji của cách đọc', () => {
+    expect(byId.hiragana.pages[0].rows.map((row) => row.romaji)).toEqual(['a', 'i', 'u', 'e', 'o']);
+    const sensei = byId['tu-vung'].pages.flatMap((page) => page.rows).find((row) => row.word?.kanji?.join('') === '先生')!;
+    expect(sensei.romaji).toBe('sensei');
+    expect(byId.kanji.pages[0].rows[0].romaji).toBeUndefined();
+  });
+});

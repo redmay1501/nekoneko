@@ -1,6 +1,7 @@
 import type { KanaContent, KanjiContent, RadicalContent, VocabularyContent } from '@/types/content';
 import { primaryRadicalGlyph } from '@/features/learning/knowledge-catalog';
 import { hasStrokeOrder, strokeCountOf } from '@/features/learning/stroke-order';
+import { vocabularyRomaji } from '@/lib/utils/romaji';
 
 /**
  * SỔ LUYỆN VIẾT — vở tập viết: mỗi trang vài dòng, mỗi dòng MỘT chữ (chữ mẫu + nhiều ô lặp lại).
@@ -20,6 +21,8 @@ export interface NotebookRow {
   reading?: string;
   strokeCount: number | null;
   hasStrokeOrder: boolean;
+  /** Romaji cho người mới (kana: theo bảng chữ; từ vựng: cách đọc kana) — Kanji / bộ thủ để trống. */
+  romaji?: string;
   /** Chữ Nhật để đọc khi bấm 🔊 ở ô đầu dòng (kana: chính chữ; Kanji: chữ; bộ thủ: tên tiếng Nhật; từ vựng: cách đọc kana). */
   speech: string;
   /** Sổ Từ vựng: một dòng là một TỪ — viết mỗi chữ một ô, theo cách viết kana hoặc chữ Kanji. */
@@ -70,7 +73,7 @@ function strokeInfo(glyph: string): Pick<NotebookRow, 'strokeCount' | 'hasStroke
 
 function kanaNotebook(kana: readonly KanaContent[], script: 'hiragana' | 'katakana'): Notebook {
   const glyphOf = (item: KanaContent) => (script === 'hiragana' ? item.hiragana : item.katakana);
-  const rowOf = (item: KanaContent): NotebookRow => ({ glyph: glyphOf(item), label: item.romaji, speech: glyphOf(item), ...strokeInfo(glyphOf(item)) });
+  const rowOf = (item: KanaContent): NotebookRow => ({ glyph: glyphOf(item), label: item.romaji, romaji: item.romaji, speech: glyphOf(item), ...strokeInfo(glyphOf(item)) });
   const pages: Array<Omit<NotebookPage, 'id' | 'number' | 'notebookId'>> = [];
   const single = kana.filter((item) => [...item.hiragana].length === 1);
   for (const group of KANA_ROWS) {
@@ -177,7 +180,7 @@ function vocabularyNotebook(vocabulary: readonly VocabularyContent[]): Notebook 
           const kana = writingFormOf(item.kana);
           const kanji = item.kanji ? writingFormOf(item.kanji) : [];
           return {
-            glyph: kana.join(''), label: kanji.length ? kanji.join('') : '', meaning: item.meaning, speech: kana.join(''),
+            glyph: kana.join(''), label: kanji.length ? kanji.join('') : '', meaning: item.meaning, speech: kana.join(''), romaji: vocabularyRomaji({ kana: kana.join(''), kanji: kanji.join('') }),
             strokeCount: null, hasStrokeOrder: kana.every(hasStrokeOrder),
             word: { kana, kanji: kanji.length && kanji.join('') !== kana.join('') ? kanji : null, meaning: item.meaning },
           };

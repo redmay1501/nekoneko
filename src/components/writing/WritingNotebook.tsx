@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { isLikelyPalmStroke, isPenOnly, penInput, type PenMode, pointerDiagnostics } from '@/features/writing/pen-input';
 import { createPortal } from 'react-dom';
-import { AudioButton } from '@/components/common/AudioButton';
+import { ListenButton } from './ListenButton';
 import { preloadStrokeOrders, type StrokeOrderData } from '@/features/learning/stroke-order';
 import { dropEmptyEraseStep, EMPTY_INK, ERASER_RADIUS, type InkAction, type InkPoint, inkReducer, type InkState, type InkStroke, strokeHitsPoint } from '@/features/writing/ink';
 import {
@@ -419,7 +419,7 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
         {page.rows.map((row, rowIndex) => row.word ? (
           <WordLinesRow key={`${page.id}-${rowIndex}`} word={(settings.vocabForm === 'kanji' && row.word.kanji ? row.word.kanji : row.word.kana).join('')}
             reading={settings.vocabForm === 'kanji' && row.word.kanji ? row.word.kana.join('') : row.word.kanji?.join('') ?? ''} meaning={row.meaning ?? ''}
-            speech={row.speech}
+            speech={row.speech} romaji={row.romaji ?? ''}
             rowId={`${page.id}-${rowIndex}-${settings.vocabForm === 'kanji' && row.word.kanji ? 'k' : 'h'}`}
             width={cellsWidth} lineHeight={layout.unitPx} autoRows={layout.rows} setting={settings.vocabLines} ghost={settings.ghost} showGrid={settings.showGrid}
             activeCell={activeCell} strokesByCell={strokesByCell} noStrokes={noStrokes} onStroke={handleStroke} onFocusCell={setActiveCell} eraser={{ tool, erase, eraseStart }} />
@@ -477,7 +477,8 @@ function NotebookRowView({ row, rowId, repeats, columns, ghost, showGrid, guide,
             {showGrid ? <CellGrid /> : null}
             <CellModel glyph={row.glyph} guide={guide} />
           </svg>
-          <AudioButton text={row.speech} label={`Nghe ${row.glyph}`} className="nb-listen" />
+          <ListenButton text={row.speech} label={`Nghe ${row.glyph}`} />
+          {row.romaji ? <span className="nb-sample-romaji">{row.romaji}</span> : null}
         </span>
         {Array.from({ length: repeats }, (_, index) => {
           const cellId = `${rowId}-${index}`;
@@ -551,8 +552,8 @@ const VOCAB_NARROW_PX = 560;
  * Dòng từ vựng kiểu vở kẻ dòng: ô nhỏ đầu dòng (từ, cách đọc, nghĩa tiếng Việt) rồi các dòng kẻ chạy hết bề ngang
  * để tự viết. Màn hẹp (điện thoại): ô chữ ở trên, dòng kẻ ở dưới. Mỗi dòng là một vùng vẽ riêng (toạ độ chuẩn hoá).
  */
-function WordLinesRow({ word, reading, meaning, speech, rowId, width, lineHeight, autoRows, setting, ghost, showGrid, activeCell, strokesByCell, noStrokes, onStroke, onFocusCell, eraser }: {
-  word: string; reading: string; meaning: string; speech: string; rowId: string; width: number; lineHeight: number; autoRows: number; setting: VocabLines;
+function WordLinesRow({ word, reading, romaji, meaning, speech, rowId, width, lineHeight, autoRows, setting, ghost, showGrid, activeCell, strokesByCell, noStrokes, onStroke, onFocusCell, eraser }: {
+  word: string; reading: string; romaji: string; meaning: string; speech: string; rowId: string; width: number; lineHeight: number; autoRows: number; setting: VocabLines;
   ghost: GhostMode; showGrid: boolean; activeCell: string | null; strokesByCell: Map<string, InkStroke[]>; noStrokes: InkStroke[];
   onStroke: (stroke: InkStroke) => void; onFocusCell: (cellId: string) => void; eraser: EraserProps;
 }) {
@@ -565,9 +566,10 @@ function WordLinesRow({ word, reading, meaning, speech, rowId, width, lineHeight
   return (
     <section className={`nb-row nb-vocab-row ${isNarrow ? 'is-narrow' : ''}`} aria-label={`Luyện viết từ ${label}`}>
       <div className="nb-vocab-label">
-        <AudioButton text={speech} label={`Nghe ${word}`} className="nb-listen" />
+        <ListenButton text={speech} label={`Nghe ${word}`} />
         <b className="jp nb-vocab-word">{word}</b>
         {reading ? <span className="jp nb-vocab-reading">{reading}</span> : null}
+        {romaji ? <span className="nb-vocab-romaji">{romaji}</span> : null}
         <span className="nb-vocab-meaning">{meaning}</span>
       </div>
       <div className="nb-vocab-lines">

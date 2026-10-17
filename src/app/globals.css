@@ -1383,12 +1383,17 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 /* Ô mẫu đầu dòng (chiếm 2×2 chỗ) + nút 🔊 ở góc trên phải. */
 .nb-sample-wrap{position:relative;grid-row:span 2;grid-column:span 2}
 .nb-sample-wrap>.nb-cell-sample{display:block;width:100%;height:100%;aspect-ratio:1/1}
-.nb-listen{position:absolute;top:4px;right:4px;display:grid;place-items:center;width:30px;height:30px;border-radius:999px;
-  background:rgba(255,255,255,.9);border:1.5px solid #F3C1CB;box-shadow:0 1px 3px rgba(96,72,66,.12)}
+.nb-listen{position:absolute;top:5px;right:5px;z-index:1;display:grid;place-items:center;width:30px;height:30px;border-radius:999px;
+  color:var(--sakura-deep);background:rgba(255,255,255,.92);border:1.5px solid #F6C9D2;box-shadow:0 1px 3px rgba(96,72,66,.1);transition:background .15s,color .15s}
 .nb-listen:hover{background:#FFF1F4}
-.nb-listen.is-speaking{background:var(--sakura);border-color:var(--sakura)}
-.nb-listen .emoji-icon{width:18px;height:18px}
-.nb-vocab-label{position:relative;padding-right:40px}
+.nb-listen:active{transform:scale(.94)}
+.nb-listen.is-speaking{background:var(--sakura);border-color:var(--sakura);color:#fff}
+.nb-listen.is-speaking .nb-listen-wave{animation:nb-wave 0.9s ease-in-out infinite}
+.nb-listen.is-speaking .nb-listen-wave-2{animation-delay:.15s}
+@keyframes nb-wave{0%,100%{opacity:1}50%{opacity:.35}}
+/* Romaji ở góc dưới ô chữ mẫu (kana). */
+.nb-sample-romaji{position:absolute;left:7px;bottom:5px;font-size:12px;font-weight:700;color:var(--ink-2);letter-spacing:.02em;pointer-events:none}
+.nb-vocab-romaji{font-size:12px;color:var(--ink-3);font-style:italic}
 .nb-order-numbers text{font-family:var(--font-vi);font-size:10px;font-weight:800;fill:#FF5B73;paint-order:stroke;stroke:#FFF8F5;stroke-width:2.2px}
 .nb-grid{fill:none;stroke:#F0DDD8;stroke-width:1;stroke-dasharray:3 3;vector-effect:non-scaling-stroke}
 .nb-ghost path{fill:none;stroke:#EFE4E0;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
@@ -1403,7 +1408,7 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 /* Sổ Từ vựng kiểu vở kẻ dòng: ô nhỏ (từ + nghĩa) rồi các dòng kẻ để tự viết. */
 .nb-vocab-row{display:grid;grid-template-columns:176px minmax(0,1fr);gap:14px;align-items:start}
 .nb-vocab-row.is-narrow{grid-template-columns:minmax(0,1fr);gap:8px}
-.nb-vocab-label{display:flex;flex-direction:column;gap:2px;padding:8px 10px;border-radius:8px;border:1.5px solid #E2CFC9;background:#FFF8F5;min-width:0}
+.nb-vocab-label{position:relative;display:flex;flex-direction:column;gap:2px;padding:8px 48px 8px 10px;border-radius:8px;border:1.5px solid #E2CFC9;background:#FFF8F5;min-width:0}
 .nb-vocab-row.is-narrow .nb-vocab-label{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:2px 10px}
 .nb-vocab-word{font-family:var(--font-learn);font-size:22px;font-weight:600;line-height:1.25;overflow-wrap:anywhere}
 .nb-vocab-reading{font-size:13px;color:var(--ink-2)}

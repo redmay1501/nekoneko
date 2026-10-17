@@ -1464,10 +1464,11 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 /* Mèo trong thùng (Lottie cat-in-box) ở đầu hộp chào mỗi ngày. */
 .daily-greeting-cat{width:132px;height:132px;margin:4px auto -6px}
 
-/* Mèo Lottie ở đầu trang / đầu mục (Trò chơi, Video, Nghe và gõ): chữ bên trái, mèo bên phải; màn hẹp mèo nhỏ lại. */
-.page-hero-cat{display:flex;align-items:center;gap:12px}
-.page-hero-cat>:first-child{flex:1;min-width:0}
-.page-hero-cat-art{flex:0 0 auto;width:120px;height:120px;margin:-8px 0 -4px}
-@media (max-width:560px){.page-hero-cat-art{width:84px;height:84px}}
+/* Mèo Lottie ở đầu trang / đầu mục (Trò chơi, Video, Nghe và gõ): trang trí NỔI — đặt tuyệt đối ở góc phải nên không
+   chiếm chỗ, không đẩy giãn bố cục (khoảng cách các phần giữ nguyên như khi chưa có mèo). Chữ chỉ chừa lề phải để không bị che. */
+.page-hero-cat{position:relative;padding-right:var(--hero-cat-room,112px)}
+.page-hero-cat-art{position:absolute;right:0;top:50%;width:var(--hero-cat-size,104px);height:var(--hero-cat-size,104px);
+  transform:translateY(-50%);pointer-events:none;z-index:1}
+@media (max-width:560px){.page-hero-cat{--hero-cat-room:70px;--hero-cat-size:64px}}
 /* Trang 404: mèo Luna (khung 723×442). */
 .not-found-cat{width:min(420px,88vw);aspect-ratio:723/442;margin:0 auto}

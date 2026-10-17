@@ -1,4 +1,4 @@
-import { HeroAnimal, STUDY_ANIMAL_SIZE } from '@/components/common/HeroAnimal';
+import { HeroAnimal } from '@/components/common/HeroAnimal';
 import { KanaPractice } from '@/components/learning/KanaPractice';
 import { TestPicker } from '@/components/learning/TestPicker';
 import { itemsOfType } from '@/features/learning/knowledge-catalog';
@@ -21,7 +21,7 @@ export default async function HiraganaPage({ searchParams }: { searchParams: Pro
         <span className="chip mint">{data.learnedCount}/{data.cells.length}</span>
       </div>
       <p className="soft sm" style={{ margin: '4px 0 12px' }}>Mỗi chữ đều có: học → nghe → nhận diện → luyện viết → kiểm tra → gặp lại.</p>
-        <HeroAnimal src="/animations/kana-cat.json" stillFrame={90} minSize={STUDY_ANIMAL_SIZE} />
+        <HeroAnimal src="/animations/kana-cat.json" stillFrame={90} viewBox="96 -6 240 240" />
       </div>
       <TestPicker groups={testGroups} unit="chữ" />
       <KanaPractice key={viet ?? ''} data={data} initialWriting={viet} />

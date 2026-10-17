@@ -16,10 +16,12 @@ interface SpeechPreferenceStore {
   pendingText: string | null;
   /** Câu đang được đọc — để nút 🔊 hiện trạng thái "đang phát". */
   speakingText: string | null;
+  /** Câu đang đọc ở tốc độ chậm (nút 🐢) — để nút đúng là nút sáng lên. */
+  isSpeakingSlow: boolean;
   setVoiceGender: (voiceGender: VoiceGender) => void;
   setAutoplayAudio: (autoplayAudio: boolean) => void;
   setAudioBlocked: (pendingText: string | null) => void;
-  setSpeakingText: (speakingText: string | null) => void;
+  setSpeakingText: (speakingText: string | null, isSlow?: boolean) => void;
 }
 
 export const useSpeechPreferenceStore = create<SpeechPreferenceStore>((set) => ({
@@ -28,8 +30,9 @@ export const useSpeechPreferenceStore = create<SpeechPreferenceStore>((set) => (
   isAudioBlocked: false,
   pendingText: null,
   speakingText: null,
+  isSpeakingSlow: false,
   setVoiceGender: (voiceGender) => set({ voiceGender }),
   setAutoplayAudio: (autoplayAudio) => set({ autoplayAudio }),
   setAudioBlocked: (pendingText) => set({ isAudioBlocked: pendingText !== null, pendingText }),
-  setSpeakingText: (speakingText) => set({ speakingText }),
+  setSpeakingText: (speakingText, isSlow = false) => set({ speakingText, isSpeakingSlow: speakingText ? isSlow : false }),
 }));

@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { ReadAloudPrompt } from './ReadAloudPrompt';
-import { SpeakingPrompt } from './SpeakingPrompt';
 import { type SpeakingPosition, nextPosition, positionFromParam, previousPosition } from '@/features/speech/speaking-session';
 
 export interface SpeakingSentence {
@@ -14,60 +13,42 @@ export interface SpeakingSentence {
   vi: string;
 }
 
-export const SPEAKING_MODES = [
-  { id: 'tu-goi-y', label: '🗣️ Nói tiếng Nhật từ gợi ý tiếng Việt' },
-  { id: 'doc-theo-mau', label: '🎙️ Đọc theo mẫu' },
-] as const;
-export type SpeakingMode = (typeof SPEAKING_MODES)[number]['id'];
-
-function writeUrl(mode: SpeakingMode, position: SpeakingPosition) {
+function writeUrl(position: SpeakingPosition) {
   const url = new URL(window.location.href);
-  url.searchParams.set('che-do', mode);
+  url.searchParams.delete('che-do'); // link cũ (?che-do=tu-goi-y | doc-theo-mau) vẫn mở được — chỉ còn một chế độ
   url.searchParams.set('cau', String(position.index + 1));
   window.history.replaceState(window.history.state, '', url);
 }
 
 /**
- * Luyện nói MỖI LẦN MỘT CÂU: vị trí "3/10", Câu trước / Câu tiếp, màn kết thúc. Không tự chuyển câu.
- * Đổi chế độ ngay trong trang (giữ câu đang luyện); URL ghi lại ?che-do=&cau= để tải lại vẫn đúng chỗ.
+ * Luyện nói = ĐỌC THEO MẪU, mỗi lần một câu: nghe mẫu, đọc to, trình duyệt nhận diện rồi so chữ với câu mẫu (không chấm phát âm).
+ * Chế độ "nói từ gợi ý tiếng Việt" đã bỏ — cùng bộ câu, chỉ thiếu nhận diện nên trùng với chế độ này.
+ * Vị trí "3/10", Câu trước / Câu tiếp, màn kết thúc; URL ghi ?cau= để tải lại vẫn đúng chỗ. Không ghi trí nhớ.
  */
-export function SpeakingSession({ sentences, initialMode, initialSentence, otherSetHref }: {
+export function SpeakingSession({ sentences, initialSentence, otherSetHref }: {
   sentences: SpeakingSentence[];
-  initialMode: SpeakingMode;
   initialSentence?: string;
   /** "Câu khác" (bộ câu ngẫu nhiên khác) — không có khi đang luyện cả một bài. */
   otherSetHref: string | null;
 }) {
-  const [mode, setMode] = useState<SpeakingMode>(initialMode);
   const [position, setPosition] = useState<SpeakingPosition>(() => positionFromParam(initialSentence, sentences.length));
   const total = sentences.length;
   const sentence = sentences[position.index];
-  // Link do server dựng theo chế độ lúc tải trang → thay bằng chế độ đang chọn.
-  const otherHref = otherSetHref ? otherSetHref.replace(/che-do=[^&]*/, `che-do=${mode}`) : null;
+  const otherHref = otherSetHref;
 
-  useEffect(() => { writeUrl(mode, position); }, [mode, position]);
+  useEffect(() => { writeUrl(position); }, [position]);
 
   if (!total) return <p className="card tight sm soft mt-3">Phạm vi này chưa có câu để luyện nói.</p>;
 
   return (
     <section aria-label="Luyện nói">
-      <div className="pill-tabs mt-2" role="tablist" aria-label="Chế độ luyện nói">
-        {SPEAKING_MODES.map((option) => (
-          <button key={option.id} type="button" role="tab" aria-selected={option.id === mode} className={`tab ${option.id === mode ? 'on' : ''}`}
-            onClick={() => setMode(option.id)}>{option.label}</button>
-        ))}
+      <div style={{ margin: '10px 0 12px' }}>
+        <p className="soft sm">Nghe mẫu, bấm 🎙️ rồi đọc to. Trình duyệt nhận diện câu bạn nói và so chữ với câu mẫu — đây <b>chưa phải chấm phát âm</b>.</p>
+        <p className="tiny muted mt-1">
+          Âm thanh do trình duyệt xử lý (Chrome gửi lên dịch vụ nhận diện trực tuyến của Google; Safari dùng bộ nhận diện của Siri).
+          NekoNeko không ghi âm, không lưu và không gửi âm thanh lên máy chủ của mình.
+        </p>
       </div>
-      {mode === 'tu-goi-y' ? (
-        <p className="soft sm" style={{ margin: '10px 0 12px' }}>Đọc câu tiếng Việt, tự nói câu tiếng Nhật tương ứng thành tiếng, rồi mới xem đáp án.</p>
-      ) : (
-        <div style={{ margin: '10px 0 12px' }}>
-          <p className="soft sm">Nghe mẫu, bấm 🎙️ rồi đọc to. Trình duyệt nhận diện câu bạn nói và so chữ với câu mẫu — đây <b>chưa phải chấm phát âm</b>.</p>
-          <p className="tiny muted mt-1">
-            Âm thanh do trình duyệt xử lý (Chrome gửi lên dịch vụ nhận diện trực tuyến của Google; Safari dùng bộ nhận diện của Siri).
-            NekoNeko không ghi âm, không lưu và không gửi âm thanh lên máy chủ của mình.
-          </p>
-        </div>
-      )}
 
       {position.isFinished ? (
         <div className="card center speaking-done">
@@ -84,12 +65,8 @@ export function SpeakingSession({ sentences, initialMode, initialSentence, other
             <span className="sm"><b>{position.index + 1}</b>/{total}</span>
             <div className="study-progress" style={{ flex: 1, marginTop: 0 }} aria-hidden="true"><span style={{ width: `${((position.index + 1) / total) * 100}%` }} /></div>
           </div>
-          {mode === 'tu-goi-y' ? (
-            <SpeakingPrompt key={`${mode}:${sentence.id}`} lessonLabel={sentence.lessonLabel} promptVi={sentence.vi} answerJp={sentence.jp} chipClass="pink" />
-          ) : (
-            <ReadAloudPrompt key={`${mode}:${sentence.id}`} lessonLabel={sentence.lessonLabel} sentenceJp={sentence.jp} reading={sentence.reading}
-              meaningVi={sentence.vi} chipClass="pink" />
-          )}
+          <ReadAloudPrompt key={sentence.id} lessonLabel={sentence.lessonLabel} sentenceJp={sentence.jp} reading={sentence.reading}
+            meaningVi={sentence.vi} chipClass="pink" />
           <div className="speaking-nav">
             <button type="button" className="btn ghost" onClick={() => setPosition(previousPosition(position))} disabled={position.index === 0}>← Câu trước</button>
             <button type="button" className="btn" onClick={() => setPosition(nextPosition(position, total))}>

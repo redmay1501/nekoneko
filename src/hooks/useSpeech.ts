@@ -7,6 +7,8 @@ import { useSpeechPreferenceStore } from '@/stores/speech-preference-store';
 const JAPANESE_LOCALE = 'ja-JP';
 /** Nói chậm hơn bình thường một chút — người mới học nghe rõ hơn. */
 const LEARNER_SPEECH_RATE = 0.85;
+/** Nút 🐢 "Nghe chậm": ≈ 0.75 lần tốc độ thường (đổi thật tốc độ tổng hợp giọng — không phải nhãn suông). */
+export const SLOW_SPEECH_FACTOR = 0.75;
 const NO_VOICES: SpeechSynthesisVoice[] = [];
 
 const hasSpeech = () => typeof window !== 'undefined' && 'speechSynthesis' in window;
@@ -37,21 +39,28 @@ const getVoices = () => cachedVoices;
 const getServerVoices = () => NO_VOICES;
 
 /** Đọc một câu. Lỗi "not-allowed" = trình duyệt chặn tự phát (iOS / chưa chạm màn hình) → ghi nhớ để phát lại khi chạm. */
-function speakNow(text: string, voice: SpeechSynthesisVoice | null) {
+function speakNow(text: string, voice: SpeechSynthesisVoice | null, isSlow = false) {
   const store = useSpeechPreferenceStore.getState();
   // Chỉ huỷ khi đang đọc dở: gọi cancel() khi không có gì để huỷ làm Safari phát chậm (hoặc nuốt mất) câu kế tiếp.
   if (window.speechSynthesis.speaking || window.speechSynthesis.pending) window.speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = JAPANESE_LOCALE;
-  utterance.rate = LEARNER_SPEECH_RATE;
+  utterance.rate = isSlow ? LEARNER_SPEECH_RATE * SLOW_SPEECH_FACTOR : LEARNER_SPEECH_RATE;
   if (voice) utterance.voice = voice;
-  utterance.onstart = () => { store.setAudioBlocked(null); store.setSpeakingText(text); };
+  utterance.onstart = () => { store.setAudioBlocked(null); store.setSpeakingText(text, isSlow); };
   utterance.onend = () => { if (useSpeechPreferenceStore.getState().speakingText === text) store.setSpeakingText(null); };
   utterance.onerror = (event) => {
     if (useSpeechPreferenceStore.getState().speakingText === text) store.setSpeakingText(null);
     if (event.error === 'not-allowed') store.setAudioBlocked(text);
   };
   window.speechSynthesis.speak(utterance);
+}
+
+/** Dừng hẳn mọi câu đang đọc và câu đang chờ trong hàng đợi của trình duyệt. */
+export function stopSpeech() {
+  if (!hasSpeech()) return;
+  window.speechSynthesis.cancel();
+  useSpeechPreferenceStore.getState().setSpeakingText(null);
 }
 
 let isUnlocked = false;
@@ -93,20 +102,24 @@ export function useSpeech() {
   const choice = pickJapaneseVoice(voices, voiceGender);
   const voice = choice?.voice ?? null;
 
-  const speak = useCallback((text: string) => {
+  const speak = useCallback((text: string, options?: { slow?: boolean }) => {
     if (!hasSpeech() || !text) return;
-    speakNow(text, voice);
+    speakNow(text, voice, options?.slow ?? false);
   }, [voice]);
 
-  const stop = useCallback(() => {
-    if (!hasSpeech()) return;
-    window.speechSynthesis.cancel();
-    useSpeechPreferenceStore.getState().setSpeakingText(null);
-  }, []);
+  const stop = useCallback(() => stopSpeech(), []);
+
+  /** Nút loa: đang đọc đúng câu này (cùng tốc độ) thì DỪNG; còn lại thì đọc. */
+  const toggle = useCallback((text: string, options?: { slow?: boolean }) => {
+    const { speakingText, isSpeakingSlow } = useSpeechPreferenceStore.getState();
+    if (speakingText === text && isSpeakingSlow === (options?.slow ?? false)) stopSpeech();
+    else speak(text, options);
+  }, [speak]);
 
   return {
     speak,
     stop,
+    toggle,
     isSupported,
     voiceChoice: choice,
     hasVoiceList: voices.length > 0,

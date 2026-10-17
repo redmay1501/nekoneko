@@ -1,8 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AudioButton } from '@/components/common/AudioButton';
 import { useEnterToContinue } from '@/hooks/useEnterToContinue';
+import { stopSpeech, useSpeech } from '@/hooks/useSpeech';
+import { useSpeechPreferenceStore } from '@/stores/speech-preference-store';
+import { ListenControls } from './ListenControls';
 
 export interface AssessmentQuestion {
   /** Có thì mỗi câu trả lời được báo lên `onAnswer` (để ghi vào trí nhớ). */
@@ -35,6 +38,17 @@ export function AssessmentQuiz({
   const [correctCount, setCorrectCount] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   const question = questions[questionIndex];
+  const isListening = Boolean(question?.audioText && !question.prompt);
+  const { speak } = useSpeech();
+  const autoplayAudio = useSpeechPreferenceStore((store) => store.autoplayAudio);
+
+  // Sang câu mới: dừng câu cũ đang đọc dở; bài nghe thì tự đọc câu mới (nếu người học bật tự phát). Rời bài → dừng.
+  useEffect(() => {
+    stopSpeech();
+    if (isComplete || !question?.audioText || !(isListening && autoplayAudio)) return;
+    speak(question.audioText);
+  }, [questionIndex, isComplete]); // eslint-disable-line react-hooks/exhaustive-deps -- chỉ chạy khi đổi câu
+  useEffect(() => stopSpeech, []);
 
   function choose(answer: string) {
     if (!question || chosenAnswer !== null) return;
@@ -79,22 +93,26 @@ export function AssessmentQuiz({
         <div className="card tight" aria-live="polite">
           <div className="between">
             <span className="tiny muted">Câu {questionIndex + 1}/{questions.length}</span>
-            {question.audioText ? <AudioButton text={question.audioText} label={audioLabel} className="btn ghost sm" /> : null}
+            {question.audioText && !isListening ? <AudioButton text={question.audioText} label={audioLabel} className="btn ghost sm" /> : null}
           </div>
+          {isListening && question.audioText ? <ListenControls text={question.audioText} label={audioLabel} /> : null}
           {question.prompt ? (
             <p className={question.promptIsJapanese ? 'jp glyph center' : 'center'}
               style={{ fontSize: question.promptIsJapanese ? 36 : 18, fontWeight: 600, margin: '14px 0' }}>
               {question.prompt}
             </p>
           ) : null}
-          <div className="row wrap" style={{ gap: 7, justifyContent: 'center' }}>
-            {question.options.map((option) => {
+          <div className="quiz-options" role="group" aria-label="Chọn đáp án">
+            {question.options.map((option, index) => {
               const isCorrect = chosenAnswer !== null && option === question.answer;
               const isWrong = chosenAnswer === option && option !== question.answer;
               return (
                 <button key={option} type="button" disabled={chosenAnswer !== null}
-                  className={`tab ${question.promptIsJapanese && !question.audioText ? 'jp' : ''} ${isCorrect ? 'quiz-correct' : ''} ${isWrong ? 'quiz-wrong' : ''}`}
-                  aria-pressed={chosenAnswer === option} onClick={() => choose(option)}>{option}</button>
+                  className={`quiz-option ${question.promptIsJapanese && !question.audioText ? 'jp' : ''} ${isCorrect ? 'is-correct' : ''} ${isWrong ? 'is-wrong' : ''}`}
+                  aria-pressed={chosenAnswer === option} onClick={() => choose(option)}>
+                  <span className="quiz-option-key" aria-hidden="true">{String.fromCharCode(65 + index)}</span>
+                  <span className="quiz-option-text">{option}</span>
+                </button>
               );
             })}
           </div>

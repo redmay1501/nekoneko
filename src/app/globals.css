@@ -48,7 +48,12 @@ p{margin:0}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 a{color:inherit;text-decoration:none}
 ul{margin:0;padding:0;list-style:none}
-:focus-visible{outline:3px solid var(--sakura);outline-offset:2px;border-radius:8px}
+/* Viền focus cho bàn phím. KHÔNG đặt border-radius ở đây: trước đây `border-radius:8px` ghi đè độ bo của MỌI phần tử đang
+   focus → nút viên thuốc / nút tròn thành hình chữ nhật bo nhẹ. Trình duyệt hiện nay tự vẽ outline theo đúng độ bo của phần tử. */
+:focus-visible{outline:3px solid var(--sakura);outline-offset:2px}
+/* Tắt vùng sáng khi chạm mặc định của Safari iOS/iPadOS (hình chữ nhật xanh xám phủ lên ô ngày SVG, tab, lựa chọn…);
+   mỗi nút đã có hiệu ứng nhấn riêng (:active), viền focus bàn phím giữ nguyên. */
+html{-webkit-tap-highlight-color:transparent}
 ::selection{background:var(--pink);color:var(--ink)}
 .muted{color:var(--ink-3)} .soft{color:var(--ink-2)}
 .tiny{font-size:12px} .sm{font-size:13px}
@@ -258,6 +263,10 @@ ul{margin:0;padding:0;list-style:none}
 .daynode{cursor:pointer}
 .daynode .touch-target{transform-box:fill-box;transform-origin:center}
 .daynode:hover circle.hit{stroke:var(--sakura);stroke-width:2.2}
+/* Ô ngày là <g> trong SVG: outline mặc định vẽ thành khung vuông bao cả nhóm → focus bàn phím hiện vòng tròn quanh chấm. */
+.daynode:focus{outline:none}
+.daynode:focus-visible circle.hit{stroke:var(--sakura-deep);stroke-width:3.2}
+.daynode:focus-visible .day-face{transform:translateY(-2.5px) scale(1.08)}
 .daynode .today-neko{overflow:visible}
 @media (max-width:767px){
   .map-wrap{width:calc(100vw - 16px);max-width:none;margin-left:calc((100% - (100vw - 16px))/2)}
@@ -1619,3 +1628,41 @@ a.garden-tree:hover .garden-tree-tag{background:#fff;box-shadow:0 0 0 2px #F3B67
 .kanji-row .mid .kanji-row-word b.jp{font-size:14.5px;color:var(--ink)}
 .kanji-row .mid .kanji-row-reading{color:#3F7A4B}
 .kanji-row .mid .kanji-row-reading b{color:#2F6B3B}
+
+/* ============ BÀI NGHE & ĐÁP ÁN (components/learning/ListenControls, AssessmentQuiz) ============
+   Nút loa lớn ở giữa (bấm = phát / dừng), nghe chậm, nghe lại; đáp án là thẻ bo góc nổi khối — mọi trạng thái giữ nguyên độ bo. */
+.listen-stage{display:flex;flex-direction:column;align-items:center;gap:12px;margin:14px 0 18px}
+.listen-main{display:grid;place-items:center;width:92px;height:92px;border-radius:50%;border:0;cursor:pointer;color:#fff;
+  background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0) 60%),linear-gradient(180deg,#FF9EAC,#F2667C);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -4px 0 rgba(0,0,0,.1),0 10px 22px rgba(242,102,124,.32);
+  transition:transform .16s cubic-bezier(.3,1.4,.5,1),box-shadow .16s ease}
+.listen-main:hover{transform:translateY(-2px) scale(1.03)}
+.listen-main:active{transform:translateY(2px) scale(.98);box-shadow:inset 0 2px 6px rgba(0,0,0,.14),0 4px 10px rgba(242,102,124,.3)}
+.listen-main.is-speaking{animation:listen-pulse 1.1s ease-in-out infinite}
+@keyframes listen-pulse{0%,100%{box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 0 0 0 rgba(242,102,124,.35),0 10px 22px rgba(242,102,124,.32)}
+  50%{box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 0 0 12px rgba(242,102,124,0),0 10px 22px rgba(242,102,124,.32)}}
+.listen-side{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.listen-chip{min-height:40px;padding:6px 15px;border-radius:999px;border:1.5px solid #FFD3DB;background:linear-gradient(180deg,#fff,#FFF5F7);
+  color:#C2415A;font:inherit;font-size:13.5px;font-weight:700;cursor:pointer;box-shadow:0 2px 0 #FFD3DB;transition:transform .12s ease,box-shadow .12s ease}
+.listen-chip:hover{transform:translateY(-1px)}
+.listen-chip:active{transform:translateY(2px);box-shadow:0 0 0 #FFD3DB}
+.listen-chip.is-speaking{background:linear-gradient(180deg,#FFE3E9,#FFD0DA)}
+@media (prefers-reduced-motion:reduce){.listen-main.is-speaking{animation:none}}
+
+.quiz-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:6px}
+@media (max-width:420px){.quiz-options{grid-template-columns:1fr}}
+.quiz-option{display:flex;align-items:center;gap:10px;min-height:54px;padding:10px 14px;border-radius:16px;text-align:left;cursor:pointer;
+  border:1.5px solid #F3E2DC;background:linear-gradient(180deg,#fff,#FFFAF7);color:var(--ink);font:inherit;font-size:15px;font-weight:600;
+  box-shadow:0 3px 0 #F3E2DC,0 6px 14px rgba(150,80,70,.06);transition:transform .14s cubic-bezier(.3,1.4,.5,1),box-shadow .14s ease,border-color .14s}
+.quiz-option.jp{font-family:var(--font-learn);font-size:18px}
+.quiz-option:hover:not(:disabled){transform:translateY(-2px);border-color:#FFC4CE;box-shadow:0 5px 0 #FFD3DB,0 10px 18px rgba(242,121,140,.12)}
+.quiz-option:active:not(:disabled){transform:translateY(2px);box-shadow:0 1px 0 #FFD3DB}
+.quiz-option:disabled{cursor:default}
+.quiz-option-key{flex:0 0 auto;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#FFF0F3;color:#C2415A;font-size:12.5px;font-weight:800}
+.quiz-option-text{flex:1;min-width:0}
+.quiz-option[aria-pressed="true"]{border-color:#F2798C}
+.quiz-option.is-correct{border-color:#8FCF9C;background:linear-gradient(180deg,#F4FCF6,#E3F5E8);color:#2F6B3C;box-shadow:0 3px 0 #9FD3A8}
+.quiz-option.is-correct .quiz-option-key{background:#4FC491;color:#fff}
+.quiz-option.is-wrong{border-color:#F7A8B6;background:linear-gradient(180deg,#FFF8F9,#FFE9ED);color:#A9475A;box-shadow:0 3px 0 #FFC4CE}
+.quiz-option.is-wrong .quiz-option-key{background:#E24159;color:#fff}
+.quiz-option:disabled:not(.is-correct):not(.is-wrong){opacity:.6}

@@ -12,20 +12,21 @@ interface AudioButtonProps {
   showText?: boolean;
 }
 
-/** Nút 🔊 phát âm tiếng Nhật (giọng đọc của trình duyệt). Bấm lại để nghe lại; đang đọc thì nút sáng lên. */
+/** Nút 🔊 phát âm tiếng Nhật (giọng đọc của trình duyệt). Đang đọc thì nút sáng lên — bấm lần nữa là DỪNG. */
 export function AudioButton({ text, label = 'Nghe phát âm', className = 'btn ghost sm', showText = false }: AudioButtonProps) {
-  const { speak, isSupported, lacksJapaneseVoice } = useSpeech();
-  const isSpeaking = useSpeechPreferenceStore((store) => store.speakingText === text);
+  const { toggle, isSupported, lacksJapaneseVoice } = useSpeech();
+  const isSpeaking = useSpeechPreferenceStore((store) => store.speakingText === text && !store.isSpeakingSlow);
   const unavailable = !isSupported || lacksJapaneseVoice;
   return (
     <button
       type="button"
       className={`${className}${isSpeaking ? ' is-speaking' : ''}`}
-      onClick={() => speak(text)}
-      aria-label={label}
-      title={unavailable ? 'Máy này chưa có giọng đọc tiếng Nhật' : label}
+      onClick={() => toggle(text)}
+      aria-label={isSpeaking ? 'Dừng đọc' : label}
+      aria-pressed={isSpeaking}
+      title={unavailable ? 'Máy này chưa có giọng đọc tiếng Nhật' : isSpeaking ? 'Dừng đọc' : label}
     >
-      <EmojiIcon emoji="🔊" size={20} />{showText ? <span className="audio-text">Nghe</span> : null}
+      <EmojiIcon emoji="🔊" size={20} />{showText ? <span className="audio-text">{isSpeaking ? 'Dừng' : 'Nghe'}</span> : null}
     </button>
   );
 }

@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { ListeningPanel } from '@/components/learning/PracticePanels';
 import { ListeningTabs } from '@/components/listening/ListeningTabs';
 import { VideoLibrary } from '@/components/listening/VideoLibrary';
@@ -23,12 +22,6 @@ export default async function ListeningPage({ searchParams }: { searchParams: Pr
               Nghe một từ, chọn nghĩa. Chọn phần muốn nghe — kể cả bài chưa học tới. Từ đã học thì được ôn thêm một lần.
             </p>
             <ListeningPanel pools={buildListeningPools(catalog, journeyDay)} initialRange={params['pham-vi']} />
-            {/* Shadowing (3 câu cố định) và "Nguồn nghe gợi ý" (không có link) đã bỏ: nói đuổi theo câu mẫu nằm ở
-                Luyện nói › Đọc theo mẫu (cùng câu, có nghe mẫu + nhận diện); nguồn NHK / Erin có link thật trong thẻ Video N5. */}
-            <Link href="/luyen-tap/noi?che-do=doc-theo-mau" className="card tight block mt-3.5" style={{ textAlign: 'left' }}>
-              <b className="sm">🎙️ Muốn nói đuổi theo câu mẫu?</b>
-              <p className="sm soft mt-1">Luyện nói › Đọc theo mẫu: nghe câu, đọc theo từng câu một, trình duyệt nhận diện để bạn tự so.</p>
-            </Link>
           </>
         )} />
     </>

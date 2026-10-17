@@ -5,7 +5,7 @@ import Link from 'next/link';
 import type { MouseEvent, ReactNode } from 'react';
 
 /**
- * NekoButton — nút 3D dạng viên thuốc. Mặc định KHÔNG còn mèo ngồi trên nút (bấm nút đã có vết chân mèo — PawClickEffect);
+ * NekoButton — nút 3D dạng viên thuốc. Mặc định KHÔNG còn mèo ngồi trên nút (rê chuột vào nút đã có vết chân mèo — PawHoverEffect);
  * vẫn bật lại được bằng catPose="peek".
  *
  * Thân nút, chữ, icon là code (responsive, bấm được thật); chỉ con mèo là ảnh. Mèo nằm TRONG nút nên lún theo khi bấm,

@@ -1486,10 +1486,18 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 .match-star-count span{color:#E4DCD8}
 /* Hình "đang xử lý" sau khi hoàn thành (cậu bé chạy, đã cắt khung). */
 .loading-runner{display:flex;flex-direction:column;align-items:center;gap:4px}
-.loading-runner-art{width:110px;aspect-ratio:550/460}
+.loading-runner-art{width:150px;aspect-ratio:550/460}
 .loading-runner-label{font-size:13px;color:var(--ink-3)}
-/* Vết chân mèo khi bấm nút (PawClickEffect) — lớp nổi, không chặn bấm. */
-.paw-click{position:fixed;z-index:1001;width:64px;height:64px;pointer-events:none}
+/* Vết chân mèo trắng hiện TRONG nút khi rê chuột (PawHoverEffect): nằm sát mép phải, dưới chữ (z-index -1 trong nút đã isolate),
+   không chiếm chỗ (absolute). Nút nền nhạt (ghost/quiet) tô chân theo màu chữ của nút để vẫn thấy. */
+.btn{isolation:isolate}
+.btn-paw{position:absolute;z-index:-1;right:3px;top:50%;width:auto;height:66%;aspect-ratio:318/272;transform:translateY(-50%) rotate(-12deg);
+  opacity:.5;pointer-events:none;overflow:hidden}
+.btn-paw svg{display:block}
+.btn.ghost .btn-paw path,.btn.quiet .btn-paw path{fill:var(--nb-ink)}
+.btn.ghost .btn-paw,.btn.quiet .btn-paw{opacity:.28}
+/* Nút neko chừa mép phải đủ cho vết chân, để chân không đè lên chữ cuối. */
+.neko-btn:not(.has-cat){padding-right:36px}
 
 /* ============ PHONG CẢNH VƯỜN TRI THỨC (components/garden/GardenScene) ============
    Trời + mặt trời + hai lớp đồi + ba cây Lottie đứng trên mặt cỏ; nhãn số liệu nằm trên nền cỏ dưới mỗi cây. */

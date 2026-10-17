@@ -3,7 +3,7 @@ import { pickDeterministic } from '@/lib/utils/deterministic-random';
 import { primaryRadicalGlyph, type KnowledgeCatalog } from '@/features/learning/knowledge-catalog';
 import { radicalsOfKanji } from '@/features/learning/knowledge-relations';
 import { type KanaLesson, buildKanaLesson } from './kana-lesson';
-import { type KanjiContext, kanjiContextOf } from '@/features/learning/kanji-context';
+import { type KanjiContext, type OutsideKanji, kanjiContextOf, outsideCurriculumKanji } from '@/features/learning/kanji-context';
 import { lessonNumber } from '@/lib/utils/lesson';
 import type { ContentKey, ContentType, KnowledgeItem } from '@/features/learning/knowledge-types';
 import { JOURNEY_STAGES, JOURNEY_TOTAL_DAYS, clampJourneyDay, stageOfDay, type JourneyStage } from './journey';
@@ -85,6 +85,8 @@ export interface DayPlanView {
   reviewWindow: { from: number; to: number; keys: ContentKey[]; counts: Array<{ type: ContentType; count: number }> } | null;
   /** Mỗi Kanji của ngày (theo id): từ của hôm nay chứa nó (kèm cách đọc trong từ) và từ đã học trước đó có cùng chữ. */
   kanjiContext: Record<number, KanjiContext>;
+  /** Chữ Hán trong từ của ngày nhưng ngoài 103 Kanji của giáo trình (vd. 私) — chỉ để thông báo, không thành mục học. */
+  outsideKanji: OutsideKanji[];
 }
 
 /** Màu theo ký hiệu đầu nhãn đầu việc trong file Excel (◐ ôn, 部 bộ thủ, 漢 kanji…). */
@@ -253,6 +255,7 @@ export function buildDayPlan(catalog: KnowledgeCatalog, requestedDay: number, jo
     reviewTopics: hasNewKnowledge ? [] : reviewTopicsBefore(catalog, day),
     reviewWindow: hasNewKnowledge ? null : reviewWindowOf(catalog, day),
     kanjiContext: Object.fromEntries(knowledge.kanji.map((kanji) => [kanji.id, kanjiContextOf(kanji, content, day)])),
+    outsideKanji: outsideCurriculumKanji(knowledge.vocabulary, content.kanji),
   };
 }
 

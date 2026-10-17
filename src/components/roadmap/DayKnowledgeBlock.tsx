@@ -126,6 +126,15 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
           </div>
         </CollapsibleStep>
       ) : null}
+      {plan.outsideKanji.length ? (
+        <p className="tiny muted mt-2.5 outside-kanji">
+          Chữ Hán khác trong từ hôm nay — ngoài 103 Kanji N5 của giáo trình nên chưa có thẻ Kanji riêng, học qua từ:{' '}
+          {plan.outsideKanji.map((entry, index) => (
+            <span key={entry.character}>{index ? ' · ' : ''}<b className="jp">{entry.character}</b>
+              <span className="jp"> ({entry.words.map((word) => word.kanji).join('、')})</span></span>
+          ))}
+        </p>
+      ) : null}
       {knowledge.grammar.length ? (
         <CollapsibleStep label={`${number('grammar')} Ngữ pháp`} note={`${knowledge.grammar.length} mẫu câu`} step="ngu-phap" href={stepHref('ngu-phap')}>
           <div className="stack mt-2.5" style={{ gap: 7 }}>

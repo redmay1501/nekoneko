@@ -139,3 +139,26 @@ export function learnedWordsWithKanji(kanji: Pick<KanjiContent, 'character'>, vo
   return vocabulary.filter((word) => word.day !== null && word.day <= day && containsKanji(word, kanji.character))
     .sort((left, right) => Number(right.day === day) - Number(left.day === day) || (left.day ?? 0) - (right.day ?? 0) || left.id - right.id);
 }
+
+export interface OutsideKanji {
+  character: string;
+  /** Từ của ngày có chứa chữ này. */
+  words: VocabularyContent[];
+}
+
+/**
+ * Chữ Hán trong từ của ngày KHÔNG thuộc danh sách Kanji của giáo trình (103 Kanji N5 — sheet "9. Kanji 103" của Excel),
+ * ví dụ 私 trong 私（わたし）. Không có bản ghi Kanji (Hán Việt, âm đọc, nét) → không thành mục học Kanji / không ghi trí
+ * nhớ; chỉ để trang ngày nói rõ thay vì im lặng. Xem docs/KANJI_VOCAB_MAPPING_AUDIT.md.
+ */
+export function outsideCurriculumKanji(words: readonly VocabularyContent[], curriculum: readonly Pick<KanjiContent, 'character'>[]): OutsideKanji[] {
+  const known = new Set(curriculum.map((kanji) => kanji.character));
+  const found = new Map<string, VocabularyContent[]>();
+  for (const word of words) {
+    for (const character of new Set(word.kanji?.match(/[一-鿿]/g) ?? [])) {
+      if (known.has(character)) continue;
+      found.set(character, [...(found.get(character) ?? []), word]);
+    }
+  }
+  return [...found].map(([character, list]) => ({ character, words: list }));
+}

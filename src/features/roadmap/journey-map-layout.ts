@@ -9,7 +9,7 @@ export const JOURNEY_MAP = {
   WIDTH: 400,
   COLUMNS: 3,
   ROW_GAP: 58,
-  TOP: 120,
+  TOP: 250,
   BOTTOM_SPACE: 120,
   SIDE_MARGIN: 70,
 } as const;

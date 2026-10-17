@@ -1,5 +1,5 @@
-import { RoadmapBackdrop } from '@/components/roadmap/RoadmapBackdrop';
 import Link from 'next/link';
+import type { CSSProperties } from 'react';
 import { ProgressBar } from '@/components/common/ProgressBar';
 import { JourneyMap } from '@/components/roadmap/JourneyMap';
 import { getLearnerContext } from '@/features/learning/learner-context';
@@ -20,10 +20,9 @@ export default async function RoadmapPage() {
 
   return (
     <div className="roadmap-page">
-      <RoadmapBackdrop />
       <div className="between mb-1">
         <h1>Lộ trình JLPT N5</h1>
-        <span className="chip pink">Ngày {journeyDay} / {JOURNEY_TOTAL_DAYS}</span>
+        <span className="roadmap-day-chip">Ngày <b>{journeyDay}</b> / {JOURNEY_TOTAL_DAYS}</span>
       </div>
       <p className="soft sm mb-4">
         Một con đường, bốn chặng, kết thúc ở kỳ thi. Chạm vào một ngày bất kỳ để xem việc cần làm. Học xong ngày nào, bấm Hoàn thành là ngày sau mở ngay — nghỉ vài hôm cũng không bị trôi lộ trình.
@@ -37,14 +36,14 @@ export default async function RoadmapPage() {
           const { done, total } = stageProgress(stage, completedDays);
           const targetDay = Math.min(Math.max(journeyDay, stage.from), stage.to);
           return (
-            <Link key={stage.name} href={`/lo-trinh/ngay/${targetDay}`} className="card tight block" style={{ textAlign: 'left' }}>
+            <Link key={stage.name} href={`/lo-trinh/ngay/${targetDay}`} className="card tight block roadmap-stage" style={{ textAlign: 'left', '--stage': stage.color } as CSSProperties}>
               <div className="row">
-                <EmojiIcon emoji={stage.emoji} size={30} />
+                <span className="roadmap-stage-icon"><EmojiIcon emoji={stage.emoji} size={30} /></span>
                 <div style={{ flex: 1 }}>
                   <b>{stage.name}</b>
                   <div className="tiny muted">Ngày {stage.from}–{stage.to} · {stage.subtitle}</div>
                 </div>
-                <span className="tiny muted">{done}/{total}</span>
+                <span className="roadmap-stage-count">{done}/{total}</span>
               </div>
               <ProgressBar percent={percentOf(done, total)} variant="thin-mint" label={`Tiến độ chặng ${stage.name}`} className="mt-2" />
             </Link>
@@ -52,9 +51,9 @@ export default async function RoadmapPage() {
         })}
       </div>
 
-      <div className="card mt-4" style={{ background: 'var(--cream)', borderColor: '#F3E4CC' }}>
+      <div className="card mt-4 roadmap-finish">
         <div className="row">
-          <span style={{ fontSize: 22 }} aria-hidden="true">🏆</span>
+          <span className="roadmap-stage-icon is-gold"><EmojiIcon emoji="🏆" size={30} /></span>
           <div>
             <b>Ngày {JOURNEY_TOTAL_DAYS} · Kỳ thi JLPT N5</b>
             <div className="sm soft">

@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { LottieAnimation } from '@/components/common/LottieAnimation';
 import { buildJourneyMapLayout } from '@/features/roadmap/journey-map-layout';
 import { startNavigation } from '@/stores/navigation-progress-store';
 
@@ -19,8 +20,17 @@ interface JourneyMapProps {
 
 const STATE_LABEL = { done: 'đã hoàn thành', partial: 'đã qua, còn kiến thức học bù', today: 'hôm nay — đang học', upcoming: 'chưa học' } as const;
 
+/** Màu 3D của chấm ngày theo trạng thái: mặt trên sáng → dưới đậm, đế (lip) đậm hơn nằm lệch xuống tạo khối. */
+const DOT_GRADIENTS = {
+  done: ['#FF9EAC', '#F2667C'],
+  partial: ['#FFFFFF', '#FFE3E9'],
+  today: ['#FF8A9C', '#E24159'],
+  upcoming: ['#FFFFFF', '#F1E9E4'],
+} as const;
+
 /**
- * Bản đồ 90 ngày: con đường uốn lượn, torii đầu mỗi chặng, sakura mỗi tuần, Phú Sĩ cuối đường.
+ * Bản đồ 90 ngày: bãi biển động (Lottie) ở đầu bản đồ, con đường cát uốn lượn với chấm ngày 3D,
+ * torii đầu mỗi chặng, sakura mỗi tuần, Phú Sĩ cuối đường.
  * Toạ độ do journey-map-layout.ts tính — component chỉ vẽ.
  */
 export function JourneyMap({ currentDay, startDateLabel, isJourneyComplete, unfinishedDays = [] }: JourneyMapProps) {
@@ -38,15 +48,34 @@ export function JourneyMap({ currentDay, startDateLabel, isJourneyComplete, unfi
 
   return (
     <div className="map-wrap">
+      {/* Cảnh biển chỉ nằm TRONG khung bản đồ: trời, mây, sóng vỗ ở đầu; con đường bắt đầu trên bờ cát. */}
+      <div className="map-scene" aria-hidden="true">
+        <LottieAnimation src="/animations/roadmap-beach.json" className="map-scene-beach" fit="cover" stillFrame={0} />
+        <LottieAnimation src="/animations/garden-palm.json" className="map-scene-tree map-scene-palm" stillFrame={30} />
+        <LottieAnimation src="/animations/garden-wind-tree.json" className="map-scene-tree map-scene-wind" stillFrame={120} />
+      </div>
       <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Bản đồ 90 ngày">
-        <g opacity=".5">
-          <path d={`M0 ${height - 70} Q100 ${height - 120} 200 ${height - 72} T400 ${height - 78} L400 ${height} L0 ${height} Z`} fill="#CFE3CC" />
-        </g>
-        <path d={pathData} stroke="#F4E2DC" strokeWidth="20" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-        <path d={pathData} stroke="#FFFFFF" strokeWidth="12" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeDasharray="2 14" />
-        <g transform={`translate(${width / 2 - 110},26)`}>
-          <text x="110" y="18" textAnchor="middle" fontSize="15" fontWeight="700" fill="#5E5A57" fontFamily={FONT}>Bắt đầu từ đây</text>
-          <text x="110" y="40" textAnchor="middle" fontSize="11.5" fill="#8E8781" fontFamily={FONT}>{startDateLabel} · あいうえお</text>
+        <defs>
+          {Object.entries(DOT_GRADIENTS).map(([state, [top, bottom]]) => (
+            <linearGradient key={state} id={`dot-${state}`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stopColor={top} />
+              <stop offset="1" stopColor={bottom} />
+            </linearGradient>
+          ))}
+          <linearGradient id="banner-face" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#FFFFFF" />
+            <stop offset="1" stopColor="#FFF1E8" />
+          </linearGradient>
+        </defs>
+        <path d={`M0 ${height - 70} Q100 ${height - 120} 200 ${height - 72} T400 ${height - 78} L400 ${height} L0 ${height} Z`} fill="#EFC994" opacity=".45" />
+        {/* Đường cát nổi khối: bóng đổ → mặt đường → vết chân chấm chấm. */}
+        <path d={pathData} transform="translate(0,4)" stroke="rgba(176,120,62,.22)" strokeWidth="22" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        <path d={pathData} stroke="#FFF7EC" strokeWidth="20" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        <path d={pathData} stroke="#F0C994" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeDasharray="1 13" />
+        <g transform={`translate(${width / 2 - 110},18)`}>
+          <rect x="22" y="0" width="176" height="52" rx="18" fill="#FFFFFF" opacity=".82" />
+          <text x="110" y="22" textAnchor="middle" fontSize="15" fontWeight="800" fill="#5E5A57" fontFamily={FONT}>Bắt đầu từ đây</text>
+          <text x="110" y="41" textAnchor="middle" fontSize="11.5" fill="#8E8781" fontFamily={FONT}>{startDateLabel} · あいうえお</text>
         </g>
 
         {nodes.filter((node) => node.isWeekMark).map((node) => (
@@ -55,8 +84,10 @@ export function JourneyMap({ currentDay, startDateLabel, isJourneyComplete, unfi
         ))}
         {stageBanners.map(({ stage, x, y, toriiX }) => (
           <g key={stage.name}>
-            <g transform={`translate(${x},${y})`}>
-              <rect width="192" height="26" rx="13" fill="#FFFFFF" opacity=".92" />
+            <g transform={`translate(${x},${y})`} className="stage-banner">
+              <rect y="3" width="192" height="26" rx="13" fill={stage.color} />
+              <rect width="192" height="26" rx="13" fill="url(#banner-face)" stroke={stage.color} strokeWidth="1.5" />
+              <rect x="10" y="3" width="172" height="8" rx="4" fill="#FFFFFF" opacity=".7" />
               <text x="96" y="18" textAnchor="middle" fontSize="12" fontWeight="700" fill="#5E5A57" fontFamily={FONT}>
                 {stage.emoji} {stage.name} · ngày {stage.from}–{stage.to}
               </text>
@@ -74,9 +105,15 @@ export function JourneyMap({ currentDay, startDateLabel, isJourneyComplete, unfi
               {isToday ? <circle cx={node.x} cy={node.y} r={node.radius} className="pulse day-pulse" /> : null}
               {/* Vùng chạm vô hình 44px quanh mỗi chấm (chấm vẽ nhỏ hơn). */}
               <circle className="touch-target" cx={node.x} cy={node.y} r="22" fill="transparent" />
-              <circle className="hit day-dot" cx={node.x} cy={node.y} r={node.radius} />
-              {/* Căn giữa theo tâm chữ (dominant-baseline: central) — không cộng lệch tay theo cỡ font. */}
-              <text className="day-number" x={node.x} y={node.y} textAnchor="middle" dominantBaseline="central" fontFamily={FONT}>{node.day}</text>
+              {/* Chấm 3D: đế đậm lệch xuống + mặt chuyển màu + vệt bóng sáng; số có bóng đổ 1px. */}
+              <g className="day-face">
+                <circle className="day-lip" cx={node.x} cy={node.y + 2.6} r={node.radius} />
+                <circle className="hit day-dot" cx={node.x} cy={node.y} r={node.radius} fill={`url(#dot-${node.state})`} />
+                <ellipse className="day-gloss" cx={node.x} cy={node.y - node.radius * 0.5} rx={node.radius * 0.62} ry={node.radius * 0.26} />
+                <text className="day-number-shadow" x={node.x} y={node.y + 1.2} textAnchor="middle" dominantBaseline="central" fontFamily={FONT}>{node.day}</text>
+                {/* Căn giữa theo tâm chữ (dominant-baseline: central) — không cộng lệch tay theo cỡ font. */}
+                <text className="day-number" x={node.x} y={node.y} textAnchor="middle" dominantBaseline="central" fontFamily={FONT}>{node.day}</text>
+              </g>
               {node.state === 'done' ? (
                 // Dấu ✓ nhỏ góc trên phải — trạng thái không chỉ dựa vào màu.
                 <g className="day-badge" transform={`translate(${node.x + node.radius * 0.72},${node.y - node.radius * 0.72})`} aria-hidden="true">

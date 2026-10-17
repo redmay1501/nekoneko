@@ -40,7 +40,7 @@ export function SplashScreen() {
         if (reduceMotion) instance.goToAndStop(0, true);
         animation = instance;
       } catch {
-        // Không tải được animation → vẫn còn chữ "Neko Neko" trên nền hồng, màn loading vẫn tự ẩn như bình thường.
+        // Không tải được animation → chỉ còn nền hồng, màn loading vẫn tự ẩn như bình thường.
       }
     })();
 
@@ -69,7 +69,6 @@ export function SplashScreen() {
   return (
     <div className={`splash ${phase === 'fading' ? 'is-fading' : ''}`} role="status" aria-live="polite" aria-label="Đang tải Neko Neko">
       <div ref={containerRef} className="splash-cat" aria-hidden="true" />
-      <p className="splash-text">Neko Neko đang tới…</p>
     </div>
   );
 }

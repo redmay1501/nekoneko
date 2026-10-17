@@ -38,6 +38,16 @@ const ENTER_DISTANCE = 0.45;
 
 const clamp = (value: number) => Math.min(1, Math.max(0, value));
 
+/**
+ * Khối đã được React "nhận" (hydrate) chưa — React gắn khoá `__reactFiber$…` lên nút DOM khi hydrate xong.
+ * Phần trang stream về sau (Suspense / loading.tsx) hydrate muộn hơn ScrollScenes: nếu thêm class / data-* vào HTML
+ * CHƯA hydrate, React thấy HTML khác bản server → lỗi hydration ("1 Issue"). Vì vậy chỉ chạm vào khối đã hydrate,
+ * khối chưa xong thì quét lại sau (HYDRATION_RETRY_MS).
+ */
+const isHydrated = (element: Element) => Object.keys(element).some((key) => key.startsWith('__reactFiber$'));
+const HYDRATION_RETRY_MS = 150;
+const HYDRATION_RETRY_LIMIT_MS = 8000;
+
 function sceneProgress(element: HTMLElement, viewport: number): number {
   const rect = element.getBoundingClientRect();
   switch (element.dataset.scene) {
@@ -93,12 +103,14 @@ export function ScrollScenes() {
       schedule();
     }, { rootMargin: '25% 0px 25% 0px' });
 
+    let hasPending = false;
     const prepare = (scope: ParentNode) => {
       const within = (selector: string) => [
         ...(scope instanceof Element && scope.matches(selector) ? [scope] : []), ...scope.querySelectorAll(selector),
       ] as HTMLElement[];
       for (const element of within(REVEAL_SELECTOR)) {
         if (element.dataset.revealPrepared) continue;
+        if (!isHydrated(element)) { hasPending = true; continue; }
         element.dataset.revealPrepared = '1';
         if (reduced) continue;
         element.classList.add('motion-reveal');
@@ -107,6 +119,7 @@ export function ScrollScenes() {
       }
       for (const scene of within(SCENE_SELECTOR)) {
         if (scene.dataset.scenePrepared) continue;
+        if (!isHydrated(scene)) { hasPending = true; continue; }
         scene.dataset.scenePrepared = '1';
         if (reduced) { scene.style.setProperty('--p', '1'); continue; }
         scene.style.setProperty('--p', sceneProgress(scene, window.innerHeight).toFixed(4));
@@ -125,6 +138,7 @@ export function ScrollScenes() {
       const candidates = [...(scope instanceof Element && scope.matches(AUTO_SELECTOR) ? [scope] : []), ...scope.querySelectorAll(AUTO_SELECTOR)] as HTMLElement[];
       for (const element of candidates) {
         if (element.dataset.revealPrepared || !isAutoTarget(element)) continue;
+        if (!isHydrated(element)) { hasPending = true; continue; }
         element.dataset.revealPrepared = '1';
         element.dataset.reveal = 'light';
         element.classList.add('motion-reveal');
@@ -132,8 +146,18 @@ export function ScrollScenes() {
       }
     };
 
-    prepare(document.body);
-    prepareAuto(document.body);
+    // Quét lại tới khi mọi khối đã hydrate (hoặc hết HYDRATION_RETRY_LIMIT_MS) — hydrate không đổi DOM nên
+    // MutationObserver không báo; phải tự quét.
+    const startedAt = performance.now();
+    let retry = 0;
+    const scan = () => {
+      retry = 0;
+      hasPending = false;
+      prepare(document.body);
+      prepareAuto(document.body);
+      if (hasPending && performance.now() - startedAt < HYDRATION_RETRY_LIMIT_MS) retry = window.setTimeout(scan, HYDRATION_RETRY_MS);
+    };
+    scan();
     const mutations = new MutationObserver((records) => {
       for (const record of records) for (const node of record.addedNodes) if (node instanceof Element) { prepare(node); prepareAuto(node); }
     });
@@ -141,6 +165,7 @@ export function ScrollScenes() {
     window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', schedule, { passive: true });
     return () => {
+      if (retry) window.clearTimeout(retry);
       mutations.disconnect();
       revealObserver.disconnect();
       sceneObserver.disconnect();

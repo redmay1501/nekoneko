@@ -1452,6 +1452,5 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
   animation:splash-auto-hide .35s ease 6s forwards}
 .splash.is-fading{opacity:0;visibility:hidden;pointer-events:none}
 .splash-cat{width:min(240px,56vw);aspect-ratio:1/1}
-.splash-text{margin:0;font-weight:800;font-size:15px;letter-spacing:.02em;color:var(--sakura-deep)}
 @keyframes splash-auto-hide{to{opacity:0;visibility:hidden;pointer-events:none}}
 @media print{.splash{display:none!important}}

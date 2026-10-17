@@ -1,14 +1,12 @@
 import { KnowledgeListRow } from '@/components/learning/KnowledgeListRow';
-import { TestPicker } from '@/components/learning/TestPicker';
-import { itemsOfType } from '@/features/learning/knowledge-catalog';
-import { buildTestGroups } from '@/features/learning/study-actions';
+import Link from 'next/link';
+import { lessonNumber } from '@/lib/utils/lesson';
 import { countLearnedOfType, grammarGroups } from '@/features/learning/knowledge-library';
 import { getLearnerContext } from '@/features/learning/learner-context';
 
 /** SC-22 · Ngữ pháp N5 — 112 mẫu câu nhóm theo bài. */
 export default async function GrammarPage() {
   const { catalog, memoryViews } = await getLearnerContext();
-  const testGroups = buildTestGroups('grammar', itemsOfType(catalog, 'grammar'), memoryViews);
   const { learned, total } = countLearnedOfType(catalog, memoryViews, 'grammar');
   return (
     <>
@@ -16,11 +14,17 @@ export default async function GrammarPage() {
       <p className="soft sm" style={{ margin: '4px 0 14px' }}>
         112 mẫu câu theo Minna bài 1–25. Mỗi mẫu đi kèm một câu thật để bạn dùng được ngay.
       </p>
-      <TestPicker groups={testGroups} unit="mẫu" partUnit="bài" />
+      <div className="row wrap" style={{ gap: 8 }}>
+        <Link href="/hoc-tap/ngu-phap/luyen-tap?che-do=luyen-tap" className="btn sm">📝 Luyện tập theo bài</Link>
+        <Link href="/hoc-tap/ngu-phap/luyen-tap?che-do=kiem-tra" className="btn ghost sm">✅ Kiểm tra theo bài</Link>
+      </div>
       {grammarGroups(catalog, memoryViews).map((group) => {
         return (
         <section key={group.lesson} data-reveal>
-          <div className="sec-h"><h2 style={{ fontSize: 15 }}>{group.lesson}</h2><span className="tiny muted">{group.rows.length} mẫu</span></div>
+          <div className="sec-h"><h2 style={{ fontSize: 15 }}>{group.lesson}</h2>
+            <span className="tiny muted">{group.rows.length} mẫu{Number.isFinite(lessonNumber(group.lesson)) ? (
+              <> · <Link className="link" href={`/hoc-tap/ngu-phap/luyen-tap?bai=${lessonNumber(group.lesson)}&che-do=luyen-tap`}>Luyện bài này</Link></>
+            ) : null}</span></div>
           <div className="list-grid stack" style={{ gap: 9 }}>
             {group.rows.map((row) => <KnowledgeListRow key={row.contentKey} row={row} />)}
           </div>

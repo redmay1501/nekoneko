@@ -1458,8 +1458,16 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 /* Mèo (Lottie loader-cat, khung 280×200) ngồi trên mép trên thẻ "Học hôm nay": chân mèo ở 85% chiều cao khung
    → đẩy khung lên 85% để chân mèo chạm mép thẻ; đuôi thòng xuống mặt thẻ. */
 .dash-today-cat{position:absolute;z-index:2;right:96px;top:calc(var(--cat-h) * -0.85);width:calc(var(--cat-h) * 1.4);height:var(--cat-h);
-  --cat-h:92px;pointer-events:none}
+  --cat-h:130px;pointer-events:none}
 .dash-today-cat svg{overflow:visible}
-@media (max-width:767px){.dash-today-cat{--cat-h:74px;right:84px}}
+@media (max-width:767px){.dash-today-cat{--cat-h:100px;right:78px} .dash-today{margin-top:56px}}
 /* Mèo trong thùng (Lottie cat-in-box) ở đầu hộp chào mỗi ngày. */
 .daily-greeting-cat{width:132px;height:132px;margin:4px auto -6px}
+
+/* Mèo Lottie ở đầu trang / đầu mục (Trò chơi, Video, Nghe và gõ): chữ bên trái, mèo bên phải; màn hẹp mèo nhỏ lại. */
+.page-hero-cat{display:flex;align-items:center;gap:12px}
+.page-hero-cat>:first-child{flex:1;min-width:0}
+.page-hero-cat-art{flex:0 0 auto;width:120px;height:120px;margin:-8px 0 -4px}
+@media (max-width:560px){.page-hero-cat-art{width:84px;height:84px}}
+/* Trang 404: mèo Luna (khung 723×442). */
+.not-found-cat{width:min(420px,88vw);aspect-ratio:723/442;margin:0 auto}

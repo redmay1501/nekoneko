@@ -10,6 +10,8 @@ interface LottieAnimationProps {
   hideLayers?: readonly string[];
   /** Khung hình hiện khi máy bật "giảm chuyển động". */
   stillFrame?: number;
+  /** 'light' (mặc định, nhẹ — chỉ hình vẽ) hoặc 'svg' (đầy đủ hơn, vẽ được lớp chữ — ví dụ chữ Z của mèo ngủ ở trang 404). */
+  player?: 'light' | 'svg';
 }
 
 type LottiePlayer = { destroy: () => void; play: () => void; pause: () => void; goToAndStop: (frame: number, isFrame?: boolean) => void };
@@ -20,7 +22,7 @@ type LottiePlayer = { destroy: () => void; play: () => void; pause: () => void; 
  *  - Ra khỏi màn hình thì tạm dừng (IntersectionObserver) cho đỡ tốn pin; vào lại thì chạy tiếp.
  *  - "Giảm chuyển động" → đứng yên ở `stillFrame`. Tải lỗi → để trống, không ảnh hưởng trang.
  */
-export function LottieAnimation({ src, className = '', hideLayers, stillFrame = 0 }: LottieAnimationProps) {
+export function LottieAnimation({ src, className = '', hideLayers, stillFrame = 0, player: playerKind = 'light' }: LottieAnimationProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const hidden = hideLayers?.join('|') ?? '';
 
@@ -31,7 +33,7 @@ export function LottieAnimation({ src, className = '', hideLayers, stillFrame = 
     (async () => {
       try {
         const [{ default: lottie }, data] = await Promise.all([
-          import('lottie-web/build/player/lottie_light'),
+          playerKind === 'svg' ? import('lottie-web/build/player/lottie_svg') : import('lottie-web/build/player/lottie_light'),
           fetch(src).then((response) => (response.ok ? response.json() : null)),
         ]);
         const container = containerRef.current;
@@ -55,7 +57,7 @@ export function LottieAnimation({ src, className = '', hideLayers, stillFrame = 
       observer?.disconnect();
       player?.destroy();
     };
-  }, [src, hidden, stillFrame]);
+  }, [src, hidden, stillFrame, playerKind]);
 
   return <div ref={containerRef} className={className} aria-hidden="true" />;
 }

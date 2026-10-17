@@ -1,5 +1,6 @@
 'use client';
 
+import { LottieAnimation } from '@/components/common/LottieAnimation';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import {
@@ -34,10 +35,14 @@ export function VideoLibrary({ videos, sources, topics, watchedIds }: VideoLibra
 
   return (
     <section aria-label="Video tiếng Nhật N5">
+      <div className="page-hero-cat">
       <p className="soft sm" style={{ margin: '4px 0 10px' }}>
         {videos.length} video cho người mới học, <b>đều có tiếng Việt</b>: {inAppCount} video ▶ xem trong app (chuyển phụ đề Nhật / Việt),
         còn lại ↗ mở trang NHK có lời thoại song ngữ. Đã xem {watched.size}/{videos.length}.
       </p>
+        {/* Mèo ôm TV có cá bơi (Lottie, đã ẩn khung nền trắng của bản gốc) — trang trí. */}
+        <LottieAnimation src="/animations/cat-tv.json" className="page-hero-cat-art" stillFrame={60} />
+      </div>
       <div className="chip-scroll" role="group" aria-label="Cách xem">
         {([[null, `Tất cả · ${videos.length}`, videos.length], ['in-app', `▶ Xem trong app · ${inAppCount}`, inAppCount], ['animation', `🎨 Hoạt hình · ${animationCount}`, animationCount]] as const)
           .filter(([, , count]) => count > 0).map(([id, label]) => (

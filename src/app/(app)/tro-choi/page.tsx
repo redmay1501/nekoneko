@@ -1,12 +1,19 @@
 import Link from 'next/link';
 import { GAMES } from '@/features/games/game-catalog';
+import { LottieAnimation } from '@/components/common/LottieAnimation';
 
 /** Trò chơi — chọn một trò để ôn kiến thức cho vui. Danh sách ở features/games/game-catalog.ts. */
 export default function GamesPage() {
   return (
     <>
-      <h1>🎮 Trò chơi</h1>
-      <p className="soft sm" style={{ margin: '4px 0 14px' }}>Chọn một trò để ôn — chơi không ảnh hưởng điểm trí nhớ, cứ thoải mái phá kỷ lục.</p>
+      <div className="page-hero-cat">
+        <div>
+          <h1>🎮 Trò chơi</h1>
+          <p className="soft sm" style={{ margin: '4px 0 14px' }}>Chọn một trò để ôn — chơi không ảnh hưởng điểm trí nhớ, cứ thoải mái phá kỷ lục.</p>
+        </div>
+        {/* Mèo rình vờn bi (Lottie) — trang trí. */}
+        <LottieAnimation src="/animations/lurking-cat.json" className="page-hero-cat-art" stillFrame={20} />
+      </div>
       <div className="game-list">
         {GAMES.map((game) => (
           <Link key={game.id} href={game.href} className="card game-card">

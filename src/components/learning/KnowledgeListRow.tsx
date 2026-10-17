@@ -1,6 +1,7 @@
 import type { KnowledgeListRowData } from '@/features/learning/knowledge-list';
 import { STATUS_PRESENTATION } from '@/features/memory/memory-rules';
 import { KnowledgeChipButton } from './KnowledgeChipButton';
+import { ContentImageView } from '@/components/common/ContentImageView';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
 
 export type { KnowledgeListRowData };
@@ -36,6 +37,7 @@ function RowBody({ row, presentation }: { row: KnowledgeListRowData; presentatio
   return (
     <>
       {row.hideFace ? null : <span className="big jp" style={row.faceSize ? { fontSize: row.faceSize } : undefined}>{row.face}</span>}
+      {row.image ? <ContentImageView image={row.image} size={44} className="list-row-image" /> : null}
       <span className="mid">
         <b className={row.hideFace ? 'jp' : undefined} style={row.hideFace ? { fontSize: 15 } : undefined}>{row.title}</b>
         {/* Romaji ngay dưới phần tiếng Nhật: dưới mẫu câu (ngữ pháp), dưới cách đọc kana (Kanji, từ vựng). */}

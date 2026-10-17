@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { KnowledgeChipButton } from '@/components/learning/KnowledgeChipButton';
 import { CollapsibleStep } from './CollapsibleStep';
 import { DayVocabularyList } from './DayVocabularyList';
+import { ContentImageView } from '@/components/common/ContentImageView';
+import { learnerImageOf } from '@/features/learning/vocabulary-images';
 import { KanaLessonTable } from './KanaLessonTable';
 import { canRomanize, patternRomaji, sentenceRomaji } from '@/lib/utils/romaji';
 import { primaryRadicalGlyph } from '@/features/learning/knowledge-catalog';
@@ -102,6 +104,7 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
               return (
                 <KnowledgeChipButton key={`k${kanji.id}`} contentKey={toContentKey('kanji', kanji.id)} className="list-row kanji-row" style={{ padding: '10px 12px' }}>
                   <span className="kanji-row-glyph jp" aria-hidden="true">{kanji.character}</span>
+                  <ContentImageView image={learnerImageOf('kanji', kanji)} size={52} className="list-row-image" />
                   <span className="mid">
                     <b>{kanji.character} · {kanji.hanViet}</b>
                     <span>{firstMeaning(kanji.meaning)}{kanji.strokes ? ` · ${kanji.strokes} nét` : ''}</span>

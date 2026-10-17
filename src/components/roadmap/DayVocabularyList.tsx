@@ -3,6 +3,8 @@ import { toContentKey } from '@/features/learning/knowledge-types';
 import type { VocabularyContent } from '@/types/content';
 import { firstMeaning } from '@/lib/utils/text';
 import { vocabularyRomaji } from '@/lib/utils/romaji';
+import { ContentImageView } from '@/components/common/ContentImageView';
+import { learnerImageOf } from '@/features/learning/vocabulary-images';
 
 /**
  * Cách đọc dưới mặt chữ: từ có chữ Hán → kana + romaji (事務所 · じむしょ · jimusho);
@@ -28,6 +30,7 @@ export function DayVocabularyList({ words, title = 'Từ vựng' }: { words: Voc
       {words.map((word) => (
         <KnowledgeChipButton key={word.id} contentKey={toContentKey('vocabulary', word.id)} className="list-row" style={{ padding: '9px 12px' }}
           label={`${word.kanji || word.kana} — ${firstMeaning(word.meaning)}`}>
+          <ContentImageView image={learnerImageOf('vocabulary', word)} size={44} className="list-row-image" />
           <span className="mid">
             <b className="jp" style={{ fontSize: 15 }}>{word.kanji || word.kana}</b>
             <WordReading word={word} />

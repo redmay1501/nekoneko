@@ -1,4 +1,5 @@
 import type { MemoryView } from '@/features/memory/memory-types';
+import { learnerImageOf } from './vocabulary-images';
 import type { KnowledgeListRowData } from './knowledge-list';
 import { type KnowledgeCatalog, itemsOfType } from './knowledge-catalog';
 import { kanjiContainingRadical } from './knowledge-relations';
@@ -38,7 +39,7 @@ export function kanjiRows(catalog: KnowledgeCatalog, views: Views): Array<Knowle
       contentKey: item.key, face: item.face, title: `${item.content.hanViet} · ${item.content.meaning}`,
       subtitle: `${item.content.onReading} ・ ${item.content.kunReading || '—'}`,
       romaji: kanjiReadingRomaji(item.content.onReading, item.content.kunReading), ...memoryOf(views, item.key),
-      group: kanjiLessonLabel(catalog, item.day), day: item.day ?? 999,
+      group: kanjiLessonLabel(catalog, item.day), day: item.day ?? 999, image: learnerImageOf('kanji', item.content),
     }));
 }
 
@@ -46,6 +47,7 @@ export function vocabularyRows(catalog: KnowledgeCatalog, views: Views) {
   return itemsOfType(catalog, 'vocabulary').map((item) => ({
     contentKey: item.key, face: item.face, title: item.content.meaning, subtitle: item.content.kana,
     romaji: vocabularyRomaji(item.content), lesson: item.content.lesson, faceSize: 22, ...memoryOf(views, item.key),
+    image: learnerImageOf('vocabulary', item.content),
   }));
 }
 

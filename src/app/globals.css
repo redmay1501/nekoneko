@@ -1722,3 +1722,6 @@ a.garden-tree:hover .garden-tree-tag{background:#fff;box-shadow:0 0 0 2px #F3B67
 .match-tile.done{box-shadow:inset 0 0 0 1.5px #CFEBD6,0 2px 0 #CFEBD6}
 .match-tile:focus-visible{outline:3px solid #A68AF0;outline-offset:2px}
 @media (max-width:420px){.match-intro-cat{width:84px;height:84px}}
+
+/* Ảnh minh hoạ nhỏ trong dòng danh sách (từ vựng, Kanji) — tỉ lệ giữ nguyên, ảnh lỗi thì ẩn hẳn (ContentImageView). */
+.list-row-image{flex:0 0 auto;border-radius:12px;object-fit:contain;background:#FBF6F3;box-shadow:inset 0 0 0 1px rgba(0,0,0,.04)}

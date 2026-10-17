@@ -1,3 +1,4 @@
+import type { ContentImage } from '@/types/content';
 import type { MemoryStatus, MemoryView } from '@/features/memory/memory-types';
 import type { ContentKey, ContentType, KnowledgeItem } from './knowledge-types';
 
@@ -56,4 +57,6 @@ export interface KnowledgeListRowData {
   hideFace?: boolean;
   /** Cách đọc bằng chữ Latinh (Hepburn) cho người mới — dòng nhỏ dưới cách đọc kana. */
   romaji?: string;
+  /** Ảnh minh hoạ của mục (ảnh gắn ở trang quản trị / ảnh từ vựng đã duyệt) — không có thì dòng không có khung ảnh. */
+  image?: ContentImage | null;
 }

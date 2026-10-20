@@ -54,6 +54,11 @@ ul{margin:0;padding:0;list-style:none}
 /* Tắt vùng sáng khi chạm mặc định của Safari iOS/iPadOS (hình chữ nhật xanh xám phủ lên ô ngày SVG, tab, lựa chọn…);
    mỗi nút đã có hiệu ứng nhấn riêng (:active), viền focus bàn phím giữ nguyên. */
 html{-webkit-tap-highlight-color:transparent}
+/* iOS Safari tự phóng to khi chạm vào ô nhập có chữ < 16px (ô đăng nhập 15px) rồi giữ nguyên độ phóng → màn hình lệch sang một bên,
+   phải tự thu lại. Trên thiết bị cảm ứng, chữ trong ô nhập luôn ≥ 16px để không bao giờ kích hoạt việc phóng đó. */
+@media (pointer:coarse){input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea,select{font-size:max(16px,1em)!important}}
+/* Không phần tử trang trí nào được đẩy trang rộng hơn màn hình (clip không tạo vùng cuộn → position:sticky vẫn chạy). */
+html,body{overflow-x:clip}
 ::selection{background:var(--pink);color:var(--ink)}
 .muted{color:var(--ink-3)} .soft{color:var(--ink-2)}
 .tiny{font-size:12px} .sm{font-size:13px}

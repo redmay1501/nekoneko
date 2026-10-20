@@ -17,5 +17,6 @@ export const config = {
   // Font, giấy phép (*.woff2, *.txt) và dữ liệu thứ tự nét (/strokes/*.json) cũng vậy: bị chuyển về trang đăng nhập thì trang đăng nhập không có font.
   // /onboarding-3d/ là trang hướng dẫn 3D tĩnh (HTML, JS, mô hình .glb, ~55 file) chạy trong iframe — không cần phiên đăng nhập.
   // Không loại trừ thì mỗi file đều chạy làm mới phiên, và ở `npm run dev` khi chưa đăng nhập file .glb bị đổi thành trang đăng nhập.
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|onboarding-3d/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|woff2?|txt|json|SVG|PNG|JPG|JPEG|GIF|WEBP)$).*)'],
+  // Mô hình 3D (*.glb — Vườn tri thức, vài MB mỗi file) cũng là file tĩnh: không cần làm mới phiên cho từng file.
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|onboarding-3d/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|woff2?|txt|json|glb|SVG|PNG|JPG|JPEG|GIF|WEBP|GLB)$).*)'],
 };

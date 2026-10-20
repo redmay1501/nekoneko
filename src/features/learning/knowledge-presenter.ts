@@ -36,7 +36,6 @@ export interface DiscoverCard {
   detailLines: string[];
   relatedChips: RelatedChip[];
   /** Câu nối kiến thức mới vào thứ đã học — "Nó mang bộ 日 bạn đã học ngày 17". */
-  bridgeText: string | null;
   audioText: string;
   /** Cách đọc bằng chữ Latinh cho người mới (chữ cái thì `reading` đã là romaji nên bỏ trống). */
   romaji?: string;
@@ -86,20 +85,11 @@ function buildBaseDiscoverCard(item: KnowledgeItem, catalog: KnowledgeCatalog, j
   const base = { face: item.face, reading: item.reading, meaning: item.meaning, audioText: speechTextFor(item) };
   switch (item.type) {
     case 'kanji': {
-      const radicals = radicalsOfKanji(catalog, item.content);
-      const radical = radicals.find((candidate) => (candidate.day ?? 99) <= journeyDay);
-      const glyph = radical ? primaryRadicalGlyph(radical.radical) : '';
-      const isPrimary = Boolean(radical && radicals[0]?.id === radical.id);
       return {
         ...base,
         romaji: kanjiReadingRomaji(item.content.onReading, item.content.kunReading),
         detailLines: [`${item.content.hanViet} · ${item.content.onReading}・${item.content.kunReading || '—'}`, item.content.tip],
         relatedChips: [],
-        bridgeText: radical
-          ? isPrimary
-            ? `Nó mang bộ ${glyph} (${radical.meaning.toLowerCase()}) mà bạn đã học ngày ${radical.day}.`
-            : `Trong chữ có hình ${glyph} (${radical.meaning.toLowerCase()}) bạn đã học ngày ${radical.day}.`
-          : null,
       };
     }
     case 'vocabulary': {
@@ -109,9 +99,6 @@ function buildBaseDiscoverCard(item: KnowledgeItem, catalog: KnowledgeCatalog, j
         romaji: vocabularyRomaji(item.content),
         detailLines: [item.content.tip],
         relatedChips: knownKanji.map((kanji) => ({ face: kanji.character, label: kanji.meaning.toLowerCase() })),
-        bridgeText: knownKanji[0]
-          ? `Trong từ này có chữ ${knownKanji[0].character} (${knownKanji[0].meaning.toLowerCase()}) bạn đã gặp rồi.`
-          : null,
       };
     }
     case 'radical':
@@ -119,7 +106,6 @@ function buildBaseDiscoverCard(item: KnowledgeItem, catalog: KnowledgeCatalog, j
         ...base,
         detailLines: [item.content.tip],
         relatedChips: kanjiContainingRadical(catalog, item.content).slice(0, 4).map((kanji) => ({ face: kanji.character, label: '' })),
-        bridgeText: null,
       };
     case 'grammar':
       return {
@@ -128,12 +114,11 @@ function buildBaseDiscoverCard(item: KnowledgeItem, catalog: KnowledgeCatalog, j
         detailLines: [item.content.usage, item.content.exampleJp, item.content.exampleReading, item.content.exampleVi],
         romaji: canRomanize(item.content.exampleReading || item.content.exampleJp) ? sentenceRomaji(item.content.exampleReading || item.content.exampleJp) : undefined,
         relatedChips: [],
-        bridgeText: null,
         audioText: item.content.exampleJp,
       };
     case 'hiragana':
     case 'katakana':
-      return { ...base, detailLines: [item.content.tip], relatedChips: [], bridgeText: null };
+      return { ...base, detailLines: [item.content.tip], relatedChips: [] };
   }
 }
 

@@ -128,11 +128,6 @@ export function DiscoverStepView({ step, isBusy, onAcknowledge }: { step: Discov
           ))}
         </div>
       ) : null}
-      {card.bridgeText ? (
-        <div className="card tight mt-3" style={{ background: 'var(--lav)', borderColor: 'transparent' }}>
-          <p className="sm">🔗 {card.bridgeText}</p>
-        </div>
-      ) : null}
       {card.example ? (
         <div className="card tight mt-3" style={{ background: 'var(--cream)', borderColor: 'transparent', textAlign: 'left' }}>
           <p className="tiny muted">📖 Trong câu</p>

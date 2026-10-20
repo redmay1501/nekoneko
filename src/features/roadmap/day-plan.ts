@@ -1,12 +1,11 @@
 import type { DayTask, GrammarContent, JourneyDay, KanjiContent, RadicalContent, VocabularyContent } from '@/types/content';
 import { pickDeterministic } from '@/lib/utils/deterministic-random';
 import { primaryRadicalGlyph, type KnowledgeCatalog } from '@/features/learning/knowledge-catalog';
-import { radicalsOfKanji } from '@/features/learning/knowledge-relations';
 import { type KanaLesson, buildKanaLesson } from './kana-lesson';
 import { type KanjiContext, type OutsideKanji, kanjiContextOf, outsideCurriculumKanji } from '@/features/learning/kanji-context';
 import { lessonNumber } from '@/lib/utils/lesson';
 import type { ContentKey, ContentType, KnowledgeItem } from '@/features/learning/knowledge-types';
-import { JOURNEY_STAGES, JOURNEY_TOTAL_DAYS, clampJourneyDay, stageOfDay, type JourneyStage } from './journey';
+import { JOURNEY_STAGES, clampJourneyDay, stageOfDay, type JourneyStage } from './journey';
 import { type JourneyPosition, relationToCurrentDay } from './journey-progress';
 
 /**
@@ -68,7 +67,6 @@ export interface DayPlanView {
    * Câu nối kanji với bộ đã học.
    * isPrimary: bộ đứng đầu chữ. Bộ phụ thì nói "trong chữ có hình", không nói "mang bộ".
    */
-  radicalBridge: { kanji: string; radical: string; meaning: string; day: number; isPrimary: boolean } | null;
   tasks: DayTaskView[];
   /** Thời gian theo kế hoạch (Excel), tách trong app / tự làm. */
   minutesInApp: number;
@@ -215,9 +213,6 @@ export function buildDayPlan(catalog: KnowledgeCatalog, requestedDay: number, jo
   };
   const hasNewKnowledge = Object.values(knowledge).some((list) => list.length > 0);
 
-  const firstKanji = knowledge.kanji[0];
-  const kanjiRadicals = firstKanji ? radicalsOfKanji(catalog, firstKanji) : [];
-  const bridgeRadical = kanjiRadicals.find((radical) => (radical.day ?? JOURNEY_TOTAL_DAYS) < (firstKanji?.day ?? 0));
 
   // Dòng thời gian theo thứ tự học: khởi động → chữ cái → bộ thủ → từ vựng → Kanji → ngữ pháp → việc tự làm (giữ thứ tự Excel trong cùng nhóm).
   tasks.sort((left, right) => taskRank(left) - taskRank(right) || left.orderNo - right.orderNo);
@@ -237,15 +232,6 @@ export function buildDayPlan(catalog: KnowledgeCatalog, requestedDay: number, jo
     hasNewKnowledge,
     // Mỗi mặt chữ một lần (本 vừa là Kanji vừa là từ vựng — gợi ý hai lần trông như lỗi).
     reviewSuggestions: hasNewKnowledge ? [] : pickDeterministic([...new Map(reviewPool.map((item) => [item.face, item])).values()], REVIEW_SUGGESTION_COUNT, `review:${day}`),
-    radicalBridge: firstKanji && bridgeRadical
-      ? {
-          kanji: firstKanji.character,
-          radical: primaryRadicalGlyph(bridgeRadical.radical),
-          meaning: bridgeRadical.meaning,
-          day: bridgeRadical.day ?? 0,
-          isPrimary: kanjiRadicals[0]?.id === bridgeRadical.id,
-        }
-      : null,
     tasks: taskViews,
     minutesInApp: taskViews.filter((task) => task.place === 'app').reduce((sum, task) => sum + task.minutes, 0),
     minutesSelf: taskViews.filter((task) => task.place === 'self').reduce((sum, task) => sum + task.minutes, 0),

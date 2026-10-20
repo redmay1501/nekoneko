@@ -61,19 +61,6 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
           </div>
           <DayKnowledgeBlock plan={plan} />
           {plan.reviewVocabulary.length ? <DayReviewVocabulary words={plan.reviewVocabulary} /> : null}
-          {plan.radicalBridge ? (
-            <div className="card tight mt-3" style={{ background: 'var(--lav)', borderColor: 'transparent' }}>
-              <p className="sm">
-                🔗 {plan.radicalBridge.isPrimary ? (
-                  <>Chữ <b className="jp">{plan.radicalBridge.kanji}</b> mang bộ <b className="jp">{plan.radicalBridge.radical}</b>{' '}
-                    ({plan.radicalBridge.meaning.toLowerCase()}) — bạn đã học bộ này từ ngày {plan.radicalBridge.day}.</>
-                ) : (
-                  <>Trong chữ <b className="jp">{plan.radicalBridge.kanji}</b> có hình <b className="jp">{plan.radicalBridge.radical}</b>{' '}
-                    ({plan.radicalBridge.meaning.toLowerCase()}) bạn đã học ngày {plan.radicalBridge.day}.</>
-                )}
-              </p>
-            </div>
-          ) : null}
         </div>
         <div className="mt-4 xl:mt-0">
           <DayTimeline plan={plan} />

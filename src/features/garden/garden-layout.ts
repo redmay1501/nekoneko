@@ -34,6 +34,19 @@ export const GARDEN_LANDMARKS = {
     { x: -21.5, z: -18.5 }, { x: -18.8, z: -14.6 }, { x: -16.5, z: -11.5 }, { x: -13.2, z: -8.6 }, { x: -11.4, z: -4.6 }, { x: -8.4, z: -2.6 }, { x: -7.0, z: 0.8 },
     { x: -6.2, z: 2.6 }, { x: -7.6, z: 5.6 }, { x: -9.8, z: 8.4 }, { x: -9.4, z: 12.0 }, { x: -11.5, z: 16.5 },
   ],
+  /**
+   * Biển gỗ các nhóm kiến thức (theo bố cục concept): Từ vựng bên trái gần suối, Kana trước-trái cây đào,
+   * Ngữ pháp bên phải cây đào, Kanji phía phải (gần cổng torii), Bộ thủ trước-phải (khu cây non).
+   */
+  signs: {
+    vocabulary: { x: -5.2, z: -5.6 },
+    kana: { x: -3.4, z: 4.6 },
+    grammar: { x: 5.2, z: -4.2 },
+    kanji: { x: 8.8, z: -1.6 },
+    radical: { x: 5.6, z: 5.2 },
+  },
+  /** Cổng torii đỏ cạnh biển Kanji. */
+  torii: { x: 10.8, z: -4.8 },
   /** Lối đá: từ mép trước vườn uốn vào trước xích đu. */
   path: [
     { x: 1.4, z: 13.5 }, { x: 2.6, z: 10.2 }, { x: 1.2, z: 7.2 }, { x: -0.6, z: 4.6 }, { x: 0.4, z: 2.2 }, { x: 1.6, z: 0.6 },
@@ -43,6 +56,8 @@ export const GARDEN_LANDMARKS = {
 export const GARDEN_RADIUS = 13.5;
 /** Khoảng trống quanh gốc cây đào lớn (rễ nổi) + xích đu (người ngồi, dây treo) — giữ thoáng cho điểm nhấn. */
 const CENTER_CLEARANCE = 4.9;
+/** Quanh biển nhóm kiến thức / cổng torii — giữ thoáng để biển luôn đọc được. */
+const SIGN_CLEARANCE = 1.9;
 /** Hai bờ suối (đá cuội, cỏ) — không trồng cây kiến thức sát mép nước. */
 const STREAM_CLEARANCE = 1.95;
 const PATH_CLEARANCE = 1.05;
@@ -98,7 +113,9 @@ export function isPlantable(x: number, z: number): boolean {
   for (let index = 1; index < path.length; index += 1) {
     if (distanceToSegment(x, z, path[index - 1], path[index]) < PATH_CLEARANCE) return false;
   }
-  const { stream } = GARDEN_LANDMARKS;
+  const { stream, signs, torii } = GARDEN_LANDMARKS;
+  for (const sign of Object.values(signs)) if (Math.hypot(x - sign.x, z - sign.z) < SIGN_CLEARANCE) return false;
+  if (Math.hypot(x - torii.x, z - torii.z) < 2.2) return false;
   for (let index = 1; index < stream.length; index += 1) {
     if (distanceToSegment(x, z, stream[index - 1], stream[index]) < STREAM_CLEARANCE) return false;
   }

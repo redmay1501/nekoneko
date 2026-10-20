@@ -1745,27 +1745,81 @@ a.garden-tree:hover .garden-tree-tag{background:#fff;box-shadow:0 0 0 2px #F3B67
 /* Ảnh minh hoạ nhỏ trong dòng danh sách (từ vựng, Kanji) — tỉ lệ giữ nguyên, ảnh lỗi thì ẩn hẳn (ContentImageView). */
 .list-row-image{flex:0 0 auto;border-radius:12px;object-fit:contain;background:#FBF6F3;box-shadow:inset 0 0 0 1px rgba(0,0,0,.04)}
 
-/* ───────── Vườn tri thức 3D ───────── */
-.garden3d{position:relative;isolation:isolate;height:clamp(420px,62vh,640px);margin:0 0 4px;border-radius:26px;overflow:hidden;
-  background:linear-gradient(180deg,#BFE3F3 0%,#E4F2F3 50%,#F4EEDF 75%,#B9D99A 100%);border:1px solid #E7DCCD;
-  box-shadow:0 5px 0 #E2D3C2,0 14px 30px rgba(112,90,59,.14)}
+/* ───────── Vườn tri thức 3D — cảnh tràn toàn vùng nội dung, lớp UI phủ trên ───────── */
+/* Trang có .garden-stage: bỏ giới hạn rộng / lề của .view để cảnh chạy sát mép (dưới thanh trên, cạnh thanh bên). */
+.view:has(> .garden-stage){max-width:none;padding:0 0 calc(96px + var(--safe-b))}
+@media (min-width:1200px){.view:has(> .garden-stage){padding-bottom:40px}}
+.garden-stage{position:relative;height:calc(100dvh - var(--garden-top,58px));min-height:520px}
+@media (min-width:1200px){.garden-stage{--garden-top:65px;min-height:620px}}
+.garden-stage-fallback{padding:16px}
+.garden-below{max-width:1160px;margin:0 auto;padding:16px 16px 0}
+@media (min-width:768px){.garden-below{padding:20px 26px 0}}
+.garden3d{position:absolute;inset:0;isolation:isolate;overflow:hidden;
+  background:linear-gradient(180deg,#9FD0EE 0%,#D2EBF3 45%,#F3EEDC 70%,#9CCB76 100%)}
 .garden3d-canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
 .garden3d-canvas:active{cursor:grabbing}
-.garden3d-loading{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+
+/* Tiêu đề (biển gỗ nhỏ) + bộ lọc trạng thái — góc trên trái, phủ trên cảnh. */
+.garden3d-head{position:absolute;left:16px;top:14px;right:76px;z-index:4;display:flex;flex-direction:column;gap:10px;pointer-events:none}
+.garden3d-title{pointer-events:auto;align-self:flex-start;display:flex;align-items:center;gap:12px;padding:10px 14px 10px 20px;border-radius:20px;
+  background:linear-gradient(180deg,#FFF9EC,#F7EAD2);border:3px solid #A8774A;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.8),inset 0 -3px 0 rgba(168,119,74,.18),0 4px 0 #8A5E38,0 10px 22px rgba(70,45,25,.22)}
+.garden3d-title h1{margin:0;font-size:clamp(20px,2.4vw,30px);line-height:1.1;font-weight:900;color:#6E4527;letter-spacing:.2px;text-shadow:0 1px 0 #fff}
+.garden3d-count{padding:5px 12px;border-radius:999px;font-size:13px;font-weight:800;color:#2F6B3B;background:#DDF2DD;border:1px solid #BFE2C2;white-space:nowrap}
+.garden3d-filters{pointer-events:auto;display:flex;gap:8px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:none;max-width:100%}
+.garden3d-filters::-webkit-scrollbar{display:none}
+.garden3d-filter{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;padding:7px 14px 7px 9px;border-radius:999px;font:inherit;font-size:13px;
+  color:var(--ink-2);cursor:pointer;background:rgba(255,252,244,.94);border:1px solid rgba(232,220,200,.95);
+  box-shadow:0 2px 0 rgba(214,198,170,.7),0 6px 14px rgba(60,50,30,.10);transition:transform .15s ease,background .15s ease,box-shadow .15s ease}
+.garden3d-filter b{color:var(--ink);font-weight:700}
+.garden3d-filter:hover{transform:translateY(-1px)}
+.garden3d-filter.is-on{background:#FFFFFF;border-color:#7DBA82;box-shadow:0 0 0 2px rgba(125,186,130,.35),0 2px 0 #9FCFA3,0 6px 14px rgba(60,90,60,.14)}
+.garden3d-filter:focus-visible{outline:3px solid var(--sage);outline-offset:2px}
+
+/* Chữ trên biển gỗ nhóm kiến thức — đặt đúng lên mặt biển 3D (JS ghi transform mỗi khi vị trí đổi). */
+.garden3d-signs{position:absolute;inset:0;z-index:2;pointer-events:none}
+.garden3d-sign{position:absolute;left:0;top:0;width:200px;height:86px;display:flex;align-items:center;gap:12px;padding:0 14px;
+  border-radius:14px;color:var(--ink);text-decoration:none;pointer-events:auto;transform-origin:center;will-change:transform;
+  background:linear-gradient(180deg,#FFFBF1,#F8EEDA)}
+.garden3d-sign:hover .garden3d-sign-text b{text-decoration:underline;text-underline-offset:3px}
+.garden3d-sign:focus-visible{outline:3px solid var(--sage);outline-offset:3px}
+.garden3d-sign-glyph{flex:0 0 auto;display:grid;place-items:center;width:46px;height:46px;border-radius:12px;font-size:26px;font-weight:800;
+  color:#fff;background:var(--sign-color,#E07B8F);box-shadow:inset 0 2px 0 rgba(255,255,255,.35),0 2px 0 rgba(0,0,0,.12)}
+.garden3d-sign-text{display:flex;flex-direction:column;gap:3px;min-width:0}
+.garden3d-sign-text b{font-size:20px;font-weight:900;line-height:1.1;color:#5A3A24;white-space:nowrap}
+.garden3d-sign-text span{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:#7C6250}
+.garden3d-sign-text i{width:10px;height:10px;border-radius:50%;background:#CFC6BA}
+.garden3d-sign-text i.is-on{background:#6DBB6F;box-shadow:0 0 0 2px rgba(109,187,111,.25)}
+.garden3d-sign.is-vocabulary{--sign-color:linear-gradient(180deg,#F59AA8,#E0687F)}
+.garden3d-sign.is-kana{--sign-color:linear-gradient(180deg,#F7A9C0,#E2738F)}
+.garden3d-sign.is-grammar{--sign-color:linear-gradient(180deg,#9DB8EE,#6F8FD8)}
+.garden3d-sign.is-kanji{--sign-color:linear-gradient(180deg,#F2A86B,#DA7C3E)}
+.garden3d-sign.is-radical{--sign-color:linear-gradient(180deg,#9FD08E,#62A85A)}
+
+/* Lời mèo khi được chạm. */
+.garden3d-bubble{position:absolute;left:0;top:0;z-index:5;max-width:220px;padding:8px 14px;border-radius:16px;font-size:13px;font-weight:700;color:#6E4527;
+  background:#FFFDF6;border:1px solid #F0DEC6;box-shadow:0 8px 18px rgba(70,45,25,.18);pointer-events:none;white-space:nowrap;animation:garden3d-in .2s ease-out}
+.garden3d-bubble::after{content:"";position:absolute;left:50%;bottom:-7px;width:12px;height:12px;background:#FFFDF6;border-right:1px solid #F0DEC6;border-bottom:1px solid #F0DEC6;transform:translateX(-50%) rotate(45deg)}
+
+.garden3d-loading{position:absolute;inset:0;z-index:6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
   font-size:14px;font-weight:600;color:#6E5A4E;background:rgba(250,246,238,.72);backdrop-filter:blur(2px);pointer-events:none;transition:opacity .4s ease}
-.garden3d-loading.is-soft{inset:auto 12px 12px auto;flex-direction:row;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.86);font-size:12.5px;backdrop-filter:none}
+.garden3d-loading.is-soft{inset:auto auto calc(84px + var(--safe-b)) 16px;flex-direction:row;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.88);font-size:12.5px;backdrop-filter:none}
+@media (min-width:1200px){.garden3d-loading.is-soft{bottom:20px}}
 .garden3d-spinner{width:26px;height:26px;border-radius:50%;border:3px solid #F6C9D3;border-top-color:#EF7A8E;animation:spin .8s linear infinite}
 .garden3d-loading.is-soft .garden3d-spinner{width:16px;height:16px;border-width:2px}
-.garden3d-tools{position:absolute;top:12px;right:12px;display:flex;flex-direction:column;gap:8px}
-.garden3d-tool{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.9);color:#B9576A;
-  border:1px solid #F1DDD6;box-shadow:0 3px 0 #EBD8D0,0 6px 14px rgba(120,80,60,.12);transition:transform .14s ease}
+.garden3d-tools{position:absolute;top:14px;right:14px;z-index:4;display:flex;flex-direction:column;gap:8px}
+.garden3d-tool{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:rgba(255,253,247,.95);color:#C25A6E;
+  border:1px solid #F1DDD6;box-shadow:0 3px 0 #EBD8D0,0 8px 16px rgba(120,80,60,.14);transition:transform .14s ease}
 .garden3d-tool:hover{transform:translateY(-1px)}
 .garden3d-tool:active{transform:translateY(2px);box-shadow:0 1px 0 #EBD8D0}
-.garden3d-hint{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);max-width:calc(100% - 24px);margin:0;padding:6px 14px;border-radius:999px;
-  background:rgba(255,255,255,.84);color:#6E5A4E;font-size:12px;text-align:center;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.garden3d-panel{position:absolute;left:12px;top:12px;width:min(340px,calc(100% - 80px));max-height:calc(100% - 24px);overflow:auto;
-  padding:14px 16px 16px;border-radius:20px;background:rgba(255,255,255,.95);border:1px solid #F1E2DB;box-shadow:0 12px 28px rgba(110,70,50,.18);
+.garden3d-hint{position:absolute;left:50%;bottom:calc(112px + var(--safe-b));z-index:3;transform:translateX(-50%);max-width:calc(100% - 24px);margin:0;
+  display:flex;align-items:center;gap:8px;padding:8px 18px;border-radius:999px;background:rgba(255,253,246,.92);color:#5E4A3E;font-size:13px;font-weight:600;
+  box-shadow:0 6px 16px rgba(60,45,30,.14);pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (min-width:1200px){.garden3d-hint{bottom:18px}}
+.garden3d-panel{position:absolute;left:16px;bottom:calc(104px + var(--safe-b));z-index:5;width:min(340px,calc(100% - 32px));max-height:calc(100% - 200px);overflow:auto;
+  padding:14px 16px 16px;border-radius:20px;background:rgba(255,255,255,.97);border:1px solid #F1E2DB;box-shadow:0 12px 28px rgba(110,70,50,.2);
   animation:garden3d-in .22s ease-out}
+@media (min-width:1200px){.garden3d-panel{bottom:18px}}
 .garden3d-panel-head{display:flex;align-items:center;gap:10px;padding-right:30px}
 .garden3d-panel-plant{display:grid;place-items:center;flex:0 0 auto;width:46px;height:46px;border-radius:14px;background:#F4FAEF}
 .garden3d-panel-face{margin:0;font-size:24px;font-weight:700;line-height:1.2;overflow-wrap:anywhere}
@@ -1773,11 +1827,17 @@ a.garden-tree:hover .garden-tree-tag{background:#fff;box-shadow:0 0 0 2px #F3B67
 .garden3d-close:hover{background:#FFF0F2;color:#D9586E}
 @keyframes garden3d-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media (max-width:640px){
-  .garden3d{height:min(72vh,560px);border-radius:22px}
-  .garden3d-panel{top:auto;left:8px;right:8px;bottom:8px;width:auto;max-height:46%}
-  .garden3d-hint{white-space:normal;bottom:8px;font-size:11.5px}
+  .garden3d-head{left:10px;top:10px;right:64px;gap:8px}
+  .garden3d-title{padding:7px 10px 7px 14px;border-width:2px;border-radius:16px}
+  .garden3d-count{font-size:12px;padding:4px 9px}
+  .garden3d-filter{font-size:12px;padding:6px 11px 6px 7px}
+  .garden3d-tools{top:10px;right:10px}
+  .garden3d-hint{white-space:normal;font-size:11.5px;padding:7px 12px}
+  .garden3d-panel{left:8px;right:8px;width:auto;max-height:46%}
 }
-@media (prefers-reduced-motion:reduce){.garden3d-panel{animation:none}}
+@media (prefers-reduced-motion:reduce){.garden3d-panel,.garden3d-bubble{animation:none}}
+/* Trang Vườn trên màn nhỏ: biển "Khám phá Neko" nhỏ lại để không đè các biển nhóm kiến thức. */
+@media (max-width:1199px){body:has(.garden-stage) .guide-fab{--sign-w:112px}}
 
 /* ───────── Nút nổi "Khám phá Neko" (mở lại hướng dẫn 3D) — biển gỗ chỉ đường ─────────
    z 55: trên thanh dưới (50), dưới khay trượt / hộp thoại (60–70), nhãn môi trường (80), iframe hướng dẫn (90).

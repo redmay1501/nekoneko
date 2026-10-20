@@ -14,8 +14,9 @@ import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeom
 import { GARDEN_LANDMARKS, type PlantPlacement, type PlantStage, hashUnit } from '@/features/garden/garden-layout';
 import { type FoliageTint, GardenKit, KIT_URL, type KitModel } from './kit';
 import { PALETTE, type Part, m4, merge, part, plantGeometry, proceduralBigTree } from './procedural';
+import { buildSky } from './sky';
 import { buildStream, streamBankPoint, streamCrossPoint } from './stream';
-import { type LanternHandle, buildBridge, buildButterflies, buildHangingLanterns, buildKoi } from './decor';
+import { type LanternHandle, SIGN_FACE, buildBridge, buildButterflies, buildFence, buildHangingLanterns, buildHouse, buildKoi, buildSignboard, buildTorii } from './decor';
 import { STREAM_CURVE, buildTerrain, streamBankHeight, streamWidth, terrainHeight } from './terrain';
 
 export interface GardenSceneOptions {
@@ -28,10 +29,32 @@ export interface GardenSceneOptions {
   /** Cảnh đã có cây (bộ model đã tải, hoặc đã chuyển sang cây dự phòng). */
   onSceneReady: (usedKit: boolean) => void;
   onCharactersReady: (ok: boolean) => void;
+  /**
+   * Mỗi khung hình (chỉ khi đổi): vị trí trên màn hình (px, so với canvas) của mặt các biển nhóm kiến thức và đầu hai nhân vật
+   * — Garden3D đặt lớp chữ HTML đúng lên đó bằng cách ghi thẳng style (không setState mỗi khung hình).
+   */
+  onAnchors?: (anchors: SceneAnchors) => void;
+  /** Chạm vào một trong hai nhân vật mèo (−1 trái, 1 phải). */
+  onCatTap?: (side: -1 | 1) => void;
+  /** Nội dung chữ trên các biển gỗ (số liệu thật) — vẽ thẳng lên mặt biển 3D. */
+  signLabels: readonly SignLabel[];
+  /** Chạm vào một biển nhóm kiến thức. */
+  onSignTap?: (id: SignId) => void;
+}
+
+export interface SignLabel { id: SignId; label: string; glyph: string; learned: number; total: number; color: [string, string] }
+
+export type SignId = 'vocabulary' | 'kana' | 'grammar' | 'kanji' | 'radical';
+export interface ScreenAnchor { x: number; y: number; width: number; visible: boolean }
+export interface SceneAnchors {
+  signs: Record<SignId, ScreenAnchor>;
+  cats: Record<'-1' | '1', ScreenAnchor>;
 }
 
 export interface GardenSceneHandle {
   setPlants: (plants: readonly PlantPlacement[]) => void;
+  /** Lọc theo giai đoạn cây (null = tất cả): cây khác giai đoạn thu nhỏ biến mất và không chọn được. */
+  setFilter: (stage: PlantStage | null) => void;
   setSelected: (contentKey: string | null) => void;
   resetCamera: () => void;
   dispose: () => void;
@@ -64,13 +87,13 @@ const PLANT_VARIANTS: Record<PlantStage, ReadonlyArray<{ model: KitModel; height
   wilting: [{ model: 'CommonTree_3', height: 1.4, maxWidth: 0.85, tint: 'autumn' }],
 };
 
-const DEFAULT_TARGET = new THREE.Vector3(-0.2, 4.6, -1.6);
-const DEFAULT_OFFSET = new THREE.Vector3(3.4, 1.6, 21);
+// Góc nhìn diorama từ trên cao (~34°) như concept: thấy trọn cây đào, xích đu, suối, cầu và 5 biển nhóm kiến thức.
+const DEFAULT_TARGET = new THREE.Vector3(0.6, 4.0, -2.4);
+const DEFAULT_OFFSET = new THREE.Vector3(1.2, 6.0, 25.4);
 const BIG_TREE_HEIGHT = 12.8;
 const BRANCH_Y = 4.15; // độ cao cành treo so với mặt đất dưới xích đu
 const SEAT_HEIGHT = 0.95;
 const SEAT_WIDTH = 2.2;
-const SWING_AMPLITUDE = THREE.MathUtils.degToRad(8);
 const SWING_PERIOD = 4.2;
 
 /**
@@ -124,7 +147,7 @@ function skyTexture(): THREE.Texture {
 /** Núi tuyết xa (dáng Phú Sĩ) — lớp hậu cảnh cuối cùng, sương xa làm nó nhạt xanh tự nhiên. */
 function distantMountains(): THREE.Mesh {
   const parts: Part[] = [];
-  const cone = new THREE.ConeGeometry(34, 24, 48, 8, true);
+  const cone = new THREE.ConeGeometry(34, 24, 96, 12, true);
   const position = cone.getAttribute('position');
   for (let index = 0; index < position.count; index += 1) {
     const y = position.getY(index);
@@ -139,7 +162,7 @@ function distantMountains(): THREE.Mesh {
   cone.dispose();
   const positions = shaped.getAttribute('position');
   const colors = new Float32Array(positions.count * 3);
-  const rock = new THREE.Color('#7E9CB7');
+  const rock = new THREE.Color('#8FB2CC');
   const snow = new THREE.Color('#F4F8FC');
   const color = new THREE.Color();
   for (let index = 0; index < positions.count; index += 1) {
@@ -156,7 +179,57 @@ function distantMountains(): THREE.Mesh {
   parts.push(shaped);
   const ridge = new THREE.SphereGeometry(30, 24, 8, 0, Math.PI * 2, 0, Math.PI / 2);
   parts.push(part(ridge, new THREE.Color('#8FB0C4'), m4(30, -2, -112, [2.2, 0.32, 0.6]), 600, 0.03));
-  return new THREE.Mesh(merge(parts), new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 1, metalness: 0 }));
+  // Núi xa: không chịu sương chung (sương phủ trắng nhợt, lộ mặt tam giác) — màu đã pha xanh khí quyển sẵn.
+  return new THREE.Mesh(merge(parts), new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 1, metalness: 0, fog: false, flatShading: false }));
+}
+
+/** Vẽ mặt chữ biển gỗ (kem, ô biểu tượng màu nhóm, tên nhóm, chấm + tiến độ) lên canvas — sắc nét ở 1024 px. */
+function drawSignTexture(label: SignLabel, anisotropy: number): THREE.CanvasTexture {
+  const width = 1024;
+  const height = Math.round(width * (SIGN_FACE.height - 0.06) / (SIGN_FACE.width - 0.06));
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext('2d')!;
+  const background = context.createLinearGradient(0, 0, 0, height);
+  background.addColorStop(0, '#FFFBF2');
+  background.addColorStop(1, '#F6EAD3');
+  context.fillStyle = background;
+  context.fillRect(0, 0, width, height);
+  // Ô biểu tượng bo góc
+  const box = height * 0.62;
+  const boxX = height * 0.2;
+  const boxY = (height - box) / 2;
+  const iconGradient = context.createLinearGradient(0, boxY, 0, boxY + box);
+  iconGradient.addColorStop(0, label.color[0]);
+  iconGradient.addColorStop(1, label.color[1]);
+  context.fillStyle = iconGradient;
+  context.beginPath();
+  context.roundRect(boxX, boxY, box, box, box * 0.22);
+  context.fill();
+  context.fillStyle = '#FFFFFF';
+  context.textAlign = 'center';
+  context.textBaseline = 'middle';
+  context.font = `800 ${Math.round(box * 0.6)}px "Zen Maru Gothic", "Hiragino Sans", "Noto Sans JP", sans-serif`;
+  context.fillText(label.glyph, boxX + box / 2, boxY + box / 2 + box * 0.03);
+  // Tên nhóm + tiến độ
+  const textX = boxX + box + height * 0.16;
+  context.textAlign = 'left';
+  context.fillStyle = '#5A3A24';
+  context.font = `900 ${Math.round(height * 0.3)}px Nunito, "Segoe UI", sans-serif`;
+  context.fillText(label.label, textX, height * 0.38);
+  const dotY = height * 0.7;
+  context.fillStyle = label.learned > 0 ? '#6DBB6F' : '#CFC6BA';
+  context.beginPath();
+  context.arc(textX + height * 0.06, dotY, height * 0.055, 0, Math.PI * 2);
+  context.fill();
+  context.fillStyle = '#7C6250';
+  context.font = `800 ${Math.round(height * 0.2)}px Nunito, "Segoe UI", sans-serif`;
+  context.fillText(`${label.learned}/${label.total}`, textX + height * 0.17, dotY + height * 0.01);
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.anisotropy = Math.min(8, anisotropy);
+  return texture;
 }
 
 /** Bản đồ môi trường từ chính bầu trời → nhân vật PBR, nước, vỏ cây nhận ánh sáng trời giống nhau. */
@@ -205,15 +278,16 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
 
   const scene = new THREE.Scene();
   const sky = track(skyTexture());
-  scene.background = new THREE.Color('#CBE8F4');
+  scene.background = new THREE.Color('#9BD0F0');
   scene.environment = track(skyEnvironment(renderer, sky));
   scene.environmentIntensity = 0.6;
   // Sương xa thật nhẹ, bắt đầu sau toàn bộ vườn (≥ 34 m) — chỉ làm nhạt đồi / núi tạo chiều sâu, không phủ cây hay nhân vật.
-  scene.fog = new THREE.Fog('#D6E9EE', 34, 150);
+  scene.fog = new THREE.Fog('#CFE7EF', 45, 180);
+  // Trời: vòm gradient shader + mây trôi + cầu vồng (sky.ts) — không chịu sương, không vệt / đường nối.
+  const skyLayer = buildSky(lowPower, reducedMotion);
+  for (const object of skyLayer.objects) scene.add(object);
+  disposables.push(skyLayer);
   {
-    const dome = new THREE.Mesh(track(new THREE.SphereGeometry(190, 48, 24)), track(new THREE.MeshBasicMaterial({ map: sky, side: THREE.BackSide, fog: false, depthWrite: false })));
-    dome.renderOrder = -1;
-    scene.add(dome);
     const mountains = distantMountains();
     track(mountains.geometry);
     track(mountains.material as THREE.Material);
@@ -227,8 +301,8 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
   controls.enablePan = false;
   controls.rotateSpeed = 0.55;
   controls.zoomSpeed = 0.7;
-  controls.minDistance = 7.5;
-  controls.maxDistance = 26;
+  controls.minDistance = 8;
+  controls.maxDistance = 30;
   controls.minPolarAngle = 0.62;
   controls.maxPolarAngle = 1.4; // không chui xuống dưới mặt cỏ
   // Chỉ xoay quanh mặt trước, lệch về phía xích đu: xoay sang trái quá xa thì thân cây lớn che mất hai nhân vật.
@@ -392,6 +466,101 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
   }
   rebuildContacts();
 
+  /* Biển gỗ các nhóm kiến thức + cổng torii + nhà gỗ + hàng rào (tĩnh, dựng ngay — không phụ thuộc bộ model cây). */
+  const SIGN_IDS: SignId[] = ['vocabulary', 'kana', 'grammar', 'kanji', 'radical'];
+  const signFaces: THREE.Mesh[] = [];
+  const SIGN_SCALE = 1.35;
+  const signFrames = new Map<SignId, { center: THREE.Vector3; right: THREE.Vector3 }>();
+  {
+    const signGeometry = track(buildSignboard(RoundedBoxGeometry));
+    const signMaterial = track(new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.8, metalness: 0 }));
+    const signs = new THREE.InstancedMesh(signGeometry, signMaterial, SIGN_IDS.length);
+    const viewFrom = DEFAULT_TARGET.clone().add(DEFAULT_OFFSET);
+    SIGN_IDS.forEach((id, index) => {
+      const spot = GARDEN_LANDMARKS.signs[id];
+      const ground = terrainHeight(spot.x, spot.z) - 0.04;
+      // Mặt biển quay về phía camera mặc định (đọc được ngay, không cần xoay).
+      const yaw = Math.atan2(viewFrom.x - spot.x, viewFrom.z - spot.z);
+      const object = new THREE.Object3D();
+      object.position.set(spot.x, ground, spot.z);
+      object.rotation.y = yaw;
+      object.scale.setScalar(SIGN_SCALE); // biển to hơn cỡ thật để chữ đọc rõ từ góc nhìn cả vườn
+      object.updateMatrix();
+      signs.setMatrixAt(index, object.matrix);
+      const center = new THREE.Vector3(0, SIGN_FACE.centerY, 0.09).applyMatrix4(object.matrix);
+      const right = new THREE.Vector3(SIGN_FACE.width / 2, SIGN_FACE.centerY, 0.09).applyMatrix4(object.matrix);
+      signFrames.set(id, { center, right });
+      staticContacts.push({ x: spot.x, z: spot.z, size: 2.6 });
+    });
+    // Mặt chữ: mỗi biển một tấm phẳng mang texture vẽ từ dữ liệu thật — luôn khớp đúng mặt biển ở mọi góc nhìn.
+    const faceGeometry = track(new THREE.PlaneGeometry(SIGN_FACE.width - 0.06, SIGN_FACE.height - 0.06));
+    SIGN_IDS.forEach((id, index) => {
+      const label = options.signLabels.find((item) => item.id === id);
+      if (!label) return;
+      const texture = track(drawSignTexture(label, renderer.capabilities.getMaxAnisotropy()));
+      // Không chịu ánh sáng / tone mapping: chữ luôn rõ, đúng màu như UI (biển là "biển hiệu" — không cần đổ bóng lên chữ).
+      const material = track(new THREE.MeshBasicMaterial({ map: texture, toneMapped: false, color: '#F7F2EA', polygonOffset: true, polygonOffsetFactor: -1 }));
+      const face = new THREE.Mesh(faceGeometry, material);
+      const matrix = new THREE.Matrix4();
+      signs.getMatrixAt(index, matrix);
+      face.applyMatrix4(matrix);
+      face.position.add(new THREE.Vector3(0, SIGN_FACE.centerY, 0.085).applyMatrix4(new THREE.Matrix4().extractRotation(matrix)).multiplyScalar(SIGN_SCALE));
+      face.userData.signId = id;
+      face.receiveShadow = true;
+      scene.add(face);
+      signFaces.push(face);
+    });
+    signs.castShadow = true;
+    signs.receiveShadow = true;
+    scene.add(signs);
+
+    const torii = new THREE.Mesh(track(buildTorii()), track(new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.55, metalness: 0 })));
+    const toriiSpot = GARDEN_LANDMARKS.torii;
+    torii.position.set(toriiSpot.x, terrainHeight(toriiSpot.x, toriiSpot.z) - 0.05, toriiSpot.z);
+    torii.rotation.y = Math.atan2(viewFrom.x - toriiSpot.x, viewFrom.z - toriiSpot.z) * 0.6;
+    torii.castShadow = true;
+    torii.receiveShadow = true;
+    scene.add(torii);
+    staticContacts.push({ x: toriiSpot.x, z: toriiSpot.z, size: 3.4 });
+
+    const house = new THREE.Mesh(track(buildHouse()), track(new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.85, metalness: 0, emissive: '#000000' })));
+    const houseSpot = { x: -8.2, z: -11.2 };
+    house.position.set(houseSpot.x, terrainHeight(houseSpot.x, houseSpot.z) - 0.1, houseSpot.z);
+    house.rotation.y = 0.45;
+    house.castShadow = true;
+    house.receiveShadow = true;
+    scene.add(house);
+
+    // Hàng rào gỗ thấp dọc mép trước vườn, chừa lối đá và chỗ suối chảy qua.
+    const fencePoints: Array<{ x: number; y: number; z: number }> = [];
+    for (let step = 0; step <= 46; step += 1) {
+      const angle = Math.PI * (0.06 + (step / 46) * 0.88);
+      const x = Math.cos(angle) * 14.6;
+      const z = Math.sin(angle) * 14.6 - 0.6;
+      const nearPath = path.some((point) => Math.hypot(point.x - x, point.z - z) < 2.0);
+      const nearStream = GARDEN_LANDMARKS.stream.some((point) => Math.hypot(point.x - x, point.z - z) < 2.6);
+      if (nearPath || nearStream) { fencePoints.push({ x: NaN, y: 0, z: NaN }); continue; }
+      fencePoints.push({ x, y: terrainHeight(x, z) - 0.03, z });
+    }
+    const runs: Array<Array<{ x: number; y: number; z: number }>> = [[]];
+    for (const point of fencePoints) { if (Number.isNaN(point.x)) runs.push([]); else runs[runs.length - 1].push(point); }
+    const fenceParts = runs.filter((run) => run.length > 1).map((run) => buildFence(run));
+    if (fenceParts.length) {
+      const fence = new THREE.Mesh(track(merge(fenceParts)), track(new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.85, metalness: 0 })));
+      fence.castShadow = true;
+      fence.receiveShadow = true;
+      scene.add(fence);
+    }
+
+    // Hồ lớn phía xa (hậu cảnh), nhạt dần trong sương.
+    const lake = new THREE.Mesh(track(new THREE.CircleGeometry(1, 48).rotateX(-Math.PI / 2)),
+      track(new THREE.MeshStandardMaterial({ color: '#7FC7D2', roughness: 0.08, metalness: 0.05, envMapIntensity: 1.1 })));
+    lake.scale.set(18, 1, 6);
+    lake.position.set(14, terrainHeight(14, -30) + 0.4, -30);
+    scene.add(lake);
+    rebuildContacts();
+  }
+
   /*
    * Xích đu — một hệ thống nhất:
    *   cành treo (đường cong cố định, đoạn trên ghế gần như nằm ngang) → điểm treo = mặt dưới cành tại 2 vị trí dây
@@ -473,6 +642,59 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
     }
     addStatic(merge(wraps), swingMaterial, 'both');
   }
+
+  /*
+   * Vùng chạm (vô hình) cho các vật CHẶN tia chuột: hai nhân vật, xích đu (ghế + dây), thân cây đào.
+   * Trước đây tia chỉ thử trên hitbox cây kiến thức → bấm vào mèo / xích đu xuyên qua và mở một cây ở PHÍA SAU.
+   * Giờ mọi thứ cùng so khoảng cách dọc tia: vật ở trước nhận click.
+   */
+  const proxyMaterial = track(new THREE.MeshBasicMaterial({ visible: false }));
+  const catGroups: Record<'-1' | '1', THREE.Group> = { '-1': new THREE.Group(), '1': new THREE.Group() };
+  const catProxies: THREE.Mesh[] = [];
+  for (const side of [-1, 1] as const) {
+    const group = catGroups[String(side) as '-1' | '1'];
+    seatGroup.add(group);
+    const proxy = new THREE.Mesh(track(new THREE.BoxGeometry(0.62, 1.32, 0.7)), proxyMaterial);
+    proxy.position.set(side * 0.5, 0.62, 0.08);
+    proxy.userData.catSide = side;
+    proxy.name = `cat${side}`;
+    seatGroup.add(proxy);
+    catProxies.push(proxy);
+  }
+  const swingProxies: THREE.Mesh[] = [];
+  {
+    const seatTop = seatGroup.position.y;
+    const seat = new THREE.Mesh(track(new THREE.BoxGeometry(SEAT_WIDTH + 0.1, 0.3, 0.6)), proxyMaterial);
+    seat.position.set(0, seatTop - 0.08, 0);
+    seat.name = 'seat';
+    swingPivot.add(seat);
+    swingProxies.push(seat);
+    for (const side of [-1, 1]) {
+      // Dây thật ~6 cm: vùng chạm 12 cm — không che cây đang nhìn thấy phía sau (ghế mới là vùng bấm chính).
+      const rope = new THREE.Mesh(track(new THREE.BoxGeometry(0.12, Math.abs(seatTop), 0.12)), proxyMaterial);
+      rope.position.set(side * ropeX, seatTop / 2, 0);
+      rope.name = `rope${side}`;
+      swingPivot.add(rope);
+      swingProxies.push(rope);
+    }
+  }
+  // Khớp thân thật (bán kính ~0.55 m, loe ~0.8 m ở gốc) — hộp to hơn sẽ che nhầm cây đang nhìn thấy cạnh thân.
+  const trunkProxy = new THREE.Mesh(track(new THREE.CylinderGeometry(0.5, 0.78, 4.4, 12)), proxyMaterial);
+  trunkProxy.position.set(bigTree.x, terrainHeight(bigTree.x, bigTree.z) + 2.2, bigTree.z);
+  trunkProxy.name = 'trunk';
+  scene.add(trunkProxy);
+
+  /* Xích đu: con lắc có quán tính — biên độ đổi mượt (không bật/tắt đột ngột). Chạm → đẩy mạnh hơn; chạm khi đã cao → dịu lại. */
+  const SWING_BASE = reducedMotion ? 0 : THREE.MathUtils.degToRad(3.5);
+  const SWING_MAX = THREE.MathUtils.degToRad(14);
+  const swingState = { amplitude: SWING_BASE, target: SWING_BASE, phase: 0 };
+  function pushSwing(strength = 1) {
+    if (reducedMotion) return;
+    swingState.target = swingState.target >= SWING_MAX * 0.85
+      ? THREE.MathUtils.degToRad(1.5) // đã đung đưa cao → chạm lần nữa: dịu dần lại
+      : Math.min(SWING_MAX, Math.max(swingState.target, swingState.amplitude) + THREE.MathUtils.degToRad(5) * strength);
+  }
+  const catHop: Record<'-1' | '1', number> = { '-1': 0, '1': 0 };
 
   /* ─────────── Bộ model thiên nhiên (cây, cỏ, hoa, đá) ─────────── */
   const loader = new GLTFLoader();
@@ -891,6 +1113,7 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
   hitGeometry.translate(0, 0.5, 0);
   const hitMaterial = track(new THREE.MeshBasicMaterial({ visible: false }));
   let hitMesh: THREE.InstancedMesh | null = null;
+  let hitMatrices: THREE.Matrix4[] = [];
   let placements: PlantPlacement[] = [];
   /** Theo thứ tự `placements`: các InstancedMesh (mỗi phần hình một mesh) + chỉ số instance + ma trận gốc. */
   let plantSlots: Array<{ meshes: THREE.InstancedMesh[]; index: number; base: THREE.Matrix4; color: THREE.Color | null }> = [];
@@ -964,15 +1187,40 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
     }
     hitMesh = new THREE.InstancedMesh(hitGeometry, hitMaterial, Math.max(1, placements.length));
     hitMesh.count = placements.length;
+    hitMatrices = [];
     placements.forEach((placement, index) => {
-      hitMesh!.setMatrixAt(index, m4(placement.x, terrainHeight(placement.x, placement.z) - 0.1, placement.z, [1, Math.max(1.2, (heights[index] ?? 1) + 0.35), 1]));
+      hitMatrices[index] = m4(placement.x, terrainHeight(placement.x, placement.z) - 0.1, placement.z, [1, Math.max(1.2, (heights[index] ?? 1) + 0.35), 1]);
+      hitMesh!.setMatrixAt(index, hitMatrices[index]);
       plantContacts.push({ x: placement.x, z: placement.z, size: placement.stage === 'sprout' ? 0.9 : 1.5 });
     });
     hitMesh.instanceMatrix.needsUpdate = true;
     hitMesh.computeBoundingSphere();
     plantGroup.add(hitMesh);
     rebuildContacts();
+    if (stageFilter !== null) applyFilter();
   }
+
+  let stageFilter: PlantStage | null = null;
+  const hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
+  /** Lọc theo giai đoạn: cây không khớp thu về 0 (ẩn, không vẽ bóng), hitbox cũng thu về 0 → không chọn được. */
+  function applyFilter() {
+    placements.forEach((placement, index) => {
+      const slot = plantSlots[index];
+      const isShown = stageFilter === null || placement.stage === stageFilter;
+      if (slot?.meshes.length) for (const mesh of slot.meshes) { mesh.setMatrixAt(slot.index, isShown ? slot.base : hiddenMatrix); mesh.instanceMatrix.needsUpdate = true; }
+      if (hitMesh) {
+        hitMesh.setMatrixAt(index, isShown ? hitMatrices[index] : hiddenMatrix);
+        hitMesh.instanceMatrix.needsUpdate = true;
+      }
+    });
+    hitMesh?.computeBoundingSphere();
+  }
+  function setFilter(stage: PlantStage | null) {
+    stageFilter = stage;
+    if (selectedIndex >= 0 && stage !== null && placements[selectedIndex]?.stage !== stage) options.onSelect(null);
+    applyFilter();
+  }
+  const isPlantShown = (index: number) => stageFilter === null || placements[index]?.stage === stageFilter;
 
   function setPlants(next: readonly PlantPlacement[]) {
     placements = [...next];
@@ -1070,7 +1318,7 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
     model.scale.setScalar(scale);
     model.position.set(side * 0.5, 0.08 - hipsY * scale, 0.02);
     model.rotation.y = -side * 0.16; // hơi quay về phía nhau
-    seatGroup.add(model);
+    catGroups[String(side) as '-1' | '1'].add(model);
     characterRoots.push(model);
   }
   Promise.allSettled([loadCharacter(MODELS.left, -1), loadCharacter(MODELS.right, 1)]).then((results) => {
@@ -1099,7 +1347,7 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
   const cameraGoal = { position: new THREE.Vector3(), target: DEFAULT_TARGET.clone(), active: false };
   const defaultPosition = () => {
     const aspect = camera.aspect || 1;
-    const distanceScale = aspect < 0.8 ? 1.55 : aspect < 1.2 ? 1.22 : 1; // màn dọc: lùi xa để thấy trọn cây + xích đu
+    const distanceScale = aspect < 0.6 ? 1.9 : aspect < 0.8 ? 1.6 : aspect < 1.2 ? 1.25 : 1; // màn dọc: lùi xa để thấy trọn vườn + các biển
     return DEFAULT_TARGET.clone().add(DEFAULT_OFFSET.clone().multiplyScalar(distanceScale));
   };
   function resize() {
@@ -1108,7 +1356,7 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
-    controls.maxDistance = camera.aspect < 0.8 ? 34 : 26;
+    controls.maxDistance = camera.aspect < 0.8 ? 40 : 30;
   }
   resize();
   camera.position.copy(defaultPosition());
@@ -1132,34 +1380,59 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
   const projectedBase = new THREE.Vector3();
   const projectedTop = new THREE.Vector3();
   const toScreen = (vector: THREE.Vector3, rect: DOMRect) => ({ x: (vector.x + 1) / 2 * rect.width, y: (1 - vector.y) / 2 * rect.height, behind: vector.z > 1 });
-  const pickIndex = (event: PointerEvent): number => {
-    if (!hitMesh || !placements.length) return -1;
-    const rect = canvas.getBoundingClientRect();
+  let lastBlocker: string | null = null;
+  type Pick = { kind: 'plant'; index: number } | { kind: 'cat'; side: -1 | 1 } | { kind: 'swing' } | { kind: 'sign'; id: SignId } | { kind: 'none' };
+  const pick = (event: PointerEvent): Pick => {
+    const rect = canvas.getBoundingClientRect(); // toạ độ TƯƠNG ĐỐI canvas (canvas không nằm ở góc viewport)
     const px = event.clientX - rect.left;
     const py = event.clientY - rect.top;
     pointer.set((px / rect.width) * 2 - 1, -(py / rect.height) * 2 + 1);
-    raycaster.setFromCamera(pointer, camera);
-    const rayHits = new Set(raycaster.intersectObject(hitMesh, false).map((hit) => hit.instanceId ?? -1));
-    const reach = event.pointerType === 'mouse' ? 22 : 40;
+    raycaster.setFromCamera(pointer, camera); // đúng camera đang render
+    // 1) Vật chặn cứng: nhân vật, ghế xích đu, thân cây — lấy giao điểm gần nhất. Dây xích đu (mảnh) là vật "mềm":
+    //    chỉ nhận click khi không có cây nào ở điểm đó (dây chồng lên thân cây phía sau → người dùng muốn bấm cây).
+    const blockers = raycaster.intersectObjects([...catProxies, swingProxies[0], trunkProxy, ...signFaces], false);
+    const ropeHit = raycaster.intersectObjects(swingProxies.slice(1), false)[0];
+    const nearestBlocker = blockers[0];
+    lastBlocker = nearestBlocker ? String(nearestBlocker.object.name || 'unnamed') : null;
+    // 2) Cây kiến thức: giao điểm thật với hitbox (khoảng cách dọc tia) + gần thân trên màn hình.
+    const plantHitDistance = new Map<number, number>();
+    if (hitMesh) {
+      for (const hit of raycaster.intersectObject(hitMesh, false)) {
+        const id = hit.instanceId ?? -1;
+        if (id >= 0 && !plantHitDistance.has(id)) plantHitDistance.set(id, hit.distance);
+      }
+    }
+    const reach = event.pointerType === 'mouse' ? 18 : 34;
     let best = -1;
     let bestScore = Infinity;
     placements.forEach((placement, index) => {
+      if (!isPlantShown(index)) return;
+      const rayDistance = plantHitDistance.get(index);
+      // Cây nằm SAU vật chặn trên cùng tia → không được chọn (đây là lỗi "bấm mèo lại mở cây phía sau").
+      if (nearestBlocker && (rayDistance === undefined || rayDistance > nearestBlocker.distance)) return;
       const ground = terrainHeight(placement.x, placement.z);
       projectedBase.set(placement.x, ground, placement.z).project(camera);
       projectedTop.set(placement.x, ground + Math.max(0.6, plantHeights[index] ?? 1), placement.z).project(camera);
       const base = toScreen(projectedBase, rect);
       const top = toScreen(projectedTop, rect);
       if (base.behind) return;
-      // Khoảng cách từ con trỏ tới đoạn thân (gốc → ngọn) trên màn hình.
       const dx = top.x - base.x;
       const dy = top.y - base.y;
       const t = Math.max(0, Math.min(1, ((px - base.x) * dx + (py - base.y) * dy) / Math.max(dx * dx + dy * dy, 1)));
       const distance = Math.hypot(px - (base.x + dx * t), py - (base.y + dy * t));
-      if (!rayHits.has(index) && distance > reach) return;
-      const score = distance - (rayHits.has(index) ? 8 : 0);
+      if (rayDistance === undefined && distance > reach) return;
+      const score = distance - (rayDistance !== undefined ? 8 : 0);
       if (score < bestScore) { bestScore = score; best = index; }
     });
-    return best;
+    if (nearestBlocker?.object.userData.signId && best < 0) return { kind: 'sign', id: nearestBlocker.object.userData.signId as SignId };
+    if (best >= 0) return { kind: 'plant', index: best };
+    if (ropeHit && (!nearestBlocker || ropeHit.distance < nearestBlocker.distance)) return { kind: 'swing' };
+    if (nearestBlocker) {
+      const side = nearestBlocker.object.userData.catSide as -1 | 1 | undefined;
+      if (side) return { kind: 'cat', side };
+      if (swingProxies.includes(nearestBlocker.object as THREE.Mesh)) return { kind: 'swing' };
+    }
+    return { kind: 'none' };
   };
   let downAt: { x: number; y: number; time: number } | null = null;
   const onPointerDown = (event: PointerEvent) => { downAt = { x: event.clientX, y: event.clientY, time: performance.now() }; };
@@ -1169,8 +1442,17 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
     const quick = performance.now() - downAt.time < 600;
     downAt = null;
     if (moved > 8 || !quick) return; // kéo để xoay — không phải chạm chọn
-    const index = pickIndex(event);
-    options.onSelect(index >= 0 ? placements[index].contentKey : null);
+    const result = pick(event);
+    if (result.kind === 'plant') { options.onSelect(placements[result.index].contentKey); return; }
+    if (result.kind === 'swing') { pushSwing(1); return; }
+    if (result.kind === 'sign') { options.onSignTap?.(result.id); return; }
+    if (result.kind === 'cat') {
+      catHop[String(result.side) as '-1' | '1'] = 1;
+      pushSwing(0.6);
+      options.onCatTap?.(result.side);
+      return;
+    }
+    options.onSelect(null);
   };
 
   /* Hover (chỉ chuột): con trỏ tay, vòng sáng nhẹ dưới gốc, cây sáng lên một chút. Chạm trên mobile không phụ thuộc hover. */
@@ -1203,7 +1485,9 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
     if (event.pointerType !== 'mouse' || hoverFrame || downAt) return;
     hoverFrame = requestAnimationFrame(() => {
       hoverFrame = 0;
-      setHovered(pickIndex(event));
+      const result = pick(event);
+      setHovered(result.kind === 'plant' ? result.index : -1);
+      if (result.kind === 'cat' || result.kind === 'swing' || result.kind === 'sign') canvas.style.cursor = 'pointer';
     });
   };
   const onPointerLeave = () => setHovered(-1);
@@ -1236,6 +1520,70 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
     }
   }
 
+  /* Vị trí màn hình của mặt biển + đầu nhân vật → lớp HTML (chỉ gọi khi đổi > 0.5px). */
+  const anchorVector = new THREE.Vector3();
+  const anchorRight = new THREE.Vector3();
+  let lastAnchorKey = '';
+  const headBones: Record<'-1' | '1', THREE.Object3D | null> = { '-1': null, '1': null };
+  function project(world: THREE.Vector3, rightWorld: THREE.Vector3 | null, width: number, height: number): ScreenAnchor {
+    anchorVector.copy(world).project(camera);
+    const visible = anchorVector.z < 1 && Math.abs(anchorVector.x) < 1.2 && Math.abs(anchorVector.y) < 1.2;
+    const x = (anchorVector.x + 1) / 2 * width;
+    const y = (1 - anchorVector.y) / 2 * height;
+    let screenWidth = 0;
+    if (rightWorld) {
+      anchorRight.copy(rightWorld).project(camera);
+      screenWidth = Math.abs(((anchorRight.x + 1) / 2 * width) - x) * 2;
+    }
+    return { x, y, width: screenWidth, visible };
+  }
+  function publishAnchors() {
+    if (!options.onAnchors) return;
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    const signs = {} as Record<SignId, ScreenAnchor>;
+    for (const id of SIGN_IDS) {
+      const frame = signFrames.get(id)!;
+      signs[id] = project(frame.center, frame.right, width, height);
+    }
+    const cats = {} as Record<'-1' | '1', ScreenAnchor>;
+    for (const key of ['-1', '1'] as const) {
+      const head = headBones[key] ?? (headBones[key] = catGroups[key].getObjectByName('Head') ?? null);
+      if (head) head.getWorldPosition(anchorVector);
+      else catGroups[key].getWorldPosition(anchorVector).add(new THREE.Vector3(Number(key) * 0.5, 1.2, 0));
+      cats[key] = project(anchorVector.clone(), null, width, height);
+    }
+    const key = [...SIGN_IDS.map((id) => `${signs[id].x.toFixed(1)},${signs[id].y.toFixed(1)},${signs[id].width.toFixed(1)},${signs[id].visible}`),
+      cats['-1'].x.toFixed(0), cats['-1'].y.toFixed(0), cats['1'].x.toFixed(0), cats['1'].y.toFixed(0)].join('|');
+    if (key === lastAnchorKey) return;
+    lastAnchorKey = key;
+    options.onAnchors({ signs, cats });
+  }
+
+  /* Gỡ lỗi chọn cây (?garden-debug=1): toạ độ màn hình của gốc / ngọn từng cây + nhân vật + ghế — để kiểm thử click chính xác. */
+  const isDebug = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('garden-debug');
+  let debugTimer = 0;
+  function writeDebug() {
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    const plants = placements.map((placement, index) => {
+      const ground = terrainHeight(placement.x, placement.z);
+      const base = project(new THREE.Vector3(placement.x, ground, placement.z), null, width, height);
+      const top = project(new THREE.Vector3(placement.x, ground + (plantHeights[index] ?? 1), placement.z), null, width, height);
+      return { key: placement.contentKey, shown: isPlantShown(index), base: [Math.round(base.x), Math.round(base.y)], top: [Math.round(top.x), Math.round(top.y)] };
+    });
+    const centerOf = (object: THREE.Object3D) => { const p = project(object.getWorldPosition(new THREE.Vector3()), null, width, height); return [Math.round(p.x), Math.round(p.y)]; };
+    const cloudMesh = scene.getObjectByName('sky-clouds') as THREE.InstancedMesh | undefined;
+    const clouds: number[][] = [];
+    if (cloudMesh) for (let index = 0; index < cloudMesh.count; index += 1) {
+      const matrix = new THREE.Matrix4();
+      cloudMesh.getMatrixAt(index, matrix);
+      const p = project(new THREE.Vector3().setFromMatrixPosition(matrix), null, width, height);
+      clouds.push([Math.round(p.x), Math.round(p.y), p.visible ? 1 : 0]);
+    }
+    canvas.dataset.debug = JSON.stringify({ clouds, plants, cats: catProxies.map(centerOf), trunk: centerOf(trunkProxy), seat: centerOf(swingProxies[0]), swing: +THREE.MathUtils.radToDeg(swingState.amplitude).toFixed(2), swingTarget: +THREE.MathUtils.radToDeg(swingState.target).toFixed(2), selected: selectedIndex >= 0 ? placements[selectedIndex]?.contentKey ?? null : null, lastBlocker });
+  }
+
   /* ─────────── Vòng lặp: chỉ chạy khi khung đang hiện trên màn hình và tab đang mở ─────────── */
   const clock = new THREE.Clock();
   const popMatrix = new THREE.Matrix4();
@@ -1248,7 +1596,16 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
     if (kit) kit.time.value = elapsed;
     if (!reducedMotion) {
       // Con lắc quanh trục treo (dọc cành): ±8°, chu kỳ 4.2 s — êm, chậm; ghế, dây, hai nhân vật quay cùng pivot.
-      swingPivot.rotation.x = Math.sin(elapsed * (Math.PI * 2 / SWING_PERIOD)) * SWING_AMPLITUDE;
+      // Biên độ tiến dần tới đích (quán tính), đích tự dịu về mức nền sau vài chu kỳ; pha liên tục → không giật.
+      swingState.amplitude += (swingState.target - swingState.amplitude) * (1 - Math.exp(-delta * 0.9));
+      swingState.target += (SWING_BASE - swingState.target) * (1 - Math.exp(-delta * 0.08));
+      swingState.phase += delta * (Math.PI * 2 / SWING_PERIOD);
+      swingPivot.rotation.x = Math.sin(swingState.phase) * swingState.amplitude;
+      for (const key of ['-1', '1'] as const) {
+        if (catHop[key] <= 0) continue;
+        catHop[key] = Math.max(0, catHop[key] - delta * 1.8);
+        catGroups[key].position.y = Math.sin((1 - catHop[key]) * Math.PI) * 0.09; // nhún nhẹ một nhịp, vẫn ngồi trên ghế
+      }
       stream.update(elapsed);
       koi.update(elapsed);
       butterflies.update(elapsed);
@@ -1294,7 +1651,12 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
     }
     if (petalCount) petals.instanceMatrix.needsUpdate = true;
 
-    if (!isPreparing) renderer.render(scene, camera);
+    skyLayer.update(elapsed, camera);
+    if (!isPreparing) {
+      renderer.render(scene, camera);
+      publishAnchors();
+      if (isDebug && (debugTimer += delta) > 0.4) { debugTimer = 0; writeDebug(); }
+    }
   }
 
   let isOnScreen = true;
@@ -1327,6 +1689,7 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
 
   return {
     setPlants,
+    setFilter,
     setSelected,
     resetCamera,
     dispose() {

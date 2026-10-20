@@ -47,5 +47,7 @@ describe('garden layout', () => {
     expect(isPlantable(20, 0)).toBe(false);
     expect(isPlantable(-11.4, -4.6)).toBe(false); // giữa dòng suối
     expect(isPlantable(-8.4, -2.6)).toBe(false);
+    expect(isPlantable(5.2, -4.2)).toBe(false); // biển Ngữ pháp
+    expect(isPlantable(8.8, -1.6)).toBe(false); // biển Kanji
   });
 });

@@ -5,9 +5,10 @@ import { getLearnerContext } from '@/features/learning/learner-context';
 import { toKnowledgeListEntries } from '@/features/learning/knowledge-list';
 import { GARDEN_STAGES, STATUS_PRESENTATION } from '@/features/memory/memory-rules';
 import { buildMemoryOverview, forgettingRadarList, joinWithKnowledge, pickGardenPlants, viewsWithStatus } from '@/features/memory/memory-overview';
-import { EmojiIcon } from '@/components/common/EmojiIcon';
 import { GardenScene } from '@/components/garden/GardenScene';
-import { Garden3D } from '@/components/garden/Garden3D';
+import { Garden3D, type GardenGroupProgress, type GardenStatusCount } from '@/components/garden/Garden3D';
+import { itemsOfType } from '@/features/learning/knowledge-catalog';
+import type { ContentType } from '@/features/learning/knowledge-types';
 
 const GARDEN_VISIBLE_PLANTS = 60;
 const BLOOM_PREVIEW = 8;
@@ -25,28 +26,37 @@ export default async function GardenPage() {
   // Chỉ gửi xuống trình duyệt những trường thẻ thông tin cây cần.
   const plants3d = shownPlants.map(({ contentKey, face, reading, meaning, status, lastEncounterText }) => ({ contentKey, face, reading, meaning, status, lastEncounterText }));
 
+  // Tiến độ thật của từng nhóm kiến thức (biển gỗ trong vườn) — cùng cách đếm "đã học" như các trang Học tập.
+  const progressOf = (types: readonly ContentType[]) => {
+    const items = types.flatMap((type) => itemsOfType(catalog, type));
+    return { learned: items.filter((item) => memoryViews.get(item.key)?.isLearned).length, total: items.length };
+  };
+  const groups: GardenGroupProgress[] = [
+    { id: 'vocabulary', label: 'Từ vựng', glyph: '語', href: '/hoc-tap/tu-vung', ...progressOf(['vocabulary']) },
+    { id: 'kana', label: 'Kana', glyph: 'あ', href: '/hoc-tap/hiragana', ...progressOf(['hiragana', 'katakana']) },
+    { id: 'grammar', label: 'Ngữ pháp', glyph: '文', href: '/hoc-tap/ngu-phap', ...progressOf(['grammar']) },
+    { id: 'kanji', label: 'Kanji', glyph: '漢', href: '/hoc-tap/kanji', ...progressOf(['kanji']) },
+    { id: 'radical', label: 'Bộ thủ', glyph: '部', href: '/hoc-tap/bo-thu', ...progressOf(['radical']) },
+  ];
+  const statusCounts: GardenStatusCount[] = [
+    ...GARDEN_STAGES.map((stage) => ({ status: stage.status, label: stage.label, description: stage.description, count: overview.counts[stage.status] })),
+    { status: 'fading', label: STATUS_PRESENTATION.fading.label, description: 'Lâu chưa gặp lại — lá ngả vàng, nên tưới lại sớm', count: overview.counts.fading },
+  ];
+
   return (
     <>
-      <div className="title-count"><h1>Vườn tri thức</h1><span className="chip mint">{learned.length} cây</span></div>
-      <p className="soft sm" style={{ margin: '4px 0 14px' }}>
-        Mỗi thứ bạn giữ lại được là một cái cây. Vườn này không phải trang trí — nó chính là trí nhớ của bạn.
-      </p>
-      {/* Chú giải: hàng nhãn co giãn theo chữ (trước đây ép vào ô cây 58px → chữ vỡ 3 dòng, ô cao thấp lệch nhau). */}
-      <ul className="garden-legend mb-3" aria-label="Các giai đoạn của cây">
-        {GARDEN_STAGES.map((stage) => (
-          <li key={stage.status} title={stage.description}>
-            <EmojiIcon emoji={STATUS_PRESENTATION[stage.status].plant} size={22} />
-            <span><b>{stage.label}</b> · {overview.counts[stage.status]} cây</span>
-          </li>
-        ))}
-        <li title="Lâu chưa gặp lại — lá ngả vàng, nên tưới lại sớm">
-          <EmojiIcon emoji={STATUS_PRESENTATION.fading.plant} size={22} />
-          <span><b>{STATUS_PRESENTATION.fading.label}</b> · {overview.counts.fading} cây</span>
-        </li>
-      </ul>
-      <Garden3D plants={plants3d}
-        fallback={<GardenScene planted={learned.length} mastered={overview.counts.mastered} fading={overview.counts.fading} />} />
-      <p className="tiny muted center mt-2">
+      {/* Cảnh 3D tràn toàn vùng nội dung (dưới thanh trên, cạnh thanh bên); tiêu đề, bộ lọc, biển nhóm kiến thức phủ trên cảnh. */}
+      <section className="garden-stage">
+        <Garden3D plants={plants3d} groups={groups} statusCounts={statusCounts} totalCount={learned.length}
+          fallback={(
+            <div className="garden-stage-fallback">
+              <div className="title-count"><h1>Vườn tri thức</h1><span className="chip mint">{learned.length} cây</span></div>
+              <GardenScene planted={learned.length} mastered={overview.counts.mastered} fading={overview.counts.fading} />
+            </div>
+          )} />
+      </section>
+      <div className="garden-below">
+      <p className="tiny muted center">
         Mầm 🌱 mới học · cây non 🌿 đang hình thành · cây xanh 🌳 đã nhớ tốt · cây nở hoa 🌸 đã thành thạo · lá vàng 🍂 sắp quên.
         {learned.length > GARDEN_VISIBLE_PLANTS ? ` Vườn hiển thị ${GARDEN_VISIBLE_PLANTS} trong ${learned.length} cây.` : ''}
       </p>
@@ -78,6 +88,7 @@ export default async function GardenPage() {
         </div>
       </div>
       {rescuedTotal ? <p className="tiny muted center mt-3.5">Bạn đã cứu {rescuedTotal} cây khỏi héo 🌸</p> : null}
+      </div>
     </>
   );
 }

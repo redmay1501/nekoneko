@@ -239,3 +239,98 @@ export function buildButterflies(spots: ReadonlyArray<{ x: number; y: number; z:
   update(0);
   return { mesh, update, dispose: () => { wing.dispose(); material.dispose(); mesh.dispose(); } };
 }
+
+/* ───────── Biển gỗ nhóm kiến thức ───────── */
+
+/** Kích thước mặt biển (m) — lớp chữ HTML phủ đúng lên mặt này (chữ sắc nét, số liệu thật). */
+export const SIGN_FACE = { width: 2.0, height: 0.86, centerY: 1.42 };
+
+/**
+ * Biển gỗ đứng trong vườn: hai cọc gỗ, khung gỗ dày bo cạnh, mặt kem, khóm hoa nhỏ trên mép, chân đá + cỏ.
+ * Toạ độ cục bộ: mặt biển hướng +Z, chân ở y = 0. Chữ / tiến độ do HTML phủ lên (cập nhật theo dữ liệu thật).
+ */
+export function buildSignboard(RoundedBox: new (w: number, h: number, d: number, segments: number, radius: number) => THREE.BufferGeometry): THREE.BufferGeometry {
+  const wood = new THREE.Color('#9C6B40');
+  const woodDark = new THREE.Color('#7D5332');
+  const cream = new THREE.Color('#FBF3E3');
+  const parts: Part[] = [];
+  for (const side of [-1, 1]) {
+    parts.push(part(new THREE.CylinderGeometry(0.075, 0.09, 1.55, 10), woodDark, m4(side * 0.86, 0.775, -0.02), 900, 0.05));
+    parts.push(part(new THREE.SphereGeometry(0.1, 10, 8), woodDark, m4(side * 0.86, 1.94, -0.02, [1, 0.6, 1]), 901, 0.04));
+    // đá chân cọc
+    parts.push(part(new THREE.DodecahedronGeometry(0.16, 0), new THREE.Color('#B8B0A2'), m4(side * 0.86, 0.05, 0.02, [1.2, 0.6, 1]), 902, 0.08));
+  }
+  parts.push(part(new RoundedBox(SIGN_FACE.width + 0.24, SIGN_FACE.height + 0.22, 0.14, 3, 0.07), wood, m4(0, SIGN_FACE.centerY, 0), 903, 0.05));
+  parts.push(part(new RoundedBox(SIGN_FACE.width, SIGN_FACE.height, 0.04, 2, 0.05), cream, m4(0, SIGN_FACE.centerY, 0.06), 904, 0.02));
+  // khóm hoa nhỏ ở hai góc trên
+  const pink = new THREE.Color('#F7A9C0');
+  const leaf = new THREE.Color('#6FAE5E');
+  for (const [x, scale] of [[-0.92, 1], [0.78, 0.8]] as const) {
+    parts.push(part(new THREE.SphereGeometry(0.13 * scale, 10, 8), leaf, m4(x, SIGN_FACE.centerY + 0.52, 0.05, [1.4, 0.8, 1]), 905, 0.06));
+    for (let petal = 0; petal < 4; petal += 1) {
+      parts.push(part(new THREE.SphereGeometry(0.055 * scale, 8, 6), petal % 2 ? pink : new THREE.Color('#FFFFFF'),
+        m4(x + (petal - 1.5) * 0.07 * scale, SIGN_FACE.centerY + 0.6 + (petal % 2) * 0.03, 0.1), 906 + petal, 0.03));
+    }
+  }
+  return merge(parts);
+}
+
+/** Cổng torii son đỏ (kasagi cong, nuki, hai trụ đen chân). Gốc ở giữa hai trụ, y = 0. */
+export function buildTorii(): THREE.BufferGeometry {
+  const red = new THREE.Color('#D2402F');
+  const black = new THREE.Color('#2E2724');
+  const parts: Part[] = [];
+  for (const side of [-1, 1]) {
+    parts.push(part(new THREE.CylinderGeometry(0.17, 0.2, 3.6, 14), red, m4(side * 1.35, 1.8, 0, 1, [0, 0, side * 0.03]), 920, 0.03));
+    parts.push(part(new THREE.CylinderGeometry(0.23, 0.25, 0.35, 14), black, m4(side * 1.37, 0.17, 0), 921, 0.03));
+  }
+  parts.push(part(new THREE.BoxGeometry(3.4, 0.2, 0.3), red, m4(0, 2.85, 0), 922, 0.03)); // nuki
+  // kasagi: dầm trên cong vểnh hai đầu
+  const curve = new THREE.CatmullRomCurve3([-2.2, -1.1, 0, 1.1, 2.2].map((x) => new THREE.Vector3(x, 3.55 + (Math.abs(x) / 2.2) ** 2 * 0.28, 0)));
+  parts.push(part(new THREE.TubeGeometry(curve, 24, 0.17, 8, false), black, m4(0, 0.05, 0, [1, 1, 1.5]), 923, 0.03));
+  parts.push(part(new THREE.TubeGeometry(curve, 24, 0.15, 8, false), red, m4(0, -0.22, 0, [0.97, 1, 1.3]), 924, 0.03));
+  parts.push(part(new THREE.BoxGeometry(0.22, 0.6, 0.22), red, m4(0, 3.15, 0), 925, 0.03)); // gakuzuka
+  return merge(parts);
+}
+
+/** Nhà gỗ Nhật nhỏ: nền đá, tường kem khung gỗ, cửa giấy sáng ấm, mái ngói xám-lục vểnh nhẹ. */
+export function buildHouse(): THREE.BufferGeometry {
+  const parts: Part[] = [];
+  const wood = new THREE.Color('#8A5C36');
+  parts.push(part(new THREE.BoxGeometry(4.6, 0.4, 3.6), new THREE.Color('#BDB4A4'), m4(0, 0.2, 0), 940, 0.06));
+  parts.push(part(new THREE.BoxGeometry(4.0, 2.1, 3.0), new THREE.Color('#F4EAD6'), m4(0, 1.45, 0), 941, 0.03));
+  for (const x of [-2, -0.67, 0.67, 2]) parts.push(part(new THREE.BoxGeometry(0.14, 2.15, 3.06), wood, m4(x, 1.45, 0), 942, 0.04));
+  parts.push(part(new THREE.BoxGeometry(4.1, 0.14, 3.08), wood, m4(0, 2.45, 0), 943, 0.04));
+  // cửa giấy (shoji) phát sáng ấm phía trước
+  parts.push(part(new THREE.BoxGeometry(1.2, 1.5, 0.04), new THREE.Color('#FFE6B5'), m4(0, 1.2, 1.52), 944, 0.02));
+  // mái: hai mặt dốc, vểnh nhẹ ở đầu hồi
+  const roof = new THREE.Color('#4F6E6A');
+  for (const side of [-1, 1]) {
+    parts.push(part(new THREE.BoxGeometry(5.2, 0.16, 2.5), roof, m4(0, 3.05, side * 1.0, 1, [side * 0.52, 0, 0]), 945, 0.04));
+  }
+  parts.push(part(new THREE.BoxGeometry(5.3, 0.22, 0.3), new THREE.Color('#3E5754'), m4(0, 3.62, 0), 946, 0.03));
+  for (const side of [-1, 1]) parts.push(part(new THREE.ConeGeometry(0.18, 0.4, 6), new THREE.Color('#3E5754'), m4(side * 2.6, 3.7, 0, 1, [0, 0, side * -0.9]), 947, 0.03));
+  return merge(parts);
+}
+
+/** Hàng rào gỗ dọc các điểm cho trước (cọc + 2 thanh ngang), gộp một geometry. */
+export function buildFence(points: ReadonlyArray<{ x: number; y: number; z: number }>): THREE.BufferGeometry {
+  const parts: Part[] = [];
+  const post = new THREE.Color('#8E6440');
+  const rail = new THREE.Color('#A87A50');
+  points.forEach((point, index) => {
+    parts.push(part(new THREE.BoxGeometry(0.12, 0.8, 0.12), post, m4(point.x, point.y + 0.38, point.z), 960 + (index % 5), 0.06));
+    parts.push(part(new THREE.ConeGeometry(0.09, 0.12, 4), post, m4(point.x, point.y + 0.84, point.z, 1, [0, Math.PI / 4, 0]), 966, 0.04));
+    const next = points[index + 1];
+    if (!next) return;
+    const dx = next.x - point.x;
+    const dz = next.z - point.z;
+    const length = Math.hypot(dx, dz);
+    if (length > 2.2) return; // khoảng hở (lối đi / suối)
+    const angle = Math.atan2(-dz, dx);
+    for (const height of [0.32, 0.62]) {
+      parts.push(part(new THREE.BoxGeometry(length, 0.08, 0.06), rail, m4((point.x + next.x) / 2, (point.y + next.y) / 2 + height, (point.z + next.z) / 2, 1, [0, angle, Math.atan2(next.y - point.y, length)]), 970, 0.05));
+    }
+  });
+  return merge(parts);
+}

@@ -237,7 +237,7 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
             <b className="sm">⚠️ Lỗi thường gặp</b>
             <p className="sm soft mt-1">{detail.commonMistake}</p>
           </div>
-          <Link className="btn block mt-3.5" href="/hoc/use">Luyện mẫu này trong câu</Link>
+          <Link className="btn block mt-3.5" href={`/hoc-tap/ngu-phap/luyen-tap?mau=${item.content.id}`}>📝 Luyện mẫu này</Link>
         </>
       );
   }

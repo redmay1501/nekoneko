@@ -13,6 +13,7 @@ import {
   GRAMMAR_QUIZZES, KANA_QUIZZES, KANJI_QUIZZES, type KanjiQuizId, RADICAL_QUIZZES, STUDY_STEPS, type StudyStepId, VOCAB_QUIZZES, buildGrammarQuiz, buildKanaQuiz, buildKanjiQuiz, buildRadicalQuiz, buildVocabQuiz,
 } from '@/features/learning/day-study-quiz';
 import { MAX_FOCUS_ITEMS, focusSessionHref } from '@/features/learning/session-modes';
+import { parseContentKey } from '@/features/learning/knowledge-types';
 import { Flashcards } from './Flashcards';
 import { ContentImageView } from '@/components/common/ContentImageView';
 import { GrammarPractice } from './GrammarPractice';
@@ -168,6 +169,8 @@ export function DayStudyFlow({ data, initialStep, initialMode }: { data: DayStud
 
         {stepId === 'ngu-phap' && mode === LESSON_MODE ? (
           <div className="stack" style={{ gap: 12 }}>
+            {/* Bộ câu hỏi ngữ pháp (10 câu / mẫu) nằm ở trang luyện ngữ pháp — mở đúng các mẫu của ngày này. */}
+            <Link className="btn block" href={`/hoc-tap/ngu-phap/luyen-tap?ngay=${data.day}`}>📝 Luyện tập ngữ pháp ngày {data.day} →</Link>
             {data.grammar.map((card) => <GrammarTopic key={card.key} card={card} isMarked={marked.has(card.key)} onToggleMark={() => toggleMark(card.key)} />)}
             <div className="card tight flashcard-end">{endActions}</div>
           </div>
@@ -330,6 +333,7 @@ function StrokeToggle({ character }: { character: string }) {
 }
 
 function GrammarTopic({ card, isMarked, onToggleMark }: { card: StudyGrammarCard; isMarked: boolean; onToggleMark: () => void }) {
+  const grammarId = parseContentKey(card.key)?.id;
   return (
     <article className="card grammar-topic">
       <div className="between" style={{ alignItems: 'flex-start', gap: 8 }}>
@@ -362,6 +366,9 @@ function GrammarTopic({ card, isMarked, onToggleMark }: { card: StudyGrammarCard
         ))}
       </ul>
       <p className="sm grammar-apply mt-2">✍️ <b>Áp dụng:</b> thử đặt một câu của bạn theo mẫu <span className="jp">{card.pattern}</span> — rồi luyện ở “Việt → Nhật”, “Sắp xếp câu”, “Tự viết câu”.</p>
+      {grammarId !== undefined ? (
+        <Link className="link sm mt-2" style={{ display: 'inline-block' }} href={`/hoc-tap/ngu-phap/luyen-tap?mau=${grammarId}`}>📝 Luyện riêng mẫu này →</Link>
+      ) : null}
     </article>
   );
 }

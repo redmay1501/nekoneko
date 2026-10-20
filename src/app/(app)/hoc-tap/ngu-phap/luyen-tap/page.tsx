@@ -8,9 +8,12 @@ import { lessonNumber } from '@/lib/utils/lesson';
 
 const COUNT_OPTIONS = [10, 20] as const;
 type Scope = 'tat-ca' | 'theo-bai' | 'da-hoc';
-type Search = { bai?: string; mau?: string; pham?: string; 'so-cau'?: string };
+type Search = { bai?: string; mau?: string; ngay?: string; pham?: string; 'so-cau'?: string };
 
-/** Luyện ngữ pháp từ ngân hàng: toàn bộ câu hỏi, một bài Minna, hoặc các mẫu người học đã học. */
+/**
+ * Luyện ngữ pháp từ ngân hàng: toàn bộ câu hỏi, một bài Minna, các mẫu người học đã học,
+ * một mẫu (?mau=id — nút trong thẻ chi tiết) hoặc mọi mẫu của một ngày lộ trình (?ngay=N — nút ở trang ngày).
+ */
 export default async function GrammarPracticePage({ searchParams }: { searchParams: Promise<Search> }) {
   const params = await searchParams;
   const { catalog, memoryViews } = await getLearnerContext();
@@ -18,12 +21,17 @@ export default async function GrammarPracticePage({ searchParams }: { searchPara
   const all = buildGrammarQuestionBank(grammar);
   const lessons = [...new Set(grammar.map((entry) => lessonNumber(entry.lesson)))].filter(Number.isFinite).sort((a, b) => a - b);
   const point = params.mau ? grammar.find((entry) => String(entry.id) === params.mau) : undefined;
+  const dayNumber = !point && params.ngay ? Number(params.ngay) : NaN;
+  const dayGrammarIds = new Set(grammar.filter((entry) => entry.day === dayNumber).map((entry) => entry.id));
+  const day = dayGrammarIds.size ? dayNumber : null;
   const selectedLessons = (params.bai ?? '').split(',').map(Number).filter((number) => lessons.includes(number));
   const selectedLessonSet = new Set(selectedLessons);
   const scope: Scope = point ? 'theo-bai' : params.pham === 'theo-bai' || selectedLessons.length ? 'theo-bai' : params.pham === 'da-hoc' ? 'da-hoc' : 'tat-ca';
   const learnedIds = new Set(grammar.filter((entry) => memoryViews.get(toContentKey('grammar', entry.id))?.isLearned).map((entry) => entry.id));
   const pool = point
     ? exercisesFor(all, { grammarId: point.id })
+    : day !== null
+      ? exercisesFor(all.filter((exercise) => dayGrammarIds.has(exercise.grammarId)), {}, `ngay-${day}`)
     : scope === 'theo-bai' && selectedLessons.length
       ? exercisesFor(all.filter((exercise) => selectedLessonSet.has(exercise.lesson)), {})
       : scope === 'da-hoc'
@@ -31,7 +39,7 @@ export default async function GrammarPracticePage({ searchParams }: { searchPara
         : exercisesFor(all, {});
   const requested = params['so-cau'] === 'tat-ca' ? Infinity : Number(params['so-cau']) || COUNT_OPTIONS[0];
   const exercises = pool.slice(0, Math.min(requested, pool.length));
-  const scopeTitle = point ? `Mẫu “${point.pattern}”` : scope === 'theo-bai' && selectedLessons.length
+  const scopeTitle = point ? `Mẫu “${point.pattern}”` : day !== null ? `Ngữ pháp ngày ${day}` : scope === 'theo-bai' && selectedLessons.length
     ? `${selectedLessons.length === 1 ? 'Bài' : 'Các bài'} ${selectedLessons.join(', ')}`
     : scope === 'da-hoc' ? 'Các mẫu đã học' : 'Toàn bộ ngân hàng';
 
@@ -45,21 +53,28 @@ export default async function GrammarPracticePage({ searchParams }: { searchPara
     if (nextLesson) next.bai = nextLesson;
     if (nextPattern) next.mau = nextPattern;
     if (nextCount) next['so-cau'] = nextCount;
+    if (day !== null && !patch.pham && !patch.bai && !patch.mau) next.ngay = String(day); // đổi số câu: giữ phạm vi ngày
     const query = new URLSearchParams(next);
     return `/hoc-tap/ngu-phap/luyen-tap${query.size ? `?${query}` : ''}`;
   }
 
   const learnedCount = all.filter((exercise) => learnedIds.has(exercise.grammarId)).length;
+  // Mở từ một mẫu / một ngày: không hiện bộ chọn phạm vi, chỉ luyện đúng phần đó.
+  const isFocused = Boolean(point) || day !== null;
 
   return (
     <>
-      <Link href="/hoc-tap/ngu-phap" className="tiny muted">← Ngữ pháp</Link>
+      {day !== null
+        ? <Link href={`/lo-trinh/ngay/${day}/hoc?buoc=ngu-phap`} className="tiny muted">← Ngày {day}</Link>
+        : <Link href="/hoc-tap/ngu-phap" className="tiny muted">← Ngữ pháp</Link>}
       <h1 className="mt-1">Luyện tập ngữ pháp</h1>
       <p className="soft sm" style={{ margin: '4px 0 12px' }}>
-        Chọn phạm vi câu hỏi: toàn bộ ngân hàng, theo bài Minna hoặc các mẫu bạn đã học.
+        {day !== null ? `Câu hỏi của ${dayGrammarIds.size} mẫu ngữ pháp học trong ngày ${day}.`
+          : point ? 'Câu hỏi của riêng mẫu này trong ngân hàng ngữ pháp.'
+          : 'Chọn phạm vi câu hỏi: toàn bộ ngân hàng, theo bài Minna hoặc các mẫu bạn đã học.'}
       </p>
 
-      {!point ? (
+      {!isFocused ? (
         <>
           <div className="segmented gx-mode" role="radiogroup" aria-label="Phạm vi luyện tập">
             {([
@@ -93,8 +108,8 @@ export default async function GrammarPracticePage({ searchParams }: { searchPara
         </>
       ) : null}
 
-      {scope === 'theo-bai' && !point && !selectedLessons.length ? <p className="card tight sm soft mt-4">Chọn một hoặc nhiều bài Minna để bắt đầu luyện.</p> : null}
-      {pool.length && (point || scope !== 'theo-bai' || selectedLessons.length) ? (
+      {scope === 'theo-bai' && !isFocused && !selectedLessons.length ? <p className="card tight sm soft mt-4">Chọn một hoặc nhiều bài Minna để bắt đầu luyện.</p> : null}
+      {pool.length && (isFocused || scope !== 'theo-bai' || selectedLessons.length) ? (
         <>
           {scope === 'theo-bai' && selectedLessons.length ? (
             <ScrollToElementOnChange targetId="grammar-practice-heading" trigger={selectedLessons.join(',')} />

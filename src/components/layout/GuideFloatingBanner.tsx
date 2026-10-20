@@ -47,29 +47,15 @@ export function GuideFloatingBanner({ isWelcomed, displayName, journeyDay, daily
         <aside className={`guide-fab${isCollapsed ? ' is-collapsed' : ''}${isRaised ? ' is-raised' : ''}`} aria-label="Hướng dẫn NekoNeko">
           {isCollapsed ? (
             <button type="button" className="guide-fab-bubble" onClick={() => setCollapsed(false)}
-              aria-label="Mở lại thẻ Khám phá Neko" title="Khám phá Neko">
+              aria-label="Mở lại biển Khám phá Neko" title="Khám phá Neko">
               <span className="guide-fab-bubble-face" aria-hidden="true" />
             </button>
           ) : (
             <div className="guide-fab-shell">
-              {/*
-                Mèo kimono nhỏ ngồi vắt chéo chân trên mép trên bảng. Chuyển động là animation GỐC của model 3D
-                (kimono_ngoi_vat_cheo_chan · HumanSitting3, vòng 9,6 s) đã render sẵn thành dải 48 khung
-                (public/illustrations/mascot/guide-kimono-sit.webp), phát bằng CSS steps() đúng tốc độ gốc — rất chậm, không
-                tải Three.js trên mọi trang. Lớp riêng, không nhận chuột: hover bảng không làm mèo động đậy.
-              */}
-              <span className="guide-fab-mascot" aria-hidden="true">
-                <span className="guide-fab-mascot-seat" />
-                <span className="guide-fab-sprite" />
-              </span>
-              <button type="button" className="guide-fab-card" onClick={() => setIsGuideOpen(true)} aria-label="Khám phá Neko — mở lại hướng dẫn NekoNeko">
-                <span className="guide-fab-title">Khám phá Neko</span>
-                <span className="guide-fab-arrow" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                </span>
-              </button>
-              <button type="button" className="guide-fab-close" onClick={() => setCollapsed(true)} aria-label="Thu gọn thẻ Khám phá Neko">
-                <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" /></svg>
+              {/* Biển gỗ "Khám phá Neko" (public/illustrations/guide-sign.webp) — cả biển là nút mở lại hướng dẫn. */}
+              <button type="button" className="guide-sign" onClick={() => setIsGuideOpen(true)} aria-label="Khám phá Neko — mở lại hướng dẫn NekoNeko" />
+              <button type="button" className="guide-fab-close" onClick={() => setCollapsed(true)} aria-label="Thu gọn biển Khám phá Neko">
+                <svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" /></svg>
               </button>
             </div>
           )}

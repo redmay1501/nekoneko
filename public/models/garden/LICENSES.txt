@@ -1,0 +1,12 @@
+Vườn tri thức 3D — nguồn model
+
+garden-kit.glb
+  Trích từ "Stylized Nature MegaKit" (bản Standard, miễn phí) của Quaternius — https://quaternius.com
+  Giấy phép: CC0 1.0 Universal (Public Domain) — https://creativecommons.org/publicdomain/zero/1.0/
+  Model dùng: TwistedTree_2, CommonTree_1–4, Plant_1, Fern_1, Clover_1, Grass_Common_Short, Grass_Wispy_Short,
+  Mushroom_Common, Rock_Medium_1–2, RockPath_Round_Small_1–2, RockPath_Round_Wide, Pebble_Round_2–3,
+  Flower_3_Group, Flower_4_Group, Bush_Common, Bush_Common_Flowers.
+  Đã gộp, nén meshopt, texture WebP ≤ 1024px (gltf-transform). Màu lá anh đào / thu đổi bằng shader lúc chạy.
+
+kimono_ngoi.glb, nam_lac_chan.glb
+  Nhân vật kimono do NekoNeko cung cấp (design/icons-moi/recraft-assets), đã giảm đa giác và nén.

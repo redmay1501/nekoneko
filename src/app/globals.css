@@ -1744,3 +1744,120 @@ a.garden-tree:hover .garden-tree-tag{background:#fff;box-shadow:0 0 0 2px #F3B67
 
 /* Ảnh minh hoạ nhỏ trong dòng danh sách (từ vựng, Kanji) — tỉ lệ giữ nguyên, ảnh lỗi thì ẩn hẳn (ContentImageView). */
 .list-row-image{flex:0 0 auto;border-radius:12px;object-fit:contain;background:#FBF6F3;box-shadow:inset 0 0 0 1px rgba(0,0,0,.04)}
+
+/* ───────── Vườn tri thức 3D ───────── */
+.garden3d{position:relative;isolation:isolate;height:clamp(420px,62vh,640px);margin:0 0 4px;border-radius:26px;overflow:hidden;
+  background:linear-gradient(180deg,#BFE3F3 0%,#E4F2F3 50%,#F4EEDF 75%,#B9D99A 100%);border:1px solid #E7DCCD;
+  box-shadow:0 5px 0 #E2D3C2,0 14px 30px rgba(112,90,59,.14)}
+.garden3d-canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+.garden3d-canvas:active{cursor:grabbing}
+.garden3d-loading{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  font-size:14px;font-weight:600;color:#6E5A4E;background:rgba(250,246,238,.72);backdrop-filter:blur(2px);pointer-events:none;transition:opacity .4s ease}
+.garden3d-loading.is-soft{inset:auto 12px 12px auto;flex-direction:row;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.86);font-size:12.5px;backdrop-filter:none}
+.garden3d-spinner{width:26px;height:26px;border-radius:50%;border:3px solid #F6C9D3;border-top-color:#EF7A8E;animation:spin .8s linear infinite}
+.garden3d-loading.is-soft .garden3d-spinner{width:16px;height:16px;border-width:2px}
+.garden3d-tools{position:absolute;top:12px;right:12px;display:flex;flex-direction:column;gap:8px}
+.garden3d-tool{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.9);color:#B9576A;
+  border:1px solid #F1DDD6;box-shadow:0 3px 0 #EBD8D0,0 6px 14px rgba(120,80,60,.12);transition:transform .14s ease}
+.garden3d-tool:hover{transform:translateY(-1px)}
+.garden3d-tool:active{transform:translateY(2px);box-shadow:0 1px 0 #EBD8D0}
+.garden3d-hint{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);max-width:calc(100% - 24px);margin:0;padding:6px 14px;border-radius:999px;
+  background:rgba(255,255,255,.84);color:#6E5A4E;font-size:12px;text-align:center;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.garden3d-panel{position:absolute;left:12px;top:12px;width:min(340px,calc(100% - 80px));max-height:calc(100% - 24px);overflow:auto;
+  padding:14px 16px 16px;border-radius:20px;background:rgba(255,255,255,.95);border:1px solid #F1E2DB;box-shadow:0 12px 28px rgba(110,70,50,.18);
+  animation:garden3d-in .22s ease-out}
+.garden3d-panel-head{display:flex;align-items:center;gap:10px;padding-right:30px}
+.garden3d-panel-plant{display:grid;place-items:center;flex:0 0 auto;width:46px;height:46px;border-radius:14px;background:#F4FAEF}
+.garden3d-panel-face{margin:0;font-size:24px;font-weight:700;line-height:1.2;overflow-wrap:anywhere}
+.garden3d-close{position:absolute;top:8px;right:8px;width:36px;height:36px;border-radius:12px;font-size:22px;line-height:1;color:#9A7F78}
+.garden3d-close:hover{background:#FFF0F2;color:#D9586E}
+@keyframes garden3d-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (max-width:640px){
+  .garden3d{height:min(72vh,560px);border-radius:22px}
+  .garden3d-panel{top:auto;left:8px;right:8px;bottom:8px;width:auto;max-height:46%}
+  .garden3d-hint{white-space:normal;bottom:8px;font-size:11.5px}
+}
+@media (prefers-reduced-motion:reduce){.garden3d-panel{animation:none}}
+
+/* ───────── Nút nổi "Khám phá Neko" (mở lại hướng dẫn 3D) — Calm 3D ─────────
+   z 55: trên thanh dưới (50), dưới khay trượt / hộp thoại (60–70), nhãn môi trường (80), iframe hướng dẫn (90).
+   Mascot: dải sprite 48 khung (128×148 / khung, hiển thị 1/2) render từ animation gốc HumanSitting3 (vòng 9,6 s).
+   --m-w/--m-h: cỡ hiển thị một khung · --seat: mông mèo ở ~83% chiều cao khung → canh đúng mép trên bảng.
+   Chuyển động tiết chế: chỉ xuất hiện 1 lần (420ms) + hover nâng 1.5px; bảng KHÔNG trôi liên tục; mèo động rất chậm. */
+.guide-fab{--m-w:64px;--m-h:74px;--seat:0.83;--lip:4px;position:fixed;right:14px;bottom:calc(80px + var(--safe-b));z-index:55;
+  max-width:calc(100vw - 24px);animation:guide-fab-in .42s cubic-bezier(.22,.8,.3,1) both}
+.guide-fab.is-raised{bottom:calc(112px + var(--safe-b))} /* nhãn "Chế độ demo" ở góc dưới phải → đứng trên nó */
+@media (min-width:1200px){
+  .guide-fab{right:26px;bottom:26px}
+  .guide-fab.is-raised{bottom:50px}
+}
+.guide-fab-shell{position:relative;padding:calc(var(--m-h) * var(--seat) - 3px) 0 0 0}
+/* Bảng: kem sữa sáng ở trên → mint rất nhạt → kem ấm ở dưới; highlight cạnh trên; đế mint tạo độ dày; bóng tiếp xúc + bóng khuếch tán. */
+.guide-fab-card{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:space-between;gap:14px;
+  min-width:206px;height:54px;padding:0 8px 0 calc(var(--m-w) + 2px);font:inherit;color:var(--ink);cursor:pointer;
+  border-radius:22px;border:1px solid rgba(255,255,255,.9);
+  background:linear-gradient(180deg,#FFFFFF 0%,#F5FBF3 48%,#F7F3E6 100%);
+  box-shadow:
+    inset 0 1.5px 0 #FFFFFF,
+    inset 0 -1.5px 0 rgba(214,200,168,.35),
+    0 0 0 1px rgba(196,222,198,.9),
+    0 var(--lip) 0 #D4E8D3,
+    0 calc(var(--lip) + 1px) 0 .5px rgba(140,180,146,.32),
+    0 calc(var(--lip) + 3px) 6px rgba(70,100,72,.12),
+    0 18px 34px rgba(70,100,72,.10);
+  transition:transform .25s ease,box-shadow .25s ease}
+/* Dấu ấn NekoNeko: một dấu chân mèo rất mờ trên mặt bảng (duy nhất một chi tiết trang trí). */
+.guide-fab-card::before{content:"";position:absolute;z-index:-1;right:46px;bottom:5px;width:24px;height:24px;opacity:.09;transform:rotate(-14deg);
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cg fill='%2364A86C'%3E%3Cellipse cx='16' cy='21' rx='7.5' ry='6.5'/%3E%3Cellipse cx='7' cy='12.5' rx='3' ry='3.8' transform='rotate(-18 7 12.5)'/%3E%3Cellipse cx='12.5' cy='7.5' rx='3' ry='3.8'/%3E%3Cellipse cx='19.5' cy='7.5' rx='3' ry='3.8'/%3E%3Cellipse cx='25' cy='12.5' rx='3' ry='3.8' transform='rotate(18 25 12.5)'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;pointer-events:none}
+.guide-fab-card:hover{transform:translateY(-1.5px);
+  box-shadow:inset 0 1.5px 0 #FFFFFF,inset 0 -1.5px 0 rgba(214,200,168,.35),0 0 0 1px rgba(186,216,190,.95),0 var(--lip) 0 #CDE4CC,
+    0 calc(var(--lip) + 1px) 0 .5px rgba(140,180,146,.32),0 calc(var(--lip) + 4px) 8px rgba(70,100,72,.13),0 22px 38px rgba(70,100,72,.11)}
+.guide-fab-card:active{transform:translateY(2px);transition-duration:.08s;
+  box-shadow:inset 0 1.5px 0 #FFFFFF,0 0 0 1px rgba(186,216,190,.95),0 1.5px 0 #CDE4CC,0 4px 8px rgba(70,100,72,.12)}
+.guide-fab-title{font-size:15px;font-weight:800;line-height:1.2;color:#356B3E;letter-spacing:.15px;white-space:nowrap;text-shadow:0 1px 0 #fff}
+/* Nút mũi tên: tròn xanh lá dịu, highlight nhỏ phía trên, bóng mềm phía dưới; hover chỉ sáng lên. */
+.guide-fab-arrow{position:relative;display:grid;place-items:center;flex:0 0 auto;width:38px;height:38px;border-radius:50%;color:#fff;
+  background:linear-gradient(180deg,#9ED3A2 0%,#79BD80 55%,#68AE70 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -1.5px 2px rgba(50,110,60,.22),0 2px 0 #5C9F64,0 4px 9px rgba(70,130,80,.22);
+  transition:filter .2s ease}
+.guide-fab-arrow::before{content:"";position:absolute;left:9px;right:9px;top:3px;height:9px;border-radius:50%;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,0))}
+.guide-fab-arrow svg{position:relative;margin-left:1px}
+.guide-fab-card:hover .guide-fab-arrow{filter:brightness(1.05) saturate(1.05)}
+.guide-fab-card:active .guide-fab-arrow{box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 1px 0 #5C9F64}
+/* Nút thu gọn: chấm tròn nhỏ ngoài góc trên phải bảng. */
+.guide-fab-close{position:absolute;right:-7px;top:calc(var(--m-h) * var(--seat) - 13px);z-index:3;display:grid;place-items:center;
+  width:22px;height:22px;border-radius:50%;cursor:pointer;color:#8E9C8E;background:#FFFFFF;border:1px solid #DCEBDC;
+  box-shadow:0 1px 0 #DCEBDC,0 3px 6px rgba(70,100,72,.12);transition:color .15s ease}
+.guide-fab-close::after{content:"";position:absolute;inset:-10px} /* vùng chạm rộng hơn hình */
+.guide-fab-close:hover{color:#356B3E}
+/* Mascot: lớp nằm TRÊN bảng (chân trước mặt bảng), không nhận chuột, không phản ứng hover. */
+.guide-fab-mascot{position:absolute;left:4px;top:0;z-index:2;width:var(--m-w);height:var(--m-h);pointer-events:none}
+.guide-fab-mascot-seat{position:absolute;left:18%;right:12%;top:calc(var(--seat) * 100% - 2px);height:6px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(64,86,62,.26),rgba(64,86,62,0))}
+.guide-fab-sprite{position:absolute;inset:0;background:url('/illustrations/mascot/guide-kimono-sit.webp') 0 0 / calc(var(--m-w) * 48) var(--m-h) no-repeat;
+  filter:drop-shadow(0 1.5px 2px rgba(90,70,60,.16));animation:guide-fab-sit 9.57s steps(48) infinite}
+@keyframes guide-fab-sit{to{background-position:calc(var(--m-w) * -48) 0}}
+/* Thu gọn: icon tròn, khuôn mặt mèo (khung đầu, phóng to). */
+.guide-fab-bubble{display:grid;place-items:center;width:56px;height:56px;padding:0;border-radius:50%;cursor:pointer;overflow:hidden;
+  border:2px solid #fff;background:linear-gradient(180deg,#FFFFFF,#F1F8EF 60%,#F7F2E4);
+  box-shadow:0 0 0 1px rgba(196,222,198,.9),0 3px 0 #D4E8D3,0 7px 14px rgba(70,100,72,.14),0 16px 28px rgba(70,100,72,.08);
+  transition:transform .25s ease}
+.guide-fab-bubble-face{width:56px;height:56px;background:url('/illustrations/mascot/guide-kimono-sit.webp') -50px -46px / 8602px 207px no-repeat}
+.guide-fab-bubble:hover{transform:translateY(-1.5px)}
+.guide-fab-bubble:active{transform:translateY(1px)}
+.guide-fab-card:focus-visible,.guide-fab-close:focus-visible,.guide-fab-bubble:focus-visible{outline:3px solid var(--sage);outline-offset:3px}
+@media (max-width:640px){
+  /* Điện thoại: mèo và bảng nhỏ hơn; chữ vẫn dễ đọc; nút mũi tên 36px (cả bảng là vùng bấm). */
+  .guide-fab{--m-w:54px;--m-h:62px;--lip:3.5px}
+  .guide-fab-card{min-width:186px;height:50px;gap:10px;border-radius:20px;padding:0 7px 0 calc(var(--m-w) + 2px)}
+  .guide-fab-title{font-size:14.5px}
+  .guide-fab-arrow{width:36px;height:36px}
+  .guide-fab-card::before{right:42px;width:20px;height:20px}
+}
+@keyframes guide-fab-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+  .guide-fab,.guide-fab-sprite{animation:none}
+  .guide-fab-card,.guide-fab-bubble,.guide-fab-arrow{transition:none}
+  .guide-fab-card:hover,.guide-fab-bubble:hover{transform:none}
+}

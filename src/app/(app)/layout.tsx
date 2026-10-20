@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { AppShell } from '@/components/layout/AppShell';
+import { Onboarding3DWelcome } from '@/components/onboarding/Onboarding3DWelcome';
 import { getCurrentLearner } from '@/features/auth/current-learner';
 import { isCurrentUserAdmin } from '@/features/auth/current-roles';
 import { getLearnerContext } from '@/features/learning/learner-context';
@@ -17,6 +18,9 @@ export const dynamic = 'force-dynamic';
 export default async function AuthenticatedLayout({ children }: { children: ReactNode }) {
   if (!(await getCurrentLearner())) redirect('/dang-nhap');
   const [context, isAdmin] = await Promise.all([getLearnerContext(), isCurrentUserAdmin()]);
+  // Người học mới = welcomed_at còn trống trong cài đặt (gắn với tài khoản, không dựa vào localStorage).
+  // Kiểm tra ở layout → hướng dẫn hiện ở BẤT KỲ trang nào người học vào đầu tiên (kể cả ?tiep=… sau đăng ký / Google).
+  const isWelcomed = context.settings.welcomedAt !== null;
   return (
     <AppShell
       displayName={context.profile.displayName}
@@ -28,8 +32,14 @@ export default async function AuthenticatedLayout({ children }: { children: Reac
       voiceGender={context.settings.voiceGender}
       isDemo={context.learner.isDemo}
       isAdmin={isAdmin}
+      isWelcomed={isWelcomed}
+      journeyDay={context.journeyDay}
+      dailyGoalMinutes={context.settings.dailyMinutes}
     >
       {children}
+      {isWelcomed ? null : (
+        <Onboarding3DWelcome displayName={context.profile.displayName} journeyDay={context.journeyDay} initialDailyMinutes={context.settings.dailyMinutes} />
+      )}
     </AppShell>
   );
 }

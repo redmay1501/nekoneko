@@ -15,5 +15,7 @@ export const config = {
   // Bỏ qua file tĩnh — cả đuôi chữ HOA (ảnh xuất từ máy thường là .PNG/.JPEG): nếu không, file ảnh bị middleware
   // coi là trang cần đăng nhập → trả 307 thay vì ảnh, next/image báo "isn't a valid image" (400).
   // Font, giấy phép (*.woff2, *.txt) và dữ liệu thứ tự nét (/strokes/*.json) cũng vậy: bị chuyển về trang đăng nhập thì trang đăng nhập không có font.
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|woff2?|txt|json|SVG|PNG|JPG|JPEG|GIF|WEBP)$).*)'],
+  // /onboarding-3d/ là trang hướng dẫn 3D tĩnh (HTML, JS, mô hình .glb, ~55 file) chạy trong iframe — không cần phiên đăng nhập.
+  // Không loại trừ thì mỗi file đều chạy làm mới phiên, và ở `npm run dev` khi chưa đăng nhập file .glb bị đổi thành trang đăng nhập.
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|onboarding-3d/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|woff2?|txt|json|SVG|PNG|JPG|JPEG|GIF|WEBP)$).*)'],
 };

@@ -1,0 +1,1655 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NekoNeko · Hướng dẫn 3D</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Bản xem thử: hướng dẫn sử dụng NekoNeko trong không gian 3D (Three.js).">
+<style>
+@font-face{font-family:'Nunito';font-style:normal;font-weight:400 800;font-display:swap;src:url(fonts/nunito-400-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:'Nunito';font-style:normal;font-weight:400 800;font-display:swap;src:url(fonts/nunito-400-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Zen Maru Gothic';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/zen-maru-gothic-700.woff2) format('woff2')}
+:root{
+  color-scheme:light;
+  --bg:#FFFDF8;--card:#FFFFFF;--sakura:#FF5B73;--sakura-deep:#E24159;--pink:#FFC1CD;
+  --mint:#DFF3E4;--sage:#7DBA82;--lav:#EAE4F7;--sky:#E2F0F8;--cream:#FFF3DE;
+  --ink:#252525;--ink-2:#5E5A57;--ink-3:#8E8781;--line:#F2E8E4;
+  --glass:rgba(255,252,248,.9);
+  --sh-2:0 6px 22px rgba(96,72,66,.10);--sh-3:0 18px 50px rgba(96,72,66,.16);
+  --font-vi:'Nunito',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-jp:'Zen Maru Gothic','Hiragino Sans','Yu Gothic',sans-serif;
+  --safe-b:env(safe-area-inset-bottom,0px);--safe-t:env(safe-area-inset-top,0px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:var(--font-vi);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;padding:0}
+:focus-visible{outline:3px solid var(--sakura);outline-offset:2px}
+.jp{font-family:var(--font-jp);font-weight:700}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Lớp 3D */
+#scene{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;z-index:0;outline:none}
+#scene.grab{cursor:grab}#scene.grabbing{cursor:grabbing}#scene.point{cursor:pointer}
+.sky-fallback{position:fixed;inset:0;z-index:0;background:linear-gradient(180deg,#FFE3E8 0%,#FFF1E8 55%,#FFF8EF 100%)}
+.sky-fallback::after{content:"";position:absolute;inset:0;background:var(--bg-img) center/cover no-repeat;opacity:.45;filter:saturate(1.05)}
+
+.labels3d{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;contain:strict}
+.lbl3d{position:absolute;left:0;top:0;display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:999px;white-space:nowrap;
+  background:rgba(255,253,249,.97);border:1px solid #F0D7D0;box-shadow:0 2px 8px rgba(96,62,52,.14);
+  font:700 13.5px/1.25 var(--font-vi);color:#4A302A;letter-spacing:0;opacity:0;visibility:hidden;pointer-events:none;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.lbl3d i{width:10px;height:10px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.lbl3d small{font-weight:700;font-size:12px;color:#6E5650;margin-left:2px}
+.lbl3d.tag{font-size:12px;font-weight:700;color:#6B4A42;background:rgba(255,250,246,.95);padding:3px 10px}
+.lbl3d.area{font-size:13px;padding:3px 10px}
+.lbl3d.accent{background:#E8435E;border-color:#E8435E;color:#fff;box-shadow:0 4px 12px rgba(226,65,89,.35)}
+.lbl3d.note3d{font-size:12px;font-weight:600;color:#6B4A42}
+@media (max-width:760px){.lbl3d{font-size:12px;padding:3px 9px;gap:5px}.lbl3d.tag,.lbl3d.note3d,.lbl3d small{font-size:11px}.lbl3d.area{font-size:11.5px;padding:2px 8px}}
+body.no3d .labels3d{display:none}
+
+/* Thanh trên */
+.topbar{position:fixed;z-index:20;top:calc(14px + var(--safe-t));left:18px;right:18px;display:flex;align-items:center;gap:10px;pointer-events:none}
+.topbar>*{pointer-events:auto}
+.brand{display:flex;align-items:center;gap:10px;padding:6px 14px 6px 8px;border-radius:999px;background:var(--glass);box-shadow:var(--sh-2);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.brand img{height:38px;width:auto;display:block}
+.brand span{font-size:13px;font-weight:700;color:#8A5A50;white-space:nowrap}
+.spacer{flex:1}
+.tool{height:42px;min-width:42px;padding:0 14px;display:inline-flex;align-items:center;justify-content:center;gap:7px;border-radius:999px;background:var(--glass);box-shadow:var(--sh-2);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-size:13.5px;font-weight:700;color:#6B4C45;transition:transform .15s,background .15s}
+.tool:hover{background:#fff;transform:translateY(-1px)}
+.tool svg{width:18px;height:18px;flex:none}
+.tool[aria-pressed="false"] .on,.tool[aria-pressed="true"] .off{display:none}
+.tool.skip{color:var(--sakura-deep)}
+
+/* Tiến độ */
+.progress{position:fixed;z-index:19;top:calc(72px + var(--safe-t));left:50%;transform:translateX(-50%);display:flex;gap:6px;padding:7px;border-radius:999px;background:var(--glass);box-shadow:var(--sh-2);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.progress button{display:flex;align-items:center;gap:7px;height:32px;padding:0 12px 0 8px;white-space:nowrap;border-radius:999px;font-size:12.5px;font-weight:700;color:var(--ink-3);transition:background .2s,color .2s}
+.progress button i{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:11px;background:#F3E6E0;color:#9C817A;flex:none}
+.progress button.seen i{background:#FFD3DB;color:var(--sakura-deep)}
+.progress button.on{background:linear-gradient(180deg,#FF8FA0,#FF5B73);color:#fff;box-shadow:0 4px 12px rgba(226,65,89,.28)}
+.progress button.on i{background:rgba(255,255,255,.3);color:#fff}
+.progress .bar{display:none}
+
+/* Bảng hướng dẫn */
+.panel{position:fixed;z-index:18;left:24px;bottom:calc(24px + var(--safe-b));width:410px;max-width:calc(100vw - 48px);padding:22px 22px 18px;border-radius:26px;background:var(--glass);box-shadow:var(--sh-3);backdrop-filter:blur(14px) saturate(1.1);-webkit-backdrop-filter:blur(14px) saturate(1.1);border:1px solid rgba(255,255,255,.7)}
+.kicker{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#C2626F}
+.kicker img{width:30px;height:30px}
+.panel h1{margin:8px 0 6px;font-size:26px;line-height:1.2;letter-spacing:-.01em}
+.panel p.lead{margin:0;font-size:15px;line-height:1.55;color:var(--ink-2)}
+.extra{margin-top:14px}
+.extra:empty{display:none}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px 0 5px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:13px;font-weight:700;color:#5C4640;transition:transform .15s,border-color .15s}
+.chip:hover{transform:translateY(-1px);border-color:#F5C4CD}
+.chip img{width:26px;height:26px}
+.chip .dot{width:14px;height:14px;border-radius:50%;margin-left:5px}
+.note{margin-top:10px;font-size:12px;color:var(--ink-3);line-height:1.45}
+.quiz{border-radius:18px;background:#fff;border:1px solid var(--line);padding:12px}
+.quiz-q{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.quiz-q .jp{font-size:40px;line-height:1;color:var(--ink);width:56px;text-align:center}
+.quiz-q small{display:block;color:var(--ink-3);font-size:12px}
+.quiz-q b{font-size:14px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opt{height:40px;border-radius:13px;border:1px solid #F4D9DC;background:#FFFAFA;font-weight:700;text-align:left;padding:0 12px;transition:background .2s,border-color .2s}
+.opt:hover:not([disabled]){border-color:#F5A8B5}
+.opt.right{background:#E9F6EC;border-color:#9FD3A6;color:#2F6B39}
+.opt.wrong{background:#FFEFF2;border-color:#F5A8B5;color:#B23A4E}
+.opt[disabled]{cursor:default}
+.fb{min-height:20px;margin-top:9px;font-size:13px;color:var(--ink-2)}
+.fb button{color:var(--sakura-deep);font-weight:800;margin-left:6px}
+.nav{display:flex;align-items:center;gap:10px;margin-top:18px}
+.btn{height:46px;padding:0 22px;border-radius:999px;font-weight:800;font-size:15px;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .15s,box-shadow .15s,opacity .15s}
+.btn.primary{flex:1;color:#fff;background:linear-gradient(180deg,#FF8FA0 0%,#FF5B73 60%,#F04E68 100%);box-shadow:0 8px 18px rgba(226,65,89,.30),inset 0 1px 0 rgba(255,255,255,.45)}
+.btn.primary:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(226,65,89,.36),inset 0 1px 0 rgba(255,255,255,.45)}
+.btn.ghost{background:#fff;border:1px solid #F3D5D9;color:#B4475A}
+.btn.ghost:hover{background:#FFF6F7}
+.btn[disabled]{opacity:.4;cursor:default;transform:none}
+.btn svg{width:18px;height:18px}
+.count{font-size:12px;font-weight:700;color:var(--ink-3);white-space:nowrap}
+
+/* Chi tiết thẻ */
+.detail{position:fixed;z-index:30;right:24px;top:calc(124px + var(--safe-t));width:380px;max-width:calc(100vw - 48px);max-height:calc(100vh - 150px);overflow:auto;border-radius:24px;background:#fffdfb;box-shadow:var(--sh-3);border:1px solid #F4E6E1;padding:14px 14px 18px;opacity:0;transform:translateY(10px) scale(.98);pointer-events:none;transition:opacity .22s,transform .22s}
+.detail.open{opacity:1;transform:none;pointer-events:auto}
+.detail .close{position:absolute;top:10px;right:10px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.9);box-shadow:var(--sh-2);display:grid;place-items:center}
+.detail .close svg{width:16px;height:16px}
+.detail figure{margin:0 0 12px;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#fff}
+.detail figure img{display:block;width:100%;height:auto}
+.detail .icon{width:72px;height:72px;margin:4px 0 4px}
+.detail h2{margin:0 0 6px;font-size:19px;padding-right:40px}
+.detail p{margin:0;font-size:14.5px;line-height:1.55;color:var(--ink-2)}
+.detail .where{margin-top:10px;display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:#8A5A50;background:var(--cream);border-radius:999px;padding:5px 11px}
+.detail .src{margin-top:10px;font-size:11.5px;color:var(--ink-3)}
+
+/* Gợi ý, tooltip */
+.hint{position:fixed;z-index:15;right:24px;bottom:calc(24px + var(--safe-b));padding:9px 14px;border-radius:999px;background:rgba(255,252,248,.82);box-shadow:var(--sh-2);font-size:12.5px;font-weight:700;color:#7A5D56;display:flex;align-items:center;gap:8px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.hint svg{width:16px;height:16px}
+.tip{position:fixed;z-index:25;pointer-events:none;padding:7px 11px;border-radius:12px;background:#3C2A26;color:#fff;font-size:12.5px;font-weight:700;opacity:0;transform:translate(-50%,-130%);transition:opacity .12s;white-space:nowrap}
+.tip.show{opacity:1}
+
+/* Bản 2D dự phòng */
+.flat{position:fixed;z-index:5;inset:130px 24px 24px 460px;display:none;align-content:center;justify-content:center;gap:18px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));overflow:auto;padding:10px}
+body.no3d .flat{display:grid}
+body.no3d #scene,body.no3d .hint,body.no3d #resetBtn{display:none}
+.flat-card{border-radius:18px;overflow:hidden;background:#fff;box-shadow:var(--sh-3);border:6px solid #fff;text-align:left;transition:transform .2s;max-width:520px;justify-self:center;width:100%}
+.flat-card:hover{transform:translateY(-3px) rotate(-.4deg)}
+.flat-card img{display:block;width:100%;height:auto;border-radius:12px}
+.flat-card span{display:block;padding:8px 6px 4px;font-weight:800;font-size:14px}
+.flat-mascot{max-height:58vh;width:auto;justify-self:center;filter:drop-shadow(0 18px 24px rgba(120,70,50,.18))}
+.notice{position:fixed;z-index:40;left:50%;top:calc(124px + var(--safe-t));transform:translateX(-50%);max-width:min(560px,calc(100vw - 32px));padding:10px 16px;border-radius:14px;background:#FFF4E0;border:1px solid #F3D7A6;color:#7A5320;font-size:13px;line-height:1.45;box-shadow:var(--sh-2);display:none}
+.notice.show{display:block}
+.notice b{color:#5E3C0F}
+
+/* Màn chờ */
+.loader{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:linear-gradient(180deg,#FFE8EC,#FFF8EF);transition:opacity .5s}
+.loader.hide{opacity:0;pointer-events:none}
+.loader-in{text-align:center;padding:24px}
+.loader img{width:170px;height:auto;animation:bob 1.6s ease-in-out infinite}
+.loader p{margin:10px 0 0;font-weight:700;color:#8A5A50}
+.loader .dots{display:inline-flex;gap:5px;margin-top:10px}
+.loader .dots i{width:8px;height:8px;border-radius:50%;background:var(--sakura);animation:pulse 1s infinite}
+.loader .dots i:nth-child(2){animation-delay:.15s}.loader .dots i:nth-child(3){animation-delay:.3s}
+@keyframes bob{50%{transform:translateY(-8px)}}
+@keyframes pulse{50%{opacity:.3}}
+
+/* Kết thúc */
+.done{position:fixed;inset:0;z-index:45;display:grid;place-items:center;background:rgba(255,246,240,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity .3s}
+.done.open{opacity:1;pointer-events:auto}
+.done-card{width:min(420px,calc(100vw - 32px));text-align:center;background:#fff;border-radius:28px;box-shadow:var(--sh-3);padding:22px 24px 24px}
+.done-card img{width:150px;height:auto;margin-top:-80px;filter:drop-shadow(0 10px 14px rgba(120,70,50,.2))}
+.done-card h2{margin:6px 0 6px;font-size:23px}
+.done-card p{margin:0 0 18px;color:var(--ink-2);line-height:1.55}
+.done-card .row{display:flex;gap:10px}
+.done-more{margin-top:12px}.done-more button{font-weight:700;font-size:13.5px;color:#B4475A;text-decoration:underline;text-underline-offset:3px;padding:6px 10px}
+.goal small{display:block;font-size:13px;font-weight:800;color:var(--ink-2);margin:2px 0 8px}
+.chip.goal-chip{padding:0 14px}
+.chip.goal-chip[aria-pressed="true"]{background:#FF5B73;border-color:#FF5B73;color:#fff}
+.goal .note{margin-top:8px}
+
+@media (prefers-reduced-motion:reduce){.loader img,.loader .dots i{animation:none}}
+
+/* iPad dọc / máy nhỏ */
+@media (max-width:1000px){
+  .progress button span{display:none}
+  .progress button{padding:0 6px}
+  .flat{inset:130px 16px 16px 440px}
+}
+/* iPad dọc: bảng hướng dẫn nằm dưới, giữa màn hình */
+@media (min-width:761px) and (max-width:1100px) and (orientation:portrait){
+  .panel{left:50%;transform:translateX(-50%);width:min(640px,calc(100vw - 40px));bottom:calc(20px + var(--safe-b))}
+  .hint{display:none}
+  .detail{top:auto;bottom:calc(20px + var(--safe-b));right:20px}
+  .flat{inset:130px 20px 46vh 20px}
+}
+/* Điện thoại */
+@media (max-width:760px){
+  .topbar{left:12px;right:12px;top:calc(10px + var(--safe-t));gap:7px}
+  .brand{padding:4px 10px 4px 6px}.brand img{height:30px}.brand span{display:none}
+  .tool{height:38px;min-width:38px;padding:0 11px;font-size:12.5px}
+  .tool .lbl{display:none}
+  .progress{top:calc(58px + var(--safe-t));gap:4px;padding:5px}
+  .progress button{height:26px}
+  .progress button i{width:18px;height:18px}
+  .panel{left:0;right:0;bottom:0;width:auto;max-width:none;border-radius:24px 24px 0 0;padding:16px 16px calc(14px + var(--safe-b));max-height:52vh;overflow:auto}
+  .panel h1{font-size:21px;margin:6px 0 4px}
+  .panel p.lead{font-size:14px}
+  .nav{margin-top:12px}
+  .btn{height:44px;padding:0 16px}
+  .hint{display:none}
+  .detail{left:10px;right:10px;width:auto;top:auto;bottom:calc(10px + var(--safe-b));max-height:70vh}
+  .flat{inset:104px 12px 52vh 12px;grid-template-columns:1fr}
+  .flat-mascot{max-height:30vh}
+}
+</style>
+</head>
+<body>
+<div class="sky-fallback" id="skyFallback"></div>
+<canvas id="scene" class="grab" aria-label="Không gian 3D NekoNeko — kéo để xoay góc nhìn" tabindex="-1"></canvas>
+<div class="labels3d" id="labels3d" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="brand"><img id="logoImg" alt="Neko Neko"><span>Hướng dẫn nhanh</span></div>
+  <div class="spacer"></div>
+  <button class="tool" id="resetBtn" type="button" title="Về góc nhìn mặc định">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg><span class="lbl">Góc nhìn</span>
+  </button>
+  <button class="tool" id="motionBtn" type="button" aria-pressed="true" title="Bật/tắt chuyển động">
+    <svg class="on" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1.5"/><rect x="14" y="5" width="4" height="14" rx="1.5"/></svg>
+    <svg class="off" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+    <span class="lbl">Chuyển động</span>
+  </button>
+  <button class="tool skip" id="skipBtn" type="button">Bỏ qua</button>
+</header>
+
+<nav class="progress" id="progress" aria-label="Các bước hướng dẫn"></nav>
+
+<main class="panel" id="panel" aria-live="polite">
+  <div class="kicker" id="kicker"></div>
+  <h1 id="title"></h1>
+  <p class="lead" id="lead"></p>
+  <div class="extra" id="extra"></div>
+  <div class="nav" id="nav"></div>
+</main>
+
+<aside class="detail" id="detail" role="dialog" aria-modal="false" aria-labelledby="detailTitle">
+  <button class="close" id="detailClose" type="button" aria-label="Đóng"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <div id="detailBody"></div>
+</aside>
+
+<div class="flat" id="flat"></div>
+<div class="hint" id="hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11V6a2 2 0 0 1 4 0v5"/><path d="M13 10.5V9a2 2 0 0 1 4 0v4.5a6.5 6.5 0 0 1-12.2 3.1L3.6 14a1.8 1.8 0 0 1 3-2l1.4 1.6V8a1.5 1.5 0 0 1 3 0"/></svg>Kéo để xoay · chạm thẻ để xem chi tiết</div>
+<div class="tip" id="tip"></div>
+<div class="notice" id="notice" role="status"></div>
+
+<div class="done" id="done" role="dialog" aria-modal="true" aria-labelledby="doneTitle">
+  <div class="done-card">
+    <img id="doneImg" alt="">
+    <h2 id="doneTitle"></h2>
+    <p id="doneText"></p>
+    <div class="row" id="doneRow"></div>
+    <div class="done-more" id="doneMore"></div>
+  </div>
+</div>
+
+<div class="loader" id="loader"><div class="loader-in"><img id="loaderImg" alt=""><p>Đang dựng thế giới NekoNeko…</p><div class="dots"><i></i><i></i><i></i></div></div></div>
+
+<script>
+/* ============================================================
+ * NekoNeko — hướng dẫn 3D (bản xem thử độc lập)
+ * Bản tích hợp: ảnh, font, mô hình GLB và Three.js nằm cạnh file này (assets/, fonts/, models/, vendor/).
+ * Nhúng vào app bằng iframe: index.html?embed=1&phut=<mục tiêu> — trang báo kết quả về app qua postMessage.
+ * Ảnh giao diện: chụp từ app chạy ở chế độ demo (người học mẫu, ngày 23/90).
+ * Không có WebGL / không tải được Three.js → bản 2D cùng nội dung.
+ * ============================================================ */
+const A = {"bg": "assets/bg.webp", "garden-art": "assets/garden-art.webp", "ic-achievements": "assets/ic-achievements.webp", "ic-garden": "assets/ic-garden.webp", "ic-hiragana": "assets/ic-hiragana.webp", "ic-home": "assets/ic-home.webp", "ic-kanji": "assets/ic-kanji.webp", "ic-katakana": "assets/ic-katakana.webp", "ic-listening": "assets/ic-listening.webp", "ic-memory": "assets/ic-memory.webp", "ic-practice": "assets/ic-practice.webp", "ic-progress": "assets/ic-progress.webp", "ic-radical": "assets/ic-radical.webp", "ic-reading": "assets/ic-reading.webp", "ic-review": "assets/ic-review.webp", "ic-roadmap": "assets/ic-roadmap.webp", "ic-speaking": "assets/ic-speaking.webp", "ic-study": "assets/ic-study.webp", "ic-vocabulary": "assets/ic-vocabulary.webp", "ic-writing": "assets/ic-writing.webp", "island-1": "assets/island-1.webp", "island-2": "assets/island-2.webp", "island-3": "assets/island-3.webp", "island-4": "assets/island-4.webp", "logo-bar": "assets/logo-bar.webp", "logo": "assets/logo.webp", "mascot-study": "assets/mascot-study.webp", "mascot-wave": "assets/mascot-wave.webp", "shot-day": "assets/shot-day.webp", "shot-garden": "assets/shot-garden.webp", "shot-grammar": "assets/shot-grammar.webp", "shot-hiragana": "assets/shot-hiragana.webp", "shot-home": "assets/shot-home.webp", "shot-kanji": "assets/shot-kanji.webp", "shot-memory": "assets/shot-memory.webp", "shot-progress": "assets/shot-progress.webp", "shot-quiz-a": "assets/shot-quiz-a.webp", "shot-quiz-q": "assets/shot-quiz-q.webp", "shot-roadmap": "assets/shot-roadmap.webp", "shot-skills": "assets/shot-skills.webp", "shot-vocab": "assets/shot-vocab.webp"};
+
+/* Three.js 0.160.0 đi kèm trong vendor/ (đã đổi import 'three' thành đường dẫn tương đối) — không cần CDN, không cần import map. */
+const THREE_URL = new URL('vendor/three/three.module.min.js', location.href).href;
+const ADDONS_URL = new URL('vendor/three/addons/', location.href).href;
+const CAT_MODEL = 'cat.glb';
+const ANIM_FILES = { catAnimIdle: 'anim-idle.glb', catAnimRun: 'anim-run.glb', catAnimSpin: 'anim-spin.glb', catAnimSalsa: 'anim-salsa.glb', catAnimFlair: 'anim-flair.glb' };
+
+/* ---------- Nội dung (đối chiếu với source) ---------- */
+const CARDS = {
+  roadmap: { img: 'shot-roadmap', title: 'Bản đồ lộ trình 90 ngày', text: 'Một con đường bốn chặng, kết thúc ở kỳ thi. Chạm vào một ngày bất kỳ trên bản đồ để mở trang của ngày đó.', where: 'Menu › Lộ trình' },
+  day: { img: 'shot-day', title: 'Trang một ngày học', text: 'Mỗi ngày có danh sách kiến thức và kế hoạch buổi học. Bấm “Học hết ngày” để học; xong thì bấm “Hoàn thành ngày” — app không tự chuyển ngày.', where: 'Lộ trình › chọn một ngày' },
+  hiragana: { img: 'shot-hiragana', title: 'Hiragana', text: 'Bảng chữ đầy đủ. Mỗi chữ đều có: học → nghe → nhận diện → luyện viết → kiểm tra → gặp lại.', where: 'Học tập › Hiragana' },
+  kanji: { img: 'shot-kanji', title: 'Kanji N5', text: '103 chữ Kanji của kỳ thi N5, kèm âm Hán Việt, cách đọc và nút luyện viết Kanji.', where: 'Học tập › Kanji' },
+  vocab: { img: 'shot-vocab', title: 'Từ vựng N5', text: '755 từ theo Minna no Nihongo I bài 1–25 cùng từ N5 bổ sung, lọc theo từng bài. Bấm một từ để nghe và xem chi tiết.', where: 'Học tập › Từ vựng' },
+  grammar: { img: 'shot-grammar', title: 'Ngữ pháp N5', text: '112 mẫu câu theo Minna bài 1–25, mỗi mẫu kèm một câu thật. Có nút “Luyện tập ngữ pháp”.', where: 'Học tập › Ngữ pháp' },
+  quiz: { img: 'shot-quiz-a', title: 'Một câu hỏi trong phiên học', text: 'Chọn một đáp án: app tô xanh đáp án đúng và nhắc lại đáp án. Kết quả được ghi để NekoNeko lên lịch gặp lại kiến thức đó.', where: 'Trang chủ › Bắt đầu học' },
+  skills: { img: 'shot-skills', title: 'Luyện kỹ năng', text: 'Luyện nghe, Luyện nói, Đọc hiểu và Luyện viết. Chọn phạm vi theo lộ trình hoặc tự chọn bài.', where: 'Menu › Luyện tập' },
+  memory: { img: 'shot-memory', title: 'Theo dõi trí nhớ', text: 'Bạn không cần tự quản lý lịch ôn: trang này cho biết bạn đang nhớ được bao nhiêu và có bao nhiêu thứ sắp quên.', where: 'Menu › Theo dõi › Trí nhớ' },
+  garden: { img: 'shot-garden', title: 'Vườn tri thức', text: 'Mỗi thứ bạn giữ lại được là một cái cây. Lá úa là kiến thức sắp quên — ôn lại để “tưới” nó.', where: 'Menu › Vườn tri thức' },
+  progress: { img: 'shot-progress', title: 'Tiến độ', text: 'Số ngày học đã hoàn thành và mức đã học của từng loại kiến thức.', where: 'Menu › Theo dõi › Tiến độ' },
+  home: { img: 'shot-home', title: 'Trang chủ', text: 'Thẻ “Học hôm nay” với nút Bắt đầu học, thẻ “Gặp lại kiến thức”, lộ trình 90 ngày và vườn tri thức.', where: 'Trang chủ' },
+};
+const AREAS = {
+  hiragana: { icon: 'ic-hiragana', glyph: 'あ', label: 'Hiragana', color: '#FFC1CD', text: 'Chữ mềm cơ bản. Mỗi chữ: học → nghe → nhận diện → luyện viết → kiểm tra → gặp lại.', where: 'Học tập › Hiragana', card: 'hiragana' },
+  katakana: { icon: 'ic-katakana', glyph: 'ア', label: 'Katakana', color: '#CDE8ED', text: 'Chữ cứng cho từ mượn, học theo cùng cách với Hiragana.', where: 'Học tập › Katakana' },
+  radical: { icon: 'ic-radical', glyph: '人', label: 'Bộ thủ', color: '#FFE4B0', text: '45 bộ thủ trong lộ trình — mảnh ghép tạo nên Kanji, giúp đoán nghĩa và nhớ lâu hơn.', where: 'Học tập › Bộ thủ' },
+  kanji: { icon: 'ic-kanji', glyph: '学', label: 'Kanji', color: '#D9E9BB', text: '103 chữ Kanji N5 kèm âm Hán Việt — cách nhớ nhanh cho người Việt.', where: 'Học tập › Kanji', card: 'kanji' },
+  vocab: { icon: 'ic-vocabulary', glyph: 'ねこ', label: 'Từ vựng', color: '#EAE4F7', text: '755 từ theo Minna bài 1–25 và từ N5 bổ sung.', where: 'Học tập › Từ vựng', card: 'vocab' },
+  grammar: { icon: 'ic-study', glyph: 'です', label: 'Ngữ pháp', color: '#FFD9DE', text: '112 mẫu câu, mỗi mẫu có câu ví dụ thật và bài luyện tập.', where: 'Học tập › Ngữ pháp', card: 'grammar' },
+};
+const STAGES = [
+  { from: 1, to: 14, name: 'Bảng chữ cái', sub: 'Hiragana & Katakana', color: '#FFC1CD' },
+  { from: 15, to: 17, name: 'Bộ thủ', sub: '45 bộ — nhận diện mặt chữ', color: '#F6D58E' },
+  { from: 18, to: 81, name: 'Giáo trình', sub: 'Minna bài 1–25 · từ, Kanji, mẫu câu', color: '#9FD3A6' },
+  { from: 82, to: 90, name: 'Chinh phục N5', sub: 'Tổng ôn & thi thử', color: '#D8C7F0' },
+];
+/* Trạng thái trí nhớ — docs/memory-engine.md */
+const STATUSES = [
+  { id: 'weak', name: 'Chưa vững', range: 'dưới 40', top: 40, color: '#C9784E', text: 'Mới học hoặc từng trả lời sai.' },
+  { id: 'fading', name: 'Sắp quên', range: '40–55', top: 55, color: '#E7A040', text: 'Đã đến lúc gặp lại — mục này hiện ở “Gặp lại kiến thức”.' },
+  { id: 'learning', name: 'Đang học', range: '56–73', top: 73, color: '#A7D39A', text: 'Nhớ nhưng còn lung lay.' },
+  { id: 'strong', name: 'Đã nhớ tốt', range: '74–89', top: 89, color: '#5FA36A', text: 'Gọi ra được mà không cần nghĩ lâu.' },
+  { id: 'mastered', name: 'Đã thành thạo', range: 'từ 90', top: 99, color: '#F07C95', text: 'Gần như không quên.' },
+];
+const MEMORY_RULE = 'Điểm nhớ giảm 0,45 mỗi ngày không gặp. Trả lời đúng: +14 và hẹn gặp lại sau khoảng (điểm ÷ 18) ngày. Sai: −6 và gặp lại ngay hôm sau.';
+const QUIZ = { glyph: 'サ', ask: 'Chữ này đọc là gì?', options: ['za', 'sa', 'ryo', 'fu'], answer: 1 };
+
+const STEPS = [
+  { id: 'welcome', nav: 'Chào mừng', icon: 'ic-home', kicker: 'Chào mừng',
+    title: 'Chào mừng đến NekoNeko',
+    lead: 'NekoNeko giúp bạn học tiếng Nhật JLPT N5 theo lộ trình 90 ngày — và đưa từng kiến thức quay lại đúng lúc bạn sắp quên.',
+    next: 'Bắt đầu khám phá', cards: [] },
+  { id: 'roadmap', nav: 'Lộ trình', icon: 'ic-roadmap', kicker: 'Lộ trình 90 ngày',
+    title: 'Mỗi ngày một chặng nhỏ',
+    lead: 'Vào Lộ trình, chạm vào một ngày để xem việc cần làm. Học xong, bấm “Hoàn thành ngày” để mở ngày tiếp theo.',
+    cards: ['roadmap', 'day'] },
+  { id: 'learning', nav: 'Học tập', icon: 'ic-study', kicker: 'Khu Học tập',
+    title: 'Sáu kho kiến thức',
+    lead: 'Hiragana, Katakana, Bộ thủ, Kanji, Từ vựng và Ngữ pháp — mở bất kỳ lúc nào để tra và ôn. Chạm vào từng khối để xem bên trong.',
+    cards: ['hiragana', 'kanji', 'vocab', 'grammar'] },
+  { id: 'practice', nav: 'Luyện tập', icon: 'ic-practice', kicker: 'Luyện tập',
+    title: 'Chọn đáp án, biết ngay kết quả',
+    lead: 'Đây là một câu hỏi thật trong app. Thử chọn đáp án nhé:',
+    cards: ['quiz', 'skills'] },
+  { id: 'memory', nav: 'Ôn tập', icon: 'ic-memory', kicker: 'Ôn tập & tiến độ',
+    title: 'NekoNeko nhớ giúp bạn',
+    lead: 'Mỗi kiến thức có một điểm nhớ, giảm dần theo thời gian. Khi sắp quên, nó hiện ở “Gặp lại kiến thức” để bạn ôn.',
+    cards: ['memory', 'garden'] },
+  { id: 'finish', nav: 'Bắt đầu', icon: 'ic-achievements', kicker: 'Bắt đầu hành trình',
+    title: 'Sẵn sàng rồi!',
+    lead: 'Mỗi ngày, mở Trang chủ và bấm “Bắt đầu học” (khoảng 8 phút: ôn thứ đã học + vài kiến thức mới). Phần còn lại, NekoNeko lo.',
+    cards: ['home'] },
+];
+
+/* ---------- Tiện ích ---------- */
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch { /* bỏ qua */ } } };
+const reducedPref = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const state = {
+  step: 0, visited: new Set([0]),
+  motion: store.get('neko3d-motion') ? store.get('neko3d-motion') === '1' : !reducedPref,
+  quiz: null, three: null,
+};
+
+/* ---------- Nhúng trong app (iframe) ----------
+ * ?embed=1        : chạy trong app, báo kết quả về trang cha bằng postMessage (cùng origin)
+ * ?phut=5|8|15|0  : mục tiêu mỗi ngày hiện tại (0 = không giới hạn)
+ * ?mode=replay    : xem lại từ Cài đặt — không hỏi mục tiêu, nút cuối là "Xong"
+ * Tin gửi đi: { source: 'nekoneko-onboarding', version: 1, type: 'ready', mode: '3d'|'2d' }
+ *             { source: 'nekoneko-onboarding', version: 1, type: 'done', action: 'learn'|'home'|'skip', dailyMinutes: number|null }
+ *             { source: 'nekoneko-onboarding', version: 1, type: 'close' }   (chỉ ở mode=replay)
+ * Tin nhận về: { source: 'nekoneko-app', type: 'save-failed' } → bật lại nút, báo lỗi để người dùng thử lại. */
+const QS = new URLSearchParams(location.search);
+const EMBED = QS.get('embed') === '1' && window.parent !== window;
+const REPLAY = QS.get('mode') === 'replay';
+const GOALS = [{ m: 5, l: '5 phút' }, { m: 8, l: '8 phút' }, { m: 15, l: '15 phút' }, { m: 0, l: 'Không giới hạn' }];
+state.minutes = QS.has('phut') && GOALS.some((g) => g.m === Number(QS.get('phut'))) ? Number(QS.get('phut')) : 8;
+const ASK_GOAL = EMBED && !REPLAY;
+function postToApp(type, data = {}) {
+  if (!EMBED) return;
+  try { window.parent.postMessage({ source: 'nekoneko-onboarding', version: 1, type, ...data }, location.origin); } catch (err) { console.warn('[NekoNeko 3D] postMessage lỗi', err); }
+}
+window.addEventListener('message', (e) => {
+  if (e.origin !== location.origin || e.source !== window.parent) return;
+  const d = e.data; if (!d || d.source !== 'nekoneko-app') return;
+  if (d.type === 'save-failed') {
+    document.querySelectorAll('#doneRow button, #doneMore button').forEach((b) => { b.disabled = false; b.removeAttribute('aria-busy'); });
+    notice('<b>Chưa lưu được.</b> Bạn kiểm tra mạng rồi bấm lại nhé.'); setTimeout(() => $('notice').classList.remove('show'), 7000);
+  }
+});
+function leadOf(s) {
+  if (s.id !== 'finish' || !ASK_GOAL) return s.lead;
+  const m = state.minutes;
+  return 'Mỗi ngày, mở Trang chủ và bấm “Bắt đầu học” (' + (m > 0 ? 'khoảng ' + m + ' phút' : 'bao lâu tuỳ bạn') + ': ôn thứ đã học + vài kiến thức mới). Phần còn lại, NekoNeko lo.';
+}
+function goalChips() {
+  return `<div class="goal"><small>Mỗi ngày bạn muốn học bao lâu?</small><div class="chips" role="group" aria-label="Mục tiêu mỗi ngày">${GOALS.map((g) => `<button class="chip goal-chip" type="button" data-goal="${g.m}" aria-pressed="${g.m === state.minutes}">${g.l}</button>`).join('')}</div><div class="note">Đổi lại lúc nào cũng được trong Cài đặt.</div></div>`;
+}
+
+/* ---------- Giao diện HTML (chạy được cả khi không có 3D) ---------- */
+function renderProgress() {
+  $('progress').innerHTML = STEPS.map((s, i) =>
+    `<button type="button" data-step="${i}" class="${i === state.step ? 'on' : ''} ${state.visited.has(i) && i !== state.step ? 'seen' : ''}" aria-current="${i === state.step ? 'step' : 'false'}" aria-label="Bước ${i + 1}: ${esc(s.nav)}"><i>${i + 1}</i><span>${esc(s.nav)}</span></button>`).join('');
+}
+function chipArea(id) { const a = AREAS[id]; return `<button class="chip" type="button" data-area="${id}"><img src="${A[a.icon]}" alt="">${esc(a.label)}</button>`; }
+
+function renderExtra(step) {
+  const s = STEPS[step];
+  if (s.id === 'finish' && ASK_GOAL) return goalChips();
+  if (s.id === 'roadmap') return `<div class="chips">${STAGES.map((g, i) => `<button class="chip" type="button" data-stage="${i}"><span class="dot" style="background:${g.color}"></span>${esc(g.name)} · ${g.from}–${g.to}</button>`).join('')}</div>`;
+  if (s.id === 'learning') return `<div class="chips">${Object.keys(AREAS).map(chipArea).join('')}</div>`;
+  if (s.id === 'practice') {
+    const q = state.quiz;
+    const opts = QUIZ.options.map((o, i) => {
+      let cls = 'opt'; if (q !== null) { if (i === QUIZ.answer) cls += ' right'; else if (i === q) cls += ' wrong'; }
+      return `<button type="button" class="${cls}" data-opt="${i}" ${q !== null ? 'disabled' : ''}>${esc(o)}${q !== null && i === QUIZ.answer ? ' ✓' : ''}</button>`;
+    }).join('');
+    const fb = q === null ? '<span style="color:var(--ink-3)">Chạm một đáp án — ở đây hoặc trên bảng 3D.</span>'
+      : (q === QUIZ.answer ? 'Đúng rồi, bạn nhớ tốt lắm! Đáp án: <b>sa</b>.' : 'Không sao, mình nhớ dần nhé. Đáp án: <b>sa</b>.') + '<button type="button" data-quiz-reset>Làm lại</button>';
+    return `<div class="quiz"><div class="quiz-q"><span class="jp">${QUIZ.glyph}</span><div><small>Bạn còn nhớ cái này không?</small><b>${QUIZ.ask}</b></div></div><div class="opts">${opts}</div><div class="fb">${fb}</div></div>
+      <div class="note">Ngoài câu hỏi trong phiên học còn có: Luyện nghe · Luyện nói · Đọc hiểu · Luyện viết · Trò chơi Ghép thẻ.</div>`;
+  }
+  if (s.id === 'memory') return `<div class="chips">${STATUSES.map((t, i) => `<button class="chip" type="button" data-status="${i}"><span class="dot" style="background:${t.color}"></span>${esc(t.name)}</button>`).join('')}</div><div class="note">Cột và đường cong trong cảnh 3D minh hoạ cách tính — không phải dữ liệu của bạn.</div>`;
+  return '';
+}
+
+function renderNav(step) {
+  const last = step === STEPS.length - 1;
+  const back = `<button class="btn ghost" type="button" data-act="back" ${step === 0 ? 'disabled' : ''} aria-label="Quay lại"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>`;
+  if (last) return `${back}<button class="btn ghost" type="button" data-act="again">Khám phá lại</button><button class="btn primary" type="button" data-act="finish">Hoàn thành hướng dẫn</button>`;
+  const label = STEPS[step].next || 'Tiếp tục';
+  return `${back}<button class="btn primary" type="button" data-act="next">${esc(label)}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button><span class="count">${step + 1}/${STEPS.length}</span>`;
+}
+
+function renderPanel() {
+  const s = STEPS[state.step];
+  $('kicker').innerHTML = `<img src="${A[s.icon]}" alt="">${esc(s.kicker)}`;
+  $('title').textContent = s.title;
+  $('lead').textContent = leadOf(s);
+  $('extra').innerHTML = renderExtra(state.step);
+  $('nav').innerHTML = renderNav(state.step);
+  renderProgress();
+  renderFlat();
+}
+
+function renderFlat() {
+  const s = STEPS[state.step];
+  let html = '';
+  if (s.id === 'welcome') html = `<img class="flat-mascot" src="${A['mascot-study']}" alt="Mèo NekoNeko">`;
+  html += s.cards.map((id) => `<button class="flat-card" type="button" data-card="${id}"><img src="${A[CARDS[id].img]}" alt="${esc(CARDS[id].title)}"><span>${esc(CARDS[id].title)}</span></button>`).join('');
+  if (s.id === 'finish') html = `<img class="flat-mascot" src="${A['mascot-wave']}" alt="Mèo NekoNeko vẫy chào">` + html;
+  $('flat').innerHTML = html;
+}
+
+function goTo(step, opts = {}) {
+  step = Math.max(0, Math.min(STEPS.length - 1, step));
+  if (step === state.step && !opts.force) return;
+  state.step = step; state.visited.add(step);
+  closeDetail();
+  renderPanel();
+  if (state.three) state.three.goTo(step);
+  if (!opts.keepFocus && document.activeElement && document.activeElement.closest && document.activeElement.closest('#nav')) {
+    const p = $('nav').querySelector('.btn.primary'); if (p) p.focus({ preventScroll: true });
+  }
+}
+
+/* Chi tiết */
+let detailOpen = null;
+function openDetail(kind, id) {
+  let html = '';
+  if (kind === 'card') {
+    const c = CARDS[id];
+    html = `<figure><img src="${A[c.img]}" alt="Ảnh chụp: ${esc(c.title)}"></figure><h2 id="detailTitle">${esc(c.title)}</h2><p>${esc(c.text)}</p><span class="where">Trong app: ${esc(c.where)}</span><div class="src">Ảnh chụp app NekoNeko ở chế độ demo — số liệu trong ảnh là của người học mẫu (ngày 23/90), không phải của bạn.</div>`;
+  } else if (kind === 'area') {
+    const a = AREAS[id];
+    html = `<img class="icon" src="${A[a.icon]}" alt=""><h2 id="detailTitle">${esc(a.label)} <span class="jp" style="color:#C2626F">${esc(a.glyph)}</span></h2><p>${esc(a.text)}</p><span class="where">Trong app: ${esc(a.where)}</span>` + (a.card ? `<figure style="margin-top:12px"><img src="${A[CARDS[a.card].img]}" alt="Ảnh chụp trang ${esc(a.label)}"></figure><div class="src">Ảnh chụp chế độ demo (người học mẫu).</div>` : '');
+  } else if (kind === 'stage') {
+    const g = STAGES[id];
+    html = `<img class="icon" src="${A['island-' + (id + 1)]}" alt="" style="width:150px;height:auto"><h2 id="detailTitle">${esc(g.name)}</h2><p>Ngày ${g.from}–${g.to} · ${esc(g.sub)}.</p><span class="where">Trong app: Lộ trình › ${esc(g.name)}</span>`;
+  } else if (kind === 'day') {
+    const g = STAGES.find((x) => id >= x.from && id <= x.to);
+    html = `<img class="icon" src="${A['ic-roadmap']}" alt=""><h2 id="detailTitle">Ngày ${id}</h2><p>Thuộc chặng <b>${esc(g.name)}</b> (ngày ${g.from}–${g.to}). Trong app, chạm vào ngày này trên bản đồ để mở trang ngày học: danh sách kiến thức, kế hoạch buổi học và nút “Hoàn thành ngày”.</p><span class="where">Trong app: Lộ trình › Ngày ${id}</span>`;
+  } else if (kind === 'status') {
+    const t = STATUSES[id];
+    html = `<h2 id="detailTitle"><span class="dot" style="display:inline-block;width:14px;height:14px;border-radius:50%;background:${t.color};margin-right:6px"></span>${esc(t.name)} · điểm ${esc(t.range)}</h2><p>${esc(t.text)}</p><p style="margin-top:8px">${esc(MEMORY_RULE)}</p><span class="where">Trong app: Theo dõi › Trí nhớ</span><div class="src">Theo docs/memory-engine.md của dự án.</div>`;
+  } else if (kind === 'curve') {
+    html = `<img class="icon" src="${A['ic-memory']}" alt=""><h2 id="detailTitle">Đường cong trí nhớ (minh hoạ)</h2><p>${esc(MEMORY_RULE)}</p><p style="margin-top:8px">Đường trên bảng là một kiến thức giả định: bắt đầu ở 35 điểm, trả lời đúng ở mọi lần gặp lại trừ một lần sai. Không phải dữ liệu của bạn.</p>`;
+  } else if (kind === 'mascot') {
+    const mode = state.three ? state.three.catMode() : '2d';
+    html = mode === '3d'
+      ? `<img class="icon" src="${A['ic-home']}" alt=""><h2 id="detailTitle">Mèo NekoNeko 3D</h2><p>Mô hình 3D mèo mặc yukata (file GLB của dự án). Kéo để xoay quanh và nhìn mèo từ nhiều phía.</p><p style="margin-top:8px">Model có khung xương 52 xương và các animation: đi bộ ra rồi đứng phẩy phẩy, xoay một vòng rồi nhảy salsa ở bước cuối, chạy đi khi bạn bấm Bỏ qua, nhào lộn khi bạn chạm vào. Lúc đứng nghỉ, nhịp thở nhẹ được thêm bằng code.</p>`
+      : `<img class="icon" src="${A['ic-home']}" alt=""><h2 id="detailTitle">Mèo NekoNeko</h2><p>${mode === 'loading' ? 'Mô hình 3D đang tải…' : 'Không tải được mô hình 3D nên đang dùng hình minh hoạ 2D đặt trên một tấm phẳng.'}</p>`;
+  }
+  $('detailBody').innerHTML = html;
+  $('detail').classList.add('open');
+  detailOpen = kind + ':' + id;
+}
+function closeDetail() { $('detail').classList.remove('open'); detailOpen = null; }
+
+/* Quiz */
+function answerQuiz(i) {
+  if (state.quiz !== null) return;
+  state.quiz = i;
+  if (STEPS[state.step].id === 'practice') $('extra').innerHTML = renderExtra(state.step);
+  if (state.three) state.three.quizChanged();
+}
+function resetQuiz() { state.quiz = null; $('extra').innerHTML = renderExtra(state.step); if (state.three) state.three.quizChanged(); }
+
+/* Hoàn thành / bỏ qua */
+function showDone(kind) {
+  closeDetail();
+  $('doneImg').src = A['mascot-wave'];
+  $('doneTitle').textContent = kind === 'skip' ? 'Đã bỏ qua hướng dẫn' : 'Hoàn thành hướng dẫn!';
+  $('doneText').textContent = kind === 'skip'
+    ? 'Bạn có thể xem lại bất cứ lúc nào. Bắt đầu từ Trang chủ: bấm “Bắt đầu học”.'
+    : 'Bắt đầu từ Trang chủ: bấm “Bắt đầu học” mỗi ngày. Ôn những gì sắp quên ở “Gặp lại kiến thức”.';
+  $('done').classList.add('open');
+  store.set('neko3d-done', kind);
+  const B = (act, cls, label) => `<button class="btn ${cls}" type="button" data-done="${act}"${cls === 'ghost' ? ' style="flex:1"' : ''}>${label}</button>`;
+  let row, more = '';
+  if (!EMBED) row = B('again', 'ghost', 'Khám phá lại') + B('back', 'primary', 'Đóng');
+  else if (REPLAY) row = B('again', 'ghost', 'Xem lại từ đầu') + B('close', 'primary', 'Xong');
+  else if (kind === 'skip') row = B('again', 'ghost', 'Xem hướng dẫn') + B('skip', 'primary', 'Vào Trang chủ');
+  else { row = B('home', 'ghost', 'Về Trang chủ') + B('learn', 'primary', 'Bắt đầu học'); more = '<button type="button" data-done="again">Khám phá lại</button>'; }
+  if (EMBED && !REPLAY && kind !== 'skip') $('doneText').textContent = 'Bấm “Bắt đầu học” để vào buổi học đầu tiên. Những ngày sau: mở Trang chủ và bấm “Bắt đầu học”.';
+  $('doneRow').innerHTML = row; $('doneMore').innerHTML = more;
+  setTimeout(() => { const p = $('doneRow').querySelector('.primary'); if (p) p.focus(); }, 50);
+}
+
+/* Sự kiện */
+document.addEventListener('click', (e) => {
+  const t = e.target.closest('button'); if (!t) return;
+  if (t.dataset.step) goTo(+t.dataset.step);
+  else if (t.dataset.act === 'next') goTo(state.step + 1);
+  else if (t.dataset.act === 'back') goTo(state.step - 1);
+  else if (t.dataset.act === 'again') { state.quiz = null; goTo(0); }
+  else if (t.dataset.act === 'finish') showDone('finish');
+  else if (t.dataset.goal !== undefined) { state.minutes = +t.dataset.goal; $('extra').innerHTML = renderExtra(state.step); $('lead').textContent = leadOf(STEPS[state.step]); const b = $('extra').querySelector(`[data-goal="${state.minutes}"]`); if (b) b.focus(); }
+  else if (t.dataset.area) openDetail('area', t.dataset.area);
+  else if (t.dataset.stage) openDetail('stage', +t.dataset.stage);
+  else if (t.dataset.status) openDetail('status', +t.dataset.status);
+  else if (t.dataset.card) openDetail('card', t.dataset.card);
+  else if (t.dataset.opt) answerQuiz(+t.dataset.opt);
+  else if ('quizReset' in t.dataset) resetQuiz();
+});
+$('detailClose').onclick = closeDetail;
+let skipping = false;
+/* Thoát hướng dẫn sau khi mèo chạy đi.
+ * Trong app (embed): không hiện thẻ "Đã bỏ qua" — lần đầu báo app 'done/skip' (app lưu welcomed_at rồi về Trang chủ);
+ * xem lại (replay) báo 'close' (app đóng iframe, người học ở lại trang đang xem). Xem độc lập: hiện thẻ kết thúc như cũ. */
+function leaveAfterSkip() {
+  skipping = false;
+  if (EMBED && REPLAY) postToApp('close');
+  else if (EMBED) postToApp('done', { action: 'skip', dailyMinutes: null });
+  else showDone('skip');
+}
+if (EMBED && REPLAY) { $('skipBtn').textContent = 'Đóng'; $('skipBtn').setAttribute('aria-label', 'Đóng hướng dẫn'); }
+$('skipBtn').onclick = () => {
+  if (skipping) return;
+  // mèo 3D quay lưng chạy đi (animation chạy), chạy xong mới thoát; không có 3D (bản 2D / mèo lỗi) → thoát ngay
+  if (state.three && state.three.catRunAway(leaveAfterSkip)) { skipping = true; return; }
+  leaveAfterSkip();
+};
+function doneBack() {
+  $('done').classList.remove('open');
+  // nếu mèo đã chạy đi (do Bỏ qua) → đưa camera về bước đang xem và mèo đi bộ quay lại
+  if (state.three && state.three.catGone()) { goTo(state.step, { force: true }); state.three.catReturn(); }
+}
+function doneAgain() { $('done').classList.remove('open'); state.quiz = null; goTo(0, { force: true }); if (state.three) state.three.catReturn(); }
+$('done').addEventListener('click', (e) => {
+  const b = e.target.closest('button[data-done]'); if (!b) return;
+  const act = b.dataset.done;
+  if (act === 'again') doneAgain();
+  else if (act === 'back') doneBack();
+  else if (act === 'close') postToApp('close');
+  else {
+    // learn | home | skip → app lưu welcomed_at (+ mục tiêu), rồi tự đóng iframe; lưu lỗi thì app gửi 'save-failed'
+    document.querySelectorAll('#doneRow button, #doneMore button').forEach((x) => { x.disabled = true; });
+    b.setAttribute('aria-busy', 'true');
+    postToApp('done', { action: act, dailyMinutes: act === 'skip' ? null : state.minutes });
+  }
+});
+$('resetBtn').onclick = () => state.three && state.three.resetView();
+function applyMotion() {
+  $('motionBtn').setAttribute('aria-pressed', String(state.motion));
+  $('motionBtn').title = state.motion ? 'Tắt chuyển động' : 'Bật chuyển động';
+  if (state.three) state.three.setMotion(state.motion);
+}
+$('motionBtn').onclick = () => { state.motion = !state.motion; store.set('neko3d-motion', state.motion ? '1' : '0'); applyMotion(); };
+document.addEventListener('keydown', (e) => {
+  if (e.target.closest && e.target.closest('input,textarea')) return;
+  if (e.key === 'Escape') { if ($('done').classList.contains('open')) doneBack(); else closeDetail(); }
+  if ($('done').classList.contains('open')) return;
+  if (e.key === 'ArrowRight') goTo(state.step + 1);
+  if (e.key === 'ArrowLeft') goTo(state.step - 1);
+});
+
+function notice(html) { const n = $('notice'); n.innerHTML = html; n.classList.add('show'); }
+function useFlat(reason) {
+  document.body.classList.add('no3d');
+  notice(reason);
+  hideLoader();
+}
+function hideLoader() {
+  $('loader').classList.add('hide');
+  if (!state.readySent) { state.readySent = true; postToApp('ready', { mode: document.body.classList.contains('no3d') ? '2d' : '3d' }); }
+}
+
+/* Khởi động UI */
+$('logoImg').src = A['logo-bar'];
+$('loaderImg').src = A['mascot-study'];
+$('skyFallback').style.setProperty('--bg-img', `url(${A['bg']})`);
+renderPanel(); applyMotion();
+
+/* ---------- Tải Three.js ---------- */
+function hasWebGL() {
+  try { const c = document.createElement('canvas'); return !!(window.WebGLRenderingContext && (c.getContext('webgl2') || c.getContext('webgl'))); } catch { return false; }
+}
+function withTimeout(p, ms) { return Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))]); }
+async function loadThree() {
+  let THREE = null, GLTFLoader = null, MeshoptDecoder = null;
+  try { THREE = await withTimeout(import(THREE_URL), 20000); } catch (err) { console.warn('[NekoNeko 3D] Không tải được three', err && err.message); return null; }
+  try { ({ GLTFLoader } = await withTimeout(import(ADDONS_URL + 'loaders/GLTFLoader.js'), 20000)); }
+  catch (err) { console.warn('[NekoNeko 3D] Không tải được GLTFLoader', err && err.message); }
+  try { ({ MeshoptDecoder } = await withTimeout(import(ADDONS_URL + 'libs/meshopt_decoder.module.js'), 20000)); }
+  catch (err) { console.warn('[NekoNeko 3D] Không tải được MeshoptDecoder', err && err.message); }
+  return { THREE, GLTFLoader, MeshoptDecoder };
+}
+(async function boot() {
+  if (!hasWebGL()) { useFlat('<b>Trình duyệt không bật WebGL</b> nên không dựng được cảnh 3D. Đang hiển thị bản 2D với cùng nội dung.'); return; }
+  const lib = await loadThree();
+  const THREE = lib && lib.THREE;
+  if (!THREE) { useFlat('<b>Không tải được thư viện 3D.</b> Đang hiển thị bản 2D với cùng nội dung — tải lại trang để thử lại.'); return; }
+  try {
+    try {
+      await withTimeout(Promise.all([document.fonts.load('700 48px Nunito', 'Giáo trình Bảng chữ cái'), document.fonts.load('800 48px Nunito', 'Từ vựng'), document.fonts.load('400 48px Nunito'),
+        document.fonts.load('700 48px "Zen Maru Gothic"', 'あいうえおアネコ人学日本語猫ねこですサ')]), 6000);
+      await document.fonts.ready;
+    } catch { /* hết giờ chờ: dùng font hệ thống */ }
+    if (!document.fonts.check('700 48px "Zen Maru Gothic"', 'あ')) console.warn('[NekoNeko 3D] Font Zen Maru Gothic chưa sẵn sàng — chữ Nhật dùng font hệ thống.');
+    state.three = await buildWorld(THREE);
+    state.three.setMotion(state.motion);
+    state.three.goTo(state.step, true);
+    $('skyFallback').style.display = 'none';
+    hideLoader();
+    state.three.loadCat(lib.GLTFLoader, lib.MeshoptDecoder); // mèo 3D tải sau khi cảnh đã hiện — không chặn trang
+  } catch (err) {
+    console.error(err);
+    useFlat('<b>Không dựng được cảnh 3D</b> trên thiết bị này. Đang hiển thị bản 2D với cùng nội dung.');
+  }
+})();
+
+/* ============================================================
+ * Cảnh 3D
+ * ============================================================ */
+async function buildWorld(THREE) {
+  const canvas = $('scene');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.0;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+  const scene = new THREE.Scene();
+  const FOG = new THREE.Color('#FCE9E4');
+  scene.fog = new THREE.Fog(FOG, 34, 82);
+  const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 200);
+
+  const disposables = [];
+  const keep = (x) => { disposables.push(x); return x; };
+  const maxAniso = renderer.capabilities.getMaxAnisotropy();
+
+  /* --- Ảnh → texture --- */
+  const imgCache = {};
+  function loadImg(key) {
+    if (imgCache[key]) return imgCache[key];
+    imgCache[key] = new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = A[key]; });
+    return imgCache[key];
+  }
+  const keys = ['mascot-study', 'mascot-wave', 'logo', 'garden-art', 'island-1', 'island-2', 'island-3', 'island-4',
+    ...Object.values(CARDS).map((c) => c.img), ...Object.values(AREAS).map((a) => a.icon), 'ic-listening', 'ic-speaking', 'ic-reading', 'ic-writing', 'ic-memory', 'ic-roadmap'];
+  const IM = {};
+  await Promise.all([...new Set(keys)].map(async (k) => { IM[k] = await loadImg(k); }));
+  function tex(srcEl, { srgb = true } = {}) {
+    const t = keep(new THREE.Texture(srcEl));
+    t.needsUpdate = true; if (srgb) t.colorSpace = THREE.SRGBColorSpace;
+    t.anisotropy = maxAniso; t.minFilter = THREE.LinearMipmapLinearFilter; t.magFilter = THREE.LinearFilter; t.generateMipmaps = true;
+    return t;
+  }
+  const canvasTex = (cv) => { const t = keep(new THREE.CanvasTexture(cv)); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = maxAniso;
+    t.minFilter = THREE.LinearMipmapLinearFilter; t.magFilter = THREE.LinearFilter; t.generateMipmaps = true; return t; };
+
+  /* --- Vẽ canvas --- */
+  function rr(ctx, x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+  function labelCanvas(text, { size = 56, weight = 800, color = '#5C3F38', bg = 'rgba(255,253,248,.94)', border = '#F3DCD6', jp = false, padX = 34, padY = 18, dot = null } = {}) {
+    const cv = document.createElement('canvas'); const ctx = cv.getContext('2d');
+    const font = `${weight} ${size}px ${jp ? '"Zen Maru Gothic","Hiragino Sans",sans-serif' : 'Nunito,system-ui,sans-serif'}`;
+    ctx.font = font; const tw = ctx.measureText(text).width; const dotW = dot ? size * 0.75 : 0;
+    cv.width = Math.ceil(tw + padX * 2 + dotW); cv.height = Math.ceil(size * 1.3 + padY * 2);
+    ctx.font = font;
+    if (bg) { rr(ctx, 3, 3, cv.width - 6, cv.height - 6, (cv.height - 6) / 2); ctx.fillStyle = bg; ctx.fill(); ctx.lineWidth = 4; ctx.strokeStyle = border; ctx.stroke(); }
+    if (dot) { ctx.fillStyle = dot; ctx.beginPath(); ctx.arc(padX + size * 0.25, cv.height / 2, size * 0.24, 0, 7); ctx.fill(); }
+    ctx.fillStyle = color; ctx.textBaseline = 'middle'; ctx.fillText(text, padX + dotW, cv.height / 2 + size * 0.04);
+    return cv;
+  }
+  function label(text, height = 0.42, opts = {}) {
+    const cv = labelCanvas(text, opts);
+    const mat = keep(new THREE.SpriteMaterial({ map: canvasTex(cv), transparent: true, depthWrite: false, toneMapped: false }));
+    const sp = new THREE.Sprite(mat); sp.scale.set(height * cv.width / cv.height, height, 1); sp.renderOrder = 5;
+    return sp;
+  }
+
+  /* --- Hình khối bo góc --- */
+  function rrShape(w, h, r) {
+    const s = new THREE.Shape(); const x = -w / 2, y = -h / 2;
+    s.moveTo(x + r, y); s.lineTo(x + w - r, y); s.quadraticCurveTo(x + w, y, x + w, y + r); s.lineTo(x + w, y + h - r); s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    s.lineTo(x + r, y + h); s.quadraticCurveTo(x, y + h, x, y + h - r); s.lineTo(x, y + r); s.quadraticCurveTo(x, y, x + r, y); return s;
+  }
+  function faceGeo(w, h, r) {
+    const g = keep(new THREE.ShapeGeometry(rrShape(w, h, r), 10)); const p = g.attributes.position, uv = g.attributes.uv;
+    for (let i = 0; i < p.count; i++) uv.setXY(i, (p.getX(i) + w / 2) / w, (p.getY(i) + h / 2) / h);
+    return g;
+  }
+  function slab(w, h, r, depth, color, opts = {}) {
+    const g = keep(new THREE.ExtrudeGeometry(rrShape(w, h, r), { depth, bevelEnabled: true, bevelThickness: opts.bevel ?? 0.03, bevelSize: opts.bevel ?? 0.03, bevelSegments: 3, curveSegments: 10 }));
+    g.translate(0, 0, -depth - (opts.bevel ?? 0.03));
+    const m = keep(new THREE.MeshStandardMaterial({ color, roughness: opts.roughness ?? 0.55, metalness: 0 }));
+    const mesh = new THREE.Mesh(g, m); mesh.castShadow = true; mesh.receiveShadow = true; return mesh;
+  }
+
+  /* --- Nhãn HTML bám vật thể: chữ vẽ ở độ phân giải màn hình (không qua texture) --- */
+  const labelLayer = $('labels3d');
+  const overlayLabels = [];
+  let buildStation = 'hub';
+  function overlayLabel(parent, pos, text, { cls = '', dot = null, sub = null, owner = null } = {}) {
+    const anchor = new THREE.Object3D(); anchor.position.copy(pos); parent.add(anchor);
+    const el = document.createElement('div'); el.className = 'lbl3d ' + cls;
+    el.innerHTML = (dot ? `<i style="background:${dot}"></i>` : '') + `<span>${esc(text)}</span>` + (sub ? `<small>${esc(sub)}</small>` : '');
+    labelLayer.appendChild(el);
+    const prio = cls.includes('accent') ? 3 : cls.includes('note3d') ? 0 : cls.includes('tag') ? 1 : 2;
+    const L = { anchor, el, owner: owner || parent, station: buildStation, prio, op: 0, occ: false, w: 0, h: 0, shown: false, x: 0, y: 0 };
+    overlayLabels.push(L); return L;
+  }
+
+  const pickables = [];
+  const floaters = [];   // vật trôi nhẹ
+  const billboards = []; // quay theo camera (trục đứng)
+  const hovers = [];
+
+  /* --- Ánh sáng --- */
+  scene.add(new THREE.HemisphereLight('#FFF4F2', '#E6CBB8', 0.95));
+  const sun = new THREE.DirectionalLight('#FFE9D6', 2.5);
+  sun.position.set(14, 26, 16); sun.castShadow = true;
+  sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.02;
+  Object.assign(sun.shadow.camera, { left: -30, right: 30, top: 30, bottom: -30, near: 1, far: 80 });
+  scene.add(sun); scene.add(sun.target);
+  const spot = new THREE.SpotLight('#FFF0F3', 0, 40, 0.42, 0.75, 2);
+  spot.position.set(0, 12, 6); scene.add(spot); scene.add(spot.target);
+
+  /* --- Trời, nền, mặt đất --- */
+  { const cv = document.createElement('canvas'); cv.width = 16; cv.height = 512; const c = cv.getContext('2d');
+    const g = c.createLinearGradient(0, 0, 0, 512); g.addColorStop(0, '#FFCFD8'); g.addColorStop(0.55, '#FFE6E2'); g.addColorStop(1, '#FCE9E4');
+    c.fillStyle = g; c.fillRect(0, 0, 16, 512); scene.background = canvasTex(cv); }
+  /* Vòm trời: trước đây là ảnh minh hoạ phẳng dán lên mặt trụ cong → bị kéo giãn & méo. Nay là bầu trời 3D thật:
+     dải màu pastel (xanh nhạt trên đỉnh → hồng kem ở chân trời, khớp màu sương mù) + quầng sáng phía mặt trời. */
+  const skyMat = keep(new THREE.ShaderMaterial({
+    side: THREE.BackSide, depthWrite: false, fog: false, toneMapped: false,
+    uniforms: { uTop: { value: new THREE.Color('#B9D8F2') }, uMid: { value: new THREE.Color('#E3EEFA') }, uHorizon: { value: FOG.clone() },
+      uSun: { value: new THREE.Vector3(14, 26, 16).normalize() }, uGlow: { value: new THREE.Color('#FFF3E2') } },
+    vertexShader: `varying vec3 vDir; void main(){ vDir = normalize(position); gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+    fragmentShader: `uniform vec3 uTop, uMid, uHorizon, uGlow; uniform vec3 uSun; varying vec3 vDir;
+      void main(){ float h = clamp(vDir.y, 0.0, 1.0);
+        vec3 c = mix(uHorizon, uMid, smoothstep(0.0, 0.22, h)); c = mix(c, uTop, smoothstep(0.22, 0.75, h));
+        float sun = pow(max(dot(normalize(vDir), uSun), 0.0), 18.0); c = mix(c, uGlow, sun * 0.55);
+        gl_FragColor = vec4(c, 1.0); }`,
+  }));
+  { const sky = new THREE.Mesh(keep(new THREE.SphereGeometry(150, 48, 24)), skyMat); sky.renderOrder = -2; sky.frustumCulled = false; scene.add(sky); }
+  /* Mây 3D: mỗi đám là cụm khối cầu (dẹt đáy), tất cả gộp trong MỘT InstancedMesh → một lần vẽ. Trôi rất chậm quanh cảnh. */
+  const cloudRing = new THREE.Group(); scene.add(cloudRing);
+  { const rnd = (() => { let x = 20261020; return () => ((x = (x * 1664525 + 1013904223) >>> 0) / 4294967296); })(); // ngẫu nhiên cố định
+    const puffs = [];
+    const CLOUDS = 16;
+    for (let i = 0; i < CLOUDS; i++) {
+      const ang = (i / CLOUDS) * Math.PI * 2 + rnd() * 0.25; const r = 52 + rnd() * 16; const y = 13 + rnd() * 13; const big = 2.6 + rnd() * 2.2;
+      const cx = Math.cos(ang) * r, cz = Math.sin(ang) * r; const yaw = -ang + Math.PI / 2; const n = 5 + Math.floor(rnd() * 4);
+      for (let k = 0; k < n; k++) {
+        const t = (k / (n - 1)) * 2 - 1; const lx = t * big * 1.5 + (rnd() - 0.5) * big * 0.4;
+        const sc = big * (1 - Math.abs(t) * 0.45) * (0.75 + rnd() * 0.35); const ly = sc * 0.35 + rnd() * big * 0.25;
+        puffs.push({ x: cx + Math.cos(yaw) * lx, y: y + ly, z: cz - Math.sin(yaw) * lx + (rnd() - 0.5) * big * 0.6, sx: sc * 1.15, sy: sc * 0.82, sz: sc });
+      }
+    }
+    const geo = keep(new THREE.SphereGeometry(1, 20, 14));
+    const mat = keep(new THREE.MeshStandardMaterial({ color: '#FFFFFF', emissive: '#FFEFF2', emissiveIntensity: 0.5, roughness: 1, metalness: 0, fog: false })); // không phủ sương: mây trắng, có khối
+    const clouds = new THREE.InstancedMesh(geo, mat, puffs.length); const d = new THREE.Object3D();
+    puffs.forEach((pf, i) => { d.position.set(pf.x, pf.y, pf.z); d.scale.set(pf.sx, pf.sy, pf.sz); d.updateMatrix(); clouds.setMatrixAt(i, d.matrix); });
+    clouds.frustumCulled = false; cloudRing.add(clouds); }
+  { const cv = document.createElement('canvas'); cv.width = cv.height = 512; const c = cv.getContext('2d');
+    const g = c.createRadialGradient(256, 256, 40, 256, 256, 256); g.addColorStop(0, '#FFF7EE'); g.addColorStop(0.6, '#FCEBDD'); g.addColorStop(1, '#FBE6DC');
+    c.fillStyle = g; c.fillRect(0, 0, 512, 512);
+    const ground = new THREE.Mesh(keep(new THREE.CircleGeometry(75, 72)), keep(new THREE.MeshStandardMaterial({ map: canvasTex(cv), roughness: 0.95 })));
+    ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground); }
+
+  /* --- Bục --- */
+  function platform(radius, top, color, rim = '#FFFFFF') {
+    const g = new THREE.Group();
+    const body = new THREE.Mesh(keep(new THREE.CylinderGeometry(radius, radius * 1.04, top, 72)), keep(new THREE.MeshStandardMaterial({ color: '#FFF8F0', roughness: 0.7 })));
+    body.position.y = top / 2; body.castShadow = body.receiveShadow = true; g.add(body);
+    const cap = new THREE.Mesh(keep(new THREE.CylinderGeometry(radius * 0.97, radius * 0.97, 0.06, 72)), keep(new THREE.MeshStandardMaterial({ color, roughness: 0.6 })));
+    cap.position.y = top + 0.03; cap.receiveShadow = true; g.add(cap);
+    const ring = new THREE.Mesh(keep(new THREE.TorusGeometry(radius * 0.985, 0.05, 10, 96)), keep(new THREE.MeshStandardMaterial({ color: rim, roughness: 0.35, emissive: rim, emissiveIntensity: 0.15 })));
+    ring.rotation.x = Math.PI / 2; ring.position.y = top + 0.06; g.add(ring);
+    return g;
+  }
+
+  /* --- Billboard ảnh 2D có đổ bóng --- */
+  function billboard(img, height, { emissive = 0.55, cast = true } = {}) {
+    const w = height * img.width / img.height; const t = tex(img);
+    const geo = keep(new THREE.PlaneGeometry(w, height)); geo.translate(0, height / 2, 0);
+    const mat = keep(new THREE.MeshStandardMaterial({ map: t, emissiveMap: t, emissive: '#ffffff', emissiveIntensity: emissive, roughness: 0.9, alphaTest: 0.45, transparent: false, side: THREE.DoubleSide }));
+    const m = new THREE.Mesh(geo, mat); m.castShadow = cast;
+    m.customDepthMaterial = keep(new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking, map: t, alphaTest: 0.45 }));
+    return m;
+  }
+
+  /* --- Thẻ ảnh giao diện --- */
+  function card(id, w) {
+    const c = CARDS[id]; const img = IM[c.img]; const h = w * img.height / img.width;
+    const g = new THREE.Group();
+    const frame = slab(w + 0.16, h + 0.16, 0.16, 0.07, '#FFFFFF', { bevel: 0.035 }); g.add(frame);
+    const t = tex(img);
+    const face = new THREE.Mesh(faceGeo(w, h, 0.1), keep(new THREE.MeshBasicMaterial({ map: t, toneMapped: false })));
+    face.position.z = 0.012; g.add(face);
+    overlayLabel(g, V(0, -h / 2 - 0.26, 0.05), 'Ảnh thật · ' + c.title, { cls: 'tag', owner: g });
+    g.userData = { kind: 'card', id, hover: 0 };
+    face.userData.pick = g; frame.userData.pick = g; pickables.push(face, frame); hovers.push(g);
+    return g;
+  }
+
+  /* --- Khối kiến thức có mặt chữ --- */
+  /* Mặt chữ trên vật thể. Kích thước canvas đặt TRƯỚC khi vẽ; mọi số đo tính theo tỉ lệ canvas (k). */
+  function glyphFace(text, sub, bg, { w = 1024, h = 1024, glyphRatio = 0.56 } = {}) {
+    const cv = document.createElement('canvas'); cv.width = w; cv.height = h; const c = cv.getContext('2d');
+    const k = Math.min(w, h);
+    c.fillStyle = '#FFFDF9'; c.fillRect(0, 0, w, h);
+    const m = k * 0.045; c.fillStyle = bg; rr(c, m, m, w - 2 * m, h - 2 * m, k * 0.11); c.fill();
+    c.fillStyle = 'rgba(255,255,255,.55)'; rr(c, m * 2.2, m * 2.2, w - 4.4 * m, h - 4.4 * m, k * 0.09); c.fill();
+    c.textAlign = 'center'; c.textBaseline = 'middle';
+    const gs = k * glyphRatio * (text.length > 1 ? 0.62 : 1);
+    c.font = `700 ${Math.round(gs)}px "Zen Maru Gothic","Hiragino Sans","Yu Gothic",sans-serif`;
+    c.lineJoin = 'round'; c.lineWidth = gs * 0.06; c.strokeStyle = 'rgba(255,255,255,.9)';
+    const gy = h * (sub ? 0.42 : 0.52);
+    c.strokeText(text, w / 2, gy); c.fillStyle = '#2E1C18'; c.fillText(text, w / 2, gy);
+    if (sub) { c.font = `800 ${Math.round(k * 0.13)}px Nunito,"Zen Maru Gothic","Hiragino Sans",sans-serif`; c.fillStyle = '#4A302A'; c.fillText(sub, w / 2, h * 0.8); }
+    return cv;
+  }
+  function block(areaId, size = 1.15) {
+    const a = AREAS[areaId]; const g = new THREE.Group();
+    const body = slab(size, size, 0.2, size * 0.7, a.color, { bevel: 0.07, roughness: 0.45 }); g.add(body);
+    const face = new THREE.Mesh(faceGeo(size * 0.96, size * 0.96, 0.17), keep(new THREE.MeshBasicMaterial({ map: canvasTex(glyphFace(a.glyph, null, a.color)), toneMapped: false })));
+    face.position.z = 0.012; g.add(face);
+    const icon = billboard(IM[a.icon], 0.95, { cast: false, emissive: 0.6 }); icon.position.set(0, size / 2 + 0.05, -size * 0.35); g.add(icon); billboards.push(icon);
+    overlayLabel(g, V(0, -size / 2 + 0.02, 0.32), a.label, { cls: 'area', owner: g });
+    g.userData = { kind: 'area', id: areaId, hover: 0 };
+    face.userData.pick = g; body.userData.pick = g; pickables.push(face, body); hovers.push(g);
+    return g;
+  }
+
+  /* ===== Bố cục thế giới ===== */
+  const V = (x, y, z) => new THREE.Vector3(x, y, z);
+  const STATIONS = { roadmap: V(-13, 0, -10), learning: V(-4.5, 0, -21), practice: V(7.5, 0, -21), memory: V(15.5, 0, -9.5) };
+  const facing = (p) => Math.atan2(0 - p.x, 7 - p.z); // quay mặt về phía khu trung tâm
+  const groups = {};
+
+  /* Trung tâm: mascot */
+  const hub = new THREE.Group(); scene.add(hub); groups.hub = hub;
+  hub.add(platform(3.6, 0.55, '#FFD6DE', '#FFFFFF'));
+  const mascotA = billboard(IM['mascot-study'], 4.1); mascotA.position.y = 0.6; hub.add(mascotA); billboards.push(mascotA);
+  const mascotB = billboard(IM['mascot-wave'], 4.3); mascotB.position.y = 0.6; mascotB.visible = false; hub.add(mascotB); billboards.push(mascotB);
+  for (const m of [mascotA, mascotB]) { m.userData.pick = { userData: { kind: 'mascot', id: 'neko' } }; pickables.push(m); m.material.transparent = true; }
+  // Mèo 2D chỉ còn là phương án dự phòng khi không tải được model GLB — mặc định ẩn để không có hai con mèo chồng nhau.
+  let catMode = 'loading';
+  const cat = { root: new THREE.Group(), model: null, proxy: null, baseScale: 1, yaw: 0, yawGoal: 0, appear: 0, hop: 0, spin: 0, pendingCelebrate: false, busy: false,
+    mixer: null, clips: {}, actions: {}, current: null, walkIn: null, walkSpeed: 0, trick: false };
+  cat.root.position.set(0, 0.6, 0); hub.add(cat.root);
+  const logo = billboard(IM['logo'], 1.9, { cast: false, emissive: 0.7 }); logo.position.set(0, 5.1, -0.6); hub.add(logo); billboards.push(logo); floaters.push({ o: logo, base: 5.1, amp: 0.12, sp: 0.9, ph: 0 });
+  // sách xếp chồng (khối 3D thật)
+  { const books = new THREE.Group(); const cols = ['#FF8FA0', '#9CCFE0', '#A7D39A'];
+    cols.forEach((col, i) => {
+      const geo = keep(new THREE.BoxGeometry(1.35 - i * 0.12, 0.24, 0.95 - i * 0.06));
+      const page = keep(new THREE.MeshStandardMaterial({ color: '#FFF8EC', roughness: 0.8 })); const cover = keep(new THREE.MeshStandardMaterial({ color: col, roughness: 0.5 }));
+      const b = new THREE.Mesh(geo, [page, cover, cover, cover, page, page]); b.position.y = 0.12 + i * 0.25; b.rotation.y = (i - 1) * 0.28; b.castShadow = b.receiveShadow = true; books.add(b);
+    });
+    const kana = new THREE.Mesh(faceGeo(0.6, 0.6, 0.12), keep(new THREE.MeshBasicMaterial({ map: canvasTex(glyphFace('あ', null, '#FFE4B0', { w: 512, h: 512 })), toneMapped: false })));
+    kana.rotation.x = -Math.PI / 2; kana.position.set(0, 0.77, 0); books.add(kana);
+    books.position.set(-2.35, 0.6, 1.0); hub.add(books); }
+  // thẻ từ vựng nghiêng
+  { const vc = new THREE.Group(); const fc = new THREE.Mesh(faceGeo(1.2, 0.8, 0.1), keep(new THREE.MeshBasicMaterial({ map: canvasTex(glyphFace('猫', 'ねこ · con mèo', '#EAE4F7', { w: 1200, h: 800, glyphRatio: 0.6 })), toneMapped: false })));
+    fc.position.z = 0.01; vc.add(slab(1.26, 0.86, 0.12, 0.03, '#FFFFFF', { bevel: 0.015 })); vc.add(fc);
+    vc.position.set(2.45, 1.25, 1.0); vc.rotation.set(-0.15, -0.5, 0.06); hub.add(vc); floaters.push({ o: vc, base: 1.25, amp: 0.1, sp: 1.1, ph: 1.3 }); }
+  // bong bóng xà phòng chứa chữ, bay quanh mascot
+  const orbit = new THREE.Group(); hub.add(orbit);
+  const bubbles = [];
+  const bubbleGeo = keep(new THREE.SphereGeometry(1, 48, 32));
+  // màng xà phòng: viền sáng theo góc nhìn (fresnel) + dải màu cầu vồng mỏng (giao thoa màng mỏng) + đốm phản chiếu
+  const bubbleMat = keep(new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false, toneMapped: false,
+    uniforms: { uTime: { value: 0 } },
+    vertexShader: `
+      varying vec3 vN; varying vec3 vV; varying vec3 vW;
+      void main(){ vec4 wp = modelMatrix * vec4(position,1.0); vW = position;
+        vN = normalize(mat3(modelMatrix) * normal); vV = normalize(cameraPosition - wp.xyz);
+        gl_Position = projectionMatrix * viewMatrix * wp; }`,
+    fragmentShader: `
+      uniform float uTime; varying vec3 vN; varying vec3 vV; varying vec3 vW;
+      vec3 hue(float h){ return clamp(abs(mod(h*6.0+vec3(0.,4.,2.),6.)-3.)-1.,0.,1.); }
+      void main(){
+        vec3 n = normalize(vN); float f = 1.0 - abs(dot(n, normalize(vV)));
+        float rim = pow(f, 2.2);
+        float swirl = sin(vW.y*5.0 + uTime*0.8 + sin(vW.x*4.0 - uTime*0.6)*1.4) * 0.12;
+        vec3 film = mix(vec3(1.0), hue(f*1.25 + swirl + uTime*0.05), 0.55);
+        vec3 L = normalize(vec3(-0.45, 0.75, 0.5));
+        float spec = pow(max(dot(reflect(-normalize(vV), n), L), 0.0), 60.0);
+        float spec2 = pow(max(dot(reflect(-normalize(vV), n), normalize(vec3(0.5,-0.3,0.6))), 0.0), 140.0) * 0.6;
+        float a = 0.05 + rim * 0.7 + spec * 0.9 + spec2;
+        gl_FragColor = vec4(film * (0.85 + rim * 0.3) + vec3(spec + spec2), clamp(a, 0.0, 0.95));
+      }`,
+  }));
+  function glyphSprite(ch) {
+    const cv = document.createElement('canvas'); cv.width = cv.height = 256; const c = cv.getContext('2d');
+    c.textAlign = 'center'; c.textBaseline = 'middle'; c.font = '700 168px "Zen Maru Gothic","Hiragino Sans",sans-serif';
+    c.lineJoin = 'round'; c.lineWidth = 16; c.strokeStyle = 'rgba(255,255,255,.95)'; c.strokeText(ch, 128, 136);
+    c.fillStyle = '#C2385A'; c.fillText(ch, 128, 136);
+    const sp = new THREE.Sprite(keep(new THREE.SpriteMaterial({ map: canvasTex(cv), transparent: true, depthWrite: false, toneMapped: false })));
+    sp.renderOrder = 6; return sp;
+  }
+  const BUBBLE_READ = ['a', 'i', 'u', 'e', 'o', 'ne', 'ko', 'nichi · ngày', 'hon · sách', 'go · ngôn ngữ'];
+  'あいうえおネコ日本語'.split('').forEach((ch, i, arr) => {
+    const g = new THREE.Group();
+    const a = (i / arr.length) * Math.PI * 2; const r = 0.42 + (i % 3) * 0.05;
+    g.position.set(Math.cos(a) * 6.2, 2.6 + (i % 3) * 0.9, Math.sin(a) * 6.2);
+    const glyph = glyphSprite(ch); glyph.scale.setScalar(r * 1.25); g.add(glyph);
+    const shell = new THREE.Mesh(bubbleGeo, bubbleMat); shell.scale.setScalar(r); shell.renderOrder = 7; g.add(shell);
+    shell.userData.pick = { userData: { kind: 'bubble', id: i } }; pickables.push(shell);
+    orbit.add(g);
+    bubbles.push({ g, glyph, shell, r, ch, read: BUBBLE_READ[i], baseY: g.position.y, baseX: g.position.x, ph: i * 1.7, pop: 0, gone: 0 });
+  });
+  // chạm vào bong bóng: vỡ ra rồi một lúc sau thổi lại
+  function popBubble(i) {
+    const b = bubbles[i]; if (!b || b.pop > 0 || b.gone > 0) return;
+    b.pop = 0.0001; needs = true;
+  }
+
+  /* Lối đi bằng đá tròn từ trung tâm tới các trạm */
+  { const stoneGeo = keep(new THREE.CylinderGeometry(0.42, 0.46, 0.08, 24)); const stoneMat = keep(new THREE.MeshStandardMaterial({ color: '#F5DCCD', roughness: 0.85 }));
+    for (const p of Object.values(STATIONS)) {
+      const from = V(0, 0, 0), dir = p.clone().sub(from); const len = dir.length(); dir.normalize();
+      for (let d = 4.6; d < len - 5; d += 1.25) { const s = new THREE.Mesh(stoneGeo, stoneMat); s.position.copy(from).addScaledVector(dir, d); s.position.y = 0.04; s.receiveShadow = true; scene.add(s); }
+    } }
+
+  /* Trạm 1: Lộ trình */
+  const dayTiles = { mesh: null, day: 23 };
+  buildStation = 'roadmap';
+  { const st = new THREE.Group(); st.position.copy(STATIONS.roadmap); st.rotation.y = facing(STATIONS.roadmap); scene.add(st); groups.roadmap = st;
+    st.add(platform(5.4, 0.45, '#FFF0E4', '#FFD6DE'));
+    const c1 = card('roadmap', 3.3); c1.position.set(-2.3, 3.0, -2.6); c1.rotation.y = 0.22; st.add(c1); floaters.push({ o: c1, base: 3.0, amp: 0.07, sp: 0.8, ph: 0.2 });
+    const c2 = card('day', 3.6); c2.position.set(2.2, 2.9, -2.6); c2.rotation.y = -0.22; st.add(c2); floaters.push({ o: c2, base: 2.9, amp: 0.07, sp: 0.8, ph: 1.4 });
+    // 90 ô ngày — đường rắn như bản đồ trong app
+    const geo = keep(new THREE.CylinderGeometry(0.17, 0.19, 0.14, 20)); const mat = keep(new THREE.MeshStandardMaterial({ roughness: 0.45 }));
+    const mesh = new THREE.InstancedMesh(geo, mat, 90); mesh.castShadow = true; mesh.receiveShadow = true;
+    const dummy = new THREE.Object3D(); const col = new THREE.Color();
+    for (let d = 1; d <= 90; d++) {
+      const row = Math.floor((d - 1) / 10); let colI = (d - 1) % 10; if (row % 2) colI = 9 - colI;
+      dummy.position.set(-1.89 + colI * 0.42, 0.52, 3.55 - row * 0.44); dummy.scale.set(1, d === 23 ? 3.2 : 1, 1); dummy.position.y += d === 23 ? 0.15 : 0; dummy.updateMatrix();
+      mesh.setMatrixAt(d - 1, dummy.matrix);
+      const g = STAGES.find((x) => d >= x.from && d <= x.to); col.set(d === 23 ? '#FF5B73' : g.color); mesh.setColorAt(d - 1, col);
+    }
+    mesh.userData.pickInstanced = true; st.add(mesh); pickables.push(mesh); dayTiles.mesh = mesh;
+    { const row = Math.floor((23 - 1) / 10), colI = (23 - 1) % 10; overlayLabel(st, V(-1.89 + colI * 0.42, 1.3, 3.55 - row * 0.44), 'Ví dụ: ngày 23', { cls: 'accent', owner: mesh }); }
+    // đảo minh hoạ 4 chặng
+    [[-4.8, -1.6], [-4.1, 1.0], [4.1, -0.5], [4.1, 1.9]].forEach(([x, z], i) => {
+      const b = billboard(IM['island-' + (i + 1)], 1.3, { emissive: 0.5 }); b.position.set(x, 0.45, z); st.add(b); billboards.push(b);
+      b.userData.pick = { userData: { kind: 'stage', id: i } }; pickables.push(b);
+      overlayLabel(st, V(x, 1.95, z), STAGES[i].name, { dot: STAGES[i].color, sub: STAGES[i].from + '–' + STAGES[i].to, owner: b });
+    });
+  }
+
+  /* Trạm 2: Học tập */
+  buildStation = 'learning';
+  { const st = new THREE.Group(); st.position.copy(STATIONS.learning); st.rotation.y = facing(STATIONS.learning); scene.add(st); groups.learning = st;
+    st.add(platform(5.8, 0.45, '#F3EEFB', '#EAE4F7'));
+    ['hiragana', 'kanji', 'vocab', 'grammar'].forEach((id, i) => {
+      const x = -3.6 + i * 2.4; const c = card(id, 2.2); c.position.set(x, 3.55, -1.6 - Math.abs(x) * 0.18); c.rotation.y = -x * 0.075; st.add(c);
+      floaters.push({ o: c, base: 3.55, amp: 0.06, sp: 0.7, ph: i });
+    });
+    Object.keys(AREAS).forEach((id, i) => {
+      const b = block(id, 1.02); const x = -3.2 + i * 1.28; b.position.set(x, 1.1, 1.9 - Math.abs(x) * 0.12); b.rotation.y = -x * 0.06; st.add(b);
+      floaters.push({ o: b, base: 1.1, amp: 0.09, sp: 1.2, ph: i * 0.7, rot: true });
+    });
+  }
+
+  /* Trạm 3: Luyện tập — bảng câu hỏi 3D */
+  const quiz = { tiles: [], redraw: null };
+  buildStation = 'practice';
+  { const st = new THREE.Group(); st.position.copy(STATIONS.practice); st.rotation.y = facing(STATIONS.practice); scene.add(st); groups.practice = st;
+    st.add(platform(5.6, 0.45, '#FFF4E2', '#FFE4B0'));
+    const board = new THREE.Group(); board.position.set(0, 3.15, -0.6); st.add(board);
+    board.add(slab(3.9, 2.1, 0.3, 0.12, '#FFFFFF', { bevel: 0.05 }));
+    { const cv = document.createElement('canvas'); cv.width = 2048; cv.height = 1104; const c = cv.getContext('2d'); c.scale(2, 2);
+      c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, 1024, 552); c.textAlign = 'center'; c.textBaseline = 'middle';
+      c.fillStyle = '#5E5A57'; c.font = '700 46px Nunito,sans-serif'; c.fillText('Bạn còn nhớ cái này không?', 512, 70);
+      c.fillStyle = '#252525'; c.font = '700 250px "Zen Maru Gothic","Hiragino Sans",sans-serif'; c.fillText(QUIZ.glyph, 512, 285);
+      c.fillStyle = '#3A2A26'; c.font = '800 52px Nunito,sans-serif'; c.fillText(QUIZ.ask, 512, 478);
+      const f = new THREE.Mesh(faceGeo(3.75, 2.0, 0.24), keep(new THREE.MeshBasicMaterial({ map: canvasTex(cv), toneMapped: false }))); f.position.z = 0.01; board.add(f); }
+    QUIZ.options.forEach((o, i) => {
+      const cv = document.createElement('canvas'); cv.width = 1024; cv.height = 320; const t = canvasTex(cv);
+      const g = new THREE.Group(); const body = slab(1.8, 0.56, 0.2, 0.16, '#FFF4F5', { bevel: 0.04 }); g.add(body);
+      const f = new THREE.Mesh(faceGeo(1.76, 0.52, 0.18), keep(new THREE.MeshBasicMaterial({ map: t, toneMapped: false }))); f.position.z = 0.012; g.add(f);
+      g.position.set(i % 2 ? 0.98 : -0.98, i < 2 ? 1.42 : 0.78, 1.15 + (i < 2 ? -0.15 : 0.2)); g.rotation.x = -0.32; st.add(g);
+      g.userData = { kind: 'answer', id: i, hover: 0 }; f.userData.pick = g; body.userData.pick = g; pickables.push(f, body); hovers.push(g);
+      quiz.tiles.push({ g, body, cv, t, text: o });
+    });
+    quiz.redraw = () => {
+      const q = state.quiz;
+      quiz.tiles.forEach((tl, i) => {
+        const c = tl.cv.getContext('2d'); c.setTransform(2, 0, 0, 2, 0, 0); let bg = '#FFFAFA', fg = '#2E1C18', bd = '#EFC6CC', body = '#FFF4F5';
+        if (q !== null && i === QUIZ.answer) { bg = '#E9F6EC'; fg = '#2F6B39'; bd = '#9FD3A6'; body = '#CFEBD5'; }
+        else if (q !== null && i === q) { bg = '#FFEFF2'; fg = '#B23A4E'; bd = '#F5A8B5'; body = '#FFD3DB'; }
+        c.clearRect(0, 0, 512, 160); c.fillStyle = bg; rr(c, 4, 4, 504, 152, 40); c.fill(); c.lineWidth = 6; c.strokeStyle = bd; c.stroke();
+        c.fillStyle = fg; c.font = '800 76px Nunito,sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(tl.text + (q !== null && i === QUIZ.answer ? '  ✓' : ''), 256, 84);
+        tl.t.needsUpdate = true; tl.body.material.color.set(body);
+      });
+    };
+    quiz.redraw();
+    const c1 = card('quiz', 2.55); c1.position.set(-4.35, 3.0, -1.1); c1.rotation.y = 0.42; st.add(c1); floaters.push({ o: c1, base: 3.0, amp: 0.07, sp: 0.8, ph: 0.4 });
+    const c2 = card('skills', 2.7); c2.position.set(4.35, 3.0, -1.1); c2.rotation.y = -0.42; st.add(c2); floaters.push({ o: c2, base: 3.0, amp: 0.07, sp: 0.8, ph: 2.1 });
+    ['ic-listening', 'ic-speaking', 'ic-reading', 'ic-writing'].forEach((k, i) => {
+      const b = billboard(IM[k], 0.85, { cast: false, emissive: 0.6 }); b.position.set(-1.65 + i * 1.1, 4.45, -0.9); st.add(b); billboards.push(b);
+      floaters.push({ o: b, base: 4.45, amp: 0.1, sp: 1.3, ph: i * 0.8 });
+    });
+  }
+
+  /* Trạm 4: Ôn tập — cột trạng thái + đường cong trí nhớ (minh hoạ công thức) */
+  buildStation = 'memory';
+  { const st = new THREE.Group(); st.position.copy(STATIONS.memory); st.rotation.y = facing(STATIONS.memory); scene.add(st); groups.memory = st;
+    st.add(platform(5.8, 0.45, '#EAF6EC', '#DFF3E4'));
+    STATUSES.forEach((s, i) => {
+      const h = s.top / 42; const x = -2.6 + i * 1.3;
+      const m = new THREE.Mesh(keep(new THREE.CylinderGeometry(0.4, 0.44, h, 40)), keep(new THREE.MeshStandardMaterial({ color: s.color, roughness: 0.45 })));
+      m.position.set(x, 0.45 + h / 2, 1.4); m.castShadow = m.receiveShadow = true; st.add(m);
+      const capM = new THREE.Mesh(keep(new THREE.SphereGeometry(0.4, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2)), m.material); capM.position.set(x, 0.45 + h, 1.4); capM.castShadow = true; st.add(capM);
+      overlayLabel(st, V(x, 0.45 + h + 0.72, 1.4), s.name, { dot: s.color, sub: s.range, owner: m });
+      m.userData = { kind: 'status', id: i, hover: 0 }; m.userData.pick = m; capM.userData.pick = m; pickables.push(m, capM);
+    });
+    // bảng đồ thị
+    const board = new THREE.Group(); board.position.set(0, 4.6, -1.2); st.add(board);
+    const BW = 4.6, BH = 2.3; board.add(slab(BW + 0.2, BH + 0.2, 0.2, 0.08, '#FFFFFF', { bevel: 0.04 }));
+    const cv = document.createElement('canvas'); cv.width = 2048; cv.height = 1024; const c = cv.getContext('2d'); c.scale(2, 2);
+    c.fillStyle = '#FFFDF9'; c.fillRect(0, 0, 1024, 512);
+    const PX = (t) => 70 + (t / 40) * 910, PY = (s) => 450 - (s / 100) * 380;
+    [[90, '#FDE3EA'], [74, '#E3F2E5'], [56, '#EEF7EA'], [40, '#FFF1DC'], [10, '#FBE8DD']].forEach(([s, color], i, arr) => { const top = i === 0 ? 100 : arr[i - 1][0]; c.fillStyle = color; c.fillRect(70, PY(top), 910, PY(s) - PY(top)); });
+    c.fillStyle = '#FBE8DD'; c.fillRect(70, PY(40), 910, PY(10) - PY(40));
+    c.strokeStyle = '#E9D9D3'; c.lineWidth = 2; for (let t = 0; t <= 40; t += 5) { c.beginPath(); c.moveTo(PX(t), PY(10)); c.lineTo(PX(t), PY(100)); c.stroke(); }
+    c.fillStyle = '#5E5A57'; c.font = '700 32px Nunito,sans-serif'; c.textAlign = 'center'; for (let t = 0; t <= 40; t += 10) c.fillText(t + ' ngày', PX(t), 490);
+    c.textAlign = 'left'; c.fillStyle = '#4A302A'; c.font = '800 38px Nunito,sans-serif'; c.fillText('Điểm nhớ của một kiến thức (minh hoạ)', 80, 38);
+    const bf = new THREE.Mesh(faceGeo(BW, BH, 0.18), keep(new THREE.MeshBasicMaterial({ map: canvasTex(cv), toneMapped: false }))); bf.position.z = 0.01; board.add(bf);
+    bf.userData.pick = { userData: { kind: 'curve', id: 0 } }; pickables.push(bf);
+    // mô phỏng theo docs/memory-engine.md
+    const pts = []; const events = []; let score = 35, last = 0, next = 1; const outcomes = [true, false, true, true, true, true, true, true];
+    pts.push([0, 35]); let k = 0;
+    while (next <= 40 && k < outcomes.length) {
+      const t = next; const decayed = Math.max(10, score - 0.45 * (t - last)); pts.push([t, decayed]);
+      const ok = outcomes[k++]; score = ok ? Math.min(99, decayed + 14) : Math.max(10, decayed - 6);
+      pts.push([t, score]); events.push([t, score, ok]); last = t; next = t + (ok ? Math.max(1, Math.round(score / 18)) : 1);
+    }
+    pts.push([40, Math.max(10, score - 0.45 * (40 - last))]);
+    const toLocal = ([t, s]) => V(-BW / 2 + ((PX(t)) / 1024) * BW, -BH / 2 + (1 - PY(s) / 512) * BH, 0.09);
+    const path = new THREE.CurvePath(); for (let i = 1; i < pts.length; i++) path.add(new THREE.LineCurve3(toLocal(pts[i - 1]), toLocal(pts[i])));
+    const tube = new THREE.Mesh(keep(new THREE.TubeGeometry(path, 260, 0.03, 8, false)), keep(new THREE.MeshStandardMaterial({ color: '#E24159', roughness: 0.35, emissive: '#E24159', emissiveIntensity: 0.25 })));
+    board.add(tube);
+    const dotGeo = keep(new THREE.SphereGeometry(0.075, 20, 12));
+    events.forEach(([t, s, ok]) => { const d = new THREE.Mesh(dotGeo, keep(new THREE.MeshStandardMaterial({ color: ok ? '#5FA36A' : '#E7A040', roughness: 0.4 }))); d.position.copy(toLocal([t, s])); d.position.z = 0.12; board.add(d); });
+    overlayLabel(board, V(0, -BH / 2 - 0.52, 0.1), 'Minh hoạ công thức — không phải dữ liệu của bạn', { cls: 'note3d', owner: board });
+    const c1 = card('memory', 2.7); c1.position.set(-4.45, 2.9, -0.4); c1.rotation.y = 0.45; st.add(c1); floaters.push({ o: c1, base: 2.9, amp: 0.07, sp: 0.8, ph: 0.4 });
+    const c2 = card('garden', 2.7); c2.position.set(4.45, 2.9, -0.4); c2.rotation.y = -0.45; st.add(c2); floaters.push({ o: c2, base: 2.9, amp: 0.07, sp: 0.8, ph: 1.9 });
+    const gart = billboard(IM['garden-art'], 1.6); gart.position.set(4.3, 0.45, 2.6); st.add(gart); billboards.push(gart);
+  }
+
+  /* Trạm cuối dùng lại khu trung tâm; thêm thẻ Trang chủ phía sau mascot */
+  buildStation = 'finish';
+  { const c = card('home', 3.4); c.position.set(-4.6, 3.1, -1.8); c.rotation.y = 0.45; hub.add(c); floaters.push({ o: c, base: 3.1, amp: 0.07, sp: 0.8, ph: 0.9 }); groups.homeCard = c; c.visible = false; }
+
+  /* Cánh hoa anh đào rơi */
+  const petals = (() => {
+    const cv = document.createElement('canvas'); cv.width = cv.height = 64; const c = cv.getContext('2d');
+    c.translate(32, 32); c.rotate(0.6); c.fillStyle = '#FFB7C5'; c.beginPath(); c.ellipse(0, 0, 13, 22, 0, 0, 7); c.fill();
+    c.fillStyle = 'rgba(255,255,255,.55)'; c.beginPath(); c.ellipse(-3, -6, 4, 9, 0, 0, 7); c.fill();
+    const N = window.innerWidth < 760 ? 70 : 140; const pos = new Float32Array(N * 3); const seed = new Float32Array(N);
+    for (let i = 0; i < N; i++) { pos[i * 3] = (Math.random() - 0.5) * 50; pos[i * 3 + 1] = Math.random() * 14; pos[i * 3 + 2] = -32 + Math.random() * 44; seed[i] = Math.random() * 10; }
+    const geo = keep(new THREE.BufferGeometry()); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    const pts = new THREE.Points(geo, keep(new THREE.PointsMaterial({ map: canvasTex(cv), size: 0.38, transparent: true, depthWrite: false, alphaTest: 0.05 })));
+    scene.add(pts); return { pts, pos, seed, N, geo };
+  })();
+
+  /* ===== Camera & góc nhìn ===== */
+  function viewOf(step) {
+    const id = STEPS[step].id;
+    if (id === 'welcome') return { target: V(0, 2.6, 0), pos: V(0.6, 3.8, 12.5) };
+    if (id === 'finish') return { target: V(-1.3, 2.7, 0), pos: V(-5.2, 4.0, 11.2) };
+    const st = groups[id]; const center = st.position.clone(); const yaw = st.rotation.y;
+    const fwd = V(Math.sin(yaw), 0, Math.cos(yaw));
+    const dist = { roadmap: 12.2, learning: 11.2, practice: 10.6, memory: 11.6 }[id];
+    const ty = { roadmap: 2.1, learning: 2.5, practice: 2.6, memory: 2.9 }[id];
+    return { target: center.clone().add(V(0, ty, 0)).addScaledVector(fwd, id === 'roadmap' ? 0.6 : 0.2), pos: center.clone().addScaledVector(fwd, dist).add(V(0, ty + (id === 'roadmap' ? 3.6 : 1.4), 0)) };
+  }
+  const cam = {
+    from: null, to: viewOf(0), t: 1, dur: 1.6,
+    user: { yaw: 0, pitch: 0, zoom: 1 }, cur: { yaw: 0, pitch: 0, zoom: 1 },
+    basePos: V(0, 0, 0), baseTarget: V(0, 0, 0),
+  };
+  cam.basePos.copy(cam.to.pos); cam.baseTarget.copy(cam.to.target);
+  const ease = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+
+  let W = 1, H = 1, aspectMul = 1;
+  function layoutOffset() {
+    const panel = $('panel').getBoundingClientRect();
+    if (W <= 760) return { x: 0, y: H * 0.19 };
+    if (H > W && W <= 1100) return { x: 0, y: H * 0.15 };
+    return { x: -(panel.right + 10) * 0.42, y: 0 };
+  }
+  function resize() {
+    W = window.innerWidth; H = window.innerHeight;
+    renderer.setSize(W, H, false); camera.aspect = W / H;
+    const a = W / H; aspectMul = a < 0.8 ? Math.min(1.85, 1.05 / a) : a < 1.25 ? 1.25 : a < 1.5 ? 1.08 : 1;
+    const off = layoutOffset(); camera.setViewOffset(W, H, off.x, off.y, W, H);
+    if (typeof measureLabels === 'function' && overlayLabels.length) measureLabels();
+    camera.updateProjectionMatrix(); needs = true;
+  }
+  let needs = true;
+  const ro = new ResizeObserver(resize); ro.observe(document.body); window.addEventListener('resize', resize);
+  resize();
+
+  function goTo(step, instant = false) {
+    const v = viewOf(step);
+    cam.from = { pos: cam.basePos.clone(), target: cam.baseTarget.clone() }; cam.to = v;
+    cam.t = instant ? 1 : 0; cam.dur = state.motion ? 1.7 : 0.45;
+    if (instant) { cam.basePos.copy(v.pos); cam.baseTarget.copy(v.target); }
+    cam.user.yaw = 0; cam.user.pitch = 0; cam.user.zoom = 1;
+    const id = STEPS[step].id;
+    const focus = id === 'welcome' || id === 'finish' ? V(0, 0, 0) : groups[id].position;
+    spot.target.position.copy(focus).add(V(0, 1.5, 0)); spot.position.copy(focus).add(V(0, 13, 7)); spotGoal = 240;
+    swapMascot(id === 'finish');
+    // mèo 3D quay về phía camera mặc định của bước (không bám theo khi kéo xoay — để thấy được các mặt của model)
+    if (id === 'welcome' || id === 'finish') { const wp = hub.position; cat.yawGoal = Math.max(-0.9, Math.min(0.9, Math.atan2(v.pos.x - wp.x, v.pos.z - wp.z))); }
+    if (id === 'finish' && !instant) cat.pendingCelebrate = true;
+    if (id !== 'finish' && id !== 'welcome' && !cat.runOut) catPlay(null);
+    if (id === 'welcome' && catPrevStep === 'finish' && !instant) catWalkIn('walk');
+    else if (id === 'welcome' && state.motion && !cat.walkIn && !cat.runOut && !cat.gone && cat.current !== 'trick' && catHubAnim()) catPlay(catHubAnim());
+    catPrevStep = id;
+    groups.homeCard.visible = id === 'finish';
+    if (id === 'practice') quiz.redraw();
+    for (const L of overlayLabels) L.occ = null;
+    needs = true;
+  }
+  let spotGoal = 240;
+  function resetView() { cam.user.yaw = 0; cam.user.pitch = 0; cam.user.zoom = 1; needs = true; }
+  let mascotSwap = { t: 1, toB: false };
+  function swapMascot(toB) { if (mascotSwap.toB === toB) return; mascotSwap = { t: state.motion ? 0 : 1, toB }; mascotB.visible = true; mascotA.visible = true; }
+
+  /* ===== Tương tác chuột / chạm ===== */
+  const ray = new THREE.Raycaster(); const ndc = new THREE.Vector2();
+  const pointers = new Map(); let drag = null; let pinch0 = 0, pinchZoom = 1; let hovered = null;
+  function pick(clientX, clientY) {
+    ndc.set((clientX / W) * 2 - 1, -(clientY / H) * 2 + 1); ray.setFromCamera(ndc, camera);
+    const hits = ray.intersectObjects(pickables, false);
+    for (const h of hits) {
+      if (!isVisibleChain(h.object)) continue;
+      if (h.object.userData.pickInstanced) return { userData: { kind: 'day', id: h.instanceId + 1 } };
+      if (h.object.userData.pick) return h.object.userData.pick;
+    }
+    return null;
+  }
+  function isVisibleChain(o) { while (o) { if (!o.visible) return false; o = o.parent; } return true; }
+  const tip = $('tip');
+  canvas.addEventListener('pointerdown', (e) => {
+    canvas.setPointerCapture(e.pointerId); pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pointers.size === 1) drag = { x: e.clientX, y: e.clientY, sx: e.clientX, sy: e.clientY, yaw: cam.user.yaw, pitch: cam.user.pitch, moved: false };
+    if (pointers.size === 2) { const [a, b] = [...pointers.values()]; pinch0 = Math.hypot(a.x - b.x, a.y - b.y); pinchZoom = cam.user.zoom; if (drag) drag.moved = true; }
+  });
+  canvas.addEventListener('pointermove', (e) => {
+    if (pointers.has(e.pointerId)) pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pointers.size === 2) { const [a, b] = [...pointers.values()]; const d = Math.hypot(a.x - b.x, a.y - b.y); cam.user.zoom = clamp(pinchZoom * pinch0 / Math.max(d, 1), 0.75, 1.3); needs = true; return; }
+    if (drag && pointers.size === 1) {
+      const dx = e.clientX - drag.sx, dy = e.clientY - drag.sy;
+      if (Math.hypot(dx, dy) > 6) drag.moved = true;
+      if (drag.moved) { canvas.className = 'grabbing'; cam.user.yaw = clamp(drag.yaw - dx * 0.0042, -0.62, 0.62); cam.user.pitch = clamp(drag.pitch + dy * 0.003, -0.22, 0.32); needs = true; tip.classList.remove('show'); }
+      return;
+    }
+    if (e.pointerType === 'mouse') hoverAt(e.clientX, e.clientY);
+  });
+  function endPointer(e) {
+    const wasDrag = drag && drag.moved; const single = pointers.size === 1;
+    pointers.delete(e.pointerId);
+    if (single && drag && !wasDrag && e.type === 'pointerup') { const hit = pick(e.clientX, e.clientY); if (hit) activate(hit.userData); else closeDetail(); }
+    if (pointers.size === 0) { drag = null; canvas.className = hovered ? 'point' : 'grab'; }
+  }
+  canvas.addEventListener('pointerup', endPointer); canvas.addEventListener('pointercancel', endPointer);
+  canvas.addEventListener('pointerleave', () => { if (hovered) { hovered = null; tip.classList.remove('show'); canvas.className = 'grab'; needs = true; } });
+  canvas.addEventListener('wheel', (e) => { e.preventDefault(); cam.user.zoom = clamp(cam.user.zoom * (1 + Math.sign(e.deltaY) * 0.06), 0.75, 1.3); needs = true; }, { passive: false });
+  function hoverAt(x, y) {
+    const hit = pick(x, y); const g = hit && hit.userData && hit.userData.kind ? hit : null;
+    if (g !== hovered) { hovered = g; needs = true; }
+    canvas.className = g ? 'point' : 'grab';
+    if (g) {
+      const u = g.userData; let t = '';
+      if (u.kind === 'card') t = 'Xem: ' + CARDS[u.id].title; else if (u.kind === 'area') t = AREAS[u.id].label; else if (u.kind === 'day') t = 'Ngày ' + u.id + ' · ' + STAGES.find((s) => u.id >= s.from && u.id <= s.to).name;
+      else if (u.kind === 'answer') t = state.quiz === null ? 'Chọn “' + QUIZ.options[u.id] + '”' : ''; else if (u.kind === 'status') t = STATUSES[u.id].name; else if (u.kind === 'stage') t = 'Chặng ' + STAGES[u.id].name; else if (u.kind === 'curve') t = 'Đường cong trí nhớ'; else if (u.kind === 'mascot') t = catMode === '3d' ? (cat.actions.trick ? (state.motion ? 'Chạm để mèo nhào lộn' : 'Bật chuyển động để xem mèo nhào lộn') : 'Mèo NekoNeko 3D — chạm để xem') : 'Mèo NekoNeko'; else if (u.kind === 'bubble') t = bubbles[u.id].ch + ' · ' + bubbles[u.id].read + ' — chạm để làm vỡ';
+      tip.textContent = t; tip.style.left = x + 'px'; tip.style.top = y + 'px'; tip.classList.toggle('show', !!t);
+    } else tip.classList.remove('show');
+  }
+  function activate(u) {
+    if (!u || !u.kind) return;
+    // chạm mèo 3D có animation → nhào lộn (không mở bảng chi tiết che mất động tác)
+    if (u.kind === 'mascot' && catMode === '3d' && cat.actions.trick) { if (state.motion) catTrick(); return; }
+    if (u.kind === 'mascot' && catMode === '3d' && state.motion) catTrick();
+    if (u.kind === 'bubble') { popBubble(u.id); return; }
+    if (u.kind === 'answer') { if (STEPS[state.step].id !== 'practice') goTo(3); answerQuiz(u.id); return; }
+    openDetail(u.kind, u.id);
+  }
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  /* ===== Nhãn HTML: chiếu toạ độ 3D → màn hình, ẩn khi ngoài khung / bị che / không thuộc cảnh hiện tại ===== */
+  const occluders = [];
+  scene.traverse((o) => { if (o.isMesh && !o.isInstancedMesh && !o.customDepthMaterial && o.castShadow && !(o.geometry && o.geometry.type === 'CylinderGeometry' && o.geometry.parameters.radiusTop < 0.5 && o.geometry.parameters.height < 0.1)) occluders.push(o); });
+  const occRay = new THREE.Raycaster(); occRay.camera = camera;
+  const lv = new THREE.Vector3(), lp = new THREE.Vector3(), ldir = new THREE.Vector3();
+  let labelFrame = 0, labelsSettling = true;
+  function isDescendant(o, root) { while (o) { if (o === root) return true; o = o.parent; } return false; }
+  function measureLabels() { for (const L of overlayLabels) { L.el.style.visibility = 'hidden'; L.el.style.display = 'inline-flex'; L.w = L.el.offsetWidth; L.h = L.el.offsetHeight; } }
+  function updateLabels(dt) {
+    labelFrame++;
+    const stepId = STEPS[state.step].id;
+    const active = cat.runOut ? '__none' : stepId === 'welcome' ? 'hub' : stepId; // lúc mèo chạy đi: ẩn mọi nhãn
+    const checkOcc = labelFrame % 3 === 0;
+    // ngưỡng mờ theo khoảng cách TƯƠNG ĐỐI (camera lùi xa hơn trên màn dọc/điện thoại — ngưỡng tuyệt đối làm nhãn mờ oan)
+    const camDist = camera.position.distanceTo(cam.baseTarget);
+    const k = state.motion ? Math.min(1, dt * 12) : 1;
+    labelsSettling = false;
+    // vùng giao diện HTML (bảng hướng dẫn, thanh trên, tiến độ, gợi ý, chi tiết) — nhãn không được lấp ló sau các vùng này
+    const ui = [];
+    for (const id of ['panel', 'progress', 'hint', 'detail']) { const el = $(id); if (!el || (id === 'detail' && !el.classList.contains('open'))) continue; const r = el.getBoundingClientRect(); if (r.width) ui.push(r); }
+    for (const el of document.querySelectorAll('.topbar > *')) { const r = el.getBoundingClientRect(); if (r.width) ui.push(r); }
+    const placed = [];
+    const hit = (a, b, pad) => a.left < b.right + pad && a.right > b.left - pad && a.top < b.bottom + pad && a.bottom > b.top - pad;
+    const order = overlayLabels.slice().sort((a, b) => b.prio - a.prio);
+    for (const L of order) {
+      let goal = 0, x = 0, y = 0;
+      if ((L.station === active || (L.stations && L.stations.includes(active))) && isVisibleChain(L.anchor)) {
+        L.anchor.getWorldPosition(lv);
+        const dist = lv.distanceTo(camera.position);
+        lp.copy(lv).project(camera);
+        x = (lp.x + 1) / 2 * W; y = (1 - lp.y) / 2 * H;
+        const inside = lp.z < 1 && lp.z > -1 && x > -40 && x < W + 40 && y > -20 && y < H + 20;
+        if (inside) {
+          goal = Math.max(0, Math.min(1, (camDist * 1.9 - dist) / (camDist * 0.5)));
+          if (checkOcc || L.occ === null) {
+            ldir.copy(lv).sub(camera.position).normalize(); occRay.set(camera.position, ldir); occRay.far = dist;
+            const hit = occRay.intersectObjects(occluders, false).find((h) => h.distance < dist - 0.25 && !isDescendant(h.object, L.owner) && isVisibleChain(h.object));
+            L.occ = !!hit;
+          }
+          if (L.occ) goal = 0;
+          if (goal > 0) {
+            // giữ nhãn trong khung nhìn (lệch tối đa nửa bề rộng nhãn, vẫn sát vật thể)
+            const m = 8; x = Math.min(Math.max(x, L.w / 2 + m), W - L.w / 2 - m);
+            // né va chạm: thử vị trí gốc, rồi dịch lên/xuống một nấc; vẫn đè thì ẩn (nhãn ưu tiên thấp nhường chỗ)
+            let ok = null;
+            const step = L.h + 5;
+            // nhãn khu vực chỉ được dịch xuống (không đè lên khối); thử lại vị trí của khung trước để nhãn không nhảy qua lại
+            const tries = L.prio === 2 && L.el.classList.contains('area') ? [0, 1] : [0, -1, 1];
+            if (L.lastDy && tries.includes(L.lastDy)) tries.unshift(L.lastDy);
+            for (const t of tries) {
+              const dy = t * step;
+              const r = { left: x - L.w / 2, right: x + L.w / 2, top: y + dy - L.h / 2, bottom: y + dy + L.h / 2 };
+              if (!ui.some((u) => hit(r, u, 6)) && !placed.some((q) => hit(r, q, 3))) { ok = r; y += dy; L.lastDy = t; break; }
+            }
+            if (ok) placed.push(ok); else goal = 0;
+          }
+        }
+      }
+      L.op += (goal - L.op) * k; if (Math.abs(goal - L.op) < 0.01) L.op = goal; else labelsSettling = true;
+      if (L.op <= 0.001) { if (L.shown) { L.el.style.visibility = 'hidden'; L.shown = false; } continue; }
+      if (!L.shown) { L.el.style.visibility = 'visible'; L.shown = true; }
+      // Làm tròn pixel để chữ không rơi vào nửa pixel (nguyên nhân nhòe của transform phân số)
+      L.el.style.transform = `translate(${Math.round(x - L.w / 2)}px,${Math.round(y - L.h / 2)}px)`;
+      L.el.style.opacity = L.op.toFixed(3);
+    }
+  }
+  measureLabels();
+
+  /* ===== Mèo 3D (GLB nhúng trong trang) ===== */
+  const catLoading = overlayLabel(hub, V(0, 2.2, 0), 'Đang tải mèo 3D…', { cls: 'tag', owner: hub });
+  catLoading.stations = ['hub', 'finish'];
+  function catFail(reason, err) {
+    if (err) console.error('[NekoNeko 3D] ' + reason, err);
+    catMode = '2d'; catLoading.anchor.visible = false;
+    mascotA.visible = true; mascotSwap = { t: 1, toB: STEPS[state.step].id === 'finish' };
+    notice('<b>Không tải được mô hình mèo 3D</b> (' + esc(reason) + '). Đang dùng hình mèo 2D thay thế — các phần khác vẫn hoạt động bình thường.');
+    setTimeout(() => $('notice').classList.remove('show'), 9000);
+    needs = true;
+  }
+  async function fetchGlb(file) {
+    const res = await withTimeout(fetch(new URL('models/' + file, location.href), { credentials: 'same-origin' }), 60000);
+    if (!res.ok) throw new Error('HTTP ' + res.status + ' khi tải ' + file);
+    if ((res.headers.get('content-type') || '').includes('text/html')) throw new Error('máy chủ trả về trang HTML thay cho ' + file + ' — kiểm tra matcher của middleware');
+    const buf = await res.arrayBuffer();
+    if (buf.byteLength < 12 || new TextDecoder().decode(new Uint8Array(buf, 0, 4)) !== 'glTF') throw new Error(file + ' không phải file GLB');
+    return buf;
+  }
+  /* Giải mã ảnh nhúng trong GLB KHÔNG dùng blob: URL.
+     Mặc định GLTFLoader tạo URL blob: rồi tải lại ảnh từ URL đó; một số trình duyệt nhúng / trình xem file đổi blob: thành
+     scheme riêng (vd. blob-request://) không tải được → texture mất, mèo thành bóng trắng. Plugin này đọc thẳng bufferView. */
+  function blobToImage(blob) {
+    return new Promise((res, rej) => {
+      const fr = new FileReader();
+      fr.onerror = () => rej(fr.error || new Error('không đọc được ảnh'));
+      fr.onload = () => { const im = new Image(); im.onload = () => res(im); im.onerror = () => rej(new Error('không giải mã được ảnh')); im.src = fr.result; };
+      fr.readAsDataURL(blob);
+    });
+  }
+  async function decodeImage(blob) {
+    if (typeof createImageBitmap === 'function') {
+      try { return await createImageBitmap(blob, { premultiplyAlpha: 'none', colorSpaceConversion: 'none' }); }
+      catch (err) { console.warn('[NekoNeko 3D] createImageBitmap không dùng được, chuyển sang data URL', err && err.message); }
+    }
+    return blobToImage(blob);
+  }
+  const GL_FILTER = { 9728: THREE.NearestFilter, 9729: THREE.LinearFilter, 9984: THREE.NearestMipmapNearestFilter, 9985: THREE.LinearMipmapNearestFilter, 9986: THREE.NearestMipmapLinearFilter, 9987: THREE.LinearMipmapLinearFilter };
+  const GL_WRAP = { 33071: THREE.ClampToEdgeWrapping, 33648: THREE.MirroredRepeatWrapping, 10497: THREE.RepeatWrapping };
+  class EmbeddedTexturePlugin {
+    constructor(parser) { this.parser = parser; this.name = 'NEKO_embedded_texture_no_blob_url'; }
+    loadTexture(index) {
+      const parser = this.parser, json = parser.json, def = json.textures[index];
+      const src = def && json.images && json.images[def.source];
+      if (!src || src.bufferView === undefined) return null; // ảnh ngoài file: để GLTFLoader xử lý như thường
+      return parser.getDependency('bufferView', src.bufferView).then(async (buf) => {
+        const image = await decodeImage(new Blob([buf], { type: src.mimeType || 'image/png' }));
+        const t = new THREE.Texture(image); t.flipY = false; t.name = def.name || src.name || '';
+        const smp = (json.samplers || [])[def.sampler] || {};
+        t.magFilter = GL_FILTER[smp.magFilter] || THREE.LinearFilter; t.minFilter = GL_FILTER[smp.minFilter] || THREE.LinearMipmapLinearFilter;
+        t.wrapS = GL_WRAP[smp.wrapS] || THREE.RepeatWrapping; t.wrapT = GL_WRAP[smp.wrapT] || THREE.RepeatWrapping;
+        t.userData.mimeType = src.mimeType; t.needsUpdate = true;
+        parser.associations.set(t, { textures: index });
+        return t;
+      });
+    }
+  }
+  async function loadCat(GLTFLoader, MeshoptDecoder) {
+    if (!GLTFLoader) { catFail('không tải được GLTFLoader'); return; }
+    // 5 file chuyển động tải song song với mô hình chính; lỗi file nào thì chỉ thiếu động tác đó
+    const animBufs = Promise.all(Object.entries(ANIM_FILES).map(([id, f]) => fetchGlb(f).then((b) => [id, b], (e) => [id, e]))).then(Object.fromEntries);
+    let gltf;
+    try {
+      const buf = await fetchGlb(CAT_MODEL);
+      const loader = new GLTFLoader(); if (MeshoptDecoder) loader.setMeshoptDecoder(MeshoptDecoder); loader.register((parser) => new EmbeddedTexturePlugin(parser));
+      gltf = await withTimeout(new Promise((res, rej) => loader.parse(buf, '', res, rej)), 60000);
+    } catch (err) { catFail(err && err.message === 'timeout' ? 'quá thời gian xử lý' : 'file model bị lỗi hoặc thiếu', err); return; }
+    // các file chuyển động (chỉ có khung xương + animation) — lỗi thì mèo vẫn hiện, chỉ thiếu động tác đó
+    const extraClips = []; const bufs = await animBufs;
+    for (const id of ['catAnimIdle', 'catAnimRun', 'catAnimSpin', 'catAnimSalsa', 'catAnimFlair']) {
+      try { const b = bufs[id]; if (b instanceof Error) throw b; const g = await new Promise((res, rej) => new GLTFLoader().parse(b, '', res, rej));
+        const hips = g.scene.getObjectByName('Hips'); for (const c of g.animations) { c.userData = { restHips: hips ? hips.position.clone() : null }; extraClips.push(c); } }
+      catch (err) { console.warn('[NekoNeko 3D] Không đọc được animation', id, err && err.message); }
+    }
+    const model = gltf.scene;
+    // GLTFLoader chỉ báo lỗi texture ra console rồi vẫn trả về model → tự kiểm tra, thiếu texture thì không hiện "mèo trắng"
+    let missingTex = 0; model.traverse((o) => { if (o.isMesh) for (const m of [].concat(o.material)) if (!m.map && !m.emissiveMap) missingTex++; });
+    if (missingTex) { catFail('không giải mã được texture của model'); return; }
+    let skinned = 0; model.traverse((o) => { if (o.isSkinnedMesh) skinned++; });
+    console.info('[NekoNeko 3D] Mèo GLB: skinned mesh =', skinned, '· animation =', gltf.animations.concat(extraClips).map((c) => c.name + ' ' + c.duration.toFixed(2) + 's').join(', ') || 'không có');
+    model.traverse((o) => {
+      if (!o.isMesh) return;
+      o.castShadow = true; o.receiveShadow = false;
+      if (o.isSkinnedMesh) {
+        o.frustumCulled = false; // khi nhảy/nhào lộn, mesh ra ngoài khung bao tĩnh — không để bị cắt mất
+        // GLB có tới 12 xương/đỉnh; bộ 0 đã là 4 xương mạnh nhất (đã kiểm tra) → Three dùng bộ 0. Bỏ 2 bộ thừa cho nhẹ bộ nhớ GPU.
+        for (const k of ['joints_1', 'joints_2', 'weights_1', 'weights_2']) if (o.geometry.attributes[k]) o.geometry.deleteAttribute(k);
+      }
+      // Model "shaded": ánh sáng đã nướng vào texture (kênh emissive). Tắt tone mapping để giữ đúng màu texture gốc.
+      const mats = Array.isArray(o.material) ? o.material : [o.material];
+      for (const m of mats) { m.toneMapped = false; if (m.emissiveMap) m.emissiveMap.anisotropy = maxAniso; keep(m); if (m.emissiveMap) keep(m.emissiveMap); if (m.map) keep(m.map); }
+      keep(o.geometry);
+    });
+    // chuẩn hoá: chân chạm mặt bục, tâm ngang về giữa, cao ~4.2 đơn vị (cỡ mèo 2D cũ, không chạm logo phía trên)
+    // Khung bao: vị trí đỉnh SAU khi skin ở tư thế gốc (chưa phát animation), lấy mẫu ~20 nghìn đỉnh.
+    // Không dùng geometry.boundingBox: file nén (KHR_mesh_quantization) lưu toạ độ đã lượng tử hoá (-1…1), phép giải nén
+    // nằm trong ma trận xương → khung bao của geometry sai, mèo bị phóng to và lệch khỏi bục.
+    model.updateMatrixWorld(true);
+    const box = new THREE.Box3(), vtx = new THREE.Vector3();
+    model.traverse((o) => {
+      if (!o.isMesh) return;
+      if (o.isSkinnedMesh) o.skeleton.update();
+      const n = o.geometry.attributes.position.count, step = Math.max(1, Math.floor(n / 20000));
+      for (let i = 0; i < n; i += step) { o.getVertexPosition(i, vtx); vtx.applyMatrix4(o.matrixWorld); box.expandByPoint(vtx); }
+    });
+    const size = box.getSize(new THREE.Vector3()); const center = box.getCenter(new THREE.Vector3());
+    console.info('[NekoNeko 3D] Kích thước model (tư thế gốc):', size.toArray().map((x) => x.toFixed(2)).join(' × '));
+    model.position.set(-center.x, -box.min.y, -center.z);
+    const inner = new THREE.Group(); inner.add(model);
+    cat.baseScale = 4.2 / size.y; cat.root.add(inner); cat.model = inner;
+    // khối chọn vô hình (raycast nhanh thay vì 120 nghìn tam giác)
+    const proxy = new THREE.Mesh(keep(new THREE.BoxGeometry(size.x * 0.82, size.y * 0.98, size.z * 0.9)), keep(new THREE.MeshBasicMaterial({ visible: false })));
+    proxy.position.y = size.y * 0.49; inner.add(proxy); cat.proxy = proxy;
+    proxy.userData.pick = { userData: { kind: 'mascot', id: 'neko' } }; pickables.push(proxy); occluders.push(proxy);
+    // animation: đi bộ (trong file chính), nhảy, nhào lộn
+    if (skinned) {
+      cat.mixer = new THREE.AnimationMixer(model);
+      for (const clip of gltf.animations.concat(extraClips)) {
+        // đi bộ → vào cảnh · chạy → quay lại khi "Khám phá lại" · xoay → ra mắt ở bước cuối · salsa → nhảy lặp ở bước cuối · flair → khi chạm
+        const key = /idle/i.test(clip.name) ? 'idle' : /walk/i.test(clip.name) ? 'walk' : /run/i.test(clip.name) ? 'run' : /spin/i.test(clip.name) ? 'spin' : /salsa|danc/i.test(clip.name) ? 'dance' : /flair/i.test(clip.name) ? 'trick' : null;
+        if (key && !cat.clips[key]) cat.clips[key] = clip;
+      }
+      // "Đứng phẩy phẩy" (HumanDwarfIdle) đến từ một bản model khác (tư thế gốc & độ dài xương khác mèo đang dùng):
+      // chỉ lấy GÓC XOAY các xương + chuyển động hông (bù theo tư thế gốc của mèo này) → giữ đúng tỉ lệ cơ thể, chân đặt đúng mặt bục.
+      if (cat.clips.idle && cat.clips.idle.userData && cat.clips.idle.userData.restHips) {
+        const myHips = model.getObjectByName('Hips'); const src = cat.clips.idle;
+        const tracks = src.tracks.filter((t) => t.name.endsWith('.quaternion') || /^Hips\.position$/.test(t.name));
+        const hp = tracks.find((t) => /^Hips\.position$/.test(t.name));
+        if (hp && myHips) { const d = myHips.position.clone().sub(src.userData.restHips); for (let i = 0; i < hp.values.length; i += 3) { hp.values[i] += d.x; hp.values[i + 1] += d.y; hp.values[i + 2] += d.z; } }
+        cat.clips.idle = new THREE.AnimationClip(src.name, src.duration, tracks);
+      }
+      cat.speed = {};
+      for (const gait of ['walk', 'run']) {
+        if (!cat.clips[gait]) continue;
+        // đi/chạy có "root motion": hông tiến dần theo trục z. Bỏ phần tiến (giữ nhịp nhún) để mèo bước tại chỗ,
+        // còn quãng đường thì code tự di chuyển mèo với đúng tốc độ bước chân → chân không bị trượt.
+        const tr = cat.clips[gait].tracks.find((t) => /hips/i.test(t.name) && t.name.endsWith('.position'));
+        if (tr) {
+          const n = tr.times.length, z0 = tr.values[2], z1 = tr.values[(n - 1) * 3 + 2], T = tr.times[n - 1] - tr.times[0];
+          for (let i = 0; i < n; i++) tr.values[i * 3 + 2] -= (z1 - z0) * (tr.times[i] - tr.times[0]) / T;
+          cat.speed[gait] = (z1 - z0) / T; // đơn vị của model / giây (nhân với tỉ lệ khi dùng)
+        }
+      }
+      for (const [k, clip] of Object.entries(cat.clips)) {
+        const a = cat.mixer.clipAction(clip);
+        if (k === 'trick' || k === 'spin') { a.setLoop(THREE.LoopOnce, 1); a.clampWhenFinished = false; }
+        cat.actions[k] = a;
+      }
+      // động tác một lần xong → về salsa nếu đang ở bước cuối, còn lại đứng nghỉ
+      cat.mixer.addEventListener('finished', (e) => { if (e.action === cat.actions.trick || e.action === cat.actions.spin) { cat.trick = false; catPlay(state.motion ? catHubAnim() : null); } });
+    }
+    cat.root.scale.setScalar(0.0001);
+    cat.yaw = cat.yawGoal;
+    catMode = '3d'; catLoading.anchor.visible = false; needs = true;
+    if (state.motion && cat.actions.walk && STEPS[state.step].id === 'welcome') { cat.appear = 1; catWalkIn(); }
+    else { cat.appear = state.motion ? 0.0001 : 1; if (STEPS[state.step].id === 'finish' && state.motion) catPlay('dance'); }
+  }
+  let catPrevStep = STEPS[state.step].id;
+  // chuyển mượt giữa các animation; null = về tư thế gốc (đứng nghỉ, code thêm nhịp thở)
+  function catPlay(name, fade = 0.45) {
+    if (!cat.mixer) return;
+    const next = name && cat.actions[name];
+    if (cat.current === name && (!next || next.isRunning())) return;
+    const prev = cat.current && cat.actions[cat.current];
+    if (next) { next.reset(); next.setEffectiveWeight(1); next.fadeIn(fade).play(); }
+    if (prev && prev !== next) prev.fadeOut(fade);
+    cat.current = name || null; needs = true;
+  }
+  // đi vào: từ phía sau bục ra giữa, bước chân khớp tốc độ của animation
+  function catWalkIn(gait = 'walk') {
+    if (!cat.actions[gait]) gait = 'walk';
+    if (!cat.actions[gait] || !state.motion) return;
+    cat.gone = false; cat.root.visible = true;
+    cat.walkIn = { z: -2.7, yaw: 0, gait }; cat.appear = 1; catPlay(gait, 0.2);
+  }
+  const catHubStep = () => STEPS[state.step].id === 'welcome' || STEPS[state.step].id === 'finish';
+  // động tác lặp theo cảnh: bước đầu → đứng phẩy phẩy · bước cuối → salsa
+  function catHubAnim() { const id = STEPS[state.step].id; const want = id === 'welcome' ? 'idle' : id === 'finish' ? 'dance' : null; return want && cat.actions[want] ? want : null; }
+  // Bỏ qua: camera về khu trung tâm (không đổi bước), mèo quay lưng chạy đi xa, chạy xong gọi cb (hiện màn hình thoát)
+  function catRunAway(cb) {
+    if (catMode !== '3d' || !cat.model || !cat.actions.run || !state.motion || cat.gone) return false;
+    if (cat.runOut) return true;
+    closeDetail();
+    const v = viewOf(0);
+    cam.from = { pos: cam.basePos.clone(), target: cam.baseTarget.clone() }; cam.to = v; cam.t = 0; cam.dur = 1.1;
+    cam.user.yaw = 0; cam.user.pitch = 0; cam.user.zoom = 1;
+    cat.walkIn = null; cat.trick = false; cat.pendingCelebrate = false; cat.hop = 0; cat.spin = 0;
+    cat.runOut = { z: cat.root.position.z, t: 0, started: false, cb };
+    needs = true; return true;
+  }
+  function catRunDone() { const cb = cat.runOut && cat.runOut.cb; cat.runOut = null; cat.gone = true; cat.root.visible = false; catPlay(null, 0); if (cb) cb(); }
+  function catReturn() {
+    if (!cat.gone || !cat.model) return;
+    if (state.motion && cat.actions.walk && STEPS[state.step].id === 'welcome') catWalkIn('walk');
+    else { cat.gone = false; cat.root.visible = true; cat.root.position.z = 0; if (state.motion) catPlay(catHubAnim()); }
+    needs = true;
+  }
+  function catTrick() {
+    if (cat.runOut || cat.gone) return;
+    if (cat.actions.trick) { if (cat.trick) return; cat.trick = true; cat.walkIn = null; cat.root.position.z = 0; catPlay('trick', 0.2); }
+    else if (cat.hop === 0) { cat.hop = 0.0001; needs = true; }
+  }
+  function updateCat(dt) {
+    if (catMode !== '3d' || !cat.model) { cat.busy = false; return; }
+    const m = state.motion; cat.busy = false;
+    // xuất hiện: phồng lên nhẹ có nảy
+    let sAppear = 1;
+    if (cat.appear > 0 && cat.appear < 1) { cat.appear = Math.min(1, cat.appear + dt / 0.7); const t = cat.appear; const c = 1.70158; sAppear = 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); cat.busy = true; if (cat.appear >= 1 && m) cat.hop = 0.0001; }
+    // ăn mừng ở bước cuối: chờ camera tới gần rồi nhảy (animation) — không có clip thì nhún + xoay bằng code
+    if (cat.pendingCelebrate && cam.t >= 0.8) { cat.pendingCelebrate = false; if (m) { if (cat.actions.spin) catPlay('spin'); else if (cat.actions.dance) catPlay('dance'); else { cat.hop = 0.0001; cat.spin = 0.0001; } } }
+    // tắt chuyển động → dừng animation, đứng ở tư thế gốc
+    if (!m && cat.runOut) catRunDone(); // tắt chuyển động giữa chừng → thoát ngay
+    if (!m && cat.current) { catPlay(null, 0.2); cat.walkIn = null; cat.trick = false; }
+    if (m && !cat.current && !cat.trick && !cat.walkIn && !cat.runOut && !cat.gone && !cat.pendingCelebrate && catHubAnim()) catPlay(catHubAnim());
+    if (cat.mixer) {
+      cat.mixer.update(dt);
+      if (cat.current || cat.mixer._nActiveActions > 0) cat.busy = true;
+    }
+    // đi vào sân khấu
+    let walkZ = 0;
+    if (cat.walkIn) {
+      cat.walkIn.z = Math.min(0, cat.walkIn.z + (cat.speed[cat.walkIn.gait] || cat.speed.walk || 0.6) * cat.baseScale * dt); walkZ = cat.walkIn.z; cat.busy = true;
+      if (cat.walkIn.z >= 0) { cat.walkIn = null; walkZ = 0; catPlay(m ? catHubAnim() : null, 0.5); } // đi ra xong → đứng phẩy phẩy (bước 1) / salsa (bước cuối)
+    }
+    // chạy đi (Bỏ qua): chờ camera về gần rồi mới chạy, tốc độ khớp bước chạy
+    if (cat.runOut) {
+      cat.busy = true;
+      if (!cat.runOut.started) { if (cam.t >= 0.55) { cat.runOut.started = true; catPlay('run', 0.25); } }
+      else {
+        cat.runOut.t += dt; cat.runOut.z -= (cat.speed.run || 1) * cat.baseScale * dt;
+        if (cat.runOut.t > 2.6 || cat.runOut.z < -12) catRunDone();
+      }
+    }
+    cat.root.position.z = cat.runOut ? cat.runOut.z : walkZ;
+    if (cat.pendingCelebrate) cat.busy = true;
+    // nhún: lấy đà (nén) → bật lên (giãn) → tiếp đất (nén)
+    let hopY = 0, sy = 1;
+    if (cat.hop > 0) {
+      cat.hop = Math.min(1, cat.hop + dt / 0.75); const t = cat.hop; cat.busy = true;
+      if (t < 0.18) sy = 1 - 0.09 * Math.sin(Math.PI * t / 0.18);
+      else if (t < 0.82) { const u = (t - 0.18) / 0.64; hopY = Math.sin(Math.PI * u) * 0.55; sy = 1 + 0.05 * Math.sin(Math.PI * u); }
+      else sy = 1 - 0.07 * Math.sin(Math.PI * (t - 0.82) / 0.18);
+      if (cat.hop >= 1) cat.hop = 0;
+    }
+    let spinA = 0;
+    if (cat.spin > 0) { cat.spin = Math.min(1, cat.spin + dt / 1.1); const t = cat.spin; spinA = Math.PI * 2 * (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2); cat.busy = true; if (cat.spin >= 1) { cat.spin = 0; spinA = 0; } }
+    // thở / nghiêng / nhìn quanh nhẹ (chỉ khi bật chuyển động)
+    let breath = 0, sway = 0, look = 0;
+    const animating = !!cat.current || cat.trick || !!cat.walkIn || !!cat.runOut;
+    if (m && !animating) { breath = Math.sin(time * 2.2) * 0.012; sway = Math.sin(time * 1.1) * 0.035; look = Math.sin(time * 0.35) * 0.14; }
+    const yGoal = cat.runOut ? Math.PI : cat.walkIn ? 0 : cat.yawGoal + look; // đi vào: nhìn thẳng hướng đi · chạy đi: quay lưng
+    if (m) { cat.yaw += (yGoal - cat.yaw) * Math.min(1, dt * (cat.runOut ? 6 : 2.5)); if (Math.abs(yGoal - cat.yaw) > 0.002) cat.busy = true; } else cat.yaw = yGoal;
+    const sY = (1 + breath) * sy, sXZ = 1 / Math.sqrt(sY);
+    const k = cat.baseScale * Math.max(0.0001, sAppear);
+    cat.root.scale.set(k * sXZ, k * sY, k * sXZ);
+    cat.root.position.y = 0.6 + hopY;
+    cat.root.rotation.set(0, cat.yaw + spinA, sway * (cat.hop > 0 ? 0.3 : 1));
+  }
+
+  /* ===== Vòng lặp ===== */
+  let bubblesBusy = false;
+  let motion = true; let running = true; let tPrev = performance.now(); let time = 0;
+  const tmpV = new THREE.Vector3(), sph = new THREE.Spherical();
+  function frame(now) {
+    if (!running) return;
+    requestAnimationFrame(frame);
+    const rawDt = Math.min(0.25, (now - tPrev) / 1000); const dt = Math.min(0.05, rawDt); tPrev = now;
+    const transitioning = cam.t < 1 || mascotSwap.t < 1 || Math.abs(spot.intensity - spotGoal) > 0.5;
+    const settling = Math.abs(cam.cur.yaw - cam.user.yaw) + Math.abs(cam.cur.pitch - cam.user.pitch) + Math.abs(cam.cur.zoom - cam.user.zoom) > 0.0005;
+    if (!motion && !transitioning && !settling && !needs && !labelsSettling && !bubblesBusy && !cat.busy) return;
+    needs = false;
+    if (motion) time += dt;
+
+    // camera
+    if (cam.t < 1) {
+      cam.t = Math.min(1, cam.t + rawDt / cam.dur); const k = ease(cam.t);
+      cam.basePos.lerpVectors(cam.from.pos, cam.to.pos, k); cam.baseTarget.lerpVectors(cam.from.target, cam.to.target, k);
+      const far = cam.from.pos.distanceTo(cam.to.pos);
+      if (state.motion && far > 6) cam.basePos.y += Math.sin(Math.PI * k) * Math.min(5, far * 0.18);
+    }
+    const lk = 1 - Math.pow(0.0015, dt);
+    cam.cur.yaw += (cam.user.yaw - cam.cur.yaw) * lk; cam.cur.pitch += (cam.user.pitch - cam.cur.pitch) * lk; cam.cur.zoom += (cam.user.zoom - cam.cur.zoom) * lk;
+    tmpV.copy(cam.basePos).sub(cam.baseTarget); sph.setFromVector3(tmpV);
+    sph.theta += cam.cur.yaw; sph.phi = clamp(sph.phi - cam.cur.pitch, 0.42, 1.48); sph.radius *= cam.cur.zoom * aspectMul;
+    if (motion) { sph.theta += Math.sin(time * 0.18) * 0.012; }
+    tmpV.setFromSpherical(sph); camera.position.copy(cam.baseTarget).add(tmpV); camera.lookAt(cam.baseTarget);
+
+    // spotlight
+    spot.intensity += (spotGoal - spot.intensity) * Math.min(1, dt * 3);
+
+    // mascot đổi tư thế
+    if (mascotSwap.t < 1) mascotSwap.t = Math.min(1, mascotSwap.t + rawDt / 0.6);
+    const kB = mascotSwap.toB ? mascotSwap.t : 1 - mascotSwap.t;
+    mascotA.material.opacity = 1 - kB; mascotB.material.opacity = kB; mascotA.material.alphaTest = mascotB.material.alphaTest = 0.45;
+    mascotA.visible = kB < 0.99; mascotB.visible = kB > 0.01;
+    mascotA.material.depthWrite = kB < 0.5; mascotB.material.depthWrite = kB >= 0.5;
+    if (catMode !== '2d') { mascotA.visible = false; mascotB.visible = false; }
+    updateCat(rawDt);
+
+    // vật trôi
+    if (motion) {
+      for (const f of floaters) { f.o.position.y = f.base + Math.sin(time * f.sp + f.ph) * f.amp; if (f.rot) f.o.rotation.z = Math.sin(time * f.sp * 0.7 + f.ph) * 0.05; }
+      mascotA.position.y = mascotB.position.y = 0.6 + Math.abs(Math.sin(time * 1.6)) * 0.08;
+      orbit.rotation.y = time * 0.12;
+      cloudRing.rotation.y = time * 0.006;
+      bubbleMat.uniforms.uTime.value = time;
+      for (const b of bubbles) {
+        b.g.position.y = b.baseY + Math.sin(time * 0.9 + b.ph) * 0.18;
+        b.g.position.x = b.baseX + Math.sin(time * 0.5 + b.ph) * 0.12;
+        // màng bong bóng "thở" nhẹ, không đều theo trục
+        if (!b.pop && !b.gone) b.shell.scale.set(b.r * (1 + Math.sin(time * 2.1 + b.ph) * 0.03), b.r * (1 + Math.sin(time * 1.7 + b.ph + 1) * 0.03), b.r);
+        b.glyph.material.rotation = Math.sin(time * 0.8 + b.ph) * 0.12;
+      }
+      const p = petals.pos;
+      for (let i = 0; i < petals.N; i++) {
+        p[i * 3 + 1] -= dt * (0.55 + (petals.seed[i] % 1) * 0.5); p[i * 3] += Math.sin(time + petals.seed[i]) * dt * 0.5;
+        if (p[i * 3 + 1] < 0) { p[i * 3 + 1] = 12 + Math.random() * 3; p[i * 3] = (Math.random() - 0.5) * 50; }
+      }
+      petals.geo.attributes.position.needsUpdate = true;
+    }
+    // bong bóng vỡ / thổi lại
+    bubblesBusy = false;
+    for (const b of bubbles) {
+      if (b.pop > 0) {
+        b.pop += rawDt / 0.28; const k = Math.min(1, b.pop);
+        b.shell.scale.setScalar(b.r * (1 + k * 0.6)); b.shell.material = bubbleMat; b.shell.visible = k < 1;
+        b.glyph.material.opacity = 1 - k; b.glyph.scale.setScalar(b.r * 1.25 * (1 + k * 0.3));
+        if (k >= 1) { b.pop = 0; b.gone = 0.0001; }
+        bubblesBusy = true;
+      } else if (b.gone > 0) {
+        b.gone += rawDt / 2.4; const k = Math.min(1, Math.max(0, (b.gone - 0.6) / 0.4));
+        b.shell.visible = k > 0; b.shell.scale.setScalar(b.r * Math.max(0.001, k)); b.glyph.material.opacity = k; b.glyph.scale.setScalar(b.r * 1.25 * Math.max(0.001, k));
+        if (b.gone >= 1) { b.gone = 0; b.shell.visible = true; b.glyph.material.opacity = 1; }
+        bubblesBusy = true;
+      }
+    }
+    // billboard quay theo camera
+    for (const b of billboards) { b.getWorldPosition(tmpV); const parentYaw = worldYaw(b.parent); b.rotation.y = Math.atan2(camera.position.x - tmpV.x, camera.position.z - tmpV.z) - parentYaw; }
+    // hover
+    for (const g of hovers) { const goal = hovered === g ? 1 : 0; g.userData.hover += (goal - g.userData.hover) * Math.min(1, dt * 12 || 1); const s = 1 + g.userData.hover * 0.05; g.scale.setScalar(s); }
+    // ô ngày 23 nhấp nháy
+    renderer.render(scene, camera);
+    updateLabels(dt);
+  }
+  const yawCache = new WeakMap();
+  function worldYaw(o) { let y = 0; while (o) { y += o.rotation.y; o = o.parent; } return y; }
+
+  requestAnimationFrame(frame);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) running = false; else if (!running) { running = true; tPrev = performance.now(); needs = true; requestAnimationFrame(frame); } });
+  window.addEventListener('pagehide', dispose);
+  function dispose() {
+    running = false; ro.disconnect(); labelLayer.innerHTML = '';
+    for (const d of disposables) { try { d.dispose(); } catch { /* bỏ qua */ } }
+    renderer.dispose();
+  }
+
+  return {
+    goTo, resetView,
+    setMotion(on) { motion = on; petals.pts.visible = on; needs = true; },
+    quizChanged() { quiz.redraw(); needs = true; },
+    isIdle: () => cam.t >= 1 && mascotSwap.t >= 1,
+    catAnim: () => ({ current: cat.current, walkIn: !!cat.walkIn, trick: cat.trick, runOut: !!cat.runOut, gone: !!cat.gone, clips: Object.keys(cat.clips) }),
+    catRunAway, catReturn, catGone: () => !!cat.gone,
+    loadCat, catMode: () => catMode,
+    _debug: { scene, camera, renderer, overlayLabels, bubbles, cat },
+  };
+}
+</script>
+</body>
+</html>

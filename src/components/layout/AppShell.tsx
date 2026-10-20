@@ -10,6 +10,7 @@ import { SheetHost } from './SheetHost';
 import { Sidebar } from './Sidebar';
 import { TopBar } from './TopBar';
 import { AdminFlagProvider } from './AdminFlag';
+import { GuideFloatingBanner } from './GuideFloatingBanner';
 
 interface AppShellProps {
   displayName: string;
@@ -22,6 +23,11 @@ interface AppShellProps {
   isDemo: boolean;
   /** Có vai trò admin (server đã kiểm tra) → menu tài khoản có mục "Quản trị nội dung". */
   isAdmin?: boolean;
+  /** welcomed_at đã có → hiện nút "Khám phá NekoNeko" (mở lại hướng dẫn 3D). */
+  isWelcomed: boolean;
+  journeyDay: number;
+  /** Mục tiêu mỗi ngày đã lưu (phút, 0 = không giới hạn) — trang hướng dẫn xem lại hiển thị đúng lựa chọn hiện tại. */
+  dailyGoalMinutes: number;
   children: ReactNode;
 }
 
@@ -30,7 +36,10 @@ const PRODUCTION_ENVIRONMENT = 'production';
 const HOME_ONLY = ['/'] as const;
 
 /** Khung ứng dụng: thanh bên (desktop) · thanh trên · nội dung · thanh dưới (mobile) · khay trượt. */
-export function AppShell({ displayName, level, recallDays, dailyMinutes, isGentleMode, shouldAutoplayAudio, voiceGender, isDemo, isAdmin = false, children }: AppShellProps) {
+export function AppShell({
+  displayName, level, recallDays, dailyMinutes, isGentleMode, shouldAutoplayAudio, voiceGender, isDemo, isAdmin = false,
+  isWelcomed, journeyDay, dailyGoalMinutes, children,
+}: AppShellProps) {
   const environmentLabel = isDemo
     ? 'Chế độ demo'
     : publicEnv.appEnvironment !== PRODUCTION_ENVIRONMENT ? publicEnv.appEnvironment : null;
@@ -49,6 +58,7 @@ export function AppShell({ displayName, level, recallDays, dailyMinutes, isGentl
       <BottomNavigation />
       <SheetHost dailyMinutes={dailyMinutes} />
       {environmentLabel ? <span className="env-badge" title="Nhãn môi trường — không hiện ở production">{environmentLabel}</span> : null}
+      <GuideFloatingBanner isWelcomed={isWelcomed} displayName={displayName} journeyDay={journeyDay} dailyMinutes={dailyGoalMinutes} isRaised={Boolean(environmentLabel)} />
     </div>
     </AdminFlagProvider>
   );

@@ -9,7 +9,6 @@ import { RoadmapStages } from '@/components/home/RoadmapStages';
 import { TimeOfDayGreeting } from '@/components/home/TimeOfDayGreeting';
 import { TodayLearnCard } from '@/components/home/TodayLearnCard';
 import type { ContentType } from '@/features/learning/knowledge-types';
-import { WelcomeDialog } from '@/components/home/WelcomeDialog';
 import { DailyGreetingDialog } from '@/components/home/DailyGreetingDialog';
 import { buildDailyGreeting } from '@/features/home/daily-greeting';
 import { findResumableSession } from '@/features/learning/session-service';
@@ -94,15 +93,13 @@ export default async function HomePage() {
         <GardenSummaryCard learnedCount={overview.learnedCount} />
       </div>
 
-      {/* Lần đầu: lời chào 3 bước. Từ đó: lời chào ngắn đầu mỗi ngày, nội dung theo ngày. */}
-      {settings.welcomedAt ? (shouldGreet ? (
+      {/* Lần đầu: hướng dẫn 3D do layout (app) hiện ở mọi trang. Từ ngày sau: lời chào ngắn đầu mỗi ngày, nội dung theo ngày. */}
+      {shouldGreet ? (
         <DailyGreetingDialog displayName={profile.displayName} greeting={buildDailyGreeting({
           now, journeyDay, dayTitle, plan, streak, resumable,
           hasNewKnowledge: dayCompletion.hasNewKnowledge, isReadyToComplete: isDayReadyToComplete(journey, dayCompletion),
         })} />
-      ) : null) : (
-        <WelcomeDialog displayName={profile.displayName} journeyDay={journeyDay} initialDailyMinutes={settings.dailyMinutes} />
-      )}
+      ) : null}
     </div>
   );
 }

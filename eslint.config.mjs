@@ -9,7 +9,7 @@ const compat = new FlatCompat({ baseDirectory: __dirname });
 const eslintConfig = [
   ...compat.extends('next/core-web-vitals', 'next/typescript'),
   {
-    ignores: ['node_modules/**', '.next/**', 'next-env.d.ts', 'content/**'],
+    ignores: ['node_modules/**', '.next/**', 'next-env.d.ts', 'content/**', 'public/onboarding-3d/**', 'docs/nekoneko-onboarding-3d-kit/**'],
   },
   {
     rules: {

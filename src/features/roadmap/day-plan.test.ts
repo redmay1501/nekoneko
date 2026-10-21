@@ -11,16 +11,16 @@ describe('buildDayPlan', () => {
   it('ngày 1 có đầu việc và kiến thức bảng chữ cái', () => {
     const plan = buildDayPlan(catalog, 1, AT_DAY_23);
     expect(plan.tasks.length).toBeGreaterThan(0);
-    expect(plan.knowledge.kana.length).toBe(10);
+    expect(plan.knowledge.kana.length).toBe(15);
     expect(plan.relation).toBe('past');
   });
 
-  // Lộ trình phân bổ lại (scripts/roadmap_adjustments.py — roadmap-replan-v2): ngày 1–14 giữ việc Excel; ngày 15–81 dựng từ dữ liệu
-  // + việc tự làm của bài; tổng ôn gộp ngày Excel. Mỗi ngày đều có việc, tổng 396.
+  // Lộ trình NekoNeko v3 (scripts/replan_v3.py): chữ cái 1–10, bộ thủ 11–13, bài 14–81 dựng từ dữ liệu + việc tự làm của bài;
+  // tổng ôn 82–90 giữ nguyên. Mỗi ngày đều có việc, tổng 388.
   it('mỗi ngày đều có việc; tổng số đầu việc của 90 ngày khớp dữ liệu', () => {
     const counts = Array.from({ length: 90 }, (_, index) => buildDayPlan(catalog, index + 1, AT_DAY_1).tasks.length);
     expect(counts.every((count) => count > 0)).toBe(true);
-    expect(counts.reduce((sum, count) => sum + count, 0)).toBe(396);
+    expect(counts.reduce((sum, count) => sum + count, 0)).toBe(388);
   });
 
   it('ngày ngoài khoảng 1–90 được kéo về trong khoảng', () => {
@@ -46,13 +46,13 @@ describe('formatTaskBody', () => {
 
 describe('chưa thuộc bảng chữ cái thì chưa học từ', () => {
   const content = loadSeedContent();
-  it('ngày 1–5 (46 chữ Hiragana cơ bản) không có việc học từ vựng', () => {
-    const vocabularyTasks = content.dayTasks.filter((task) => task.day <= 5 && task.label.includes('Từ vựng'));
+  it('ngày 1–3 (46 chữ Hiragana cơ bản) không có việc học từ vựng', () => {
+    const vocabularyTasks = content.dayTasks.filter((task) => task.day <= 3 && task.label.includes('Từ vựng'));
     expect(vocabularyTasks).toEqual([]);
   });
 
-  it('mười từ chào hỏi vẫn được học — ở ngày 8–12', () => {
-    const later = content.dayTasks.filter((task) => task.day >= 8 && task.day <= 12 && task.label.includes('Từ vựng')).map((task) => task.body).join(' ');
+  it('mười từ chào hỏi vẫn được học — ở ngày 4–6 (sau khi thuộc đủ Hiragana)', () => {
+    const later = content.dayTasks.filter((task) => task.day >= 4 && task.day <= 6 && task.label.includes('Từ vựng')).map((task) => task.body).join(' ');
     for (const greeting of ['おはようございます', 'こんにちは', 'ありがとうございます', 'はじめまして', 'ごめんなさい']) expect(later).toContain(greeting);
   });
 });
@@ -60,24 +60,24 @@ describe('chưa thuộc bảng chữ cái thì chưa học từ', () => {
 describe('lộ trình kana theo hàng âm (kana-by-row)', () => {
   const kanaOf = (day: number) => buildDayPlan(catalog, day, AT_DAY_23).knowledge.kana;
 
-  it('Hiragana ngày 1–5: trọn hàng âm 10/10/10/8/8; ngày 6 chỉ âm đục & bán đục; ngày 7 âm ghép', () => {
-    expect([1, 2, 3, 4, 5, 6, 7].map((day) => kanaOf(day).length)).toEqual([10, 10, 10, 8, 8, 25, 33]);
-    expect(kanaOf(2).map((item) => item.face).join('')).toBe('さしすせそたちつてと');
-    expect(kanaOf(6).every((item) => item.face.length === 1)).toBe(true); // không có âm ghép (2 ký tự)
-    expect(kanaOf(7).every((item) => item.face.length === 2)).toBe(true);
+  it('Hiragana ngày 1–3: trọn hàng âm 15/15/16; ngày 4 chỉ âm đục & bán đục; ngày 5 âm ghép', () => {
+    expect([1, 2, 3, 4, 5].map((day) => kanaOf(day).length)).toEqual([15, 15, 16, 25, 33]);
+    expect(kanaOf(2).map((item) => item.face).join('')).toBe('たちつてとなにぬねのはひふへほ');
+    expect(kanaOf(4).every((item) => item.face.length === 1)).toBe(true); // không có âm ghép (2 ký tự)
+    expect(kanaOf(5).every((item) => item.face.length === 2)).toBe(true);
   });
 
-  it('Katakana ngày 8–14 đi y hệt; ngày 8 là ngày CHỮ MỚI — khớp với việc "Học chữ mới"', () => {
-    expect([8, 9, 10, 11, 12, 13, 14].map((day) => kanaOf(day).length)).toEqual([10, 10, 10, 8, 8, 25, 33]);
-    const dayEight = buildDayPlan(catalog, 8, AT_DAY_23);
+  it('Katakana ngày 6–10 đi y hệt; ngày 6 là ngày CHỮ MỚI — khớp với việc "Học chữ mới"', () => {
+    expect([6, 7, 8, 9, 10].map((day) => kanaOf(day).length)).toEqual([15, 15, 16, 25, 33]);
+    const dayEight = buildDayPlan(catalog, 6, AT_DAY_23);
     expect(dayEight.knowledge.kana.every((item) => item.type === 'katakana')).toBe(true);
     expect(dayEight.hasNewKnowledge).toBe(true);
     expect(dayEight.tasks.some((task) => task.name.includes('Học chữ mới'))).toBe(true);
   });
 });
 
-describe('lộ trình ngày 15–90 (audit)', () => {
-  const plans = Array.from({ length: 76 }, (_, index) => buildDayPlan(catalog, index + 15, AT_DAY_1));
+describe('lộ trình ngày 11–90 (audit)', () => {
+  const plans = Array.from({ length: 80 }, (_, index) => buildDayPlan(catalog, index + 11, AT_DAY_1));
 
   it('dòng thời gian luôn theo thứ tự Bộ thủ → Từ vựng → Kanji (ngay sau từ) → Ngữ pháp', () => {
     const order = ['部', '語', '漢', '文'];
@@ -88,11 +88,11 @@ describe('lộ trình ngày 15–90 (audit)', () => {
   });
 
   it('ngày ôn giữa lộ trình gắn với kiến thức thật của các ngày học liền trước', () => {
-    // Ngày 26 (ôn bài 1–3) = kiến thức thật của ngày 15–25: bộ thủ 15–17 không có ngày ôn riêng nên được ôn cùng bài 1–3.
-    const day26 = plans.find((plan) => plan.day === 26)!;
-    expect(day26.reviewWindow).toMatchObject({ from: 15, to: 25 });
+    // Ngày 22 (ôn bài 1–3) = kiến thức thật của ngày 11–21: bộ thủ 11–13 không có ngày ôn riêng nên được ôn cùng bài 1–3.
+    const day26 = plans.find((plan) => plan.day === 22)!;
+    expect(day26.reviewWindow).toMatchObject({ from: 11, to: 21 });
     expect(day26.reviewWindow!.counts.map((entry) => entry.type)).toContain('radical');
-    const fromWeek = new Set(catalog.items.filter((item) => item.day! >= 15 && item.day! <= 25 && item.type !== 'hiragana' && item.type !== 'katakana').map((item) => item.key));
+    const fromWeek = new Set(catalog.items.filter((item) => item.day! >= 11 && item.day! <= 21 && item.type !== 'hiragana' && item.type !== 'katakana').map((item) => item.key));
     expect(new Set(day26.reviewWindow!.keys)).toEqual(fromWeek);
     // "Ôn lại toàn bộ từ vựng Minna bài 1–3" → đúng các từ bài 1–3.
     expect(day26.reviewVocabulary.length).toBeGreaterThan(0);
@@ -120,10 +120,10 @@ describe('lộ trình ngày 15–90 (audit)', () => {
 });
 
 describe('nút học lại của mọi ngày có kiến thức', () => {
-  it('ngày 1–82 đều có kiến thức của riêng ngày hoặc của tuần; chỉ tổng ôn / thi thử 83–90 không gắn', () => {
+  it('ngày 1–81 đều có kiến thức của riêng ngày hoặc của tuần; chỉ tổng ôn / thi thử 82–90 không gắn', () => {
     const plans = Array.from({ length: 90 }, (_, index) => buildDayPlan(catalog, index + 1, AT_DAY_1));
     const withoutOwnKnowledge = plans.filter((plan) => !plan.hasNewKnowledge && !plan.reviewWindow).map((plan) => plan.day);
-    expect(withoutOwnKnowledge).toEqual([83, 84, 85, 86, 87, 88, 89, 90]);
-    expect(plans[13].knowledge.kana.length).toBeGreaterThan(0);
+    expect(withoutOwnKnowledge).toEqual([82, 83, 84, 85, 86, 87, 88, 89, 90]);
+    expect(plans[9].knowledge.kana.length).toBeGreaterThan(0);
   });
 });

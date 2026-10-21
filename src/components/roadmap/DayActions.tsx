@@ -11,7 +11,7 @@ interface DayActionsProps {
   /** Ngày có kiến thức mới (chữ cái, từ, mẫu câu, bộ thủ, Kanji) → trang học của ngày (/lo-trinh/ngay/N/hoc). */
   hasDayStudy: boolean;
   /**
-   * Học / ôn ĐÚNG kiến thức của ngày này: trang học của ngày, hoặc phiên ôn các chữ cái của ngày (ngày 1–14), hoặc phiên ôn
+   * Học / ôn ĐÚNG kiến thức của ngày này: trang học của ngày, hoặc phiên ôn các chữ cái của ngày (ngày 1–10), hoặc phiên ôn
    * kiến thức của tuần (ngày ôn 21, 28…). Null khi ngày không gắn kiến thức cụ thể (tổng ôn / thi thử 78–90).
    */
   studyHref: string | null;

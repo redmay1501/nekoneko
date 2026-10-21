@@ -67,7 +67,7 @@ export function DictationPractice({ words, sentences }: { words: DictationItem[]
   );
 
   if (!items.length) {
-    return <section className="card">{tabs}<p className="sm soft">Học thêm vài từ và mẫu câu đầu tiên (từ ngày 18) là có bài nghe – gõ ở đây.</p></section>;
+    return <section className="card">{tabs}<p className="sm soft">Học thêm vài từ và mẫu câu đầu tiên (từ ngày 14) là có bài nghe – gõ ở đây.</p></section>;
   }
 
   if (index >= items.length) {

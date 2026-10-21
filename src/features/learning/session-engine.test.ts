@@ -123,9 +123,9 @@ describe('buildLearningSession — dùng chung cho mọi chế độ', () => {
 describe('kiến thức mới đi theo chặng của ngày đang học', () => {
   const unmetDay23 = unmetKnowledgeOfDay(catalog, viewsDay23, 23);
 
-  it('ngày đang học (23 — bài 3, phần 1/3) bắt đầu với đủ kiến thức chưa gặp của ngày: từ → (Kanji ngay sau từ chứa nó) → ngữ pháp', () => {
+  it('ngày đang học (23 — bài 4, phần 1/4) bắt đầu với đủ kiến thức chưa gặp của ngày: từ → (Kanji ngay sau từ chứa nó) → ngữ pháp', () => {
     expect(unmetDay23).toHaveLength(itemsScheduledOn(catalog, 23).length);
-    expect(unmetDay23.length).toBe(19);
+    expect(unmetDay23.length).toBe(23);
     const order = ['vocabulary', 'grammar'];
     const ranks = unmetDay23.filter((item) => item.type !== 'kanji').map((item) => order.indexOf(item.type));
     expect(ranks).toEqual([...ranks].sort((left, right) => left - right));
@@ -207,9 +207,9 @@ describe('summarizeSession — Khoảnh khắc tiến bộ', () => {
 });
 
 describe('Học bù (BACKLOG) — kiến thức ngày cũ bị bỏ sót không bao giờ mất', () => {
-  // Người học đang ở ngày 3: ngày 1 mới học 7/10 chữ rồi bấm "Hoàn thành", ngày 2 bỏ qua hẳn.
+  // Người học đang ở ngày 3: ngày 1 mới học 12/15 chữ rồi bấm "Hoàn thành", ngày 2 bỏ qua hẳn.
   const dayOne = catalog.items.filter((item) => item.day === 1);
-  const metOnDayOne = new Set(dayOne.slice(0, 7).map((item) => item.key));
+  const metOnDayOne = new Set(dayOne.slice(0, 12).map((item) => item.key));
   const views = new Map(catalog.items.map((item) => {
     const record = item.day !== null && item.day <= 3
       ? { ...createInitialMemoryRecord(item.type, item.id, NOW), encounterCount: metOnDayOne.has(item.key) ? 1 : 0, lastSeenAt: NOW.toISOString() }

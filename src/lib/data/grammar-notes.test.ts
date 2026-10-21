@@ -4,8 +4,8 @@ import { loadSeedContent } from './seed-content';
 const { grammar } = loadSeedContent();
 
 describe('ghi chú ngữ pháp', () => {
-  it('cả 112 mẫu đều có cách đọc, khi nào dùng, lỗi thường gặp và ví dụ thứ hai (kèm cách đọc + nghĩa)', () => {
-    expect(grammar).toHaveLength(112);
+  it('cả 128 mẫu đều có cách đọc, khi nào dùng, lỗi thường gặp và ví dụ thứ hai (kèm cách đọc + nghĩa)', () => {
+    expect(grammar).toHaveLength(128);
     const missing = grammar.filter((pattern) => ![pattern.exampleReading, pattern.whenToUse, pattern.commonMistake,
       pattern.example2Jp, pattern.example2Reading, pattern.example2Vi].every(Boolean));
     expect(missing.map((pattern) => pattern.id)).toEqual([]);

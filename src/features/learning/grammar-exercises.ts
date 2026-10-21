@@ -151,8 +151,7 @@ export function buildGrammarQuestionBank(
   const ids = new Set<string>();
   const counts = new Map<number, number>();
   const parsed: GrammarQuestionBankRow[] = [];
-  if (grammar.length !== 112) errors.push(`Nội dung có ${grammar.length} mẫu ngữ pháp; cần đúng 112.`);
-  if (sourceRows.length !== 1120) errors.push(`Ngân hàng có ${sourceRows.length} dòng; cần đúng 1.120.`);
+  if (sourceRows.length !== grammar.length * 10) errors.push(`Ngân hàng có ${sourceRows.length} dòng; cần đúng ${grammar.length * 10} (10 câu × ${grammar.length} mẫu).`);
 
   sourceRows.forEach((value, index) => {
     const rowNumber = index + 1;
@@ -221,7 +220,8 @@ export function buildGrammarQuestionBank(
   return parsed.map((row) => {
     const point = grammarById.get(row.grammarId)!;
     const kind = row.kind === 'Nhật → Việt' ? 'nhat-viet' : row.kind === 'Việt → Nhật' ? 'viet-nhat' : 'dien-tu';
-    const completedPrompt = kind === 'dien-tu' ? row.prompt.replace(/□|＿＿/, row.answer) : row.sentenceJp;
+    // Câu điền bản v2 có gợi ý nghĩa ở cuối: 「…＿＿…。（nghĩa）」 → bỏ phần gợi ý khi so với câu gốc.
+    const completedPrompt = kind === 'dien-tu' ? row.prompt.replace(/（[^（）]*）\s*$/, '').replace(/□|＿＿/, row.answer) : row.sentenceJp;
     const sourceMatchesPrompt = completedPrompt.replace(/\s+/g, '') === row.sentenceJp.replace(/\s+/g, '');
     return {
       id: row.id, grammarId: row.grammarId, lesson: lessonNumber(point.lesson), pattern: row.pattern, kind,

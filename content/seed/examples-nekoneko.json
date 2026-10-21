@@ -1,0 +1,6629 @@
+{
+ "_note": "Câu ví dụ do NekoNeko tự soạn cho từ vựng (bổ sung cho câu Tatoeba trong examples.json). Gộp vào mảng sentences của content/seed/examples.json. id 900001+ để không trùng mã câu Tatoeba; owner = \"NekoNeko\".",
+ "sentences": [
+  {
+   "id": 900001,
+   "jp": "医者に行ったほうがいいですよ。",
+   "vi": "Bạn nên đi bác sĩ đi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900002,
+   "jp": "兄は大学で経済を勉強しています。",
+   "vi": "Anh tôi học kinh tế ở đại học.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900003,
+   "jp": "お名前は何ですか。",
+   "vi": "Bạn tên là gì?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900004,
+   "jp": "これは誰のペンですか。",
+   "vi": "Đây là bút của ai?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900005,
+   "jp": "リンさんは学生です。",
+   "vi": "Bạn Linh là sinh viên.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900006,
+   "jp": "辞書で言葉を調べます。",
+   "vi": "Tôi tra từ bằng từ điển.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900007,
+   "jp": "電車で雑誌を読みます。",
+   "vi": "Tôi đọc tạp chí trên tàu.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900008,
+   "jp": "鍵をなくしました。",
+   "vi": "Tôi đã làm mất chìa khóa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900009,
+   "jp": "この時計は日本製です。",
+   "vi": "Chiếc đồng hồ này là hàng Nhật.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900010,
+   "jp": "雨ですから、傘を持って行きます。",
+   "vi": "Trời mưa nên tôi mang ô theo.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900011,
+   "jp": "赤いボールペンがほしいです。",
+   "vi": "Tôi muốn một cây bút bi đỏ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900012,
+   "jp": "学校の食堂は安いです。",
+   "vi": "Căng tin trường rẻ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900013,
+   "jp": "会議室は二階です。",
+   "vi": "Phòng họp ở tầng hai.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900014,
+   "jp": "受付で名前を書いてください。",
+   "vi": "Hãy viết tên ở quầy lễ tân.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900015,
+   "jp": "階段で二階へ上がります。",
+   "vi": "Lên tầng hai bằng cầu thang.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900016,
+   "jp": "エレベーターで十階へ行きます。",
+   "vi": "Tôi đi thang máy lên tầng mười.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900017,
+   "jp": "仕事は六時に終わります。",
+   "vi": "Công việc kết thúc lúc sáu giờ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900018,
+   "jp": "晩は家で本を読みます。",
+   "vi": "Buổi tối tôi đọc sách ở nhà.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900019,
+   "jp": "郵便局で切手を買います。",
+   "vi": "Tôi mua tem ở bưu điện.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900020,
+   "jp": "地下鉄は便利です。",
+   "vi": "Tàu điện ngầm tiện lợi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900021,
+   "jp": "飛行機で日本へ行きます。",
+   "vi": "Tôi đi Nhật bằng máy bay.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900022,
+   "jp": "自転車で公園へ行きます。",
+   "vi": "Tôi đạp xe đến công viên.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900023,
+   "jp": "先月、引っ越しました。",
+   "vi": "Tháng trước tôi đã chuyển nhà.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900024,
+   "jp": "誕生日おめでとう。",
+   "vi": "Chúc mừng sinh nhật.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900025,
+   "jp": "ここでたばこを吸わないでください。",
+   "vi": "Xin đừng hút thuốc ở đây.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900026,
+   "jp": "音楽を聞きます。",
+   "vi": "Tôi nghe nhạc.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900027,
+   "jp": "名前を書いてください。",
+   "vi": "Hãy viết tên.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900028,
+   "jp": "毎日運動をします。",
+   "vi": "Ngày nào tôi cũng tập thể dục.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900029,
+   "jp": "明日、先生に会います。",
+   "vi": "Ngày mai tôi gặp thầy.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900030,
+   "jp": "卵を二つ使います。",
+   "vi": "Dùng hai quả trứng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900031,
+   "jp": "友達に花をあげました。",
+   "vi": "Tôi đã tặng hoa cho bạn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900032,
+   "jp": "図書館で本を借りました。",
+   "vi": "Tôi đã mượn sách ở thư viện.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900033,
+   "jp": "友達にギターを習います。",
+   "vi": "Tôi học đàn ghi-ta với bạn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900034,
+   "jp": "壁に時計を掛けます。",
+   "vi": "Treo đồng hồ lên tường.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900035,
+   "jp": "箸で食べます。",
+   "vi": "Tôi ăn bằng đũa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900036,
+   "jp": "スプーンでスープを飲みます。",
+   "vi": "Tôi ăn súp bằng thìa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900037,
+   "jp": "紙を一枚ください。",
+   "vi": "Cho tôi một tờ giấy.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900038,
+   "jp": "この家は古いです。",
+   "vi": "Ngôi nhà này cũ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900039,
+   "jp": "この本は面白いです。",
+   "vi": "Quyển sách này hay.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900040,
+   "jp": "今週は忙しいです。",
+   "vi": "Tuần này bận.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900041,
+   "jp": "旅行は楽しかったです。",
+   "vi": "Chuyến du lịch rất vui.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900042,
+   "jp": "このおばあさんは親切です。",
+   "vi": "Cụ bà này rất tốt bụng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900043,
+   "jp": "野菜が嫌いです。",
+   "vi": "Tôi không thích rau.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900044,
+   "jp": "私は料理が下手です。",
+   "vi": "Tôi nấu ăn dở.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900045,
+   "jp": "机の上に本があります。",
+   "vi": "Trên bàn có sách.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900046,
+   "jp": "音楽を聞くのが好きです。",
+   "vi": "Tôi thích nghe nhạc.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900047,
+   "jp": "どんなスポーツが好きですか。",
+   "vi": "Bạn thích môn thể thao nào?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900048,
+   "jp": "よく映画を見ます。",
+   "vi": "Tôi thường xem phim.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900049,
+   "jp": "全然分かりません。",
+   "vi": "Tôi hoàn toàn không hiểu.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900050,
+   "jp": "教室に先生がいます。",
+   "vi": "Trong lớp có thầy giáo.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900051,
+   "jp": "隣の人は中国人です。",
+   "vi": "Người nhà bên là người Trung Quốc.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900052,
+   "jp": "家の近くにコンビニがあります。",
+   "vi": "Gần nhà có cửa hàng tiện lợi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900053,
+   "jp": "庭に花がたくさんあります。",
+   "vi": "Trong vườn có nhiều hoa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900054,
+   "jp": "あのビルは三十階です。",
+   "vi": "Tòa nhà kia cao ba mươi tầng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900055,
+   "jp": "車が一台あります。",
+   "vi": "Có một chiếc ô tô.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900056,
+   "jp": "切手を十枚ください。",
+   "vi": "Cho tôi mười con tem.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900057,
+   "jp": "本を二冊買いました。",
+   "vi": "Tôi đã mua hai quyển sách.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900058,
+   "jp": "二〇二六年に卒業します。",
+   "vi": "Tôi tốt nghiệp năm 2026.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900059,
+   "jp": "この手紙に切手を貼ってください。",
+   "vi": "Hãy dán tem vào bức thư này.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900060,
+   "jp": "友達に葉書を書きます。",
+   "vi": "Tôi viết bưu thiếp cho bạn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900061,
+   "jp": "冬の北海道は寒いです。",
+   "vi": "Hokkaido mùa đông lạnh.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900062,
+   "jp": "今日はとても暑いです。",
+   "vi": "Hôm nay rất nóng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900063,
+   "jp": "秋は涼しいです。",
+   "vi": "Mùa thu mát mẻ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900064,
+   "jp": "春は暖かいです。",
+   "vi": "Mùa xuân ấm áp.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900065,
+   "jp": "今日はいい天気ですね。",
+   "vi": "Hôm nay thời tiết đẹp nhỉ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900066,
+   "jp": "北海道は雪が多いです。",
+   "vi": "Hokkaido có nhiều tuyết.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900067,
+   "jp": "今日は一日中曇りです。",
+   "vi": "Hôm nay trời âm u cả ngày.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900068,
+   "jp": "明日は晴れでしょう。",
+   "vi": "Ngày mai chắc trời nắng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900069,
+   "jp": "どの季節が好きですか。",
+   "vi": "Bạn thích mùa nào?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900070,
+   "jp": "春に桜が咲きます。",
+   "vi": "Mùa xuân hoa anh đào nở.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900071,
+   "jp": "食事の前に手を洗います。",
+   "vi": "Trước bữa ăn tôi rửa tay.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900072,
+   "jp": "今日はとても疲れました。",
+   "vi": "Hôm nay tôi rất mệt.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900073,
+   "jp": "喉が渇きました。",
+   "vi": "Tôi khát nước.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900074,
+   "jp": "夏はプールで泳ぎます。",
+   "vi": "Mùa hè tôi bơi ở bể bơi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900075,
+   "jp": "電気をつけてください。",
+   "vi": "Hãy bật đèn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900076,
+   "jp": "テレビを消してください。",
+   "vi": "Hãy tắt tivi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900077,
+   "jp": "窓を開けてください。",
+   "vi": "Hãy mở cửa sổ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900078,
+   "jp": "ドアを閉めてください。",
+   "vi": "Hãy đóng cửa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900079,
+   "jp": "急いでください。",
+   "vi": "Hãy nhanh lên.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900080,
+   "jp": "駅で友達を待ちます。",
+   "vi": "Tôi đợi bạn ở ga.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900081,
+   "jp": "あの角を左に曲がります。",
+   "vi": "Rẽ trái ở góc kia.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900082,
+   "jp": "名前を呼ばれました。",
+   "vi": "Tôi bị gọi tên.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900083,
+   "jp": "大阪に住んでいます。",
+   "vi": "Tôi đang sống ở Osaka.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900084,
+   "jp": "このパソコンを使ってもいいですか。",
+   "vi": "Tôi dùng máy tính này được không?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900085,
+   "jp": "その人を知っていますか。",
+   "vi": "Bạn có biết người đó không?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900086,
+   "jp": "母がケーキを作りました。",
+   "vi": "Mẹ đã làm bánh.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900087,
+   "jp": "あの店で果物を売っています。",
+   "vi": "Cửa hàng kia bán trái cây.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900088,
+   "jp": "病院は駅の前にあります。",
+   "vi": "Bệnh viện ở trước nhà ga.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900089,
+   "jp": "私の家族は四人です。",
+   "vi": "Gia đình tôi có bốn người.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900090,
+   "jp": "ドアを引いてください。",
+   "vi": "Hãy kéo cửa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900091,
+   "jp": "毎日駅まで歩きます。",
+   "vi": "Ngày nào tôi cũng đi bộ đến ga.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900092,
+   "jp": "道を渡る時、気をつけてください。",
+   "vi": "Khi băng qua đường hãy cẩn thận.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900093,
+   "jp": "この部屋は広いです。",
+   "vi": "Căn phòng này rộng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900094,
+   "jp": "父はまだ若いです。",
+   "vi": "Bố tôi vẫn còn trẻ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900095,
+   "jp": "次の交差点を右へ曲がってください。",
+   "vi": "Hãy rẽ phải ở ngã tư tiếp theo.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900096,
+   "jp": "ここで靴を脱いでください。",
+   "vi": "Xin hãy cởi giày ở đây.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900097,
+   "jp": "母が心配しています。",
+   "vi": "Mẹ đang lo lắng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900098,
+   "jp": "大丈夫ですか。",
+   "vi": "Bạn có sao không?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900099,
+   "jp": "仕事は大変です。",
+   "vi": "Công việc vất vả.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900100,
+   "jp": "病気で学校を休みました。",
+   "vi": "Tôi nghỉ học vì bị ốm.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900101,
+   "jp": "熱が三十八度あります。",
+   "vi": "Tôi sốt 38 độ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900102,
+   "jp": "家族は大切です。",
+   "vi": "Gia đình rất quan trọng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900103,
+   "jp": "日本語ができます。",
+   "vi": "Tôi biết tiếng Nhật.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900104,
+   "jp": "ピアノを弾きます。",
+   "vi": "Tôi chơi đàn piano.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900105,
+   "jp": "カラオケで歌います。",
+   "vi": "Tôi hát karaoke.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900106,
+   "jp": "ここにごみを捨てないでください。",
+   "vi": "Đừng vứt rác ở đây.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900107,
+   "jp": "父は車を運転します。",
+   "vi": "Bố tôi lái ô tô.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900108,
+   "jp": "レストランを予約しました。",
+   "vi": "Tôi đã đặt bàn ở nhà hàng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900109,
+   "jp": "日本語で日記を書きます。",
+   "vi": "Tôi viết nhật ký bằng tiếng Nhật.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900110,
+   "jp": "頭が痛いです。",
+   "vi": "Tôi đau đầu.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900111,
+   "jp": "一度日本へ行きたいです。",
+   "vi": "Tôi muốn đến Nhật một lần.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900112,
+   "jp": "山に登りました。",
+   "vi": "Tôi đã leo núi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900113,
+   "jp": "ホテルに二晩泊まります。",
+   "vi": "Tôi ở khách sạn hai đêm.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900114,
+   "jp": "もうすぐ夏になります。",
+   "vi": "Sắp sang hè rồi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900115,
+   "jp": "このチームは強いです。",
+   "vi": "Đội này mạnh.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900116,
+   "jp": "私はお酒に弱いです。",
+   "vi": "Tôi uống rượu kém.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900117,
+   "jp": "だんだん寒くなりました。",
+   "vi": "Trời dần lạnh hơn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900118,
+   "jp": "お茶をどうぞ。",
+   "vi": "Mời bạn dùng trà.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900119,
+   "jp": "最近、忙しいです。",
+   "vi": "Dạo này tôi bận.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900120,
+   "jp": "パスポートが要ります。",
+   "vi": "Cần hộ chiếu.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900121,
+   "jp": "インターネットで調べます。",
+   "vi": "Tôi tra trên mạng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900122,
+   "jp": "自転車を直しました。",
+   "vi": "Tôi đã sửa xe đạp.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900123,
+   "jp": "テレビが壊れました。",
+   "vi": "Tivi bị hỏng rồi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900124,
+   "jp": "僕は大学生です。",
+   "vi": "Tớ là sinh viên đại học.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900125,
+   "jp": "君の名前は？",
+   "vi": "Tên cậu là gì?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900126,
+   "jp": "普通の日は七時に起きます。",
+   "vi": "Ngày bình thường tôi dậy lúc bảy giờ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900127,
+   "jp": "大学で日本の文化を研究しています。",
+   "vi": "Tôi nghiên cứu văn hóa Nhật ở đại học.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900128,
+   "jp": "うん、わかった。",
+   "vi": "Ừ, hiểu rồi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900129,
+   "jp": "すごいですね！",
+   "vi": "Giỏi quá!",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900130,
+   "jp": "お金が足りません。",
+   "vi": "Không đủ tiền.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900131,
+   "jp": "毎朝ニュースを見ます。",
+   "vi": "Sáng nào tôi cũng xem tin tức.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900132,
+   "jp": "本当ですか。",
+   "vi": "Thật vậy sao?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900133,
+   "jp": "明日はたぶん雨です。",
+   "vi": "Có lẽ ngày mai mưa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900134,
+   "jp": "きっと大丈夫です。",
+   "vi": "Chắc chắn sẽ ổn thôi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900135,
+   "jp": "コートを着ます。",
+   "vi": "Tôi mặc áo khoác.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900136,
+   "jp": "ズボンをはきます。",
+   "vi": "Tôi mặc quần.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900137,
+   "jp": "帽子をかぶります。",
+   "vi": "Tôi đội mũ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900138,
+   "jp": "サラダにドレッシングをかけます。",
+   "vi": "Rưới nước sốt lên sa lát.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900139,
+   "jp": "私はダナンで生まれました。",
+   "vi": "Tôi sinh ra ở Đà Nẵng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900140,
+   "jp": "今日は用事があります。",
+   "vi": "Hôm nay tôi có việc bận.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900141,
+   "jp": "友達と会う約束があります。",
+   "vi": "Tôi có hẹn gặp bạn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900142,
+   "jp": "洋服を着ます。",
+   "vi": "Tôi mặc đồ Âu.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900143,
+   "jp": "帽子をかぶって出かけます。",
+   "vi": "Tôi đội mũ rồi ra ngoài.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900144,
+   "jp": "眼鏡をかけています。",
+   "vi": "Tôi đang đeo kính.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900145,
+   "jp": "角に花屋があります。",
+   "vi": "Ở góc phố có tiệm hoa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900146,
+   "jp": "この橋を渡ってください。",
+   "vi": "Hãy đi qua cây cầu này.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900147,
+   "jp": "姉が本をくれました。",
+   "vi": "Chị gái cho tôi quyển sách.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900148,
+   "jp": "友達を紹介します。",
+   "vi": "Tôi xin giới thiệu bạn tôi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900149,
+   "jp": "町を案内します。",
+   "vi": "Tôi sẽ dẫn bạn đi tham quan thị trấn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900150,
+   "jp": "先生が文法を説明します。",
+   "vi": "Thầy giải thích ngữ pháp.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900151,
+   "jp": "おじいさんは八十歳です。",
+   "vi": "Ông tôi tám mươi tuổi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900152,
+   "jp": "祖父は農家でした。",
+   "vi": "Ông tôi từng làm nông.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900153,
+   "jp": "お弁当を持って行きます。",
+   "vi": "Tôi mang cơm hộp đi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900154,
+   "jp": "地図を見ながら歩きます。",
+   "vi": "Tôi vừa xem bản đồ vừa đi bộ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900155,
+   "jp": "自分で料理を作ります。",
+   "vi": "Tôi tự nấu ăn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900156,
+   "jp": "塩を取ってください。",
+   "vi": "Lấy giúp tôi lọ muối.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900157,
+   "jp": "試験を頑張ってください。",
+   "vi": "Thi cố lên nhé.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900158,
+   "jp": "はい、そうです。",
+   "vi": "Vâng, đúng vậy.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900159,
+   "jp": "いいえ、ちがいます。",
+   "vi": "Không, không phải.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900160,
+   "jp": "朝はパンとコーヒーです。",
+   "vi": "Buổi sáng tôi ăn bánh mì và cà phê.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900161,
+   "jp": "タクシーを呼んでください。",
+   "vi": "Hãy gọi taxi giúp tôi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900162,
+   "jp": "バスで学校へ行きます。",
+   "vi": "Tôi đi học bằng xe buýt.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900163,
+   "jp": "ペンを貸してください。",
+   "vi": "Cho tôi mượn cái bút.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900164,
+   "jp": "パソコンでメールを書きます。",
+   "vi": "Tôi viết email bằng máy tính.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900165,
+   "jp": "駅の近くにレストランがあります。",
+   "vi": "Gần ga có nhà hàng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900166,
+   "jp": "ええ、いいですよ。",
+   "vi": "Ừ, được thôi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900167,
+   "jp": "この町は外国人が多いです。",
+   "vi": "Thị trấn này có nhiều người nước ngoài.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900168,
+   "jp": "この学校には留学生が多いです。",
+   "vi": "Trường này có nhiều du học sinh.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900169,
+   "jp": "皆さん、おはようございます。",
+   "vi": "Chào buổi sáng mọi người.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900170,
+   "jp": "みんなで写真をとりましょう。",
+   "vi": "Cả nhóm cùng chụp ảnh nhé.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900171,
+   "jp": "クラスに生徒が三十人います。",
+   "vi": "Lớp có ba mươi học sinh.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900172,
+   "jp": "これは本です。",
+   "vi": "Đây là quyển sách.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900173,
+   "jp": "それは何ですか。",
+   "vi": "Cái đó là gì?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900174,
+   "jp": "あれは私の車です。",
+   "vi": "Kia là xe của tôi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900175,
+   "jp": "この本はおもしろいです。",
+   "vi": "Quyển sách này hay.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900176,
+   "jp": "その時計はいくらですか。",
+   "vi": "Cái đồng hồ đó giá bao nhiêu?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900177,
+   "jp": "あの建物は銀行です。",
+   "vi": "Tòa nhà kia là ngân hàng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900178,
+   "jp": "椅子に座ってください。",
+   "vi": "Hãy ngồi xuống ghế.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900179,
+   "jp": "カレンダーに予定を書きます。",
+   "vi": "Tôi ghi lịch hẹn lên tờ lịch.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900180,
+   "jp": "母に手紙を出しました。",
+   "vi": "Tôi đã gửi thư cho mẹ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900181,
+   "jp": "封筒に手紙を入れます。",
+   "vi": "Tôi cho thư vào phong bì.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900182,
+   "jp": "箱の中に何がありますか。",
+   "vi": "Trong hộp có gì?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900183,
+   "jp": "父の万年筆は古いです。",
+   "vi": "Cây bút máy của bố đã cũ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900184,
+   "jp": "英語が話せますか。",
+   "vi": "Bạn nói được tiếng Anh không?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900185,
+   "jp": "どの人が先生ですか。",
+   "vi": "Người nào là thầy giáo?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900186,
+   "jp": "どれがあなたのですか。",
+   "vi": "Cái nào là của bạn?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900187,
+   "jp": "ここは教室です。",
+   "vi": "Đây là lớp học.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900188,
+   "jp": "そこに座ってください。",
+   "vi": "Hãy ngồi chỗ đó.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900189,
+   "jp": "あそこに駅があります。",
+   "vi": "Ở chỗ kia có nhà ga.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900190,
+   "jp": "トイレはどこですか。",
+   "vi": "Nhà vệ sinh ở đâu?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900191,
+   "jp": "そちらはどうですか。",
+   "vi": "Bên đó thế nào?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900192,
+   "jp": "出口はあちらです。",
+   "vi": "Lối ra ở đằng kia.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900193,
+   "jp": "こっちへ来て。",
+   "vi": "Lại đây.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900194,
+   "jp": "そっちは寒い？",
+   "vi": "Bên đó lạnh không?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900195,
+   "jp": "あっちに猫がいるよ。",
+   "vi": "Bên kia có con mèo đấy.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900196,
+   "jp": "あの白い建物は病院です。",
+   "vi": "Tòa nhà trắng kia là bệnh viện.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900197,
+   "jp": "入口はあちらです。",
+   "vi": "Lối vào ở đằng kia.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900198,
+   "jp": "東の出口で会いましょう。",
+   "vi": "Hãy gặp nhau ở cửa ra phía đông.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900199,
+   "jp": "玄関で靴を脱ぎます。",
+   "vi": "Cởi giày ở lối vào.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900200,
+   "jp": "母は台所にいます。",
+   "vi": "Mẹ ở trong bếp.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900201,
+   "jp": "廊下を走らないでください。",
+   "vi": "Đừng chạy ngoài hành lang.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900202,
+   "jp": "ベトナム大使館はどこですか。",
+   "vi": "Đại sứ quán Việt Nam ở đâu?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900203,
+   "jp": "あさって国へ帰ります。",
+   "vi": "Ngày kia tôi về nước.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900204,
+   "jp": "おととい友達が来ました。",
+   "vi": "Hôm kia bạn tôi đã đến.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900205,
+   "jp": "今朝、パンを食べました。",
+   "vi": "Sáng nay tôi đã ăn bánh mì.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900206,
+   "jp": "今晩、映画を見ます。",
+   "vi": "Tối nay tôi sẽ xem phim.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900207,
+   "jp": "昨夜はよく寝ました。",
+   "vi": "Tối qua tôi ngủ ngon.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900208,
+   "jp": "午前十時に会議があります。",
+   "vi": "Có cuộc họp lúc 10 giờ sáng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900209,
+   "jp": "夕方、雨が降りました。",
+   "vi": "Chiều tối trời đã mưa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900210,
+   "jp": "毎朝ジョギングをします。",
+   "vi": "Sáng nào tôi cũng chạy bộ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900211,
+   "jp": "毎晩日記を書きます。",
+   "vi": "Tối nào tôi cũng viết nhật ký.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900212,
+   "jp": "水曜日は店が休みです。",
+   "vi": "Thứ Tư cửa hàng nghỉ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900213,
+   "jp": "木曜日に病院へ行きます。",
+   "vi": "Thứ Năm tôi đi bệnh viện.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900214,
+   "jp": "金曜日の夜、パーティーがあります。",
+   "vi": "Tối thứ Sáu có tiệc.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900215,
+   "jp": "土曜日は家族と出かけます。",
+   "vi": "Thứ Bảy tôi đi chơi với gia đình.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900216,
+   "jp": "仕事は九時から五時までです。",
+   "vi": "Công việc từ chín giờ đến năm giờ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900217,
+   "jp": "電話番号はゼロから始まります。",
+   "vi": "Số điện thoại bắt đầu bằng số 0.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900218,
+   "jp": "気温は零度です。",
+   "vi": "Nhiệt độ là không độ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900219,
+   "jp": "授業は九時に始まります。",
+   "vi": "Giờ học bắt đầu lúc chín giờ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900220,
+   "jp": "この町は自動車が多いです。",
+   "vi": "Thị trấn này có nhiều ô tô.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900221,
+   "jp": "四月一日に入学します。",
+   "vi": "Tôi nhập học ngày mồng một tháng Tư.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900222,
+   "jp": "二日休みます。",
+   "vi": "Tôi nghỉ hai ngày.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900223,
+   "jp": "三日に友達が来ます。",
+   "vi": "Ngày mồng ba bạn tôi đến.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900224,
+   "jp": "四日かかりました。",
+   "vi": "Đã mất bốn ngày.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900225,
+   "jp": "五月五日は子供の日です。",
+   "vi": "Ngày 5 tháng 5 là ngày Thiếu nhi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900226,
+   "jp": "六日に旅行から帰ります。",
+   "vi": "Ngày mồng sáu tôi đi du lịch về.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900227,
+   "jp": "七日間入院しました。",
+   "vi": "Tôi đã nằm viện bảy ngày.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900228,
+   "jp": "八日は母の誕生日です。",
+   "vi": "Ngày mồng tám là sinh nhật mẹ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900229,
+   "jp": "九日に試験があります。",
+   "vi": "Ngày mồng chín có kỳ thi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900230,
+   "jp": "十日までに出してください。",
+   "vi": "Hãy nộp trước ngày mồng mười.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900231,
+   "jp": "二十日に給料をもらいます。",
+   "vi": "Ngày hai mươi tôi nhận lương.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900232,
+   "jp": "毎週日曜日に買い物をします。",
+   "vi": "Chủ nhật hàng tuần tôi đi mua sắm.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900233,
+   "jp": "今月はお金がありません。",
+   "vi": "Tháng này tôi không có tiền.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900234,
+   "jp": "来月、結婚します。",
+   "vi": "Tháng sau tôi kết hôn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900235,
+   "jp": "毎月本を三冊読みます。",
+   "vi": "Mỗi tháng tôi đọc ba cuốn sách.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900236,
+   "jp": "去年、日本へ来ました。",
+   "vi": "Năm ngoái tôi đến Nhật.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900237,
+   "jp": "今年は雪が多いです。",
+   "vi": "Năm nay tuyết nhiều.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900238,
+   "jp": "来年、大学に入ります。",
+   "vi": "Năm sau tôi vào đại học.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900239,
+   "jp": "毎年夏に海へ行きます。",
+   "vi": "Mùa hè năm nào tôi cũng đi biển.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900240,
+   "jp": "おととし、富士山に登りました。",
+   "vi": "Năm kia tôi đã leo núi Phú Sĩ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900241,
+   "jp": "さ来年、国へ帰ります。",
+   "vi": "Năm sau nữa tôi về nước.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900242,
+   "jp": "いつ日本へ来ましたか。",
+   "vi": "Bạn đến Nhật khi nào?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900243,
+   "jp": "朝ご飯を食べましたか。",
+   "vi": "Bạn đã ăn sáng chưa?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900244,
+   "jp": "昼ご飯はラーメンでした。",
+   "vi": "Bữa trưa là mì ramen.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900245,
+   "jp": "晩ご飯を作ります。",
+   "vi": "Tôi nấu bữa tối.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900246,
+   "jp": "夕飯は七時です。",
+   "vi": "Bữa tối lúc bảy giờ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900247,
+   "jp": "好きな食べ物は何ですか。",
+   "vi": "Món ăn bạn thích là gì?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900248,
+   "jp": "飲み物は何がいいですか。",
+   "vi": "Bạn muốn uống gì?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900249,
+   "jp": "紅茶に砂糖を入れますか。",
+   "vi": "Bạn có cho đường vào trà không?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900250,
+   "jp": "毎朝牛乳を飲みます。",
+   "vi": "Sáng nào tôi cũng uống sữa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900251,
+   "jp": "果物は体にいいです。",
+   "vi": "Trái cây tốt cho cơ thể.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900252,
+   "jp": "野菜をたくさん食べましょう。",
+   "vi": "Hãy ăn nhiều rau.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900253,
+   "jp": "牛肉は高いです。",
+   "vi": "Thịt bò đắt.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900254,
+   "jp": "豚肉を焼きました。",
+   "vi": "Tôi đã nướng thịt lợn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900255,
+   "jp": "鶏肉のスープを作ります。",
+   "vi": "Tôi nấu súp gà.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900256,
+   "jp": "カレーは辛いですか。",
+   "vi": "Cà ri có cay không?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900257,
+   "jp": "いただきます。",
+   "vi": "Tôi xin phép ăn ạ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900258,
+   "jp": "喫茶店で友達と話します。",
+   "vi": "Tôi nói chuyện với bạn ở quán cà phê.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900259,
+   "jp": "ナイフで肉を切ります。",
+   "vi": "Tôi cắt thịt bằng dao.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900260,
+   "jp": "フォークを使います。",
+   "vi": "Tôi dùng nĩa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900261,
+   "jp": "お皿を洗います。",
+   "vi": "Tôi rửa đĩa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900262,
+   "jp": "茶碗にご飯を入れます。",
+   "vi": "Xới cơm vào bát.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900263,
+   "jp": "コップに水を入れます。",
+   "vi": "Rót nước vào cốc.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900264,
+   "jp": "ハンカチを持っていますか。",
+   "vi": "Bạn có khăn tay không?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900265,
+   "jp": "テープで音楽を聞きました。",
+   "vi": "Tôi đã nghe nhạc bằng băng cát-xét.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900266,
+   "jp": "両親はハノイに住んでいます。",
+   "vi": "Bố mẹ tôi sống ở Hà Nội.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900267,
+   "jp": "奥さんはお元気ですか。",
+   "vi": "Vợ anh có khỏe không?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900268,
+   "jp": "いい天気ですね。",
+   "vi": "Thời tiết đẹp nhỉ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900269,
+   "jp": "このコーヒーはまずいです。",
+   "vi": "Cà phê này dở.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900270,
+   "jp": "このケーキは甘いです。",
+   "vi": "Cái bánh này ngọt.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900271,
+   "jp": "キムチは辛いです。",
+   "vi": "Kim chi cay.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900272,
+   "jp": "このかばんは重いです。",
+   "vi": "Cái túi này nặng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900273,
+   "jp": "このパソコンは軽いです。",
+   "vi": "Máy tính này nhẹ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900274,
+   "jp": "この鉛筆は短いです。",
+   "vi": "Cây bút chì này ngắn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900275,
+   "jp": "駅は家から近いです。",
+   "vi": "Ga gần nhà.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900276,
+   "jp": "学校は遠いです。",
+   "vi": "Trường học xa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900277,
+   "jp": "今日は早く起きました。",
+   "vi": "Hôm nay tôi dậy sớm.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900278,
+   "jp": "新幹線は速いです。",
+   "vi": "Tàu Shinkansen nhanh.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900279,
+   "jp": "昨日は遅く寝ました。",
+   "vi": "Hôm qua tôi ngủ muộn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900280,
+   "jp": "弟は背が低いです。",
+   "vi": "Em trai tôi thấp.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900281,
+   "jp": "太いペンで書きます。",
+   "vi": "Tôi viết bằng bút nét to.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900282,
+   "jp": "この道は細いです。",
+   "vi": "Con đường này hẹp.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900283,
+   "jp": "丸いテーブルを買いました。",
+   "vi": "Tôi đã mua cái bàn tròn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900284,
+   "jp": "このパンは薄いです。",
+   "vi": "Lát bánh mì này mỏng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900285,
+   "jp": "冷たい水を飲みたいです。",
+   "vi": "Tôi muốn uống nước lạnh.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900286,
+   "jp": "このお風呂は温いです。",
+   "vi": "Nước bồn tắm này hơi nguội.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900287,
+   "jp": "危ないですから、触らないでください。",
+   "vi": "Nguy hiểm nên xin đừng chạm vào.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900288,
+   "jp": "手が汚いです。",
+   "vi": "Tay bẩn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900289,
+   "jp": "隣の部屋がうるさいです。",
+   "vi": "Phòng bên cạnh ồn ào.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900290,
+   "jp": "この映画はつまらないです。",
+   "vi": "Bộ phim này chán.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900291,
+   "jp": "この犬はかわいいですね。",
+   "vi": "Con chó này dễ thương nhỉ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900292,
+   "jp": "漢字は難しいです。",
+   "vi": "Chữ Hán khó.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900293,
+   "jp": "このテストは易しかったです。",
+   "vi": "Bài kiểm tra này dễ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900294,
+   "jp": "この町はにぎやかです。",
+   "vi": "Thị trấn này nhộn nhịp.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900295,
+   "jp": "この店は有名です。",
+   "vi": "Cửa hàng này nổi tiếng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900296,
+   "jp": "このアプリは便利です。",
+   "vi": "Ứng dụng này tiện lợi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900297,
+   "jp": "お元気ですか。",
+   "vi": "Bạn có khỏe không?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900298,
+   "jp": "祖母は体が丈夫です。",
+   "vi": "Bà tôi rất khỏe.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900299,
+   "jp": "りっぱな建物ですね。",
+   "vi": "Tòa nhà lộng lẫy nhỉ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900300,
+   "jp": "もう結構です。",
+   "vi": "Tôi đủ rồi ạ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900301,
+   "jp": "小さな村に住んでいます。",
+   "vi": "Tôi sống ở một ngôi làng nhỏ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900302,
+   "jp": "こんな服がほしいです。",
+   "vi": "Tôi muốn bộ quần áo như thế này.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900303,
+   "jp": "日本の生活はどうですか。",
+   "vi": "Cuộc sống ở Nhật thế nào?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900304,
+   "jp": "お茶はいかがですか。",
+   "vi": "Anh dùng trà nhé?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900305,
+   "jp": "何色が好きですか。",
+   "vi": "Bạn thích màu gì?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900306,
+   "jp": "信号が青になりました。",
+   "vi": "Đèn giao thông đã chuyển xanh.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900307,
+   "jp": "青い海が見えます。",
+   "vi": "Nhìn thấy biển xanh.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900308,
+   "jp": "赤は私の好きな色です。",
+   "vi": "Đỏ là màu tôi thích.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900309,
+   "jp": "赤いりんごを買いました。",
+   "vi": "Tôi đã mua táo đỏ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900310,
+   "jp": "黒のかばんがほしいです。",
+   "vi": "Tôi muốn cái túi màu đen.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900311,
+   "jp": "黒い靴をはいています。",
+   "vi": "Tôi đang đi giày đen.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900312,
+   "jp": "白い猫がいます。",
+   "vi": "Có một con mèo trắng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900313,
+   "jp": "黄色の花が咲いています。",
+   "vi": "Hoa màu vàng đang nở.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900314,
+   "jp": "黄色いバナナ",
+   "vi": "Quả chuối vàng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900315,
+   "jp": "茶色の犬を飼っています。",
+   "vi": "Tôi nuôi một con chó màu nâu.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900316,
+   "jp": "この町は緑が多いです。",
+   "vi": "Thị trấn này có nhiều cây xanh.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900317,
+   "jp": "日本の料理が大好きです。",
+   "vi": "Tôi rất thích đồ ăn Nhật.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900318,
+   "jp": "雨の日は嫌です。",
+   "vi": "Tôi ghét ngày mưa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900319,
+   "jp": "日本の歌を覚えました。",
+   "vi": "Tôi đã thuộc một bài hát Nhật.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900320,
+   "jp": "妹は絵が上手です。",
+   "vi": "Em gái tôi vẽ giỏi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900321,
+   "jp": "兄はギターが弾けます。",
+   "vi": "Anh tôi biết chơi ghi-ta.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900322,
+   "jp": "漢字は難しいですが、おもしろいです。",
+   "vi": "Chữ Hán khó nhưng thú vị.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900323,
+   "jp": "意味を辞書で調べます。",
+   "vi": "Tôi tra nghĩa trong từ điển.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900324,
+   "jp": "この言葉の意味は何ですか。",
+   "vi": "Từ này nghĩa là gì?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900325,
+   "jp": "なぜ日本語を勉強していますか。",
+   "vi": "Tại sao bạn học tiếng Nhật?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900326,
+   "jp": "人がたくさんいます。",
+   "vi": "Có rất nhiều người.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900327,
+   "jp": "犬を飼っています。",
+   "vi": "Tôi nuôi chó.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900328,
+   "jp": "鳥が鳴いています。",
+   "vi": "Chim đang hót.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900329,
+   "jp": "どんな動物が好きですか。",
+   "vi": "Bạn thích con vật nào?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900330,
+   "jp": "ペットを飼っていますか。",
+   "vi": "Bạn có nuôi thú cưng không?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900331,
+   "jp": "池に魚がいます。",
+   "vi": "Trong ao có cá.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900332,
+   "jp": "海で泳ぎました。",
+   "vi": "Tôi đã bơi ở biển.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900333,
+   "jp": "公園で散歩します。",
+   "vi": "Tôi đi dạo ở công viên.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900334,
+   "jp": "道がわからない時は交番で聞きます。",
+   "vi": "Khi không biết đường thì tôi hỏi ở bốt cảnh sát.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900335,
+   "jp": "おまわりさんに道を聞きました。",
+   "vi": "Tôi đã hỏi đường chú cảnh sát.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900336,
+   "jp": "駅の前に警官がいます。",
+   "vi": "Trước ga có cảnh sát.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900337,
+   "jp": "本棚に本を並べます。",
+   "vi": "Xếp sách lên giá.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900338,
+   "jp": "冷蔵庫に牛乳があります。",
+   "vi": "Trong tủ lạnh có sữa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900339,
+   "jp": "ベッドで寝ます。",
+   "vi": "Tôi ngủ trên giường.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900340,
+   "jp": "テーブルの上に花があります。",
+   "vi": "Trên bàn có hoa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900341,
+   "jp": "ドアを開けてください。",
+   "vi": "Hãy mở cửa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900342,
+   "jp": "戸を閉めてください。",
+   "vi": "Hãy đóng cửa lại.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900343,
+   "jp": "窓を開けてもいいですか。",
+   "vi": "Tôi mở cửa sổ được không?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900344,
+   "jp": "手紙をポストに入れます。",
+   "vi": "Tôi bỏ thư vào hòm thư.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900345,
+   "jp": "テレビの横に電話があります。",
+   "vi": "Bên cạnh tivi có điện thoại.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900346,
+   "jp": "駅のそばに本屋があります。",
+   "vi": "Cạnh ga có hiệu sách.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900347,
+   "jp": "川の向こうに村があります。",
+   "vi": "Bên kia sông có một ngôi làng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900348,
+   "jp": "この辺に銀行はありますか。",
+   "vi": "Quanh đây có ngân hàng không?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900349,
+   "jp": "色々な国の人がいます。",
+   "vi": "Có người từ nhiều nước khác nhau.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900350,
+   "jp": "駅の近くのアパートに住んでいます。",
+   "vi": "Tôi sống ở căn hộ gần ga.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900351,
+   "jp": "りんごを一つください。",
+   "vi": "Cho tôi một quả táo.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900352,
+   "jp": "かばんが二つあります。",
+   "vi": "Có hai cái cặp.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900353,
+   "jp": "いすが四つあります。",
+   "vi": "Có bốn cái ghế.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900354,
+   "jp": "たまごを五つ使います。",
+   "vi": "Dùng năm quả trứng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900355,
+   "jp": "コップが六つあります。",
+   "vi": "Có sáu cái cốc.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900356,
+   "jp": "妹は七つです。",
+   "vi": "Em gái tôi bảy tuổi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900357,
+   "jp": "あめを八つもらいました。",
+   "vi": "Tôi được cho tám cái kẹo.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900358,
+   "jp": "箱が九つあります。",
+   "vi": "Có chín cái hộp.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900359,
+   "jp": "りんごはいくつありますか。",
+   "vi": "Có bao nhiêu quả táo?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900360,
+   "jp": "弟は来年二十歳になります。",
+   "vi": "Năm sau em trai tôi tròn hai mươi tuổi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900361,
+   "jp": "兄弟は何人いますか。",
+   "vi": "Bạn có mấy anh chị em?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900362,
+   "jp": "兄は東京で働いています。",
+   "vi": "Anh trai tôi làm việc ở Tokyo.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900363,
+   "jp": "姉は銀行に勤めています。",
+   "vi": "Chị gái tôi làm ở ngân hàng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900364,
+   "jp": "弟はサッカーが好きです。",
+   "vi": "Em trai tôi thích bóng đá.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900365,
+   "jp": "妹は高校生です。",
+   "vi": "Em gái tôi là học sinh cấp ba.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900366,
+   "jp": "お兄さんは何歳ですか。",
+   "vi": "Anh trai bạn bao nhiêu tuổi?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900367,
+   "jp": "お姉さんはきれいですね。",
+   "vi": "Chị gái bạn xinh nhỉ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900368,
+   "jp": "おばさんにお菓子をもらいました。",
+   "vi": "Tôi được dì cho bánh kẹo.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900369,
+   "jp": "大人は一人千円です。",
+   "vi": "Người lớn mỗi người một nghìn yên.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900370,
+   "jp": "女の子が歌を歌っています。",
+   "vi": "Cô bé đang hát.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900371,
+   "jp": "外国へ行ったことがありますか。",
+   "vi": "Bạn đã từng ra nước ngoài chưa?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900372,
+   "jp": "このかばんは三キロです。",
+   "vi": "Cái túi này nặng ba cân.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900373,
+   "jp": "肉を五百グラム買います。",
+   "vi": "Tôi mua năm trăm gam thịt.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900374,
+   "jp": "プールは五十メートルです。",
+   "vi": "Bể bơi dài năm mươi mét.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900375,
+   "jp": "教科書の十ページを開けてください。",
+   "vi": "Hãy mở trang mười của sách giáo khoa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900376,
+   "jp": "ケーキを半分食べました。",
+   "vi": "Tôi đã ăn một nửa cái bánh.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900377,
+   "jp": "全部でいくらですか。",
+   "vi": "Tất cả bao nhiêu tiền?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900378,
+   "jp": "公園に大勢の人がいます。",
+   "vi": "Công viên có rất đông người.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900379,
+   "jp": "一月に一度、髪を切ります。",
+   "vi": "Một tháng tôi cắt tóc một lần.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900380,
+   "jp": "私と同じかばんですね。",
+   "vi": "Cái túi giống của tôi nhỉ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900381,
+   "jp": "今日は風が強いです。",
+   "vi": "Hôm nay gió mạnh.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900382,
+   "jp": "午後から晴れました。",
+   "vi": "Từ chiều trời đã quang.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900383,
+   "jp": "空が曇ってきました。",
+   "vi": "Trời bắt đầu nhiều mây.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900384,
+   "jp": "雪が降りました。",
+   "vi": "Tuyết đã rơi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900385,
+   "jp": "冷たい風が吹いています。",
+   "vi": "Gió lạnh đang thổi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900386,
+   "jp": "桜が咲きました。",
+   "vi": "Hoa anh đào đã nở.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900387,
+   "jp": "来月、北海道へ旅行します。",
+   "vi": "Tháng sau tôi đi du lịch Hokkaido.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900388,
+   "jp": "今晩、パーティーがあります。",
+   "vi": "Tối nay có tiệc.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900389,
+   "jp": "週末は暇です。",
+   "vi": "Cuối tuần tôi rảnh.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900390,
+   "jp": "映画館は駅の近くにあります。",
+   "vi": "Rạp chiếu phim ở gần ga.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900391,
+   "jp": "日曜日は家族と出かけます。",
+   "vi": "Chủ nhật tôi đi chơi cùng gia đình.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900392,
+   "jp": "祖母は小さい村に住んでいます。",
+   "vi": "Bà tôi sống ở một ngôi làng nhỏ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900393,
+   "jp": "子供にお菓子をあげます。",
+   "vi": "Tôi cho bọn trẻ bánh kẹo.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900394,
+   "jp": "砂糖を少し入れます。",
+   "vi": "Cho một chút đường.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900395,
+   "jp": "塩を入れすぎました。",
+   "vi": "Tôi cho quá nhiều muối.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900396,
+   "jp": "魚に醤油をかけます。",
+   "vi": "Rưới nước tương lên cá.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900397,
+   "jp": "パンにバターをぬります。",
+   "vi": "Phết bơ lên bánh mì.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900398,
+   "jp": "ここに立ってください。",
+   "vi": "Hãy đứng ở đây.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900399,
+   "jp": "どうぞ、座ってください。",
+   "vi": "Xin mời ngồi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900400,
+   "jp": "先生の質問に答えます。",
+   "vi": "Tôi trả lời câu hỏi của thầy.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900401,
+   "jp": "友達に仕事を頼みました。",
+   "vi": "Tôi đã nhờ bạn một việc.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900402,
+   "jp": "店の前に人が並んでいます。",
+   "vi": "Người ta đang xếp hàng trước cửa hàng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900403,
+   "jp": "テーブルにお皿を並べます。",
+   "vi": "Bày đĩa lên bàn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900404,
+   "jp": "この道をまっすぐ行ってください。",
+   "vi": "Hãy đi thẳng con đường này.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900405,
+   "jp": "ゆっくりと休んでください。",
+   "vi": "Hãy nghỉ ngơi thoải mái.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900406,
+   "jp": "どうぞ、入ってください。",
+   "vi": "Xin mời vào.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900407,
+   "jp": "どうもありがとう。",
+   "vi": "Cảm ơn nhiều.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900408,
+   "jp": "さあ、行きましょう。",
+   "vi": "Nào, đi thôi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900409,
+   "jp": "銀行は三時に閉まります。",
+   "vi": "Ngân hàng đóng cửa lúc ba giờ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900410,
+   "jp": "店は十時に開きます。",
+   "vi": "Cửa hàng mở lúc mười giờ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900411,
+   "jp": "七時に駅に着きました。",
+   "vi": "Bảy giờ tôi đã đến ga.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900412,
+   "jp": "バスに乗ります。",
+   "vi": "Tôi lên xe buýt.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900413,
+   "jp": "次の駅で降ります。",
+   "vi": "Tôi xuống ở ga tiếp theo.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900414,
+   "jp": "姉は病院に勤めています。",
+   "vi": "Chị tôi làm ở bệnh viện.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900415,
+   "jp": "家庭の料理が一番です。",
+   "vi": "Món ăn gia đình là ngon nhất.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900416,
+   "jp": "質問がありますか。",
+   "vi": "Có câu hỏi nào không?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900417,
+   "jp": "この問題は易しいです。",
+   "vi": "Câu hỏi này dễ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900418,
+   "jp": "授業は九時からです。",
+   "vi": "Giờ học bắt đầu từ chín giờ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900419,
+   "jp": "日本語で作文を書きました。",
+   "vi": "Tôi đã viết bài văn bằng tiếng Nhật.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900420,
+   "jp": "この文章を読んでください。",
+   "vi": "Hãy đọc đoạn văn này.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900421,
+   "jp": "このクラスは楽しいです。",
+   "vi": "Lớp này vui.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900422,
+   "jp": "体に気をつけてください。",
+   "vi": "Hãy giữ gìn sức khỏe.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900423,
+   "jp": "もっと大きい声で話してください。",
+   "vi": "Hãy nói to hơn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900424,
+   "jp": "手を洗います。",
+   "vi": "Tôi rửa tay.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900425,
+   "jp": "毎晩お風呂に入ります。",
+   "vi": "Tối nào tôi cũng tắm bồn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900426,
+   "jp": "石鹸で手を洗います。",
+   "vi": "Tôi rửa tay bằng xà phòng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900427,
+   "jp": "初めはよくわかりませんでした。",
+   "vi": "Lúc đầu tôi không hiểu lắm.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900428,
+   "jp": "宿題をして、それから寝ます。",
+   "vi": "Tôi làm bài tập rồi sau đó đi ngủ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900429,
+   "jp": "風邪をひきました。",
+   "vi": "Tôi bị cảm.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900430,
+   "jp": "お金がなくて困っています。",
+   "vi": "Tôi đang gặp khó vì không có tiền.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900431,
+   "jp": "電話番号を忘れました。",
+   "vi": "Tôi quên số điện thoại rồi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900432,
+   "jp": "毎日新しい言葉を十覚えます。",
+   "vi": "Mỗi ngày tôi thuộc mười từ mới.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900433,
+   "jp": "財布を無くしました。",
+   "vi": "Tôi đã làm mất ví.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900434,
+   "jp": "本を返します。",
+   "vi": "Tôi trả sách.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900435,
+   "jp": "まだ宿題をしていません。",
+   "vi": "Tôi vẫn chưa làm bài tập.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900436,
+   "jp": "もう昼ご飯を食べました。",
+   "vi": "Tôi đã ăn trưa rồi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900437,
+   "jp": "毎日漢字を練習します。",
+   "vi": "Ngày nào tôi cũng luyện chữ Hán.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900438,
+   "jp": "日曜日に部屋を掃除します。",
+   "vi": "Chủ nhật tôi dọn phòng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900439,
+   "jp": "毎日洗濯します。",
+   "vi": "Ngày nào tôi cũng giặt đồ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900440,
+   "jp": "公園を走ります。",
+   "vi": "Tôi chạy trong công viên.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900441,
+   "jp": "鳥が空を飛んでいます。",
+   "vi": "Chim đang bay trên trời.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900442,
+   "jp": "夜、猫が鳴いています。",
+   "vi": "Ban đêm mèo đang kêu.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900443,
+   "jp": "宿題をやりましたか。",
+   "vi": "Cậu làm bài tập chưa?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900444,
+   "jp": "日本は初めてです。",
+   "vi": "Đây là lần đầu tôi đến Nhật.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900445,
+   "jp": "時々映画を見ます。",
+   "vi": "Thỉnh thoảng tôi xem phim.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900446,
+   "jp": "今、ちょうど十二時です。",
+   "vi": "Bây giờ vừa đúng mười hai giờ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900447,
+   "jp": "また来てください。",
+   "vi": "Hãy lại đến nhé.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900448,
+   "jp": "ほかに質問はありますか。",
+   "vi": "Còn câu hỏi nào khác không?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900449,
+   "jp": "では、また来週。",
+   "vi": "Vậy hẹn tuần sau.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900450,
+   "jp": "じゃ、また明日。",
+   "vi": "Thế thì mai gặp nhé.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900451,
+   "jp": "日本語は難しいです。でも、おもしろいです。",
+   "vi": "Tiếng Nhật khó. Nhưng thú vị.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900452,
+   "jp": "しかし、時間がありません。",
+   "vi": "Tuy nhiên không có thời gian.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900453,
+   "jp": "それでは、始めましょう。",
+   "vi": "Vậy thì, bắt đầu nào.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900454,
+   "jp": "答えが違います。",
+   "vi": "Câu trả lời sai rồi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900455,
+   "jp": "今日は天気が悪いです。",
+   "vi": "Hôm nay thời tiết xấu.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900456,
+   "jp": "うちの犬が死にました。",
+   "vi": "Con chó nhà tôi đã chết.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900457,
+   "jp": "電気が消えました。",
+   "vi": "Đèn đã tắt.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900458,
+   "jp": "上着を脱いでください。",
+   "vi": "Xin hãy cởi áo khoác.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900459,
+   "jp": "冬はコートが必要です。",
+   "vi": "Mùa đông cần áo choàng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900460,
+   "jp": "白いシャツを着ています。",
+   "vi": "Tôi đang mặc áo sơ mi trắng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900461,
+   "jp": "会社にワイシャツを着て行きます。",
+   "vi": "Tôi mặc áo sơ mi đi làm.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900462,
+   "jp": "父は背広で会社へ行きます。",
+   "vi": "Bố tôi mặc com-lê đi làm.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900463,
+   "jp": "赤いスカートを買いました。",
+   "vi": "Tôi đã mua cái váy đỏ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900464,
+   "jp": "このズボンは長いです。",
+   "vi": "Cái quần này dài.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900465,
+   "jp": "靴を脱いでください。",
+   "vi": "Xin hãy cởi giày.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900466,
+   "jp": "靴下に穴があります。",
+   "vi": "Tất bị thủng lỗ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900467,
+   "jp": "父にネクタイをあげました。",
+   "vi": "Tôi đã tặng bố cái cà vạt.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900468,
+   "jp": "ポケットに鍵があります。",
+   "vi": "Chìa khóa ở trong túi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900469,
+   "jp": "新しい服を買いました。",
+   "vi": "Tôi đã mua quần áo mới.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900470,
+   "jp": "雨なので傘を差します。",
+   "vi": "Trời mưa nên tôi giương ô.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900471,
+   "jp": "花瓶に花を入れます。",
+   "vi": "Cắm hoa vào bình.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900472,
+   "jp": "財布にお金が少しあります。",
+   "vi": "Trong ví có một ít tiền.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900473,
+   "jp": "寒いからストーブをつけます。",
+   "vi": "Lạnh nên tôi bật lò sưởi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900474,
+   "jp": "電気を消してください。",
+   "vi": "Hãy tắt đèn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900475,
+   "jp": "門の前で待っています。",
+   "vi": "Tôi đang đợi trước cổng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900476,
+   "jp": "家から会社まで一時間かかります。",
+   "vi": "Từ nhà đến công ty mất một tiếng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900477,
+   "jp": "はさみで紙を切ります。",
+   "vi": "Cắt giấy bằng kéo.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900478,
+   "jp": "紙をたてに折ってください。",
+   "vi": "Hãy gấp tờ giấy theo chiều dọc.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900479,
+   "jp": "八百屋でトマトを買います。",
+   "vi": "Tôi mua cà chua ở hàng rau.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900480,
+   "jp": "父は古いレコードを集めています。",
+   "vi": "Bố tôi sưu tầm đĩa hát cũ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900481,
+   "jp": "この書類をコピーしてください。",
+   "vi": "Hãy photo tài liệu này.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900482,
+   "jp": "あの方は先生です。",
+   "vi": "Vị kia là thầy giáo.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900483,
+   "jp": "わたくしがご案内します。",
+   "vi": "Tôi xin phép được hướng dẫn ạ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900484,
+   "jp": "誰か来ましたよ。",
+   "vi": "Có ai đó đến kìa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900485,
+   "jp": "彼は私の兄です。",
+   "vi": "Anh ấy là anh trai tôi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900486,
+   "jp": "彼女は歌が上手です。",
+   "vi": "Cô ấy hát giỏi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900487,
+   "jp": "ゆいちゃんは五歳です。",
+   "vi": "Bé Yui năm tuổi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900488,
+   "jp": "けんた君、こっちへ来て。",
+   "vi": "Kenta ơi, lại đây.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900489,
+   "jp": "お客様、こちらへどうぞ。",
+   "vi": "Mời quý khách đi lối này.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900490,
+   "jp": "そうですか。",
+   "vi": "Vậy à.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900491,
+   "jp": "ああ、そうですか。",
+   "vi": "À, ra vậy.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900492,
+   "jp": "失礼します。",
+   "vi": "Tôi xin phép (vào/về).",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900493,
+   "jp": "朝、先生に挨拶します。",
+   "vi": "Buổi sáng tôi chào thầy giáo.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900494,
+   "jp": "私は二十五歳です。",
+   "vi": "Tôi hai mươi lăm tuổi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900495,
+   "jp": "女の人が二人います。",
+   "vi": "Có hai người phụ nữ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900496,
+   "jp": "男性のトイレはあちらです。",
+   "vi": "Nhà vệ sinh nam ở đằng kia.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900497,
+   "jp": "この会社は女性が多いです。",
+   "vi": "Công ty này có nhiều nữ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900498,
+   "jp": "子供たちが遊んでいます。",
+   "vi": "Bọn trẻ đang chơi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900499,
+   "jp": "皆、元気です。",
+   "vi": "Mọi người đều khỏe.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900500,
+   "jp": "先輩に仕事を教えてもらいます。",
+   "vi": "Tôi được đàn anh chỉ việc.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900501,
+   "jp": "私は大学生です。",
+   "vi": "Tôi là sinh viên đại học.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900502,
+   "jp": "部長に報告します。",
+   "vi": "Tôi báo cáo với trưởng phòng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900503,
+   "jp": "課長は会議中です。",
+   "vi": "Trưởng ban đang họp.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900504,
+   "jp": "兄は公務員です。",
+   "vi": "Anh tôi là công chức.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900505,
+   "jp": "週末、レストランでアルバイトをします。",
+   "vi": "Cuối tuần tôi làm thêm ở nhà hàng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900506,
+   "jp": "消しゴムを忘れました。",
+   "vi": "Tôi quên cục tẩy rồi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900507,
+   "jp": "冬は手袋をします。",
+   "vi": "Mùa đông tôi đeo găng tay.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900508,
+   "jp": "きれいな指輪ですね。",
+   "vi": "Chiếc nhẫn đẹp nhỉ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900509,
+   "jp": "灰皿はありますか。",
+   "vi": "Có gạt tàn không?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900510,
+   "jp": "字がきれいですね。",
+   "vi": "Chữ bạn đẹp nhỉ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900511,
+   "jp": "テキストを忘れました。",
+   "vi": "Tôi quên giáo trình rồi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900512,
+   "jp": "ファックスで地図を送ります。",
+   "vi": "Tôi gửi bản đồ qua fax.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900513,
+   "jp": "マッチで火をつけます。",
+   "vi": "Châm lửa bằng diêm.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900514,
+   "jp": "家族にお土産を買いました。",
+   "vi": "Tôi đã mua quà cho gia đình.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900515,
+   "jp": "先生に贈り物をしました。",
+   "vi": "Tôi đã tặng quà cho thầy.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900516,
+   "jp": "このカメラは五万円です。",
+   "vi": "Cái máy ảnh này giá năm mươi nghìn yên.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900517,
+   "jp": "おつりは二百円です。",
+   "vi": "Tiền thừa là hai trăm yên.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900518,
+   "jp": "靴売り場は三階です。",
+   "vi": "Quầy giày ở tầng ba.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900519,
+   "jp": "レジでお金を払います。",
+   "vi": "Trả tiền ở quầy thu ngân.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900520,
+   "jp": "お正月に神社へ行きます。",
+   "vi": "Tết tôi đi đền.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900521,
+   "jp": "会議の場所はどこですか。",
+   "vi": "Địa điểm cuộc họp ở đâu?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900522,
+   "jp": "昼間は家に誰もいません。",
+   "vi": "Ban ngày không có ai ở nhà.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900523,
+   "jp": "今夜は雪が降るでしょう。",
+   "vi": "Đêm nay chắc sẽ có tuyết.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900524,
+   "jp": "再来週から夏休みです。",
+   "vi": "Từ tuần sau nữa là nghỉ hè.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900525,
+   "jp": "三時すぎに来てください。",
+   "vi": "Hãy đến sau ba giờ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900526,
+   "jp": "七時ごろ家を出ます。",
+   "vi": "Tôi ra khỏi nhà khoảng bảy giờ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900527,
+   "jp": "最初は難しかったです。",
+   "vi": "Lúc đầu thì khó.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900528,
+   "jp": "最後に質問はありますか。",
+   "vi": "Cuối cùng, có câu hỏi nào không?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900529,
+   "jp": "話の終わりがおもしろいです。",
+   "vi": "Phần cuối câu chuyện thú vị.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900530,
+   "jp": "さっき電話がありました。",
+   "vi": "Lúc nãy có điện thoại.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900531,
+   "jp": "この間はありがとうございました。",
+   "vi": "Cảm ơn bạn về hôm trước.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900532,
+   "jp": "この頃、よく雨が降ります。",
+   "vi": "Dạo này hay mưa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900533,
+   "jp": "昔、ここは海でした。",
+   "vi": "Ngày xưa chỗ này là biển.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900534,
+   "jp": "今度、一緒に行きましょう。",
+   "vi": "Lần tới cùng đi nhé.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900535,
+   "jp": "これから出かけます。",
+   "vi": "Bây giờ tôi đi ra ngoài.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900536,
+   "jp": "学生時代は楽しかったです。",
+   "vi": "Thời sinh viên rất vui.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900537,
+   "jp": "一日に三回薬を飲みます。",
+   "vi": "Một ngày uống thuốc ba lần.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900538,
+   "jp": "再来月に引っ越します。",
+   "vi": "Tháng sau nữa tôi chuyển nhà.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900539,
+   "jp": "年はいくつですか。",
+   "vi": "Bạn bao nhiêu tuổi?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900540,
+   "jp": "お正月に家族が集まります。",
+   "vi": "Tết cả gia đình quây quần.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900541,
+   "jp": "夏のお祭りに行きました。",
+   "vi": "Tôi đã đi lễ hội mùa hè.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900542,
+   "jp": "週末の予定は何ですか。",
+   "vi": "Kế hoạch cuối tuần của bạn là gì?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900543,
+   "jp": "明日の都合はどうですか。",
+   "vi": "Ngày mai bạn có tiện không?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900544,
+   "jp": "久しぶりですね。",
+   "vi": "Lâu quá không gặp nhỉ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900545,
+   "jp": "ベトナムはオートバイが多いです。",
+   "vi": "Việt Nam có nhiều xe máy.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900546,
+   "jp": "舟で島へ行きます。",
+   "vi": "Đi thuyền ra đảo.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900547,
+   "jp": "子供は乗り物が好きです。",
+   "vi": "Trẻ con thích các loại xe cộ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900548,
+   "jp": "急行に乗れば、早く着きます。",
+   "vi": "Đi tàu tốc hành thì đến sớm.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900549,
+   "jp": "特急は高いですが、速いです。",
+   "vi": "Tàu đặc biệt đắt nhưng nhanh.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900550,
+   "jp": "今日はお客さんが来ます。",
+   "vi": "Hôm nay có khách đến.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900551,
+   "jp": "魚を焼きます。",
+   "vi": "Tôi nướng cá.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900552,
+   "jp": "ベトナムの米はおいしいです。",
+   "vi": "Gạo Việt Nam ngon.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900553,
+   "jp": "いちごのジャムが好きです。",
+   "vi": "Tôi thích mứt dâu.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900554,
+   "jp": "サラダを食べます。",
+   "vi": "Tôi ăn sa lát.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900555,
+   "jp": "昼はサンドイッチを食べました。",
+   "vi": "Buổi trưa tôi ăn bánh sandwich.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900556,
+   "jp": "ステーキを食べに行きましょう。",
+   "vi": "Đi ăn bít tết nhé.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900557,
+   "jp": "子供はハンバーグが大好きです。",
+   "vi": "Trẻ con rất thích món hamburg.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900558,
+   "jp": "飴を一つどうぞ。",
+   "vi": "Mời bạn một viên kẹo.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900559,
+   "jp": "このぶどうは甘いです。",
+   "vi": "Nho này ngọt.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900560,
+   "jp": "お湯を沸かします。",
+   "vi": "Tôi đun nước nóng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900561,
+   "jp": "アルコールは飲みません。",
+   "vi": "Tôi không uống đồ có cồn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900562,
+   "jp": "味噌汁を作ります。",
+   "vi": "Tôi nấu canh miso.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900563,
+   "jp": "このすし、うまい！",
+   "vi": "Món sushi này ngon quá!",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900564,
+   "jp": "この薬は苦いです。",
+   "vi": "Thuốc này đắng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900565,
+   "jp": "お腹がいっぱいです。",
+   "vi": "Tôi no căng bụng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900566,
+   "jp": "ご飯を二杯食べました。",
+   "vi": "Tôi đã ăn hai bát cơm.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900567,
+   "jp": "ごちそうさまでした。",
+   "vi": "Cảm ơn vì bữa ăn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900568,
+   "jp": "富士山の写真を撮りました。",
+   "vi": "Tôi đã chụp ảnh núi Phú Sĩ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900569,
+   "jp": "おじさんが遊びに来ました。",
+   "vi": "Chú tôi đến chơi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900570,
+   "jp": "親に手紙を書きます。",
+   "vi": "Tôi viết thư cho bố mẹ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900571,
+   "jp": "夫は料理をよくします。",
+   "vi": "Chồng tôi hay nấu ăn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900572,
+   "jp": "妻は先生です。",
+   "vi": "Vợ tôi là giáo viên.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900573,
+   "jp": "家内も喜んでいます。",
+   "vi": "Vợ tôi cũng rất vui.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900574,
+   "jp": "ご主人のお仕事は何ですか。",
+   "vi": "Chồng chị làm nghề gì?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900575,
+   "jp": "息子は小学生です。",
+   "vi": "Con trai tôi học tiểu học.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900576,
+   "jp": "娘はピアノを習っています。",
+   "vi": "Con gái tôi đang học piano.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900577,
+   "jp": "お子さんは何人ですか。",
+   "vi": "Anh chị có mấy cháu?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900578,
+   "jp": "お嬢さんはおいくつですか。",
+   "vi": "Con gái chị mấy tuổi rồi?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900579,
+   "jp": "赤ちゃんが寝ています。",
+   "vi": "Em bé đang ngủ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900580,
+   "jp": "赤ん坊が泣いています。",
+   "vi": "Đứa bé đang khóc.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900581,
+   "jp": "パパ、早く来て。",
+   "vi": "Bố ơi, mau lại đây.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900582,
+   "jp": "近所の人はとても親切です。",
+   "vi": "Hàng xóm rất tốt bụng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900583,
+   "jp": "犬の世話をします。",
+   "vi": "Tôi chăm sóc con chó.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900584,
+   "jp": "壁にポスターを貼ります。",
+   "vi": "Tôi dán áp phích lên tường.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900585,
+   "jp": "友達を誕生日パーティーに招待しました。",
+   "vi": "Tôi đã mời bạn đến tiệc sinh nhật.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900586,
+   "jp": "結婚のお祝いをあげました。",
+   "vi": "Tôi đã tặng quà mừng đám cưới.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900587,
+   "jp": "お礼の手紙を書きます。",
+   "vi": "Tôi viết thư cảm ơn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900588,
+   "jp": "姉はとても優しいです。",
+   "vi": "Chị tôi rất hiền.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900589,
+   "jp": "白のシャツを着ます。",
+   "vi": "Tôi mặc áo trắng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900590,
+   "jp": "この辞書は厚いです。",
+   "vi": "Quyển từ điển này dày.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900591,
+   "jp": "駅から遠くて不便です。",
+   "vi": "Xa ga nên bất tiện.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900592,
+   "jp": "富士山は美しいです。",
+   "vi": "Núi Phú Sĩ đẹp.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900593,
+   "jp": "素晴らしい景色ですね。",
+   "vi": "Phong cảnh tuyệt vời nhỉ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900594,
+   "jp": "ひどい雨ですね。",
+   "vi": "Mưa to khủng khiếp nhỉ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900595,
+   "jp": "このパソコンは少しおかしいです。",
+   "vi": "Máy tính này hơi có vấn đề.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900596,
+   "jp": "珍しい花ですね。",
+   "vi": "Bông hoa hiếm thấy nhỉ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900597,
+   "jp": "外国の言葉は片仮名で書きます。",
+   "vi": "Từ nước ngoài viết bằng katakana.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900598,
+   "jp": "日本語の文法は難しいです。",
+   "vi": "Ngữ pháp tiếng Nhật khó.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900599,
+   "jp": "発音がとても上手です。",
+   "vi": "Phát âm rất giỏi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900600,
+   "jp": "会話の練習をしましょう。",
+   "vi": "Hãy luyện hội thoại.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900601,
+   "jp": "専門は何ですか。",
+   "vi": "Chuyên ngành của bạn là gì?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900602,
+   "jp": "日本の文化に興味があります。",
+   "vi": "Tôi quan tâm đến văn hóa Nhật.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900603,
+   "jp": "先生のお宅はどちらですか。",
+   "vi": "Nhà thầy ở đâu ạ?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900604,
+   "jp": "布団を敷きます。",
+   "vi": "Tôi trải chăn đệm.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900605,
+   "jp": "この部屋は六畳です。",
+   "vi": "Phòng này rộng sáu chiếu.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900606,
+   "jp": "引き出しにはさみがあります。",
+   "vi": "Trong ngăn kéo có cái kéo.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900607,
+   "jp": "カーテンを閉めます。",
+   "vi": "Tôi kéo rèm lại.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900608,
+   "jp": "住所を書いてください。",
+   "vi": "Hãy viết địa chỉ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900609,
+   "jp": "母は今留守です。",
+   "vi": "Mẹ tôi giờ không có nhà.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900610,
+   "jp": "一人二つずつ取ってください。",
+   "vi": "Mỗi người hãy lấy hai cái.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900611,
+   "jp": "りんごを三個ください。",
+   "vi": "Cho tôi ba quả táo.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900612,
+   "jp": "猫が二匹います。",
+   "vi": "Có hai con mèo.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900613,
+   "jp": "日曜日だけ休みです。",
+   "vi": "Chỉ nghỉ ngày Chủ nhật.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900614,
+   "jp": "天気予報によると、明日は雨です。",
+   "vi": "Theo dự báo thời tiết, mai trời mưa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900615,
+   "jp": "台風が来ます。",
+   "vi": "Bão sắp đến.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900616,
+   "jp": "日本は地震が多いです。",
+   "vi": "Nhật Bản hay có động đất.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900617,
+   "jp": "雨が止みました。",
+   "vi": "Mưa đã tạnh.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900618,
+   "jp": "白い雲が見えます。",
+   "vi": "Nhìn thấy mây trắng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900619,
+   "jp": "夜、星がたくさん見えます。",
+   "vi": "Ban đêm nhìn thấy nhiều sao.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900620,
+   "jp": "山の空気はおいしいです。",
+   "vi": "Không khí trên núi trong lành.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900621,
+   "jp": "湖の水はきれいです。",
+   "vi": "Nước hồ trong.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900622,
+   "jp": "日本には島がたくさんあります。",
+   "vi": "Nhật Bản có rất nhiều đảo.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900623,
+   "jp": "海岸を散歩しました。",
+   "vi": "Tôi đã đi dạo dọc bờ biển.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900624,
+   "jp": "森の中は静かです。",
+   "vi": "Trong rừng yên tĩnh.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900625,
+   "jp": "家の近くに林があります。",
+   "vi": "Gần nhà có một khu rừng nhỏ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900626,
+   "jp": "この料理は簡単です。",
+   "vi": "Món này dễ làm.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900627,
+   "jp": "この問題は複雑です。",
+   "vi": "Vấn đề này phức tạp.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900628,
+   "jp": "両方ともほしいです。",
+   "vi": "Tôi muốn cả hai.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900629,
+   "jp": "一時間ほど待ちました。",
+   "vi": "Tôi đã chờ khoảng một tiếng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900630,
+   "jp": "スーパーは二十四時間開いています。",
+   "vi": "Siêu thị mở cửa 24 giờ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900631,
+   "jp": "店員さんに聞きましょう。",
+   "vi": "Hãy hỏi nhân viên bán hàng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900632,
+   "jp": "この店は品物が多いです。",
+   "vi": "Cửa hàng này có nhiều hàng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900633,
+   "jp": "このかばんの値段はいくらですか。",
+   "vi": "Giá cái túi này là bao nhiêu?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900634,
+   "jp": "カードで払えますか。",
+   "vi": "Có trả bằng thẻ được không?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900635,
+   "jp": "好きな色を選んでください。",
+   "vi": "Hãy chọn màu bạn thích.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900636,
+   "jp": "プレゼントを包んでください。",
+   "vi": "Xin hãy gói quà giúp tôi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900637,
+   "jp": "小さいので取り替えてください。",
+   "vi": "Nhỏ quá, xin đổi giúp tôi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900638,
+   "jp": "お正月に着物を着ます。",
+   "vi": "Tết tôi mặc kimono.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900639,
+   "jp": "子供と動物園に行きます。",
+   "vi": "Tôi đi vườn thú với con.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900640,
+   "jp": "旅行が楽しみです。",
+   "vi": "Tôi mong chờ chuyến du lịch.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900641,
+   "jp": "休みを楽しんでください。",
+   "vi": "Hãy tận hưởng kỳ nghỉ nhé.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900642,
+   "jp": "妹が犬を欲しがっています。",
+   "vi": "Em gái tôi đang muốn có con chó.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900643,
+   "jp": "ネクタイを締めます。",
+   "vi": "Tôi thắt cà vạt.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900644,
+   "jp": "電車が十分遅れました。",
+   "vi": "Tàu đã trễ mười phút.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900645,
+   "jp": "急げば間に合いますよ。",
+   "vi": "Nếu nhanh lên thì sẽ kịp đấy.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900646,
+   "jp": "この電車は各駅に止まります。",
+   "vi": "Tàu này dừng ở mọi ga.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900647,
+   "jp": "かばんをここに置いてください。",
+   "vi": "Hãy để túi ở đây.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900648,
+   "jp": "日本語の勉強を始めました。",
+   "vi": "Tôi đã bắt đầu học tiếng Nhật.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900649,
+   "jp": "手を上げてください。",
+   "vi": "Hãy giơ tay lên.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900650,
+   "jp": "鍵を探しています。",
+   "vi": "Tôi đang tìm chìa khóa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900651,
+   "jp": "スマホを落としました。",
+   "vi": "Tôi làm rơi điện thoại.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900652,
+   "jp": "弟がおもちゃを壊しました。",
+   "vi": "Em trai tôi làm hỏng đồ chơi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900653,
+   "jp": "顔を洗います。",
+   "vi": "Tôi rửa mặt.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900654,
+   "jp": "象は鼻が長いです。",
+   "vi": "Voi có vòi (mũi) dài.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900655,
+   "jp": "首が痛いです。",
+   "vi": "Tôi bị đau cổ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900656,
+   "jp": "腕が太いです。",
+   "vi": "Cánh tay to.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900657,
+   "jp": "指を切りました。",
+   "vi": "Tôi bị đứt tay.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900658,
+   "jp": "足が痛くて歩けません。",
+   "vi": "Chân đau nên không đi được.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900659,
+   "jp": "背中がかゆいです。",
+   "vi": "Lưng tôi ngứa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900660,
+   "jp": "兄は背が高いです。",
+   "vi": "Anh trai tôi cao.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900661,
+   "jp": "髪を短く切りました。",
+   "vi": "Tôi đã cắt tóc ngắn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900662,
+   "jp": "この猫は毛が白いです。",
+   "vi": "Con mèo này lông trắng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900663,
+   "jp": "父はひげがあります。",
+   "vi": "Bố tôi có râu.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900664,
+   "jp": "指から血が出ました。",
+   "vi": "Ngón tay chảy máu.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900665,
+   "jp": "昨日遅く寝たので、眠いです。",
+   "vi": "Hôm qua ngủ muộn nên tôi buồn ngủ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900666,
+   "jp": "赤ちゃんがよく眠っています。",
+   "vi": "Em bé đang ngủ ngon.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900667,
+   "jp": "最近、少し太りました。",
+   "vi": "Dạo này tôi hơi béo lên.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900668,
+   "jp": "運動して痩せました。",
+   "vi": "Tôi tập thể dục và đã gầy đi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900669,
+   "jp": "毎朝運動します。",
+   "vi": "Sáng nào tôi cũng tập thể dục.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900670,
+   "jp": "東京駅で乗り換えます。",
+   "vi": "Tôi đổi tàu ở ga Tokyo.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900671,
+   "jp": "タクシーの運転手に道を聞きました。",
+   "vi": "Tôi hỏi đường tài xế taxi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900672,
+   "jp": "この町は交通が便利です。",
+   "vi": "Thị trấn này giao thông thuận tiện.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900673,
+   "jp": "空港まで一時間かかります。",
+   "vi": "Đến sân bay mất một tiếng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900674,
+   "jp": "駐車場に車を止めます。",
+   "vi": "Tôi đỗ xe ở bãi đỗ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900675,
+   "jp": "ガソリンが高くなりました。",
+   "vi": "Xăng đã lên giá.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900676,
+   "jp": "朝ご飯を食べました。そして、学校へ行きました。",
+   "vi": "Tôi ăn sáng. Rồi đi học.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900677,
+   "jp": "明日、歯医者に行きます。",
+   "vi": "Ngày mai tôi đi nha sĩ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900678,
+   "jp": "父は一週間入院しました。",
+   "vi": "Bố tôi nằm viện một tuần.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900679,
+   "jp": "明日退院できます。",
+   "vi": "Ngày mai có thể ra viện.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900680,
+   "jp": "友達のお見舞いに行きます。",
+   "vi": "Tôi đi thăm bạn bị ốm.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900681,
+   "jp": "足にけがをしました。",
+   "vi": "Tôi bị thương ở chân.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900682,
+   "jp": "具合はどうですか。",
+   "vi": "Bạn thấy trong người thế nào?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900683,
+   "jp": "風邪が治りました。",
+   "vi": "Tôi đã khỏi cảm.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900684,
+   "jp": "この道は安全です。",
+   "vi": "Con đường này an toàn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900685,
+   "jp": "この川で泳ぐのは危険です。",
+   "vi": "Bơi ở con sông này rất nguy hiểm.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900686,
+   "jp": "パスポートが必要です。",
+   "vi": "Cần hộ chiếu.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900687,
+   "jp": "無理をしないでください。",
+   "vi": "Đừng làm quá sức nhé.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900688,
+   "jp": "ここでたばこを吸ってはだめです。",
+   "vi": "Không được hút thuốc ở đây.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900689,
+   "jp": "時間がない。",
+   "vi": "Không có thời gian.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900690,
+   "jp": "授業の前に予習します。",
+   "vi": "Trước giờ học tôi chuẩn bị bài.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900691,
+   "jp": "家で今日の復習をします。",
+   "vi": "Ở nhà tôi ôn lại bài hôm nay.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900692,
+   "jp": "来月、日本語の試験を受けます。",
+   "vi": "Tháng sau tôi thi tiếng Nhật.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900693,
+   "jp": "答えを書いてください。",
+   "vi": "Hãy viết câu trả lời.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900694,
+   "jp": "私の夢は医者になることです。",
+   "vi": "Ước mơ của tôi là trở thành bác sĩ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900695,
+   "jp": "会議の準備をします。",
+   "vi": "Tôi chuẩn bị cho cuộc họp.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900696,
+   "jp": "仕事の経験がありますか。",
+   "vi": "Bạn có kinh nghiệm làm việc không?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900697,
+   "jp": "もう一度言ってください。",
+   "vi": "Xin hãy nói lại một lần nữa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900698,
+   "jp": "来年、大学を卒業します。",
+   "vi": "Năm sau tôi tốt nghiệp đại học.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900699,
+   "jp": "先生に相談します。",
+   "vi": "Tôi trao đổi với thầy.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900700,
+   "jp": "お茶を用意しました。",
+   "vi": "Tôi đã chuẩn bị trà.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900701,
+   "jp": "試験に失敗しました。",
+   "vi": "Tôi đã thi trượt.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900702,
+   "jp": "京都の旅館に泊まりました。",
+   "vi": "Tôi đã nghỉ ở một nhà trọ kiểu Nhật ở Kyoto.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900703,
+   "jp": "東京を見物します。",
+   "vi": "Tôi tham quan Tokyo.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900704,
+   "jp": "ここから見る景色はきれいです。",
+   "vi": "Phong cảnh nhìn từ đây rất đẹp.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900705,
+   "jp": "明日の朝七時に出発します。",
+   "vi": "Bảy giờ sáng mai xuất phát.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900706,
+   "jp": "スーツケースに服を入れます。",
+   "vi": "Tôi xếp quần áo vào va li.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900707,
+   "jp": "将来、先生になりたいです。",
+   "vi": "Tương lai tôi muốn làm giáo viên.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900708,
+   "jp": "学校へ行く途中で雨が降りました。",
+   "vi": "Trên đường đến trường thì trời mưa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900709,
+   "jp": "急に用事ができました。",
+   "vi": "Tự nhiên tôi có việc gấp.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900710,
+   "jp": "そろそろ帰りましょう。",
+   "vi": "Đến lúc về rồi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900711,
+   "jp": "この店は安いです。それに、おいしいです。",
+   "vi": "Quán này rẻ. Thêm nữa lại ngon.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900712,
+   "jp": "例えば、すしや天ぷらが好きです。",
+   "vi": "Ví dụ tôi thích sushi và tempura.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900713,
+   "jp": "お体を大事にしてください。",
+   "vi": "Hãy giữ gìn sức khỏe.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900714,
+   "jp": "正しい答えを選んでください。",
+   "vi": "Hãy chọn câu trả lời đúng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900715,
+   "jp": "今日は特別な日です。",
+   "vi": "Hôm nay là ngày đặc biệt.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900716,
+   "jp": "プレゼントをもらって、嬉しいです。",
+   "vi": "Được nhận quà nên tôi rất vui.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900717,
+   "jp": "悲しい映画を見ました。",
+   "vi": "Tôi đã xem một bộ phim buồn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900718,
+   "jp": "一人で寂しいです。",
+   "vi": "Một mình buồn quá.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900719,
+   "jp": "犬が怖いです。",
+   "vi": "Tôi sợ chó.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900720,
+   "jp": "人の前で歌うのは恥ずかしいです。",
+   "vi": "Hát trước mặt người khác thật ngại.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900721,
+   "jp": "行けなくて残念です。",
+   "vi": "Không đi được thật đáng tiếc.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900722,
+   "jp": "それを聞いて安心しました。",
+   "vi": "Nghe vậy tôi yên tâm rồi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900723,
+   "jp": "母はとても喜びました。",
+   "vi": "Mẹ đã rất vui.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900724,
+   "jp": "そのニュースに驚きました。",
+   "vi": "Tôi ngạc nhiên trước tin đó.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900725,
+   "jp": "大きな音にびっくりしました。",
+   "vi": "Tôi giật mình vì tiếng động lớn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900726,
+   "jp": "先生が怒りました。",
+   "vi": "Thầy giáo đã nổi giận.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900727,
+   "jp": "子供が泣いています。",
+   "vi": "Đứa trẻ đang khóc.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900728,
+   "jp": "みんなが笑いました。",
+   "vi": "Mọi người đã cười.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900729,
+   "jp": "心から感謝します。",
+   "vi": "Tôi cảm ơn từ tận đáy lòng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900730,
+   "jp": "嘘をつかないでください。",
+   "vi": "Xin đừng nói dối.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900731,
+   "jp": "必ず電話してください。",
+   "vi": "Nhất định hãy gọi điện nhé.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900732,
+   "jp": "この通りは人が多いです。",
+   "vi": "Con phố này đông người.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900733,
+   "jp": "このバスは駅の前を通ります。",
+   "vi": "Xe buýt này đi qua trước ga.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900734,
+   "jp": "遠くに山が見えます。",
+   "vi": "Nhìn thấy núi ở đằng xa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900735,
+   "jp": "右に曲がってください。",
+   "vi": "Hãy rẽ phải.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900736,
+   "jp": "銀行はスーパーの左です。",
+   "vi": "Ngân hàng ở bên trái siêu thị.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900737,
+   "jp": "窓側の席がいいです。",
+   "vi": "Tôi thích ghế cạnh cửa sổ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900738,
+   "jp": "駅の西に公園があります。",
+   "vi": "Phía tây nhà ga có công viên.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900739,
+   "jp": "ベトナムの南は暑いです。",
+   "vi": "Miền Nam Việt Nam nóng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900740,
+   "jp": "北海道は日本の北にあります。",
+   "vi": "Hokkaido ở phía bắc Nhật Bản.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900741,
+   "jp": "この雲は魚の形です。",
+   "vi": "Đám mây này có hình con cá.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900742,
+   "jp": "ここに線を引いてください。",
+   "vi": "Hãy kẻ một đường ở đây.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900743,
+   "jp": "テストで九十点を取りました。",
+   "vi": "Tôi được chín mươi điểm bài kiểm tra.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900744,
+   "jp": "駅まで二キロメートルあります。",
+   "vi": "Đến ga còn hai cây số.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900745,
+   "jp": "母は三人の子供を育てました。",
+   "vi": "Mẹ đã nuôi ba đứa con.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900746,
+   "jp": "私は母に似ています。",
+   "vi": "Tôi giống mẹ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900747,
+   "jp": "弟とけんかしました。",
+   "vi": "Tôi đã cãi nhau với em trai.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900748,
+   "jp": "お名前をお願いします。",
+   "vi": "Xin cho biết quý danh.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900749,
+   "jp": "父は 会社員です。",
+   "vi": "Bố tôi là nhân viên công ty.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900750,
+   "jp": "姉は 銀行員です。",
+   "vi": "Chị gái tôi là nhân viên ngân hàng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900751,
+   "jp": "はじめまして。グエンです。",
+   "vi": "Rất hân hạnh. Tôi là Nguyễn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900752,
+   "jp": "これから どうぞよろしく お願いします。",
+   "vi": "Từ nay mong được anh chị giúp đỡ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900753,
+   "jp": "手帳に 予定を 書きます。",
+   "vi": "Tôi ghi lịch hẹn vào sổ tay.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900754,
+   "jp": "これは わたしの 名刺です。",
+   "vi": "Đây là danh thiếp của tôi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900755,
+   "jp": "駅まで 歩いて 行きます。",
+   "vi": "Tôi đi bộ đến ga.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900756,
+   "jp": "ここで たばこを 吸いません。",
+   "vi": "Không hút thuốc ở đây.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900757,
+   "jp": "りんごを 一つ ください。",
+   "vi": "Cho tôi một quả táo.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900758,
+   "jp": "友だちに はがきを 書きました。",
+   "vi": "Tôi đã viết bưu thiếp cho bạn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900759,
+   "jp": "駅まで １０分ぐらい かかります。",
+   "vi": "Đến ga mất khoảng 10 phút.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900760,
+   "jp": "日曜日に 美術館へ 行きました。",
+   "vi": "Chủ nhật tôi đã đi bảo tàng mỹ thuật.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900761,
+   "jp": "冬は 温泉に 入りたいです。",
+   "vi": "Mùa đông tôi muốn ngâm suối nước nóng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900762,
+   "jp": "時間が ありませんから、急ぎましょう。",
+   "vi": "Không còn thời gian nên mình nhanh lên thôi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900763,
+   "jp": "母の 仕事を 手伝いました。",
+   "vi": "Tôi đã giúp mẹ làm việc.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900764,
+   "jp": "タクシーを 呼びましょうか。",
+   "vi": "Tôi gọi taxi giúp nhé?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900765,
+   "jp": "わたしは 東京に 住みたいです。",
+   "vi": "Tôi muốn sống ở Tokyo.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900766,
+   "jp": "その 人の 名前を 知りませんでした。",
+   "vi": "Tôi đã không biết tên người đó.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900767,
+   "jp": "兄は 大学の 研究者です。",
+   "vi": "Anh trai tôi là nhà nghiên cứu ở đại học.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900768,
+   "jp": "わたしは まだ 独身です。",
+   "vi": "Tôi vẫn còn độc thân.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900769,
+   "jp": "この 橋を 渡ります。",
+   "vi": "Tôi đi qua cây cầu này.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900770,
+   "jp": "あした 写真を 持って来ます。",
+   "vi": "Ngày mai tôi sẽ mang ảnh đến.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900771,
+   "jp": "きょうは 夜９時まで 残業します。",
+   "vi": "Hôm nay tôi làm thêm đến 9 giờ tối.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900772,
+   "jp": "来週 大阪へ 出張します。",
+   "vi": "Tuần sau tôi đi công tác Osaka.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900773,
+   "jp": "きょうは 体の 調子が いいです。",
+   "vi": "Hôm nay cơ thể tôi khỏe.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900774,
+   "jp": "大学院で 経済を 勉強して います。",
+   "vi": "Tôi đang học kinh tế ở cao học.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900775,
+   "jp": "国際電話は 高いです。",
+   "vi": "Gọi điện quốc tế đắt.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900776,
+   "jp": "じゃあ、また あした。",
+   "vi": "Vậy thì, mai gặp nhé.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900777,
+   "jp": "きのうの 試合で 日本が 勝ちました。",
+   "vi": "Trong trận hôm qua Nhật Bản đã thắng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900778,
+   "jp": "ベトナムは 負けましたが、いい 試合でした。",
+   "vi": "Việt Nam thua nhưng đó là trận đấu hay.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900779,
+   "jp": "わたしは 政治に 興味が ありません。",
+   "vi": "Tôi không quan tâm đến chính trị.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900780,
+   "jp": "めがねを かけて 本を 読みます。",
+   "vi": "Tôi đeo kính để đọc sách.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900781,
+   "jp": "ご出身は どちらですか。",
+   "vi": "Quê anh ở đâu vậy?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900782,
+   "jp": "部屋の 電気を 青に 変えました。",
+   "vi": "Tôi đã đổi đèn phòng sang màu xanh.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900783,
+   "jp": "この 絵に 触らないで ください。",
+   "vi": "Xin đừng chạm vào bức tranh này.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900784,
+   "jp": "エアコンが 故障しました。",
+   "vi": "Máy điều hòa bị hỏng rồi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900785,
+   "jp": "つまみを 右へ 回して ください。",
+   "vi": "Hãy vặn núm sang phải.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900786,
+   "jp": "子どもを 公園へ 連れて行きます。",
+   "vi": "Tôi dẫn con đi công viên.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900787,
+   "jp": "友だちを うちへ 連れて来ました。",
+   "vi": "Tôi đã dẫn bạn về nhà.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900788,
+   "jp": "夏休みは 田舎へ 帰ります。",
+   "vi": "Nghỉ hè tôi về quê.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900789,
+   "jp": "これは いい チャンスです。",
+   "vi": "Đây là một cơ hội tốt.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900790,
+   "jp": "いくら 練習しても、上手に なりません。",
+   "vi": "Dù luyện bao nhiêu cũng không giỏi lên.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900791,
+   "jp": "毎朝 走るのが 習慣です。",
+   "vi": "Chạy bộ mỗi sáng là thói quen của tôi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900792,
+   "jp": "人生は 一度だけです。",
+   "vi": "Đời người chỉ có một lần.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900793,
+   "jp": "いろいろ お世話になりました。",
+   "vi": "Cảm ơn anh chị đã giúp đỡ nhiều.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900794,
+   "jp": "あしたの 試験、頑張ります。",
+   "vi": "Tôi sẽ cố gắng cho kỳ thi ngày mai.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900795,
+   "jp": "はい、わかりました。",
+   "vi": "Vâng, tôi hiểu rồi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900796,
+   "jp": "こんにちは。いい 天気ですね。",
+   "vi": "Xin chào. Trời đẹp nhỉ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900797,
+   "jp": "こんばんは。寒いですね。",
+   "vi": "Chào buổi tối. Lạnh nhỉ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900798,
+   "jp": "さようなら。お元気で。",
+   "vi": "Tạm biệt. Giữ sức khỏe nhé.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900799,
+   "jp": "「ありがとう」「どういたしまして」",
+   "vi": "\"Cảm ơn.\" \"Không có gì.\"",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900800,
+   "jp": "すみません、駅は どこですか。",
+   "vi": "Xin lỗi, ga ở đâu ạ?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900801,
+   "jp": "遅れて ごめんなさい。",
+   "vi": "Xin lỗi vì đến muộn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900802,
+   "jp": "リンです。どうぞよろしく。",
+   "vi": "Tôi là Linh. Mong được giúp đỡ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900803,
+   "jp": "再来年 日本へ 留学します。",
+   "vi": "Năm sau nữa tôi sẽ đi du học Nhật.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900804,
+   "jp": "朝ごはんに パンを 食べます。",
+   "vi": "Bữa sáng tôi ăn bánh mì.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900805,
+   "jp": "昼御飯は 会社の 食堂で 食べます。",
+   "vi": "Bữa trưa tôi ăn ở căng-tin công ty.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900806,
+   "jp": "晩御飯を 作りましょう。",
+   "vi": "Mình nấu bữa tối nhé.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900807,
+   "jp": "ちゃわんに ご飯を 入れます。",
+   "vi": "Tôi xới cơm vào bát.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900808,
+   "jp": "父は 毎朝 早いです。",
+   "vi": "Bố tôi sáng nào cũng dậy sớm.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900809,
+   "jp": "バスが 遅いですね。",
+   "vi": "Xe buýt đến muộn nhỉ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900810,
+   "jp": "いろいろな 国の 料理を 食べました。",
+   "vi": "Tôi đã ăn món của nhiều nước.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900811,
+   "jp": "きょうは 風が 強く 吹きます。",
+   "vi": "Hôm nay gió thổi mạnh.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900812,
+   "jp": "さしみに しょうゆを つけます。",
+   "vi": "Chấm sashimi với nước tương.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900813,
+   "jp": "みんな 立ちましょう。",
+   "vi": "Mọi người đứng dậy nào.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900814,
+   "jp": "どうぞ ここに 座りましょう。",
+   "vi": "Nào, ngồi đây đi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900815,
+   "jp": "レジの 前に 並びます。",
+   "vi": "Tôi xếp hàng trước quầy thu ngân.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900816,
+   "jp": "せっけんで 手を 洗います。",
+   "vi": "Tôi rửa tay bằng xà phòng.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900817,
+   "jp": "宿題を しました。そうして 寝ました。",
+   "vi": "Tôi làm bài tập. Và rồi đi ngủ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900818,
+   "jp": "お金が なくて 困りました。",
+   "vi": "Không có tiền nên tôi gặp rắc rối.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900819,
+   "jp": "鳥が 空を 飛びます。",
+   "vi": "Chim bay trên trời.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900820,
+   "jp": "犬が 鳴きます。",
+   "vi": "Con chó sủa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900821,
+   "jp": "家の 中では スリッパを はきます。",
+   "vi": "Trong nhà tôi đi dép.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900822,
+   "jp": "きょうは きのう程 寒くないです。",
+   "vi": "Hôm nay không lạnh bằng hôm qua.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900823,
+   "jp": "好きな 色を 選びます。",
+   "vi": "Tôi chọn màu mình thích.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900824,
+   "jp": "プレゼントを きれいに 包みます。",
+   "vi": "Tôi gói quà thật đẹp.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900825,
+   "jp": "かぎは 机の 上に 置きます。",
+   "vi": "Tôi để chìa khóa trên bàn.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900826,
+   "jp": "赤ちゃんが よく 眠ります。",
+   "vi": "Em bé ngủ rất ngon.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900827,
+   "jp": "その 映画を 見て 泣きました。",
+   "vi": "Xem bộ phim đó tôi đã khóc.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900828,
+   "jp": "ドアに 触りました。",
+   "vi": "Tôi đã chạm vào cửa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  }
+ ]
+}

@@ -8,20 +8,20 @@ const position = { currentDay: 30, completedAt: null } as never;
 const plan = (day: number) => buildDayPlan(catalog, day, position);
 
 describe('trang ngày — từ vựng cần ôn, thời gian, việc Từ vựng', () => {
-  it('ngày 14: 25 từ được liệt kê đều khớp đúng kho từ', () => {
-    const words = plan(14).reviewVocabulary;
-    expect(words).toHaveLength(25);
+  it('ngày 10: 28 từ ôn lại được liệt kê đều khớp đúng kho từ', () => {
+    const words = plan(10).reviewVocabulary;
+    expect(words).toHaveLength(28);
     expect(words.map((word) => word.kana)).toContain('わかりました');
   });
 
-  it('ngày 7: 3 từ; ngày ôn theo khoảng bài: lấy đúng các bài đó', () => {
-    expect(plan(7).reviewVocabulary.map((word) => word.kana)).toEqual(['はい', 'いいえ', 'わかりました']);
+  it('ngày 5: ôn 7 từ của ngày 4; ngày ôn theo khoảng bài: lấy đúng các bài đó', () => {
+    expect(plan(5).reviewVocabulary.map((word) => word.kana)).toEqual(['はい', 'いいえ', 'わかりました', 'おはようございます', 'こんにちは', 'こんばんは', 'さようなら']);
     // Tổng ôn trợ từ (ngày 83): "Ôn từ vựng Minna bài 1–10".
     const day83 = plan(83).reviewVocabulary;
     expect(day83.length).toBeGreaterThan(100);
     expect(day83.every((word) => /\b([1-9]|10)\b/.test(word.lesson))).toBe(true);
-    // Ngày ôn giữa lộ trình (ngày 26): đúng từ của bài 1–3.
-    const day26 = plan(26).reviewVocabulary;
+    // Ngày ôn giữa lộ trình (ngày 22): đúng từ của bài 1–3.
+    const day26 = plan(22).reviewVocabulary;
     expect(day26.length).toBeGreaterThan(50);
     expect(day26.every((word) => /\b[1-3]\b/.test(word.lesson))).toBe(true);
   });

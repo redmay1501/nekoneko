@@ -6,16 +6,16 @@ describe('chặng đường', () => {
   it('bốn chặng nối liền nhau từ 1 tới 90', () => {
     expect(JOURNEY_STAGES[0].from).toBe(1);
     expect(JOURNEY_STAGES.at(-1)?.to).toBe(90);
-    expect(stageOfDay(14).name).toBe('Bảng chữ cái');
-    expect(stageOfDay(15).name).toBe('Bộ thủ');
-    expect(stageOfDay(17).name).toBe('Bộ thủ');
-    expect(stageOfDay(18).name).toBe('Giáo trình');
+    expect(stageOfDay(10).name).toBe('Bảng chữ cái');
+    expect(stageOfDay(11).name).toBe('Bộ thủ');
+    expect(stageOfDay(13).name).toBe('Bộ thủ');
+    expect(stageOfDay(14).name).toBe('Giáo trình');
     expect(stageOfDay(81).name).toBe('Giáo trình');
     expect(stageOfDay(82).name).toBe('Chinh phục N5');
     JOURNEY_STAGES.slice(1).forEach((stage, index) => expect(stage.from).toBe(JOURNEY_STAGES[index].to + 1));
   });
   it('tiến độ chặng tính đúng', () => {
-    expect(stageProgress(JOURNEY_STAGES[2], 23)).toEqual({ done: 6, total: 64 });
+    expect(stageProgress(JOURNEY_STAGES[2], 23)).toEqual({ done: 10, total: 68 });
     expect(stageProgress(JOURNEY_STAGES[1], 23)).toEqual({ done: 3, total: 3 });
   });
 });

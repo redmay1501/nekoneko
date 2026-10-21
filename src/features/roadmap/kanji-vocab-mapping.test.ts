@@ -53,7 +53,9 @@ describe('Kanji của ngày = Kanji giáo trình trong từ của ngày, học l
     const rows = kanjiRows(catalog, new Map());
     expect(rows.find((row) => row.face === '先')?.group).toBe('Bài 1');
     expect(rows.find((row) => row.face === '本')?.group).toBe('Bài 2');
-    expect(rows.find((row) => row.face === '駅')?.group).toBe('Kanji N5 bổ sung');
+    // NekoNeko v2: 川 nay có từ N5 chứa nó (Bài 14) — không còn chữ nào thuộc nhóm "Kanji N5 bổ sung".
+    expect(rows.find((row) => row.face === '川')?.group).toBe('Bài 14');
+    expect(rows.some((row) => row.group === 'Kanji N5 bổ sung')).toBe(false);
   });
 });
 

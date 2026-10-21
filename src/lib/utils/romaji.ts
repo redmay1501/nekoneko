@@ -208,7 +208,7 @@ export function kanjiReadingRomaji(onReading: string, kunReading: string): strin
 }
 
 /**
- * Cách đọc hiragana của chữ Hán trong 112 mẫu ngữ pháp N5 (場所 へ 行きます → ばしょ へ いきます).
+ * Cách đọc hiragana của chữ Hán trong 128 mẫu ngữ pháp N5 (場所 へ 行きます → ばしょ へ いきます).
  * Có "〜" phía trước là trợ số đếm (〜人 = にん, khác 人 = ひと). Dài trước ngắn sau khi thay.
  */
 const PATTERN_KANJI_READINGS: ReadonlyArray<[string, string]> = ([

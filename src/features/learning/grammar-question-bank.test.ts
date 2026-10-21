@@ -9,15 +9,15 @@ const rows = rawQuestionBank as unknown[];
 const bank = buildGrammarQuestionBank(content.grammar, rows);
 
 describe('ngân hàng câu hỏi ngữ pháp', () => {
-  it('có đúng 10 câu cho từng mẫu trong tổng số 112 mẫu', () => {
-    expect(bank).toHaveLength(1120);
+  it('có đúng 10 câu cho từng mẫu trong tổng số 128 mẫu', () => {
+    expect(bank).toHaveLength(1280);
     for (const grammar of content.grammar) {
       expect(bank.filter((exercise) => exercise.grammarId === grammar.id)).toHaveLength(10);
     }
   });
 
   it('không trùng ID; mỗi câu có 4 lựa chọn khác nhau và đáp án đúng nằm trong lựa chọn', () => {
-    expect(new Set(bank.map((exercise) => exercise.id)).size).toBe(1120);
+    expect(new Set(bank.map((exercise) => exercise.id)).size).toBe(1280);
     for (const exercise of bank) {
       expect(exercise.options).toHaveLength(4);
       expect(new Set(exercise.options.map((option) => option.text)).size).toBe(4);
@@ -27,7 +27,7 @@ describe('ngân hàng câu hỏi ngữ pháp', () => {
 
   it('chỉ ánh xạ ba dạng được hỗ trợ, gộp hai nhãn điền thành một dạng', () => {
     expect(new Set(bank.map((exercise) => exercise.kind))).toEqual(new Set(['nhat-viet', 'viet-nhat', 'dien-tu']));
-    expect(bank.filter((exercise) => exercise.kind === 'dien-tu')).toHaveLength(447);
+    expect(bank.filter((exercise) => exercise.kind === 'dien-tu')).toHaveLength(512);
     expect((rawQuestionBank as Array<{ reviewStatus: string }>).every((row) => row.reviewStatus === 'Cần rà soát ngôn ngữ và đáp án')).toBe(true);
   });
 
@@ -53,7 +53,7 @@ describe('ngân hàng câu hỏi ngữ pháp', () => {
   });
 
   it('dừng nếu thiếu dòng hoặc có đáp án sai, không bỏ qua câu lỗi', () => {
-    expect(() => buildGrammarQuestionBank(content.grammar, rows.slice(0, -1))).toThrow(/1119/);
+    expect(() => buildGrammarQuestionBank(content.grammar, rows.slice(0, -1))).toThrow(/1279/);
     const corrupted = rows.map((row) => row);
     const first = { ...(corrupted[0] as Record<string, unknown>), answer: 'Không có trong lựa chọn' };
     corrupted[0] = first;

@@ -16,11 +16,11 @@ describe('buildDayPlan', () => {
   });
 
   // Lộ trình phân bổ lại (scripts/roadmap_adjustments.py — roadmap-replan-v2): ngày 1–14 giữ việc Excel; ngày 15–81 dựng từ dữ liệu
-  // + việc tự làm của bài; tổng ôn gộp ngày Excel. Mỗi ngày đều có việc, tổng 396.
+  // + việc tự làm của bài; tổng ôn gộp ngày Excel. Mỗi ngày đều có việc, tổng 399.
   it('mỗi ngày đều có việc; tổng số đầu việc của 90 ngày khớp dữ liệu', () => {
     const counts = Array.from({ length: 90 }, (_, index) => buildDayPlan(catalog, index + 1, AT_DAY_1).tasks.length);
     expect(counts.every((count) => count > 0)).toBe(true);
-    expect(counts.reduce((sum, count) => sum + count, 0)).toBe(396);
+    expect(counts.reduce((sum, count) => sum + count, 0)).toBe(399);
   });
 
   it('ngày ngoài khoảng 1–90 được kéo về trong khoảng', () => {
@@ -120,10 +120,11 @@ describe('lộ trình ngày 15–90 (audit)', () => {
 });
 
 describe('nút học lại của mọi ngày có kiến thức', () => {
-  it('ngày 1–82 đều có kiến thức của riêng ngày hoặc của tuần; chỉ tổng ôn / thi thử 83–90 không gắn', () => {
+  // NekoNeko v2: ngày 82 không còn Kanji "mồ côi" (mọi chữ học cùng từ chứa nó) → 82 thành ngày ôn như 83–90.
+  it('ngày 1–81 đều có kiến thức của riêng ngày hoặc của tuần; chỉ tổng ôn / thi thử 82–90 không gắn', () => {
     const plans = Array.from({ length: 90 }, (_, index) => buildDayPlan(catalog, index + 1, AT_DAY_1));
     const withoutOwnKnowledge = plans.filter((plan) => !plan.hasNewKnowledge && !plan.reviewWindow).map((plan) => plan.day);
-    expect(withoutOwnKnowledge).toEqual([83, 84, 85, 86, 87, 88, 89, 90]);
+    expect(withoutOwnKnowledge).toEqual([82, 83, 84, 85, 86, 87, 88, 89, 90]);
     expect(plans[13].knowledge.kana.length).toBeGreaterThan(0);
   });
 });

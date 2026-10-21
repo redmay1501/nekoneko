@@ -4,7 +4,7 @@ import { lessonNumber } from '@/lib/utils/lesson';
 import { countLearnedOfType, grammarGroups } from '@/features/learning/knowledge-library';
 import { getLearnerContext } from '@/features/learning/learner-context';
 
-/** SC-22 · Ngữ pháp N5 — các mẫu câu nhóm theo bài. */
+/** SC-22 · Ngữ pháp N5 — 128 mẫu câu nhóm theo bài. */
 export default async function GrammarPage() {
   const { catalog, memoryViews } = await getLearnerContext();
   const { learned, total } = countLearnedOfType(catalog, memoryViews, 'grammar');

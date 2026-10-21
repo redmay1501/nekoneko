@@ -6,22 +6,21 @@ import { kanjiReadingInWord, kanjiReadingIndex } from '@/features/learning/kanji
 import { lessonNumber } from '@/lib/utils/lesson';
 
 /**
- * Lộ trình phân bổ lại (docs/ROADMAP_REPLAN.md · scripts/roadmap_adjustments.py — roadmap-replan-v2):
- * chữ cái 1–14 → bộ thủ 15–17 → Minna bài 1–25 ở ngày 18–81 → tổng ôn & thi thử 82–90.
+ * Lộ trình NekoNeko v3 (docs/INTEGRATION_NEKONEKO_V3.md · scripts/replan_v3.py):
+ * chữ cái 1–10 (15–16 chữ/ngày) → bộ thủ 11–13 → bài 1–25 ở ngày 14–81 (số từ mỗi bài theo giáo trình) → tổng ôn & thi thử 82–90.
  */
 const content = loadSeedContent();
-const LESSON_DAYS = { from: 18, to: 81 };
+const LESSON_DAYS = { from: 14, to: 81 };
 const FINAL_FIRST_DAY = 82;
-const ORPHAN_KANJI: string[] = []; // NekoNeko v2: cả 14 chữ trước đây "mồ côi" nay có từ N5 mới chứa nó → học ở ngày của từ
 const wordsOn = (day: number) => content.vocabulary.filter((word) => word.day === day);
 
 describe('thứ tự giai đoạn', () => {
-  it('45 bộ thủ của lộ trình học gọn trong ngày 15–17 (15 bộ/ngày); không ngày nào khác có bộ thủ mới', () => {
+  it('45 bộ thủ của lộ trình học gọn trong ngày 11–13 (15 bộ/ngày); không ngày nào khác có bộ thủ mới', () => {
     const scheduled = content.radicals.filter((radical) => radical.day !== null);
     expect(scheduled).toHaveLength(45);
-    expect([15, 16, 17].map((day) => scheduled.filter((radical) => radical.day === day).length)).toEqual([15, 15, 15]);
+    expect([11, 12, 13].map((day) => scheduled.filter((radical) => radical.day === day).length)).toEqual([15, 15, 15]);
     // Ngày bộ thủ chỉ có bộ thủ.
-    for (const day of [15, 16, 17]) {
+    for (const day of [11, 12, 13]) {
       expect(wordsOn(day)).toEqual([]);
       expect(content.kanji.filter((kanji) => kanji.day === day)).toEqual([]);
     }
@@ -48,16 +47,16 @@ describe('thứ tự giai đoạn', () => {
     }
   });
 
-  it('không mất kiến thức: đủ 978 từ, 128 mẫu câu, 103 Kanji, 45 bộ thủ — mục nào cũng có ngày', () => {
-    expect(content.vocabulary.filter((word) => word.day !== null)).toHaveLength(978);
+  it('không mất kiến thức: đủ 1.085 từ (1.063 từ của bài 1–25 + 22 từ giai đoạn chữ cái), 128 mẫu câu, 103 Kanji — mục nào cũng có ngày', () => {
+    expect(content.vocabulary.filter((word) => word.day !== null)).toHaveLength(1085);
+    expect(content.vocabulary.filter((word) => Number.isFinite(lessonNumber(word.lesson)))).toHaveLength(1063);
     expect(content.grammar.filter((pattern) => pattern.day !== null)).toHaveLength(128);
     expect(content.kanji.filter((kanji) => kanji.day !== null)).toHaveLength(103);
   });
 
-  // NekoNeko v2: nâng 21 → 26 từ/ngày để xếp đủ 223 từ N5 mới (trung bình ~15 từ/ngày; 16 ngày vượt 20).
-  it('ngày học vừa sức: tối đa 26 từ, 6 Kanji mới, 3 mẫu câu', () => {
+  it('ngày học vừa sức: tối đa 24 từ, 6 Kanji mới, 3 mẫu câu', () => {
     for (let day = LESSON_DAYS.from; day <= LESSON_DAYS.to; day++) {
-      expect(wordsOn(day).length).toBeLessThanOrEqual(26);
+      expect(wordsOn(day).length).toBeLessThanOrEqual(24);
       expect(content.kanji.filter((kanji) => kanji.day === day).length).toBeLessThanOrEqual(6);
       expect(content.grammar.filter((pattern) => pattern.day === day).length).toBeLessThanOrEqual(3);
     }
@@ -79,13 +78,10 @@ describe('Kanji học cùng ngày với từ vựng chứa nó', () => {
     }
   });
 
-  it('Kanji N5 không có trong từ vựng giáo trình học ở ngày đầu tổng ôn, qua từ ví dụ của dữ liệu Kanji', () => {
+  it('mọi Kanji N5 đều có từ chứa nó trong bài 1–25 (không còn chữ phải dồn về ngày tổng ôn)', () => {
     const orphans = content.kanji.filter((kanji) => !content.vocabulary.some((word) => word.kanji.includes(kanji.character)));
-    expect(orphans.map((kanji) => kanji.character).sort()).toEqual([...ORPHAN_KANJI].sort());
-    for (const kanji of orphans) {
-      expect(kanji.day).toBe(FINAL_FIRST_DAY);
-      expect(kanji.words.length).toBeGreaterThan(0);
-    }
+    expect(orphans.map((kanji) => kanji.character)).toEqual([]);
+    expect(content.kanji.every((kanji) => kanji.day! < FINAL_FIRST_DAY)).toBe(true);
   });
 });
 
@@ -110,17 +106,16 @@ describe('cách đọc của Kanji trong từ (suy từ dữ liệu, không đo�
 });
 
 describe('migration Supabase giữ trí nhớ và tiến độ', () => {
-  const sql = readFileSync(join(process.cwd(), 'supabase/migrations/20261018000001_roadmap_replan_v2.sql'), 'utf8');
-  const sqlV2 = readFileSync(join(process.cwd(), 'supabase/migrations/20261021000001_nekoneko_v2.sql'), 'utf8');
+  const sql = readFileSync(join(process.cwd(), 'supabase/migrations/20261022000001_nekoneko_v3.sql'), 'utf8');
   const mapping = [...sql.match(/insert into _journey_day_map values\s*([^;]+);/)![1].matchAll(/\((\d+), (\d+)\)/g)]
     .map(([, from, to]) => [Number(from), Number(to)] as const);
 
   it('chạy lại cả file vẫn an toàn: đổi tiến độ nằm trọn trong một khối DO, chỉ chạy một lần', () => {
-    const block = sql.slice(sql.indexOf('do $replan$'), sql.indexOf('$replan$;'));
+    const block = sql.slice(sql.indexOf('do $replan_v3$'), sql.indexOf('$replan_v3$;'));
     for (const statement of ['update public.profiles', 'delete from public.journey_day_completions', 'insert into _journey_day_map'])
       expect(block).toContain(statement);
-    expect(block).toMatch(/if exists \(select 1 from public\.journey_plan_versions where version = 'roadmap-replan-v2'\) then\s+return;/);
-    expect(sql.slice(sql.indexOf('$replan$;'))).not.toMatch(/_journey_/);
+    expect(block).toMatch(/if exists \(select 1 from public\.journey_plan_versions where version = 'nekoneko-v3'\) then\s+return;/);
+    expect(sql.slice(sql.indexOf('$replan_v3$;'))).not.toMatch(/_journey_/);
   });
 
   it('không đụng bảng trí nhớ (memory_items, review_events, learning_sessions, session_items)', () => {
@@ -128,23 +123,21 @@ describe('migration Supabase giữ trí nhớ và tiến độ', () => {
     for (const table of ['memory_items', 'review_events', 'learning_sessions', 'session_items']) expect(code).not.toContain(table);
   });
 
-  it('ngày cũ → ngày mới: chữ cái 1–14 không đổi, không bao giờ lùi thứ tự, ngày đích luôn là đầu một bài / ngày ôn / tổng ôn', () => {
-    expect(mapping.map(([from]) => from)).toEqual(Array.from({ length: 76 }, (_, index) => index + 15));
+  it('ngày cũ → ngày mới: đủ 90 ngày cũ, không bao giờ lùi thứ tự, ngày đích luôn là chữ cái / bộ thủ / đầu một bài / ngày ôn / tổng ôn', () => {
+    expect(mapping.map(([from]) => from)).toEqual(Array.from({ length: 90 }, (_, index) => index + 1));
     for (let index = 1; index < mapping.length; index++) expect(mapping[index][1]).toBeGreaterThanOrEqual(mapping[index - 1][1]);
     const journey = content.journeyDays;
     for (const [, to] of mapping) {
       const minna = journey[to - 1].minna;
-      expect(/\(1\/\d\)$/.test(minna) || minna.startsWith('Ôn') || to >= FINAL_FIRST_DAY).toBe(true);
+      expect(to < LESSON_DAYS.from || /\(1\/\d\)$/.test(minna) || minna.startsWith('Ôn') || to >= FINAL_FIRST_DAY).toBe(true);
     }
   });
 
   it('cột day trong migration khớp đúng dữ liệu seed (cùng id)', () => {
-    for (const [table, rows] of [['kanji', content.kanji], ['grammar', content.grammar]] as const) {
+    for (const [table, rows] of [['kana', content.kana], ['kanji', content.kanji], ['grammar', content.grammar], ['vocabulary', content.vocabulary]] as const) {
       const block = sql.split(`update public.${table} as t set day`)[1].split(') as v(id, day)')[0];
       const days = new Map([...block.matchAll(/\((\d+), (\d+|null)\)/g)].map(([, id, day]) => [Number(id), day === 'null' ? null : Number(day)]));
-      const later = sqlV2.split(`update public.${table} as t set day`)[1]?.split(') as v(id, day)')[0] ?? '';
-      for (const [, id, day] of later.matchAll(/\((\d+), (\d+|null)\)/g)) days.set(Number(id), day === 'null' ? null : Number(day)); // migration sau ghi đè
-      for (const row of rows) if (days.has(row.id)) expect(days.get(row.id)).toBe(row.day); // id mới (113+) nằm ở migration bổ sung
+      for (const row of rows) expect(days.get(row.id)).toBe(row.day);
     }
   });
 });

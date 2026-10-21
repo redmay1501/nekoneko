@@ -26,9 +26,9 @@ export function primaryRadicalGlyph(radical: string): string {
 
 /**
  * Mỗi dòng bảng chữ cái mang cả Hiragana lẫn Katakana nhưng chỉ có MỘT cột ngày (ngày học Hiragana, 1–6).
- * Lộ trình học Katakana đúng một tuần sau, cùng thứ tự: Hiragana ngày 1–6 · ôn ngày 7 · Katakana ngày 8–13 · ôn ngày 14.
+ * Lộ trình học Katakana sau Hiragana 5 ngày, cùng thứ tự: Hiragana ngày 1–5 (15–16 chữ/ngày, âm đục, âm ghép) · Katakana ngày 6–10.
  */
-export const KATAKANA_DAY_OFFSET = 7;
+export const KATAKANA_DAY_OFFSET = 5; // NekoNeko v3: Katakana học sau Hiragana 5 ngày (ngày 6–10)
 
 export function buildKnowledgeCatalog(content: N5Content): KnowledgeCatalog {
   const items: KnowledgeItem[] = [];

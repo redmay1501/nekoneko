@@ -42,9 +42,9 @@ describe('Luyện nói / viết / đọc — không khoá theo ngày', () => {
   it('viết: ngày 1 vẫn luyện được Kanji đầu tiên; nhóm 10 chữ', async () => {
     const { buildWritingPractice } = await import('./skill-practice');
     const practice = buildWritingPractice(catalog, 1);
-    // Kanji đầu tiên của lộ trình là chữ của bài 1 (ngày 18 — học cùng từ 先生, 会社…).
+    // Kanji đầu tiên của lộ trình là chữ của bài 1 (ngày 14 — học cùng từ 先生, 会社…).
     const firstDay = Math.min(...catalog.content.kanji.map((kanji) => kanji.day ?? Infinity));
-    expect(firstDay).toBe(18);
+    expect(firstDay).toBe(14);
     expect(catalog.content.kanji.find((kanji) => kanji.character === practice.focus.character)?.day).toBe(firstDay);
     expect(practice.others).toHaveLength(10);
     expect(practice.groups.filter((group) => group.isCurrent)).toHaveLength(1);

@@ -27,9 +27,9 @@ function freshViews(day: number, metKeys: ContentKey[] = []): Map<ContentKey, Me
 describe('getDayCompletionProgress', () => {
   const dayOneKeys = itemsScheduledOn(catalog, 1).map((item) => item.key);
 
-  it('tài khoản mới ở ngày 1: có 10 chữ Hiragana (Katakana học từ ngày 8), chưa gặp cái nào', () => {
+  it('tài khoản mới ở ngày 1: có 15 chữ Hiragana (Katakana học từ ngày 6), chưa gặp cái nào', () => {
     expect(getDayCompletionProgress(catalog, freshViews(1), 1)).toEqual({
-      metCount: 0, totalCount: 10, hasNewKnowledge: true, isAllKnowledgeMet: false,
+      metCount: 0, totalCount: 15, hasNewKnowledge: true, isAllKnowledgeMet: false,
     });
   });
 
@@ -89,7 +89,7 @@ describe('dữ liệu demo', () => {
     }));
     const progress = getDayCompletionProgress(catalog, views, 23);
     expect(progress.metCount).toBe(0);
-    expect(getDayCompletionProgress(catalog, views, 22).isAllKnowledgeMet).toBe(true);
+    expect(getDayCompletionProgress(catalog, views, 21).isAllKnowledgeMet).toBe(true);
   });
 });
 
@@ -111,7 +111,7 @@ describe('buildDayStatuses', () => {
     expect(statuses[17].status).toBe('partial');
     expect(buildDayStatuses(catalog, freshViews(18, day18.map((item) => item.key)), 18)[17].status).toBe('done');
     expect(statuses[18].status).toBe('todo');
-    // Ngày ôn (ngày 26, không có kiến thức mới): đã qua → done.
-    expect(buildDayStatuses(catalog, freshViews(30), 30)[25].status).toBe('done');
+    // Ngày ôn (ngày 22, không có kiến thức mới): đã qua → done.
+    expect(buildDayStatuses(catalog, freshViews(30), 30)[21].status).toBe('done');
   });
 });

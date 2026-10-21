@@ -34,4 +34,4 @@ biến đổi câu, hỏi đáp theo gợi ý và hội thoại điền chỗ tr
 khi tải; chấm bằng `src/lib/utils/drill-checker.ts` (NFKC, bỏ dấu câu, chấp nhận gõ toàn kana). Hỏi đáp tự do không khớp
 đáp án mẫu → hiện mẫu và cho người học tự đánh giá. Giao diện: `GrammarDrillRunner`. Không ghi vào Memory Engine.
 Định dạng dữ liệu: [`README_exercises.md`](README_exercises.md), [`exercises.schema.json`](exercises.schema.json).
-Toàn bộ quá trình tích hợp: [`INTEGRATION_NEKONEKO_V2.md`](INTEGRATION_NEKONEKO_V2.md).
+Toàn bộ quá trình tích hợp: [`INTEGRATION_NEKONEKO_V3.md`](INTEGRATION_NEKONEKO_V3.md).

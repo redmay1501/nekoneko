@@ -1,5 +1,6 @@
 import rawSeedContent from '@content/seed/n5-content.json';
 import rawExamples from '@content/seed/examples.json';
+import rawNekoExamples from '@content/seed/examples-nekoneko.json';
 import rawKanjiRadicals from '@content/seed/kanji-radicals.json';
 import rawGrammarNotes from '@content/seed/grammar-notes.json';
 import type { N5Content } from '@/types/content';
@@ -19,6 +20,7 @@ import { withReadingPassages } from './reading-passages';
 export function loadSeedContent(): N5Content {
   // Câu ví dụ (Tatoeba), thành phần bộ thủ và ghi chú ngữ pháp nằm file riêng — không sinh từ Excel lộ trình.
   const raw = rawSeedContent as unknown as Omit<N5Content, 'exampleSentences' | 'kanjiRadicals'>;
-  const base = withGrammarNotes({ ...raw, exampleSentences: rawExamples.sentences }, rawGrammarNotes as GrammarNotesSource);
+  // Câu Tatoeba + câu NekoNeko tự soạn cho từ vựng chưa có câu (examples-nekoneko.json, id 900001+).
+  const base = withGrammarNotes({ ...raw, exampleSentences: [...rawExamples.sentences, ...rawNekoExamples.sentences] }, rawGrammarNotes as GrammarNotesSource);
   return withReadingPassages(withKanjiRadicals(base, rawKanjiRadicals as KanjiRadicalSource));
 }

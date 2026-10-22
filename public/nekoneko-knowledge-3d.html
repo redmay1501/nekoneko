@@ -1135,6 +1135,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
 
     var drawer = $('drawer'), scrim = $('drawerScrim'), drawerTimer = 0;
     function openDrawer() {
+      if (isEmbedded) {
+        window.parent.postMessage({ source: 'nekoneko-knowledge-garden', version: 1, type: 'picker', open: true }, location.origin);
+        return;
+      }
       clearTimeout(drawerTimer);
       drawer.hidden = false; scrim.hidden = false;
       requestAnimationFrame(function () { drawer.classList.add('open'); scrim.classList.add('open'); });

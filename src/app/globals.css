@@ -1093,6 +1093,18 @@ input[type="radio"]{appearance:auto;-webkit-appearance:radio;width:18px;height:1
 .app-root:has(.knowledge-garden-shell:not(.kana-classroom-shell)) .knowledge-garden-frame{top:-66px;height:calc(100% + 66px)}
 .knowledge-radical-test{position:absolute;z-index:15;top:10px;left:clamp(10px,2vw,24px)}.knowledge-radical-test .test-open-row{justify-content:flex-start;margin:0}
 .app-root:has(.kana-classroom-shell) .topbar-knowledge-slot{display:block;position:absolute;top:9px;left:24px;z-index:2;width:min(260px,calc(100% - 490px));pointer-events:none}
+.kana-picker-backdrop{position:fixed;inset:0;z-index:89;border:0;padding:0;background:transparent;cursor:default}
+.kana-picker-dialog{position:fixed;z-index:100;left:50%;top:50%;transform:translate(-50%,-50%);width:min(460px,calc(100vw - 24px));max-height:min(80dvh,720px);overflow:auto;padding:16px;border:1px solid #F0DFD1;border-radius:24px;background:linear-gradient(180deg,#FFFCF7,#FFF5EA);box-shadow:0 24px 60px rgba(55,35,28,.34)}
+body:has(.kana-picker-dialog) .topbar{z-index:95}
+.kana-picker-dialog header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.kana-picker-dialog h2{margin:0;font-size:18px;color:#543B32}
+.kana-picker-close{width:36px;height:36px;border:0;border-radius:50%;background:#fff;color:#76584E;font-size:25px;line-height:1;box-shadow:0 2px 8px rgba(120,60,40,.15);cursor:pointer}
+.kana-picker-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.kana-picker-cell{aspect-ratio:1/1.05;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px solid #F0E1CE;border-radius:18px;background:linear-gradient(180deg,#fff,#FBF2E6);color:#49352F;cursor:pointer}
+.kana-picker-cell b{font-family:var(--font-kana);font-size:24px;font-weight:500;line-height:1}
+.kana-picker-cell small{font-size:11.5px;font-weight:700;color:#9A8279}
+.kana-picker-cell[aria-current="true"]{border-color:#F28CA3;background:linear-gradient(180deg,#FFE8EE,#FFCFDA);box-shadow:inset 0 0 0 1px #F28CA3}
+@media(max-width:640px){.kana-picker-dialog{max-height:calc(100dvh - 24px - var(--safe-t) - var(--safe-b));padding:12px;border-radius:20px}.kana-picker-grid{gap:6px}.kana-picker-cell{border-radius:14px}.kana-picker-cell b{font-size:22px}}
 .kana-header-copy strong{font-size:18px}.kana-header-copy span{min-height:23px}
 .kana-classroom-toolbar .knowledge-garden-actions{gap:8px}
 .kana-classroom-toolbar .knowledge-garden-actions .test-open{min-height:39px;padding:7px 14px;border:1px solid #E46F81;border-radius:999px;background:linear-gradient(180deg,#FFB0BC 0%,#F77E94 100%);color:#fff;font-size:12px;font-weight:800;box-shadow:inset 0 1px 0 rgba(255,255,255,.75),inset 0 -2px 0 rgba(181,62,82,.16),0 3px 0 #CE5A70,0 5px 9px rgba(180,67,89,.16);transition:transform .16s,box-shadow .16s,filter .16s}

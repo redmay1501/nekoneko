@@ -1216,7 +1216,7 @@ window.NekoHiraganaData = {
 
   /* ---------- bảng 46 chữ ---------- */
   var grid = $('grid'), dlg = $('picker'), scrim = $('pickerScrim');
-  var cells = [];
+  var cells = [], pickerTimer = 0;
   HIRAGANA.forEach(function (k, i) {
     var c = document.createElement('button'); c.type = 'button'; c.className = 'cell'; c.dataset.index = String(i);
     c.innerHTML = '<b lang="ja">' + k.character + '</b>' + (kind === 'kanji' ? '' : '<small>' + k.romaji + '</small>'); c.setAttribute('aria-label', k.character + ', ' + k.romaji);
@@ -1226,14 +1226,20 @@ window.NekoHiraganaData = {
   });
   grid.addEventListener('click', function (e) { var c = e.target.closest('.cell[data-index]'); if (!c) return; select(+c.dataset.index); closePicker(); });
   function openPicker() {
+    if (window.parent !== window) {
+      window.parent.postMessage({ source: 'nekoneko-kana-classroom', version: 1, type: 'picker', open: true }, window.location.origin);
+      return;
+    }
+    clearTimeout(pickerTimer);
     dlg.hidden = false; scrim.hidden = false;
     requestAnimationFrame(function () { dlg.classList.add('open'); scrim.classList.add('open'); });
     setTimeout(function () { (cells[state.index] || $('pickerClose')).focus(); }, 50);
   }
   function closePicker() {
     if (dlg.hidden) return;
+    clearTimeout(pickerTimer);
     dlg.classList.remove('open'); scrim.classList.remove('open');
-    setTimeout(function () { dlg.hidden = true; scrim.hidden = true; }, 220);
+    pickerTimer = setTimeout(function () { dlg.hidden = true; scrim.hidden = true; }, 220);
     $('pickerBtn').focus({ preventScroll: true });
   }
   $('pickerBtn').addEventListener('click', openPicker);

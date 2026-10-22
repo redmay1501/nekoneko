@@ -13,8 +13,8 @@ export interface GuideBannerContext {
   isGuideOpen: boolean;
 }
 
-/** Tiền tố route mà nút nổi không được che (phiên học toàn màn hình). */
-export const GUIDE_BANNER_HIDDEN_PREFIXES: readonly string[] = ['/hoc'];
+/** Tiền tố route mà nút nổi không được che (phiên học toàn màn hình và khu vực Học tập). */
+export const GUIDE_BANNER_HIDDEN_PREFIXES: readonly string[] = ['/hoc', '/hoc-tap'];
 
 export function shouldShowGuideBanner({ pathname, isWelcomed, isGuideOpen }: GuideBannerContext): boolean {
   if (!isWelcomed || isGuideOpen) return false;

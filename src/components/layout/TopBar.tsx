@@ -44,6 +44,7 @@ export function TopBar({ displayName, level, recallDays, isGentleMode, isDemo, i
       <Link href="/" className="row topbrand" aria-label={`${APP_NAME} — về trang chủ`}>
         <BrandLogo width={100} priority={pathname !== '/'} />
       </Link>
+      <div className="topbar-knowledge-slot" aria-live="polite" />
       <div style={{ flex: 1 }} />
       <form
         className="topsearch"

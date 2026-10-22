@@ -7,6 +7,7 @@ import {
   normalizeEmail, validateCredentials,
 } from '@/features/auth/credentials';
 import { createBrowserSupabaseClient } from '@/lib/supabase/client';
+import { isSupabaseConfigured } from '@/config/env';
 import { startNavigation } from '@/stores/navigation-progress-store';
 import { TurnstileWidget } from './TurnstileWidget';
 
@@ -48,6 +49,12 @@ export function SignInForm({ redirectTo, initialMessage, isGoogleEnabled, turnst
 
   const callbackUrl = () => `${window.location.origin}/auth/callback?tiep=${encodeURIComponent(redirectTo)}`;
   const isCaptchaMissing = Boolean(turnstileSiteKey) && !captchaToken;
+  const requireSupabase = () => {
+    if (isSupabaseConfigured()) return true;
+    setMessage('Ứng dụng đang chạy chế độ demo nên không cần đăng nhập. Hãy quay lại trang học nhé.');
+    setIsBusy(false);
+    return false;
+  };
   /** Token CAPTCHA dùng một lần — sau mỗi yêu cầu xin token mới. */
   const takeCaptchaToken = () => {
     const token = captchaToken ?? undefined;
@@ -74,6 +81,7 @@ export function SignInForm({ redirectTo, initialMessage, isGoogleEnabled, turnst
     if (Object.keys(found).length) return;
     if (mode === 'sign-up' && cooldown > 0) { setMessage(`Đợi ${cooldown} giây rồi thử lại nhé.`); return; }
     if (isCaptchaMissing) { setMessage('Hoàn tất ô xác minh bên dưới trước nhé.'); return; }
+    if (!requireSupabase()) return;
 
     setIsBusy(true);
     const supabase = createBrowserSupabaseClient();
@@ -108,6 +116,7 @@ export function SignInForm({ redirectTo, initialMessage, isGoogleEnabled, turnst
   async function resendConfirmation() {
     if (!pendingEmail || cooldown > 0 || isBusy) return;
     if (isCaptchaMissing) { setMessage('Hoàn tất ô xác minh bên dưới trước nhé.'); return; }
+    if (!requireSupabase()) return;
     setIsBusy(true);
     const { error } = await createBrowserSupabaseClient().auth.resend({
       type: 'signup', email: pendingEmail, options: { emailRedirectTo: callbackUrl(), captchaToken: takeCaptchaToken() },
@@ -123,6 +132,7 @@ export function SignInForm({ redirectTo, initialMessage, isGoogleEnabled, turnst
     if (problem) { setErrors({ email: problem }); setMessage('Nhập email của bạn trước, rồi bấm "Quên mật khẩu?" nhé.'); return; }
     if (cooldown > 0 || isBusy) { setMessage(`Đợi ${cooldown} giây rồi thử lại nhé.`); return; }
     if (isCaptchaMissing) { setMessage('Hoàn tất ô xác minh bên dưới trước nhé.'); return; }
+    if (!requireSupabase()) return;
     setIsBusy(true);
     const { error } = await createBrowserSupabaseClient().auth.resetPasswordForEmail(normalizeEmail(email), {
       redirectTo: `${window.location.origin}/dat-lai-mat-khau`, captchaToken: takeCaptchaToken(),
@@ -136,6 +146,7 @@ export function SignInForm({ redirectTo, initialMessage, isGoogleEnabled, turnst
 
   async function signInWithGoogle() {
     if (isBusy) return;
+    if (!requireSupabase()) return;
     setIsBusy(true);
     setMessage(null);
     const { error } = await createBrowserSupabaseClient().auth.signInWithOAuth({ provider: 'google', options: { redirectTo: callbackUrl() } });

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { footerNavigation, NAVIGATION_GROUPS, type NavigationItem, isActivePath, isInSection } from './navigation-items';
 import { useIsAdmin } from './AdminFlag';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
@@ -34,12 +34,33 @@ interface NavigationListProps {
 export function NavigationList({ onNavigate }: NavigationListProps) {
   const pathname = usePathname();
   const isAdmin = useIsAdmin();
+  const navRef = useRef<HTMLElement>(null);
   const [toggled, setToggled] = useState<Record<string, boolean>>({});
   const isExpanded = (item: NavigationItem) => toggled[item.href] ?? isInSection(pathname, item);
-  const toggle = (item: NavigationItem) => setToggled((current) => ({ ...current, [item.href]: !isExpanded(item) }));
+  const revealSubmenu = (item: NavigationItem) => {
+    const id = `nav-sub-${item.href.slice(1)}`;
+    requestAnimationFrame(() => {
+      const nav = navRef.current;
+      const submenu = nav?.querySelector<HTMLElement>(`#${id}`);
+      if (!nav || !submenu) return;
+      const navRect = nav.getBoundingClientRect();
+      const menuRect = submenu.getBoundingClientRect();
+      if (menuRect.bottom > navRect.bottom) nav.scrollTop += menuRect.bottom - navRect.bottom + 12;
+      else if (menuRect.top < navRect.top) nav.scrollTop -= navRect.top - menuRect.top + 12;
+    });
+  };
+  const toggle = (item: NavigationItem) => {
+    const expanded = isExpanded(item);
+    if (expanded && isInSection(pathname, item)) {
+      revealSubmenu(item);
+      return;
+    }
+    setToggled((current) => ({ ...current, [item.href]: !expanded }));
+    if (!expanded) revealSubmenu(item);
+  };
 
   return (
-    <nav aria-label="Điều hướng chính">
+    <nav ref={navRef} aria-label="Điều hướng chính">
       {NAVIGATION_GROUPS.map((group) => (
         <div key={group.label} className="nav-group" role="group" aria-label={group.label}>
           <p className="nav-group-label" aria-hidden="true">{group.label}</p>

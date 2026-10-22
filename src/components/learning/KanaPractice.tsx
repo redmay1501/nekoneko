@@ -68,9 +68,9 @@ function WritingPicker({ choices, selected, onSelect }: { choices: KanaWritingCh
  * Màn Hiragana / Katakana với bốn thẻ — chuyển thẻ là trạng thái giao diện cục bộ.
  * `initialWriting` (từ ?viet=そ, nút "Luyện viết" ở trang chi tiết chữ) mở thẳng thẻ Luyện viết với chữ đó.
  */
-export function KanaPractice({ data, initialWriting }: { data: KanaPracticeData; initialWriting?: string }) {
+export function KanaPractice({ data, initialWriting, initialTab }: { data: KanaPracticeData; initialWriting?: string; initialTab?: TabId }) {
   const requested = data.writingChoices.find((choice) => choice.character === initialWriting);
-  const [tab, setTab] = useState<TabId>(requested ? 'write' : 'learn');
+  const [tab, setTab] = useState<TabId>(requested ? 'write' : initialTab ?? 'learn');
   const [writing, setWriting] = useState<KanaWritingChoice>(requested ?? data.writing);
   return (
     <>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CheckCircleIcon } from '@/components/common/CheckCircleIcon';
 import { ModalPortal } from '@/components/common/ModalPortal';
 import { focusSessionHref } from '@/features/learning/session-modes';
@@ -29,6 +29,8 @@ const ALL = ALL_QUESTIONS;
 export function TestPicker({ groups, unit, partUnit = 'nhóm' }: TestPickerProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [isStarting, setIsStarting] = useState(false);
+  const startLocked = useRef(false);
   const [scope, setScope] = useState<Scope>('all');
   const [picked, setPicked] = useState<Set<string>>(new Set());
   const [onlyLearned, setOnlyLearned] = useState(false);
@@ -62,7 +64,14 @@ export function TestPicker({ groups, unit, partUnit = 'nhóm' }: TestPickerProps
   const allLimit = questionCountFor(ALL_QUESTIONS, pool.length);
   // Cùng một số cho nút, ghi chú và số mục gửi đi → phiên có đúng chừng đó câu hỏi.
   const questionCount = questionCountFor(count, pool.length);
-  const start = () => router.push(focusSessionHref(pickTestKeys(pool, questionCount)));
+  const start = () => {
+    if (startLocked.current || !pool.length) return;
+    startLocked.current = true;
+    setIsStarting(true);
+    const href = focusSessionHref(pickTestKeys(pool, questionCount));
+    // Give React a frame to paint the loading state before navigation begins.
+    requestAnimationFrame(() => router.push(href));
+  };
 
   return (
     <>
@@ -128,7 +137,9 @@ export function TestPicker({ groups, unit, partUnit = 'nhóm' }: TestPickerProps
               </p>
             ) : null}
             {pool.length ? (
-              <button type="button" className="btn block" onClick={start}>▶ Bắt đầu kiểm tra · {questionCount} câu</button>
+              <button type="button" className="btn block test-begin-button" onClick={start} disabled={isStarting} aria-busy={isStarting}>
+                {isStarting ? <><span className="test-loading-spinner" aria-hidden="true" /> Đang chuẩn bị bài kiểm tra…</> : <>▶ Bắt đầu kiểm tra · {questionCount} câu</>}
+              </button>
             ) : (
               <button type="button" className="btn block" disabled>
                 {scope === 'learned' ? `Chưa có ${unit} đã học` : picked.size && onlyLearned ? `Các ${partUnit} này chưa có ${unit} đã học` : `Chọn ít nhất một ${partUnit}`}

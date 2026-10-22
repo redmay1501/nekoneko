@@ -1,34 +1,53 @@
-import { HeroAnimal } from '@/components/common/HeroAnimal';
-import { LessonVocabularyList, KANA_PERIOD_TAB } from '@/components/learning/LessonVocabularyList';
+import { CafeVocabularyFrame } from '@/components/learning/CafeVocabularyFrame';
 import { TestPicker } from '@/components/learning/TestPicker';
 import { itemsOfType } from '@/features/learning/knowledge-catalog';
 import { buildTestGroups } from '@/features/learning/study-actions';
-import { countLearnedOfType, vocabularyRows } from '@/features/learning/knowledge-library';
+import { countLearnedOfType } from '@/features/learning/knowledge-library';
+import { getContextIndex } from '@/features/learning/context-index';
 import { getLearnerContext } from '@/features/learning/learner-context';
+import { grammarUsingVocabulary, kanjiInVocabulary } from '@/features/learning/knowledge-relations';
+import { toContentKey } from '@/features/learning/knowledge-types';
+import { learnerImageOf } from '@/features/learning/vocabulary-images';
 import { lessonNumber } from '@/lib/utils/lesson';
+import { vocabularyRomaji } from '@/lib/utils/romaji';
 
-/** SC-20 · Từ vựng N5, lọc theo bài Minna — mở sẵn bài đang học. */
+/** Từ vựng N5 trong sổ quán cà phê; nội dung, tiến độ và kiểm tra lấy từ kho học thật. */
 export default async function VocabularyPage() {
   const { catalog, memoryViews, journeyDay } = await getLearnerContext();
+  const vocabulary = catalog.content.vocabulary;
+  const contextIndex = getContextIndex(catalog);
   const testGroups = buildTestGroups('vocabulary', itemsOfType(catalog, 'vocabulary'), memoryViews);
   const { learned, total } = countLearnedOfType(catalog, memoryViews, 'vocabulary');
-  // Bài đang học = bài của từ vựng gần nhất đã tới lịch (≤ ngày đang học); chưa tới bài 1 thì là tab "Chữ cái".
-  const scheduled = catalog.content.vocabulary.filter((word) => word.day !== null && word.day <= journeyDay);
-  const latest = scheduled.sort((left, right) => (right.day ?? 0) - (left.day ?? 0))[0];
-  const latestLesson = latest ? lessonNumber(latest.lesson) : Number.POSITIVE_INFINITY;
-  const rows = vocabularyRows(catalog, memoryViews);
-  const currentTab = latest ? (Number.isFinite(latestLesson) ? `Bài ${latestLesson}` : KANA_PERIOD_TAB) : '';
+  const items = vocabulary.map((word) => {
+    const key = toContentKey('vocabulary', word.id);
+    const view = memoryViews.get(key);
+    const image = learnerImageOf('vocabulary', word);
+    const sentences = contextIndex.sentencesFor(key).slice().sort((left, right) => left.jp.length - right.jp.length).slice(0, 3);
+    // Dùng cùng ví dụ Minna với bảng chi tiết; tránh để thẻ chính và sheet hiện hai bộ câu khác nhau.
+    const lessonExamples = grammarUsingVocabulary(catalog, word).map(({ exampleJp, exampleVi }) => ({ jp: exampleJp, vi: exampleVi }));
+    return {
+      contentKey: key,
+      kana: word.kana,
+      kanji: word.kanji,
+      romaji: vocabularyRomaji(word),
+      meaning: word.meaning,
+      tip: word.tip,
+      lesson: Number.isFinite(lessonNumber(word.lesson)) ? `Bài ${lessonNumber(word.lesson)}` : 'Chào hỏi & Katakana',
+      icon: image?.url ?? '',
+      learned: view?.isLearned ?? false,
+      examples: lessonExamples.length ? lessonExamples : sentences.map(({ jp, vi }) => ({ jp, vi })),
+      kanjiParts: kanjiInVocabulary(catalog, word).map((kanji) => ({
+        contentKey: toContentKey('kanji', kanji.id), character: kanji.character, meaning: kanji.meaning,
+      })),
+    };
+  });
+  const latest = [...vocabulary]
+    .filter((word) => word.day !== null && word.day <= journeyDay)
+    .sort((left, right) => (right.day ?? 0) - (left.day ?? 0))[0];
+
   return (
-    <>
-      <div className="page-hero-cat">
-      <div className="title-count"><h1>Từ vựng N5</h1><span className="chip sky">{learned}/{total}</span></div>
-      <p className="soft sm" style={{ margin: '4px 0 12px' }}>
-        {total} từ: theo Minna no Nihongo I bài 1–25, cộng từ N5 bổ sung và từ của giai đoạn bảng chữ cái.
-      </p>
-        <HeroAnimal src="/animations/vocab-cat.json" stillFrame={60} />
-      </div>
+    <CafeVocabularyFrame items={items} count={`${learned}/${total}`} initialContentKey={latest ? toContentKey('vocabulary', latest.id) : undefined}>
       <TestPicker groups={testGroups} unit="từ" partUnit="bài" />
-      <LessonVocabularyList rows={rows} lessons={catalog.content.lessons} currentTab={currentTab} />
-    </>
+    </CafeVocabularyFrame>
   );
 }

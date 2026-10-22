@@ -4,24 +4,20 @@ import { useEffect, useRef, useState } from 'react';
 
 /** Animation mèo nhảy (Lottie) — public/animations/dance-cat.json. */
 const ANIMATION_URL = '/animations/dance-cat.json';
-/** Hiện ít nhất chừng này để kịp thấy mèo, rồi mới ẩn khi trang đã sẵn sàng. */
-const MIN_VISIBLE_MS = 900;
-/** Chậm nhất chừng này là ẩn, kể cả khi trang còn tải ảnh — không bắt người học chờ. */
-const MAX_VISIBLE_MS = 4000;
-const FADE_MS = 350;
+/** Ẩn ngay sau frame đầu tiên để màn chờ không giữ người học lại. */
+const FADE_MS = 160;
 
 /**
  * Màn loading toàn trang khi MỚI VÀO web (hoặc tải lại trang): mèo nhảy ở giữa trên nền hồng nhạt.
- *  - Nằm trong layout gốc nên có ngay trong HTML đầu tiên (không nháy trang bên dưới); chuyển trang trong app không hiện lại.
+ *  - Nằm trong layout gốc nên có ngay trong HTML đầu tiên; chuyển trang trong app không hiện lại.
  *  - lottie-web (bản light, chỉ SVG) tải động — chỉ cho màn này.
- *  - "Giảm chuyển động" → mèo đứng yên. JavaScript lỗi → CSS tự ẩn màn này sau vài giây (.splash trong globals.css).
+ *  - "Giảm chuyển động" → mèo đứng yên. CSS tự ẩn màn này nếu JavaScript không chạy.
  */
 export function SplashScreen() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [phase, setPhase] = useState<'visible' | 'fading' | 'gone'>('visible');
 
   useEffect(() => {
-    const startedAt = performance.now();
     let isCancelled = false;
     let animation: { destroy: () => void } | null = null;
 
@@ -46,21 +42,14 @@ export function SplashScreen() {
 
     const hide = () => {
       if (isCancelled) return;
-      const wait = Math.max(0, MIN_VISIBLE_MS - (performance.now() - startedAt));
-      window.setTimeout(() => {
-        if (isCancelled) return;
-        setPhase('fading');
-        window.setTimeout(() => { if (!isCancelled) setPhase('gone'); }, FADE_MS);
-      }, wait);
+      setPhase('fading');
+      window.setTimeout(() => { if (!isCancelled) setPhase('gone'); }, FADE_MS);
     };
-    if (document.readyState === 'complete') hide();
-    else window.addEventListener('load', hide, { once: true });
-    const fallback = window.setTimeout(hide, MAX_VISIBLE_MS);
+    const firstFrame = window.requestAnimationFrame(hide);
 
     return () => {
       isCancelled = true;
-      window.removeEventListener('load', hide);
-      window.clearTimeout(fallback);
+      window.cancelAnimationFrame(firstFrame);
       animation?.destroy();
     };
   }, []);

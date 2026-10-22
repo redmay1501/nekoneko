@@ -4,11 +4,11 @@ import { EmojiIcon } from '@/components/common/EmojiIcon';
 import { SessionSoundToggle } from './SessionAudio';
 import { type PublicSessionStep, SESSION_PHASE_INFO, SESSION_PHASES, phaseOfStep, questionProgress } from '@/features/learning/session-types';
 
-export function SessionHeader({ mode }: { mode: SessionMode }) {
+export function SessionHeader({ mode, returnTo = '/' }: { mode: SessionMode; returnTo?: string }) {
   const config = SESSION_MODE_CONFIG[mode];
   return (
     <div className="between mb-3">
-      <Link className="link" href="/">✕ Để sau</Link>
+      <Link className="link" href={returnTo}>✕ Để sau</Link>
       <span className="row" style={{ gap: 6 }}>
         <span className="chip"><EmojiIcon emoji={config.emoji} size={16} /> {config.label}</span>
         <SessionSoundToggle />

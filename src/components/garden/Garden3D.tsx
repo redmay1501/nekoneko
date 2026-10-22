@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
-import { STAGE_OF_STATUS, layoutGardenPlants } from '@/features/garden/garden-layout';
+import { GARDEN_AREA_SIZE, STAGE_OF_STATUS, gardenAreaCount, layoutGardenPlants, plantsInGardenArea } from '@/features/garden/garden-layout';
 import { focusSessionHref } from '@/features/learning/session-modes';
 import { STATUS_PRESENTATION } from '@/features/memory/memory-rules';
 import type { MemoryStatus } from '@/features/memory/memory-types';
@@ -96,11 +96,14 @@ export function Garden3D({ plants, groups, statusCounts, totalCount, fallback }:
   const [charactersReady, setCharactersReady] = useState(false);
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [filter, setFilter] = useState<MemoryStatus | null>(null);
+  const [area, setArea] = useState(0);
   const [bubble, setBubble] = useState<{ side: -1 | 1; text: string } | null>(null);
   const bubbleSideRef = useRef<-1 | 1 | null>(null);
   const openKnowledge = useSheetStore((state) => state.openKnowledge);
 
-  const placements = useMemo(() => layoutGardenPlants(plants), [plants]);
+  const areaCount = gardenAreaCount(plants.length);
+  const visiblePlants = useMemo(() => plantsInGardenArea(plants, area), [area, plants]);
+  const placements = useMemo(() => layoutGardenPlants(visiblePlants), [visiblePlants]);
   const placementsRef = useRef(placements);
   placementsRef.current = placements;
   const byKey = useMemo(() => new Map(plants.map((plant) => [plant.contentKey, plant])), [plants]);
@@ -221,6 +224,13 @@ export function Garden3D({ plants, groups, statusCounts, totalCount, fallback }:
             );
           })}
         </div>
+        {areaCount > 1 ? (
+          <nav className="garden3d-areas" aria-label="Các khu vườn">
+            <button type="button" className="garden3d-area-button" onClick={() => { setSelectedKey(null); setArea((current) => Math.max(0, current - 1)); }} disabled={area === 0} aria-label="Khu trước">‹</button>
+            <span>Khu {area + 1}/{areaCount} · cây {area * GARDEN_AREA_SIZE + 1}–{area * GARDEN_AREA_SIZE + visiblePlants.length} / {plants.length}</span>
+            <button type="button" className="garden3d-area-button" onClick={() => { setSelectedKey(null); setArea((current) => Math.min(areaCount - 1, current + 1)); }} disabled={area + 1 >= areaCount} aria-label="Khu tiếp">›</button>
+          </nav>
+        ) : null}
       </div>
 
       {bubble ? <div ref={bubbleRef} className="garden3d-bubble" role="status">{bubble.text}</div> : null}
@@ -241,7 +251,7 @@ export function Garden3D({ plants, groups, statusCounts, totalCount, fallback }:
       {phase === 'ready' && !selected ? (
         <p className="garden3d-hint">
           <span aria-hidden="true">👆</span>
-          {plants.length ? 'Chạm vào một cây để xem kiến thức · kéo để xoay · chụm / cuộn để phóng to' : 'Vườn đang chờ hạt đầu tiên 🌱 — học một từ là có cây đầu tiên.'}
+          {visiblePlants.length ? 'Chạm vào một cây để xem kiến thức · kéo để xoay · chụm / cuộn để phóng to' : 'Vườn đang chờ hạt đầu tiên 🌱 — học một từ là có cây đầu tiên.'}
         </p>
       ) : null}
       {selected && presentation ? (
@@ -262,7 +272,7 @@ export function Garden3D({ plants, groups, statusCounts, totalCount, fallback }:
           <div className="row wrap mt-3" style={{ gap: 8 }}>
             <button type="button" className="btn sm" onClick={() => openKnowledge(selected.contentKey)}>Xem chi tiết</button>
             {needsRescue
-              ? <Link className="btn ghost sm" href={`/tri-nho/cuu/${selected.contentKey}`}>💧 Tưới lại</Link>
+              ? <Link className="btn ghost sm" href={`/tri-nho/cuu/${selected.contentKey}?returnTo=%2Fvuon`}>💧 Tưới lại</Link>
               : <Link className="btn ghost sm" href={focusSessionHref([selected.contentKey])}>🔁 Ôn lại</Link>}
           </div>
         </div>

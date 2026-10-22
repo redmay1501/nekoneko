@@ -18,23 +18,23 @@ const STEP = { AT_RISK: 0, HINT: 1, RECALL: 2, CONTEXT: 3, RESCUED: 4 } as const
 type RescueStep = (typeof STEP)[keyof typeof STEP];
 
 /** Luồng 5 bước cứu một kiến thức. Trạng thái bước là của riêng màn này → useState. */
-export function RescueFlow({ view }: { view: RescueView }) {
+export function RescueFlow({ view, returnTo = '/tri-nho/sap-quen', flowId }: { view: RescueView; returnTo?: string; flowId: string }) {
   const [step, setStep] = useState<RescueStep>(STEP.AT_RISK);
   const [chosenMeaning, setChosenMeaning] = useState<string | null>(null);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
   useScrollToAnswerFeedback(nextButtonRef, chosenMeaning);
-  const rescue = useRescueKnowledge(view.contentKey);
+  const rescue = useRescueKnowledge(view.contentKey, flowId);
 
   const goToContext = () => setStep(STEP.CONTEXT);
   const finishRescue = () => {
-    setStep(STEP.RESCUED);
-    rescue.mutate();
+    if (rescue.isPending || rescue.data) return;
+    rescue.mutate(undefined, { onSuccess: () => setStep(STEP.RESCUED) });
   };
 
   return (
     <div className="session">
       <div className="between mb-3">
-        <Link className="link" href="/tri-nho/sap-quen">✕ Để sau</Link>
+        <Link className="link" href={returnTo}>✕ Để sau</Link>
         <span className="chip">{STEP_LABELS[step]}</span>
       </div>
       <div className="rescue-steps" aria-hidden="true">
@@ -103,19 +103,26 @@ export function RescueFlow({ view }: { view: RescueView }) {
 
       {step === STEP.CONTEXT ? (
         <div className="s-card pop">
-          <span className="chip sky"><EmojiIcon emoji="💬" size={16} /> Gặp lại trong câu</span>
-          <p className="jp" style={{ fontSize: 21, margin: '16px 0 6px', lineHeight: 1.7 }}>{view.context.sentenceJp}</p>
-          <p className="sm soft">{view.context.translationVi}</p>
-          <AudioButton text={view.context.sentenceJp} label="🔊 Nghe" className="btn ghost sm mt-3" />
-          <p className="tiny muted mt-3">Gặp trong câu thật là cách giữ lại lâu nhất.</p>
-          <button type="button" className="btn block mt-3" onClick={finishRescue}>Tiếp tục</button>
+          {view.context ? <>
+            <span className="chip sky"><EmojiIcon emoji="💬" size={16} /> Gặp lại trong câu đã học</span>
+            <p className="jp" style={{ fontSize: 21, margin: '16px 0 6px', lineHeight: 1.7 }}>{view.context.sentenceJp}</p>
+            <p className="sm soft">{view.context.translationVi}</p>
+            <AudioButton text={view.context.sentenceJp} label="🔊 Nghe" className="btn ghost sm mt-3" />
+          </> : <>
+            <span className="chip sky"><EmojiIcon emoji="💬" size={16} /> Chưa có câu phù hợp</span>
+            <p className="sm soft mt-3">Mình chưa tìm được câu chỉ dùng kiến thức bạn đã học. Mình sẽ không đưa câu mới vượt quá phần bạn biết.</p>
+          </>}
+          {rescue.isError ? <ErrorState message={rescue.error.message} onRetry={finishRescue} /> : null}
+          <button type="button" className="btn block mt-3" onClick={finishRescue} disabled={rescue.isPending} aria-busy={rescue.isPending}>
+            {rescue.isPending ? 'Đang lưu…' : 'Hoàn tất tưới cây'}
+          </button>
         </div>
       ) : null}
 
       {step === STEP.RESCUED ? (
         <div className="s-card pop">
           <SpriteIcon name="noko" size={96} className="mx-auto" />
-          <h2 className="mt-2">🌸 Ôn xong rồi!</h2>
+          <h2 className="mt-2">Tưới cây thành công! 🌱</h2>
           <p className="sm soft mt-1.5">{view.face} · {view.meaning}</p>
           {rescue.isError ? <ErrorState message={rescue.error.message} onRetry={() => rescue.mutate()} /> : (
             <div className="card tight mt-4" style={{ textAlign: 'left' }}>
@@ -133,7 +140,7 @@ export function RescueFlow({ view }: { view: RescueView }) {
           {view.nextAtRisk ? (
             <Link className="btn block mt-3.5" href={`/tri-nho/cuu/${view.nextAtRisk.contentKey}`}>Ôn tiếp {view.nextAtRisk.face}</Link>
           ) : null}
-          <Link className="btn quiet block mt-2" href="/">Đủ rồi, về trang chủ</Link>
+          <Link className="btn block mt-2" href={returnTo}>Về {returnTo === '/vuon' ? 'vườn' : 'kiến thức sắp quên'}</Link>
         </div>
       ) : null}
     </div>

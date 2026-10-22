@@ -54,6 +54,17 @@ export const GARDEN_LANDMARKS = {
 } as const;
 
 export const GARDEN_RADIUS = 13.5;
+/** Một khu vực 3D giữ số mesh vừa phải; người học có thể chuyển qua mọi khu theo chỉ số. */
+export const GARDEN_AREA_SIZE = 60;
+
+export function gardenAreaCount(totalPlants: number): number {
+  return Math.max(1, Math.ceil(Math.max(0, totalPlants) / GARDEN_AREA_SIZE));
+}
+
+export function plantsInGardenArea<T>(plants: readonly T[], areaIndex: number): T[] {
+  const safeIndex = Math.max(0, Math.floor(areaIndex));
+  return plants.slice(safeIndex * GARDEN_AREA_SIZE, (safeIndex + 1) * GARDEN_AREA_SIZE);
+}
 /** Khoảng trống quanh gốc cây đào lớn (rễ nổi) + xích đu (người ngồi, dây treo) — giữ thoáng cho điểm nhấn. */
 const CENTER_CLEARANCE = 4.9;
 /** Quanh biển nhóm kiến thức / cổng torii — giữ thoáng để biển luôn đọc được. */

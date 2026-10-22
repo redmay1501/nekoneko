@@ -5,7 +5,6 @@ import type { ContentImage } from '@/types/content';
 import { type ContextExample, type KanaExampleWord, kanaExampleWords, pickContextExample } from './context-index';
 import type { MemoryView } from '@/features/memory/memory-types';
 import { speechTextFor } from './speech-text';
-import { pickDeterministic } from '@/lib/utils/deterministic-random';
 import { type KnowledgeCatalog, primaryRadicalGlyph } from './knowledge-catalog';
 import {
   grammarUsingVocabulary,
@@ -14,7 +13,7 @@ import {
   radicalsOfKanji,
   vocabularyContainingKanji,
 } from './knowledge-relations';
-import type { ContentKey, KnowledgeItem } from './knowledge-types';
+import { toContentKey, type ContentKey, type KnowledgeItem } from './knowledge-types';
 
 /**
  * Chuyển một KnowledgeItem thành dữ liệu sẵn hiển thị cho các khoảnh khắc học:
@@ -171,19 +170,61 @@ export function buildRescueHint(item: KnowledgeItem, catalog: KnowledgeCatalog):
 }
 
 /** Một câu thật có chứa kiến thức — "gặp trong câu là cách giữ lại lâu nhất". */
-export function buildContextSentence(item: KnowledgeItem, catalog: KnowledgeCatalog, journeyDay: number): ContextSentence {
-  if (item.type === 'vocabulary') {
-    const grammar = grammarUsingVocabulary(catalog, item.content)[0];
-    if (grammar) return { sentenceJp: grammar.exampleJp, translationVi: grammar.exampleVi };
-    return { sentenceJp: `わたしは ${item.content.kana} です。`, translationVi: `Tôi là ${item.meaning.toLowerCase()}.` };
-  }
-  if (item.type === 'kanji') {
-    return { sentenceJp: item.content.words.split('・')[0].trim(), translationVi: `Từ ghép thường gặp của ${item.content.hanViet}.` };
-  }
-  if (item.type === 'grammar') {
-    return { sentenceJp: item.content.exampleJp, translationVi: item.content.exampleVi };
-  }
-  const learnedGrammar = catalog.content.grammar.filter((pattern) => (pattern.day ?? 99) <= journeyDay);
-  const fallback = pickDeterministic(learnedGrammar.length ? learnedGrammar : catalog.content.grammar, 1, `context:${item.key}`)[0];
-  return { sentenceJp: fallback.exampleJp, translationVi: fallback.exampleVi };
+export function buildContextSentence(
+  item: KnowledgeItem,
+  catalog: KnowledgeCatalog,
+  journeyDay: number,
+  memoryViews: ReadonlyMap<ContentKey, MemoryView>,
+): ContextSentence | null {
+  const isAvailable = (key: ContentKey) => {
+    const knowledge = catalog.byKey.get(key);
+    return Boolean(memoryViews.get(key)?.isLearned || (knowledge?.day !== null && knowledge?.day !== undefined && knowledge.day <= journeyDay));
+  };
+  const isSentenceInScope = (sentence: string, sourceGrammarId: number): boolean => {
+    const sourceKey = toContentKey('grammar', sourceGrammarId);
+    if (!isAvailable(sourceKey)) return false;
+
+    // Từ dài được nhận diện trước để tránh nhầm chữ nằm bên trong một từ khác.
+    let remaining = sentence;
+    const vocabulary = catalog.content.vocabulary.flatMap((word) => [word.kanji, word.kana]
+      .filter(Boolean).map((form) => ({ form, key: toContentKey('vocabulary', word.id) })))
+      .sort((left, right) => right.form.length - left.form.length);
+    for (const { form, key } of vocabulary) {
+      if (!remaining.includes(form)) continue;
+      if (!isAvailable(key)) return false;
+      remaining = remaining.split(form).join(' ');
+    }
+
+    const grammar = catalog.content.grammar.filter((pattern) => isAvailable(toContentKey('grammar', pattern.id)));
+    const grammarLiterals = grammar.flatMap((pattern) => pattern.pattern
+      .replace(/N\d+|V\d*|いA|なA|A\d+|〜/g, ' ')
+      .split(/[\s/／（）()・、,。]+/).filter((part) => part && !/^\d+$/.test(part)))
+      .sort((left, right) => right.length - left.length);
+    for (const literal of grammarLiterals) remaining = remaining.split(literal).join(' ');
+
+    // Mọi Kanji còn lại phải là chữ đã học/đến ngày, và mọi chuỗi kana phải được giải thích bởi từ hoặc mẫu đã học.
+    for (const character of [...remaining]) {
+      if (/[一-龯々〆ヵヶ]/u.test(character)) {
+        const knownKanji = catalog.content.kanji.find((kanji) => kanji.character === character);
+        if (knownKanji && isAvailable(toContentKey('kanji', knownKanji.id))) remaining = remaining.split(character).join(' ');
+      }
+    }
+    return !/[ぁ-ゔァ-ヴー一-龯々〆ヵヶ]/u.test(remaining);
+  };
+
+  const candidates = item.type === 'grammar'
+    ? [item.content]
+    : item.type === 'vocabulary'
+      ? grammarUsingVocabulary(catalog, item.content)
+      : item.type === 'kanji'
+        ? vocabularyContainingKanji(catalog, item.content).flatMap((word) => grammarUsingVocabulary(catalog, word))
+        : catalog.content.grammar.filter((pattern) => pattern.exampleJp.includes(item.face));
+
+  const seen = new Set<number>();
+  const candidate = candidates.find((pattern) => {
+    if (seen.has(pattern.id)) return false;
+    seen.add(pattern.id);
+    return isSentenceInScope(pattern.exampleJp, pattern.id);
+  });
+  return candidate ? { sentenceJp: candidate.exampleJp, translationVi: candidate.exampleVi } : null;
 }

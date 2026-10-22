@@ -1,3 +1,6 @@
+import { shuffleDeterministic } from '@/lib/utils/deterministic-random';
+import type { GrammarExercise } from '@/features/learning/grammar-exercises';
+
 export interface GrammarRunnerState {
   index: number;
   answers: Array<string | null>;
@@ -37,4 +40,16 @@ export function grammarRunnerReducer(state: GrammarRunnerState, action: GrammarR
     case 'restart':
       return createGrammarRunnerState(action.length);
   }
+}
+
+/** Chọn một lượt mới từ câu chưa gặp; câu hiện tại và lịch sử đã gặp không bị lặp nếu còn lựa chọn. */
+export function selectNewGrammarRound(
+  pool: readonly GrammarExercise[],
+  currentIds: readonly string[],
+  seenIds: readonly string[],
+  count: number,
+  seed: string,
+): GrammarExercise[] {
+  const excluded = new Set([...currentIds, ...seenIds]);
+  return shuffleDeterministic(pool.filter((exercise) => !excluded.has(exercise.id)), `grammar-round:${seed}`).slice(0, count);
 }

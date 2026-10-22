@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { AdminPageHeader, DemoNotice, EmptyState, Pager, StatusBadge } from '@/components/admin/AdminParts';
 import { CreateEntityButton, RowActions } from '@/components/admin/ContentListActions';
 import { RowImageCell, RowImageDropProvider } from '@/components/admin/RowImageDrop';
+import { MemoryTipCell } from '@/components/admin/MemoryTipCell';
 import { getAdminSchema } from '@/features/admin/admin-schema';
 import { requireAdminPage } from '@/features/admin/admin-guard';
 import { loadEntityRecords } from '@/features/admin/content-admin';
@@ -16,6 +17,7 @@ export default async function AdminEntityListPage({ params, searchParams }: { pa
   const entity = ENTITY_BY_SLUG[(await params).entity];
   if (!entity) notFound();
   const config = ENTITY_CONFIG[entity];
+  const hasMemoryTip = config.fields.some((field) => field.name === 'tip');
   const search = await searchParams;
   const [records, schema] = await Promise.all([loadEntityRecords(entity), getAdminSchema()]);
   const canDropImages = admin.isDemo || (schema.media_assets && schema.content_images);
@@ -79,13 +81,14 @@ export default async function AdminEntityListPage({ params, searchParams }: { pa
         <RowImageDropProvider entity={entity}>
         <div className="adm-table-wrap">
           <table className="adm-table">
-            <thead><tr><th>ID</th><th>{config.label}</th><th>Chi tiết</th>{config.hasLesson ? <th>Bài</th> : null}<th>Ngày</th><th>Ảnh</th><th>Trạng thái</th><th><span className="sr-only">Thao tác</span></th></tr></thead>
+            <thead><tr><th>ID</th><th>{config.label}</th><th>Chi tiết</th>{hasMemoryTip ? <th>Mẹo nhớ</th> : null}{config.hasLesson ? <th>Bài</th> : null}<th>Ngày</th><th>Ảnh</th><th>Trạng thái</th><th><span className="sr-only">Thao tác</span></th></tr></thead>
             <tbody>
               {result.items.map(({ row, status: rowStatus, hasImage, image }) => (
                 <tr key={row.id} data-drop-row={canDropImages ? row.id : undefined} data-drop-title={config.title(row) || `#${row.id}`}>
                   <td className="adm-muted">{row.id}</td>
                   <td><Link className="adm-row-link adm-face" href={`/admin/${config.slug}/${row.id}`}>{config.title(row) || '—'}</Link></td>
                   <td className="adm-sm" style={{ maxWidth: 360 }}>{config.subtitle(row)}</td>
+                  {hasMemoryTip ? <td className="adm-sm adm-memory-tip-cell"><MemoryTipCell text={String(row.tip ?? '')} /></td> : null}
                   {config.hasLesson ? <td className="adm-sm">{String(row.lesson ?? '').split('·')[0]}</td> : null}
                   <td>{row.day ?? <span className="adm-muted">—</span>}</td>
                   <td>{canDropImages

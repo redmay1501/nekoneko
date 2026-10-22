@@ -156,7 +156,10 @@ export default async function GrammarPracticePage({ searchParams }: { searchPara
             </div>
           </div>
           {requested !== Infinity && requested > pool.length ? <p className="tiny muted mt-1">Phạm vi này có {pool.length} câu nên bài gồm {pool.length} câu.</p> : null}
-          <div className="mt-3"><GrammarExerciseRunner key={`${scopeTitle}:${selectedPatterns.join('.')}:${exercises.length}`} exercises={exercises} mode="luyen-tap" title={scopeTitle} /></div>
+          <div className="mt-3"><GrammarExerciseRunner key={`${scopeTitle}:${selectedPatterns.join('.')}:${exercises.length}`} exercises={exercises}
+            pool={pool} questionCount={exercises.length}
+            scopeKey={`${scope}:${selectedLessons.join('.')}:${selectedPatterns.join('.')}:${exercises.length}`}
+            mode="luyen-tap" title={scopeTitle} /></div>
         </>
       ) : null}
     </>

@@ -4,13 +4,12 @@ import { KnowledgeChipButton } from '@/components/learning/KnowledgeChipButton';
 import { getLearnerContext } from '@/features/learning/learner-context';
 import { toKnowledgeListEntries } from '@/features/learning/knowledge-list';
 import { GARDEN_STAGES, STATUS_PRESENTATION } from '@/features/memory/memory-rules';
-import { buildMemoryOverview, forgettingRadarList, joinWithKnowledge, pickGardenPlants, viewsWithStatus } from '@/features/memory/memory-overview';
+import { buildMemoryOverview, forgettingRadarList, joinWithKnowledge, viewsWithStatus } from '@/features/memory/memory-overview';
 import { GardenScene } from '@/components/garden/GardenScene';
 import { Garden3D, type GardenGroupProgress, type GardenStatusCount } from '@/components/garden/Garden3D';
 import { itemsOfType } from '@/features/learning/knowledge-catalog';
 import type { ContentType } from '@/features/learning/knowledge-types';
 
-const GARDEN_VISIBLE_PLANTS = 60;
 const BLOOM_PREVIEW = 8;
 const WILTING_PREVIEW = 8;
 
@@ -22,9 +21,8 @@ export default async function GardenPage() {
   const rescuedTotal = [...memoryRecords.values()].reduce((sum, record) => sum + record.rescuedCount, 0);
   const blooming = joinWithKnowledge(catalog, viewsWithStatus(memoryViews, 'mastered').slice(0, BLOOM_PREVIEW));
   const wilting = joinWithKnowledge(catalog, forgettingRadarList(memoryViews, WILTING_PREVIEW));
-  const shownPlants = pickGardenPlants(learned, GARDEN_VISIBLE_PLANTS, 'garden');
   // Chỉ gửi xuống trình duyệt những trường thẻ thông tin cây cần.
-  const plants3d = shownPlants.map(({ contentKey, face, reading, meaning, status, lastEncounterText }) => ({ contentKey, face, reading, meaning, status, lastEncounterText }));
+  const plants3d = learned.map(({ contentKey, face, reading, meaning, status, lastEncounterText }) => ({ contentKey, face, reading, meaning, status, lastEncounterText }));
 
   // Tiến độ thật của từng nhóm kiến thức (biển gỗ trong vườn) — cùng cách đếm "đã học" như các trang Học tập.
   const progressOf = (types: readonly ContentType[]) => {
@@ -58,12 +56,11 @@ export default async function GardenPage() {
       <div className="garden-below">
       <p className="tiny muted center">
         Mầm 🌱 mới học · cây non 🌿 đang hình thành · cây xanh 🌳 đã nhớ tốt · cây nở hoa 🌸 đã thành thạo · lá vàng 🍂 sắp quên.
-        {learned.length > GARDEN_VISIBLE_PLANTS ? ` Vườn hiển thị ${GARDEN_VISIBLE_PLANTS} trong ${learned.length} cây.` : ''}
       </p>
       {learned.length ? (
         <details className="garden mt-3">
-          <summary className="sm" style={{ cursor: 'pointer', fontWeight: 600 }}>Danh sách cây trong vườn ({shownPlants.length})</summary>
-          <div className="mt-3"><GardenPlots entries={shownPlants} /></div>
+          <summary className="sm" style={{ cursor: 'pointer', fontWeight: 600 }}>Danh sách cây trong vườn ({learned.length})</summary>
+          <div className="mt-3"><GardenPlots entries={learned} /></div>
         </details>
       ) : null}
       <div className="grid two mt-4">

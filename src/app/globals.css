@@ -1893,6 +1893,9 @@ a.garden-tree:hover .garden-tree-tag{background:#fff;box-shadow:0 0 0 2px #F3B67
 .garden3d-count{padding:5px 12px;border-radius:999px;font-size:13px;font-weight:800;color:#2F6B3B;background:#DDF2DD;border:1px solid #BFE2C2;white-space:nowrap}
 .garden3d-filters{pointer-events:auto;display:flex;gap:8px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:none;max-width:100%}
 .garden3d-filters::-webkit-scrollbar{display:none}
+.garden3d-areas{pointer-events:auto;align-self:flex-start;display:flex;align-items:center;gap:10px;padding:4px 7px;border:1px solid rgba(232,220,200,.95);border-radius:999px;background:rgba(255,252,244,.94);box-shadow:0 2px 0 rgba(214,198,170,.7),0 6px 14px rgba(60,50,30,.10);font-size:12px;font-weight:800;color:var(--ink-2)}
+.garden3d-area-button{width:28px;height:28px;border:1px solid #E7D3C0;border-radius:50%;background:#fff;color:#75553E;font-size:22px;line-height:1;cursor:pointer}
+.garden3d-area-button:disabled{opacity:.4;cursor:default}
 .garden3d-filter{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;padding:7px 14px 7px 9px;border-radius:999px;font:inherit;font-size:13px;
   color:var(--ink-2);cursor:pointer;background:rgba(255,252,244,.94);border:1px solid rgba(232,220,200,.95);
   box-shadow:0 2px 0 rgba(214,198,170,.7),0 6px 14px rgba(60,50,30,.10);transition:transform .15s ease,background .15s ease,box-shadow .15s ease}

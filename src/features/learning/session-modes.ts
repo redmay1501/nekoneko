@@ -50,10 +50,25 @@ export const DAY_CHUNK_SIZE = 5;
 
 /** Phiên "Học theo lựa chọn" / Kiểm tra nhận tối đa chừng này kiến thức — đủ cả 103 Kanji hoặc mọi chữ cái một lần. */
 export const MAX_FOCUS_ITEMS = 120;
+export const FOCUS_REVIEW_BATCH_SIZE = 10;
 
 /** Đường dẫn mở phiên "Học theo lựa chọn" cho các kiến thức này. */
 export function focusSessionHref(keys: readonly string[]): string {
   return `/hoc/${SESSION_MODES.FOCUS}?k=${keys.slice(0, MAX_FOCUS_ITEMS).join(',')}`;
+}
+
+/** Ôn dài từ lộ trình: phiên nhỏ 10 mục, giữ phần còn lại trong URL để tiếp tục không mất lựa chọn. */
+export function focusReviewBatchHref(keys: readonly string[], returnTo: string): string {
+  const unique = [...new Set(keys)].slice(0, MAX_FOCUS_ITEMS);
+  const batchCount = Math.ceil(unique.length / FOCUS_REVIEW_BATCH_SIZE);
+  const params = new URLSearchParams({
+    k: unique.slice(0, FOCUS_REVIEW_BATCH_SIZE).join(','),
+    lan: '1',
+    tong: String(batchCount),
+    back: returnTo,
+  });
+  if (unique.length > FOCUS_REVIEW_BATCH_SIZE) params.set('later', unique.slice(FOCUS_REVIEW_BATCH_SIZE).join(','));
+  return `/hoc/${SESSION_MODES.FOCUS}?${params}`;
 }
 
 /** Phiên "Học hôm nay" học bù tối đa chừng này kiến thức ngày cũ — đủ để không bỏ sót, không nuốt phiên. */

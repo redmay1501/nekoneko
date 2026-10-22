@@ -5,7 +5,7 @@ import { toMemoryView } from '@/features/memory/memory-engine';
 import type { MemoryView } from '@/features/memory/memory-types';
 import { buildKnowledgeCatalog, itemsOfType } from './knowledge-catalog';
 import { type ContentKey, toContentKey } from './knowledge-types';
-import { MAX_FOCUS_ITEMS, focusSessionHref } from './session-modes';
+import { FOCUS_REVIEW_BATCH_SIZE, MAX_FOCUS_ITEMS, focusReviewBatchHref, focusSessionHref } from './session-modes';
 import { buildTestGroups } from './study-actions';
 
 const NOW = new Date('2026-10-03T08:00:00.000Z');
@@ -53,5 +53,15 @@ describe('Kiểm tra — nhóm để chọn', () => {
     expect(MAX_FOCUS_ITEMS).toBeGreaterThanOrEqual(kanji.length);
     const keys = vocabulary.slice(0, 200).map((item) => item.key);
     expect(focusSessionHref(keys).split('k=')[1].split(',')).toHaveLength(MAX_FOCUS_ITEMS);
+  });
+
+  it('ôn tuần 120 mục tạo lượt đầu 10 câu và giữ 110 mục cho các lượt kế tiếp', () => {
+    const keys = vocabulary.slice(0, MAX_FOCUS_ITEMS).map((item) => item.key);
+    const href = focusReviewBatchHref(keys, '/lo-trinh/ngay/22');
+    const params = new URLSearchParams(href.split('?')[1]);
+    expect(params.get('k')?.split(',')).toHaveLength(FOCUS_REVIEW_BATCH_SIZE);
+    expect(params.get('later')?.split(',')).toHaveLength(110);
+    expect(params.get('tong')).toBe('12');
+    expect(params.get('back')).toBe('/lo-trinh/ngay/22');
   });
 });

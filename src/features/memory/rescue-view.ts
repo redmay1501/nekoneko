@@ -27,7 +27,7 @@ export interface RescueView {
   scoreBefore: number;
   hint: RescueHint;
   meaningOptions: string[];
-  context: ContextSentence;
+  context: ContextSentence | null;
   nextAtRisk: { contentKey: ContentKey; face: string } | null;
 }
 
@@ -61,7 +61,7 @@ export function buildRescueView(
       [item.meaning, ...pickDeterministic([...new Set(sameTypeMeanings)], MEANING_DISTRACTORS, `rescue-options:${item.key}`)],
       `rescue-order:${item.key}`,
     ),
-    context: buildContextSentence(item, catalog, journeyDay),
+    context: buildContextSentence(item, catalog, journeyDay, views),
     nextAtRisk: nextItem ? { contentKey: nextItem.key, face: nextItem.face } : null,
   };
 }

@@ -21,8 +21,10 @@ import { DiscoverStepView, RecallStepView, SurpriseStepView, UseStepView } from 
  * SC-33 · Phiên học — MỘT component cho mọi chế độ (Học hôm nay, Học nhanh 5 phút, …).
  * Thứ tự: Gặp lại → Khám phá → Dùng trong câu → Khoảnh khắc tiến bộ.
  */
-export function LearningSession({ mode, focusKeys }: { mode: SessionMode; focusKeys?: readonly string[] }) {
-  const learning = useLearningSession(mode, focusKeys);
+export function LearningSession({ mode, focusKeys, returnTo, nextBatchHref, batchLabel }: {
+  mode: SessionMode; focusKeys?: readonly string[]; returnTo?: string; nextBatchHref?: string; batchLabel?: string;
+}) {
+  const learning = useLearningSession(mode, focusKeys, { returnTo, nextBatchHref, batchLabel });
   const { sessionQuery, session, currentStep, stepIndex } = learning;
   useSessionAutoplay(currentStep, learning.feedback);
 
@@ -31,15 +33,15 @@ export function LearningSession({ mode, focusKeys }: { mode: SessionMode; focusK
   useEnterToContinue(Boolean(feedback) && !isFinishing && !isAtCheckpoint, goToNextStep);
 
   if (sessionQuery.isLoading) {
-    return <div className="session"><SessionHeader mode={mode} /><SkeletonScreen label="Noko đang chọn bài cho bạn…"><SessionCardSkeleton /></SkeletonScreen></div>;
+    return <div className="session"><SessionHeader mode={mode} returnTo={returnTo} /><SkeletonScreen label="Noko đang chọn bài cho bạn…"><SessionCardSkeleton /></SkeletonScreen></div>;
   }
   if (sessionQuery.error || !session) {
-    return <div className="session"><SessionHeader mode={mode} /><ErrorState message={sessionQuery.error?.message} onRetry={learning.restart} /></div>;
+    return <div className="session"><SessionHeader mode={mode} returnTo={returnTo} /><ErrorState message={sessionQuery.error?.message} onRetry={learning.restart} /></div>;
   }
   if (!session.steps.length && mode === SESSION_MODES.FOCUS) {
     return (
       <div className="session">
-        <SessionHeader mode={mode} />
+        <SessionHeader mode={mode} returnTo={returnTo} />
         <NokoMessage state="idle" text="Bạn chưa chọn kiến thức nào để học. Vào Học tập, chọn Kanji, từ vựng hay mẫu câu bạn muốn nhé 🌸" />
         <Link className="btn block mt-4" href="/hoc-tap/tu-vung">Mở Học tập</Link>
       </div>
@@ -48,7 +50,7 @@ export function LearningSession({ mode, focusKeys }: { mode: SessionMode; focusK
   if (!session.steps.length) {
     return (
       <div className="session">
-        <SessionHeader mode={mode} />
+        <SessionHeader mode={mode} returnTo={returnTo} />
         <NokoMessage state="idle" text="Hiện chưa có gì phù hợp với kiểu học này. Thử “Học hôm nay” nhé 🌸" />
         <Link className="btn block mt-4" href="/hoc/daily">Học hôm nay</Link>
       </div>
@@ -69,7 +71,7 @@ export function LearningSession({ mode, focusKeys }: { mode: SessionMode; focusK
     <>
     <ScrollToElementOnChange targetId="learning-session-area" trigger={`${mode}:${focusKeys?.join(',') ?? 'default'}`} />
     <div id="learning-session-area" className="session daily-session">
-      <SessionHeader mode={mode} />
+      <SessionHeader mode={mode} returnTo={returnTo} />
       <SessionPhaseBar steps={session.steps} currentIndex={stepIndex} />
       <SessionProgress steps={session.steps} currentIndex={stepIndex} />
       <SessionAudioNotice />

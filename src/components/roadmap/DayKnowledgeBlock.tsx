@@ -8,7 +8,7 @@ import { KanaLessonTable } from './KanaLessonTable';
 import { canRomanize, patternRomaji, sentenceRomaji } from '@/lib/utils/romaji';
 import { primaryRadicalGlyph } from '@/features/learning/knowledge-catalog';
 import { CONTENT_TYPE_LABELS, toContentKey } from '@/features/learning/knowledge-types';
-import { MAX_FOCUS_ITEMS, focusSessionHref } from '@/features/learning/session-modes';
+import { focusReviewBatchHref } from '@/features/learning/session-modes';
 import type { DayPlanView } from '@/features/roadmap/day-plan';
 import { firstMeaning } from '@/lib/utils/text';
 
@@ -31,8 +31,8 @@ export function DayKnowledgeBlock({ plan }: { plan: DayPlanView }) {
             <div className="review-window mt-2.5">
               <p className="sm"><b>Ôn kiến thức ngày {plan.reviewWindow.from}–{plan.reviewWindow.to}:</b>{' '}
                 {plan.reviewWindow.counts.map((entry) => `${entry.count} ${CONTENT_TYPE_LABELS[entry.type].toLowerCase()}`).join(' · ')}</p>
-              <Link className="btn review sm mt-2" href={focusSessionHref(plan.reviewWindow.keys)}>
-                🔁 Ôn kiến thức tuần ({Math.min(plan.reviewWindow.keys.length, MAX_FOCUS_ITEMS)} mục)
+              <Link className="btn review sm mt-2" href={focusReviewBatchHref(plan.reviewWindow.keys, `/lo-trinh/ngay/${plan.day}`)}>
+                🔁 Ôn kiến thức tuần ({plan.reviewWindow.keys.length} mục · lượt đầu 10)
               </Link>
             </div>
           ) : null}

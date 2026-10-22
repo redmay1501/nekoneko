@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { createGrammarRunnerState, grammarRunnerReducer } from './grammar-exercise-runner-state';
+import { loadSeedContent } from '@/lib/data/seed-content';
+import { buildGrammarQuestionBank } from '@/features/learning/grammar-exercises';
+import { createGrammarRunnerState, grammarRunnerReducer, selectNewGrammarRound } from './grammar-exercise-runner-state';
 
 describe('luồng GrammarExerciseRunner', () => {
   it('luyện tập: chỉ mở phản hồi sau khi trả lời, chuyển câu và kết thúc bài', () => {
@@ -29,5 +31,17 @@ describe('luồng GrammarExerciseRunner', () => {
     state = grammarRunnerReducer(state, { type: 'submit' });
     expect(state.isSubmitted).toBe(true);
     expect(grammarRunnerReducer(state, { type: 'restart', length: 2 })).toEqual(createGrammarRunnerState(2));
+  });
+
+  it('lượt mới tránh câu hiện tại và lịch sử đã gặp, không trùng trong một lượt', () => {
+    const pool = buildGrammarQuestionBank(loadSeedContent().grammar);
+    const current = pool.slice(0, 10);
+    const seen = pool.slice(10, 20).map((exercise) => exercise.id);
+    const next = selectNewGrammarRound(pool, current.map((exercise) => exercise.id), seen, 10, 'test');
+    const ids = next.map((exercise) => exercise.id);
+    expect(next).toHaveLength(10);
+    expect(new Set(ids).size).toBe(10);
+    expect(ids.some((id) => current.some((exercise) => exercise.id === id))).toBe(false);
+    expect(ids.some((id) => seen.includes(id))).toBe(false);
   });
 });

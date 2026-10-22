@@ -17,8 +17,11 @@ const WIN_LINES = [
 ] as const;
 
 /** SC-08 · Khoảnh khắc tiến bộ — kết phiên bằng cảm xúc, không bằng điểm số. */
-export default async function TinyWinPage({ searchParams }: { searchParams: Promise<{ phien?: string }> }) {
-  const sessionId = (await searchParams).phien;
+export default async function TinyWinPage({ searchParams }: { searchParams: Promise<{ phien?: string; back?: string; next?: string; batch?: string }> }) {
+  const query = await searchParams;
+  const sessionId = query.phien;
+  const returnTo = /^\/lo-trinh\/ngay\/(?:[1-9]|[1-8]\d|90)$/.test(query.back ?? '') ? query.back : undefined;
+  const nextBatchHref = query.next?.startsWith('/hoc/focus?') ? query.next : undefined;
   const [finished, context] = await Promise.all([sessionId ? getFinishedSession(sessionId) : null, getLearnerContext()]);
   if (!finished) {
     return (
@@ -69,6 +72,14 @@ export default async function TinyWinPage({ searchParams }: { searchParams: Prom
         <Link className="card tight block mt-4" href="/tro-choi/ghep-the?loai=tu-vung&pham-vi=vua-hoc" style={{ textAlign: 'left', background: 'var(--sky)', borderColor: 'transparent' }}>
           <p className="sm"><b>🃏 Bạn vừa học {learnedWordsThisSession} từ.</b> Thử ghép thẻ để xem mình nhớ được bao nhiêu nhé!</p>
         </Link>
+      ) : null}
+      {query.batch ? (
+        <section className="card tight mt-4" style={{ textAlign: 'left', background: 'var(--cream)', borderColor: '#F3E4CC' }}>
+          <p className="sm"><b>{nextBatchHref ? 'Đã xong lượt này' : 'Đã hoàn thành ôn tập tuần'} · {query.batch}</b></p>
+          <p className="tiny muted mt-1">Tiến độ từng lượt đã được lưu. Bạn có thể dừng và quay lại đúng ngày học bất cứ lúc nào.</p>
+          {nextBatchHref ? <Link className="btn block mt-3" href={nextBatchHref}>Tiếp tục lượt sau</Link> : null}
+          {returnTo ? <Link className={`btn ${nextBatchHref ? 'quiet' : ''} block mt-2`} href={returnTo}>Quay lại ngày học</Link> : null}
+        </section>
       ) : null}
       {remainingToday > 0 ? (
         <Link className="btn block mt-4" href="/hoc/day">

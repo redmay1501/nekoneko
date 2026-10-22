@@ -18,7 +18,9 @@ import { gradeAnswer, phaseOfStep, type SessionPhase, type StepAnswerFeedback } 
  * Việc ghi lên server (server chấm lại + Memory Engine cập nhật trí nhớ) chạy ngầm phía sau;
  * khi server trả về, phần "sức nhớ / lần gặp tới" được điền thêm vào phản hồi đang hiện.
  */
-export function useLearningSession(mode: SessionMode, focusKeys?: readonly string[]) {
+export function useLearningSession(mode: SessionMode, focusKeys?: readonly string[], completion: {
+  returnTo?: string; nextBatchHref?: string; batchLabel?: string;
+} = {}) {
   const router = useRouter();
   const [attempt, setAttempt] = useState(0);
   const [stepIndex, setStepIndex] = useState(0);
@@ -94,7 +96,11 @@ export function useLearningSession(mode: SessionMode, focusKeys?: readonly strin
     onSuccess: () => {
       if (!session) return;
       startNavigation();
-      router.push(`/khoanh-khac?phien=${session.sessionId}`);
+      const params = new URLSearchParams({ phien: session.sessionId });
+      if (completion.returnTo) params.set('back', completion.returnTo);
+      if (completion.nextBatchHref) params.set('next', completion.nextBatchHref);
+      if (completion.batchLabel) params.set('batch', completion.batchLabel);
+      router.push(`/khoanh-khac?${params}`);
       // Khung (số ngày đã ôn, trang chủ) đang giữ payload 30 giây. Làm mới sau khi phiên đã lưu.
       router.refresh();
     },

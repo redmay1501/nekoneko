@@ -1,11 +1,12 @@
 'use client';
 
-import { useMemo, useReducer, useRef, useState, type RefObject } from 'react';
+import { useCallback, useEffect, useMemo, useReducer, useRef, useState, type RefObject } from 'react';
+import Link from 'next/link';
 import { AudioButton } from '@/components/common/AudioButton';
 import { useEnterToContinue } from '@/hooks/useEnterToContinue';
 import { useScrollToAnswerFeedback } from '@/hooks/useScrollToAnswerFeedback';
 import { type GrammarExercise, GRAMMAR_EXERCISE_KINDS, isExerciseCorrect, whyWrong } from '@/features/learning/grammar-exercises';
-import { createGrammarRunnerState, grammarRunnerReducer } from './grammar-exercise-runner-state';
+import { createGrammarRunnerState, grammarRunnerReducer, selectNewGrammarRound } from './grammar-exercise-runner-state';
 
 export type GrammarRunMode = 'luyen-tap' | 'kiem-tra';
 
@@ -18,13 +19,69 @@ const KIND_LABEL = Object.fromEntries(GRAMMAR_EXERCISE_KINDS.map((kind) => [kind
  *    điểm, đáp án và giải thích từng câu.
  * Chấm trong trình duyệt, KHÔNG ghi trí nhớ (Memory Engine chỉ đổi qua phiên học / ôn tập).
  */
-export function GrammarExerciseRunner({ exercises, mode, title }: { exercises: GrammarExercise[]; mode: GrammarRunMode; title: string }) {
+export function GrammarExerciseRunner({ exercises, pool = exercises, questionCount = exercises.length, scopeKey, mode, title }: {
+  exercises: GrammarExercise[]; pool?: GrammarExercise[]; questionCount?: number; scopeKey?: string; mode: GrammarRunMode; title: string;
+}) {
+  const [activeExercises, setActiveExercises] = useState(exercises);
+  const [round, setRound] = useState(0);
+  const [seenIds, setSeenIds] = useState<string[]>([]);
+  const [historyLoaded, setHistoryLoaded] = useState(false);
+  const [noNewQuestions, setNoNewQuestions] = useState(false);
+  const storageKey = `nekoneko:grammar-practice:${scopeKey ?? title}`;
+
+  useEffect(() => {
+    try {
+      const parsed: unknown = JSON.parse(localStorage.getItem(storageKey) ?? '[]');
+      const stored = Array.isArray(parsed) ? parsed.filter((value): value is string => typeof value === 'string') : [];
+      setSeenIds(stored);
+      const next = selectNewGrammarRound(pool, [], stored, questionCount, 'first-unseen');
+      if (next.length) { setActiveExercises(next); setRound(1); }
+    } catch { /* localStorage có thể bị tắt; vẫn luyện bình thường bằng lượt mặc định */ }
+    setHistoryLoaded(true);
+  }, [pool, questionCount, storageKey]);
+
+  const persistSeen = useCallback((ids: readonly string[]) => {
+    const next = [...new Set([...seenIds, ...ids])];
+    setSeenIds(next);
+    try { localStorage.setItem(storageKey, JSON.stringify(next)); } catch { /* lưu theo phiên nếu trình duyệt không cho localStorage */ }
+  }, [seenIds, storageKey]);
+
+  function startNewRound() {
+    const currentIds = activeExercises.map((exercise) => exercise.id);
+    const next = selectNewGrammarRound(pool, currentIds, seenIds, questionCount, `${scopeKey ?? title}:${round + 1}`);
+    persistSeen(currentIds);
+    if (!next.length) { setNoNewQuestions(true); return; }
+    setActiveExercises(next);
+    setRound((current) => current + 1);
+    setNoNewQuestions(false);
+  }
+
+  function replayRound() {
+    persistSeen(activeExercises.map((exercise) => exercise.id));
+    setRound((current) => current + 1);
+    setNoNewQuestions(false);
+  }
+
+  if (!historyLoaded) return <div className="card tight sm soft" role="status">Đang mở lượt luyện…</div>;
+  return <>
+    {noNewQuestions ? <p className="card tight sm soft" role="status">Bạn đã gặp hết câu phù hợp trong phạm vi này. Bạn có thể làm lại lượt vừa rồi.</p> : null}
+    <GrammarExerciseRun key={round} exercises={activeExercises} mode={mode} title={title} onRestart={replayRound}
+      onNewRound={startNewRound} canNewRound={!noNewQuestions} onCompleted={() => persistSeen(activeExercises.map((exercise) => exercise.id))} />
+  </>;
+}
+
+function GrammarExerciseRun({ exercises, mode, title, onRestart, onNewRound, canNewRound, onCompleted }: {
+  exercises: GrammarExercise[]; mode: GrammarRunMode; title: string; onRestart: () => void; onNewRound: () => void; canNewRound: boolean; onCompleted: () => void;
+}) {
   const [state, dispatch] = useReducer(grammarRunnerReducer, exercises.length, createGrammarRunnerState);
   const { index, answers, isRevealed, isSubmitted, isFinished } = state;
   const exercise = exercises[index];
   const answer = answers[index];
   const nextButtonRef = useRef<HTMLButtonElement>(null);
+  const onCompletedRef = useRef(onCompleted);
+  onCompletedRef.current = onCompleted;
   useScrollToAnswerFeedback(nextButtonRef, mode === 'luyen-tap' ? answer : null);
+  useEffect(() => { if (isFinished || isSubmitted) onCompletedRef.current(); }, [isFinished, isSubmitted]);
 
   function setAnswer(value: string | null, reveal = false) {
     dispatch({ type: 'answer', value, reveal });
@@ -36,10 +93,6 @@ export function GrammarExerciseRunner({ exercises, mode, title }: { exercises: G
   function next() {
     dispatch({ type: 'next', length: exercises.length, training: mode === 'luyen-tap' });
   }
-  function restart() {
-    dispatch({ type: 'restart', length: exercises.length });
-  }
-
   useEnterToContinue(mode === 'luyen-tap' && isRevealed && !isFinished, next);
 
   if (!exercises.length) return <p className="card tight sm soft">Phần này chưa có bài tập.</p>;
@@ -48,7 +101,7 @@ export function GrammarExerciseRunner({ exercises, mode, title }: { exercises: G
 
   if ((mode === 'kiem-tra' && isSubmitted) || (mode === 'luyen-tap' && isFinished)) {
     return (
-      <GrammarExerciseResults mode={mode} exercises={exercises} answers={answers} onRestart={restart} />
+      <GrammarExerciseResults mode={mode} exercises={exercises} answers={answers} onRestart={onRestart} onNewRound={onNewRound} canNewRound={canNewRound} />
     );
   }
 
@@ -109,11 +162,13 @@ export function GrammarExerciseRunner({ exercises, mode, title }: { exercises: G
   );
 }
 
-export function GrammarExerciseResults({ mode, exercises, answers, onRestart }: {
+export function GrammarExerciseResults({ mode, exercises, answers, onRestart, onNewRound, canNewRound }: {
   mode: GrammarRunMode;
   exercises: GrammarExercise[];
   answers: Array<string | null>;
   onRestart: () => void;
+  onNewRound?: () => void;
+  canNewRound?: boolean;
 }) {
   const answeredCount = answers.filter((value) => value !== null).length;
   const correctCount = exercises.filter((entry, position) => isExerciseCorrect(entry, answers[position])).length;
@@ -124,7 +179,9 @@ export function GrammarExerciseResults({ mode, exercises, answers, onRestart }: 
       {mode === 'kiem-tra' && answeredCount < exercises.length ? (
         <p className="sm soft">{exercises.length - answeredCount} câu bỏ trống được tính là sai.</p>
       ) : null}
-      <button type="button" className="btn ghost mt-3" onClick={onRestart}>↻ Làm lại</button>
+      <button type="button" className="btn ghost mt-3" onClick={onRestart}>↻ Làm lại lượt này</button>
+      {mode === 'luyen-tap' && onNewRound && canNewRound !== false ? <button type="button" className="btn mt-2" onClick={onNewRound}>Luyện câu mới</button> : null}
+      {mode === 'luyen-tap' ? <Link className="btn quiet block mt-2" href="/hoc-tap/ngu-phap">Quay lại danh sách bài</Link> : null}
       {mode === 'kiem-tra' ? (
         <ol className="gx-review mt-4">
           {exercises.map((entry, position) => <ReviewItem key={entry.id} exercise={entry} answer={answers[position]} number={position + 1} />)}

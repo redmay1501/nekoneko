@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { GARDEN_RADIUS, STAGE_OF_STATUS, gardenSlots, isPlantable, layoutGardenPlants } from './garden-layout';
+import { GARDEN_AREA_SIZE, GARDEN_RADIUS, STAGE_OF_STATUS, gardenAreaCount, gardenSlots, isPlantable, layoutGardenPlants, plantsInGardenArea } from './garden-layout';
 import type { MemoryStatus } from '@/features/memory/memory-types';
 
 const STATUSES: MemoryStatus[] = ['weak', 'learning', 'strong', 'mastered', 'fading'];
@@ -18,7 +18,7 @@ describe('garden layout', () => {
     expect(layoutGardenPlants([])).toEqual([]);
   });
 
-  it('đủ chỗ cho 60 cây (số cây tối đa trang Vườn hiển thị), không đè nhau, không đè lối đá / hồ / cây lớn', () => {
+  it('đủ chỗ cho một khu 60 cây, không đè nhau, không đè lối đá / hồ / cây lớn', () => {
     const slots = gardenSlots(60);
     expect(slots).toHaveLength(60);
     for (const slot of slots) {
@@ -28,6 +28,17 @@ describe('garden layout', () => {
     for (let a = 0; a < slots.length; a += 1) for (let b = a + 1; b < slots.length; b += 1) {
       expect(Math.hypot(slots[a].x - slots[b].x, slots[a].z - slots[b].z)).toBeGreaterThanOrEqual(1.25);
     }
+  });
+
+  it('chia ít hơn 60, đúng 60 và hơn 60 cây thành các khu; mọi cây đều truy cập được đúng một lần', () => {
+    expect(gardenAreaCount(12)).toBe(1);
+    expect(gardenAreaCount(60)).toBe(1);
+    expect(gardenAreaCount(61)).toBe(2);
+    expect(gardenAreaCount(120)).toBe(2);
+    const all = Array.from({ length: 121 }, (_, index) => `vocabulary-${index + 1}`);
+    const areas = Array.from({ length: gardenAreaCount(all.length) }, (_, index) => plantsInGardenArea(all, index));
+    expect(areas.map((area) => area.length)).toEqual([GARDEN_AREA_SIZE, GARDEN_AREA_SIZE, 1]);
+    expect(areas.flat()).toEqual(all);
   });
 
   it('cây vững nằm gần tâm hơn mầm mới; bố cục ổn định giữa các lần mở', () => {

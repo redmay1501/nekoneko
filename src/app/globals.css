@@ -2161,3 +2161,21 @@ a.garden-tree:hover .garden-tree-tag{background:#fff;box-shadow:0 0 0 2px #F3B67
 @media (max-width:420px){.streak-steps li{font-size:11.5px;padding:8px 4px}.streak-flame{padding:6px 12px 6px 10px}}
 @media (max-width:360px){.streak-options{grid-template-columns:minmax(0,1fr)}.streak-intro-stats{grid-template-columns:minmax(0,1fr)}}
 @media (prefers-reduced-motion:reduce){.streak-flame.is-up b,.streak-flame.is-reset,.streak-option.is-answer,.streak-option.is-wrong,.streak-record{animation:none}.streak-progress i,.streak-progress-paw{transition:none}.streak-confetti{display:none}}
+
+/* ───────── Luyện nói — AI nhận diện trên thiết bị (OnDeviceReadAloud) ───────── */
+.ondevice-actions{gap:8px;align-items:center}
+.ondevice-outcome{scroll-margin-bottom:calc(100px + var(--safe-b))}
+.ondevice-actions .btn{min-height:42px}
+.ondevice-guide{padding:10px 12px;border-radius:var(--r-m);background:#FFF8F2;border:1px dashed #F3D9CF}
+.ondevice-guide ol{margin:6px 0 4px;padding-left:18px;display:grid;gap:3px;color:var(--ink-2)}
+.ondevice-level{display:block;height:6px;margin-top:8px;border-radius:999px;background:#F7E6DA;overflow:hidden}
+.ondevice-level span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#9ED8A6,#FF9F7A);transform-origin:left;transform:scaleX(.04);transition:transform 80ms linear}
+.ondevice-progress{display:block;height:6px;margin-top:8px;border-radius:999px;background:#F2E8E4;overflow:hidden}
+.ondevice-progress span{display:block;height:100%;background:var(--sakura);transform-origin:left;transition:transform .2s ease}
+.ondevice-spinner{display:inline-block;width:14px;height:14px;margin-right:6px;vertical-align:-2px;border:2px solid #F3C7CF;border-top-color:var(--sakura);border-radius:50%;animation:ondevice-spin .8s linear infinite}
+@keyframes ondevice-spin{to{transform:rotate(360deg)}}
+.ondevice-stats{display:flex;flex-wrap:wrap;gap:6px 14px;margin:8px 0 0}
+.ondevice-stats div{display:flex;gap:6px;align-items:baseline;font-size:13px}
+.ondevice-stats dt{color:var(--ink-3)}
+.ondevice-stats dd{margin:0;font-weight:800;color:var(--ink)}
+@media (prefers-reduced-motion:reduce){.ondevice-spinner{animation:none}.ondevice-level span,.ondevice-progress span{transition:none}}

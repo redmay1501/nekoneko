@@ -87,3 +87,49 @@ export function compareTranscript(recognizedText: string, referenceForms: readon
     mayBeScriptDifference: !isMatch && hasScriptSwap(best.segments),
   };
 }
+
+/**
+ * Đổi chữ Hán trong bản nhận diện sang kana bằng TỪ ĐIỂN TỪ VỰNG của app (dạng viết ↔ cách đọc, khớp dài nhất trước):
+ * Whisper hay viết 私は学生です trong khi câu mẫu là わたしは がくせいです — cùng cách đọc nhưng khác chữ.
+ * Chữ Hán không có trong từ điển thì giữ nguyên (không đoán cách đọc).
+ */
+export function kanaizeWithDictionary(text: string, dictionary: ReadonlyArray<readonly [string, string]>): string {
+  const entries = [...dictionary].filter(([written]) => /[㐀-鿿々]/u.test(written)).sort((left, right) => right[0].length - left[0].length);
+  let result = '';
+  for (let index = 0; index < text.length;) {
+    const entry = entries.find(([written]) => text.startsWith(written, index));
+    if (entry) { result += entry[1]; index += entry[0].length; } else { result += text[index]; index += 1; }
+  }
+  return result;
+}
+
+/** So bản nhận diện với mẫu, thử cả bản đã đổi chữ Hán → kana; lấy kết quả khớp / ít khác nhất. */
+export function compareTranscriptWithDictionary(recognizedText: string, referenceForms: readonly string[], dictionary: ReadonlyArray<readonly [string, string]>): TranscriptComparison {
+  const direct = compareTranscript(recognizedText, referenceForms);
+  if (direct.isMatch || !dictionary.length) return direct;
+  const kana = compareTranscript(kanaizeWithDictionary(recognizedText, dictionary), referenceForms);
+  return kana.isMatch || changedLength(kana.segments) < changedLength(direct.segments) ? kana : direct;
+}
+
+const O_ROW = new Set([...'おこそとのほもよろをごぞどぼぽょ']);
+const E_ROW = new Set([...'えけせてねへめれげぜでべぺ']);
+/**
+ * Bỏ những khác biệt Whisper hay tự thêm / bớt và Neko CHƯA đánh giá được: っ, ー, nguyên âm kéo dài (おう → お, えい → え).
+ * Dùng để không báo "đọc khác" chỉ vì trường âm / âm ngắt — đây KHÔNG phải kết luận người học đọc đúng hai điểm đó.
+ */
+export function withoutLengthMarks(text: string): string {
+  const kana = normalize(text).replace(/[っー]/g, '');
+  let result = '';
+  for (const character of kana) {
+    const previous = result.at(-1) ?? '';
+    if ((character === 'う' && O_ROW.has(previous)) || (character === 'い' && E_ROW.has(previous))) continue;
+    result += character;
+  }
+  return result;
+}
+
+/** Khớp khi bỏ qua trường âm / っ (sau khi đã đổi chữ Hán → kana bằng từ điển). */
+export function matchesIgnoringLength(recognizedText: string, referenceForms: readonly string[], dictionary: ReadonlyArray<readonly [string, string]>): boolean {
+  const recognized = withoutLengthMarks(kanaizeWithDictionary(recognizedText, dictionary));
+  return recognized.length > 0 && referenceForms.some((form) => withoutLengthMarks(form) === recognized);
+}

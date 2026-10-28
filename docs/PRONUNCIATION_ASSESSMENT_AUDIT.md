@@ -345,3 +345,44 @@ bỏ sai chấp nhận được.
 1. Đồng ý dùng Azure (tạo Speech resource, tầng F0) và cấp `AZURE_SPEECH_KEY` / `AZURE_SPEECH_REGION`.
 2. Có tổ chức được đợt ghi âm + người chấm cho pilot (mục 9.2) không — nếu không, MVP chỉ nên mở dạng "thử nghiệm" có ghi chú rõ giới hạn.
 3. Có đăng ký dùng thử SpeechSuper để so sánh không.
+
+---
+
+## 13. Cập nhật 2026-10-28 — AI nhận diện CHẠY TRÊN THIẾT BỊ (miễn phí, không gửi audio)
+
+Thay hướng Azure / SpeechSuper (trả phí, gửi audio ra ngoài) bằng nhận diện giọng nói chạy ngay trong trình duyệt.
+
+**Khảo sát (số liệu kiểm tra ngày 2026-10-28):**
+
+| Tiêu chí | Whisper base (chọn) | Whisper tiny | Whisper small | Web Speech API (cũ, vẫn giữ làm dự phòng) | Mô hình chấm phát âm mở |
+|---|---|---|---|---|---|
+| Chi phí API | 0 | 0 | 0 | 0 | — |
+| Audio rời thiết bị | **Không** | Không | Không | Có (Chrome → Google, Safari → Apple) | — |
+| Tiếng Nhật | Có (đa ngôn ngữ) | Có | Có | Có | Không tìm thấy mô hình chạy trên trình duyệt đủ tin cậy |
+| CER tiếng Nhật (CommonVoice 8 / JSUT) | 28.6% / 24.9% | 53.7% / 36.5% | 15.1% / 14.2% | không công bố | — |
+| Dung lượng (ONNX q8) | ~77 MB (+ ~26 MB ONNX Runtime WASM) | ~41 MB | ~249 MB | 0 | wav2vec2 ja ~1.2 GB (fp32) |
+| Chấm phát âm | ❌ chỉ nhận diện | ❌ | ❌ | ❌ | chưa xác minh |
+| Giấy phép | Apache-2.0 (mô hình + Transformers.js 4.3.2) | Apache-2.0 | Apache-2.0 | — | Apache-2.0 |
+| Thiết bị | WebGPU (Chrome/Edge, Safari 26+) hoặc WebAssembly | | | tuỳ trình duyệt | |
+
+Nguồn: Hugging Face API (kích thước tệp `onnx-community/whisper-*`, giấy phép `openai/whisper-*`), bảng CER của [Japanese ASR benchmark](https://japanese-asr-readme.static.hf.space/),
+WebGPU trên iOS/iPadOS 26 ([AppDeveloperMagazine](https://appdevelopermagazine.com/webgpu-in-ios-26/)).
+
+**Triển khai** (`/luyen-tap/noi`, chế độ "🧠 AI trên máy" mặc định khi thiết bị chạy được):
+- Ghi âm MediaRecorder (chỉ xin quyền micro khi bấm Ghi âm) → giải mã → PCM 16 kHz mono → Whisper base trong Web Worker
+  (`src/features/speech/asr.worker.ts`, tải mô hình theo nhu cầu, Transformers.js lưu Cache Storage) → so chữ với mẫu
+  (đổi chữ Hán → kana bằng từ điển từ vựng của app; bỏ qua khác biệt chỉ ở ー / っ / nguyên âm kéo dài và ghi rõ là chưa đánh giá).
+- Đo âm thanh thuần số học (`src/features/speech/audio-quality.ts`): thời gian nói, tốc độ ≈ mora/giây (đếm mora từ cách đọc kana),
+  im lặng / quá ngắn / quá nhỏ / quá ồn / rè. Bản ghi không đạt cổng chất lượng → không đưa vào Whisper.
+- Nội dung: câu ví dụ ngữ pháp (như cũ), từ đã học, chữ cái đã học (≤ ngày đang học).
+- Nghe mẫu (giọng trình duyệt), nghe lại bản ghi (Blob trong trang, không lưu, không gửi).
+
+**Kiểm thử chức năng** (Chromium + giọng TTS Kyoko của macOS bơm vào micro giả — KHÔNG phải bằng chứng độ chính xác ngôn ngữ):
+câu わたしは まいにち おきます → Whisper "私は毎日置きます" → khớp sau khi đổi kana (置/起 cùng cách đọc); từ しゃちょう → lúc "社長",
+lúc "シャッチョー" (Whisper tự thêm っ / ー) → khớp khi bỏ qua trường âm, có ghi chú; im lặng → "Không nghe thấy tiếng";
+từ chối micro → hướng dẫn cấp quyền. WebGPU: nhận diện ~0.7–0.8 s/câu sau khi tải; lần đầu ~10 s (gồm tải mô hình).
+**Chưa kiểm thử:** Safari iPhone/iPad thật, đường WebAssembly (không WebGPU), giọng người Việt thật, tiếng ồn thật.
+
+**Không làm / chưa hỗ trợ (ghi rõ trên giao diện):** điểm phát âm, trường âm, っ, ん, cao độ — không có phương pháp miễn phí trên
+trình duyệt đã được kiểm chứng. Bước tiếp theo nếu cần chấm thật: bộ ghi âm người Việt có nhãn của giám khảo (mục 9) để đo Whisper,
+rồi mới cân nhắc căn chỉnh mora (forced alignment) hoặc dịch vụ trả phí.

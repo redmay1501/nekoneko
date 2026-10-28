@@ -318,3 +318,42 @@ export function buildDictationPools(catalog: KnowledgeCatalog, views: Views, jou
     }])),
   };
 }
+
+/** Luyện nói: loại nội dung đọc theo mẫu — câu (ví dụ ngữ pháp, như trước), từ đã học, chữ cái đã học. */
+export const SPEAKING_KINDS = { cau: 'Câu', tu: 'Từ đã học', chu: 'Chữ cái đã học' } as const;
+export type SpeakingKind = keyof typeof SPEAKING_KINDS;
+export const parseSpeakingKind = (value: string | undefined): SpeakingKind => (value && value in SPEAKING_KINDS ? (value as SpeakingKind) : 'cau');
+
+export interface SpeakingItem { id: number; lessonLabel: string; jp: string; reading: string; vi: string }
+
+/**
+ * Từ / chữ cái để đọc theo mẫu: chỉ mục ĐÃ HỌC (đã gặp trong app) thuộc ngày ≤ ngày đang học, mỗi lượt SPEAKING_SENTENCES mục
+ * ngẫu nhiên ổn định theo `seed` (đổi lượt = đổi bộ). Từ: đọc theo cách đọc kana; chữ cái: chính chữ đó, nghĩa = romaji.
+ */
+export function buildSpeakingItems(catalog: KnowledgeCatalog, views: Views, journeyDay: number, kind: Exclude<SpeakingKind, 'cau'>, seed: string): SpeakingItem[] {
+  const types = kind === 'tu' ? ['vocabulary'] as const : ['hiragana', 'katakana'] as const;
+  const learned = types.flatMap((type) => itemsOfType(catalog, type))
+    .filter((item) => item.day !== null && item.day <= journeyDay && views.get(item.key)?.isLearned);
+  return pickDeterministic(learned, SPEAKING_SENTENCES, `${seed}:${kind}`).map((item, index) => (item.type === 'vocabulary'
+    ? { id: index + 1, lessonLabel: item.content.lesson.split('·')[0].trim() || 'Từ vựng', jp: item.content.kanji || item.content.kana, reading: item.content.kana, vi: item.meaning }
+    : { id: index + 1, lessonLabel: item.type === 'katakana' ? 'Katakana' : 'Hiragana', jp: item.face, reading: item.face, vi: `Đọc là “${item.reading}”` }));
+}
+
+/**
+ * Từ điển dạng viết ↔ cách đọc (kana) từ kho từ vựng của app — để đổi chữ Hán trong bản nhận diện giọng nói sang kana trước khi
+ * so với câu mẫu (Whisper hay viết 私 thay cho わたし). Chỉ lấy từ có chữ Hán; bỏ [な], 〜, khoảng trắng; "A / B" ghép theo thứ tự.
+ */
+export function buildKanaDictionary(catalog: KnowledgeCatalog): Array<[string, string]> {
+  const clean = (text: string) => text.replace(/\[[^\]]*\]/g, '').replace(/[〜~\s　]/g, '');
+  const pairs = new Map<string, string>();
+  for (const item of itemsOfType(catalog, 'vocabulary')) {
+    if (item.type !== 'vocabulary' || !item.content.kanji) continue;
+    const written = item.content.kanji.split('/').map(clean);
+    const readings = item.content.kana.split('/').map(clean);
+    written.forEach((form, index) => {
+      const reading = readings[written.length === readings.length ? index : 0];
+      if (form && reading && /[㐀-鿿々]/u.test(form) && !pairs.has(form)) pairs.set(form, reading);
+    });
+  }
+  return [...pairs];
+}

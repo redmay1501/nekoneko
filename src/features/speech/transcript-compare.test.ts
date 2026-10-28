@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { compareTranscript, diffSegments } from './transcript-compare';
+import { compareTranscript, diffSegments, compareTranscriptWithDictionary, kanaizeWithDictionary, matchesIgnoringLength } from './transcript-compare';
 
 const FORMS = ['わたしは 学生じゃ ありません。', 'わたしは がくせいじゃ ありません。'];
 
@@ -43,5 +43,26 @@ describe('so khớp văn bản nhận diện với câu mẫu', () => {
 
   it('diff gộp các ký tự liền nhau cùng loại', () => {
     expect(diffSegments('abcd', 'abxd')).toEqual([{ kind: 'same', text: 'ab' }, { kind: 'missing', text: 'c' }, { kind: 'extra', text: 'x' }, { kind: 'same', text: 'd' }]);
+  });
+});
+
+describe('đổi chữ Hán của bản nhận diện sang kana bằng từ điển của app', () => {
+  const dictionary: Array<[string, string]> = [['私', 'わたし'], ['学生', 'がくせい'], ['毎日', 'まいにち'], ['起きます', 'おきます'], ['学', 'がく']];
+  it('khớp dài nhất trước; chữ không có trong từ điển giữ nguyên', () => {
+    expect(kanaizeWithDictionary('私は学生です', dictionary)).toBe('わたしはがくせいです');
+    expect(kanaizeWithDictionary('私は先生です', dictionary)).toBe('わたしは先生です');
+  });
+  it('Whisper viết Kanji, câu mẫu viết kana → vẫn khớp; đọc khác thật thì vẫn báo khác', () => {
+    expect(compareTranscriptWithDictionary('私は毎日起きます。', ['わたしは 毎日 起きます。', 'わたしは まいにち おきます。'], dictionary).isMatch).toBe(true);
+    expect(compareTranscriptWithDictionary('私は学生です。', ['わたしは 毎日 起きます。', 'わたしは まいにち おきます。'], dictionary).isMatch).toBe(false);
+  });
+});
+
+describe('bỏ qua trường âm / っ khi so (Neko chưa đánh giá được hai điểm này)', () => {
+  it('シャッチョー ≈ しゃちょう; せんせー ≈ せんせい; nhưng từ khác hẳn thì không', () => {
+    expect(matchesIgnoringLength('シャッチョー', ['社長', 'しゃちょう'], [])).toBe(true);
+    expect(matchesIgnoringLength('せんせー', ['先生', 'せんせい'], [])).toBe(true);
+    expect(matchesIgnoringLength('がっこ', ['学校', 'がっこう'], [])).toBe(true);
+    expect(matchesIgnoringLength('かいしゃ', ['社長', 'しゃちょう'], [])).toBe(false);
   });
 });

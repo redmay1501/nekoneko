@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { canRecord, canRunOnDeviceAsr } from '@/lib/speech/recorder';
+import { OnDeviceReadAloud } from './OnDeviceReadAloud';
 import { ReadAloudPrompt } from './ReadAloudPrompt';
 import { type SpeakingPosition, nextPosition, positionFromParam, previousPosition } from '@/features/speech/speaking-session';
 
@@ -25,13 +27,23 @@ function writeUrl(position: SpeakingPosition) {
  * Chế độ "nói từ gợi ý tiếng Việt" đã bỏ — cùng bộ câu, chỉ thiếu nhận diện nên trùng với chế độ này.
  * Vị trí "3/10", Câu trước / Câu tiếp, màn kết thúc; URL ghi ?cau= để tải lại vẫn đúng chỗ. Không ghi trí nhớ.
  */
-export function SpeakingSession({ sentences, initialSentence, otherSetHref }: {
+export function SpeakingSession({ sentences, initialSentence, otherSetHref, kanaDictionary = [] }: {
   sentences: SpeakingSentence[];
+  /** Dạng viết ↔ kana của kho từ vựng — so bản nhận diện viết bằng Kanji với mẫu viết bằng kana. */
+  kanaDictionary?: Array<[string, string]>;
   initialSentence?: string;
   /** "Câu khác" (bộ câu ngẫu nhiên khác) — không có khi đang luyện cả một bài. */
   otherSetHref: string | null;
 }) {
   const [position, setPosition] = useState<SpeakingPosition>(() => positionFromParam(initialSentence, sentences.length));
+  /** Cách nhận diện: AI trên máy (mặc định khi thiết bị chạy được) hoặc nhận diện của trình duyệt (dự phòng). */
+  const [engine, setEngine] = useState<'device' | 'browser' | null>(null);
+  const [isDeviceCapable, setIsDeviceCapable] = useState(false);
+  useEffect(() => {
+    const capable = canRunOnDeviceAsr() && canRecord();
+    setIsDeviceCapable(capable);
+    setEngine(capable ? 'device' : 'browser');
+  }, []);
   const total = sentences.length;
   const sentence = sentences[position.index];
   const otherHref = otherSetHref;
@@ -43,10 +55,17 @@ export function SpeakingSession({ sentences, initialSentence, otherSetHref }: {
   return (
     <section aria-label="Luyện nói">
       <div style={{ margin: '10px 0 12px' }}>
-        <p className="soft sm">Nghe mẫu, bấm 🎙️ rồi đọc to. Trình duyệt nhận diện câu bạn nói và so chữ với câu mẫu — đây <b>chưa phải chấm phát âm</b>.</p>
-        <p className="tiny muted mt-1">
-          Âm thanh do trình duyệt xử lý (Chrome gửi lên dịch vụ nhận diện trực tuyến của Google; Safari dùng bộ nhận diện của Siri).
-          NekoNeko không ghi âm, không lưu và không gửi âm thanh lên máy chủ của mình.
+        <p className="soft sm">Nghe mẫu, ghi âm rồi đọc to. Neko nhận diện lời bạn đọc và so chữ với mẫu — đây <b>chưa phải chấm phát âm</b>.</p>
+        {isDeviceCapable ? (
+          <div className="segmented mt-2" role="radiogroup" aria-label="Cách nhận diện giọng nói">
+            <button type="button" role="radio" aria-checked={engine === 'device'} className={`segmented-option${engine === 'device' ? ' is-selected' : ''}`} onClick={() => setEngine('device')}>🧠 AI trên máy</button>
+            <button type="button" role="radio" aria-checked={engine === 'browser'} className={`segmented-option${engine === 'browser' ? ' is-selected' : ''}`} onClick={() => setEngine('browser')}>🌐 Nhận diện của trình duyệt</button>
+          </div>
+        ) : null}
+        <p className="tiny muted mt-1.5">
+          {engine === 'device'
+            ? 'AI trên máy: mô hình Whisper chạy ngay trong trình duyệt — bản ghi không rời thiết bị, không được lưu; nghe lại được bản ghi của mình.'
+            : 'Nhận diện của trình duyệt: Chrome gửi âm thanh lên dịch vụ nhận diện của Google, Safari dùng bộ nhận diện của Apple. NekoNeko không lưu âm thanh.'}
         </p>
       </div>
 
@@ -65,8 +84,13 @@ export function SpeakingSession({ sentences, initialSentence, otherSetHref }: {
             <span className="sm"><b>{position.index + 1}</b>/{total}</span>
             <div className="study-progress" style={{ flex: 1, marginTop: 0 }} aria-hidden="true"><span style={{ width: `${((position.index + 1) / total) * 100}%` }} /></div>
           </div>
-          <ReadAloudPrompt key={sentence.id} lessonLabel={sentence.lessonLabel} sentenceJp={sentence.jp} reading={sentence.reading}
-            meaningVi={sentence.vi} chipClass="pink" />
+          {engine === 'device' ? (
+            <OnDeviceReadAloud key={`d:${sentence.id}`} lessonLabel={sentence.lessonLabel} sentenceJp={sentence.jp} reading={sentence.reading}
+              meaningVi={sentence.vi} chipClass="pink" kanaDictionary={kanaDictionary} />
+          ) : engine === 'browser' ? (
+            <ReadAloudPrompt key={`b:${sentence.id}`} lessonLabel={sentence.lessonLabel} sentenceJp={sentence.jp} reading={sentence.reading}
+              meaningVi={sentence.vi} chipClass="pink" />
+          ) : <div className="card mb-3" style={{ minHeight: 220 }} aria-hidden="true" />}
           <div className="speaking-nav">
             <button type="button" className="btn ghost" onClick={() => setPosition(previousPosition(position))} disabled={position.index === 0}>← Câu trước</button>
             <button type="button" className="btn" onClick={() => setPosition(nextPosition(position, total))}>

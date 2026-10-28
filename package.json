@@ -21,6 +21,7 @@
     "images:coverage": "node scripts/generate-image-coverage-plan.mjs"
   },
   "dependencies": {
+    "@huggingface/transformers": "^4.3.2",
     "@supabase/ssr": "0.7.0",
     "@supabase/supabase-js": "2.58.0",
     "@tanstack/react-query": "5.90.2",

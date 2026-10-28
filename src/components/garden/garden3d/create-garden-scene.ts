@@ -7,13 +7,14 @@
  * garden-layout.ts, bấm vào cây → onSelect(contentKey). Không tải được bộ model cây → dùng cây dựng bằng code (procedural.ts).
  */
 import * as THREE from 'three';
+import { buildPets } from './pets';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { GARDEN_LANDMARKS, type PlantPlacement, type PlantStage, hashUnit } from '@/features/garden/garden-layout';
 import { type FoliageTint, GardenKit, KIT_URL, type KitModel } from './kit';
-import { PALETTE, type Part, m4, merge, part, plantGeometry, proceduralBigTree } from './procedural';
+import { PALETTE, type Part, TULIP_COLORS, type TulipColor, m4, merge, part, plantGeometry, proceduralBigTree, tulipGeometry } from './procedural';
 import { buildSky } from './sky';
 import { buildStream, streamBankPoint, streamCrossPoint } from './stream';
 import { type LanternHandle, SIGN_FACE, buildBridge, buildButterflies, buildFence, buildHangingLanterns, buildHouse, buildKoi, buildSignboard, buildTorii } from './decor';
@@ -68,27 +69,37 @@ const MODELS = {
 
 /**
  * Cây kiến thức theo giai đoạn: model + chiều cao đích (m) + bảng màu lá. Silhouette khác nhau rõ:
- * mầm (cây lá thấp / dương xỉ) → cây non thân mảnh → cây xanh tán dày → cây nở hoa anh đào; sắp quên: cây thưa lá vàng.
+ * mầm (cây lá thấp / dương xỉ) → cây non thân mảnh → cây xanh tán dày → bụi hoa hồng (đã thành thạo); sắp quên: cây thưa lá vàng.
+ * `petalTint`: màu cánh hoa (chỉ model có hoa). `tulip`: không dùng model kit mà dựng khóm tulip bằng code (procedural.ts) —
+ * kit không có hoa tulip.
  */
-const PLANT_VARIANTS: Record<PlantStage, ReadonlyArray<{ model: KitModel; height: number; maxWidth: number; tint: FoliageTint | null }>> = {
+type PlantVariant = { height: number; maxWidth: number } & (
+  | { model: KitModel; tint: FoliageTint | null; petalTint?: FoliageTint; tulip?: undefined }
+  | { tulip: TulipColor; model?: undefined; tint?: undefined; petalTint?: undefined });
+const PLANT_VARIANTS: Record<PlantStage, ReadonlyArray<PlantVariant>> = {
   sprout: [
     { model: 'Plant_1', height: 0.42, maxWidth: 0.62, tint: null },
     { model: 'Fern_1', height: 0.42, maxWidth: 0.75, tint: null },
   ],
-  sapling: [{ model: 'CommonTree_4', height: 1.0, maxWidth: 0.6, tint: 'fresh' }],
+  // Đang hình thành: cây non nhưng đã ra dáng (to hơn mầm rõ rệt, nhỏ hơn bụi hồng / tulip trưởng thành không nhiều).
+  sapling: [{ model: 'CommonTree_4', height: 1.4, maxWidth: 0.95, tint: 'fresh' }],
+  // Đã nhớ tốt: khóm hoa tulip — ba màu xen kẽ khắp vườn.
   tree: [
-    { model: 'CommonTree_1', height: 1.45, maxWidth: 1.05, tint: 'green' },
-    { model: 'CommonTree_2', height: 1.5, maxWidth: 1.05, tint: 'green' },
+    { tulip: 'red', height: 0.95, maxWidth: 0.6 },
+    { tulip: 'yellow', height: 0.95, maxWidth: 0.6 },
+    { tulip: 'pink', height: 0.95, maxWidth: 0.6 },
   ],
+  // Đã thành thạo: bụi hoa hồng — tán tròn rộng, phủ hoa đỏ hồng (cùng cỡ với cây "đã nhớ tốt", nhưng dáng bụi + hoa nổi bật).
   blossom: [
-    { model: 'CommonTree_1', height: 1.7, maxWidth: 1.2, tint: 'sakura' },
-    { model: 'CommonTree_2', height: 1.75, maxWidth: 1.2, tint: 'sakura' },
+    { model: 'Bush_Common_Flowers', height: 1.3, maxWidth: 1.35, tint: 'roseLeaf', petalTint: 'rose' },
   ],
   wilting: [{ model: 'CommonTree_3', height: 1.4, maxWidth: 0.85, tint: 'autumn' }],
 };
 
 // Góc nhìn diorama từ trên cao (~34°) như concept: thấy trọn cây đào, xích đu, suối, cầu và 5 biển nhóm kiến thức.
 const DEFAULT_TARGET = new THREE.Vector3(0.6, 4.0, -2.4);
+const FOG_NEAR = 45;
+const FOG_FAR = 180;
 const DEFAULT_OFFSET = new THREE.Vector3(1.2, 6.0, 25.4);
 const BIG_TREE_HEIGHT = 12.8;
 const BRANCH_Y = 4.15; // độ cao cành treo so với mặt đất dưới xích đu
@@ -282,7 +293,7 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
   scene.environment = track(skyEnvironment(renderer, sky));
   scene.environmentIntensity = 0.6;
   // Sương xa thật nhẹ, bắt đầu sau toàn bộ vườn (≥ 34 m) — chỉ làm nhạt đồi / núi tạo chiều sâu, không phủ cây hay nhân vật.
-  scene.fog = new THREE.Fog('#CFE7EF', 45, 180);
+  scene.fog = new THREE.Fog('#CFE7EF', FOG_NEAR, FOG_FAR);
   // Trời: vòm gradient shader + mây trôi + cầu vồng (sky.ts) — không chịu sương, không vệt / đường nối.
   const skyLayer = buildSky(lowPower, reducedMotion);
   for (const object of skyLayer.objects) scene.add(object);
@@ -294,7 +305,7 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
     scene.add(mountains);
   }
 
-  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 200);
+  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 320);
   const controls = new OrbitControls(camera, canvas);
   controls.enableDamping = true;
   controls.dampingFactor = 0.08;
@@ -442,6 +453,12 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
   const butterflies = buildButterflies(butterflySpots, reducedMotion);
   scene.add(butterflies.mesh);
   disposables.push(butterflies);
+
+  /* Chó Shiba + mèo tam thể chạy vòng quanh gốc cây đào (khoảng trống không trồng cây kiến thức). */
+  const pets = buildPets({ x: (GARDEN_LANDMARKS.bigTree.x + GARDEN_LANDMARKS.swing.x) / 2, z: (GARDEN_LANDMARKS.bigTree.z + GARDEN_LANDMARKS.swing.z) / 2 }, reducedMotion);
+  scene.add(pets.group);
+  disposables.push(pets);
+  const petProxies = pets.pets.map((pet) => pet.proxy);
   let hangingLanterns: LanternHandle | null = null;
 
   /* Bóng tiếp xúc (AO) dưới mọi vật đứng trên đất — một InstancedMesh. */
@@ -524,7 +541,7 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
     staticContacts.push({ x: toriiSpot.x, z: toriiSpot.z, size: 3.4 });
 
     const house = new THREE.Mesh(track(buildHouse()), track(new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.85, metalness: 0, emissive: '#000000' })));
-    const houseSpot = { x: -8.2, z: -11.2 };
+    const houseSpot = GARDEN_LANDMARKS.house;
     house.position.set(houseSpot.x, terrainHeight(houseSpot.x, houseSpot.z) - 0.1, houseSpot.z);
     house.rotation.y = 0.45;
     house.castShadow = true;
@@ -555,8 +572,9 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
     // Hồ lớn phía xa (hậu cảnh), nhạt dần trong sương.
     const lake = new THREE.Mesh(track(new THREE.CircleGeometry(1, 48).rotateX(-Math.PI / 2)),
       track(new THREE.MeshStandardMaterial({ color: '#7FC7D2', roughness: 0.08, metalness: 0.05, envMapIntensity: 1.1 })));
-    lake.scale.set(18, 1, 6);
-    lake.position.set(14, terrainHeight(14, -30) + 0.4, -30);
+    const { lake: lakeSpot } = GARDEN_LANDMARKS;
+    lake.scale.set(lakeSpot.radiusX, 1, lakeSpot.radiusZ);
+    lake.position.set(lakeSpot.x, terrainHeight(lakeSpot.x, lakeSpot.z) + 0.4, lakeSpot.z);
     scene.add(lake);
     rebuildContacts();
   }
@@ -1084,6 +1102,8 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
       const radius = 12.8 + hashUnit(`br:${index}`) * 1.4;
       const x = Math.cos(angle) * radius;
       const z = Math.sin(angle) * radius - 1;
+      // Chừa chỗ cho nhà hai tầng (bụi không mọc xuyên tường nhà).
+      if (Math.hypot(x - GARDEN_LANDMARKS.house.x, z - GARDEN_LANDMARKS.house.z) < GARDEN_LANDMARKS.house.clearance) continue;
       (index % 3 === 0 ? flowerBushes : bushes).push(matrixAt(x, z, 0.75 + hashUnit(`bs:${index}`) * 0.4, angle * 2));
       staticContacts.push({ x, z, size: 2.0 });
     }
@@ -1115,11 +1135,16 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
   let hitMesh: THREE.InstancedMesh | null = null;
   let hitMatrices: THREE.Matrix4[] = [];
   let placements: PlantPlacement[] = [];
+  /** Bán kính xa nhất có cây (cây ra tới đồng cỏ) — camera được lùi đủ xa để thấy hết. */
+  let plantExtent = 0;
+  /** Camera đã dựng xong (resize lần đầu) — trước đó setPlants chỉ ghi plantExtent. */
+  let isCameraReady = false;
   /** Theo thứ tự `placements`: các InstancedMesh (mỗi phần hình một mesh) + chỉ số instance + ma trận gốc. */
   let plantSlots: Array<{ meshes: THREE.InstancedMesh[]; index: number; base: THREE.Matrix4; color: THREE.Color | null }> = [];
   /** Chiều cao thật của từng cây (m) — để chọn cây theo khoảng cách trên màn hình. */
   let plantHeights: number[] = [];
   const fallbackGeometry = new Map<PlantStage, { geometry: THREE.BufferGeometry; height: number }>();
+  const tulipGeometries = new Map<string, THREE.BufferGeometry>();
 
   const selectionRing = new THREE.Mesh(track(new THREE.TorusGeometry(0.62, 0.045, 8, 40)),
     track(new THREE.MeshStandardMaterial({ color: '#FF9DB1', emissive: '#FF7F9A', emissiveIntensity: 0.55, roughness: 0.6 })));
@@ -1146,15 +1171,33 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
     const groups = new Map<string, number[]>();
     placements.forEach((placement, index) => {
       const variant = variantOf(placement);
-      const key = kit ? `${variant.model}|${variant.tint}|${placement.stage}` : placement.stage;
+      const key = kit ? `${variant.tulip ? `tulip:${variant.tulip}` : variant.model}|${variant.tint}|${variant.petalTint ?? '-'}|${placement.stage}` : placement.stage;
       groups.set(key, [...(groups.get(key) ?? []), index]);
     });
     for (const [key, indices] of groups) {
       const matrices: THREE.Matrix4[] = [];
       const colors: THREE.Color[] = [];
       let meshes: THREE.InstancedMesh[];
-      if (kit) {
-        const variant = variantOf(placements[indices[0]]);
+      const groupVariant = kit ? variantOf(placements[indices[0]]) : null;
+      if (groupVariant?.tulip) {
+        // Khóm tulip dựng bằng code (cùng vật liệu màu theo đỉnh với cây dự phòng), tỉ lệ theo chiều cao đích.
+        const cacheKey = `tulip:${groupVariant.tulip}`;
+        if (!tulipGeometries.has(cacheKey)) tulipGeometries.set(cacheKey, track(tulipGeometry([TULIP_COLORS[groupVariant.tulip]])));
+        const geometry = tulipGeometries.get(cacheKey)!;
+        const fit = groupVariant.height / 0.95;
+        for (const index of indices) {
+          const placement = placements[index];
+          const scale = fit * placement.scale;
+          matrices.push(matrixAt(placement.x, placement.z, scale, placement.rotation));
+          heights[index] = groupVariant.height * placement.scale;
+        }
+        const mesh = new THREE.InstancedMesh(geometry, flatMaterial, matrices.length);
+        matrices.forEach((matrix, index) => mesh.setMatrixAt(index, matrix));
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+        meshes = [mesh];
+      } else if (kit && groupVariant?.model) {
+        const variant = groupVariant;
         const size = kit.models.get(variant.model)!.size;
         const fit = Math.min(variant.height / size.y, variant.maxWidth / Math.max(size.x, size.z));
         for (const index of indices) {
@@ -1165,7 +1208,7 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
           colors.push(new THREE.Color(tone, tone, tone * 0.98));
           heights[index] = size.y * scale;
         }
-        meshes = kit.instanced(variant.model, matrices, { tint: variant.tint, wind: variant.height > 1 ? 0.012 / variant.height : 0.03, colors });
+        meshes = kit.instanced(variant.model, matrices, { tint: variant.tint, petalTint: variant.petalTint ?? null, wind: variant.height > 1 ? 0.012 / variant.height : 0.03, colors });
       } else {
         const stage = key as PlantStage;
         if (!fallbackGeometry.has(stage)) fallbackGeometry.set(stage, plantGeometry(stage));
@@ -1224,6 +1267,8 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
 
   function setPlants(next: readonly PlantPlacement[]) {
     placements = [...next];
+    plantExtent = placements.reduce((max, placement) => Math.max(max, Math.hypot(placement.x, placement.z)), 0);
+    if (isCameraReady) updateZoomLimit();
     hoveredIndex = -1;
     selectedIndex = -1;
     selectionRing.visible = false;
@@ -1356,8 +1401,21 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
-    controls.maxDistance = camera.aspect < 0.8 ? 40 : 30;
+    // Giới hạn lùi xa tính theo vị trí mặc định: màn dọc (điện thoại / iPad) mặc định đã lùi 1.6–1.9 lần — trước đây
+    // vượt luôn giới hạn cũ (40) nên camera kẹt ở mức xa nhất, chụm hai ngón không thu nhỏ thêm được.
+    updateZoomLimit();
   }
+  /**
+   * Giới hạn lùi xa: theo vị trí mặc định (màn dọc mặc định đã lùi 1.6–1.9 lần — trước đây vượt luôn giới hạn cũ nên
+   * camera kẹt ở mức xa nhất, chụm hai ngón không thu nhỏ được) và theo vùng có cây (cây ra đồng cỏ → lùi xa hơn để thấy hết).
+   */
+  function updateZoomLimit() {
+    const base = Math.max(camera.aspect < 0.8 ? 40 : 30, defaultPosition().distanceTo(DEFAULT_TARGET) * 1.4);
+    // Màn dọc hẹp bề ngang → phải lùi xa hơn nhiều mới thấy trọn vành đồng cỏ.
+    const toSeeAll = plantExtent > 16 ? plantExtent * (camera.aspect < 0.6 ? 3.4 : camera.aspect < 0.8 ? 2.8 : 1.9) : 0;
+    controls.maxDistance = Math.min(150, Math.max(base, toSeeAll));
+  }
+  isCameraReady = true;
   resize();
   camera.position.copy(defaultPosition());
   controls.target.copy(DEFAULT_TARGET);
@@ -1381,7 +1439,7 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
   const projectedTop = new THREE.Vector3();
   const toScreen = (vector: THREE.Vector3, rect: DOMRect) => ({ x: (vector.x + 1) / 2 * rect.width, y: (1 - vector.y) / 2 * rect.height, behind: vector.z > 1 });
   let lastBlocker: string | null = null;
-  type Pick = { kind: 'plant'; index: number } | { kind: 'cat'; side: -1 | 1 } | { kind: 'swing' } | { kind: 'sign'; id: SignId } | { kind: 'none' };
+  type Pick = { kind: 'plant'; index: number } | { kind: 'cat'; side: -1 | 1 } | { kind: 'pet'; pet: 'dog' | 'cat' } | { kind: 'swing' } | { kind: 'sign'; id: SignId } | { kind: 'none' };
   const pick = (event: PointerEvent): Pick => {
     const rect = canvas.getBoundingClientRect(); // toạ độ TƯƠNG ĐỐI canvas (canvas không nằm ở góc viewport)
     const px = event.clientX - rect.left;
@@ -1390,7 +1448,7 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
     raycaster.setFromCamera(pointer, camera); // đúng camera đang render
     // 1) Vật chặn cứng: nhân vật, ghế xích đu, thân cây — lấy giao điểm gần nhất. Dây xích đu (mảnh) là vật "mềm":
     //    chỉ nhận click khi không có cây nào ở điểm đó (dây chồng lên thân cây phía sau → người dùng muốn bấm cây).
-    const blockers = raycaster.intersectObjects([...catProxies, swingProxies[0], trunkProxy, ...signFaces], false);
+    const blockers = raycaster.intersectObjects([...catProxies, ...petProxies, swingProxies[0], trunkProxy, ...signFaces], false);
     const ropeHit = raycaster.intersectObjects(swingProxies.slice(1), false)[0];
     const nearestBlocker = blockers[0];
     lastBlocker = nearestBlocker ? String(nearestBlocker.object.name || 'unnamed') : null;
@@ -1425,6 +1483,7 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
       if (score < bestScore) { bestScore = score; best = index; }
     });
     if (nearestBlocker?.object.userData.signId && best < 0) return { kind: 'sign', id: nearestBlocker.object.userData.signId as SignId };
+    if (nearestBlocker?.object.userData.petKind) return { kind: 'pet', pet: nearestBlocker.object.userData.petKind as 'dog' | 'cat' };
     if (best >= 0) return { kind: 'plant', index: best };
     if (ropeHit && (!nearestBlocker || ropeHit.distance < nearestBlocker.distance)) return { kind: 'swing' };
     if (nearestBlocker) {
@@ -1445,6 +1504,7 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
     const result = pick(event);
     if (result.kind === 'plant') { options.onSelect(placements[result.index].contentKey); return; }
     if (result.kind === 'swing') { pushSwing(1); return; }
+    if (result.kind === 'pet') { pets.hop(result.pet); return; }
     if (result.kind === 'sign') { options.onSignTap?.(result.id); return; }
     if (result.kind === 'cat') {
       catHop[String(result.side) as '-1' | '1'] = 1;
@@ -1487,7 +1547,7 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
       hoverFrame = 0;
       const result = pick(event);
       setHovered(result.kind === 'plant' ? result.index : -1);
-      if (result.kind === 'cat' || result.kind === 'swing' || result.kind === 'sign') canvas.style.cursor = 'pointer';
+      if (result.kind === 'cat' || result.kind === 'pet' || result.kind === 'swing' || result.kind === 'sign') canvas.style.cursor = 'pointer';
     });
   };
   const onPointerLeave = () => setHovered(-1);
@@ -1609,6 +1669,7 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
       stream.update(elapsed);
       koi.update(elapsed);
       butterflies.update(elapsed);
+      pets.update(delta, elapsed);
       hangingLanterns?.update(elapsed);
       for (const mixer of mixers) mixer.update(delta);
     }
@@ -1619,6 +1680,12 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
       if (camera.position.distanceTo(cameraGoal.position) < 0.02) cameraGoal.active = false;
     }
     controls.update();
+    // Sương bám theo khoảng cách camera: thu nhỏ để xem cả đồng cỏ thì vườn không bị sương phủ trắng.
+    const viewDistance = camera.position.distanceTo(controls.target);
+    if (scene.fog instanceof THREE.Fog) {
+      scene.fog.near = Math.max(FOG_NEAR, viewDistance + 18);
+      scene.fog.far = Math.max(FOG_FAR, viewDistance + 150);
+    }
 
     // Cây đang chọn nảy nhẹ lên (chỉ cập nhật đúng instance đó).
     if (selectedIndex >= 0 && plantSlots[selectedIndex]?.meshes.length && selectedPop < 1) {

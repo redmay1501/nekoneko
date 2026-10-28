@@ -14,6 +14,8 @@ export interface EmojiIconSource {
 /** Khoá là emoji đã bỏ ký tự biến thể U+FE0F (xem normalizeEmoji). */
 export const EMOJI_ICONS: Record<string, EmojiIconSource> = {
   '🌸': { slug: 'cherry-blossom', fluentPath: 'Cherry blossom/3D/cherry_blossom_3d.png' },
+  '🌹': { slug: 'rose', fluentPath: 'Rose/3D/rose_3d.png' },
+  '🌷': { slug: 'tulip', fluentPath: 'Tulip/3D/tulip_3d.png' },
   '🌱': { slug: 'seedling', fluentPath: 'Seedling/3D/seedling_3d.png' },
   '🧠': { slug: 'brain', fluentPath: 'Brain/3D/brain_3d.png' },
   '🔊': { slug: 'speaker', fluentPath: 'Speaker high volume/3D/speaker_high_volume_3d.png' },

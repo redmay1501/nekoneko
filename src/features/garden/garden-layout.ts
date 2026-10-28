@@ -47,6 +47,10 @@ export const GARDEN_LANDMARKS = {
   },
   /** Cổng torii đỏ cạnh biển Kanji. */
   torii: { x: 10.8, z: -4.8 },
+  /** Nhà Nhật hai tầng sau vườn bên trái (nền 8 × 6) — `clearance`: không trồng cây / bụi trong bán kính này. */
+  house: { x: -8.8, z: -13.6, clearance: 5.6 },
+  /** Hồ lớn hậu cảnh (elip). */
+  lake: { x: 14, z: -30, radiusX: 18, radiusZ: 6 },
   /** Lối đá: từ mép trước vườn uốn vào trước xích đu. */
   path: [
     { x: 1.4, z: 13.5 }, { x: 2.6, z: 10.2 }, { x: 1.2, z: 7.2 }, { x: -0.6, z: 4.6 }, { x: 0.4, z: 2.2 }, { x: 1.6, z: 0.6 },
@@ -54,17 +58,20 @@ export const GARDEN_LANDMARKS = {
 } as const;
 
 export const GARDEN_RADIUS = 13.5;
-/** Một khu vực 3D giữ số mesh vừa phải; người học có thể chuyển qua mọi khu theo chỉ số. */
-export const GARDEN_AREA_SIZE = 60;
-
-export function gardenAreaCount(totalPlants: number): number {
-  return Math.max(1, Math.ceil(Math.max(0, totalPlants) / GARDEN_AREA_SIZE));
-}
-
-export function plantsInGardenArea<T>(plants: readonly T[], areaIndex: number): T[] {
-  const safeIndex = Math.max(0, Math.floor(areaIndex));
-  return plants.slice(safeIndex * GARDEN_AREA_SIZE, (safeIndex + 1) * GARDEN_AREA_SIZE);
-}
+/**
+ * Đồng cỏ quanh vườn — nơi trồng tiếp khi trong vườn hết chỗ (vườn chỉ chứa ~120 cây), để MỌI kiến thức đã học cùng hiện
+ * trong một cảnh. Chỉ phía sau và hai bên: phía trước (+Z) là nơi camera nhìn vào, cây ở đó sẽ che cả vườn.
+ *  - từ sau dải bụi viền vườn (12.8–14.2) ra tới trước bìa rừng (bán kính 24–29, elip z × 0.9, lệch −2);
+ *  - rồi tiếp sau bìa rừng tới MEADOW_OUTER_RADIUS (vùng xa, nhạt vào sương; mặt đất rộng ±45).
+ * Sức chứa ~1.690 ô — đủ cho toàn bộ kiến thức N5 (chữ cái, bộ thủ, Kanji, mẫu câu, từ vựng ≈ 1.600).
+ */
+export const MEADOW_INNER_RADIUS = 15.6;
+export const MEADOW_OUTER_RADIUS = 44;
+const FOREST_EDGE = { from: 23, to: 30.5 };
+/** Trên đồng cỏ cây đứng sát nhau hơn một chút (vẫn không đè nhau). */
+const MEADOW_SPACING = 0.95;
+/** Cây trên đồng cỏ nhỏ hơn cây trong vườn một chút — đứng dày mà không chen chúc. */
+const MEADOW_PLANT_SCALE = 0.85;
 /** Khoảng trống quanh gốc cây đào lớn (rễ nổi) + xích đu (người ngồi, dây treo) — giữ thoáng cho điểm nhấn. */
 const CENTER_CLEARANCE = 4.9;
 /** Quanh biển nhóm kiến thức / cổng torii — giữ thoáng để biển luôn đọc được. */
@@ -112,6 +119,26 @@ function distanceToSegment(px: number, pz: number, a: { x: number; z: number }, 
   return Math.hypot(px - (a.x + t * dx), pz - (a.z + t * dz));
 }
 
+/**
+ * Ô đất trên đồng cỏ quanh vườn: phía sau / hai bên vườn, ngoài dải bụi viền, không đè bìa rừng, suối, nhà gỗ, hồ lớn.
+ * Phía trước (camera nhìn từ +Z) chỉ cho trồng ở hai bên xa, không chắn giữa.
+ */
+export function isMeadowPlantable(x: number, z: number): boolean {
+  const radius = Math.hypot(x, z);
+  if (radius < MEADOW_INNER_RADIUS || radius > MEADOW_OUTER_RADIUS) return false;
+  if (z > 3 && !(Math.abs(x) > 17 && z < 20)) return false;
+  const forest = Math.hypot(x, (z + 2) / 0.9);
+  if (forest > FOREST_EDGE.from && forest < FOREST_EDGE.to && z < 4) return false;
+  const { stream, house, lake, path } = GARDEN_LANDMARKS;
+  for (let index = 1; index < stream.length; index += 1) {
+    if (distanceToSegment(x, z, stream[index - 1], stream[index]) < STREAM_CLEARANCE + 0.6) return false;
+  }
+  if (Math.hypot(x - house.x, z - house.z) < house.clearance + 0.4) return false;
+  if (((x - lake.x) / (lake.radiusX + 1.5)) ** 2 + ((z - lake.z) / (lake.radiusZ + 1.5)) ** 2 < 1) return false;
+  if (distanceToSegment(x, z, path[0], path[1]) < PATH_CLEARANCE) return false;
+  return true;
+}
+
 /** Ô đất trồng được: trong vườn, ngoài vùng cây lớn / xích đu, lối đá, hồ và đèn đá. */
 export function isPlantable(x: number, z: number): boolean {
   if (Math.hypot(x, z) > GARDEN_RADIUS) return false;
@@ -127,35 +154,54 @@ export function isPlantable(x: number, z: number): boolean {
   const { stream, signs, torii } = GARDEN_LANDMARKS;
   for (const sign of Object.values(signs)) if (Math.hypot(x - sign.x, z - sign.z) < SIGN_CLEARANCE) return false;
   if (Math.hypot(x - torii.x, z - torii.z) < 2.2) return false;
+  const { house } = GARDEN_LANDMARKS;
+  if (Math.hypot(x - house.x, z - house.z) < house.clearance) return false;
   for (let index = 1; index < stream.length; index += 1) {
     if (distanceToSegment(x, z, stream[index - 1], stream[index]) < STREAM_CLEARANCE) return false;
   }
   return true;
 }
 
-/** Ô trồng xếp theo xoắn ốc vàng từ trong ra ngoài, chỉ giữ ô hợp lệ và đủ cách nhau. */
+/**
+ * Ô trồng xếp theo xoắn ốc vàng từ trong ra ngoài, chỉ giữ ô hợp lệ và đủ cách nhau: trong vườn trước, hết chỗ thì
+ * ra đồng cỏ quanh vườn (isMeadowPlantable). Kiểm tra khoảng cách bằng lưới băm → nhanh cả khi hơn nghìn cây.
+ */
 export function gardenSlots(maxSlots: number): Array<{ x: number; z: number }> {
   const slots: Array<{ x: number; z: number }> = [];
   const goldenAngle = Math.PI * (3 - Math.sqrt(5));
-  for (let index = 0; index < 4000 && slots.length < maxSlots; index += 1) {
-    const radius = 3.6 + Math.sqrt(index) * 0.44;
-    if (radius > GARDEN_RADIUS) break;
-    const angle = index * goldenAngle;
-    // Lệch nhẹ có kiểm soát → cây không xếp thành vòng / hàng đều tăm tắp.
-    const jitterX = (hashUnit(`slot:x:${index}`) - 0.5) * 0.7;
-    const jitterZ = (hashUnit(`slot:z:${index}`) - 0.5) * 0.7;
-    const x = Math.round((Math.cos(angle) * radius + jitterX) * 100) / 100;
-    const z = Math.round((Math.sin(angle) * radius + jitterZ) * 100) / 100;
-    if (!isPlantable(x, z)) continue;
-    if (slots.some((slot) => Math.hypot(slot.x - x, slot.z - z) < MIN_SPACING)) continue;
-    slots.push({ x, z });
-  }
+  const grid = new Map<string, Array<{ x: number; z: number }>>();
+  const cellOf = (value: number) => Math.floor(value / MIN_SPACING);
+  const tooClose = (x: number, z: number, spacing: number) => {
+    for (let gx = cellOf(x) - 1; gx <= cellOf(x) + 1; gx += 1) for (let gz = cellOf(z) - 1; gz <= cellOf(z) + 1; gz += 1) {
+      for (const slot of grid.get(`${gx}:${gz}`) ?? []) if (Math.hypot(slot.x - x, slot.z - z) < spacing) return true;
+    }
+    return false;
+  };
+  const tryRing = (minRadius: number, maxRadius: number, step: number, accept: (x: number, z: number) => boolean, spacing: number, salt: string) => {
+    for (let index = 0; slots.length < maxSlots; index += 1) {
+      const radius = minRadius + Math.sqrt(index) * step;
+      if (radius > maxRadius) break;
+      const angle = index * goldenAngle;
+      // Lệch nhẹ có kiểm soát → cây không xếp thành vòng / hàng đều tăm tắp.
+      const jitterX = (hashUnit(`${salt}:x:${index}`) - 0.5) * 0.7;
+      const jitterZ = (hashUnit(`${salt}:z:${index}`) - 0.5) * 0.7;
+      const x = Math.round((Math.cos(angle) * radius + jitterX) * 100) / 100;
+      const z = Math.round((Math.sin(angle) * radius + jitterZ) * 100) / 100;
+      if (!accept(x, z) || tooClose(x, z, spacing)) continue;
+      slots.push({ x, z });
+      const key = `${cellOf(x)}:${cellOf(z)}`;
+      grid.set(key, [...(grid.get(key) ?? []), { x, z }]);
+    }
+  };
+  tryRing(3.6, GARDEN_RADIUS, 0.44, isPlantable, MIN_SPACING, 'slot');
+  // Đồng cỏ: xoắn ốc bắt đầu từ mép trong của đồng cỏ (không duyệt lại phần trong vườn).
+  if (slots.length < maxSlots) tryRing(MEADOW_INNER_RADIUS, MEADOW_OUTER_RADIUS, 0.3, isMeadowPlantable, MEADOW_SPACING, 'meadow');
   return slots;
 }
 
 /**
- * Đặt mỗi kiến thức một cây. Cây vững nhất gần cây lớn trung tâm, mầm mới ở rìa vườn.
- * Số cây = số kiến thức truyền vào (tối đa số ô trồng được) — không thêm cây giả.
+ * Đặt mỗi kiến thức một cây. Cây vững nhất gần cây lớn trung tâm, mầm mới ở rìa vườn rồi ra đồng cỏ quanh vườn.
+ * Số cây = số kiến thức truyền vào (tối đa số ô trồng được — đủ cho toàn bộ kiến thức N5) — không thêm cây giả.
  */
 export function layoutGardenPlants(plants: readonly PlantInput[]): PlantPlacement[] {
   const ordered = [...plants].sort((left, right) => STATUS_ORDER.indexOf(left.status) - STATUS_ORDER.indexOf(right.status)
@@ -167,6 +213,6 @@ export function layoutGardenPlants(plants: readonly PlantInput[]): PlantPlacemen
     x: slots[index].x,
     z: slots[index].z,
     rotation: hashUnit(`${plant.contentKey}:r`) * Math.PI * 2,
-    scale: 0.88 + hashUnit(`${plant.contentKey}:s`) * 0.24,
+    scale: (0.88 + hashUnit(`${plant.contentKey}:s`) * 0.24) * (Math.hypot(slots[index].x, slots[index].z) > GARDEN_RADIUS ? MEADOW_PLANT_SCALE : 1),
   }));
 }

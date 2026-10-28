@@ -55,7 +55,7 @@ export default async function GardenPage() {
       </section>
       <div className="garden-below">
       <p className="tiny muted center">
-        Mầm 🌱 mới học · cây non 🌿 đang hình thành · cây xanh 🌳 đã nhớ tốt · cây nở hoa 🌸 đã thành thạo · lá vàng 🍂 sắp quên.
+        Mầm 🌱 mới học · cây non 🌿 đang hình thành · hoa tulip 🌷 đã nhớ tốt · bụi hoa hồng 🌹 đã thành thạo · lá vàng 🍂 sắp quên.
       </p>
       {learned.length ? (
         <details className="garden mt-3">

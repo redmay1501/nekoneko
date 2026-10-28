@@ -293,23 +293,99 @@ export function buildTorii(): THREE.BufferGeometry {
   return merge(parts);
 }
 
-/** Nhà gỗ Nhật nhỏ: nền đá, tường kem khung gỗ, cửa giấy sáng ấm, mái ngói xám-lục vểnh nhẹ. */
+/** Một mái ngói bốn mặt (kiểu hông) vểnh góc: bốn tấm dốc + bờ nóc + đầu đao vểnh ở bốn góc. Gốc mái (mép dưới) ở y = baseY. */
+function hipRoof(parts: Part[], width: number, depth: number, baseY: number, rise: number, tile: THREE.Color, ridge: THREE.Color, trim: THREE.Color, seed: number) {
+  const slopeZ = Math.atan2(rise, depth / 2);
+  const slopeX = Math.atan2(rise, width / 2);
+  const lengthZ = Math.hypot(rise, depth / 2) + 0.25;
+  const lengthX = Math.hypot(rise, width / 2) + 0.25;
+  for (const side of [-1, 1]) {
+    // mặt trước / sau (dài theo X)
+    parts.push(part(new THREE.BoxGeometry(width + 0.5, 0.16, lengthZ), tile, m4(0, baseY + rise / 2, side * depth / 4, 1, [side * slopeZ, 0, 0]), seed, 0.04));
+    // hai mặt hông (ngắn hơn, khép về bờ nóc)
+    parts.push(part(new THREE.BoxGeometry(lengthX * 0.62, 0.15, depth * 0.72), tile, m4(side * width * 0.34, baseY + rise * 0.42, 0, 1, [0, 0, -side * slopeX]), seed + 1, 0.04));
+  }
+  parts.push(part(new THREE.BoxGeometry(width * 0.62, 0.2, 0.28), ridge, m4(0, baseY + rise + 0.06, 0), seed + 2, 0.03));
+  // đường viền vàng dưới mép mái
+  for (const side of [-1, 1]) parts.push(part(new THREE.BoxGeometry(width + 0.55, 0.06, 0.08), trim, m4(0, baseY - 0.06, side * (depth / 2 + 0.22)), seed + 3, 0.02));
+  // đầu đao vểnh ở bốn góc
+  for (const sx of [-1, 1]) for (const sz of [-1, 1]) {
+    parts.push(part(new THREE.ConeGeometry(0.13, 0.5, 6), ridge, m4(sx * (width / 2 + 0.2), baseY + 0.12, sz * (depth / 2 + 0.2), 1, [sz * 0.9, 0, -sx * 0.9]), seed + 4, 0.03));
+  }
+}
+
+/**
+ * Nhà Nhật hai tầng bề thế (kiểu lữ quán / phủ đệ): nền đá cao có bậc, hiên gỗ (engawa) chạy quanh, cột sơn đỏ, tường kem
+ * khung gỗ sẫm, cửa giấy sáng ấm, mái ngói xanh hai tầng vểnh góc viền vàng, cá chép vàng (shachihoko) trên nóc,
+ * mái hiên cong (karahafu) che cửa chính và hai đèn lồng đá. Gốc ở chân nền, mặt chính nhìn theo +Z. Cao ~7.8, nền 8 × 6.
+ */
 export function buildHouse(): THREE.BufferGeometry {
   const parts: Part[] = [];
-  const wood = new THREE.Color('#8A5C36');
-  parts.push(part(new THREE.BoxGeometry(4.6, 0.4, 3.6), new THREE.Color('#BDB4A4'), m4(0, 0.2, 0), 940, 0.06));
-  parts.push(part(new THREE.BoxGeometry(4.0, 2.1, 3.0), new THREE.Color('#F4EAD6'), m4(0, 1.45, 0), 941, 0.03));
-  for (const x of [-2, -0.67, 0.67, 2]) parts.push(part(new THREE.BoxGeometry(0.14, 2.15, 3.06), wood, m4(x, 1.45, 0), 942, 0.04));
-  parts.push(part(new THREE.BoxGeometry(4.1, 0.14, 3.08), wood, m4(0, 2.45, 0), 943, 0.04));
-  // cửa giấy (shoji) phát sáng ấm phía trước
-  parts.push(part(new THREE.BoxGeometry(1.2, 1.5, 0.04), new THREE.Color('#FFE6B5'), m4(0, 1.2, 1.52), 944, 0.02));
-  // mái: hai mặt dốc, vểnh nhẹ ở đầu hồi
-  const roof = new THREE.Color('#4F6E6A');
+  const stone = new THREE.Color('#C9C0B0');
+  const stoneDark = new THREE.Color('#A89F90');
+  const wall = new THREE.Color('#F6EEDD');
+  const wood = new THREE.Color('#6E4630');
+  const deck = new THREE.Color('#A0714A');
+  const paper = new THREE.Color('#FFE4AE');
+  const tile = new THREE.Color('#3F6B6E');
+  const ridge = new THREE.Color('#2F5154');
+  const gold = new THREE.Color('#E2B24A');
+
+  // Nền đá hai cấp + bậc thềm trước cửa.
+  parts.push(part(new THREE.BoxGeometry(8.0, 0.5, 6.0), stoneDark, m4(0, 0.25, 0), 940, 0.05));
+  parts.push(part(new THREE.BoxGeometry(7.4, 0.35, 5.4), stone, m4(0, 0.67, 0), 941, 0.05));
+  for (let step = 0; step < 3; step += 1) parts.push(part(new THREE.BoxGeometry(2.2 - step * 0.2, 0.17, 0.42), stone, m4(0, 0.09 + step * 0.17, 3.2 - step * 0.32), 942 + step, 0.04));
+
+  // Hiên gỗ quanh nhà + lan can thấp.
+  parts.push(part(new THREE.BoxGeometry(7.0, 0.12, 5.0), deck, m4(0, 0.9, 0), 945, 0.04));
   for (const side of [-1, 1]) {
-    parts.push(part(new THREE.BoxGeometry(5.2, 0.16, 2.5), roof, m4(0, 3.05, side * 1.0, 1, [side * 0.52, 0, 0]), 945, 0.04));
+    parts.push(part(new THREE.BoxGeometry(7.0, 0.08, 0.08), RED, m4(0, 1.35, side * 2.48), 946, 0.03));
+    parts.push(part(new THREE.BoxGeometry(0.08, 0.08, 5.0), RED, m4(side * 3.48, 1.35, 0), 947, 0.03));
   }
-  parts.push(part(new THREE.BoxGeometry(5.3, 0.22, 0.3), new THREE.Color('#3E5754'), m4(0, 3.62, 0), 946, 0.03));
-  for (const side of [-1, 1]) parts.push(part(new THREE.ConeGeometry(0.18, 0.4, 6), new THREE.Color('#3E5754'), m4(side * 2.6, 3.7, 0, 1, [0, 0, side * -0.9]), 947, 0.03));
+
+  // Tầng 1: tường kem, khung gỗ, cửa giấy sáng; cột đỏ dọc hiên.
+  parts.push(part(new THREE.BoxGeometry(5.6, 2.4, 3.8), wall, m4(0, 2.16, 0), 948, 0.03));
+  for (const x of [-2.8, -1.4, 0, 1.4, 2.8]) parts.push(part(new THREE.BoxGeometry(0.16, 2.45, 3.86), wood, m4(x, 2.16, 0), 949, 0.04));
+  parts.push(part(new THREE.BoxGeometry(5.7, 0.16, 3.9), wood, m4(0, 3.36, 0), 950, 0.04));
+  for (const x of [-2.1, -0.7, 0.7, 2.1]) {
+    parts.push(part(new THREE.BoxGeometry(1.1, 1.55, 0.05), paper, m4(x, 1.85, 1.93), 951, 0.02));
+    for (const y of [1.45, 1.85, 2.25]) parts.push(part(new THREE.BoxGeometry(1.1, 0.03, 0.06), wood, m4(x, y, 1.95), 952, 0.02));
+  }
+  for (const z of [-1.25, 0, 1.25]) for (const side of [-1, 1]) parts.push(part(new THREE.BoxGeometry(0.05, 1.3, 1.0), paper, m4(side * 2.83, 1.9, z), 953, 0.02));
+  for (const x of [-3.3, -1.65, 0, 1.65, 3.3]) for (const z of [-2.3, 2.3]) {
+    parts.push(part(new THREE.CylinderGeometry(0.11, 0.12, 2.5, 8), RED, m4(x, 2.18, z), 954, 0.03));
+  }
+  hipRoof(parts, 7.2, 5.2, 3.5, 1.15, tile, ridge, gold, 955);
+
+  // Mái hiên cong (karahafu) che cửa chính + biển tên vàng.
+  const arch = new THREE.TorusGeometry(1.1, 0.14, 6, 18, Math.PI);
+  parts.push(part(arch, ridge, m4(0, 3.55, 2.75, [1, 0.5, 1.2]), 960, 0.03));
+  parts.push(part(new THREE.BoxGeometry(2.4, 0.14, 0.9), tile, m4(0, 3.6, 2.55, 1, [0.35, 0, 0]), 961, 0.04));
+  parts.push(part(new THREE.BoxGeometry(0.9, 0.4, 0.06), gold, m4(0, 3.02, 2.62), 962, 0.02));
+
+  // Tầng 2: nhỏ hơn, cửa sổ giấy sáng, ban công lan can đỏ.
+  parts.push(part(new THREE.BoxGeometry(4.0, 1.9, 2.8), wall, m4(0, 5.15, 0), 963, 0.03));
+  for (const x of [-2.0, -0.67, 0.67, 2.0]) parts.push(part(new THREE.BoxGeometry(0.14, 1.95, 2.86), wood, m4(x, 5.15, 0), 964, 0.04));
+  for (const x of [-1.33, 0, 1.33]) parts.push(part(new THREE.BoxGeometry(1.0, 1.0, 0.05), paper, m4(x, 5.15, 1.43), 965, 0.02));
+  parts.push(part(new THREE.BoxGeometry(4.6, 0.1, 0.7), deck, m4(0, 4.3, 1.7), 966, 0.04));
+  parts.push(part(new THREE.BoxGeometry(4.6, 0.07, 0.07), RED, m4(0, 4.75, 2.02), 967, 0.03));
+  for (const x of [-2.2, -1.1, 0, 1.1, 2.2]) parts.push(part(new THREE.BoxGeometry(0.06, 0.45, 0.06), RED, m4(x, 4.53, 2.02), 968, 0.03));
+  hipRoof(parts, 5.0, 3.8, 6.1, 1.25, tile, ridge, gold, 969);
+
+  // Cá chép vàng (shachihoko) hai đầu nóc + quả cầu vàng giữa nóc.
+  for (const side of [-1, 1]) {
+    parts.push(part(new THREE.SphereGeometry(0.2, 8, 6), gold, m4(side * 1.45, 7.5, 0, [0.7, 1.2, 0.6]), 974, 0.03));
+    parts.push(part(new THREE.ConeGeometry(0.14, 0.42, 5), gold, m4(side * 1.62, 7.78, 0, 1, [0, 0, side * 0.6]), 975, 0.03));
+  }
+  parts.push(part(new THREE.SphereGeometry(0.16, 8, 6), gold, m4(0, 7.55, 0), 976, 0.02));
+
+  // Hai đèn lồng đá (tōrō) hai bên bậc thềm.
+  for (const side of [-1, 1]) {
+    const x = side * 1.7;
+    parts.push(part(new THREE.CylinderGeometry(0.1, 0.14, 0.7, 6), stoneDark, m4(x, 0.35, 3.45), 977, 0.04));
+    parts.push(part(new THREE.BoxGeometry(0.42, 0.34, 0.42), paper, m4(x, 0.86, 3.45), 978, 0.02));
+    parts.push(part(new THREE.ConeGeometry(0.4, 0.3, 4), stoneDark, m4(x, 1.17, 3.45, 1, [0, Math.PI / 4, 0]), 979, 0.04));
+  }
   return merge(parts);
 }
 

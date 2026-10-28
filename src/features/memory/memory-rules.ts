@@ -77,8 +77,8 @@ interface StatusPresentation {
 
 /** Cách hiển thị từng trạng thái — giữ đúng màu và biểu tượng của prototype. */
 export const STATUS_PRESENTATION: Record<MemoryStatus, StatusPresentation> = {
-  mastered: { label: 'Đã thành thạo', emoji: '🌸', plant: '🌸', color: '#E06C87', background: '#FFEFF2' },
-  strong: { label: 'Đã nhớ tốt', emoji: '🌳', plant: '🌳', color: '#5EA368', background: '#F1FAF3' },
+  mastered: { label: 'Đã thành thạo', emoji: '🌸', plant: '🌹', color: '#E06C87', background: '#FFEFF2' },
+  strong: { label: 'Đã nhớ tốt', emoji: '🌳', plant: '🌷', color: '#5EA368', background: '#F1FAF3' },
   learning: { label: 'Đang học', emoji: '🌿', plant: '🌿', color: '#7DBA82', background: '#F4FBF6' },
   fading: { label: 'Sắp quên', emoji: '🍂', plant: '🍂', color: '#D59A3C', background: '#FFF6E8' },
   weak: { label: 'Chưa vững', emoji: '🌱', plant: '🌱', color: '#C9774F', background: '#FDF1EA' },

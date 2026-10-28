@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { GARDEN_AREA_SIZE, GARDEN_RADIUS, STAGE_OF_STATUS, gardenAreaCount, gardenSlots, isPlantable, layoutGardenPlants, plantsInGardenArea } from './garden-layout';
+import { GARDEN_LANDMARKS, GARDEN_RADIUS, MEADOW_OUTER_RADIUS, STAGE_OF_STATUS, gardenSlots, isMeadowPlantable, isPlantable, layoutGardenPlants } from './garden-layout';
 import type { MemoryStatus } from '@/features/memory/memory-types';
 
 const STATUSES: MemoryStatus[] = ['weak', 'learning', 'strong', 'mastered', 'fading'];
@@ -30,15 +30,40 @@ describe('garden layout', () => {
     }
   });
 
-  it('chia ít hơn 60, đúng 60 và hơn 60 cây thành các khu; mọi cây đều truy cập được đúng một lần', () => {
-    expect(gardenAreaCount(12)).toBe(1);
-    expect(gardenAreaCount(60)).toBe(1);
-    expect(gardenAreaCount(61)).toBe(2);
-    expect(gardenAreaCount(120)).toBe(2);
-    const all = Array.from({ length: 121 }, (_, index) => `vocabulary-${index + 1}`);
-    const areas = Array.from({ length: gardenAreaCount(all.length) }, (_, index) => plantsInGardenArea(all, index));
-    expect(areas.map((area) => area.length)).toEqual([GARDEN_AREA_SIZE, GARDEN_AREA_SIZE, 1]);
-    expect(areas.flat()).toEqual(all);
+  it('mọi kiến thức N5 cùng hiện trong một cảnh: hết chỗ trong vườn thì ra đồng cỏ — không cây nào bị bỏ', () => {
+    const all = plants(1650);
+    const layout = layoutGardenPlants(all);
+    expect(layout).toHaveLength(1650);
+    expect(new Set(layout.map((plant) => plant.contentKey)).size).toBe(1650);
+    const inside = layout.filter((plant) => Math.hypot(plant.x, plant.z) <= GARDEN_RADIUS);
+    expect(inside.length).toBeGreaterThan(100);
+    for (const plant of layout.filter((entry) => Math.hypot(entry.x, entry.z) > GARDEN_RADIUS)) {
+      expect(isMeadowPlantable(plant.x, plant.z)).toBe(true);
+      expect(Math.max(Math.abs(plant.x), Math.abs(plant.z))).toBeLessThan(45); // trong mặt đất 90 × 90
+    }
+  });
+
+  it('đồng cỏ: không trồng chắn trước camera, trên suối, nhà gỗ hay hồ lớn; không cây nào đè nhau', () => {
+    const slots = gardenSlots(1650);
+    const { house, lake } = GARDEN_LANDMARKS;
+    for (const slot of slots.filter((entry) => Math.hypot(entry.x, entry.z) > GARDEN_RADIUS)) {
+      expect(Math.hypot(slot.x, slot.z)).toBeLessThanOrEqual(MEADOW_OUTER_RADIUS + 0.5);
+      if (slot.z > 3) expect(Math.abs(slot.x)).toBeGreaterThan(17); // giữa phía trước để trống
+      expect(Math.hypot(slot.x - house.x, slot.z - house.z)).toBeGreaterThanOrEqual(house.clearance);
+      expect(((slot.x - lake.x) / lake.radiusX) ** 2 + ((slot.z - lake.z) / lake.radiusZ) ** 2).toBeGreaterThanOrEqual(1);
+    }
+    const sorted = [...slots].sort((a, b) => a.x - b.x);
+    for (let a = 0; a < sorted.length; a += 1) for (let b = a + 1; b < sorted.length && sorted[b].x - sorted[a].x < 0.95; b += 1) {
+      expect(Math.hypot(sorted[a].x - sorted[b].x, sorted[a].z - sorted[b].z)).toBeGreaterThanOrEqual(0.94);
+    }
+  });
+
+  it('cây vững vẫn ở trong vườn; mầm mới / sắp quên ra đồng cỏ khi vườn đầy', () => {
+    const layout = layoutGardenPlants([...plants(400)]);
+    const byKey = new Map(plants(400).map((plant) => [plant.contentKey, plant.status]));
+    const radiusOf = (status: MemoryStatus) => layout.filter((plant) => byKey.get(plant.contentKey) === status).map((plant) => Math.hypot(plant.x, plant.z));
+    const average = (values: number[]) => values.reduce((sum, value) => sum + value, 0) / values.length;
+    expect(average(radiusOf('mastered'))).toBeLessThan(average(radiusOf('weak')));
   });
 
   it('cây vững nằm gần tâm hơn mầm mới; bố cục ổn định giữa các lần mở', () => {

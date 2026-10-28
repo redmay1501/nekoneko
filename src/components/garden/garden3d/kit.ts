@@ -4,7 +4,7 @@
  * texture WebP ≤ 1024px, nén meshopt).
  *
  * Lá cây: tấm lá cắt alpha (alphaTest, hai mặt) — pháp tuyến hướng tâm tán (tán sáng mềm như tranh, không lổn nhổn mặt
- * phẳng), AO nướng theo đỉnh (lá trong tán tối hơn → có chiều sâu), đổi màu theo bảng màu (anh đào, thu, xanh non) bằng
+ * phẳng), AO nướng theo đỉnh (lá trong tán tối hơn → có chiều sâu), đổi màu theo bảng màu (anh đào, thu, xanh non, hoa hồng) bằng
  * shader, gió nhẹ ở đỉnh. Một texture lá dùng cho mọi biến thể màu → không tải thêm ảnh.
  */
 import * as THREE from 'three';
@@ -26,6 +26,8 @@ export const FOLIAGE_TINTS = {
   sakuraDeep: ['#EE5A93', '#FFC9DD'], // cây đào trung tâm — hồng đậm tươi
   blush: ['#FA8DB4', '#FFE6EF'], // hồng phấn sáng — sắc độ thứ ba của tán đào
   autumn: ['#B66A32', '#F0C773'], // sắp quên — lá ngả vàng
+  rose: ['#8E0E2C', '#E3365A'], // cánh hoa hồng (đỏ thẫm → đỏ hồng thắm; texture hoa sáng nên phần lớn cánh ra màu sáng) — bụi hồng "đã thành thạo"
+  roseLeaf: ['#2E6636', '#86BD6C'], // lá bụi hồng: xanh đậm hơn cây thường để hoa nổi bật
   bush: ['#557F45', '#A3C978'],
   far: ['#7FA86A', '#C9DDA8'], // rặng cây xa: nhạt dần vào sương
 } as const;
@@ -64,6 +66,7 @@ function toFloatGeometry(source: THREE.BufferGeometry): THREE.BufferGeometry {
 }
 
 const isCanopy = (name: string) => /Leaves_(NormalTree|TwistedTree)/.test(name);
+const isPetal = (name: string) => name === 'Flowers';
 const isFoliage = (name: string) => /Leaves|Grass|Flowers/.test(name);
 const isGrass = (name: string) => /Grass/.test(name);
 
@@ -151,10 +154,11 @@ export class GardenKit {
   }
 
   /** Vật liệu cho một phần hình — dùng chung giữa mọi instance cùng (vật liệu nguồn, bảng màu, gió). */
-  material(source: THREE.MeshStandardMaterial, tint: FoliageTint | null, wind: number): THREE.Material {
+  material(source: THREE.MeshStandardMaterial, tint: FoliageTint | null, wind: number, petalTint: FoliageTint | null = null): THREE.Material {
     const foliage = isFoliage(source.name);
     const canopy = isCanopy(source.name);
-    const appliedTint = canopy ? tint : null;
+    // Tán lá theo `tint`; cánh hoa (vật liệu "Flowers") theo `petalTint` — ví dụ bụi hồng: lá xanh đậm, hoa đỏ hồng.
+    const appliedTint = canopy ? tint : isPetal(source.name) ? petalTint : null;
     const key = `${source.uuid}:${appliedTint ?? '-'}:${wind}`;
     const cached = this.materials.get(key);
     if (cached) return cached;
@@ -215,11 +219,11 @@ export class GardenKit {
    * Một InstancedMesh cho mỗi phần hình của model. `matrices` đặt sẵn vị trí / xoay / cỡ; `colors` (tuỳ chọn) nhân màu
    * từng instance để các cây cùng loại không giống hệt nhau.
    */
-  instanced(model: KitModel, matrices: readonly THREE.Matrix4[], options: { tint?: FoliageTint | null; wind?: number; castShadow?: boolean; colors?: readonly THREE.Color[] } = {}): THREE.InstancedMesh[] {
+  instanced(model: KitModel, matrices: readonly THREE.Matrix4[], options: { tint?: FoliageTint | null; petalTint?: FoliageTint | null; wind?: number; castShadow?: boolean; colors?: readonly THREE.Color[] } = {}): THREE.InstancedMesh[] {
     const info = this.models.get(model);
     if (!info || !matrices.length) return [];
     return info.parts.map(({ geometry, source }) => {
-      const mesh = new THREE.InstancedMesh(geometry, this.material(source, options.tint ?? null, options.wind ?? 0), matrices.length);
+      const mesh = new THREE.InstancedMesh(geometry, this.material(source, options.tint ?? null, options.wind ?? 0, options.petalTint ?? null), matrices.length);
       matrices.forEach((matrix, index) => mesh.setMatrixAt(index, matrix));
       if (options.colors) options.colors.forEach((color, index) => mesh.setColorAt(index, color));
       mesh.castShadow = options.castShadow ?? true;

@@ -19,6 +19,9 @@ export const PALETTE = {
   leafLight: new THREE.Color('#9CCB72'),
   sakura: new THREE.Color('#F6B3C6'),
   sakuraLight: new THREE.Color('#FCD6E1'),
+  rose: new THREE.Color('#D2304F'),
+  roseLight: new THREE.Color('#FF8FA3'),
+  roseLeaf: new THREE.Color('#4E8B47'),
   autumn: new THREE.Color('#E5A04B'),
   autumnDeep: new THREE.Color('#D27F3A'),
   stone: new THREE.Color('#D6CEC1'),
@@ -93,7 +96,42 @@ export function merge(parts: Part[]): THREE.BufferGeometry {
   return merged;
 }
 
-/** Cây kiến thức theo giai đoạn — gốc ở y = 0, cao ~0.5 (mầm) → ~2.3 (cây nở hoa). */
+/** Màu hoa tulip (cánh ngoài / cánh trong sáng hơn). */
+export const TULIP_COLORS = {
+  red: [new THREE.Color('#E0354C'), new THREE.Color('#FF7486')],
+  yellow: [new THREE.Color('#F6C02E'), new THREE.Color('#FFE27A')],
+  pink: [new THREE.Color('#EE7FA6'), new THREE.Color('#FFC2D6')],
+} as const;
+export type TulipColor = keyof typeof TULIP_COLORS;
+
+/**
+ * Khóm hoa tulip (gốc y = 0, cao ~0.95): ba bông cao thấp so le — cuống cong nhẹ, hai lá dài ôm gốc, bông hình chén
+ * (LatheGeometry 6 múi → sáu cánh) có mép cánh nhọn. `colors`: màu từng bông (cánh ngoài, cánh trong).
+ */
+export function tulipGeometry(colors: ReadonlyArray<readonly [THREE.Color, THREE.Color]>): THREE.BufferGeometry {
+  const parts: Part[] = [];
+  const stems: Array<[number, number, number, number]> = [[0, 0, 0.86, 0], [0.16, 0.07, 0.68, 0.18], [-0.13, -0.1, 0.74, -0.2]];
+  const cup = [
+    new THREE.Vector2(0.001, 0), new THREE.Vector2(0.05, 0.015), new THREE.Vector2(0.085, 0.06), new THREE.Vector2(0.1, 0.12),
+    new THREE.Vector2(0.092, 0.18), new THREE.Vector2(0.07, 0.225), new THREE.Vector2(0.078, 0.25),
+  ];
+  stems.forEach(([x, z, height, lean], index) => {
+    const [outer, inner] = colors[index % colors.length];
+    parts.push(part(new THREE.CylinderGeometry(0.014, 0.02, height, 5), PALETTE.leafDeep, m4(x, height / 2, z, 1, [0, 0, lean * 0.3]), 40 + index, 0.03));
+    const topX = x - Math.sin(lean * 0.3) * height * 0.5;
+    parts.push(part(new THREE.LatheGeometry(cup, 6), outer, m4(topX, height - 0.02, z, [1, 1, 1], [0, index * 0.5, lean * 0.3]), 44 + index, 0.04));
+    // lòng bông sáng hơn (nhìn từ trên xuống thấy cánh trong)
+    parts.push(part(new THREE.SphereGeometry(0.06, 6, 4), inner, m4(topX, height + 0.14, z, [1, 0.6, 1]), 48 + index, 0.03));
+    // hai lá dài ôm gốc mỗi cuống
+    for (const side of [-1, 1]) {
+      parts.push(part(new THREE.SphereGeometry(0.08, 6, 5), PALETTE.leaf, m4(x + side * 0.05, 0.2, z, [0.45, 2.4, 0.16], [0, index + side * 0.6, side * 0.35]), 52 + index, 0.05));
+    }
+  });
+  parts.push(part(new THREE.SphereGeometry(0.24, 8, 4, 0, Math.PI * 2, 0, Math.PI / 2), PALETTE.soil, m4(0, -0.02, 0, [1, 0.22, 1]), 60));
+  return merge(parts);
+}
+
+/** Cây kiến thức theo giai đoạn — gốc ở y = 0, cao ~0.5 (mầm) → ~1.3 (bụi hoa hồng), tulip ~0.95. */
 export function plantGeometry(stage: PlantStage): { geometry: THREE.BufferGeometry; height: number } {
   const mound = part(new THREE.SphereGeometry(0.3, 8, 4, 0, Math.PI * 2, 0, Math.PI / 2), PALETTE.soil, m4(0, -0.02, 0, [1, 0.28, 1]), 1);
   switch (stage) {
@@ -118,29 +156,20 @@ export function plantGeometry(stage: PlantStage): { geometry: THREE.BufferGeomet
         ]),
       };
     case 'tree':
-      return {
-        height: 1.9,
-        geometry: merge([
-          mound,
-          part(new THREE.CylinderGeometry(0.07, 0.11, 1.05, 7), PALETTE.bark, m4(0, 0.52, 0), 8),
-          part(blob(0.52, 9), PALETTE.leaf, m4(0, 1.32, 0, [1, 0.9, 1]), 9),
-          part(blob(0.38, 10), PALETTE.leafDeep, m4(0.36, 1.12, 0.1), 10),
-          part(blob(0.36, 11), PALETTE.leafLight, m4(-0.3, 1.2, -0.12), 11),
-          part(blob(0.3, 12), PALETTE.leaf, m4(0.05, 1.68, 0.05), 12),
-        ]),
-      };
+      // Đã nhớ tốt: khóm hoa tulip ba màu (khớp biến thể kit — xem tulipGeometry).
+      return { height: 0.95, geometry: tulipGeometry([TULIP_COLORS.red, TULIP_COLORS.yellow, TULIP_COLORS.pink]) };
     case 'blossom':
+      // Đã thành thạo: bụi hoa hồng — tán lá tròn thấp, điểm những bông hồng đỏ / hồng sáng (khớp model kit Bush_Common_Flowers).
       return {
-        height: 2.25,
+        height: 1.3,
         geometry: merge([
           mound,
-          part(new THREE.CylinderGeometry(0.08, 0.13, 1.2, 7), PALETTE.bark, m4(0, 0.6, 0), 13),
-          part(new THREE.CylinderGeometry(0.035, 0.05, 0.6, 5), PALETTE.bark, m4(0.18, 1.15, 0, 1, [0, 0, -0.7]), 14),
-          part(blob(0.56, 15), PALETTE.sakura, m4(0, 1.52, 0, [1, 0.88, 1]), 15),
-          part(blob(0.42, 16), PALETTE.sakuraLight, m4(0.42, 1.38, 0.12), 16),
-          part(blob(0.38, 17), PALETTE.sakura, m4(-0.38, 1.4, -0.1), 17),
-          part(blob(0.33, 18), PALETTE.sakuraLight, m4(0.04, 1.92, 0.04), 18),
-          part(blob(0.22, 19), PALETTE.leafLight, m4(-0.12, 1.2, 0.38), 19),
+          part(blob(0.5, 15), PALETTE.roseLeaf, m4(0, 0.55, 0, [1.2, 0.85, 1.2]), 15),
+          part(blob(0.36, 16), PALETTE.leafDeep, m4(0.42, 0.5, 0.1), 16),
+          part(blob(0.34, 17), PALETTE.roseLeaf, m4(-0.4, 0.48, -0.12), 17),
+          part(blob(0.3, 18), PALETTE.leaf, m4(0.04, 0.92, 0.04), 18),
+          ...[[0.28, 0.95, 0.22], [-0.3, 0.82, 0.3], [0.48, 0.7, -0.2], [-0.42, 0.72, -0.32], [0.05, 1.12, -0.12], [-0.05, 0.62, 0.52]]
+            .map(([x, y, z], index) => part(blob(0.13, 20 + index), index % 2 ? PALETTE.roseLight : PALETTE.rose, m4(x, y, z), 20 + index)),
         ]),
       };
     case 'wilting':

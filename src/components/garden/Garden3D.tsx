@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
-import { GARDEN_AREA_SIZE, STAGE_OF_STATUS, gardenAreaCount, layoutGardenPlants, plantsInGardenArea } from '@/features/garden/garden-layout';
+import { STAGE_OF_STATUS, layoutGardenPlants } from '@/features/garden/garden-layout';
 import { focusSessionHref } from '@/features/learning/session-modes';
 import { STATUS_PRESENTATION } from '@/features/memory/memory-rules';
 import type { MemoryStatus } from '@/features/memory/memory-types';
@@ -96,14 +96,12 @@ export function Garden3D({ plants, groups, statusCounts, totalCount, fallback }:
   const [charactersReady, setCharactersReady] = useState(false);
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [filter, setFilter] = useState<MemoryStatus | null>(null);
-  const [area, setArea] = useState(0);
   const [bubble, setBubble] = useState<{ side: -1 | 1; text: string } | null>(null);
   const bubbleSideRef = useRef<-1 | 1 | null>(null);
   const openKnowledge = useSheetStore((state) => state.openKnowledge);
 
-  const areaCount = gardenAreaCount(plants.length);
-  const visiblePlants = useMemo(() => plantsInGardenArea(plants, area), [area, plants]);
-  const placements = useMemo(() => layoutGardenPlants(visiblePlants), [visiblePlants]);
+  // Mọi cây trong MỘT cảnh: hết chỗ trong vườn thì trồng ra đồng cỏ quanh vườn (garden-layout) — không chia khu.
+  const placements = useMemo(() => layoutGardenPlants(plants), [plants]);
   const placementsRef = useRef(placements);
   placementsRef.current = placements;
   const byKey = useMemo(() => new Map(plants.map((plant) => [plant.contentKey, plant])), [plants]);
@@ -208,10 +206,14 @@ export function Garden3D({ plants, groups, statusCounts, totalCount, fallback }:
       </nav>
 
       <div className="garden3d-head">
-        <div className="garden3d-title">
-          <h1>Vườn tri thức</h1>
-          <span className="garden3d-count">{totalCount} cây</span>
-        </div>
+        <h1 className="sr-only">Vườn tri thức</h1>
+        {/* Bấm biển tên vườn → bỏ lọc, bỏ chọn cây: hiện lại toàn bộ cây. */}
+        <button type="button" className={`garden3d-title${filter ? ' is-filtered' : ''}`}
+          aria-label={filter ? `Hiện lại toàn bộ ${totalCount} cây` : `Vườn tri thức — ${totalCount} cây`}
+          onClick={() => { setFilter(null); setSelectedKey(null); }}>
+          <span className="garden3d-title-label" aria-hidden="true">Vườn tri thức</span>
+          <span className="garden3d-count" aria-hidden="true">{totalCount} cây{filter ? ' · xem tất cả' : ''}</span>
+        </button>
         <div className="garden3d-filters" role="radiogroup" aria-label="Lọc cây theo trạng thái ghi nhớ">
           {statusCounts.map((item) => {
             const isOn = filter === item.status;
@@ -224,13 +226,6 @@ export function Garden3D({ plants, groups, statusCounts, totalCount, fallback }:
             );
           })}
         </div>
-        {areaCount > 1 ? (
-          <nav className="garden3d-areas" aria-label="Các khu vườn">
-            <button type="button" className="garden3d-area-button" onClick={() => { setSelectedKey(null); setArea((current) => Math.max(0, current - 1)); }} disabled={area === 0} aria-label="Khu trước">‹</button>
-            <span>Khu {area + 1}/{areaCount} · cây {area * GARDEN_AREA_SIZE + 1}–{area * GARDEN_AREA_SIZE + visiblePlants.length} / {plants.length}</span>
-            <button type="button" className="garden3d-area-button" onClick={() => { setSelectedKey(null); setArea((current) => Math.min(areaCount - 1, current + 1)); }} disabled={area + 1 >= areaCount} aria-label="Khu tiếp">›</button>
-          </nav>
-        ) : null}
       </div>
 
       {bubble ? <div ref={bubbleRef} className="garden3d-bubble" role="status">{bubble.text}</div> : null}
@@ -251,7 +246,7 @@ export function Garden3D({ plants, groups, statusCounts, totalCount, fallback }:
       {phase === 'ready' && !selected ? (
         <p className="garden3d-hint">
           <span aria-hidden="true">👆</span>
-          {visiblePlants.length ? 'Chạm vào một cây để xem kiến thức · kéo để xoay · chụm / cuộn để phóng to' : 'Vườn đang chờ hạt đầu tiên 🌱 — học một từ là có cây đầu tiên.'}
+          {plants.length ? 'Chạm vào một cây để xem kiến thức · kéo để xoay · chụm / cuộn để phóng to, thu nhỏ để thấy cả đồng cỏ' : 'Vườn đang chờ hạt đầu tiên 🌱 — học một từ là có cây đầu tiên.'}
         </p>
       ) : null}
       {selected && presentation ? (

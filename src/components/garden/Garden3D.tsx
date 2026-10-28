@@ -241,6 +241,13 @@ export function Garden3D({ plants, groups, statusCounts, totalCount, fallback }:
           <button type="button" className="garden3d-tool" onClick={() => handleRef.current?.resetCamera()} aria-label="Về góc nhìn mặc định" title="Về góc nhìn mặc định">
             <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4.5h4.5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </button>
+          {/* Thu phóng bằng nút — luôn dùng được trên điện thoại / iPad (một tay, hoặc khi cử chỉ hai ngón không ăn). */}
+          <button type="button" className="garden3d-tool" onClick={() => handleRef.current?.zoomBy(0.72)} aria-label="Phóng to" title="Phóng to">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" /></svg>
+          </button>
+          <button type="button" className="garden3d-tool" onClick={() => handleRef.current?.zoomBy(1.4)} aria-label="Thu nhỏ — xem cả vườn" title="Thu nhỏ — xem cả vườn">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 12h14" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" /></svg>
+          </button>
         </div>
       ) : null}
       {phase === 'ready' && !selected ? (

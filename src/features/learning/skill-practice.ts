@@ -3,7 +3,7 @@ import type { MemoryView } from '@/features/memory/memory-types';
 import { pickDeterministic, shuffleDeterministic } from '@/lib/utils/deterministic-random';
 import { type KnowledgeCatalog, itemsOfType } from './knowledge-catalog';
 import { type ContentKey, toContentKey } from './knowledge-types';
-import { knowledgeGroups } from './study-actions';
+import { knowledgeGroups, needsReview } from './study-actions';
 import { lessonNumber } from '@/lib/utils/lesson';
 
 /**
@@ -233,6 +233,8 @@ export interface RangePool {
   label: string;
   /** Khoá các mục thuộc phạm vi. */
   keys: string[];
+  /** Nhóm trong bảng chọn phạm vi ("Theo trí nhớ", "Gợi ý", "Theo bài"). */
+  group?: string;
 }
 
 export interface ListeningWord {
@@ -247,18 +249,30 @@ export interface ListeningPools {
   words: Record<string, ListeningWord>;
 }
 
-/** Luyện nghe: theo lộ trình (từ đã tới ngày) · tất cả · từng bài từ vựng. */
-export function buildListeningPools(catalog: KnowledgeCatalog, journeyDay: number): ListeningPools {
+/** Luyện nghe theo trí nhớ: đủ chừng này từ mới có bài nghe ý nghĩa (1 đáp án + 3 phương án nhiễu). */
+const MIN_LISTENING_WORDS = 4;
+export const LEARNED_RANGE = 'da-hoc';
+export const REVIEW_RANGE = 'can-on';
+
+/**
+ * Luyện nghe: đã học (từ đã gặp trong app) · cần ôn (đã học, đang mờ / đến hạn) · theo lộ trình (từ đã tới ngày) · tất cả ·
+ * từng bài từ vựng. Có đủ từ đã học thì mặc định nghe đúng những từ đó.
+ */
+export function buildListeningPools(catalog: KnowledgeCatalog, journeyDay: number, views: Views = new Map()): ListeningPools {
   const vocabulary = itemsOfType(catalog, 'vocabulary');
   const lessons = knowledgeGroups('vocabulary', vocabulary);
   const roadmap = vocabulary.filter((item) => item.day !== null && item.day <= journeyDay);
+  const learned = vocabulary.filter((item) => views.get(item.key)?.isLearned);
+  const review = learned.filter((item) => needsReview(views.get(item.key)!));
   const ranges: RangePool[] = [
-    { id: ROADMAP_RANGE, label: 'Theo lộ trình', keys: roadmap.map((item) => item.key) },
-    { id: ALL_RANGE, label: 'Tất cả', keys: vocabulary.map((item) => item.key) },
-    ...lessons.map((group) => ({ id: group.id, label: group.label, keys: group.items.map((item) => item.key) })),
+    ...(learned.length ? [{ id: LEARNED_RANGE, label: 'Đã học', keys: learned.map((item) => item.key), group: 'Theo trí nhớ' }] : []),
+    ...(review.length ? [{ id: REVIEW_RANGE, label: 'Cần ôn', keys: review.map((item) => item.key), group: 'Theo trí nhớ' }] : []),
+    { id: ROADMAP_RANGE, label: 'Theo lộ trình', keys: roadmap.map((item) => item.key), group: 'Gợi ý' },
+    { id: ALL_RANGE, label: 'Tất cả', keys: vocabulary.map((item) => item.key), group: 'Gợi ý' },
+    ...lessons.map((group) => ({ id: group.id, label: group.label, keys: group.items.map((item) => item.key), group: 'Theo bài' })),
   ];
   return {
-    defaultRange: roadmap.length ? ROADMAP_RANGE : lessons[0]?.id ?? ALL_RANGE,
+    defaultRange: learned.length >= MIN_LISTENING_WORDS ? LEARNED_RANGE : roadmap.length ? ROADMAP_RANGE : lessons[0]?.id ?? ALL_RANGE,
     ranges,
     words: Object.fromEntries(vocabulary.map((item) => [item.key, {
       key: item.key, audioText: item.type === 'vocabulary' ? item.content.kana : item.face, meaning: item.meaning,

@@ -34,6 +34,8 @@ export interface GameRecord {
   bestTimeMs: number;
   plays: number;
   lastPlayedAt: string;
+  /** Neko Streak: chuỗi đúng liên tiếp dài nhất từng đạt (khoá "streak:best"). */
+  bestStreak?: number;
 }
 
 export type GameRecords = Record<string, GameRecord>;

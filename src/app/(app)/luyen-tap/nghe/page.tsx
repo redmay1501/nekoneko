@@ -9,7 +9,7 @@ import { getLearnerContext } from '@/features/learning/learner-context';
 /** SC-24 · Luyện nghe — nghe trước, hiểu sau. Hai phần: bài nghe sẵn có và thư viện video N5 (content/seed/listening-videos.json). */
 export default async function ListeningPage({ searchParams }: { searchParams: Promise<{ 'pham-vi'?: string; muc?: string }> }) {
   const params = await searchParams;
-  const { catalog, journeyDay, settings } = await getLearnerContext();
+  const { catalog, journeyDay, memoryViews, settings } = await getLearnerContext();
   return (
     <>
       <h1>Luyện nghe</h1>
@@ -19,9 +19,9 @@ export default async function ListeningPage({ searchParams }: { searchParams: Pr
         practice={(
           <>
             <p className="soft sm" style={{ margin: '12px 0 14px' }}>
-              Nghe một từ, chọn nghĩa. Chọn phần muốn nghe — kể cả bài chưa học tới. Từ đã học thì được ôn thêm một lần.
+              Nghe một từ, chọn nghĩa. Chọn “Đã học” để nghe lại những từ bạn đã học, “Cần ôn” cho từ đang mờ — hoặc một bài bất kỳ, kể cả bài chưa học tới.
             </p>
-            <ListeningPanel pools={buildListeningPools(catalog, journeyDay)} initialRange={params['pham-vi']} />
+            <ListeningPanel pools={buildListeningPools(catalog, journeyDay, memoryViews)} initialRange={params['pham-vi']} />
           </>
         )} />
     </>

@@ -44,7 +44,7 @@ export function ListeningPanel({ pools, initialRange }: { pools: ListeningPools;
   return (
     <>
       <RangePicker title="Phạm vi" current={rangeId} onSelect={(id) => deal(id, 0)}
-        options={pools.ranges.map((option, index) => ({ id: option.id, label: option.label, caption: `${option.keys.length} từ`, group: groupOf(index) }))} />
+        options={pools.ranges.map((option, index) => ({ id: option.id, label: option.label, caption: `${option.keys.length} từ`, group: option.group ?? groupOf(index) }))} />
       <ListeningQuiz key={`${rangeId}:${round}`} title="Nghe và chọn nghĩa" description="Nghe từng từ, chọn nghĩa rồi bấm câu tiếp theo. Cuối bài có kết quả và nút làm lại."
         questions={questions} emptyMessage="Phần này chưa có từ để nghe — chọn “Tất cả” hoặc một bài nhé." />
       <p className="center mt-2.5"><button type="button" className="btn ghost sm" onClick={() => deal(rangeId, round + 1)}>↻ Bài khác</button></p>

@@ -58,6 +58,8 @@ export interface GardenSceneHandle {
   setFilter: (stage: PlantStage | null) => void;
   setSelected: (contentKey: string | null) => void;
   resetCamera: () => void;
+  /** Phóng to (< 1) / thu nhỏ (> 1) quanh tâm đang nhìn — nút ＋ / － (thu phóng không cần cử chỉ hai ngón). */
+  zoomBy: (factor: number) => void;
   dispose: () => void;
 }
 
@@ -1421,6 +1423,14 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
   controls.target.copy(DEFAULT_TARGET);
   controls.update();
 
+  function zoomBy(factor: number) {
+    const offset = camera.position.clone().sub(controls.target);
+    const distance = THREE.MathUtils.clamp(offset.length() * factor, controls.minDistance, controls.maxDistance);
+    cameraGoal.position.copy(controls.target).add(offset.setLength(distance));
+    cameraGoal.target.copy(controls.target);
+    cameraGoal.active = true;
+  }
+
   function resetCamera() {
     cameraGoal.position.copy(defaultPosition());
     cameraGoal.target.copy(DEFAULT_TARGET);
@@ -1551,6 +1561,14 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
     });
   };
   const onPointerLeave = () => setHovered(-1);
+  // Safari iOS (iPhone, iPad — mọi trình duyệt trên iOS đều là WebKit) không tôn trọng touch-action: none khi chụm hai ngón:
+  // nó coi là phóng to CẢ TRANG và huỷ (pointercancel) các ngón trên canvas → OrbitControls không thu phóng được.
+  // Chặn cử chỉ phóng trang ngay trên canvas (gesture* của WebKit + touch từ hai ngón) để cú chụm về đúng khu vườn.
+  const preventPageZoom = (event: Event) => event.preventDefault();
+  const preventMultiTouch = (event: TouchEvent) => { if (event.touches.length > 1) event.preventDefault(); };
+  for (const type of ['gesturestart', 'gesturechange', 'gestureend']) canvas.addEventListener(type, preventPageZoom, { passive: false });
+  canvas.addEventListener('touchstart', preventMultiTouch, { passive: false });
+  canvas.addEventListener('touchmove', preventMultiTouch, { passive: false });
   canvas.addEventListener('pointerdown', onPointerDown);
   canvas.addEventListener('pointerup', onPointerUp);
   canvas.addEventListener('pointermove', onPointerMove);
@@ -1759,12 +1777,16 @@ export function createGardenScene(options: GardenSceneOptions): GardenSceneHandl
     setFilter,
     setSelected,
     resetCamera,
+    zoomBy,
     dispose() {
       disposed = true;
       renderer.setAnimationLoop(null);
       intersection.disconnect();
       resizeObserver.disconnect();
       document.removeEventListener('visibilitychange', onVisibility);
+      for (const type of ['gesturestart', 'gesturechange', 'gestureend']) canvas.removeEventListener(type, preventPageZoom);
+      canvas.removeEventListener('touchstart', preventMultiTouch);
+      canvas.removeEventListener('touchmove', preventMultiTouch);
       canvas.removeEventListener('pointerdown', onPointerDown);
       canvas.removeEventListener('pointerup', onPointerUp);
       canvas.removeEventListener('pointermove', onPointerMove);

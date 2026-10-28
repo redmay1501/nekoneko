@@ -14,6 +14,14 @@ export interface GameEntry {
 
 export const GAMES: readonly GameEntry[] = [
   {
+    id: 'neko-streak',
+    href: '/tro-choi/neko-streak',
+    icon: '🐾',
+    title: 'Neko Streak — Mèo nhớ siêu đỉnh!',
+    description: 'Trả lời đúng liên tiếp, phá kỷ lục của chính mình! Câu hỏi chỉ lấy từ những gì bạn đã học tới ngày hiện tại.',
+    kinds: 'Chữ cái · Bộ thủ · Kanji · Từ vựng · Ngữ pháp',
+  },
+  {
     id: 'ghep-the',
     href: '/tro-choi/ghep-the',
     icon: '🃏',

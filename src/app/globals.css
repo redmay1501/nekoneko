@@ -2179,3 +2179,17 @@ a.garden-tree:hover .garden-tree-tag{background:#fff;box-shadow:0 0 0 2px #F3B67
 .ondevice-stats dt{color:var(--ink-3)}
 .ondevice-stats dd{margin:0;font-weight:800;color:var(--ink)}
 @media (prefers-reduced-motion:reduce){.ondevice-spinner{animation:none}.ondevice-level span,.ondevice-progress span{transition:none}}
+
+/* Neko Streak — công tắc "Tự chuyển câu" */
+.streak-toolbar{display:flex;justify-content:flex-end;margin:10px 2px -2px}
+.streak-auto{display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border:1px solid #F0DCCF;border-radius:999px;background:#FFFFFF;color:var(--ink-2);font:inherit;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 2px 0 #F2DDCF}
+.streak-auto-knob{position:relative;width:34px;height:20px;border-radius:999px;background:#E9DDD6;transition:background .2s}
+.streak-auto-knob::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.18);transition:transform .2s}
+.streak-auto.is-on{border-color:#F7B6A2;color:var(--sakura-deep)}
+.streak-auto.is-on .streak-auto-knob{background:linear-gradient(90deg,#FFB38A,#FF7D93)}
+.streak-auto.is-on .streak-auto-knob::after{transform:translateX(14px)}
+.streak-auto:focus-visible{outline:3px solid #FFC4CE;outline-offset:2px}
+.streak-next.is-auto{position:relative;overflow:hidden}
+.streak-next.is-auto::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:100%;background:rgba(255,255,255,.75);transform-origin:left;animation:streak-auto-bar 1.5s linear forwards} /* = AUTO_NEXT_AFTER_CORRECT_MS */
+@keyframes streak-auto-bar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media (prefers-reduced-motion:reduce){.streak-auto-knob,.streak-auto-knob::after{transition:none}.streak-next.is-auto::after{animation:none}}

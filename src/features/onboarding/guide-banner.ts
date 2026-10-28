@@ -4,7 +4,9 @@
  * Ẩn khi:
  *  - người học chưa xem hướng dẫn lần đầu (welcomed_at còn trống) — lúc đó hướng dẫn lần đầu đang / sắp phủ màn hình;
  *  - hướng dẫn (lần đầu hoặc xem lại) đang mở;
- *  - đang trong phiên học /hoc/* — nút nổi có thể che đáp án / nút trả lời.
+ *  - đang trong phiên học /hoc/* — nút nổi có thể che đáp án / nút trả lời;
+ *  - đang làm bài: ván trò chơi (/tro-choi/…), bài luyện tập (/luyen-tap/…), học theo ngày (/lo-trinh/ngay/N/hoc) — nút nổi
+ *    che ô ghép thẻ / ô viết / thẻ học ở góc dưới phải trên điện thoại. Trang danh sách (/tro-choi, /luyen-tap) vẫn hiện.
  * Trang đăng nhập / đăng ký / đặt lại mật khẩu thuộc nhóm (auth), không dùng AppShell nên không bao giờ có nút này.
  */
 export interface GuideBannerContext {
@@ -16,8 +18,13 @@ export interface GuideBannerContext {
 /** Tiền tố route mà nút nổi không được che (phiên học toàn màn hình và khu vực Học tập). */
 export const GUIDE_BANNER_HIDDEN_PREFIXES: readonly string[] = ['/hoc'];
 
+/** Chỉ các trang CON của những mục này (đang làm bài) — trang mục chính vẫn có nút. */
+export const GUIDE_BANNER_HIDDEN_SUBPAGES: readonly string[] = ['/tro-choi', '/luyen-tap'];
+const DAY_STUDY_PATH = /^\/lo-trinh\/ngay\/\d+\/hoc(\/|$)/;
+
 export function shouldShowGuideBanner({ pathname, isWelcomed, isGuideOpen }: GuideBannerContext): boolean {
   if (!isWelcomed || isGuideOpen) return false;
+  if (GUIDE_BANNER_HIDDEN_SUBPAGES.some((prefix) => pathname.startsWith(`${prefix}/`)) || DAY_STUDY_PATH.test(pathname)) return false;
   return !GUIDE_BANNER_HIDDEN_PREFIXES.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
 }
 

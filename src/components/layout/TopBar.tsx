@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSheetStore } from '@/stores/sheet-store';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
 import { BrandLogo } from '@/components/common/BrandLogo';
@@ -25,6 +25,20 @@ export function TopBar({ displayName, level, recallDays, isGentleMode, isDemo, i
   const pathname = usePathname();
   const [query, setQuery] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  // Chiều cao thật của header (đổi theo cỡ màn hình, safe-area, ô tiêu đề xuống dòng) → biến CSS --topbar-h,
+  // để các trang toàn màn hình (lớp học, vườn) canh nội dung theo header thật thay vì số cố định.
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    const root = document.documentElement;
+    const publish = () => root.style.setProperty('--topbar-h', `${Math.round(header.getBoundingClientRect().height)}px`);
+    publish();
+    const observer = new ResizeObserver(publish);
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     function updateScrollState() {
@@ -36,7 +50,7 @@ export function TopBar({ displayName, level, recallDays, isGentleMode, isDemo, i
   }, []);
 
   return (
-    <header className={`topbar${pathname === '/' ? ' home-topbar' : ''}${isScrolled ? ' scrolled' : ''}${isMenuOpen ? ' menu-open' : ''}`}>
+    <header ref={headerRef} className={`topbar${pathname === '/' ? ' home-topbar' : ''}${isScrolled ? ' scrolled' : ''}${isMenuOpen ? ' menu-open' : ''}`}>
       <button type="button" className={`nav-burger${isMenuOpen ? ' on' : ''}`} onClick={isMenuOpen ? close : openNavigation}
         aria-label={isMenuOpen ? 'Đóng menu' : 'Mở menu'} aria-expanded={isMenuOpen}>
         ☰
@@ -66,8 +80,9 @@ export function TopBar({ displayName, level, recallDays, isGentleMode, isDemo, i
         <span style={{ position: 'absolute', left: 12, top: 10, fontSize: 13, opacity: 0.5 }} aria-hidden="true">🔍</span>
       </form>
       {isGentleMode ? null : (
-        <Link href="/theo-doi?tab=tri-nho" className="chip recall-chip" title="Số ngày bạn đã ôn tập trong 30 ngày gần đây">
-          <EmojiIcon emoji="🧠" size={16} /> Đã ôn {recallDays} ngày
+        <Link href="/theo-doi?tab=tri-nho" className="chip recall-chip" title="Số ngày bạn đã ôn tập trong 30 ngày gần đây"
+          aria-label={`Đã ôn ${recallDays} ngày trong 30 ngày gần đây`}>
+          <EmojiIcon emoji="🧠" size={16} /> <span className="recall-chip-word">Đã ôn </span>{recallDays}<span className="recall-chip-word"> ngày</span>
         </Link>
       )}
       <UserMenu displayName={displayName} level={level} isDemo={isDemo} isAdmin={isAdmin} />

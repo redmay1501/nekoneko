@@ -90,6 +90,8 @@ export function DayStudyFlow({ data, initialStep, initialMode }: { data: DayStud
   const quizzes = stepId === 'chu-cai' ? KANA_QUIZZES : stepId === 'tu-vung' ? VOCAB_QUIZZES.filter((quiz) => quiz.id !== 'ghep' || data.vocab.length >= MIN_MATCH_POOL)
     : stepId === 'ngu-phap' ? GRAMMAR_QUIZZES : stepId === 'bo-thu' ? RADICAL_QUIZZES : stepId === 'kanji' ? KANJI_QUIZZES : [];
   const quizProps = { onRestart: restart, onRetryWrong: retryWrong, onWrong: addWrong };
+  // Thẻ học: link luyện viết của đúng thẻ + nhớ thẻ đang xem của bước (đi luyện viết rồi quay lại vẫn đúng chỗ).
+  const cardExtras = { writingHref: (card: { writingHref: string | null }) => card.writingHref, storageKey: `day-study:${data.day}:${stepId}:the` };
   // Cuối phần thẻ học / bài học của bước: đi thẳng sang bài ôn của bước (đổi đúng ?buoc=&che-do=) hoặc bước sau.
   // Không tự hoàn thành ngày — người học vẫn tự bấm "Hoàn thành ngày".
   const endActions = (
@@ -149,14 +151,14 @@ export function DayStudyFlow({ data, initialStep, initialMode }: { data: DayStud
 
       <div className="mt-3" key={`${stepId}:${mode}:${run}`}>
         {stepId === 'chu-cai' && mode === LESSON_MODE ? (
-          <Flashcards cards={data.kana} unit="chữ" marked={marked} onToggleMark={toggleMark} endActions={endActions} audioText={(card) => card.face}
+          <Flashcards cards={data.kana} unit="chữ" marked={marked} onToggleMark={toggleMark} endActions={endActions} {...cardExtras} audioText={(card) => card.face}
             front={(card) => <span className="glyph flashcard-glyph">{card.face}</span>} back={(card) => <KanaBack card={card} />}
             footer={(card) => <StrokeToggle key={card.key} character={card.face} />} />
         ) : null}
         {stepId === 'chu-cai' && mode !== LESSON_MODE ? <StudyQuiz questions={questions} unit="chữ" {...quizProps} /> : null}
 
         {stepId === 'tu-vung' && mode === LESSON_MODE ? (
-          <Flashcards cards={data.vocab} unit="từ" marked={marked} onToggleMark={toggleMark} endActions={endActions}
+          <Flashcards cards={data.vocab} unit="từ" marked={marked} onToggleMark={toggleMark} endActions={endActions} {...cardExtras}
             audioText={(card) => card.kana} front={(card) => <VocabFront card={card} />} back={(card) => <VocabBack card={card} />} />
         ) : null}
         {stepId === 'tu-vung' && mode === 'ghep' ? (
@@ -181,7 +183,7 @@ export function DayStudyFlow({ data, initialStep, initialMode }: { data: DayStud
         {stepId === 'bo-thu' && mode === LESSON_MODE ? (
           <>
             <p className="sm soft mb-2">Bộ thủ là “mảnh ghép” giúp nhận ra và nhớ cấu tạo chữ Hán. Học bộ thủ không thay cho học Kanji — Kanji có bước riêng.</p>
-            <Flashcards cards={data.radicals} unit="bộ" marked={marked} onToggleMark={toggleMark} endActions={endActions}
+            <Flashcards cards={data.radicals} unit="bộ" marked={marked} onToggleMark={toggleMark} endActions={endActions} {...cardExtras}
               front={(card) => <span className="glyph flashcard-glyph">{card.glyph}</span>} back={(card) => <RadicalBack card={card} />} />
           </>
         ) : null}
@@ -190,7 +192,7 @@ export function DayStudyFlow({ data, initialStep, initialMode }: { data: DayStud
         {stepId === 'kanji' && mode === LESSON_MODE ? (
           <>
             {data.kanji.length ? (
-              <Flashcards cards={data.kanji} unit="chữ" marked={marked} onToggleMark={toggleMark} endActions={endActions}
+              <Flashcards cards={data.kanji} unit="chữ" marked={marked} onToggleMark={toggleMark} endActions={endActions} {...cardExtras}
                 audioText={(card) => card.words[0]?.reading ?? card.readings[0] ?? card.character}
                 front={(card) => <span className="glyph flashcard-glyph">{card.character}</span>}
                 back={(card) => <KanjiBack card={card} />} footer={(card) => <StrokeToggle key={card.key} character={card.character} />} />

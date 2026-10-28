@@ -25,6 +25,11 @@ describe('shouldShowGuideBanner', () => {
     expect(shouldShowGuideBanner({ ...base, pathname: '/hoc' })).toBe(false);
     expect(shouldShowGuideBanner({ ...base, pathname: '/hoc-tap' })).toBe(true);
   });
+
+  it('ẩn khi đang làm bài (ván trò chơi, bài luyện tập, học theo ngày) — trang mục chính vẫn hiện', () => {
+    for (const pathname of ['/tro-choi/ghep-the', '/luyen-tap/viet', '/lo-trinh/ngay/14/hoc']) expect(shouldShowGuideBanner({ ...base, pathname })).toBe(false);
+    for (const pathname of ['/tro-choi', '/luyen-tap', '/lo-trinh/ngay/14']) expect(shouldShowGuideBanner({ ...base, pathname })).toBe(true);
+  });
 });
 
 describe('tuỳ chọn thu gọn (localStorage)', () => {

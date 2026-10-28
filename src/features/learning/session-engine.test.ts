@@ -399,3 +399,32 @@ describe('Học theo lựa chọn (focus)', () => {
     expect(buildFocus([]).steps).toEqual([]);
   });
 });
+
+describe('câu ôn: hỏi Nhật → Việt khi cách đọc không phải là câu hỏi thật', () => {
+  it('từ vựng / Kanji / bộ thủ hỏi NGHĨA tiếng Việt; không câu ôn nào có đáp án trùng y mặt chữ', () => {
+    for (const mode of ['more', 'quick5', 'flow', 'rescue', 'daily'] as SessionMode[]) {
+      for (const seed of ['a', 'b', 'c', 'd']) {
+        for (const step of build(mode, seed).steps) {
+          if (step.type !== 'recall') continue;
+          const item = catalog.byKey.get(step.contentKey)!;
+          expect({ key: step.contentKey, same: step.correctAnswer === step.face }).toEqual({ key: step.contentKey, same: false });
+          if (item.type === 'vocabulary' || item.type === 'radical' || item.type === 'kanji') {
+            expect(step.correctAnswer).toBe(item.meaning);
+            expect(step.question).toMatch(/nghĩa/);
+          }
+        }
+      }
+    }
+  });
+});
+
+describe('Học thêm: hết thứ mới để học trước thì bù bằng câu ôn', () => {
+  it('ngày đang học đã gặp hết → phiên vẫn đủ dài (ôn = recall + discover), không chỉ còn 3 câu', () => {
+    const allMet = memoryViewsAtDay(30);
+    expect(unmetKnowledgeOfDay(catalog, allMet, 23)).toEqual([]);
+    const { composition } = SESSION_MODE_CONFIG.more;
+    const plan = build('more', 'topup', 23, allMet);
+    expect(plan.steps.filter((step) => step.type === 'recall')).toHaveLength(composition.recall + composition.discover);
+    expect(plan.steps.some((step) => step.type === 'discover')).toBe(false);
+  });
+});

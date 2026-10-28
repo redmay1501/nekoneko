@@ -262,3 +262,15 @@ export function isGhostCell(index: number, repeats: number, mode: GhostMode): bo
   if (mode === 'none') return false;
   return index < Math.ceil(repeats / 2);
 }
+
+/**
+ * Link "Luyện viết chữ này": trang sổ luyện viết có dòng của đúng chữ đó (?muc=so&so=<sổ>&trang=<số>).
+ * Sổ Từ vựng khớp theo cách viết kana hoặc chữ Kanji của từ. Không có dòng nào khớp → null (không dẫn sai trang).
+ */
+export function notebookWritingHref(notebooks: readonly Notebook[], notebookId: NotebookId, text: string): string | null {
+  const notebook = notebooks.find((entry) => entry.id === notebookId);
+  const glyph = notebookId === 'tu-vung' ? writingFormOf(text).join('') : text;
+  if (!notebook || !glyph) return null;
+  const page = notebook.pages.find((entry) => entry.rows.some((row) => row.glyph === glyph || (row.word?.kanji?.join('') === glyph)));
+  return page ? `/luyen-tap/viet?muc=so&so=${notebook.id}&trang=${page.number}` : null;
+}

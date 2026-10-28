@@ -190,6 +190,11 @@ function selectDiscoverGroups(input: BuildLearningSessionInput, count: number, e
 }
 
 function buildRecallStep(item: KnowledgeItem, catalog: KnowledgeCatalog, stepIndex: number, seed: string, known: ReadonlySet<ContentKey>): SessionStepWithAnswer {
+  // Đáp án "cách đọc" trùng y mặt chữ (từ viết bằng kana: おはよう → おはよう) thì câu hỏi vô nghĩa — hỏi nghĩa tiếng Việt.
+  if (item.reading.trim() === item.face.trim()) {
+    const step = buildPracticeStep(item, catalog, stepIndex, seed, known);
+    return step.type === 'recall' ? { ...step, isPractice: false, question: 'Nó nghĩa là gì?' } : step;
+  }
   const sameType = knownDistractors(item, catalog, known);
   return {
     type: 'recall', stepIndex, contentKey: item.key, face: item.face, audioText: speechTextFor(item),
@@ -334,12 +339,12 @@ function buildFocusSteps(input: BuildLearningSessionInput, known: Set<ContentKey
 }
 
 /**
- * Hỏi lại một thứ đã gặp: chữ cái, Kanji → cách đọc; từ vựng, bộ thủ → nghĩa (từ viết bằng kana mà hỏi cách đọc thì
- * đáp án chính là mặt chữ); mẫu câu → chọn câu đúng.
+ * Hỏi lại một thứ đã gặp: chữ cái → cách đọc (romaji); từ vựng, Kanji, bộ thủ → nghĩa tiếng Việt (Nhật → Việt; từ viết
+ * bằng kana mà hỏi cách đọc thì đáp án chính là mặt chữ); mẫu câu → chọn câu đúng.
  */
 function buildFocusReviewStep(item: KnowledgeItem, input: BuildLearningSessionInput, stepIndex: number, known: ReadonlySet<ContentKey>): SessionStepWithAnswer {
   if (item.type === 'grammar') return buildGrammarCheckStep(item, input, stepIndex, known);
-  if (item.type === 'vocabulary' || item.type === 'radical') {
+  if (item.type === 'vocabulary' || item.type === 'radical' || item.type === 'kanji') {
     const step = buildPracticeStep(item, input.catalog, stepIndex, input.seed, known);
     return step.type === 'recall' ? { ...step, isPractice: false, question: 'Nó nghĩa là gì?' } : step;
   }
@@ -384,12 +389,19 @@ export function buildLearningSession(input: BuildLearningSessionInput): Learning
     }
   }
 
-  for (const item of selectRecallItems(input, composition.recall, used)) {
+  // Chế độ chọn được (Học thêm, Học liên tục…) hết thứ mới để học trước → bù bằng câu ôn cho phiên đủ dài,
+  // thay vì chỉ còn vài câu. Học hôm nay / Khám phá giữ đúng thành phần của chúng.
+  const discoverGroups = selectDiscoverGroups(input, composition.discover, used);
+  const newCount = discoverGroups.reduce((sum, group) => sum + group.items.length, 0);
+  const topUp = SESSION_MODE_CONFIG[mode].isPickable && composition.recall > 0 ? Math.max(0, composition.discover - newCount) : 0;
+
+  // Ôn: chữ cái → cách đọc; từ vựng / Kanji / bộ thủ → nghĩa tiếng Việt; mẫu câu → chọn câu đúng (như Học theo lựa chọn).
+  for (const item of selectRecallItems(input, composition.recall + topUp, used)) {
     used.add(item.key);
-    steps.push(buildRecallStep(item, catalog, steps.length, seed, known));
+    steps.push(buildFocusReviewStep(item, input, steps.length, known));
   }
 
-  for (const group of selectDiscoverGroups(input, composition.discover, used)) {
+  for (const group of discoverGroups) {
     for (const item of group.items) used.add(item.key);
     steps.push(...buildDiscoverAndPracticeSteps(group.items, input, steps.length, group.phase, known));
   }

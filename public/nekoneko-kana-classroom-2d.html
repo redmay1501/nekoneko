@@ -999,6 +999,7 @@ window.NekoHiraganaData = {
     port: { x0: 0, x1: 1170, y0: 0, y1: 1845, ceil: 60, horizon: 1845 },
   };
   var stage = $('stage'), root = document.documentElement;
+  var topInset = 0;
   function fit() {
     var w = window.innerWidth, h = window.innerHeight;
     var hud = $('hud').getBoundingClientRect().height + 30;
@@ -1026,6 +1027,12 @@ window.NekoHiraganaData = {
       s = Math.min(sW, availH / Hc);
       tx = w / 2 - ((f.x0 + f.x1) / 2) * s;
       ty = Math.min(availH - Hc * s, Math.max(0, (availH - f.y1 * s) * 0.25));
+    }
+    if (portrait && topInset) {
+      // Không để header / thanh công cụ của app che bảng: dời cảnh xuống vừa đủ để mép trên bảng nằm dưới phần bị phủ
+      // (giữ nguyên tỉ lệ — phần sàn dưới cùng vốn được phép khuất sau dãy thẻ).
+      var boardEl = document.querySelector('.board');
+      if (boardEl) ty = Math.max(ty, topInset + 6 - boardEl.offsetTop * s);
     }
     stage.style.transform = 'translate(' + tx.toFixed(2) + 'px,' + ty.toFixed(2) + 'px) scale(' + s.toFixed(5) + ')';
     root.style.setProperty('--s', s.toFixed(4));
@@ -1289,7 +1296,14 @@ window.NekoHiraganaData = {
   if (window.parent !== window) {
     window.addEventListener('message', function (e) {
       if (e.origin !== location.origin || e.source !== window.parent) return;
-      var d = e.data; if (!d || d.source !== 'nekoneko-app' || d.type !== 'goto') return;
+      var d = e.data; if (!d || d.source !== 'nekoneko-app') return;
+      // App báo phần trên khung bị header + thanh công cụ của app phủ lên → màn dọc dời bảng xuống dưới phần đó.
+      if (d.type === 'inset' && typeof d.top === 'number') {
+        var top = Math.max(0, Math.min(window.innerHeight * 0.4, d.top));
+        if (Math.abs(top - topInset) > 0.5) { topInset = top; fit(); syncArrows(); sizeCanvas(); }
+        return;
+      }
+      if (d.type !== 'goto') return;
       var i = typeof d.index === 'number' ? d.index : HIRAGANA.findIndex(function (k) { return k.character === d.character; });
       if (i >= 0) select(i);
     });

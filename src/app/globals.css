@@ -654,6 +654,9 @@ input[type="radio"]{appearance:auto;-webkit-appearance:radio;width:18px;height:1
 .input{width:100%;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:#fff;font:inherit;font-size:15px}
 .input:focus{border-color:var(--pink)}
 .topbar .chip{white-space:nowrap}
+/* Logo không bị bóp khi header chật; màn rất hẹp: chip ôn tập chỉ còn 🧠 + số (nhãn đầy đủ ở aria-label / title). */
+.topbrand{flex:0 0 auto}
+@media (max-width:399px){.recall-chip-word{display:none}.topbar{gap:6px;padding-inline:12px}}
 /* Đặt sau quy tắc vùng chạm ở trên để nút ☰ vẫn ẩn trên desktop như prototype. */
 @media (min-width:1200px){.nav-burger{display:none}}
 
@@ -1051,7 +1054,7 @@ input[type="radio"]{appearance:auto;-webkit-appearance:radio;width:18px;height:1
 @media (min-width:900px){.radical-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 
 .knowledge-garden{margin:14px 0 20px;overflow:hidden;border-radius:22px;background:#F7E3D3;box-shadow:0 10px 28px rgba(101,73,56,.16)}
-.knowledge-garden-shell{position:relative;isolation:isolate;width:100%;height:calc(100dvh - 66px);min-height:520px;overflow:hidden;background:#F7E3D3}
+.knowledge-garden-shell{position:relative;isolation:isolate;width:100%;height:calc(100dvh - var(--topbar-h,66px));min-height:520px;overflow:hidden;background:#F7E3D3}
 .knowledge-garden-frame{position:absolute;inset:0;z-index:0;display:block;width:100%;height:100%;border:0;background:#F7E3D3}
 .knowledge-garden-toolbar{position:absolute;z-index:15;top:10px;left:clamp(10px,2vw,24px);width:min(470px,calc(100% - 20px));padding:9px 13px;border:1px solid rgba(255,255,255,.72);border-radius:17px;background:radial-gradient(circle at 12% 15%,rgba(255,255,255,.56) 0 2px,transparent 3px),radial-gradient(circle at 86% 78%,rgba(255,255,255,.34) 0 3px,transparent 4px),linear-gradient(135deg,rgba(255,252,249,.55),rgba(255,244,246,.38));box-shadow:0 8px 20px rgba(80,48,31,.12),inset 0 1px 0 rgba(255,255,255,.76);backdrop-filter:blur(8px) saturate(1.18);-webkit-backdrop-filter:blur(8px) saturate(1.18)}
 .knowledge-garden-toolbar:not(.kana-classroom-toolbar){width:min(420px,calc(100% - 20px));padding:8px 12px;border-radius:15px}
@@ -1061,8 +1064,8 @@ input[type="radio"]{appearance:auto;-webkit-appearance:radio;width:18px;height:1
 .app-root:has(.knowledge-garden-shell) .topbar{background:rgba(255,252,249,.28);backdrop-filter:blur(5px) saturate(1.12);-webkit-backdrop-filter:blur(5px) saturate(1.12);border-bottom-color:rgba(255,255,255,.4)}
 .app-root:has(.knowledge-garden-shell) .main>.topbar{position:absolute;inset:0 0 auto;z-index:30}
 .app-root:has(.knowledge-garden-shell) .knowledge-garden-shell,.app-root:has(.knowledge-garden-shell) .view:has(.knowledge-garden-shell){height:100dvh}
-.app-root:has(.knowledge-garden-shell) .knowledge-garden-toolbar{top:76px}
-.app-root:has(.knowledge-garden-shell:not(.kana-classroom-shell)) .knowledge-garden-frame{top:66px;height:calc(100% - 66px)}
+.app-root:has(.knowledge-garden-shell) .knowledge-garden-toolbar{top:calc(var(--topbar-h,66px) + 10px)}
+
 .knowledge-garden-toolbar.kana-classroom-toolbar{width:fit-content;max-width:calc(100vw - 20px)}
 .knowledge-garden-heading{display:flex;align-items:center;gap:10px}
 .knowledge-garden-heading h1{margin:0;color:var(--ink);font-size:21px;line-height:1.2}
@@ -1071,28 +1074,38 @@ input[type="radio"]{appearance:auto;-webkit-appearance:radio;width:18px;height:1
 .knowledge-garden-actions{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}
 .knowledge-garden-actions .test-open-row{justify-content:flex-start;margin:0}
 .knowledge-garden-actions .btn{min-height:34px}
-.view:has(.knowledge-garden-shell){width:100%;max-width:none;height:calc(100dvh - 66px);min-height:520px;margin:0;padding:0;overflow:visible}
+.view:has(.knowledge-garden-shell){width:100%;max-width:none;height:calc(100dvh - var(--topbar-h,66px));min-height:520px;margin:0;padding:0;overflow:visible}
 .knowledge-catalog-toggle{margin:14px 0 20px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.56)}
 .knowledge-catalog-toggle>summary{min-height:46px;padding:12px 15px;cursor:pointer;color:var(--ink-2);font-size:13px;font-weight:700;list-style:none}
 .knowledge-catalog-toggle>summary::-webkit-details-marker{display:none}
 .knowledge-catalog-toggle>summary::after{content:'⌄';float:right;color:var(--sakura-deep);font-size:18px;line-height:14px;transition:transform .18s}
 .knowledge-catalog-toggle[open]>summary::after{transform:rotate(180deg)}
 .knowledge-catalog-toggle[open]>:not(summary){margin-inline:12px}
-@media(max-width:767px){.knowledge-garden-shell,.view:has(.knowledge-garden-shell){height:calc(100dvh - 58px - var(--safe-t));min-height:500px}.knowledge-garden-toolbar{top:7px;left:8px;width:calc(100% - 16px);padding:7px 11px;border-radius:14px}.knowledge-garden-heading h1{font-size:19px}.knowledge-garden-heading>span{min-height:23px;font-size:11px}.knowledge-garden-toolbar>p{font-size:10.5px;line-height:1.25;margin:2px 0 4px}.knowledge-garden-actions{gap:4px 8px}.knowledge-garden-actions .btn{min-height:30px;padding-block:5px}.knowledge-garden-actions .test-open{min-height:30px}.kana-classroom-toolbar .knowledge-garden-heading{justify-content:flex-start;gap:8px}.kana-classroom-toolbar-body{margin-top:6px}.kana-classroom-toolbar .knowledge-garden-actions{justify-content:flex-start;gap:4px 7px}.kana-classroom-toolbar .knowledge-garden-actions .btn{min-height:29px;padding:4px 8px;font-size:11px}.app-root:has(.knowledge-garden-shell) .bottomnav{display:none}}
+@media(max-width:767px){.knowledge-garden-shell,.view:has(.knowledge-garden-shell){height:calc(100dvh - var(--topbar-h,66px));min-height:500px}.knowledge-garden-toolbar{top:7px;left:8px;width:calc(100% - 16px);padding:7px 11px;border-radius:14px}.knowledge-garden-heading h1{font-size:19px}.knowledge-garden-heading>span{min-height:23px;font-size:11px}.knowledge-garden-toolbar>p{font-size:10.5px;line-height:1.25;margin:2px 0 4px}.knowledge-garden-actions{gap:4px 8px}.knowledge-garden-actions .btn{min-height:30px;padding-block:5px}.knowledge-garden-actions .test-open{min-height:30px}.kana-classroom-toolbar .knowledge-garden-heading{justify-content:flex-start;gap:8px}.kana-classroom-toolbar-body{margin-top:6px}.kana-classroom-toolbar .knowledge-garden-actions{justify-content:flex-start;gap:4px 7px}.kana-classroom-toolbar .knowledge-garden-actions .btn{min-height:29px;padding:4px 8px;font-size:11px}.app-root:has(.knowledge-garden-shell) .bottomnav{display:none}}
 @media(max-width:767px){.knowledge-garden-toolbar.kana-classroom-toolbar{display:flex;align-items:center;gap:8px;width:max-content;max-width:calc(100vw - 16px);padding:6px 8px}.kana-classroom-toolbar .knowledge-garden-heading{flex:0 0 auto;gap:5px}.kana-classroom-toolbar .knowledge-garden-heading h1{font-size:15px;white-space:nowrap}.kana-classroom-toolbar .knowledge-garden-heading>span{min-height:20px;padding:1px 6px;font-size:9px;white-space:nowrap}.kana-classroom-toolbar-body{flex:0 0 auto;margin:0}.kana-classroom-toolbar .knowledge-garden-actions{flex-wrap:nowrap;gap:5px}.kana-classroom-toolbar .knowledge-garden-actions .btn{min-height:27px;padding:3px 7px;font-size:10px;white-space:nowrap}.kana-classroom-toolbar .knowledge-garden-actions .test-open svg{width:13px;height:13px}}
-@media(max-width:767px){.app-root:has(.knowledge-garden-shell) .knowledge-garden-shell,.app-root:has(.knowledge-garden-shell) .view:has(.knowledge-garden-shell){height:100dvh}.app-root:has(.knowledge-garden-shell) .knowledge-garden-toolbar{top:calc(58px + var(--safe-t) + 7px)}}
-@media(max-width:767px){.app-root:has(.knowledge-garden-shell:not(.kana-classroom-shell)) .knowledge-garden-frame{top:calc(58px + var(--safe-t));height:calc(100% - 58px - var(--safe-t))}}
+@media(max-width:767px){.app-root:has(.knowledge-garden-shell) .knowledge-garden-shell,.app-root:has(.knowledge-garden-shell) .view:has(.knowledge-garden-shell){height:100dvh}.app-root:has(.knowledge-garden-shell) .knowledge-garden-toolbar{top:calc(var(--topbar-h,66px) + 7px)}}
 @media(max-width:767px){.knowledge-garden-toolbar:not(.kana-classroom-toolbar){width:calc(100% - 24px);max-width:380px;padding:6px 10px;border-radius:14px}.knowledge-garden-toolbar:not(.kana-classroom-toolbar) .knowledge-garden-heading{gap:7px}.knowledge-garden-toolbar:not(.kana-classroom-toolbar) .knowledge-garden-heading h1{font-size:17px}.knowledge-garden-toolbar:not(.kana-classroom-toolbar) .knowledge-garden-heading>span{min-height:21px;padding:1px 8px;font-size:10px}.knowledge-garden-toolbar:not(.kana-classroom-toolbar)>p{font-size:10px;line-height:1.2;margin:2px 0 4px}.knowledge-garden-toolbar:not(.kana-classroom-toolbar) .knowledge-garden-actions .btn{min-height:28px;padding:4px 10px;font-size:11px}}
 .app-root:has(.knowledge-garden-shell:not(.kana-classroom-shell)) .main>.topbar{position:sticky;top:0;inset-inline:0;z-index:30;background:rgba(255,252,249,.56);backdrop-filter:blur(9px) saturate(1.14);-webkit-backdrop-filter:blur(9px) saturate(1.14);border-bottom-color:rgba(255,255,255,.62);box-shadow:0 5px 18px rgba(90,70,60,.08)}
-.app-root:has(.knowledge-garden-shell:not(.kana-classroom-shell)) .topbar-knowledge-slot{display:block;position:absolute;top:9px;left:24px;z-index:1;width:min(420px,calc(100% - 460px));pointer-events:none}
+/* Ô tiêu đề trang (Hiragana 104/104…) nằm trong hàng flex của header, sau logo — không absolute, nên không đè nút menu / logo / ô tìm kiếm. */
+.app-root:has(.knowledge-garden-shell) .topbar-knowledge-slot{display:block;flex:0 1 auto;min-width:0;pointer-events:none}
+.app-root:has(.knowledge-garden-shell) .topbar-knowledge-slot .knowledge-header-copy>div{min-width:0}
+.app-root:has(.knowledge-garden-shell) .topbar-knowledge-slot .knowledge-header-copy strong{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.app-root:has(.knowledge-garden-shell) .topbar-knowledge-slot .knowledge-header-copy span{flex:0 0 auto;white-space:nowrap}
+/* Dưới 1200px header còn nút menu + logo: chỉ giữ tiêu đề + số đếm, câu mô tả (đã có trong trang) ẩn đi cho khỏi gãy dòng. */
+@media(max-width:1199px){.app-root:has(.knowledge-garden-shell) .topbar-knowledge-slot .knowledge-header-copy p{display:none}}
+.topbar .user-menu-trigger{white-space:nowrap}
+/* Mobile: không đủ chỗ trong một hàng → ô tiêu đề xuống hàng riêng dưới nút menu / logo (header tự cao lên, --topbar-h theo đó). */
+@media(max-width:767px){.app-root:has(.kana-classroom-shell) .main>.topbar{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto auto;row-gap:4px}.app-root:has(.kana-classroom-shell) .main>.topbar>*{grid-row:1}.app-root:has(.kana-classroom-shell) .main>.topbar>.topbar-knowledge-slot{grid-row:2;grid-column:1/-1;padding-left:4px}}
+/* Trang lớp học / vườn toàn màn hình có thanh chọn ở đáy riêng: thanh điều hướng dưới và nút nổi "Khám phá Neko" che mất nó → ẩn (điều hướng qua nút ☰). */
+.app-root:has(.knowledge-garden-shell) .bottomnav,.app-root:has(.knowledge-garden-shell) .guide-fab{display:none}
 .cafe-vocab-header{display:flex;align-items:center;width:100%;pointer-events:none}.cafe-vocab-header .knowledge-header-copy{min-width:0;flex:1}.cafe-vocab-header .knowledge-header-copy>div{white-space:nowrap}.cafe-vocab-header .knowledge-header-copy strong{font-size:16px}.cafe-vocab-header .knowledge-header-copy span{min-height:21px;font-size:10px}
 .cafe-vocab-test{position:absolute;z-index:15;top:10px;left:clamp(10px,2vw,24px)}.cafe-vocab-test .test-open-row{justify-content:flex-start;margin:0}
 .knowledge-header-copy>div{display:flex;align-items:center;gap:8px}.knowledge-header-copy strong{font-size:18px;line-height:1.2;color:var(--ink)}.knowledge-header-copy span{display:inline-flex;align-items:center;min-height:23px;padding:1px 8px;border-radius:999px;background:#E8F3E6;color:#3F7846;font-size:11px;font-weight:800}.knowledge-header-copy p{margin:2px 0 0;color:var(--ink-2);font-size:10.5px;line-height:1.2}
-.app-root:has(.knowledge-garden-shell:not(.kana-classroom-shell)) .view:has(.knowledge-garden-shell){height:calc(100dvh - 66px);min-height:0;margin:0;padding:0}
-.app-root:has(.knowledge-garden-shell:not(.kana-classroom-shell)) .knowledge-garden-shell{height:calc(100dvh - 66px);min-height:0;overflow:visible}
-.app-root:has(.knowledge-garden-shell:not(.kana-classroom-shell)) .knowledge-garden-frame{top:-66px;height:calc(100% + 66px)}
+.app-root:has(.knowledge-garden-shell:not(.kana-classroom-shell)) .view:has(.knowledge-garden-shell){height:calc(100dvh - var(--topbar-h,66px));min-height:0;margin:0;padding:0}
+.app-root:has(.knowledge-garden-shell:not(.kana-classroom-shell)) .knowledge-garden-shell{height:calc(100dvh - var(--topbar-h,66px));min-height:0;overflow:visible}
+.app-root:has(.knowledge-garden-shell:not(.kana-classroom-shell)) .knowledge-garden-frame{top:calc(-1 * var(--topbar-h,66px));height:calc(100% + var(--topbar-h,66px))}
 .knowledge-radical-test{position:absolute;z-index:15;top:10px;left:clamp(10px,2vw,24px)}.knowledge-radical-test .test-open-row{justify-content:flex-start;margin:0}
-.app-root:has(.kana-classroom-shell) .topbar-knowledge-slot{display:block;position:absolute;top:9px;left:24px;z-index:2;width:min(260px,calc(100% - 490px));pointer-events:none}
+
 .kana-picker-backdrop{position:fixed;inset:0;z-index:89;border:0;padding:0;background:transparent;cursor:default}
 .kana-picker-dialog{position:fixed;z-index:100;left:50%;top:50%;transform:translate(-50%,-50%);width:min(460px,calc(100vw - 24px));max-height:min(80dvh,720px);overflow:auto;padding:16px;border:1px solid #F0DFD1;border-radius:24px;background:linear-gradient(180deg,#FFFCF7,#FFF5EA);box-shadow:0 24px 60px rgba(55,35,28,.34)}
 body:has(.kana-picker-dialog) .topbar{z-index:95}
@@ -1113,16 +1126,13 @@ body:has(.kana-picker-dialog) .topbar{z-index:95}
 .kana-classroom-toolbar .knowledge-garden-actions .test-open:active{transform:translateY(2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 1px 0 #CE5A70}
 .kana-classroom-toolbar .knowledge-garden-actions a.btn:active{transform:translateY(2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 1px 0 #D7B99A}
 @media(max-width:767px){
-  .app-root:has(.kana-classroom-shell) .main>.topbar{min-height:calc(88px + var(--safe-t));align-items:flex-start}
-  .app-root:has(.kana-classroom-shell) .topbar-knowledge-slot{top:calc(56px + var(--safe-t));left:12px;right:12px;width:auto}
   .kana-header-copy strong{font-size:16px}.kana-header-copy span{min-height:21px;padding-inline:7px;font-size:10px}
-  .app-root:has(.kana-classroom-shell) .knowledge-garden-toolbar.kana-classroom-toolbar{top:calc(88px + var(--safe-t) + 7px);left:8px;width:max-content;max-width:calc(100vw - 16px);padding:6px 8px}
+  .app-root:has(.kana-classroom-shell) .knowledge-garden-toolbar.kana-classroom-toolbar{top:calc(var(--topbar-h,66px) + 7px);left:8px;width:max-content;max-width:calc(100vw - 16px);padding:6px 8px}
   .kana-classroom-toolbar .knowledge-garden-actions{gap:7px}
   .kana-classroom-toolbar .knowledge-garden-actions .btn{min-height:39px;padding:7px 13px;font-size:11.5px}
 }
-@media(max-width:1199px){.app-root:has(.knowledge-garden-shell:not(.kana-classroom-shell)) .topbar-knowledge-slot{left:24px;width:min(420px,calc(100% - 460px))}}
 @media(max-width:767px){.cafe-vocab-toolbar{top:8px!important;left:8px;width:max-content!important;max-width:calc(100% - 16px);padding:6px 9px!important}.knowledge-garden-shell .cafe-vocab-test{top:54px;left:8px}}
-@media(max-width:767px){.app-root:has(.knowledge-garden-shell:not(.kana-classroom-shell)) .topbar-knowledge-slot{display:none}.app-root:has(.knowledge-garden-shell:not(.kana-classroom-shell)) .view:has(.knowledge-garden-shell){height:calc(100dvh - 58px - var(--safe-t))}.app-root:has(.knowledge-garden-shell:not(.kana-classroom-shell)) .knowledge-garden-shell{height:calc(100dvh - 58px - var(--safe-t))}.app-root:has(.knowledge-garden-shell:not(.kana-classroom-shell)) .knowledge-garden-frame{top:calc(-58px - var(--safe-t));height:calc(100% + 58px + var(--safe-t))}.knowledge-radical-test{top:14px;left:8px}}
+@media(max-width:767px){.app-root:has(.knowledge-garden-shell:not(.kana-classroom-shell)) .topbar-knowledge-slot{display:none}.app-root:has(.knowledge-garden-shell:not(.kana-classroom-shell)) .view:has(.knowledge-garden-shell){height:calc(100dvh - var(--topbar-h,66px))}.app-root:has(.knowledge-garden-shell:not(.kana-classroom-shell)) .knowledge-garden-shell{height:calc(100dvh - var(--topbar-h,66px))}.app-root:has(.knowledge-garden-shell:not(.kana-classroom-shell)) .knowledge-garden-frame{top:calc(-1 * var(--topbar-h,66px));height:calc(100% + var(--topbar-h,66px))}.knowledge-radical-test{top:14px;left:8px}}
 .test-open-row{display:flex;justify-content:flex-end;margin:-4px 0 10px}
 .knowledge-garden-shell .knowledge-garden-actions .test-open,
 .knowledge-garden-shell .knowledge-radical-test .test-open{min-height:34px;padding:6px 12px;border:1px solid #E46F81;border-radius:999px;background:linear-gradient(180deg,#FFB0BC 0%,#F77E94 100%);color:#fff;font-size:11.5px;font-weight:800;box-shadow:inset 0 1px 0 rgba(255,255,255,.72),inset 0 -2px 0 rgba(181,62,82,.14),0 2px 0 #CE5A70,0 4px 7px rgba(180,67,89,.14);transition:transform .16s,box-shadow .16s,filter .16s}
@@ -1265,6 +1275,9 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 .match-board-grid .match-tile.answer.len-l{font-size:clamp(10px,2.7vw,13px);font-weight:600}
 .match-board-grid .match-tile.answer.len-xl{font-size:clamp(9.5px,2.5vw,12px);font-weight:600}
 @media (max-width:420px){.match-board-grid{gap:6px}.match-board-grid .match-tile{padding:5px;border-radius:14px}}
+/* Tổng hợp: nhãn loại nhỏ ở mép trên ô chữ (Kanji / Bộ thủ / Hiragana…) — không chiếm chỗ của mặt chữ. */
+.match-tile-tag{position:absolute;top:4px;left:0;right:0;font-family:var(--font-ui,inherit);font-size:9.5px;font-weight:800;letter-spacing:.02em;line-height:1;color:#A0867D;text-transform:uppercase;pointer-events:none}
+@media (min-width:768px){.match-tile-tag{top:6px;font-size:10.5px}}
 @media (min-width:768px){.match-board-grid .match-tile.answer:not([class*=len-]){font-size:15px}}
 .match-size{display:flex;justify-content:center;gap:10px}
 .match-size-option{display:flex;flex-direction:column;align-items:center;min-width:96px;padding:10px 14px;border-radius:16px;border:0;font:inherit;cursor:pointer;color:var(--ink);
@@ -1303,9 +1316,18 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 .study-next{display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-top:16px}
 .flashcard{display:flex;width:100%;min-height:260px;margin-top:12px;border-radius:24px;border:1px solid var(--line);background:#fff;box-shadow:0 6px 18px rgba(201,90,108,.08);cursor:pointer;padding:20px 16px;align-items:center;justify-content:center;text-align:center}
 .flashcard:focus-visible{outline:3px solid #FFC4CE;outline-offset:2px}
+/* Vuốt ngang để chuyển thẻ: pan-y giữ cuộn dọc cho trang, phần kéo ngang thuộc về thẻ. Thả tay → bật về (transition). */
+.flashcard{touch-action:pan-y;transition:transform .2s cubic-bezier(.2,.8,.3,1)}
+.flashcard.is-dragging{transition:none;cursor:grabbing;user-select:none;-webkit-user-select:none}
+.flashcard.enter-next:not(.is-flipped){animation:card-in-next .22s ease-out}
+.flashcard.enter-prev:not(.is-flipped){animation:card-in-prev .22s ease-out}
+@keyframes card-in-next{from{opacity:.35;transform:translate3d(28px,0,0)}to{opacity:1;transform:none}}
+@keyframes card-in-prev{from{opacity:.35;transform:translate3d(-28px,0,0)}to{opacity:1;transform:none}}
+.flashcard-write{display:flex;width:fit-content;margin:10px auto 0}
+p.flashcard-write{display:block;width:auto;text-align:center}
 .flashcard.is-flipped{background:#FFFCF8;animation:card-flip .28s ease}
 @keyframes card-flip{from{transform:rotateY(80deg);opacity:.4}to{transform:none;opacity:1}}
-@media (prefers-reduced-motion:reduce){.flashcard.is-flipped{animation:none}}
+@media (prefers-reduced-motion:reduce){.flashcard.is-flipped,.flashcard.enter-next,.flashcard.enter-prev{animation:none}.flashcard{transition:none}}
 .flashcard-front,.flashcard-back{display:flex;flex-direction:column;align-items:center;gap:6px;width:100%}
 .flashcard-glyph{font-size:84px;line-height:1.1}
 .flashcard-glyph.is-word{font-size:48px}
@@ -1553,6 +1575,8 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 .nb-vocab-romaji{font-size:12px;color:var(--ink-3);font-style:italic}
 .nb-order-numbers text{font-family:var(--font-vi);font-size:10px;font-weight:800;fill:#FF5B73;paint-order:stroke;stroke:#FFF8F5;stroke-width:2.2px}
 .nb-grid{fill:none;stroke:#F0DDD8;stroke-width:1;stroke-dasharray:3 3;vector-effect:non-scaling-stroke}
+.nb-hit{fill:transparent;stroke:none;pointer-events:all;touch-action:none}
+.nb-cell .nb-grid,.nb-cell .nb-ghost,.nb-cell .nb-ghost-text,.nb-cell .nb-ink,.nb-cell .nb-model,.nb-cell .nb-model-text,.nb-cell .nb-order-numbers{pointer-events:none}
 .nb-ghost path{fill:none;stroke:#EFE4E0;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
 .nb-ghost-text{fill:#EDE2DE;font-family:var(--font-learn);font-weight:500}
 .nb-model path{fill:none;stroke:var(--nb-ink);stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round}
@@ -1646,6 +1670,16 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 .loading-runner{display:flex;flex-direction:column;align-items:center;gap:4px}
 .loading-runner-art{width:150px;aspect-ratio:550/460}
 .loading-runner-label{font-size:13px;color:var(--ink-3)}
+/* Lớp phủ đang xử lý trong một khu vực (BusyOverlay): absolute → không đẩy / kéo giãn nút bên dưới; chặn bấm trong khu vực. */
+.busy-host{position:relative}
+.busy-overlay{position:absolute;inset:0;z-index:6;display:grid;place-items:center;padding:6px;border-radius:inherit;
+  background:rgba(255,251,247,.74);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);animation:busy-in .16s ease-out both}
+.busy-overlay-card{display:flex;align-items:center;gap:8px;max-width:100%;padding:6px 14px 6px 6px;border:1px solid #F3DCD3;border-radius:999px;
+  background:#FFFDFB;box-shadow:0 8px 22px rgba(90,60,50,.16);color:var(--ink-2);font-size:13px;font-weight:700}
+.busy-overlay-card span{min-width:0}
+.busy-overlay-art{flex:0 0 auto;width:54px;aspect-ratio:550/460}
+@keyframes busy-in{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.busy-overlay{animation:none}}
 /* Vết chân mèo trắng hiện TRONG nút khi rê chuột (PawHoverEffect): nằm sát mép phải, dưới chữ (z-index -1 trong nút đã isolate),
    không chiếm chỗ (absolute). Nút nền nhạt (ghost/quiet) tô chân theo màu chữ của nút để vẫn thấy. */
 .btn{isolation:isolate}

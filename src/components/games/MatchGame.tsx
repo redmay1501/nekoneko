@@ -216,8 +216,9 @@ export function MatchGame({ pool, scope, recordsByPairs, unit }: MatchGameProps)
           <button key={`${tile.side}-${tile.card.contentKey}`} type="button" className={tileClass(tile.side, tile.card)}
             disabled={matched.includes(tile.card.contentKey)} style={{ '--i': index } as CSSProperties}
             aria-pressed={picked?.side === tile.side && picked.key === tile.card.contentKey}
-            aria-label={tile.side === 'face' ? `Chữ ${tile.card.face}` : `Nghĩa: ${tile.card.answer}`}
+            aria-label={tile.side === 'face' ? `${tile.card.tag ? `${tile.card.tag} ` : 'Chữ '}${tile.card.face}` : `Nghĩa: ${tile.card.answer}`}
             onClick={() => choose(tile.side, tile.card)}>
+            {tile.side === 'face' && tile.card.tag ? <small className="match-tile-tag">{tile.card.tag}</small> : null}
             <span>{tile.side === 'face' ? tile.card.face : tile.card.answer}</span>
           </button>
         ))}

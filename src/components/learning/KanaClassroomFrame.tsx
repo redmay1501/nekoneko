@@ -26,6 +26,7 @@ export function KanaClassroomFrame({
   children?: ReactNode;
 }) {
   const frameRef = useRef<HTMLIFrameElement>(null);
+  const toolbarRef = useRef<HTMLDivElement>(null);
   const pickerDialogRef = useRef<HTMLElement>(null);
   const [toolbarHost, setToolbarHost] = useState<HTMLElement | null>(null);
   const [pickerOpen, setPickerOpen] = useState(false);
@@ -62,6 +63,33 @@ export function KanaClassroomFrame({
     };
   }, [pickerOpen]);
 
+  // Header của app và thanh công cụ phủ lên phần trên của khung → báo cho lớp học biết để bảng không nằm dưới chúng.
+  useEffect(() => {
+    const frame = frameRef.current;
+    const toolbar = toolbarRef.current;
+    if (!frame || !toolbar) return;
+    let raf = 0;
+    const send = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const top = toolbar.getBoundingClientRect().bottom - frame.getBoundingClientRect().top;
+        frame.contentWindow?.postMessage({ source: 'nekoneko-app', type: 'inset', top: Math.round(top) }, window.location.origin);
+      });
+    };
+    const observer = new ResizeObserver(send);
+    observer.observe(toolbar);
+    const header = document.querySelector('.topbar');
+    if (header) observer.observe(header);
+    frame.addEventListener('load', send);
+    window.addEventListener('resize', send);
+    return () => {
+      cancelAnimationFrame(raf);
+      observer.disconnect();
+      frame.removeEventListener('load', send);
+      window.removeEventListener('resize', send);
+    };
+  }, []);
+
   useEffect(() => {
     function onMessage(event: MessageEvent) {
       if (event.origin !== window.location.origin || event.source !== frameRef.current?.contentWindow) return;
@@ -78,7 +106,7 @@ export function KanaClassroomFrame({
     <section className="knowledge-garden-shell kana-classroom-shell" aria-label={`Lớp học ${kind}`}>
       <iframe ref={frameRef} className="knowledge-garden-frame" src={src}
         title={`Lớp học ${kind}`} sandbox="allow-scripts allow-same-origin" />
-      <div className="knowledge-garden-toolbar kana-classroom-toolbar">
+      <div ref={toolbarRef} className="knowledge-garden-toolbar kana-classroom-toolbar">
         <div className="kana-classroom-toolbar-body">
           <div className="knowledge-garden-actions">
             {children}

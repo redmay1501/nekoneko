@@ -6,7 +6,7 @@ import type { MemoryView } from '@/features/memory/memory-types';
 import { buildKnowledgeCatalog } from '@/features/learning/knowledge-catalog';
 import { type ContentKey, toContentKey } from '@/features/learning/knowledge-types';
 import { type MatchCard, MATCH_PAIRS, accuracyOf, formatDuration, mergeGameRecord, pickMatchRound } from './match-game';
-import { buildMatchPool, parseMatchKind } from './match-pool';
+import { MIXED_POOL_LIMIT, buildMatchPool, buildMixedMatchPool, parseMatchKind } from './match-pool';
 
 const card = (id: number, face: string, answer: string): MatchCard => ({ contentKey: `vocabulary-${id}`, face, answer, audioText: face });
 
@@ -106,5 +106,57 @@ describe('Ghép thẻ — chọn phạm vi như phần học', () => {
   it('phạm vi lạ → mặc định; loại lạ → từ vựng', () => {
     expect(buildMatchPool(catalog, views, 'tu-vung', 'drop table').range).toBe('da-hoc');
     expect(parseMatchKind('xyz')).toBe('tu-vung');
+  });
+});
+
+describe('Ghép thẻ — Tổng hợp (trộn mọi thứ đã học)', () => {
+  const NOW = new Date('2026-10-03T08:00:00.000Z');
+  const catalog = buildKnowledgeCatalog(loadSeedContent());
+  const records = generateDemoMemoryRecords(catalog.items, 30, NOW);
+  const byKey = new Map(records.map((record) => [toContentKey(record.contentType, record.contentId), record]));
+  const views: Map<ContentKey, MemoryView> = new Map(catalog.items.map((item) => [item.key, toMemoryView(item.key, item.type, byKey.get(item.key) ?? null, NOW)]));
+  const seeded = (seed: number) => { let state = seed + 1; return () => ((state = (state * 16807) % 2147483647) / 2147483647); };
+
+  it('chỉ lấy mục ĐÃ HỌC, đủ các loại có cặp ghép; không lấy ngữ pháp, không lấy mục chưa gặp', () => {
+    const pool = buildMixedMatchPool(catalog, views, undefined, seeded(1));
+    expect(parseMatchKind('tong-hop')).toBe('tong-hop');
+    expect(pool.range).toBe('da-hoc');
+    expect(pool.cards.length).toBeGreaterThan(0);
+    for (const entry of pool.cards) {
+      expect(views.get(entry.contentKey as ContentKey)?.isLearned).toBe(true);
+      expect(entry.contentKey.startsWith('grammar')).toBe(false);
+      expect(entry.face.trim() && entry.answer.trim()).toBeTruthy();
+    }
+    expect(new Set(pool.cards.map((entry) => entry.contentKey)).size).toBe(pool.cards.length);
+    expect(pool.breakdown!.reduce((sum, entry) => sum + entry.count, 0)).toBe(pool.totalCount);
+    expect(pool.cards.length).toBe(Math.min(pool.totalCount!, MIXED_POOL_LIMIT));
+  });
+
+  it('chưa học gì → không có thẻ nào (không đưa kiến thức chưa học vào)', () => {
+    const fresh = new Map(catalog.items.map((item) => [item.key, toMemoryView(item.key, item.type, null, NOW)]));
+    const pool = buildMixedMatchPool(catalog, fresh, undefined);
+    expect(pool.cards).toEqual([]);
+    expect(pool.breakdown).toEqual([]);
+  });
+
+  it('mỗi ván: không trùng mặt chữ / nghĩa giữa các loại; mục cần ôn được ưu tiên (tối đa nửa bàn)', () => {
+    const pool = buildMixedMatchPool(catalog, views, undefined, seeded(2));
+    const urgentCount = pool.cards.filter((entry) => entry.priority).length;
+    for (let seed = 0; seed < 30; seed++) {
+      const round = pickMatchRound(pool.cards, seeded(seed), 8);
+      expect(new Set(round.map((entry) => entry.face)).size).toBe(round.length);
+      expect(new Set(round.map((entry) => entry.answer.trim().toLowerCase())).size).toBe(round.length);
+      expect(round.filter((entry) => entry.priority).length).toBeGreaterThanOrEqual(Math.min(urgentCount, 1));
+    }
+    // Mỗi ván một bộ khác.
+    const a = pickMatchRound(pool.cards, seeded(3), 8).map((entry) => entry.contentKey).sort();
+    const b = pickMatchRound(pool.cards, seeded(4), 8).map((entry) => entry.contentKey).sort();
+    expect(a).not.toEqual(b);
+  });
+
+  it('phạm vi Cần ôn chỉ gồm mục cần ôn; phạm vi lạ → Mọi thứ đã học', () => {
+    const review = buildMixedMatchPool(catalog, views, 'can-on');
+    if (review.range === 'can-on') expect(review.cards.every((entry) => entry.priority)).toBe(true);
+    expect(buildMixedMatchPool(catalog, views, 'bai-3').range).toBe('da-hoc');
   });
 });

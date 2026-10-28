@@ -2,8 +2,8 @@
 
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { LoadingRunner } from '@/components/common/LoadingRunner';
+import { useEffect, useRef, useState } from 'react';
+import { BusyOverlay } from '@/components/common/BusyOverlay';
 import { ModalPortal } from '@/components/common/ModalPortal';
 import { setJourneyStartingPoint } from '@/features/roadmap/journey-api';
 import { JOURNEY_STAGES, JOURNEY_TOTAL_DAYS } from '@/features/roadmap/journey';
@@ -19,6 +19,7 @@ interface StartingPointButtonProps {
 export function StartingPointButton({ days, currentDay }: StartingPointButtonProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const sendingRef = useRef(false);
   const [completedThroughDay, setCompletedThroughDay] = useState(Math.max(1, Math.min(currentDay - 1, JOURNEY_TOTAL_DAYS - 1)));
   useEffect(() => {
     if (isOpen) document.querySelector<HTMLElement>('.starting-point-calendar [aria-pressed="true"]')?.scrollIntoView({ block: 'center' });
@@ -42,7 +43,8 @@ export function StartingPointButton({ days, currentDay }: StartingPointButtonPro
   }
 
   const nextDay = completedThroughDay + 1;
-  const isBusy = mutation.isPending || mutation.isSuccess;
+  // Thành công thì giữ bận tới khi ngày mới mở ra; máy chủ trả "không đổi được" thì thả ra để người học thử lại.
+  const isBusy = mutation.isPending || (mutation.isSuccess && mutation.data.hasAdvanced);
   return (
     <ModalPortal className="sheet on daygrid-sheet starting-point-sheet" labelledBy="journey-starting-point-title" onEscape={() => setIsOpen(false)}>
       <button type="button" className="sheet-close" onClick={() => setIsOpen(false)} aria-label="Đóng">✕</button>
@@ -70,15 +72,19 @@ export function StartingPointButton({ days, currentDay }: StartingPointButtonPro
           </section>
         ))}
       </div>
-      <div className="starting-point-footer">
+      <div className="starting-point-footer busy-host" aria-busy={isBusy}>
         <p className="tiny muted">Các ngày trước được đánh dấu hoàn thành; dữ liệu trí nhớ của tài khoản cũ không được chuyển.</p>
         <div className="row mt-2.5" style={{ gap: 8 }}>
-          <button type="button" className="btn sm" disabled={isBusy} aria-busy={isBusy} onClick={() => mutation.mutate()}>
+          <button type="button" className="btn sm" disabled={isBusy} aria-busy={isBusy} onClick={() => {
+            if (sendingRef.current) return;
+            sendingRef.current = true;
+            mutation.mutate(undefined, { onSettled: (result) => { if (!result?.hasAdvanced) sendingRef.current = false; } });
+          }}>
             Bắt đầu từ ngày {nextDay}
           </button>
           <button type="button" className="btn quiet sm" disabled={isBusy} onClick={() => setIsOpen(false)}>Để sau</button>
         </div>
-        {isBusy ? <LoadingRunner className="mt-2" label={`Đang mở ngày ${nextDay}…`} /> : null}
+        {isBusy ? <BusyOverlay label={`Đang mở ngày ${nextDay}…`} /> : null}
         {mutation.data && !mutation.data.hasAdvanced ? <p className="sm mt-2" role="alert">Không thể cập nhật mốc ngày. Hãy thử tải lại trang.</p> : null}
         {mutation.isError ? <p className="sm mt-2" role="alert">{mutation.error.message}</p> : null}
       </div>

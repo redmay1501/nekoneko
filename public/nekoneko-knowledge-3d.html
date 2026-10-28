@@ -108,7 +108,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
   will-change:auto;contain:layout style}
 .card[hidden]{display:none}
 .stage.moving .card{will-change:transform}
-.card-shadow{position:absolute;left:8%;right:8%;bottom:-6px;height:26px;border-radius:50%;background:radial-gradient(closest-side,rgba(90,45,20,.42),rgba(90,45,20,0));transform:translateZ(-14px);filter:blur(2px)}
+.card-shadow{position:absolute;left:8%;right:8%;bottom:-6px;height:26px;border-radius:50%;background:radial-gradient(closest-side,rgba(90,45,20,.36),rgba(90,45,20,.12) 62%,rgba(90,45,20,0));transform:translateZ(-14px)} /* không filter:blur — blur trong cảnh 3D bị vẽ lại mỗi khung khi thẻ trượt */
 .card-inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.3,1.25,.45,1)}
 .card.flipped .card-inner{transform:rotateY(180deg)}
 .card-tilt{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .25s ease-out}
@@ -932,8 +932,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
       var y = -far * 4;
       var op = a > M.range ? Math.max(0, 1 - (a - M.range)) : 1;
       el.style.transform = 'translate3d(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px,' + z.toFixed(2) + 'px) rotateY(' + ry.toFixed(2) + 'deg) scale(' + sc.toFixed(4) + ')';
-      el.style.opacity = op.toFixed(3);
-      el.style.zIndex = String(1000 - Math.round(a * 10));
+      // chỉ ghi khi đổi: opacity / z-index đổi mỗi khung làm trình duyệt xếp lại lớp và vẽ lại
+      var opS = op.toFixed(2), zS = String(1000 - Math.round(a * 10));
+      if (el.__op !== opS) { el.style.opacity = opS; el.__op = opS; }
+      if (el.__z !== zS) { el.style.zIndex = zS; el.__z = zS; }
       var isActive = i === active;
       if (el.classList.contains('active') !== isActive) {
         el.classList.toggle('active', isActive);
@@ -947,7 +949,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     var dt = S.lastT ? Math.min(0.05, (t - S.lastT) / 1000) : 1 / 60;
     S.lastT = t;
     if (!drag.active) {
-      var k = 165, c = 2 * Math.sqrt(k) * 0.92;                 // lò xo gần tới hạn: mượt, không nảy quá
+      var k = 300, c = 2 * Math.sqrt(k) * 0.95;                 // lò xo gần tới hạn: dừng nhanh (~0.3s) sau khi thả tay, không nảy
       var acc = (S.target - S.pos) * k - S.vel * c;
       S.vel += acc * dt; S.pos += S.vel * dt;
       if (Math.abs(S.target - S.pos) < 0.0008 && Math.abs(S.vel) < 0.002) { S.pos = S.target; S.vel = 0; }
@@ -1014,7 +1016,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     if (e.button !== undefined && e.button !== 0) return;
     if (e.target.closest('.nav-arrow, [data-speak]')) return;
     drag.armed = true; drag.active = false; drag.id = e.pointerId;
-    drag.x0 = e.clientX; drag.y0 = e.clientY; drag.pos0 = S.pos; drag.samples = [{ t: performance.now(), x: e.clientX }];
+    drag.x0 = e.clientX; drag.y0 = e.clientY; drag.pos0 = S.pos; drag.from = S.target; drag.samples = [{ t: performance.now(), x: e.clientX }];
     var card = e.target.closest('.card.active');
     if (card) card.classList.add('pressed');
   }
@@ -1051,9 +1053,13 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     drag.suppressClick = true; setTimeout(function () { drag.suppressClick = false; }, 0);
     var sm = drag.samples, v = 0;
     if (sm.length > 1) { var f = sm[0], l = sm[sm.length - 1]; var dt = (l.t - f.t) / 1000; if (dt > 0) v = -((l.x - f.x) / M.s1) / dt; }
-    var proj = S.pos + Math.max(-3, Math.min(3, v * 0.22));
-    S.vel = v * 0.6;
-    goTo(Math.round(proj));
+    // Đích = thẻ gần vị trí thả nhất; vuốt nhanh (búng) thì đi thêm ĐÚNG một thẻ theo hướng vuốt — không bay qua nhiều mục.
+    // Tính từ thẻ đích hiện tại (drag.from) nên vuốt dồn nhiều lần khi thẻ còn đang trượt vẫn đi từng thẻ một.
+    var dir = v > 0.9 ? 1 : v < -0.9 ? -1 : 0;
+    var near = Math.round(S.pos);
+    var target = dir ? (dir > 0 ? Math.max(near, drag.from + 1) : Math.min(near, drag.from - 1)) : near;
+    S.vel = Math.max(-4, Math.min(4, v * 0.35));
+    goTo(target);
   }
   function clearPressed() { var p = track.querySelector('.card.pressed'); if (p) p.classList.remove('pressed'); }
 

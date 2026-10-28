@@ -1,3 +1,4 @@
+import { buildNotebooks, notebookWritingHref } from '@/features/writing/notebook';
 import type { MemoryView } from '@/features/memory/memory-types';
 import { buildDayPlan } from '@/features/roadmap/day-plan';
 import type { JourneyPosition } from '@/features/roadmap/journey-progress';
@@ -28,6 +29,8 @@ export interface StudyKanaCard {
   script: 'Hiragana' | 'Katakana';
   /** Vài từ bắt đầu bằng chữ này (khi có trong kho từ). */
   exampleWords: Array<{ face: string; meaning: string }>;
+  /** "Luyện viết chữ này": trang luyện viết mở đúng chữ (sổ luyện viết / viết tay Kanji); null = chưa có nội dung luyện viết. */
+  writingHref: string | null;
 }
 
 export interface StudyVocabCard {
@@ -42,6 +45,8 @@ export interface StudyVocabCard {
   example: { jp: string; vi: string; romaji: string } | null;
   /** Ảnh minh hoạ (admin tải lên, hoặc icon có sẵn) — null thì thẻ không có khung ảnh. */
   image: ContentImage | null;
+  /** "Luyện viết chữ này": trang luyện viết mở đúng chữ (sổ luyện viết / viết tay Kanji); null = chưa có nội dung luyện viết. */
+  writingHref: string | null;
 }
 
 export interface StudyGrammarExample {
@@ -70,6 +75,8 @@ export interface StudyRadicalCard {
   /** Kanji (trong app) chứa bộ này — bộ thủ là công cụ nhận ra / nhớ chữ, không thay cho việc học chữ. */
   kanji: Array<{ character: string; meaning: string }>;
   image: ContentImage | null;
+  /** "Luyện viết chữ này": trang luyện viết mở đúng chữ (sổ luyện viết / viết tay Kanji); null = chưa có nội dung luyện viết. */
+  writingHref: string | null;
 }
 
 export interface StudyKanjiCard {
@@ -94,6 +101,8 @@ export interface StudyKanjiCard {
   relatedVocab: Array<{ face: string; kana: string; meaning: string }>;
   tip: string;
   image: ContentImage | null;
+  /** "Luyện viết chữ này": trang luyện viết mở đúng chữ (sổ luyện viết / viết tay Kanji); null = chưa có nội dung luyện viết. */
+  writingHref: string | null;
 }
 
 /** Đáp án sai hợp lý cho câu hỏi trắc nghiệm (kiến thức của các ngày gần nhất). */
@@ -144,10 +153,12 @@ export function buildDayStudy(
   const plan = buildDayPlan(catalog, day, journey);
   const { knowledge } = plan;
   const { content } = catalog;
+  const notebooks = buildNotebooks(content);
 
   const kana = knowledge.kana.map((item): StudyKanaCard => ({
     key: item.key, face: item.face, romaji: item.reading, script: item.type === 'katakana' ? 'Katakana' : 'Hiragana',
     exampleWords: kanaExampleWords(catalog, item),
+    writingHref: notebookWritingHref(notebooks, item.type === 'katakana' ? 'katakana' : 'hiragana', item.face),
   }));
   const kanaTypes = new Set(knowledge.kana.map((item) => item.type));
   const ownKana = new Set(kana.map((card) => card.key));
@@ -161,6 +172,7 @@ export function buildDayStudy(
       meaning: word.meaning, tip: word.tip,
       example: found ? { jp: found.jp, vi: found.vi, romaji: canRomanize(found.jp) ? sentenceRomaji(found.jp) : '' } : null,
       image: learnerImageOf('vocabulary', word),
+      writingHref: notebookWritingHref(notebooks, 'tu-vung', word.kana),
     };
   });
 
@@ -184,6 +196,7 @@ export function buildDayStudy(
     name: radical.nameJp.split(' / ')[0], meaning: radical.meaning, tip: radical.tip,
     kanji: kanjiContainingRadical(catalog, radical).slice(0, 6).map((entry) => ({ character: entry.character, meaning: entry.meaning })),
     image: learnerImageOf('radical', radical),
+    writingHref: notebookWritingHref(notebooks, 'bo-thu', primaryRadicalGlyph(radical.radical)),
   }));
 
   const kanji = knowledge.kanji.map((entry): StudyKanjiCard => {
@@ -199,6 +212,8 @@ export function buildDayStudy(
       radicals: radicalsOfKanji(catalog, entry).map((radical) => ({ glyph: primaryRadicalGlyph(radical.radical), meaning: radical.meaning })),
       relatedVocab: context.earlier.map((word) => ({ face: word.kanji, kana: word.kana, meaning: word.meaning })),
       image: learnerImageOf('kanji', entry),
+      // Viết tay Kanji có bảng thứ tự nét + viết đè cho từng chữ N5 → mở thẳng chữ này.
+      writingHref: `/luyen-tap/viet?muc=kanji&chu=${entry.id}`,
     };
   });
 

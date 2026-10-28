@@ -186,6 +186,10 @@ function NotebookCellView({ cellId, glyph, hasGhost, guide, showGrid, isActive, 
     <svg className={`nb-cell ${ghostCopies !== undefined ? 'nb-line' : ''} ${isActive && tool === 'pen' ? 'is-active' : ''}`} viewBox={`0 0 ${100 * aspect} 100`} role="img" aria-label={label}
       style={aspect !== 1 ? { aspectRatio: `${aspect} / 1` } : undefined}
       onPointerDown={start} onPointerMove={move} onPointerUp={end} onPointerCancel={end} onContextMenu={(event) => event.preventDefault()}>
+      {/* Vùng nhận nét phủ kín ô: ô KHÔNG có chữ mờ ("Nửa đồ, nửa tự viết", "Tự viết") cũng là một vùng được vẽ — WebKit
+          (iPad / iPhone) không coi phần nền trong suốt của <svg> là nơi chạm, nên cú chạm thành cuộn trang và nét bị huỷ.
+          Lưới / chữ mờ / mực nằm trên nhưng pointer-events: none → chỉ là lớp hướng dẫn, không chặn nét. */}
+      <rect className="nb-hit" x="0" y="0" width={100 * aspect} height="100" />
       {showGrid ? <CellGrid aspect={aspect} /> : null}
       {hasGhost ? (ghostCopies !== undefined ? <LineGhost word={glyph} copies={ghostCopies} />
         : aspect !== 1 ? <WordText word={glyph} aspect={aspect} className="nb-ghost-text" /> : <CellGhost glyph={glyph} guide={guide} />) : null}

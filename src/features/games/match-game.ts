@@ -16,6 +16,10 @@ export interface MatchCard {
   /** Mặt bên phải: nghĩa tiếng Việt (Kanji: "HÁN VIỆT · nghĩa"). */
   answer: string;
   audioText: string;
+  /** Chế độ Tổng hợp: loại kiến thức hiện nhỏ trên ô chữ ("Kanji", "Bộ thủ"…) — nhiều loại trộn chung một bàn. */
+  tag?: string;
+  /** Mục đang cần ôn (theo trí nhớ) — mỗi ván ưu tiên lấy trước, tối đa nửa bàn. */
+  priority?: boolean;
 }
 
 export interface GameResult {
@@ -72,9 +76,12 @@ export function mergeGameRecord(records: GameRecords, key: string, result: GameR
 /**
  * Chọn một ván: tối đa MATCH_PAIRS thẻ ngẫu nhiên, không trùng mặt chữ và không trùng nghĩa
  * (hai thẻ cùng nghĩa thì ghép kiểu nào cũng "đúng" — người chơi bị chấm sai oan).
+ * Thẻ `priority` (đang cần ôn) được lấy trước, nhiều nhất nửa bàn — phần còn lại vẫn ngẫu nhiên để mỗi ván một khác.
  */
 export function pickMatchRound(pool: readonly MatchCard[], random: () => number = Math.random, size = MATCH_PAIRS): MatchCard[] {
-  const shuffled = shuffle(pool, random);
+  const urgent = shuffle(pool.filter((card) => card.priority), random).slice(0, Math.ceil(size / 2));
+  const taken = new Set(urgent.map((card) => card.contentKey));
+  const shuffled = [...urgent, ...shuffle(pool.filter((card) => !taken.has(card.contentKey)), random)];
   const faces = new Set<string>();
   const answers = new Set<string>();
   const round: MatchCard[] = [];

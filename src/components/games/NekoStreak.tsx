@@ -50,7 +50,7 @@ const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: r
 /** "Tự chuyển câu" — BẬT mặc định; người học tắt thì nhớ trên máy này (localStorage). */
 const AUTO_NEXT_KEY = 'neko-streak-auto-next';
 /** Trả lời ĐÚNG: thấy kết quả bấy nhiêu rồi tự sang câu. Trả lời SAI: không tự chuyển — người học đọc giải thích, tự bấm. */
-const AUTO_NEXT_AFTER_CORRECT_MS = 1500;
+const AUTO_NEXT_AFTER_CORRECT_MS = 2500;
 
 function readAutoNext(): boolean {
   try { return localStorage.getItem(AUTO_NEXT_KEY) !== '0'; } catch { return true; }
@@ -103,6 +103,7 @@ export function NekoStreak({ items, initialBest, journeyDay, sessionKey }: NekoS
   const usedRef = useRef<Set<string>>(new Set());
   const lockedRef = useRef(false);
   const nextRef = useRef<HTMLButtonElement>(null);
+  const feedbackRef = useRef<HTMLDivElement>(null);
   const boardRef = useRef<HTMLDivElement>(null);
   /** Kỷ lục đã lưu server + hàng đợi gửi (một yêu cầu một lúc; luôn gửi giá trị lớn nhất đang chờ). */
   const saved = useRef({ best: initialBest, pending: 0, inFlight: false, sessionCounted: false });
@@ -181,10 +182,9 @@ export function NekoStreak({ items, initialBest, journeyDay, sessionKey }: NekoS
 
     // Sau khi chọn: cuộn mượt tới vùng phản hồi để nút "Câu tiếp" nằm trong tầm tay (nhất là điện thoại), rồi focus nút.
     window.requestAnimationFrame(() => {
-      const next = nextRef.current;
-      if (!next) return;
-      next.scrollIntoView({ block: 'end', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
-      next.focus({ preventScroll: true });
+      // Điện thoại / iPad: nút "Câu tiếp" nổi cố định ở đáy (CSS) → chỉ cần đưa phần phản hồi / giải thích vào tầm nhìn.
+      feedbackRef.current?.scrollIntoView({ block: 'nearest', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+      nextRef.current?.focus({ preventScroll: true });
     });
   }
 
@@ -203,7 +203,7 @@ export function NekoStreak({ items, initialBest, journeyDay, sessionKey }: NekoS
     dealDeck(false);
   }
 
-  // Tự chuyển câu (chỉ khi trả lời ĐÚNG): ~1,5 giây sau sang câu tiếp. Sai → đứng lại cho người học đọc giải thích và tự bấm.
+  // Tự chuyển câu (chỉ khi trả lời ĐÚNG): ~2,5 giây sau sang câu tiếp. Sai → đứng lại cho người học đọc giải thích và tự bấm.
   // Bấm "Câu tiếp" / tắt công tắc → huỷ.
   useEffect(() => {
     if (!feedback?.isCorrect || !autoNext || phase !== 'play') return;
@@ -226,7 +226,7 @@ export function NekoStreak({ items, initialBest, journeyDay, sessionKey }: NekoS
 
   const autoToggle = (
     <button type="button" className={`streak-auto${autoNext ? ' is-on' : ''}`} role="switch" aria-checked={autoNext} onClick={toggleAutoNext}
-      title="Trả lời đúng: tự sang câu tiếp sau 1,5 giây · trả lời sai: dừng lại để bạn xem giải thích">
+      title="Trả lời đúng: tự sang câu tiếp sau 2,5 giây · trả lời sai: dừng lại để bạn xem giải thích">
       <span className="streak-auto-knob" aria-hidden="true" /> ⏩ Tự chuyển câu
     </button>
   );
@@ -311,7 +311,9 @@ export function NekoStreak({ items, initialBest, journeyDay, sessionKey }: NekoS
   const accuracy = state.answered ? Math.round((state.correct / state.answered) * 100) : null;
   const isAboveOldBest = state.streak > initialBest && initialBest > 0;
   return (
-    <section className={`streak-game tier-${tier.id}`} aria-label="Neko Streak — đang chơi">
+    // data-no-reveal: không cho hiệu ứng hiện dần (ScrollScenes) gắn transform vào các thẻ — transform ở phần tử cha làm nút
+    // "Câu tiếp" (position: fixed) bám theo thẻ thay vì đáy màn hình.
+    <section className={`streak-game tier-${tier.id}${feedback ? ' has-feedback' : ''}`} aria-label="Neko Streak — đang chơi" data-no-reveal>
       {header}
       <div ref={boardRef} className="streak-board card">
         <div className="streak-scores">
@@ -355,7 +357,7 @@ export function NekoStreak({ items, initialBest, journeyDay, sessionKey }: NekoS
             );
           })}
         </div>
-        <div className="streak-feedback" aria-live="polite">
+        <div ref={feedbackRef} className="streak-feedback" aria-live="polite">
           {feedback ? (
             <>
               {feedback.isNewBest ? <p className="streak-record"><AnimatedEmoji name="party-popper" size={28} /> KỶ LỤC MỚI! Bạn đã vượt qua chính mình!</p> : null}

@@ -104,7 +104,7 @@ export function NekoStreak({ items, initialBest, journeyDay, sessionKey }: NekoS
   const lockedRef = useRef(false);
   const nextRef = useRef<HTMLButtonElement>(null);
   const feedbackRef = useRef<HTMLDivElement>(null);
-  const boardRef = useRef<HTMLDivElement>(null);
+  const questionRef = useRef<HTMLElement>(null);
   /** Kỷ lục đã lưu server + hàng đợi gửi (một yêu cầu một lúc; luôn gửi giá trị lớn nhất đang chờ). */
   const saved = useRef({ best: initialBest, pending: 0, inFlight: false, sessionCounted: false });
 
@@ -180,10 +180,10 @@ export function NekoStreak({ items, initialBest, journeyDay, sessionKey }: NekoS
     if (next.best > saved.current.best) queueSave(next.best);
     writeSession(sessionKey, { streak: next.streak, answered: next.answered, correct: next.correct, used: [...usedRef.current], savedAt: Date.now() });
 
-    // Sau khi chọn: cuộn mượt tới vùng phản hồi để nút "Câu tiếp" nằm trong tầm tay (nhất là điện thoại), rồi focus nút.
+    // Sau khi chọn: nút "Câu tiếp" (nằm ngay dưới phần phản hồi) chưa thấy hết thì cuộn vừa đủ — nút đứng ngay trên thanh
+    // điều hướng dưới (scroll-margin-bottom), không che nội dung nào; rồi focus nút.
     window.requestAnimationFrame(() => {
-      // Điện thoại / iPad: nút "Câu tiếp" nổi cố định ở đáy (CSS) → chỉ cần đưa phần phản hồi / giải thích vào tầm nhìn.
-      feedbackRef.current?.scrollIntoView({ block: 'nearest', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+      nextRef.current?.scrollIntoView({ block: 'nearest', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
       nextRef.current?.focus({ preventScroll: true });
     });
   }
@@ -195,13 +195,20 @@ export function NekoStreak({ items, initialBest, journeyDay, sessionKey }: NekoS
       setPosition(position + 1);
       setFeedback(null);
       lockedRef.current = false;
-      // Câu mới: đưa bảng điểm + câu hỏi trở lại tầm nhìn (nếu đang cuộn xuống dưới).
-      window.requestAnimationFrame(() => boardRef.current?.scrollIntoView({ block: 'nearest', behavior: prefersReducedMotion() ? 'auto' : 'smooth' }));
       return;
     }
     // Hết bộ câu: còn câu chưa hỏi trong phiên thì chia tiếp, hết hẳn thì báo và cho xáo lại.
     dealDeck(false);
   }
+
+  // Màn chơi: mỗi câu mới (và lúc bắt đầu) tự cuộn tới KHU VỰC CHƠI — khung câu hỏi nằm ngay dưới header,
+  // câu hỏi + 4 đáp án + nút trong tầm nhìn (scroll-margin-top = chiều cao header thật).
+  const questionId = phase === 'play' ? question?.id : null;
+  useEffect(() => {
+    if (!questionId) return;
+    const frame = window.requestAnimationFrame(() => questionRef.current?.scrollIntoView({ block: 'start', behavior: prefersReducedMotion() ? 'auto' : 'smooth' }));
+    return () => window.cancelAnimationFrame(frame);
+  }, [questionId]);
 
   // Tự chuyển câu (chỉ khi trả lời ĐÚNG): ~2,5 giây sau sang câu tiếp. Sai → đứng lại cho người học đọc giải thích và tự bấm.
   // Bấm "Câu tiếp" / tắt công tắc → huỷ.
@@ -315,7 +322,7 @@ export function NekoStreak({ items, initialBest, journeyDay, sessionKey }: NekoS
     // "Câu tiếp" (position: fixed) bám theo thẻ thay vì đáy màn hình.
     <section className={`streak-game tier-${tier.id}${feedback ? ' has-feedback' : ''}`} aria-label="Neko Streak — đang chơi" data-no-reveal>
       {header}
-      <div ref={boardRef} className="streak-board card">
+      <div className="streak-board card">
         <div className="streak-scores">
           <div className={`streak-flame${feedback?.isCorrect ? ' is-up' : ''}${feedback && !feedback.isCorrect ? ' is-reset' : ''}`} aria-live="polite">
             <EmojiIcon emoji="🔥" size={30} className="streak-flame-icon" />
@@ -338,7 +345,7 @@ export function NekoStreak({ items, initialBest, journeyDay, sessionKey }: NekoS
       </div>
 
       <div className="streak-toolbar">{autoToggle}</div>
-      <article className="card streak-question" key={question.id}>
+      <article ref={questionRef} className="card streak-question" key={question.id}>
         {feedback?.isNewBest ? <StreakConfetti /> : null}
         <p className="streak-prompt"><span className={`streak-kind is-${typeOfLabel(question.typeLabel)}`}>{question.typeLabel}</span> {question.prompt}</p>
         <div className="streak-face">

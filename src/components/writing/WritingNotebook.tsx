@@ -14,7 +14,7 @@ import type { PageProgress } from '@/features/writing/notebook-progress';
 import { postJson } from '@/lib/api/api-client';
 import { CellGhost, CellGrid, CellModel, eraserPointer, LineGhost, NotebookCell } from './NotebookCell';
 
-type CellSize = 'nho' | 'vua' | 'lon';
+type CellSize = 'rat-nho' | 'nho' | 'vua' | 'lon' | 'rat-lon';
 interface NotebookSettings {
   repeats: RepeatSetting;
   ghost: GhostMode;
@@ -29,9 +29,11 @@ type VocabForm = 'kana' | 'kanji';
 const DEFAULT_SETTINGS: NotebookSettings = { repeats: DEFAULT_REPEATS, ghost: 'half', showGrid: true, cellSize: 'vua', vocabForm: 'kana', vocabLines: 'auto' };
 const SETTINGS_KEY = 'neko-writing-notebook-settings';
 const GHOST_LABELS: Record<GhostMode, string> = { all: 'Đồ chữ mờ', half: 'Nửa đồ, nửa tự viết', none: 'Tự viết' };
-const SIZE_LABELS: Record<CellSize, string> = { nho: 'Nhỏ', vua: 'Vừa', lon: 'Lớn' };
+const SIZE_LABELS: Record<CellSize, string> = { 'rat-nho': 'Rất nhỏ', nho: 'Nhỏ', vua: 'Vừa', lon: 'Lớn', 'rat-lon': 'Rất lớn' };
+/** Thứ tự cỡ chữ (nút A− / A+ trên thanh công cụ đi lần lượt theo thứ tự này). */
+const SIZE_ORDER: readonly CellSize[] = ['rat-nho', 'nho', 'vua', 'lon', 'rat-lon'];
 /** Cỡ ô tối thiểu (px) của từng chế độ — khớp --nb-cell trong globals.css; ô giãn thêm cho kín bề rộng khung. */
-const CELL_PX: Record<CellSize, number> = { nho: 52, vua: 64, lon: 84 };
+const CELL_PX: Record<CellSize, number> = { 'rat-nho': 44, nho: 52, vua: 64, lon: 84, 'rat-lon': 112 };
 const CELL_GAP_PX = 6;
 
 /** Cùng múi giờ ở server và trình duyệt → không lệch khi hydrate. */
@@ -312,6 +314,12 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
   const layout = { columns, rows: filled.rows, unitPx, repeats: settings.repeats === 'auto' ? filled.repeats : settings.repeats };
   const pageProgress = progress[page.id];
   const sizeClass = `nb-size-${settings.cellSize}`;
+  function stepSize(direction: -1 | 1) {
+    setSettings((current) => {
+      const index = Math.max(0, SIZE_ORDER.indexOf(current.cellSize));
+      return { ...current, cellSize: SIZE_ORDER[Math.min(SIZE_ORDER.length - 1, Math.max(0, index + direction))] };
+    });
+  }
   return (
     <section id="so-luyen-viet" className={`nb ${sizeClass} ${tool === 'eraser' ? 'is-erasing' : ''}`} aria-label={`Sổ ${notebook.title}`}>
       <div className="nb-head">
@@ -352,6 +360,12 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
         <button type="button" className="btn ghost sm nb-icon-btn" onClick={() => dispatchInk({ type: 'redo' })} disabled={!ink.future.length}
           aria-label="Làm lại" title="Làm lại"><HistoryIcon direction="redo" /></button>
         <button type="button" className="btn ghost sm" onClick={clearPage} disabled={!ink.strokes.length}>🗑 Xoá hết</button>
+        {/* Cỡ chữ tập viết ngay trên thanh công cụ: chữ mờ, nét viết và ô cùng to / nhỏ theo (SVG co giãn theo ô). */}
+        <span className="nb-size-switch" role="group" aria-label="Cỡ chữ tập viết">
+          <button type="button" onClick={() => stepSize(-1)} disabled={settings.cellSize === SIZE_ORDER[0]} aria-label="Chữ nhỏ hơn" title="Chữ nhỏ hơn">A−</button>
+          <span aria-live="polite">{SIZE_LABELS[settings.cellSize]}</span>
+          <button type="button" onClick={() => stepSize(1)} disabled={settings.cellSize === SIZE_ORDER[SIZE_ORDER.length - 1]} aria-label="Chữ to hơn" title="Chữ to hơn">A+</button>
+        </span>
         {/* Trạng thái bút: nhãn, KHÔNG phải nút (chạm nhầm / tì tay vào không được tắt chống tì tay). Đổi chế độ ở ⚙️ Tuỳ chỉnh. */}
         {isPenOnly(pen) ? (
           <span className="nb-pen-chip" role="status" title="Đang chỉ nhận nét bút — chạm tay vào ô viết không vẽ. Đổi ở ⚙️ Tuỳ chỉnh → Bút cảm ứng.">✏️ Chỉ nhận bút</span>
@@ -387,7 +401,7 @@ export function WritingNotebook({ notebooks, initialProgress, initialNotebookId,
                 </select>
               </label>
             ) : null}
-            <label className="nb-setting"><span>Cỡ ô</span>
+            <label className="nb-setting"><span>Cỡ chữ (cỡ ô)</span>
               <select value={settings.cellSize} onChange={(event) => setSettings((current) => ({ ...current, cellSize: event.target.value as CellSize }))}>
                 {(Object.keys(SIZE_LABELS) as CellSize[]).map((value) => <option key={value} value={value}>{SIZE_LABELS[value]}</option>)}
               </select></label>

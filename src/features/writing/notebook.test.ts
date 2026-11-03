@@ -74,7 +74,10 @@ describe('Đầy khung — số cột và số ô theo bề rộng', () => {
     expect(gridColumns(970, 64, 6)).toBe(13);
     expect(gridColumns(970, 84, 6)).toBe(10);
     expect(gridColumns(330, 64, 6)).toBe(4);
-    expect(gridColumns(0, 64, 6)).toBe(4);
+    expect(gridColumns(0, 64, 6)).toBe(3);
+    // Điện thoại hẹp + cỡ chữ lớn: còn 3 cột (ô mẫu 2 cột + 1 cột viết) thay vì ép về 4 cột nhỏ.
+    expect(gridColumns(340, 84, 6)).toBe(3);
+    expect(gridColumns(340, 112, 6)).toBe(3);
   });
   it('khung rộng (PC / iPad) → kín đúng 2 hàng: ô mẫu 2×2 + ô luyện', () => {
     const { rows, repeats } = fillRepeats(13);

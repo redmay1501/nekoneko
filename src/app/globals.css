@@ -1494,7 +1494,13 @@ p.flashcard-write{display:block;width:auto;text-align:center}
 
 /* ============ SỔ LUYỆN VIẾT (components/writing) ============ */
 .nb{--nb-cell:64px;--nb-paper:#FFFEFA;--nb-rule:#EFE3DE;--nb-ink:#2B2B33}
-.nb.nb-size-nho{--nb-cell:52px} .nb.nb-size-lon{--nb-cell:84px}
+.nb.nb-size-rat-nho{--nb-cell:44px} .nb.nb-size-nho{--nb-cell:52px} .nb.nb-size-lon{--nb-cell:84px} .nb.nb-size-rat-lon{--nb-cell:112px}
+/* Nút cỡ chữ trên thanh công cụ sổ luyện viết: A− · Vừa · A+ */
+.nb-size-switch{display:inline-flex;align-items:center;gap:2px;padding:2px;border:1px solid var(--line);border-radius:999px;background:#fff}
+.nb-size-switch button{min-width:38px;min-height:34px;padding:0 8px;border:0;border-radius:999px;background:transparent;color:var(--ink-2);font:inherit;font-weight:900;cursor:pointer}
+.nb-size-switch button:not(:disabled):hover{background:#FFF1EC;color:var(--sakura-deep)}
+.nb-size-switch button:disabled{opacity:.35;cursor:default}
+.nb-size-switch span{min-width:56px;text-align:center;font-size:12.5px;font-weight:800;color:var(--ink)}
 .nb-covers{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
 .nb-cover{position:relative;display:flex;flex-direction:column;gap:6px;min-height:230px;padding:18px 18px 16px 26px;text-align:left;border-radius:8px 18px 18px 8px;
   background:linear-gradient(90deg,rgba(0,0,0,.06) 0,rgba(0,0,0,0) 10px),var(--cover,#FFE4EA);border:1px solid rgba(0,0,0,.06);box-shadow:var(--sh-2);transition:transform .15s}

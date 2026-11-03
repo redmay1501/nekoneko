@@ -239,7 +239,8 @@ export const PRINT_AUTO_REPEATS = 12;
 
 /** Lưới của một dòng chữ: số cột vừa bề rộng khung; ô mẫu chiếm 2 cột × 2 hàng. */
 export const SAMPLE_SPAN = 2;
-const MIN_COLUMNS = SAMPLE_SPAN + 2;
+/** Tối thiểu: ô mẫu (2 cột) + 1 cột viết — để cỡ chữ Lớn / Rất lớn vẫn to được trên điện thoại hẹp. */
+const MIN_COLUMNS = SAMPLE_SPAN + 1;
 
 export function gridColumns(containerWidth: number, cellSize: number, gap: number): number {
   if (containerWidth <= 0) return MIN_COLUMNS;

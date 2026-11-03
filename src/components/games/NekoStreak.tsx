@@ -50,7 +50,7 @@ const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: r
 /** "Tự chuyển câu" — BẬT mặc định; người học tắt thì nhớ trên máy này (localStorage). */
 const AUTO_NEXT_KEY = 'neko-streak-auto-next';
 /** Trả lời ĐÚNG: thấy kết quả bấy nhiêu rồi tự sang câu. Trả lời SAI: không tự chuyển — người học đọc giải thích, tự bấm. */
-const AUTO_NEXT_AFTER_CORRECT_MS = 2500;
+const AUTO_NEXT_AFTER_CORRECT_MS = 1000;
 
 function readAutoNext(): boolean {
   try { return localStorage.getItem(AUTO_NEXT_KEY) !== '0'; } catch { return true; }
@@ -210,7 +210,7 @@ export function NekoStreak({ items, initialBest, journeyDay, sessionKey }: NekoS
     return () => window.cancelAnimationFrame(frame);
   }, [questionId]);
 
-  // Tự chuyển câu (chỉ khi trả lời ĐÚNG): ~2,5 giây sau sang câu tiếp. Sai → đứng lại cho người học đọc giải thích và tự bấm.
+  // Tự chuyển câu (chỉ khi trả lời ĐÚNG): ~1 giây sau sang câu tiếp. Sai → đứng lại cho người học đọc giải thích và tự bấm.
   // Bấm "Câu tiếp" / tắt công tắc → huỷ.
   useEffect(() => {
     if (!feedback?.isCorrect || !autoNext || phase !== 'play') return;
@@ -233,7 +233,7 @@ export function NekoStreak({ items, initialBest, journeyDay, sessionKey }: NekoS
 
   const autoToggle = (
     <button type="button" className={`streak-auto${autoNext ? ' is-on' : ''}`} role="switch" aria-checked={autoNext} onClick={toggleAutoNext}
-      title="Trả lời đúng: tự sang câu tiếp sau 2,5 giây · trả lời sai: dừng lại để bạn xem giải thích">
+      title="Trả lời đúng: tự sang câu tiếp sau 1 giây · trả lời sai: dừng lại để bạn xem giải thích">
       <span className="streak-auto-knob" aria-hidden="true" /> ⏩ Tự chuyển câu
     </button>
   );

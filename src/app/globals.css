@@ -2200,6 +2200,6 @@ a.garden-tree:hover .garden-tree-tag{background:#fff;box-shadow:0 0 0 2px #F3B67
 .streak-auto.is-on .streak-auto-knob::after{transform:translateX(14px)}
 .streak-auto:focus-visible{outline:3px solid #FFC4CE;outline-offset:2px}
 .streak-next.is-auto{position:relative;overflow:hidden}
-.streak-next.is-auto::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:100%;background:rgba(255,255,255,.75);transform-origin:left;animation:streak-auto-bar 2.5s linear forwards} /* = AUTO_NEXT_AFTER_CORRECT_MS */
+.streak-next.is-auto::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:100%;background:rgba(255,255,255,.75);transform-origin:left;animation:streak-auto-bar 1s linear forwards} /* = AUTO_NEXT_AFTER_CORRECT_MS */
 @keyframes streak-auto-bar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @media (prefers-reduced-motion:reduce){.streak-auto-knob,.streak-auto-knob::after{transition:none}.streak-next.is-auto::after{animation:none}}

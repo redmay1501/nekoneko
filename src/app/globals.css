@@ -2209,3 +2209,13 @@ a.garden-tree:hover .garden-tree-tag{background:#fff;box-shadow:0 0 0 2px #F3B67
 .streak-next.is-auto::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:100%;background:rgba(255,255,255,.75);transform-origin:left;animation:streak-auto-bar 1s linear forwards} /* = AUTO_NEXT_AFTER_CORRECT_MS */
 @keyframes streak-auto-bar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @media (prefers-reduced-motion:reduce){.streak-auto-knob,.streak-auto-knob::after{transition:none}.streak-next.is-auto::after{animation:none}}
+
+/* Thông báo không phát được âm thanh (SpeechPreferenceSync) — nổi phía trên thanh điều hướng dưới, không chặn bấm phần còn lại. */
+.speech-toast{position:fixed;left:50%;bottom:calc(100px + var(--safe-b));z-index:85;transform:translateX(-50%);width:min(440px,calc(100vw - 24px));padding:12px 40px 12px 14px;
+  border:1px solid #F3D2C7;border-radius:var(--r-m);background:#FFFBF7;box-shadow:0 12px 30px rgba(90,50,40,.2);color:var(--ink);font-size:13px;line-height:1.45;animation:speech-toast-in .2s ease-out}
+.speech-toast b{display:block;margin-bottom:3px;color:var(--sakura-deep)}
+.speech-toast p{margin:0 0 6px;color:var(--ink-2)}
+.speech-toast-close{position:absolute;top:6px;right:8px;width:28px;height:28px;border:0;border-radius:50%;background:transparent;color:var(--ink-3);font-size:20px;cursor:pointer}
+@media (min-width:1200px){.speech-toast{bottom:24px}}
+@keyframes speech-toast-in{from{opacity:0;transform:translate(-50%,8px)}to{opacity:1;transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.speech-toast{animation:none}}

@@ -18,10 +18,13 @@ interface SpeechPreferenceStore {
   speakingText: string | null;
   /** Câu đang đọc ở tốc độ chậm (nút 🐢) — để nút đúng là nút sáng lên. */
   isSpeakingSlow: boolean;
+  /** Lần đọc gần nhất không phát được: máy không có giọng tiếng Nhật / giọng đọc lỗi (giọng online bị chặn…). */
+  speechError: 'no-voice' | 'failed' | null;
   setVoiceGender: (voiceGender: VoiceGender) => void;
   setAutoplayAudio: (autoplayAudio: boolean) => void;
   setAudioBlocked: (pendingText: string | null) => void;
   setSpeakingText: (speakingText: string | null, isSlow?: boolean) => void;
+  setSpeechError: (speechError: 'no-voice' | 'failed' | null) => void;
 }
 
 export const useSpeechPreferenceStore = create<SpeechPreferenceStore>((set) => ({
@@ -31,8 +34,10 @@ export const useSpeechPreferenceStore = create<SpeechPreferenceStore>((set) => (
   pendingText: null,
   speakingText: null,
   isSpeakingSlow: false,
+  speechError: null,
   setVoiceGender: (voiceGender) => set({ voiceGender }),
   setAutoplayAudio: (autoplayAudio) => set({ autoplayAudio }),
   setAudioBlocked: (pendingText) => set({ isAudioBlocked: pendingText !== null, pendingText }),
   setSpeakingText: (speakingText, isSlow = false) => set({ speakingText, isSpeakingSlow: speakingText ? isSlow : false }),
+  setSpeechError: (speechError) => set({ speechError }),
 }));

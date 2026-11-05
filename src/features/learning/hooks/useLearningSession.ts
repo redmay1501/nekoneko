@@ -8,7 +8,16 @@ import { scrollToTop } from '@/lib/ui/motion';
 import { startNavigation } from '@/stores/navigation-progress-store';
 import { answerSessionStep, finishSession, startSession } from '../session-api';
 import { SESSION_MODE_CONFIG, type SessionMode } from '../session-modes';
-import { gradeAnswer, phaseOfStep, type SessionPhase, type StepAnswerFeedback } from '../session-types';
+import { gradeAnswer, phaseOfStep, type PublicSessionStep, type SessionPhase, type StepAnswerFeedback } from '../session-types';
+
+export interface TestAnswer { contentKey: string; face: string; isCorrect: boolean; correctAnswer: string | null }
+
+/** Chữ hiện ở màn kết quả cho một câu hỏi. */
+function stepFace(step: PublicSessionStep): string {
+  if (step.type === 'discover') return step.contentKey;
+  if (step.type === 'use') return step.variant === 'fill-blank' ? step.sentenceJp : step.promptVi;
+  return step.face;
+}
 
 /**
  * Vòng đời một phiên học ở trình duyệt:
@@ -20,6 +29,8 @@ import { gradeAnswer, phaseOfStep, type SessionPhase, type StepAnswerFeedback } 
  */
 export function useLearningSession(mode: SessionMode, focusKeys?: readonly string[], completion: {
   returnTo?: string; nextBatchHref?: string; batchLabel?: string;
+  /** Bài kiểm tra mở từ trang Học tập: xong bài hiện kết quả ngay tại chỗ, không sang Khoảnh khắc tiến bộ. */
+  testFrom?: string;
 } = {}) {
   const router = useRouter();
   const [attempt, setAttempt] = useState(0);
@@ -30,6 +41,8 @@ export function useLearningSession(mode: SessionMode, focusKeys?: readonly strin
   const [isAtCheckpoint, setIsAtCheckpoint] = useState(false);
   /** Vừa xong một chặng (Gặp lại → Học bù → Mới → Dùng thử): chặng vừa xong, để hiện màn chuyển chặng. */
   const [finishedPhase, setFinishedPhase] = useState<SessionPhase | null>(null);
+  /** Các câu có đúng/sai đã trả lời trong lần làm này — để hiện kết quả bài kiểm tra. */
+  const [testAnswers, setTestAnswers] = useState<TestAnswer[]>([]);
   const checkpointEvery = SESSION_MODE_CONFIG[mode].checkpointEvery;
 
   const sessionQuery = useQuery({
@@ -95,6 +108,11 @@ export function useLearningSession(mode: SessionMode, focusKeys?: readonly strin
     },
     onSuccess: () => {
       if (!session) return;
+      if (completion.testFrom) {
+        // Kết quả bài kiểm tra hiện ngay trong phiên (xem testResult). Vẫn làm mới khung để số liệu trang chủ cập nhật.
+        router.refresh();
+        return;
+      }
       startNavigation();
       const params = new URLSearchParams({ phien: session.sessionId });
       if (completion.returnTo) params.set('back', completion.returnTo);
@@ -115,7 +133,11 @@ export function useLearningSession(mode: SessionMode, focusKeys?: readonly strin
   function submitAnswer(answer: string) {
     if (!currentStep || feedback) return;
     setChosenAnswer(answer);
-    setFeedback({ isCorrect: gradeAnswer(currentStep, answer), correctAnswer: currentStep.correctAnswer, memory: null });
+    const isCorrect = gradeAnswer(currentStep, answer);
+    setFeedback({ isCorrect, correctAnswer: currentStep.correctAnswer, memory: null });
+    if (isCorrect !== null) {
+      setTestAnswers((list) => [...list, { contentKey: currentStep.contentKey, face: stepFace(currentStep), isCorrect, correctAnswer: currentStep.correctAnswer }]);
+    }
     recordInBackground(stepIndex, answer);
   }
 
@@ -169,7 +191,11 @@ export function useLearningSession(mode: SessionMode, focusKeys?: readonly strin
     setChosenAnswer(null);
     setAttempt((value) => value + 1);
     setFinishedPhase(null);
+    setTestAnswers([]);
+    finishMutation.reset();
   }
+
+  const isTestDone = Boolean(completion.testFrom) && finishMutation.isSuccess;
 
   return {
     sessionQuery,
@@ -179,7 +205,9 @@ export function useLearningSession(mode: SessionMode, focusKeys?: readonly strin
     feedback,
     chosenAnswer,
     // Kết thúc xong vẫn tính là bận cho tới khi màn Khoảnh khắc mở ra — tránh bấm lại lần nữa.
-    isFinishing: finishMutation.isPending || finishMutation.isSuccess,
+    isFinishing: finishMutation.isPending || (finishMutation.isSuccess && !isTestDone),
+    /** Bài kiểm tra đã lưu xong → các câu đã trả lời (đúng / sai) để hiện màn kết quả. */
+    testResult: isTestDone ? testAnswers : null,
     error: recordMutation.error ?? finishMutation.error,
     /** Tổng kết lỗi (mất mạng…) — màn kết thúc hiện nút thử lại, không bắt làm lại câu cuối. */
     finishError: finishMutation.error,

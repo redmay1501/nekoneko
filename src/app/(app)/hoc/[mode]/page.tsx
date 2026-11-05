@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { LearningSession } from '@/components/learning/LearningSession';
-import { MAX_FOCUS_ITEMS, SESSION_MODES, isSessionMode } from '@/features/learning/session-modes';
+import { MAX_FOCUS_ITEMS, SESSION_MODES, TEST_ORIGIN_PATTERN, isSessionMode } from '@/features/learning/session-modes';
 import { FOCUS_REVIEW_BATCH_SIZE } from '@/features/learning/session-modes';
 
 /**
@@ -9,7 +9,7 @@ import { FOCUS_REVIEW_BATCH_SIZE } from '@/features/learning/session-modes';
  */
 export default async function SessionPage({ params, searchParams }: {
   params: Promise<{ mode: string }>;
-  searchParams: Promise<{ k?: string; later?: string; lan?: string; tong?: string; back?: string }>;
+  searchParams: Promise<{ k?: string; later?: string; lan?: string; tong?: string; back?: string; 'kiem-tra'?: string }>;
 }) {
   const [{ mode }, query] = await Promise.all([params, searchParams]);
   if (!isSessionMode(mode)) notFound();
@@ -19,6 +19,8 @@ export default async function SessionPage({ params, searchParams }: {
   const focusKeys = mode === SESSION_MODES.FOCUS ? (isBatchedReview ? allKeys.slice(0, FOCUS_REVIEW_BATCH_SIZE) : allKeys) : undefined;
   const laterKeys = mode === SESSION_MODES.FOCUS ? (query.later ?? '').split(',').filter((key) => keyPattern.test(key)).slice(0, MAX_FOCUS_ITEMS) : [];
   const returnTo = /^\/lo-trinh\/ngay\/(?:[1-9]|[1-8]\d|90)$/.test(query.back ?? '') ? query.back : undefined;
+  // Bài kiểm tra mở từ trang Học tập → xong bài hiện kết quả tại chỗ, nút "Để sau" đưa về trang đó.
+  const testFrom = mode === SESSION_MODES.FOCUS && TEST_ORIGIN_PATTERN.test(query['kiem-tra'] ?? '') ? query['kiem-tra'] : undefined;
   const round = Math.max(1, Math.min(999, Number(query.lan) || 1));
   const rounds = Math.max(round, Math.min(999, Number(query.tong) || round));
   let nextBatchHref: string | undefined;
@@ -31,6 +33,6 @@ export default async function SessionPage({ params, searchParams }: {
     nextBatchHref = `/hoc/focus?${nextParams}`;
   }
   const batchLabel = query.lan ? `Lượt ${round}/${rounds} · câu ${(round - 1) * FOCUS_REVIEW_BATCH_SIZE + 1}–${(round - 1) * FOCUS_REVIEW_BATCH_SIZE + (focusKeys?.length ?? 0)}` : undefined;
-  return <LearningSession key={`${mode}:${focusKeys?.join(',') ?? ''}`} mode={mode} focusKeys={focusKeys} returnTo={returnTo}
-    nextBatchHref={nextBatchHref} batchLabel={batchLabel} />;
+  return <LearningSession key={`${mode}:${focusKeys?.join(',') ?? ''}`} mode={mode} focusKeys={focusKeys} returnTo={returnTo ?? testFrom}
+    nextBatchHref={nextBatchHref} batchLabel={batchLabel} testFrom={testFrom} />;
 }

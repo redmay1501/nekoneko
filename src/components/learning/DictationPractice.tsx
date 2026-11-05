@@ -1,6 +1,6 @@
 'use client';
 
-import { type FormEvent, useRef, useState } from 'react';
+import { type FormEvent, useEffect, useRef, useState } from 'react';
 import { AudioButton } from '@/components/common/AudioButton';
 import { useScrollToAnswerFeedback } from '@/hooks/useScrollToAnswerFeedback';
 import type { DictationItem } from '@/features/learning/skill-practice';
@@ -28,8 +28,13 @@ export function DictationPractice({ words, sentences }: { words: DictationItem[]
   const [current, setCurrent] = useState<Result | null>(null);
   const [results, setResults] = useState<Result[]>([]);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
+  const restartButtonRef = useRef<HTMLButtonElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   useScrollToAnswerFeedback(nextButtonRef, current);
   const items = mode === 'words' ? words : sentences;
+  const isDone = items.length > 0 && index >= items.length;
+  // Xong bài → focus nút "Làm lại" để Enter làm lại ngay.
+  useEffect(() => { if (isDone) restartButtonRef.current?.focus({ preventScroll: true }); }, [isDone]);
 
   function switchMode(next: Mode) {
     setMode(next);
@@ -40,10 +45,12 @@ export function DictationPractice({ words, sentences }: { words: DictationItem[]
     setShowHint(false);
   }
 
+  /** Enter trong ô gõ: lần đầu chấm, lần sau sang câu tiếp (ô gõ giữ focus suốt — gõ liền tay không cần chuột). */
   function check(event: FormEvent) {
     event.preventDefault();
+    if (current) { next(); return; }
     const item = items[index];
-    if (!item || !typed.trim() || current) return;
+    if (!item || !typed.trim()) return;
     const result = { item, typed, comparison: compareJapanese(typed, item.accepted, { foldKatakana: true }) };
     setCurrent(result);
     setResults((list) => [...list, result]);
@@ -55,6 +62,8 @@ export function DictationPractice({ words, sentences }: { words: DictationItem[]
     setTyped('');
     setShowHint(false);
     setIndex((value) => value + 1);
+    // Bấm "Câu tiếp" bằng chuột / chạm → đưa con trỏ lại ô gõ cho câu mới.
+    inputRef.current?.focus({ preventScroll: true });
   }
 
   const tabs = (
@@ -92,7 +101,7 @@ export function DictationPractice({ words, sentences }: { words: DictationItem[]
             ))}
           </div>
         ) : null}
-        <button type="button" className="btn block mt-3" onClick={() => switchMode(mode)}>Làm lại</button>
+        <button ref={restartButtonRef} type="button" className="btn block mt-3" onClick={() => switchMode(mode)}>Làm lại</button>
       </section>
     );
   }
@@ -115,7 +124,8 @@ export function DictationPractice({ words, sentences }: { words: DictationItem[]
         {showHint || mode === 'words' ? <p className="sm soft mt-2"><span className="tiny muted">Nghĩa: </span>“{item.hint}”</p> : null}
       </div>
       <form onSubmit={check} className="mt-3">
-        <input className="input jp" value={typed} onChange={(event) => setTyped(event.target.value)} disabled={Boolean(current)}
+        <input ref={inputRef} className="input jp" value={typed} onChange={(event) => setTyped(event.target.value)} readOnly={Boolean(current)}
+          // Đã chấm: chỉ đọc (KHÔNG disabled — disabled làm mất focus, Enter không còn tác dụng).
           // Enter để CHỐT CHỮ của bộ gõ tiếng Nhật không được nộp bài (Safari gửi Enter ngay sau khi chốt).
           onKeyDown={(event) => { if (event.key === 'Enter' && (event.nativeEvent.isComposing || event.keyCode === 229)) event.preventDefault(); }}
           lang="ja" autoComplete="off" autoCorrect="off" spellCheck={false}
@@ -133,7 +143,7 @@ export function DictationPractice({ words, sentences }: { words: DictationItem[]
             ))}
           </p>
           {!current.comparison.isCorrect ? <p className="tiny muted mt-1">Đáp án: <span className="jp">{item.display}</span></p> : null}
-          <button ref={nextButtonRef} type="button" className="btn block mt-2.5" onClick={next}>{index + 1 === items.length ? 'Xem kết quả' : 'Câu tiếp'}</button>
+          <button ref={nextButtonRef} type="button" className="btn block mt-2.5" onClick={next}>{index + 1 === items.length ? 'Xem kết quả' : 'Câu tiếp'} <span className="tiny muted">(Enter)</span></button>
         </div>
       ) : null}
     </section>

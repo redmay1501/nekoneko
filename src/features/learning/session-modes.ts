@@ -57,6 +57,15 @@ export function focusSessionHref(keys: readonly string[]): string {
   return `/hoc/${SESSION_MODES.FOCUS}?k=${keys.slice(0, MAX_FOCUS_ITEMS).join(',')}`;
 }
 
+/** Trang Học tập được phép mở bài kiểm tra (và nhận người học quay về sau khi làm xong). */
+export const TEST_ORIGIN_PATTERN = /^\/hoc-tap\/(?:hiragana|katakana|kanji|bo-thu|tu-vung|ngu-phap)$/;
+
+/** Bài kiểm tra mở từ trang Học tập: xong bài hiện kết quả ngay trong phiên (không sang Khoảnh khắc tiến bộ). */
+export function focusTestHref(keys: readonly string[], from: string): string {
+  const href = focusSessionHref(keys);
+  return TEST_ORIGIN_PATTERN.test(from) ? `${href}&kiem-tra=${encodeURIComponent(from)}` : href;
+}
+
 /** Ôn dài từ lộ trình: phiên nhỏ 10 mục, giữ phần còn lại trong URL để tiếp tục không mất lựa chọn. */
 export function focusReviewBatchHref(keys: readonly string[], returnTo: string): string {
   const unique = [...new Set(keys)].slice(0, MAX_FOCUS_ITEMS);

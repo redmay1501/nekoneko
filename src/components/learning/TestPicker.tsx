@@ -1,10 +1,10 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { CheckCircleIcon } from '@/components/common/CheckCircleIcon';
 import { ModalPortal } from '@/components/common/ModalPortal';
-import { focusSessionHref } from '@/features/learning/session-modes';
+import { focusTestHref } from '@/features/learning/session-modes';
 import { ALL_QUESTIONS, QUESTION_COUNTS, pickTestKeys, questionCountFor } from '@/features/learning/test-selection';
 import type { TestGroup } from '@/features/learning/study-actions';
 
@@ -28,7 +28,16 @@ const ALL = ALL_QUESTIONS;
  */
 export function TestPicker({ groups, unit, partUnit = 'nhóm' }: TestPickerProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  // Từ màn kết quả bấm "Kiểm tra tiếp" (?kiem-tra=mo) → mở sẵn khay chọn đề, rồi bỏ tham số khỏi địa chỉ.
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    if (url.searchParams.get('kiem-tra') !== 'mo') return;
+    setIsOpen(true);
+    url.searchParams.delete('kiem-tra');
+    window.history.replaceState(window.history.state, '', `${url.pathname}${url.search}${url.hash}`);
+  }, []);
   const [isStarting, setIsStarting] = useState(false);
   const startLocked = useRef(false);
   const [scope, setScope] = useState<Scope>('all');
@@ -68,7 +77,7 @@ export function TestPicker({ groups, unit, partUnit = 'nhóm' }: TestPickerProps
     if (startLocked.current || !pool.length) return;
     startLocked.current = true;
     setIsStarting(true);
-    const href = focusSessionHref(pickTestKeys(pool, questionCount));
+    const href = focusTestHref(pickTestKeys(pool, questionCount), pathname);
     // Give React a frame to paint the loading state before navigation begins.
     requestAnimationFrame(() => router.push(href));
   };

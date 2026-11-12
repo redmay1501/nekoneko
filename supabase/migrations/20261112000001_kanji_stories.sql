@@ -8,8 +8,7 @@
 -- Phiên bản / ngôn ngữ: khoá (kanji_id, locale, version). App dùng bản 'published' có version cao nhất của (kanji_id, locale).
 --   Viết lại chuyện → thêm version mới. Quay về bản cũ → đặt bản mới là 'archived'.
 -- Giấy phép ảnh: có URL nguồn ≠ đã được cấp phép thương mại → mặc định 'unverified'.
--- Ảnh: image_url = URL gốc của thư viện (giữ nguyên để truy nguồn). image_hosted_url = bản sao trên Storage của mình
---   (scripts/host-kanji-story-images.ts điền); app dùng bản sao trước, lỗi thì về URL gốc.
+-- Ảnh: image_url = URL gốc của thư viện (giữ nguyên để truy nguồn). Bản sao trên Storage: migration 20261112000002.
 --
 -- Seed: `npm run seed:content` chỉ THÊM dòng (kanji_id, locale, version) còn thiếu — không ghi đè dòng đã có (sửa tay an toàn).
 -- App đọc bảng nếu có dòng; bảng chưa có / rỗng → dùng bản trong repo (lib/data/kanji-stories.ts).
@@ -31,7 +30,6 @@ create table if not exists public.kanji_stories (
   memory_tip            text not null default '',
   example_words         jsonb not null default '[]'::jsonb check (jsonb_typeof(example_words) = 'array'),
   image_url             text,
-  image_hosted_url      text,
   image_alt             text not null default '',
   image_source_url      text not null default '',
   image_source_label    text not null default '',

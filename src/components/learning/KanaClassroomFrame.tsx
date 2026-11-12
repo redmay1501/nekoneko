@@ -12,6 +12,8 @@ export interface KanaClassroomItem {
   romaji: string;
   tip: string;
   status: MemoryStatus;
+  /** Kanji: người học đã bấm "Đã đọc" câu chuyện (chỉ để đánh dấu trong bảng chọn chữ — không phải mức nhớ). */
+  storyRead?: boolean;
 }
 
 /** Lớp học 2D từ prototype; nội dung chữ và trạng thái luôn lấy từ kho kiến thức của app. */
@@ -32,7 +34,7 @@ export function KanaClassroomFrame({
   const [pickerOpen, setPickerOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(() => Math.max(0, items.findIndex((item) => item.character === initialCharacter)));
   const src = useMemo(() => {
-    const data = encodeURIComponent(JSON.stringify(items.map((item) => ({
+    const data = encodeURIComponent(JSON.stringify(items.map(({ storyRead: _storyRead, ...item }) => ({
       ...item,
       status: item.status === 'mastered' || item.status === 'strong' ? 'learned'
         : item.status === 'weak' || item.status === 'fading' ? 'weak'
@@ -41,6 +43,7 @@ export function KanaClassroomFrame({
     const selected = initialCharacter ? `&selected=${encodeURIComponent(initialCharacter)}&writing=1` : '';
     return `/nekoneko-kana-classroom-2d.html?kind=${kind}${selected}#data=${data}`;
   }, [initialCharacter, items, kind]);
+  const storiesRead = items.filter((item) => item.storyRead).length;
   const title = kind === 'hiragana' ? 'Hiragana' : kind === 'katakana' ? 'Katakana' : 'Kanji N5';
 
   useEffect(() => {
@@ -122,10 +125,14 @@ export function KanaClassroomFrame({
         <>
           <button className="kana-picker-backdrop" type="button" aria-label="Đóng bảng chọn chữ" onClick={() => setPickerOpen(false)} />
           <section ref={pickerDialogRef} className="kana-picker-dialog" role="dialog" aria-label={`Chọn chữ ${title}`}>
-            <header><h2>Chọn chữ</h2><button type="button" className="kana-picker-close" onClick={() => setPickerOpen(false)} aria-label="Đóng">×</button></header>
+            <header>
+              <h2>Chọn chữ</h2>
+              {kind === 'kanji' && storiesRead > 0 ? <span className="kana-picker-story-count">✦ {storiesRead}/{items.length} chuyện đã đọc</span> : null}
+              <button type="button" className="kana-picker-close" onClick={() => setPickerOpen(false)} aria-label="Đóng">×</button></header>
             <div className="kana-picker-grid">
               {items.map((item, index) => (
                 <button key={item.contentKey} type="button" className="kana-picker-cell" aria-current={index === selectedIndex ? 'true' : undefined}
+                  aria-label={item.storyRead ? `${item.character} — đã đọc câu chuyện` : undefined}
                   onClick={() => {
                     setSelectedIndex(index);
                     setPickerOpen(false);
@@ -133,6 +140,7 @@ export function KanaClassroomFrame({
                     frameRef.current?.contentWindow?.focus();
                   }}>
                   <b lang="ja">{item.character}</b>{kind !== 'kanji' ? <small>{item.romaji}</small> : null}
+                  {item.storyRead ? <i className="kana-picker-story" aria-hidden="true">✦</i> : null}
                 </button>
               ))}
             </div>

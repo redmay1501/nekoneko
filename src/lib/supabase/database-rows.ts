@@ -16,6 +16,14 @@ export interface KanjiRow {
   id: number; character: string; han_viet: string; meaning: string; on_reading: string; kun_reading: string;
   strokes: number | null; words: string; tip: string; day: number | null;
 }
+/** Bảng kanji_stories (migration 20261112000001) — khoá (kanji_id, locale, version). */
+export interface KanjiStoryRow {
+  kanji_id: number; locale: string; version: number; status: string; source_id: string | null;
+  category: string; category_label: string; title: string; content: string; memory_tip: string; example_words: unknown;
+  image_url: string | null; image_hosted_url: string | null; image_alt: string; image_source_url: string; image_source_label: string; image_provider: string;
+  image_credit: string; image_width: number | null; image_height: number | null; image_resolution: string;
+  image_license: string; image_license_url: string; image_license_status: string; image_description: string; image_usage_note: string;
+}
 export interface VocabularyRow { id: number; kana: string; kanji: string; meaning: string; tip: string; lesson: string; day: number | null }
 export interface GrammarRow {
   id: number; pattern: string; usage: string; example_jp: string; example_vi: string; lesson: string; day: number | null;

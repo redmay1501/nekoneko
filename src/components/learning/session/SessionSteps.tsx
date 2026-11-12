@@ -22,6 +22,7 @@ import {
 import { useSheetStore } from '@/stores/sheet-store';
 import { AnswerOptions } from './AnswerOptions';
 import { StepFeedback } from './StepFeedback';
+import { KanjiStoryNudge } from '@/components/learning/KanjiStoryNudge';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
 
 /** Một kiểu bước = một component. Tất cả chỉ hiển thị và báo lựa chọn lên useLearningSession. */
@@ -73,6 +74,8 @@ export function SurpriseStepView({ step, feedback, chosenAnswer, isBusy, onAnswe
               <button type="button" className="btn sm" onClick={() => openKnowledge(step.contentKey)}>Xem kỹ hơn</button>
             </div> : null}
           </div>
+          {/* "Chưa nhớ" một Kanji → gợi ý câu chốt của câu chuyện; điểm vẫn do câu trả lời quyết định. */}
+          {!wasRemembered ? <KanjiStoryNudge contentKey={step.contentKey} /> : null}
           {!isDaily ? <button type="button" className="btn block mt-2.5" onClick={onContinue} disabled={isBusy} aria-busy={isBusy}>Tiếp tục</button> : null}
         </>
       ) : null}
@@ -92,6 +95,7 @@ export function RecallStepView({ step, isDaily = false, ...interaction }: StepIn
       <AnswerOptions options={step.options} chosenAnswer={interaction.chosenAnswer} feedback={interaction.feedback}
         isDisabled={interaction.isBusy} isJapanese onChoose={interaction.onAnswer} />
       {interaction.feedback && !isDaily ? <StepFeedback kind={step.isPractice ? 'practice' : 'recall'} feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} /> : null}
+      {interaction.feedback?.isCorrect === false ? <KanjiStoryNudge contentKey={step.contentKey} /> : null}
     </div>
   );
 }

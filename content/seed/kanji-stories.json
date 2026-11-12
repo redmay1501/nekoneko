@@ -1,0 +1,4234 @@
+{
+  "_note": "Câu chuyện ghi nhớ Kanji (sinh bằng scripts/import-kanji-stories.py — KHÔNG sửa tay nội dung ở đây; muốn đổi chuyện thì tăng version). Liên kết với kanji bằng kanjiId. Giao diện dùng nghĩa / âm đọc của bảng kanji; `source` chỉ để đối chiếu. licenseStatus \"unverified\" = chưa có người kiểm tra giấy phép dùng thương mại.",
+  "source": {
+    "file": "docs/nekoneko-kanji-story-library-103-story-rewrite-v9.html",
+    "sha256": "3a6f7916db906d1c4b937e0d9b5d686259e8108a1f2785b3630ea8db3da646ef",
+    "cards": 103,
+    "version": 9
+  },
+  "stories": [
+    {
+      "kanjiId": 2,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "一",
+      "sourceId": "n5-001",
+      "category": "number",
+      "categoryLabel": "Số đếm",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Buổi kiểm kê ở cửa hàng chỉ có đúng một món bị bỏ quên: một chiếc bánh nằm chơ vơ trên quầy. Nhân viên nhìn tờ ghi chú, gạch một nét ngang và viết: ‘1 chiếc’. Chữ 一 cũng chỉ có đúng một nét — không thể đếm nhầm được.",
+      "memoryTip": "Một nét ngang, một món: 一 là một.",
+      "exampleWords": [
+        {
+          "word": "一つ",
+          "reading": "ひとつ"
+        }
+      ],
+      "source": {
+        "meaning": "một",
+        "onyomi": "イチ・イツ",
+        "kunyomi": "ひと(つ)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2012/04/12/12/12/apple-29747_1280.png",
+        "alt": "一 – một",
+        "sourceUrl": "https://pixabay.com/vectors/apple-fruit-red-round-food-ripe-29747/",
+        "sourceLabel": "Pixabay · Clker-Free-Vector-Images",
+        "provider": "Pixabay",
+        "credit": "Clker-Free-Vector-Images",
+        "width": 1920,
+        "height": 1860,
+        "resolution": "1920 × 1860",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Một quả táo đơn lẻ; liên tưởng một vật duy nhất.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 9,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "二",
+      "sourceId": "n5-002",
+      "category": "number",
+      "categoryLabel": "Số đếm",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko nhận giao hai chiếc hộp. Cậu đặt hộp thứ nhất xuống, rồi chồng hộp thứ hai lên trên. Nhìn chữ 二 như hai tầng kệ: một nét ở trên, một nét ở dưới. Đủ hai tầng là đủ hai.",
+      "memoryTip": "Hai nét ngang, hai tầng: 二 là hai.",
+      "exampleWords": [
+        {
+          "word": "二つ",
+          "reading": "ふたつ"
+        }
+      ],
+      "source": {
+        "meaning": "hai",
+        "onyomi": "ニ",
+        "kunyomi": "ふた(つ)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2017/10/04/22/45/men-2817874_1280.png",
+        "alt": "二 – hai",
+        "sourceUrl": "https://pixabay.com/illustrations/men-cartoon-friends-together-happy-2817874/",
+        "sourceLabel": "Pixabay · Mohamed_hassan",
+        "provider": "Pixabay",
+        "credit": "Mohamed_hassan",
+        "width": 3904,
+        "height": 3904,
+        "resolution": "3904 × 3904",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Hai người bạn đứng cạnh nhau; liên tưởng số hai.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 14,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "三",
+      "sourceId": "n5-003",
+      "category": "number",
+      "categoryLabel": "Số đếm",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Đầu bếp yêu cầu xếp ba chiếc bánh pancake thành một tháp. Neko xếp chiếc thứ nhất, chiếc thứ hai, rồi chiếc thứ ba lên trên cùng. Chữ 三 trông như chính cái tháp bánh ấy: ba lớp nằm ngang.",
+      "memoryTip": "Ba nét ngang như ba lớp bánh: 三 là ba.",
+      "exampleWords": [
+        {
+          "word": "三つ",
+          "reading": "みっつ"
+        }
+      ],
+      "source": {
+        "meaning": "ba",
+        "onyomi": "サン",
+        "kunyomi": "み・みっ(つ)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2012/04/16/12/38/balloons-35812_1280.png",
+        "alt": "三 – ba",
+        "sourceUrl": "https://pixabay.com/vectors/balloons-red-green-yellow-35812/",
+        "sourceLabel": "Pixabay · Clker-Free-Vector-Images",
+        "provider": "Pixabay",
+        "credit": "Clker-Free-Vector-Images",
+        "width": 1851,
+        "height": 1921,
+        "resolution": "1851 × 1921",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Đúng ba quả bóng bay màu sắc khác nhau; liên tưởng số ba.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 28,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "四",
+      "sourceId": "n5-004",
+      "category": "number",
+      "categoryLabel": "Số đếm",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko đóng gói bốn chiếc bánh vào một hộp vuông. Cậu đếm từng góc hộp để chắc không thiếu chiếc nào, rồi đóng nắp lại. Chữ 四 có phần khung bao quanh, bên trong là phần được gom vào một hộp — hãy nhớ chiếc hộp chứa bốn món.",
+      "memoryTip": "Chiếc hộp đóng lại sau khi đếm đủ bốn: 四 là bốn.",
+      "exampleWords": [
+        {
+          "word": "四つ",
+          "reading": "よっつ"
+        }
+      ],
+      "source": {
+        "meaning": "bốn",
+        "onyomi": "シ",
+        "kunyomi": "よ・よん・よっ(つ)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2023/07/19/21/07/ai-generated-8137871_1280.png",
+        "alt": "四 – bốn",
+        "sourceUrl": "https://pixabay.com/vectors/ai-generated-leaves-clover-8137871/",
+        "sourceLabel": "Pixabay · deeznutz1",
+        "provider": "Pixabay",
+        "credit": "deeznutz1",
+        "width": 1668,
+        "height": 1920,
+        "resolution": "1668 × 1920",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Cỏ bốn lá có đúng bốn lá; liên tưởng hình ảnh cho số bốn.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 24,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "五",
+      "sourceId": "n5-005",
+      "category": "number",
+      "categoryLabel": "Số đếm",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Trong cuộc thi mở khóa, mật mã là năm. Neko thử một, hai, ba, bốn… đến lượt thứ năm thì ổ khóa bật mở. Chữ 五 có những nét gấp khúc như đường đi quanh co trước khi chạm đúng con số cần tìm.",
+      "memoryTip": "Qua đủ năm lượt, khóa mới mở: 五 là năm.",
+      "exampleWords": [
+        {
+          "word": "五つ",
+          "reading": "いつつ"
+        }
+      ],
+      "source": {
+        "meaning": "năm",
+        "onyomi": "ゴ",
+        "kunyomi": "いつ(つ)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2022/06/30/03/44/five-stars-7292866_1280.png",
+        "alt": "五 – năm",
+        "sourceUrl": "https://pixabay.com/illustrations/five-stars-stars-feedback-review-7292866/",
+        "sourceLabel": "Pixabay · kieutruongphoto",
+        "provider": "Pixabay",
+        "credit": "kieutruongphoto",
+        "width": 6000,
+        "height": 4000,
+        "resolution": "6000 × 4000",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Năm ngôi sao vàng xếp thành một hàng; liên tưởng trực tiếp đến số năm.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 44,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "六",
+      "sourceId": "n5-006",
+      "category": "number",
+      "categoryLabel": "Số đếm",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Một chiếc ô vừa mở ra giữa cơn mưa, bên dưới có sáu chú mèo con chen nhau trú. Nhìn chữ 六, phần trên giống mái che, hai nét dưới xòe ra như sáu cái chân đang tìm chỗ đứng.",
+      "memoryTip": "Mái ô và nhóm mèo trú mưa: 六 là sáu.",
+      "exampleWords": [
+        {
+          "word": "六つ",
+          "reading": "むっつ"
+        }
+      ],
+      "source": {
+        "meaning": "sáu",
+        "onyomi": "ロク",
+        "kunyomi": "む・むっ(つ)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/8/83/Charline_the_cat_and_her_kittens.jpg",
+        "alt": "六 – sáu",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Charline_the_cat_and_her_kittens.jpg",
+        "sourceLabel": "Wikimedia Commons · Stephanb",
+        "provider": "Wikimedia Commons",
+        "credit": "Stephanb",
+        "width": 999,
+        "height": 749,
+        "resolution": "999 × 749",
+        "license": "CC BY-SA 3.0 (GFDL also listed)",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "licenseStatus": "unverified",
+        "description": "Mèo mẹ cùng sáu mèo con; hình ảnh trực tiếp để ghi nhớ số sáu.",
+        "usageNote": "Giữ ghi công tác giả và giấy phép CC BY-SA; không gỡ thông tin nguồn."
+      }
+    },
+    {
+      "kanjiId": 49,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "七",
+      "sourceId": "n5-007",
+      "category": "number",
+      "categoryLabel": "Số đếm",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko được giao cắt chiếc bánh thành bảy phần. Cậu vừa cắt vừa đếm, nhưng đường cắt cuối cùng làm miếng bánh lệch hẳn sang một bên. Chữ 七 có nét ngang rồi nét chéo xuống — giống đường dao cắt dứt khoát ấy.",
+      "memoryTip": "Một đường cắt chéo để chia thành bảy: 七 là bảy.",
+      "exampleWords": [
+        {
+          "word": "七つ",
+          "reading": "ななつ"
+        }
+      ],
+      "source": {
+        "meaning": "bảy",
+        "onyomi": "シチ",
+        "kunyomi": "なな・なな(つ)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2024/12/07/21/31/seven-9251728_1280.png",
+        "alt": "七 – bảy",
+        "sourceUrl": "https://pixabay.com/vectors/seven-number-7-symbol-creature-9251728/",
+        "sourceLabel": "Pixabay · BenKirb",
+        "provider": "Pixabay",
+        "credit": "BenKirb",
+        "width": 1432,
+        "height": 1920,
+        "resolution": "1432 × 1920",
+        "license": "Pixabay Content License",
+        "licenseUrl": "https://pixabay.com/service/license-summary/",
+        "licenseStatus": "unverified",
+        "description": "Hình số 7 được tạo hình thành nhân vật; liên tưởng trực tiếp đến số bảy.",
+        "usageNote": "Nhúng như một phần của bài học; không phân phối lại ảnh như tài nguyên độc lập."
+      }
+    },
+    {
+      "kanjiId": 43,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "八",
+      "sourceId": "n5-008",
+      "category": "number",
+      "categoryLabel": "Số đếm",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Hai cánh cửa kho mở bung ra hai phía. Bên trong là tám thùng hàng đang chờ kiểm kê. Chữ 八 xòe ra như hai cánh cửa mở rộng; cứ thấy hai nét tách đôi là nhớ số tám.",
+      "memoryTip": "Hai nét mở rộng như cửa kho: 八 là tám.",
+      "exampleWords": [
+        {
+          "word": "八つ",
+          "reading": "やっつ"
+        }
+      ],
+      "source": {
+        "meaning": "tám",
+        "onyomi": "ハチ",
+        "kunyomi": "や・やっ(つ)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/5/53/Eight_petals_flower.jpg",
+        "alt": "八 – tám",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Eight_petals_flower.jpg",
+        "sourceLabel": "Wikimedia Commons · Mrunalashokkadam",
+        "provider": "Wikimedia Commons",
+        "credit": "Mrunalashokkadam",
+        "width": 3120,
+        "height": 4160,
+        "resolution": "3120 × 4160",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "licenseStatus": "unverified",
+        "description": "Hoa gấp giấy có tám cánh rõ ràng; dùng để liên tưởng số tám.",
+        "usageNote": "Giữ ghi công tác giả và giấy phép CC BY-SA; không gỡ thông tin nguồn."
+      }
+    },
+    {
+      "kanjiId": 32,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "九",
+      "sourceId": "n5-009",
+      "category": "number",
+      "categoryLabel": "Số đếm",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko còn thiếu đúng một điểm để đạt mười. Cậu nhìn bảng điểm: chín. Một nét cong như móc câu kéo con số lại gần mười nhưng vẫn chưa chạm tới.",
+      "memoryTip": "Chưa đủ mười, còn một bước: 九 là chín.",
+      "exampleWords": [
+        {
+          "word": "九つ",
+          "reading": "ここのつ"
+        }
+      ],
+      "source": {
+        "meaning": "chín",
+        "onyomi": "キュウ・ク",
+        "kunyomi": "ここの(つ)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2013/07/12/12/38/number-146029_1280.png",
+        "alt": "九 – chín",
+        "sourceUrl": "https://pixabay.com/vectors/number-9-alphabet-abc-gold-146029/",
+        "sourceLabel": "Pixabay · OpenClipart-Vectors",
+        "provider": "Pixabay",
+        "credit": "OpenClipart-Vectors",
+        "width": 1345,
+        "height": 1920,
+        "resolution": "1345 × 1920",
+        "license": "Pixabay Content License",
+        "licenseUrl": "https://pixabay.com/service/license-summary/",
+        "licenseStatus": "unverified",
+        "description": "Chữ số 9 lớn, dễ nhận biết; liên tưởng trực tiếp đến số chín.",
+        "usageNote": "Nhúng như một phần của bài học; không phân phối lại ảnh như tài nguyên độc lập."
+      }
+    },
+    {
+      "kanjiId": 8,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "十",
+      "sourceId": "n5-010",
+      "category": "number",
+      "categoryLabel": "Số đếm",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Hai con đường cắt nhau ngay giữa ngã tư. Người giao hàng dừng lại, nhìn bảng chỉ đường có hình dấu cộng rồi nhận ra đó là điểm hẹn số mười. Chữ 十 là hai nét giao nhau, gọn như một dấu cộng.",
+      "memoryTip": "Hai nét giao nhau: 十 là mười.",
+      "exampleWords": [
+        {
+          "word": "十",
+          "reading": "じゅう"
+        }
+      ],
+      "source": {
+        "meaning": "mười",
+        "onyomi": "ジュウ",
+        "kunyomi": "とお",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/5/53/Ten_chicken_eggs.jpg",
+        "alt": "十 – mười",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ten_chicken_eggs.jpg",
+        "sourceLabel": "Wikimedia Commons · Achim",
+        "provider": "Wikimedia Commons",
+        "credit": "Achim",
+        "width": 2048,
+        "height": 1536,
+        "resolution": "2048 × 1536",
+        "license": "CC0 1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseStatus": "unverified",
+        "description": "Mười quả trứng được bày cùng nhau; hình ảnh đếm đủ một chục.",
+        "usageNote": "Tác phẩm được đánh dấu CC0; ghi tác giả để tiện truy vết nguồn."
+      }
+    },
+    {
+      "kanjiId": 57,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "百",
+      "sourceId": "n5-011",
+      "category": "number",
+      "categoryLabel": "Số đếm",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Một cửa hàng treo biển giảm giá, nhưng Neko chỉ chú ý đến chiếc hộp ghi ‘100 chiếc’. Cậu mở ra, bên trong là cả núi bánh quy. Chữ 百 có 一 ở phía trên như dấu mốc, nhắc đến một trăm — con số lớn hơn hẳn những lần đếm lẻ.",
+      "memoryTip": "Một hộp đầy đủ 100 món: 百 là một trăm.",
+      "exampleWords": [
+        {
+          "word": "百円",
+          "reading": "ひゃくえん"
+        }
+      ],
+      "source": {
+        "meaning": "trăm",
+        "onyomi": "ヒャク",
+        "kunyomi": "—",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2017/08/21/15/55/money-2665824_1280.jpg",
+        "alt": "百 – trăm",
+        "sourceUrl": "https://pixabay.com/photos/money-euro-100-eur-package-2665824/",
+        "sourceLabel": "Pixabay · jojooff",
+        "provider": "Pixabay",
+        "credit": "jojooff",
+        "width": 1920,
+        "height": 1355,
+        "resolution": "1920 × 1355",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Các tờ tiền mệnh giá 100 euro; ví dụ trực quan cho con số một trăm.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 62,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "千",
+      "sourceId": "n5-012",
+      "category": "number",
+      "categoryLabel": "Số đếm",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Trên vé tàu, giá tiền có thêm một số 0 khiến Neko phải nhìn lại: một nghìn yên. Chữ 千 giống 十 được thêm một nét nhỏ phía trên — như con số vừa được nâng lên một bậc.",
+      "memoryTip": "Thêm một nét lên 十 thành 千: một nghìn.",
+      "exampleWords": [
+        {
+          "word": "千円",
+          "reading": "せんえん"
+        }
+      ],
+      "source": {
+        "meaning": "nghìn",
+        "onyomi": "セン",
+        "kunyomi": "ち",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2024/04/29/11/20/moneybag-8727680_1280.jpg",
+        "alt": "千 – nghìn",
+        "sourceUrl": "https://pixabay.com/photos/moneybag-money-dollars-currency-8727680/",
+        "sourceLabel": "Pixabay · muqadastalib",
+        "provider": "Pixabay",
+        "credit": "muqadastalib",
+        "width": 4000,
+        "height": 2403,
+        "resolution": "4000 × 2403",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Túi tiền và các bó tiền; ảnh gợi tiền/giá trị, không biểu diễn chính xác 1.000.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 82,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "万",
+      "sourceId": "n5-013",
+      "category": "number",
+      "categoryLabel": "Số đếm",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko mở ứng dụng ngân hàng và thấy số dư hiện 10.000 yên. Cậu kiểm tra lại ba lần vì tưởng mình nhìn nhầm. Chữ 万 là mốc ‘vạn’, con số lớn đến mức phải dừng lại đếm cho chắc.",
+      "memoryTip": "Thấy số tiền có bốn số 0: nhớ 万 là mười nghìn.",
+      "exampleWords": [
+        {
+          "word": "一万円",
+          "reading": "いちまんえん"
+        }
+      ],
+      "source": {
+        "meaning": "mười nghìn; vạn",
+        "onyomi": "マン・バン",
+        "kunyomi": "—",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2013/07/18/10/56/pile-163497_1280.jpg",
+        "alt": "万 – mười nghìn; vạn",
+        "sourceUrl": "https://pixabay.com/illustrations/pile-money-finance-currency-crisis-163497/",
+        "sourceLabel": "Pixabay · PublicDomainPictures",
+        "provider": "Pixabay",
+        "credit": "PublicDomainPictures",
+        "width": 1920,
+        "height": 1280,
+        "resolution": "1920 × 1280",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Nhiều bó tiền xếp thành đống; dùng liên tưởng con số lớn/vạn, không phải ví dụ giá trị chính xác.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 38,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "円",
+      "sourceId": "n5-014",
+      "category": "number",
+      "categoryLabel": "Số đếm",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Máy bán nước chỉ nhận đồng xu tròn. Neko lục túi, tìm được một đồng yên sáng bóng rồi thả vào khe. Chữ 円 có khung gần như khép kín, gợi hình một đồng xu tròn.",
+      "memoryTip": "Đồng xu nằm trong khung tròn: 円 là yên.",
+      "exampleWords": [
+        {
+          "word": "百円",
+          "reading": "ひゃくえん"
+        }
+      ],
+      "source": {
+        "meaning": "yên; hình tròn",
+        "onyomi": "エン",
+        "kunyomi": "まる(い)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2019/09/05/14/09/japanese-yen-4454139_1280.png",
+        "alt": "円 – yên; hình tròn",
+        "sourceUrl": "https://pixabay.com/illustrations/japanese-yen-japan-jpy-y-badge-4454139/",
+        "sourceLabel": "Pixabay · ooceey",
+        "provider": "Pixabay",
+        "credit": "ooceey",
+        "width": 5000,
+        "height": 5000,
+        "resolution": "5000 × 5000",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Biểu tượng tiền tệ Yen Nhật; đúng ngữ cảnh nghĩa yên.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 1,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "日",
+      "sourceId": "n5-015",
+      "category": "nature",
+      "categoryLabel": "Thiên nhiên",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Đồng hồ báo thức reo, nhưng Neko vẫn kéo chăn. Khi kéo rèm, một vệt nắng hình chữ nhật chiếu thẳng vào phòng. Chữ 日 giống ô cửa sổ đang giữ mặt trời bên trong — nhìn thấy nó là biết một ngày đã bắt đầu.",
+      "memoryTip": "Mặt trời trong ô cửa sổ: 日 là mặt trời, ngày.",
+      "exampleWords": [
+        {
+          "word": "日曜日",
+          "reading": "にちようび"
+        }
+      ],
+      "source": {
+        "meaning": "mặt trời; ngày",
+        "onyomi": "ニチ・ジツ",
+        "kunyomi": "ひ・か",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2024/03/27/19/57/sun-8659768_1280.png",
+        "alt": "日 – mặt trời; ngày",
+        "sourceUrl": "https://pixabay.com/illustrations/sun-sunrise-pastel-watercolor-8659768/",
+        "sourceLabel": "Pixabay · Pfefferminza_Viktualia",
+        "provider": "Pixabay",
+        "credit": "Pfefferminza_Viktualia",
+        "width": 4000,
+        "height": 4000,
+        "resolution": "4000 × 4000",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Ảnh mặt trời mọc, ánh nắng pastel.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 19,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "月",
+      "sourceId": "n5-016",
+      "category": "nature",
+      "categoryLabel": "Thiên nhiên",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko đi câu cá lúc tối muộn. Phao mãi không động, nhưng trên mặt hồ lại có một vầng trăng cong phản chiếu. Cậu ngẩng lên nhìn trăng rồi quên luôn chuyện câu cá. Chữ 月 gợi vầng trăng khuyết treo trên trời.",
+      "memoryTip": "Vầng trăng cong trên mặt hồ: 月 là trăng, tháng.",
+      "exampleWords": [
+        {
+          "word": "月曜日",
+          "reading": "げつようび"
+        }
+      ],
+      "source": {
+        "meaning": "mặt trăng; tháng",
+        "onyomi": "ゲツ・ガツ",
+        "kunyomi": "つき",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2024/09/20/12/03/moon-9061326_1280.png",
+        "alt": "月 – mặt trăng; tháng",
+        "sourceUrl": "https://pixabay.com/illustrations/moon-crescent-stars-clouds-sky-9061326/",
+        "sourceLabel": "Pixabay · Không xác minh được tên tác giả trong metadata đã xem; ảnh được gắn nhãn AI-generated trên Pixabay",
+        "provider": "Pixabay",
+        "credit": "Không xác minh được tên tác giả trong metadata đã xem; ảnh được gắn nhãn AI-generated trên Pixabay",
+        "width": 4096,
+        "height": 4096,
+        "resolution": "4096 × 4096",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Trăng lưỡi liềm, sao và mây màu pastel.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 91,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "火",
+      "sourceId": "n5-017",
+      "category": "nature",
+      "categoryLabel": "Thiên nhiên",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko định nướng đúng một xiên cá. Cậu quạt than hơi mạnh, lửa phụt lên, tia lửa bắn sang hai bên và xiên cá rơi xuống đất. Chữ 火 có phần giữa như ngọn lửa, các nét xòe ra như tia lửa văng tung tóe.",
+      "memoryTip": "Ngọn lửa bùng lên, tia lửa bắn ra: 火 là lửa.",
+      "exampleWords": [
+        {
+          "word": "火曜日",
+          "reading": "かようび"
+        }
+      ],
+      "source": {
+        "meaning": "lửa",
+        "onyomi": "カ",
+        "kunyomi": "ひ",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2025/03/13/02/33/campfire-9466787_1280.png",
+        "alt": "火 – lửa",
+        "sourceUrl": "https://pixabay.com/illustrations/campfire-fire-bonfire-camping-hot-9466787/",
+        "sourceLabel": "Pixabay · Yahnos",
+        "provider": "Pixabay",
+        "credit": "Yahnos",
+        "width": 5492,
+        "height": 6864,
+        "resolution": "5492 × 6864",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Lửa trại và củi; minh họa riêng, nền trong suốt.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 64,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "水",
+      "sourceId": "n5-018",
+      "category": "nature",
+      "categoryLabel": "Thiên nhiên",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Một giọt nước rơi khỏi vòi, chạm đất rồi bắn thành nhiều tia nhỏ. Neko nhìn dòng nước tách ra hai bên và nhớ ngay chữ 水: một dòng ở giữa, những nhánh nước xòe ra xung quanh.",
+      "memoryTip": "Dòng nước tỏa thành nhánh: 水 là nước.",
+      "exampleWords": [
+        {
+          "word": "水曜日",
+          "reading": "すいようび"
+        }
+      ],
+      "source": {
+        "meaning": "nước",
+        "onyomi": "スイ",
+        "kunyomi": "みず",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2018/02/22/20/41/watercolor-3173964_1280.jpg",
+        "alt": "水 – nước",
+        "sourceUrl": "https://pixabay.com/illustrations/watercolor-river-nature-green-3173964/",
+        "sourceLabel": "Pixabay · lextotan",
+        "provider": "Pixabay",
+        "credit": "lextotan",
+        "width": 6010,
+        "height": 4005,
+        "resolution": "6010 × 4005",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Cầu đá bắc qua dòng sông trong rừng; hình ảnh nước/sông.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 75,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "木",
+      "sourceId": "n5-019",
+      "category": "nature",
+      "categoryLabel": "Thiên nhiên",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Sau cơn bão, một cái cây đứng trơ giữa sân. Thân cây vươn thẳng, cành chìa sang hai bên, rễ bám xuống đất. Chữ 木 giống sơ đồ đơn giản của cả cái cây — thân, cành và rễ đều có mặt.",
+      "memoryTip": "Thân, cành, rễ trong một hình: 木 là cây, gỗ.",
+      "exampleWords": [
+        {
+          "word": "木曜日",
+          "reading": "もくようび"
+        }
+      ],
+      "source": {
+        "meaning": "cây; gỗ",
+        "onyomi": "モク・ボク",
+        "kunyomi": "き",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2020/12/16/03/46/watercolor-5835630_1280.png",
+        "alt": "木 – cây; gỗ",
+        "sourceUrl": "https://pixabay.com/illustrations/watercolor-tree-nature-forest-5835630/",
+        "sourceLabel": "Pixabay · SYG_Anime",
+        "provider": "Pixabay",
+        "credit": "SYG_Anime",
+        "width": 3000,
+        "height": 3000,
+        "resolution": "3000 × 3000",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Một cây xanh màu nước riêng biệt; thay cho hình cành thông trước đó.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 31,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "金",
+      "sourceId": "n5-020",
+      "category": "object",
+      "categoryLabel": "Đồ vật",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko đào vườn để trồng cà rốt thì xẻng chạm phải một vật cứng. Cậu phủi đất, thấy một thỏi kim loại vàng lấp lánh. Chữ 金 gợi một món kim loại được chôn dưới lớp đất; nhớ đến vàng và tiền.",
+      "memoryTip": "Đào dưới đất thấy kim loại quý: 金 là vàng, tiền, kim loại.",
+      "exampleWords": [
+        {
+          "word": "金曜日",
+          "reading": "きんようび"
+        }
+      ],
+      "source": {
+        "meaning": "vàng; tiền; kim loại",
+        "onyomi": "キン・コン",
+        "kunyomi": "かね",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2020/09/27/10/01/money-5606272_1280.png",
+        "alt": "金 – vàng; tiền; kim loại",
+        "sourceUrl": "https://pixabay.com/vectors/money-gold-coins-icon-treasure-5606272/",
+        "sourceLabel": "Pixabay · mk_graphics",
+        "provider": "Pixabay",
+        "credit": "mk_graphics",
+        "width": 1920,
+        "height": 960,
+        "resolution": "1920 × 960",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Đống đồng xu vàng; liên tưởng 金 là vàng/kim loại/tiền.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 74,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "土",
+      "sourceId": "n5-021",
+      "category": "nature",
+      "categoryLabel": "Thiên nhiên",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Người làm vườn vun một ụ đất quanh gốc cây. Một nét ngang là mặt đất, nét dọc như chiếc xẻng cắm xuống. Chữ 土 nhìn như một mảnh đất được vun lên thành ụ.",
+      "memoryTip": "Ụ đất ngay dưới chân: 土 là đất.",
+      "exampleWords": [
+        {
+          "word": "土曜日",
+          "reading": "どようび"
+        }
+      ],
+      "source": {
+        "meaning": "đất; đất đai",
+        "onyomi": "ド・ト",
+        "kunyomi": "つち",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2014/12/21/23/36/soil-575663_1280.png",
+        "alt": "土 – đất; đất đai",
+        "sourceUrl": "https://pixabay.com/vectors/soil-mud-clearing-ground-land-575663/",
+        "sourceLabel": "Pixabay · OpenClipart-Vectors",
+        "provider": "Pixabay",
+        "credit": "OpenClipart-Vectors",
+        "width": 1920,
+        "height": 960,
+        "resolution": "1920 × 960",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Mảng đất/nền đất, vector phẳng.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 89,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "週",
+      "sourceId": "n5-022",
+      "category": "time",
+      "categoryLabel": "Thời gian",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko dán bảy tờ lịch lên tường, mỗi ngày một tờ. Đến tờ cuối cùng, cậu lật lại từ đầu — một tuần mới bắt đầu. Chữ 週 gắn với việc đi hết một vòng ngày tháng rồi quay lại.",
+      "memoryTip": "Đi hết bảy ngày rồi quay vòng: 週 là tuần.",
+      "exampleWords": [
+        {
+          "word": "毎週",
+          "reading": "まいしゅう"
+        }
+      ],
+      "source": {
+        "meaning": "tuần",
+        "onyomi": "シュウ",
+        "kunyomi": "—",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2017/05/18/12/50/time-management-2323612_1280.png",
+        "alt": "週 – tuần",
+        "sourceUrl": "https://pixabay.com/illustrations/time-management-week-calendar-days-2323612/",
+        "sourceLabel": "Pixabay · Mohamed_hassan",
+        "provider": "Pixabay",
+        "credit": "Mohamed_hassan",
+        "width": 2460,
+        "height": 2460,
+        "resolution": "2460 × 2460",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Lịch tuần với các ngày được đánh dấu; gợi khái niệm một tuần.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 6,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "年",
+      "sourceId": "n5-023",
+      "category": "time",
+      "categoryLabel": "Thời gian",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko treo lịch mới vào ngày đầu năm. Cậu nhìn lại cuốn lịch cũ đã kín những chuyến đi, sinh nhật và ngày nghỉ. Một vòng lịch khép lại là một năm trôi qua. Chữ 年 là dấu mốc của cả vòng thời gian ấy.",
+      "memoryTip": "Một cuốn lịch đi hết vòng: 年 là năm.",
+      "exampleWords": [
+        {
+          "word": "来年",
+          "reading": "らいねん"
+        }
+      ],
+      "source": {
+        "meaning": "năm",
+        "onyomi": "ネン",
+        "kunyomi": "とし",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2015/10/21/10/27/calendar-999172_1280.jpg",
+        "alt": "年 – năm",
+        "sourceUrl": "https://pixabay.com/illustrations/calendar-year-month-day-date-time-999172/",
+        "sourceLabel": "Pixabay · TheDigitalArtist",
+        "provider": "Pixabay",
+        "credit": "TheDigitalArtist",
+        "width": 3225,
+        "height": 2625,
+        "resolution": "3225 × 2625",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Lịch năm gồm đủ 12 tháng; gợi khái niệm một năm.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 15,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "時",
+      "sourceId": "n5-024",
+      "category": "time",
+      "categoryLabel": "Thời gian",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko hỏi giờ nhưng đồng hồ treo tường đã hết pin. Cậu gõ nhẹ, kim phút nhích lên đúng một nấc. Chữ 時 có 日 gợi ánh sáng của ngày và 寺 gợi một nơi có tiếng chuông báo giờ — ghép lại thành thời điểm.",
+      "memoryTip": "Tiếng chuông báo một thời điểm: 時 là giờ.",
+      "exampleWords": [
+        {
+          "word": "時間",
+          "reading": "じかん"
+        }
+      ],
+      "source": {
+        "meaning": "giờ; thời gian",
+        "onyomi": "ジ",
+        "kunyomi": "とき",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2012/04/11/17/16/clock-29008_1280.png",
+        "alt": "時 – giờ; thời gian",
+        "sourceUrl": "https://pixabay.com/vectors/clock-calendar-day-time-29008/",
+        "sourceLabel": "Pixabay · Clker-Free-Vector-Images",
+        "provider": "Pixabay",
+        "credit": "Clker-Free-Vector-Images",
+        "width": 1892,
+        "height": 1920,
+        "resolution": "1892 × 1920",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Đồng hồ và các tờ lịch; liên tưởng đến giờ và thời gian.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 20,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "分",
+      "sourceId": "n5-025",
+      "category": "time",
+      "categoryLabel": "Thời gian",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko chia chiếc bánh thành nhiều phần để mọi người đều có. Cậu dùng dao cắt một đường dứt khoát, tách chiếc bánh ra. Chữ 分 gợi hành động chia một thứ thành những phần nhỏ; thời gian cũng được chia thành phút.",
+      "memoryTip": "Chia nhỏ một khoảng thời gian: 分 là phút, phần.",
+      "exampleWords": [
+        {
+          "word": "五分",
+          "reading": "ごふん"
+        }
+      ],
+      "source": {
+        "meaning": "phút; phần; hiểu",
+        "onyomi": "フン・ブン",
+        "kunyomi": "わ(かる)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Cutting_bread_20.jpg",
+        "alt": "分 – phút; phần; hiểu",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Cutting_bread_20.jpg",
+        "sourceLabel": "Wikimedia Commons · Wheeler Cowperthwaite",
+        "provider": "Wikimedia Commons",
+        "credit": "Wheeler Cowperthwaite",
+        "width": 3888,
+        "height": 2592,
+        "resolution": "3888 × 2592",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+        "licenseStatus": "unverified",
+        "description": "Bánh mì được cắt thành các phần nhỏ; liên tưởng nghĩa chia phần của 分.",
+        "usageNote": "Cần ghi công tác giả theo CC BY 2.0 khi sử dụng."
+      }
+    },
+    {
+      "kanjiId": 65,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "半",
+      "sourceId": "n5-026",
+      "category": "time",
+      "categoryLabel": "Thời gian",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Hai người bạn tranh nhau chiếc bánh. Neko lấy dao cắt chính giữa, mỗi người nhận một phần bằng nhau. Chữ 半 nhắc đến đường chia đôi — không ai được miếng lớn hơn.",
+      "memoryTip": "Cắt ở giữa thành hai phần: 半 là một nửa.",
+      "exampleWords": [
+        {
+          "word": "三時半",
+          "reading": "さんじはん"
+        }
+      ],
+      "source": {
+        "meaning": "một nửa",
+        "onyomi": "ハン",
+        "kunyomi": "なか(ば)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2021/02/26/16/43/apple-6052496_1280.jpg",
+        "alt": "半 – một nửa",
+        "sourceUrl": "https://pixabay.com/illustrations/apple-fruit-watercolor-food-sliced-6052496/",
+        "sourceLabel": "Pixabay · VroniSchmidt",
+        "provider": "Pixabay",
+        "credit": "VroniSchmidt",
+        "width": 4074,
+        "height": 4200,
+        "resolution": "4074 × 4200",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Quả táo được cắt đôi – liên tưởng trực quan đến nghĩa một nửa.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 29,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "今",
+      "sourceId": "n5-027",
+      "category": "time",
+      "categoryLabel": "Thời gian",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko cứ nói ‘lát nữa làm’, cho đến khi nhìn đồng hồ và nhận ra đã đến giờ. Không phải hôm qua, cũng chẳng phải ngày mai — chính là lúc này. Chữ 今 là chiếc mốc nhỏ kéo sự chú ý về hiện tại.",
+      "memoryTip": "Không phải trước hay sau: 今 là bây giờ.",
+      "exampleWords": [
+        {
+          "word": "今日",
+          "reading": "きょう"
+        }
+      ],
+      "source": {
+        "meaning": "bây giờ",
+        "onyomi": "コン",
+        "kunyomi": "いま",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2022/12/02/12/26/time-7630786_1280.png",
+        "alt": "今 – bây giờ",
+        "sourceUrl": "https://pixabay.com/vectors/time-calendar-management-date-mark-7630786/",
+        "sourceLabel": "Pixabay · Mohamed_hassan",
+        "provider": "Pixabay",
+        "credit": "Mohamed_hassan",
+        "width": 1920,
+        "height": 1372,
+        "resolution": "1920 × 1372",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Đồng hồ và lịch giúp liên tưởng đến thời điểm hiện tại/bây giờ.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 56,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "午",
+      "sourceId": "n5-028",
+      "category": "time",
+      "categoryLabel": "Thời gian",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Đúng 12 giờ, nhân viên văn phòng đồng loạt đứng dậy đi ăn. Mặt trời ở gần đỉnh đầu, bóng người ngắn lại. Chữ 午 gắn với mốc giữa ngày — giờ ngọ, buổi trưa.",
+      "memoryTip": "Mặt trời lên cao nhất: 午 là trưa.",
+      "exampleWords": [
+        {
+          "word": "午後",
+          "reading": "ごご"
+        }
+      ],
+      "source": {
+        "meaning": "trưa; ngọ",
+        "onyomi": "ゴ",
+        "kunyomi": "—",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2012/04/14/13/46/clock-33989_1280.png",
+        "alt": "午 – trưa; ngọ",
+        "sourceUrl": "https://pixabay.com/vectors/clock-time-face-roman-twelve-33989/",
+        "sourceLabel": "Pixabay · Clker-Free-Vector-Images",
+        "provider": "Pixabay",
+        "credit": "Clker-Free-Vector-Images",
+        "width": 1920,
+        "height": 1920,
+        "resolution": "1920 × 1920",
+        "license": "Pixabay Content License",
+        "licenseUrl": "https://pixabay.com/service/license-summary/",
+        "licenseStatus": "unverified",
+        "description": "Đồng hồ chỉ đúng 12 giờ; liên tưởng trực tiếp đến 午 (trưa/ngọ).",
+        "usageNote": "Nhúng như một phần của bài học; không phân phối lại ảnh như tài nguyên độc lập."
+      }
+    },
+    {
+      "kanjiId": 22,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "前",
+      "sourceId": "n5-029",
+      "category": "direction",
+      "categoryLabel": "Phương hướng",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko xếp hàng mua vé. Người đứng ngay trước mặt cậu được gọi vào quầy trước, còn Neko phải chờ. Chữ 前 là hướng ở phía trước — nơi người kia đang đứng.",
+      "memoryTip": "Người đứng trước được gọi trước: 前 là phía trước.",
+      "exampleWords": [
+        {
+          "word": "午前",
+          "reading": "ごぜん"
+        }
+      ],
+      "source": {
+        "meaning": "trước; phía trước",
+        "onyomi": "ゼン",
+        "kunyomi": "まえ",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2021/06/26/19/38/car-6366999_1280.jpg",
+        "alt": "前 – trước; phía trước",
+        "sourceUrl": "https://pixabay.com/photos/car-vehicle-license-plate-auto-6366999/",
+        "sourceLabel": "Pixabay · JACLOU-DL",
+        "provider": "Pixabay",
+        "credit": "JACLOU-DL",
+        "width": 5732,
+        "height": 3824,
+        "resolution": "5732 × 3824",
+        "license": "Pixabay Content License",
+        "licenseUrl": "https://pixabay.com/service/license-summary/",
+        "licenseStatus": "unverified",
+        "description": "Góc chụp trực diện phần đầu xe, nhấn rõ phía trước (前).",
+        "usageNote": "Nhúng như một phần của bài học; ảnh có thể chứa quyền hình ảnh/nhãn hiệu riêng cần rà soát khi phát hành."
+      }
+    },
+    {
+      "kanjiId": 21,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "後",
+      "sourceId": "n5-030",
+      "category": "direction",
+      "categoryLabel": "Phương hướng",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko chạy ra khỏi nhà, đi được một đoạn mới phát hiện quên ví. Cậu phải quay lại phía sau để lấy. Chữ 後 gợi phần đường còn lại phía sau lưng — thứ đến sau hoặc nằm phía sau.",
+      "memoryTip": "Quên ví nên phải quay về phía sau: 後 là sau.",
+      "exampleWords": [
+        {
+          "word": "後で",
+          "reading": "あとで"
+        }
+      ],
+      "source": {
+        "meaning": "sau; phía sau",
+        "onyomi": "ゴ・コウ",
+        "kunyomi": "あと・うし(ろ)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2021/07/16/19/43/woman-6471715_1280.jpg",
+        "alt": "後 – sau; phía sau",
+        "sourceUrl": "https://pixabay.com/photos/woman-young-long-hair-back-view-6471715/",
+        "sourceLabel": "Pixabay · Icsilviu",
+        "provider": "Pixabay",
+        "credit": "Icsilviu",
+        "width": 3100,
+        "height": 5000,
+        "resolution": "3100 × 5000",
+        "license": "Pixabay Content License",
+        "licenseUrl": "https://pixabay.com/service/license-summary/",
+        "licenseStatus": "unverified",
+        "description": "Người được chụp từ phía sau; liên tưởng phía sau/sau đó (後).",
+        "usageNote": "Nhúng như một phần của bài học; rà soát quyền hình ảnh cá nhân khi phát hành."
+      }
+    },
+    {
+      "kanjiId": 84,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "毎",
+      "sourceId": "n5-031",
+      "category": "time",
+      "categoryLabel": "Thời gian",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Sáng nào Neko cũng tắt báo thức rồi tự hứa ngày mai sẽ dậy sớm. Nhưng ngày nào chuyện ấy cũng lặp lại. Chữ 毎 là lời nhắc về thứ xảy ra hết lần này đến lần khác: mỗi ngày, mỗi lần.",
+      "memoryTip": "Việc lặp lại ngày nào cũng có: 毎 là mỗi.",
+      "exampleWords": [
+        {
+          "word": "毎日",
+          "reading": "まいにち"
+        }
+      ],
+      "source": {
+        "meaning": "mỗi; mọi",
+        "onyomi": "マイ",
+        "kunyomi": "—",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2022/03/01/18/54/calendar-7041843_1280.png",
+        "alt": "毎 – mỗi; mọi",
+        "sourceUrl": "https://pixabay.com/vectors/calendar-agenda-online-mark-7041843/",
+        "sourceLabel": "Pixabay · Mohamed_hassan",
+        "provider": "Pixabay",
+        "credit": "Mohamed_hassan",
+        "width": 1920,
+        "height": 1441,
+        "resolution": "1920 × 1441",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Lịch và thông báo nhắc việc; liên tưởng việc lặp lại đều đặn mỗi ngày.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 25,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "間",
+      "sourceId": "n5-032",
+      "category": "direction",
+      "categoryLabel": "Phương hướng",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Hai cánh cửa khép hờ, ở giữa lọt vào một vệt nắng. Neko tò mò nhìn qua khe cửa để xem bên trong có gì. Chữ 間 có 門 là cánh cổng, 日 là ánh sáng ở giữa — khoảng không nằm giữa hai bên.",
+      "memoryTip": "Ánh sáng lọt giữa hai cánh cửa: 間 là khoảng giữa.",
+      "exampleWords": [
+        {
+          "word": "一時間",
+          "reading": "いちじかん"
+        }
+      ],
+      "source": {
+        "meaning": "khoảng; giữa",
+        "onyomi": "カン・ケン",
+        "kunyomi": "あいだ・ま",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2015/03/09/19/10/door-open-666175_1280.jpg",
+        "alt": "間 – khoảng; giữa",
+        "sourceUrl": "https://pixabay.com/photos/open-door-garden-against-the-light-666175/",
+        "sourceLabel": "Pixabay · mradsami",
+        "provider": "Pixabay",
+        "credit": "mradsami",
+        "width": 2592,
+        "height": 3872,
+        "resolution": "2592 × 3872",
+        "license": "Pixabay Content License",
+        "licenseUrl": "https://pixabay.com/service/license-summary/",
+        "licenseStatus": "unverified",
+        "description": "Khoảng mở giữa khung cửa dẫn ra khu vườn; liên tưởng không gian/khoảng giữa (間).",
+        "usageNote": "Nhúng như một phần của bài học; không phân phối lại ảnh như tài nguyên độc lập."
+      }
+    },
+    {
+      "kanjiId": 5,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "人",
+      "sourceId": "n5-033",
+      "category": "people",
+      "categoryLabel": "Con người",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Trên sân ga đông người, Neko chỉ nhận ra một người đang bước đi. Hai nét của 人 giống dáng người đang dang chân bước tới. Đơn giản, nhưng đi đâu cũng gặp.",
+      "memoryTip": "Dáng người đang bước: 人 là người.",
+      "exampleWords": [
+        {
+          "word": "日本人",
+          "reading": "にほんじん"
+        }
+      ],
+      "source": {
+        "meaning": "người",
+        "onyomi": "ジン・ニン",
+        "kunyomi": "ひと",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2017/08/17/15/32/walking-2651721_1280.png",
+        "alt": "人 – người",
+        "sourceUrl": "https://pixabay.com/illustrations/walking-man-young-isolated-2651721/",
+        "sourceLabel": "Pixabay · Mohamed_hassan",
+        "provider": "Pixabay",
+        "credit": "Mohamed_hassan",
+        "width": 2048,
+        "height": 2048,
+        "resolution": "2048 × 2048",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Người đang bước đi; hình riêng biệt, nền trong suốt.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 39,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "子",
+      "sourceId": "n5-034",
+      "category": "people",
+      "categoryLabel": "Con người",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Một em bé vừa tập đi, hai tay dang ra để giữ thăng bằng. Người lớn đứng gần đó sẵn sàng đỡ nếu bé ngã. Chữ 子 gợi dáng một đứa trẻ nhỏ đang dang tay.",
+      "memoryTip": "Em bé dang tay tập đi: 子 là trẻ em, con.",
+      "exampleWords": [
+        {
+          "word": "子ども",
+          "reading": "こども"
+        }
+      ],
+      "source": {
+        "meaning": "trẻ em; con",
+        "onyomi": "シ・ス",
+        "kunyomi": "こ",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2023/06/01/09/31/child-8033277_1280.png",
+        "alt": "子 – trẻ em; con",
+        "sourceUrl": "https://pixabay.com/illustrations/child-boy-watercolor-art-watercolor-8033277/",
+        "sourceLabel": "Pixabay · elhoz",
+        "provider": "Pixabay",
+        "credit": "elhoz",
+        "width": 2560,
+        "height": 3328,
+        "resolution": "2560 × 3328",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Chân dung bé trai màu nước; riêng biệt với ảnh nữ giới.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 54,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "女",
+      "sourceId": "n5-035",
+      "category": "people",
+      "categoryLabel": "Con người",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Trong lớp học võ, huấn luyện viên yêu cầu mọi người ngồi ngay ngắn, hai tay đặt gọn trước người. Neko nhìn tư thế ấy và liên tưởng đến nét 女 — dáng ngồi khép gọn trong hình chữ.",
+      "memoryTip": "Tư thế ngồi khép gọn: 女 là nữ, phụ nữ.",
+      "exampleWords": [
+        {
+          "word": "女の子",
+          "reading": "おんなのこ"
+        }
+      ],
+      "source": {
+        "meaning": "phụ nữ; nữ",
+        "onyomi": "ジョ・ニョ",
+        "kunyomi": "おんな",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2019/04/29/17/03/watercolor-girl-4166566_1280.jpg",
+        "alt": "女 – phụ nữ; nữ",
+        "sourceUrl": "https://pixabay.com/illustrations/watercolor-girl-watercolour-drawing-4166566/",
+        "sourceLabel": "Pixabay · lucianapappdesign",
+        "provider": "Pixabay",
+        "credit": "lucianapappdesign",
+        "width": 2550,
+        "height": 3300,
+        "resolution": "2550 × 3300",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Minh họa cô bé phong cách watercolor.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 66,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "男",
+      "sourceId": "n5-036",
+      "category": "people",
+      "categoryLabel": "Con người",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Ngoài ruộng, một người đang cúi xuống làm việc với chiếc cuốc. Phần 田 gợi thửa ruộng, phần 力 gợi sức lực. Ghép lại thành hình ảnh người làm việc ngoài đồng — 男.",
+      "memoryTip": "Sức lực trên cánh đồng: 男 là nam, đàn ông.",
+      "exampleWords": [
+        {
+          "word": "男の子",
+          "reading": "おとこのこ"
+        }
+      ],
+      "source": {
+        "meaning": "đàn ông; nam",
+        "onyomi": "ダン・ナン",
+        "kunyomi": "おとこ",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2019/10/02/16/25/portrait-4521359_1280.jpg",
+        "alt": "男 – đàn ông; nam",
+        "sourceUrl": "https://pixabay.com/illustrations/portrait-man-boy-watercolor-faces-4521359/",
+        "sourceLabel": "Pixabay · Sunriseforever",
+        "provider": "Pixabay",
+        "credit": "Sunriseforever",
+        "width": 2944,
+        "height": 4040,
+        "resolution": "2944 × 4040",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Chân dung nam giới vẽ màu nước; minh họa nghĩa nam/đàn ông.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 98,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "父",
+      "sourceId": "n5-037",
+      "category": "people",
+      "categoryLabel": "Con người",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko loay hoay sửa chiếc xe đạp bị tuột xích. Bố cậu đến, cầm hai dụng cụ bắt chéo nhau và sửa xong trong vài phút. Chữ 父 gợi hình ảnh người cha với đôi tay khéo léo đang làm việc.",
+      "memoryTip": "Người bố xắn tay sửa xe: 父 là cha.",
+      "exampleWords": [
+        {
+          "word": "お父さん",
+          "reading": "おとうさん"
+        }
+      ],
+      "source": {
+        "meaning": "cha; bố",
+        "onyomi": "フ",
+        "kunyomi": "ちち",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2023/12/22/21/43/watercolor-8464442_1280.jpg",
+        "alt": "父 – cha; bố",
+        "sourceUrl": "https://pixabay.com/illustrations/watercolor-beautiful-silhouette-8464442/",
+        "sourceLabel": "Pixabay · Παῦλος",
+        "provider": "Pixabay",
+        "credit": "Παῦλος",
+        "width": 3072,
+        "height": 2048,
+        "resolution": "3072 × 2048",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Hình minh họa người cha bế em bé; trang nguồn ghi AI-generated.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 90,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "母",
+      "sourceId": "n5-038",
+      "category": "people",
+      "categoryLabel": "Con người",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko bị sốt, mẹ đặt tay lên trán rồi mang nước ấm đến. Cậu nhận ra dù lớn đến đâu, lúc mệt vẫn muốn gọi mẹ đầu tiên. Chữ 母 có những nét bên trong như hình ảnh được ôm giữ, gợi người mẹ.",
+      "memoryTip": "Người luôn chăm khi ta ốm: 母 là mẹ.",
+      "exampleWords": [
+        {
+          "word": "お母さん",
+          "reading": "おかあさん"
+        }
+      ],
+      "source": {
+        "meaning": "mẹ",
+        "onyomi": "ボ",
+        "kunyomi": "はは",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2023/12/22/21/43/watercolor-8464459_1280.jpg",
+        "alt": "母 – mẹ",
+        "sourceUrl": "https://pixabay.com/illustrations/watercolor-beautiful-silhouette-8464459/",
+        "sourceLabel": "Pixabay · Παῦλος",
+        "provider": "Pixabay",
+        "credit": "Παῦλος",
+        "width": 3072,
+        "height": 2048,
+        "resolution": "3072 × 2048",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Hình minh họa người mẹ ôm em bé; trang nguồn ghi AI-generated.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 95,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "友",
+      "sourceId": "n5-039",
+      "category": "people",
+      "categoryLabel": "Con người",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Hai người bạn cùng kéo một chiếc bàn nặng lên cầu thang. Một người kéo, người kia đẩy; không ai làm một mình. Chữ 友 gợi hai bàn tay cùng phối hợp — bạn bè là người có thể dựa vào.",
+      "memoryTip": "Hai người cùng chung tay: 友 là bạn.",
+      "exampleWords": [
+        {
+          "word": "友だち",
+          "reading": "ともだち"
+        }
+      ],
+      "source": {
+        "meaning": "bạn bè",
+        "onyomi": "ユウ",
+        "kunyomi": "とも",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2021/01/08/06/55/friends-5899127_1280.jpg",
+        "alt": "友 – bạn bè",
+        "sourceUrl": "https://pixabay.com/illustrations/friends-women-watercolor-smile-5899127/",
+        "sourceLabel": "Pixabay · andytraderthailand",
+        "provider": "Pixabay",
+        "credit": "andytraderthailand",
+        "width": 3976,
+        "height": 2568,
+        "resolution": "3976 × 2568",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Hai người bạn cùng vui vẻ; minh họa tình bạn.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 59,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "先",
+      "sourceId": "n5-040",
+      "category": "people",
+      "categoryLabel": "Con người",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Trong chuyến leo núi, người dẫn đường đi trước để kiểm tra lối. Cả nhóm chỉ bước tiếp khi thấy anh ra hiệu an toàn. Chữ 先 nhắc đến người đi trước, người mở đường.",
+      "memoryTip": "Người mở đường đi trước: 先 là trước.",
+      "exampleWords": [
+        {
+          "word": "先生",
+          "reading": "せんせい"
+        }
+      ],
+      "source": {
+        "meaning": "trước; phía trước",
+        "onyomi": "セン",
+        "kunyomi": "さき",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2020/10/08/06/23/forest-5637068_1280.jpg",
+        "alt": "先 – trước; phía trước",
+        "sourceUrl": "https://pixabay.com/photos/forest-road-pine-trees-trail-path-5637068/",
+        "sourceLabel": "Pixabay · IlyaYurukin",
+        "provider": "Pixabay",
+        "credit": "IlyaYurukin",
+        "width": 5184,
+        "height": 3456,
+        "resolution": "5184 × 3456",
+        "license": "Pixabay Content License",
+        "licenseUrl": "https://pixabay.com/service/license-summary/",
+        "licenseStatus": "unverified",
+        "description": "Con đường kéo về phía trước, gợi hướng đi trước/đi trước (先).",
+        "usageNote": "Nhúng như một phần của bài học; không phân phối lại ảnh như tài nguyên độc lập."
+      }
+    },
+    {
+      "kanjiId": 23,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "生",
+      "sourceId": "n5-041",
+      "category": "nature",
+      "categoryLabel": "Thiên nhiên",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Một mầm cây đội đất chui lên sau trận mưa. Hôm qua chưa thấy gì, hôm nay chiếc lá non đã xuất hiện. Chữ 生 gợi sự sống vừa bật lên — sinh ra, sống và lớn lên.",
+      "memoryTip": "Mầm non vừa nhú khỏi đất: 生 là sống, sinh ra.",
+      "exampleWords": [
+        {
+          "word": "学生",
+          "reading": "がくせい"
+        }
+      ],
+      "source": {
+        "meaning": "sống; sinh ra",
+        "onyomi": "セイ・ショウ",
+        "kunyomi": "い(きる)・う(まれる)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2026/05/18/20/23/20-23-01-682_1280.png",
+        "alt": "生 – sống; sinh ra",
+        "sourceUrl": "https://pixabay.com/illustrations/plant-growth-watercolor-seedling-10286648/",
+        "sourceLabel": "Pixabay · BuchArena",
+        "provider": "Pixabay",
+        "credit": "BuchArena",
+        "width": 3000,
+        "height": 3000,
+        "resolution": "3000 × 3000",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Mầm cây đang lớn lên; gợi sự sống và sinh trưởng. Hiển thị trên nền sáng vì ảnh có thể có nền trong suốt.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 60,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "名",
+      "sourceId": "n5-042",
+      "category": "people",
+      "categoryLabel": "Con người",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Ở buổi gặp mặt, mọi người đều đeo thẻ tên. Neko quên thẻ nên phải giới thiệu lại từ đầu. Chữ 名 gợi việc gọi tên một người để nhận ra họ giữa đám đông.",
+      "memoryTip": "Có tên mới nhận ra nhau: 名 là tên.",
+      "exampleWords": [
+        {
+          "word": "名前",
+          "reading": "なまえ"
+        }
+      ],
+      "source": {
+        "meaning": "tên; danh tiếng",
+        "onyomi": "メイ・ミョウ",
+        "kunyomi": "な",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2022/02/18/02/33/name-tag-7019883_1280.png",
+        "alt": "名 – tên; danh tiếng",
+        "sourceUrl": "https://pixabay.com/vectors/name-tag-name-sticker-name-meeting-7019883/",
+        "sourceLabel": "Pixabay · Maiconfz",
+        "provider": "Pixabay",
+        "credit": "Maiconfz",
+        "width": 1920,
+        "height": 1080,
+        "resolution": "1920 × 1080",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Thẻ tên đeo trước ngực; liên tưởng nghĩa tên.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 40,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "目",
+      "sourceId": "n5-043",
+      "category": "body",
+      "categoryLabel": "Cơ thể",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko nheo mắt nhìn bảng thông báo từ xa. Hai mí mắt khép mở quanh con ngươi, giúp cậu đọc được dòng chữ nhỏ. Chữ 目 giống một con mắt nhìn thẳng — khung ngoài là mí, nét giữa là phần bên trong.",
+      "memoryTip": "Khung mắt nhìn thẳng: 目 là mắt.",
+      "exampleWords": [
+        {
+          "word": "目",
+          "reading": "め"
+        }
+      ],
+      "source": {
+        "meaning": "mắt",
+        "onyomi": "モク",
+        "kunyomi": "め",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2019/09/05/05/28/eye-4453129_1280.jpg",
+        "alt": "目 – mắt",
+        "sourceUrl": "https://pixabay.com/illustrations/eye-watercolor-art-sketch-4453129/",
+        "sourceLabel": "Pixabay · Nika_Akin",
+        "provider": "Pixabay",
+        "credit": "Nika_Akin",
+        "width": 4737,
+        "height": 3150,
+        "resolution": "4737 × 3150",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Mắt người vẽ màu nước trên nền sáng.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 103,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "耳",
+      "sourceId": "n5-044",
+      "category": "body",
+      "categoryLabel": "Cơ thể",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Trong thư viện yên tĩnh, Neko nghe thấy tiếng giấy sột soạt rất nhỏ. Cậu nghiêng đầu, dựng tai lên để nghe rõ hơn. Chữ 耳 có dáng gợi vành tai với những nếp gấp bên trong.",
+      "memoryTip": "Dựng tai để nghe tiếng động: 耳 là tai.",
+      "exampleWords": [
+        {
+          "word": "耳",
+          "reading": "みみ"
+        }
+      ],
+      "source": {
+        "meaning": "tai",
+        "onyomi": "ジ",
+        "kunyomi": "みみ",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2025/06/16/16/47/ear-9663602_1280.png",
+        "alt": "耳 – tai",
+        "sourceUrl": "https://pixabay.com/vectors/ear-human-person-hear-listen-9663602/",
+        "sourceLabel": "Pixabay · BlenderTimer",
+        "provider": "Pixabay",
+        "credit": "BlenderTimer",
+        "width": 1246,
+        "height": 1921,
+        "resolution": "1246 × 1921",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Minh họa tai người; không phải watercolor nhưng đúng nghĩa và rõ hình.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 69,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "口",
+      "sourceId": "n5-045",
+      "category": "body",
+      "categoryLabel": "Cơ thể",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko ăn bánh quá nhanh nên miệng dính đầy kem. Cậu soi gương, thấy một chiếc miệng vuông đang mở. Chữ 口 là hình đơn giản của một cái miệng — cũng có thể gợi một cửa mở.",
+      "memoryTip": "Một ô mở để ăn và nói: 口 là miệng.",
+      "exampleWords": [
+        {
+          "word": "入り口",
+          "reading": "いりぐち"
+        }
+      ],
+      "source": {
+        "meaning": "miệng; cửa",
+        "onyomi": "コウ・ク",
+        "kunyomi": "くち",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2021/12/31/04/33/mouth-6904998_1280.png",
+        "alt": "口 – miệng; cửa",
+        "sourceUrl": "https://pixabay.com/vectors/mouth-lips-beauty-makeup-cosmetics-6904998/",
+        "sourceLabel": "Pixabay · Królestwo_Nauki",
+        "provider": "Pixabay",
+        "credit": "Królestwo_Nauki",
+        "width": 1921,
+        "height": 960,
+        "resolution": "1921 × 960",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Minh họa miệng/môi đơn giản, dễ nhận diện.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 35,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "手",
+      "sourceId": "n5-046",
+      "category": "body",
+      "categoryLabel": "Cơ thể",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko làm rơi chìa khóa xuống khe ghế. Cậu luồn tay vào, mò một lúc mới lấy được. Chữ 手 gợi bàn tay và những ngón tay đang vươn ra để cầm nắm.",
+      "memoryTip": "Bàn tay vươn ra lấy chìa khóa: 手 là tay.",
+      "exampleWords": [
+        {
+          "word": "上手",
+          "reading": "じょうず"
+        }
+      ],
+      "source": {
+        "meaning": "tay; bàn tay",
+        "onyomi": "シュ",
+        "kunyomi": "て",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2013/07/13/11/44/hand-158576_1280.png",
+        "alt": "手 – tay; bàn tay",
+        "sourceUrl": "https://pixabay.com/vectors/hand-fingers-thumb-index-finger-158576/",
+        "sourceLabel": "Pixabay · OpenClipart-Vectors",
+        "provider": "Pixabay",
+        "credit": "OpenClipart-Vectors",
+        "width": 1477,
+        "height": 1920,
+        "resolution": "1477 × 1920",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Bàn tay mở, nhìn rõ lòng bàn tay và năm ngón.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 81,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "足",
+      "sourceId": "n5-047",
+      "category": "body",
+      "categoryLabel": "Cơ thể",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko đi bộ cả ngày, đến tối mới nhận ra chân mình mỏi nhừ. Cậu ngồi xuống xoa bàn chân và nhớ chữ 足 — phần dưới cơ thể giúp ta đứng, đi và chạy.",
+      "memoryTip": "Đôi chân đưa ta đi khắp nơi: 足 là chân.",
+      "exampleWords": [
+        {
+          "word": "足",
+          "reading": "あし"
+        }
+      ],
+      "source": {
+        "meaning": "chân; bàn chân; đủ",
+        "onyomi": "ソク",
+        "kunyomi": "あし・た(りる)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2023/09/07/03/32/foot-8238234_1280.png",
+        "alt": "足 – chân; bàn chân; đủ",
+        "sourceUrl": "https://pixabay.com/vectors/foot-human-side-person-man-woman-8238234/",
+        "sourceLabel": "Pixabay · BlenderTimer",
+        "provider": "Pixabay",
+        "credit": "BlenderTimer",
+        "width": 1920,
+        "height": 1687,
+        "resolution": "1920 × 1687",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Bàn chân nhìn nghiêng, hình đơn giản dễ nhận diện.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 50,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "山",
+      "sourceId": "n5-048",
+      "category": "nature",
+      "categoryLabel": "Thiên nhiên",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Sương tan, ba đỉnh núi hiện ra trên đường chân trời. Đỉnh giữa cao nhất, hai đỉnh bên thấp hơn. Chữ 山 giống hệt đường viền của một dãy núi nhìn từ xa.",
+      "memoryTip": "Ba đỉnh nhô lên khỏi đường chân trời: 山 là núi.",
+      "exampleWords": [
+        {
+          "word": "富士山",
+          "reading": "ふじさん"
+        }
+      ],
+      "source": {
+        "meaning": "núi",
+        "onyomi": "サン",
+        "kunyomi": "やま",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2022/06/20/18/21/watercolor-7274347_1280.jpg",
+        "alt": "山 – núi",
+        "sourceUrl": "https://pixabay.com/illustrations/watercolor-muted-pastel-art-7274347/",
+        "sourceLabel": "Pixabay · Malediction_Wolf",
+        "provider": "Pixabay",
+        "credit": "Malediction_Wolf",
+        "width": 5018,
+        "height": 3217,
+        "resolution": "5018 × 3217",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Nhiều lớp núi màu pastel; rất phù hợp làm ảnh ghi nhớ 山.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 61,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "川",
+      "sourceId": "n5-049",
+      "category": "nature",
+      "categoryLabel": "Thiên nhiên",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Sau cơn mưa, nước từ sườn đồi chảy thành ba dòng song song. Nhìn từ trên cao, chúng uốn lượn qua cánh đồng. Chữ 川 là ba dòng nước chảy cạnh nhau — hình của một con sông.",
+      "memoryTip": "Ba dòng chảy song song: 川 là sông.",
+      "exampleWords": [
+        {
+          "word": "川",
+          "reading": "かわ"
+        }
+      ],
+      "source": {
+        "meaning": "sông",
+        "onyomi": "セン",
+        "kunyomi": "かわ",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2015/08/26/17/35/water-908813_1280.png",
+        "alt": "川 – sông",
+        "sourceUrl": "https://pixabay.com/vi/vectors/n%C6%B0%E1%BB%9Bc-l%E1%BA%A1ch-nh%E1%BB%8F-con-s%C3%B4ng-l%C6%B0u-l%C6%B0%E1%BB%A3ng-908813/",
+        "sourceLabel": "Pixabay · OpenClipart-Vectors (source listing; verify exact uploader metadata on page)",
+        "provider": "Pixabay",
+        "credit": "OpenClipart-Vectors (source listing; verify exact uploader metadata on page)",
+        "width": null,
+        "height": null,
+        "resolution": "1280 CDN rendition; source page provides original dimensions",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Dòng sông xanh uốn lượn; dùng riêng cho 川, không trùng ảnh 水.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 87,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "天",
+      "sourceId": "n5-050",
+      "category": "nature",
+      "categoryLabel": "Thiên nhiên",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko giơ hai tay lên cao để đo xem bầu trời rộng đến đâu. Cậu nhận ra chẳng có mái nhà nào che hết được khoảng xanh phía trên. Chữ 天 gợi phần ở trên đầu con người — bầu trời.",
+      "memoryTip": "Thứ nằm trên đầu tất cả chúng ta: 天 là trời.",
+      "exampleWords": [
+        {
+          "word": "天気",
+          "reading": "てんき"
+        }
+      ],
+      "source": {
+        "meaning": "trời; thiên",
+        "onyomi": "テン",
+        "kunyomi": "あめ・あま",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2021/07/13/00/03/sky-6438645_1280.jpg",
+        "alt": "天 – trời; thiên",
+        "sourceUrl": "https://pixabay.com/illustrations/sky-fun-watercolor-clouds-summer-6438645/",
+        "sourceLabel": "Pixabay · danajwright",
+        "provider": "Pixabay",
+        "credit": "danajwright",
+        "width": 3000,
+        "height": 2121,
+        "resolution": "3000 × 2121",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Màu nước xanh da trời/mây; ảnh nền bầu trời, không phải ảnh mây đơn lẻ.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 47,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "気",
+      "sourceId": "n5-051",
+      "category": "nature",
+      "categoryLabel": "Thiên nhiên",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Trước buổi thi, Neko hồi hộp đến mức cứ đi qua đi lại. Bạn cậu bảo: ‘Bình tĩnh, lấy lại tinh thần đi’. Chữ 気 thường xuất hiện trong những từ nói về khí, năng lượng và tâm trạng — thứ không nhìn thấy nhưng cảm nhận được.",
+      "memoryTip": "Thứ không thấy nhưng cảm nhận được: 気 là khí, tinh thần.",
+      "exampleWords": [
+        {
+          "word": "元気",
+          "reading": "げんき"
+        }
+      ],
+      "source": {
+        "meaning": "khí; tinh thần; tâm trạng",
+        "onyomi": "キ・ケ",
+        "kunyomi": "—",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2020/01/31/13/50/wind-4808125_1280.jpg",
+        "alt": "気 – khí; tinh thần; tâm trạng",
+        "sourceUrl": "https://pixabay.com/photos/wind-gale-leaves-trees-country-4808125/",
+        "sourceLabel": "Pixabay · KHphotography",
+        "provider": "Pixabay",
+        "credit": "KHphotography",
+        "width": 4912,
+        "height": 7360,
+        "resolution": "4912 × 7360",
+        "license": "Pixabay Content License",
+        "licenseUrl": "https://pixabay.com/service/license-summary/",
+        "licenseStatus": "unverified",
+        "description": "Cảnh gió mạnh cuốn lá và thổi người đi; gợi khí/gió và năng lượng (気).",
+        "usageNote": "Nhúng như một phần của bài học; không phân phối lại ảnh như tài nguyên độc lập."
+      }
+    },
+    {
+      "kanjiId": 100,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "雨",
+      "sourceId": "n5-052",
+      "category": "nature",
+      "categoryLabel": "Thiên nhiên",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko vừa phơi quần áo thì mây đen kéo đến. Những giọt nước bắt đầu gõ lộp bộp lên mái hiên. Chữ 雨 có phần trên như mái mây, bên dưới là những giọt mưa rơi xuống.",
+      "memoryTip": "Những giọt rơi dưới mái mây: 雨 là mưa.",
+      "exampleWords": [
+        {
+          "word": "雨",
+          "reading": "あめ"
+        }
+      ],
+      "source": {
+        "meaning": "mưa",
+        "onyomi": "ウ",
+        "kunyomi": "あめ",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2024/04/19/18/45/watercolor-8707013_1280.png",
+        "alt": "雨 – mưa",
+        "sourceUrl": "https://pixabay.com/illustrations/watercolor-painting-window-rain-8707013/",
+        "sourceLabel": "Pixabay · FreeFunArt",
+        "provider": "Pixabay",
+        "credit": "FreeFunArt",
+        "width": 4500,
+        "height": 3500,
+        "resolution": "4500 × 3500",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Cửa sổ có những giọt mưa; gợi nghĩa mưa.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 73,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "空",
+      "sourceId": "n5-053",
+      "category": "nature",
+      "categoryLabel": "Thiên nhiên",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko mở chiếc hộp tưởng chứa đầy bánh, nhưng bên trong trống không. Cậu ngẩng lên nhìn bầu trời rộng cũng không có gì che kín. Chữ 空 vừa gợi khoảng trời, vừa gợi sự trống rỗng.",
+      "memoryTip": "Khoảng rộng không bị lấp đầy: 空 là bầu trời, trống.",
+      "exampleWords": [
+        {
+          "word": "空",
+          "reading": "そら"
+        }
+      ],
+      "source": {
+        "meaning": "bầu trời; trống rỗng",
+        "onyomi": "クウ",
+        "kunyomi": "そら・あ(く)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2024/04/29/14/43/sky-8728075_1280.jpg",
+        "alt": "空 – bầu trời; trống rỗng",
+        "sourceUrl": "https://pixabay.com/illustrations/sky-art-watercolor-mountain-fog-8728075/",
+        "sourceLabel": "Pixabay · wevfewv · AI-generated",
+        "provider": "Pixabay",
+        "credit": "wevfewv · AI-generated",
+        "width": 4096,
+        "height": 4096,
+        "resolution": "4096 × 4096",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Tranh màu nước trừu tượng gợi không gian trời rộng; liên tưởng nghĩa bầu trời.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 92,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "花",
+      "sourceId": "n5-054",
+      "category": "nature",
+      "categoryLabel": "Thiên nhiên",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Một nụ hoa nằm im suốt nhiều ngày. Sáng hôm sau, cánh hoa bung ra ngay trước cửa sổ. Neko nhìn sự thay đổi ấy và nhớ 花 — thứ nở ra, có cánh và thường khiến khu vườn bớt đơn điệu.",
+      "memoryTip": "Nụ bung cánh: 花 là hoa.",
+      "exampleWords": [
+        {
+          "word": "花",
+          "reading": "はな"
+        }
+      ],
+      "source": {
+        "meaning": "hoa",
+        "onyomi": "カ",
+        "kunyomi": "はな",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2019/05/16/20/56/watercolour-flower-4208233_1280.png",
+        "alt": "花 – hoa",
+        "sourceUrl": "https://pixabay.com/illustrations/watercolour-flower-watercolour-4208233/",
+        "sourceLabel": "Pixabay · lucianapappdesign",
+        "provider": "Pixabay",
+        "credit": "lucianapappdesign",
+        "width": 2550,
+        "height": 3300,
+        "resolution": "2550 × 3300",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Bó hoa mẫu đơn và tử đinh hương màu nước.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 26,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "上",
+      "sourceId": "n5-055",
+      "category": "direction",
+      "categoryLabel": "Phương hướng",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko đặt chiếc hộp lên kệ. Chiếc hộp nằm cao hơn mặt bàn, đúng vị trí phía trên. Chữ 上 có nét đánh dấu nằm trên đường chuẩn — thứ ở cao hơn được gọi là trên.",
+      "memoryTip": "Dấu nằm phía trên đường chuẩn: 上 là trên.",
+      "exampleWords": [
+        {
+          "word": "上",
+          "reading": "うえ"
+        }
+      ],
+      "source": {
+        "meaning": "trên; phía trên",
+        "onyomi": "ジョウ",
+        "kunyomi": "うえ・あ(がる)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2023/01/16/13/43/arrow-7722394_1280.png",
+        "alt": "上 – trên; phía trên",
+        "sourceUrl": "https://pixabay.com/illustrations/arrow-arrow-up-positive-growth-7722394/",
+        "sourceLabel": "Pixabay · TheDigitalArtist",
+        "provider": "Pixabay",
+        "credit": "TheDigitalArtist",
+        "width": 4000,
+        "height": 2500,
+        "resolution": "4000 × 2500",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Mũi tên hướng lên; liên tưởng vị trí phía trên.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 45,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "下",
+      "sourceId": "n5-056",
+      "category": "direction",
+      "categoryLabel": "Phương hướng",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Quả bóng lăn khỏi bàn và rơi xuống sàn. Neko cúi xuống nhặt, nhìn lại chiếc bàn ở phía trên. Chữ 下 đánh dấu vị trí thấp hơn đường chuẩn — phía dưới.",
+      "memoryTip": "Quả bóng rơi khỏi bàn: 下 là dưới.",
+      "exampleWords": [
+        {
+          "word": "下",
+          "reading": "した"
+        }
+      ],
+      "source": {
+        "meaning": "dưới; phía dưới",
+        "onyomi": "カ・ゲ",
+        "kunyomi": "した・さ(がる)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2020/10/16/08/34/arrow-5658893_1280.png",
+        "alt": "下 – dưới; phía dưới",
+        "sourceUrl": "https://pixabay.com/illustrations/arrow-down-icon-button-media-5658893/",
+        "sourceLabel": "Pixabay · TheDigitalArtist",
+        "provider": "Pixabay",
+        "credit": "TheDigitalArtist",
+        "width": 3600,
+        "height": 3600,
+        "resolution": "3600 × 3600",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Mũi tên chỉ xuống; liên tưởng vị trí phía dưới.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 11,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "中",
+      "sourceId": "n5-057",
+      "category": "direction",
+      "categoryLabel": "Phương hướng",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko tìm chìa khóa trong chiếc túi lớn. Cậu lục bên ngoài mãi không thấy, cuối cùng thò tay vào chính giữa túi và chạm được nó. Chữ 中 có một nét xuyên qua phần khung — thứ nằm ở trong, ở giữa.",
+      "memoryTip": "Nét xuyên vào giữa khung: 中 là trong, giữa.",
+      "exampleWords": [
+        {
+          "word": "中",
+          "reading": "なか"
+        }
+      ],
+      "source": {
+        "meaning": "trong; giữa",
+        "onyomi": "チュウ",
+        "kunyomi": "なか",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2018/01/28/03/23/container-3112707_1280.jpg",
+        "alt": "中 – trong; giữa",
+        "sourceUrl": "https://pixabay.com/photos/container-of-glass-colour-marbles-3112707/",
+        "sourceLabel": "Pixabay · fernandozhiminaicela",
+        "provider": "Pixabay",
+        "credit": "fernandozhiminaicela",
+        "width": 3872,
+        "height": 2592,
+        "resolution": "3872 × 2592",
+        "license": "Pixabay Content License",
+        "licenseUrl": "https://pixabay.com/service/license-summary/",
+        "licenseStatus": "unverified",
+        "description": "Những viên bi nằm bên trong lọ thủy tinh; liên tưởng nghĩa trong/ở giữa (中).",
+        "usageNote": "Nhúng như một phần của bài học; không phân phối lại ảnh như tài nguyên độc lập."
+      }
+    },
+    {
+      "kanjiId": 41,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "外",
+      "sourceId": "n5-058",
+      "category": "direction",
+      "categoryLabel": "Phương hướng",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Cửa rạp đã đóng, Neko đến muộn nên phải đứng bên ngoài. Bên trong mọi người đang xem phim, còn cậu chỉ nghe tiếng cười vọng ra. Chữ 外 nhắc đến phía ngoài ranh giới — không ở bên trong.",
+      "memoryTip": "Đứng ngoài cánh cửa đã đóng: 外 là bên ngoài.",
+      "exampleWords": [
+        {
+          "word": "外国",
+          "reading": "がいこく"
+        }
+      ],
+      "source": {
+        "meaning": "ngoài; bên ngoài",
+        "onyomi": "ガイ・ゲ",
+        "kunyomi": "そと・ほか",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2020/10/08/09/23/door-5637438_1280.jpg",
+        "alt": "外 – ngoài; bên ngoài",
+        "sourceUrl": "https://pixabay.com/photos/door-field-doorway-opened-door-5637438/",
+        "sourceLabel": "Pixabay · Tumisu",
+        "provider": "Pixabay",
+        "credit": "Tumisu",
+        "width": 4002,
+        "height": 2994,
+        "resolution": "4002 × 2994",
+        "license": "Pixabay Content License",
+        "licenseUrl": "https://pixabay.com/service/license-summary/",
+        "licenseStatus": "unverified",
+        "description": "Cánh cửa mở ra cánh đồng bên ngoài; đối lập trong nhà và ngoài trời (外).",
+        "usageNote": "Nhúng như một phần của bài học; không phân phối lại ảnh như tài nguyên độc lập."
+      }
+    },
+    {
+      "kanjiId": 93,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "右",
+      "sourceId": "n5-059",
+      "category": "direction",
+      "categoryLabel": "Phương hướng",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko cầm bánh bằng tay phải, nhưng bạn lại đưa đĩa sang phía trái. Hai người loay hoay đổi qua đổi lại. Chữ 右 có 口 ở phần dưới — hãy dùng mẹo liên tưởng miệng và bàn tay phải để phân biệt với 左, nhưng nhớ đây là mẹo ghi nhớ chứ không phải nguồn gốc chữ.",
+      "memoryTip": "Đĩa bánh ở phía tay phải: 右 là phải.",
+      "exampleWords": [
+        {
+          "word": "右",
+          "reading": "みぎ"
+        }
+      ],
+      "source": {
+        "meaning": "phải",
+        "onyomi": "ウ・ユウ",
+        "kunyomi": "みぎ",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2020/11/22/17/07/signage-board-5767269_1280.jpg",
+        "alt": "右 – phải",
+        "sourceUrl": "https://pixabay.com/illustrations/signage-board-wooden-post-5767269/",
+        "sourceLabel": "Pixabay · ooceey",
+        "provider": "Pixabay",
+        "credit": "ooceey",
+        "width": 5000,
+        "height": 5000,
+        "resolution": "5000 × 5000",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Biển chỉ đường có mũi tên sang trái và phải; dùng để luyện định hướng, chú ý chọn nhánh bên phải.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 96,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "左",
+      "sourceId": "n5-060",
+      "category": "direction",
+      "categoryLabel": "Phương hướng",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko cầm thước bằng tay trái để vẽ đường thẳng. Tay phải giữ giấy, tay trái điều khiển thước. Chữ 左 là cặp đối chiếu với 右 — hãy tưởng tượng bàn tay trái đang giữ dụng cụ làm việc.",
+      "memoryTip": "Tay trái giữ thước: 左 là trái.",
+      "exampleWords": [
+        {
+          "word": "左",
+          "reading": "ひだり"
+        }
+      ],
+      "source": {
+        "meaning": "trái",
+        "onyomi": "サ",
+        "kunyomi": "ひだり",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2012/04/13/14/47/hand-32687_1280.png",
+        "alt": "左 – trái",
+        "sourceUrl": "https://pixabay.com/vectors/hand-left-palm-human-32687/",
+        "sourceLabel": "Pixabay · Clker-Free-Vector-Images",
+        "provider": "Pixabay",
+        "credit": "Clker-Free-Vector-Images",
+        "width": 1414,
+        "height": 1920,
+        "resolution": "1414 × 1920",
+        "license": "Pixabay Content License",
+        "licenseUrl": "https://pixabay.com/service/license-summary/",
+        "licenseStatus": "unverified",
+        "description": "Minh họa lòng bàn tay trái, theo đúng tag Left/Palm trên trang nguồn.",
+        "usageNote": "Nhúng như một phần của bài học; không phân phối lại ảnh như tài nguyên độc lập."
+      }
+    },
+    {
+      "kanjiId": 27,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "東",
+      "sourceId": "n5-061",
+      "category": "direction",
+      "categoryLabel": "Phương hướng",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Sáng sớm, Neko đứng chờ mặt trời mọc. Ánh sáng đầu tiên xuất hiện ở phía sau hàng cây bên phải bản đồ — hướng đông. Chữ 東 gắn với nơi mặt trời xuất hiện mỗi sáng.",
+      "memoryTip": "Nơi mặt trời mọc: 東 là đông.",
+      "exampleWords": [
+        {
+          "word": "東京",
+          "reading": "とうきょう"
+        }
+      ],
+      "source": {
+        "meaning": "đông",
+        "onyomi": "トウ",
+        "kunyomi": "ひがし",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2025/10/06/09/03/watercolor-9876620_1280.png",
+        "alt": "東 – đông",
+        "sourceUrl": "https://pixabay.com/illustrations/watercolor-mountains-sunrise-mist-9876620/",
+        "sourceLabel": "Pixabay · kriti_h_2121 · AI-generated",
+        "provider": "Pixabay",
+        "credit": "kriti_h_2121 · AI-generated",
+        "width": 4500,
+        "height": 3000,
+        "resolution": "4500 × 3000",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Mặt trời nhô lên sau dãy núi lúc bình minh; liên tưởng hướng đông.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 67,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "西",
+      "sourceId": "n5-062",
+      "category": "direction",
+      "categoryLabel": "Phương hướng",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Cuối ngày, Neko ngồi trên đồi nhìn mặt trời khuất dần sau đường chân trời. Ánh sáng tắt ở phía đối diện nơi mặt trời mọc — hướng tây. Chữ 西 là hướng của buổi hoàng hôn.",
+      "memoryTip": "Nơi mặt trời lặn: 西 là tây.",
+      "exampleWords": [
+        {
+          "word": "西口",
+          "reading": "にしぐち"
+        }
+      ],
+      "source": {
+        "meaning": "tây",
+        "onyomi": "セイ・サイ",
+        "kunyomi": "にし",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2024/02/17/20/10/ai-generated-8580082_1280.jpg",
+        "alt": "西 – tây",
+        "sourceUrl": "https://pixabay.com/illustrations/ai-generated-couple-sunset-beach-8580082/",
+        "sourceLabel": "Pixabay · TyliJura · AI-generated",
+        "provider": "Pixabay",
+        "credit": "TyliJura · AI-generated",
+        "width": 4928,
+        "height": 3712,
+        "resolution": "4928 × 3712",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Hoàng hôn trên biển; liên tưởng mặt trời lặn ở hướng tây.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 80,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "南",
+      "sourceId": "n5-063",
+      "category": "direction",
+      "categoryLabel": "Phương hướng",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko đi tránh rét và chọn chuyến tàu xuống phía nam, nơi thời tiết ấm hơn. Trên bản đồ, cậu khoanh vùng phía dưới. Chữ 南 là hướng nam — nhớ bằng chuyến đi tìm nắng.",
+      "memoryTip": "Đi xuống vùng ấm hơn trên bản đồ: 南 là nam.",
+      "exampleWords": [
+        {
+          "word": "南",
+          "reading": "みなみ"
+        }
+      ],
+      "source": {
+        "meaning": "nam",
+        "onyomi": "ナン",
+        "kunyomi": "みなみ",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2017/11/07/07/04/compass-2925824_1280.png",
+        "alt": "南 – nam",
+        "sourceUrl": "https://pixabay.com/illustrations/compass-north-south-east-west-2925824/",
+        "sourceLabel": "Pixabay · ariesjay",
+        "provider": "Pixabay",
+        "credit": "ariesjay",
+        "width": 8333,
+        "height": 8333,
+        "resolution": "8333 × 8333",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "La bàn hiển thị đủ hướng, trong đó hướng Nam nằm ở phía dưới.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 55,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "北",
+      "sourceId": "n5-064",
+      "category": "direction",
+      "categoryLabel": "Phương hướng",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Hai người đứng quay lưng vào nhau vì gió lạnh thổi từ phía bắc. Neko nhìn la bàn, xác định hướng gió rồi kéo khóa áo lên. Chữ 北 thường được nhớ qua hình ảnh hai người quay lưng — hướng bắc.",
+      "memoryTip": "Quay lưng tránh gió lạnh: 北 là bắc.",
+      "exampleWords": [
+        {
+          "word": "北",
+          "reading": "きた"
+        }
+      ],
+      "source": {
+        "meaning": "bắc",
+        "onyomi": "ホク",
+        "kunyomi": "きた",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2016/06/05/13/48/compass-1437379_1280.png",
+        "alt": "北 – bắc",
+        "sourceUrl": "https://pixabay.com/illustrations/compass-north-south-direction-1437379/",
+        "sourceLabel": "Pixabay · ArtsyBee",
+        "provider": "Pixabay",
+        "credit": "ArtsyBee",
+        "width": 1920,
+        "height": 1626,
+        "resolution": "1920 × 1626",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "La bàn có ký hiệu phương hướng; dùng để gợi hướng Bắc, cần hiển thị chú thích hướng Bắc.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 3,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "国",
+      "sourceId": "n5-065",
+      "category": "place",
+      "categoryLabel": "Địa điểm",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko nhìn bản đồ có một đường biên bao quanh hòn đảo. Bên trong có thành phố, núi, sông và người dân cùng sống. Chữ 国 có khung bao ngoài như đường biên lãnh thổ — một đất nước.",
+      "memoryTip": "Đường biên bao quanh một vùng: 国 là quốc gia.",
+      "exampleWords": [
+        {
+          "word": "外国",
+          "reading": "がいこく"
+        }
+      ],
+      "source": {
+        "meaning": "đất nước; quốc gia",
+        "onyomi": "コク",
+        "kunyomi": "くに",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2020/08/01/23/22/banner-5456391_1280.jpg",
+        "alt": "国 – đất nước; quốc gia",
+        "sourceUrl": "https://pixabay.com/illustrations/banner-header-geography-map-5456391/",
+        "sourceLabel": "Pixabay · kwade1",
+        "provider": "Pixabay",
+        "credit": "kwade1",
+        "width": 5606,
+        "height": 1674,
+        "resolution": "5606 × 1674",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Bản đồ thế giới – gợi đất nước và địa lý.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 36,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "学",
+      "sourceId": "n5-066",
+      "category": "place",
+      "categoryLabel": "Địa điểm",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko vào thư viện với ý định chỉ đọc một trang. Một trang thành mười trang, rồi cậu bắt đầu ghi chú. Chữ 学 gắn với việc tiếp nhận kiến thức, học hỏi và rèn luyện.",
+      "memoryTip": "Mở sách, ghi chú, tích lũy kiến thức: 学 là học.",
+      "exampleWords": [
+        {
+          "word": "学生",
+          "reading": "がくせい"
+        }
+      ],
+      "source": {
+        "meaning": "học; học tập",
+        "onyomi": "ガク",
+        "kunyomi": "まな(ぶ)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2024/04/17/19/27/ai-generated-8702864_1280.png",
+        "alt": "学 – học; học tập",
+        "sourceUrl": "https://pixabay.com/vi/illustrations/ai-%C4%91%C6%B0%E1%BB%A3c-t%E1%BA%A1o-ra-tr%C6%B0%E1%BB%9Dng-h%E1%BB%8Dc-sinh-vi%C3%AAn-8702864/",
+        "sourceLabel": "Pixabay · tanrıca",
+        "provider": "Pixabay",
+        "credit": "tanrıca",
+        "width": 3000,
+        "height": 2400,
+        "resolution": "3000 × 2400",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Học sinh ngồi học và viết trong lớp; ảnh được gắn nhãn AI-generated trên trang nguồn.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 71,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "校",
+      "sourceId": "n5-067",
+      "category": "place",
+      "categoryLabel": "Địa điểm",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Ngày đầu đến trường, Neko đi nhầm vào phòng giáo viên rồi bị chỉ đường sang lớp học. Cậu nhận ra trường học không chỉ là một tòa nhà mà còn là nơi mọi người đến học mỗi ngày. Chữ 校 thường đi cùng 学 tạo thành 学校 — trường học.",
+      "memoryTip": "Nơi có lớp học và giáo viên: 校 là trường.",
+      "exampleWords": [
+        {
+          "word": "学校",
+          "reading": "がっこう"
+        }
+      ],
+      "source": {
+        "meaning": "trường học",
+        "onyomi": "コウ",
+        "kunyomi": "—",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2014/03/24/17/15/school-295210_1280.png",
+        "alt": "校 – trường học",
+        "sourceUrl": "https://pixabay.com/vectors/school-building-education-property-295210/",
+        "sourceLabel": "Pixabay · Clker-Free-Vector-Images",
+        "provider": "Pixabay",
+        "credit": "Clker-Free-Vector-Images",
+        "width": 1920,
+        "height": 1040,
+        "resolution": "1920 × 1040",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Tòa nhà trường học; chuyển từ liên kết dự kiến ở 学 sang chữ 校 để giữ đúng nghĩa và tránh lặp hình.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 83,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "店",
+      "sourceId": "n5-068",
+      "category": "place",
+      "categoryLabel": "Địa điểm",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko đi ngang một cửa tiệm nhỏ, thấy tấm biển ‘mở cửa’ và mùi bánh thơm bay ra. Cậu chỉ định nhìn một chút nhưng cuối cùng mua hết khay bánh. Chữ 店 gợi nơi bày bán hàng hóa — cửa hàng.",
+      "memoryTip": "Có biển mở cửa và hàng trên kệ: 店 là cửa hàng.",
+      "exampleWords": [
+        {
+          "word": "店",
+          "reading": "みせ"
+        }
+      ],
+      "source": {
+        "meaning": "cửa hàng",
+        "onyomi": "テン",
+        "kunyomi": "みせ",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2021/01/24/15/21/shop-5945498_1280.png",
+        "alt": "店 – cửa hàng",
+        "sourceUrl": "https://pixabay.com/vectors/shop-store-front-shopping-5945498/",
+        "sourceLabel": "Pixabay · phoenixvectorart",
+        "provider": "Pixabay",
+        "credit": "phoenixvectorart",
+        "width": 1904,
+        "height": 1920,
+        "resolution": "1904 × 1920",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Mặt tiền cửa hàng mái hiên sọc, màu pastel.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 99,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "駅",
+      "sourceId": "n5-069",
+      "category": "place",
+      "categoryLabel": "Địa điểm",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko chạy đến sân ga đúng lúc tàu chuẩn bị đóng cửa. Cậu nhìn bảng điện tử, tìm đúng số đường ray rồi lên tàu. Chữ 駅 gắn với nơi tàu dừng đón và trả khách — nhà ga.",
+      "memoryTip": "Nơi tàu dừng để đón khách: 駅 là ga.",
+      "exampleWords": [
+        {
+          "word": "駅",
+          "reading": "えき"
+        }
+      ],
+      "source": {
+        "meaning": "nhà ga; ga",
+        "onyomi": "エキ",
+        "kunyomi": "—",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2025/10/15/13/28/watercolor-9896320_1280.jpg",
+        "alt": "駅 – nhà ga; ga",
+        "sourceUrl": "https://pixabay.com/illustrations/watercolor-friends-girls-friendship-9896320/",
+        "sourceLabel": "Pixabay · WriterandIllustrator",
+        "provider": "Pixabay",
+        "credit": "WriterandIllustrator",
+        "width": 3000,
+        "height": 4500,
+        "resolution": "3000 × 4500",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Hai bạn học sinh đứng tại nhà ga; ảnh dùng riêng cho ngữ cảnh ga tàu.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 63,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "道",
+      "sourceId": "n5-070",
+      "category": "place",
+      "categoryLabel": "Địa điểm",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko đứng trước ngã ba, nhìn ba con đường đều giống nhau. Cậu chọn con đường có biển chỉ dẫn và đi theo đến đích. Chữ 道 là lối đi dẫn từ nơi này đến nơi khác — con đường.",
+      "memoryTip": "Lối dẫn đến một nơi: 道 là đường.",
+      "exampleWords": [
+        {
+          "word": "道",
+          "reading": "みち"
+        }
+      ],
+      "source": {
+        "meaning": "con đường; đường đi",
+        "onyomi": "ドウ",
+        "kunyomi": "みち",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2023/02/13/02/43/path-7786401_1280.jpg",
+        "alt": "道 – con đường; đường đi",
+        "sourceUrl": "https://pixabay.com/illustrations/path-trip-road-city-journey-7786401/",
+        "sourceLabel": "Pixabay · souandresantana",
+        "provider": "Pixabay",
+        "credit": "souandresantana",
+        "width": 4267,
+        "height": 4267,
+        "resolution": "4267 × 4267",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Con đường kéo dài về phía chân trời; một người đang đi trên đường.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 16,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "行",
+      "sourceId": "n5-071",
+      "category": "action",
+      "categoryLabel": "Hành động",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko nhìn bản đồ, gấp lại rồi bước khỏi nhà. Kế hoạch đã xong, giờ phải đi thôi. Chữ 行 gắn với hành động di chuyển, đi đến một nơi hoặc tiến hành việc gì đó.",
+      "memoryTip": "Gấp bản đồ và bắt đầu bước: 行 là đi.",
+      "exampleWords": [
+        {
+          "word": "行きます",
+          "reading": "いきます"
+        }
+      ],
+      "source": {
+        "meaning": "đi; tiến hành",
+        "onyomi": "コウ・ギョウ",
+        "kunyomi": "い(く)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2021/02/05/11/10/watercolor-5984221_1280.jpg",
+        "alt": "行 – đi; tiến hành",
+        "sourceUrl": "https://pixabay.com/illustrations/watercolor-girl-autumn-woman-art-5984221/",
+        "sourceLabel": "Pixabay · acuarelasplash_com",
+        "provider": "Pixabay",
+        "credit": "acuarelasplash_com",
+        "width": 2480,
+        "height": 3509,
+        "resolution": "2480 × 3509",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Minh họa cô gái trên con đường mùa thu; gợi hành động đi/di chuyển.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 46,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "来",
+      "sourceId": "n5-072",
+      "category": "action",
+      "categoryLabel": "Hành động",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko đang đợi bạn ở quán. Từ xa, cậu thấy bạn vẫy tay và tiến lại gần. Chữ 来 là chuyển động hướng về phía người đang chờ — đến.",
+      "memoryTip": "Người bạn tiến lại gần: 来 là đến.",
+      "exampleWords": [
+        {
+          "word": "来ます",
+          "reading": "きます"
+        }
+      ],
+      "source": {
+        "meaning": "đến",
+        "onyomi": "ライ",
+        "kunyomi": "く(る)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2016/03/28/10/08/train-1285358_1280.jpg",
+        "alt": "来 – đến",
+        "sourceUrl": "https://pixabay.com/photos/train-commuter-commerce-people-1285358/",
+        "sourceLabel": "Pixabay · Pexels",
+        "provider": "Pixabay",
+        "credit": "Pexels",
+        "width": 4021,
+        "height": 3978,
+        "resolution": "4021 × 3978",
+        "license": "Pixabay Content License",
+        "licenseUrl": "https://pixabay.com/service/license-summary/",
+        "licenseStatus": "unverified",
+        "description": "Đoàn tàu đang tiến vào ga; gợi chuyển động đến/đến nơi (来).",
+        "usageNote": "Nhúng như một phần của bài học; không phân phối lại ảnh như tài nguyên độc lập."
+      }
+    },
+    {
+      "kanjiId": 13,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "出",
+      "sourceId": "n5-073",
+      "category": "action",
+      "categoryLabel": "Hành động",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Một mầm cây đội lớp đất, nhô hẳn lên khỏi mặt đất. Phần bên trong đã vượt qua ranh giới và xuất hiện bên ngoài. Chữ 出 gợi hành động đi ra hoặc đưa thứ gì đó ra.",
+      "memoryTip": "Mầm cây nhô khỏi mặt đất: 出 là ra.",
+      "exampleWords": [
+        {
+          "word": "出口",
+          "reading": "でぐち"
+        }
+      ],
+      "source": {
+        "meaning": "ra; đi ra",
+        "onyomi": "シュツ",
+        "kunyomi": "で(る)・だ(す)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2017/03/22/02/23/seedling-2163773_1280.png",
+        "alt": "出 – ra; đi ra",
+        "sourceUrl": "https://pixabay.com/vectors/seedling-seed-growth-plant-green-2163773/",
+        "sourceLabel": "Pixabay · REDQUASAR",
+        "provider": "Pixabay",
+        "credit": "REDQUASAR",
+        "width": 1206,
+        "height": 1920,
+        "resolution": "1206 × 1920",
+        "license": "Pixabay Content License",
+        "licenseUrl": "https://pixabay.com/service/license-summary/",
+        "licenseStatus": "unverified",
+        "description": "Mầm cây mọc nhú ra khỏi hạt; minh họa trực quan ý ra/đi ra (出).",
+        "usageNote": "Nhúng như một phần của bài học; không phân phối lại ảnh như tài nguyên độc lập."
+      }
+    },
+    {
+      "kanjiId": 33,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "入",
+      "sourceId": "n5-074",
+      "category": "action",
+      "categoryLabel": "Hành động",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko đứng trước cửa, cúi đầu rồi bước qua ngưỡng. Bóng cậu biến mất bên trong căn phòng. Chữ 入 có hai nét chụm xuống như một lối mở để đi vào.",
+      "memoryTip": "Bước qua ngưỡng cửa: 入 là vào.",
+      "exampleWords": [
+        {
+          "word": "入口",
+          "reading": "いりぐち"
+        }
+      ],
+      "source": {
+        "meaning": "vào; đi vào",
+        "onyomi": "ニュウ",
+        "kunyomi": "はい(る)・い(れる)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2022/03/06/14/27/opening-a-door-7051778_1280.png",
+        "alt": "入 – vào; đi vào",
+        "sourceUrl": "https://pixabay.com/illustrations/opening-a-door-entering-a-room-7051778/",
+        "sourceLabel": "Pixabay · LOLOGO",
+        "provider": "Pixabay",
+        "credit": "LOLOGO",
+        "width": 3940,
+        "height": 4248,
+        "resolution": "3940 × 4248",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Nhân vật bước vào qua cánh cửa – liên tưởng nghĩa vào.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 18,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "見",
+      "sourceId": "n5-075",
+      "category": "action",
+      "categoryLabel": "Hành động",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko đứng trên ghế để nhìn qua bức tường thấp. Cậu phải dùng mắt quan sát thật kỹ mới nhận ra chiếc chìa khóa nằm dưới gốc cây. Chữ 見 có 目 là mắt và phần dưới gợi người đang đứng nhìn.",
+      "memoryTip": "Mắt hướng về thứ cần tìm: 見 là nhìn, xem.",
+      "exampleWords": [
+        {
+          "word": "見ます",
+          "reading": "みます"
+        }
+      ],
+      "source": {
+        "meaning": "nhìn; xem",
+        "onyomi": "ケン",
+        "kunyomi": "み(る)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2018/09/27/10/03/human-3706670_1280.jpg",
+        "alt": "見 – nhìn; xem",
+        "sourceUrl": "https://pixabay.com/photos/human-eye-close-up-girl-face-3706670/",
+        "sourceLabel": "Pixabay · athree23",
+        "provider": "Pixabay",
+        "credit": "athree23",
+        "width": 4288,
+        "height": 2848,
+        "resolution": "4288 × 2848",
+        "license": "Pixabay Content License",
+        "licenseUrl": "https://pixabay.com/service/license-summary/",
+        "licenseStatus": "unverified",
+        "description": "Ảnh cận cảnh mắt người; gắn trực tiếp với hành động nhìn/xem (見).",
+        "usageNote": "Nhúng như một phần của bài học; rà soát quyền hình ảnh cá nhân khi phát hành."
+      }
+    },
+    {
+      "kanjiId": 42,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "言",
+      "sourceId": "n5-076",
+      "category": "action",
+      "categoryLabel": "Hành động",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko định nói dối rằng mình chưa ăn chiếc bánh cuối cùng, nhưng vụn bánh vẫn dính trên miệng. Lời nói vừa phát ra đã bị bằng chứng tố cáo. Chữ 言 gắn với lời được nói thành tiếng.",
+      "memoryTip": "Lời bật ra khỏi miệng: 言 là nói, lời nói.",
+      "exampleWords": [
+        {
+          "word": "言います",
+          "reading": "いいます"
+        }
+      ],
+      "source": {
+        "meaning": "nói; lời nói",
+        "onyomi": "ゲン・ゴン",
+        "kunyomi": "い(う)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2022/08/13/11/25/watercolor-7383433_1280.png",
+        "alt": "言 – nói; lời nói",
+        "sourceUrl": "https://pixabay.com/illustrations/watercolor-speech-bubble-7383433/",
+        "sourceLabel": "Pixabay · Prawny",
+        "provider": "Pixabay",
+        "credit": "Prawny",
+        "width": 3000,
+        "height": 2533,
+        "resolution": "3000 × 2533",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Một bong bóng lời nói màu nước; gợi lời nói/ngôn từ.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 51,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "話",
+      "sourceId": "n5-077",
+      "category": "action",
+      "categoryLabel": "Hành động",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Hai người bạn ngồi ở quán cà phê, nói từ chuyện công việc sang phim ảnh rồi quên cả giờ về. Chữ 話 có 言 liên quan đến lời nói và 舌 là lưỡi — những âm thanh được tạo ra để trò chuyện.",
+      "memoryTip": "Lời nói qua lại thành cuộc trò chuyện: 話 là nói chuyện.",
+      "exampleWords": [
+        {
+          "word": "電話",
+          "reading": "でんわ"
+        }
+      ],
+      "source": {
+        "meaning": "nói chuyện; câu chuyện",
+        "onyomi": "ワ",
+        "kunyomi": "はな(す)・はなし",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2023/04/06/01/48/speech-7902604_1280.png",
+        "alt": "話 – nói chuyện; câu chuyện",
+        "sourceUrl": "https://pixabay.com/illustrations/speech-bubbles-comic-watercolor-7902604/",
+        "sourceLabel": "Pixabay · Mia_Tortilla",
+        "provider": "Pixabay",
+        "credit": "Mia_Tortilla",
+        "width": 3161,
+        "height": 3211,
+        "resolution": "3161 × 3211",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Các bong bóng hội thoại màu nước; gợi việc nói chuyện và trao đổi.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 76,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "聞",
+      "sourceId": "n5-078",
+      "category": "action",
+      "categoryLabel": "Hành động",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko áp tai vào cánh cửa để nghe xem bên trong có ai không. Cậu nghe tiếng bước chân, rồi tiếng kéo ghế. Chữ 聞 có 耳 là tai nằm trong 門 là cánh cửa — nghe ngóng qua cửa.",
+      "memoryTip": "Tai ghé bên cửa: 聞 là nghe, hỏi.",
+      "exampleWords": [
+        {
+          "word": "聞きます",
+          "reading": "ききます"
+        }
+      ],
+      "source": {
+        "meaning": "nghe; hỏi",
+        "onyomi": "ブン・モン",
+        "kunyomi": "き(く)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2013/07/13/12/35/sound-159915_1280.png",
+        "alt": "聞 – nghe; hỏi",
+        "sourceUrl": "https://pixabay.com/vectors/sound-listening-man-ear-hearing-159915/",
+        "sourceLabel": "Pixabay · OpenClipart-Vectors",
+        "provider": "Pixabay",
+        "credit": "OpenClipart-Vectors",
+        "width": 1920,
+        "height": 1116,
+        "resolution": "1920 × 1116",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Người nghiêng tai lắng nghe âm thanh; hình gợi hành động nghe.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 94,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "読",
+      "sourceId": "n5-079",
+      "category": "action",
+      "categoryLabel": "Hành động",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko mượn một cuốn truyện trinh thám và quyết định đọc hết trước khi ngủ. Nhưng mỗi chương lại hé thêm manh mối, khiến cậu không thể dừng. Chữ 読 có 言 liên quan đến ngôn từ — đọc là tiếp nhận những lời được viết ra.",
+      "memoryTip": "Theo từng dòng chữ để biết câu chuyện: 読 là đọc.",
+      "exampleWords": [
+        {
+          "word": "読みます",
+          "reading": "よみます"
+        }
+      ],
+      "source": {
+        "meaning": "đọc",
+        "onyomi": "ドク",
+        "kunyomi": "よ(む)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2025/01/14/07/48/boy-9332082_1280.jpg",
+        "alt": "読 – đọc",
+        "sourceUrl": "https://pixabay.com/illustrations/boy-books-reading-watercolor-9332082/",
+        "sourceLabel": "Pixabay · TyliJura",
+        "provider": "Pixabay",
+        "credit": "TyliJura",
+        "width": 4096,
+        "height": 4096,
+        "resolution": "4096 × 4096",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Cậu bé đang đọc sách, xung quanh là chồng sách; phù hợp động từ đọc.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 58,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "書",
+      "sourceId": "n5-080",
+      "category": "action",
+      "categoryLabel": "Hành động",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko viết danh sách mua đồ lên giấy, nhưng chữ đầu tiên đã bị mực lem. Cậu đổi sang cây bút khác và viết lại thật rõ. Chữ 書 gắn với việc ghi chữ, viết ra điều mình muốn lưu lại.",
+      "memoryTip": "Đưa nét bút lên giấy: 書 là viết.",
+      "exampleWords": [
+        {
+          "word": "書きます",
+          "reading": "かきます"
+        }
+      ],
+      "source": {
+        "meaning": "viết",
+        "onyomi": "ショ",
+        "kunyomi": "か(く)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2017/05/03/22/08/notebook-2282300_1280.png",
+        "alt": "書 – viết",
+        "sourceUrl": "https://pixabay.com/vectors/notebook-daily-agenda-notes-2282300/",
+        "sourceLabel": "Pixabay · FiveFlowersForFamilyFirst",
+        "provider": "Pixabay",
+        "credit": "FiveFlowersForFamilyFirst",
+        "width": 1919,
+        "height": 1920,
+        "resolution": "1919 × 1920",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Quyển sổ và bút, liên tưởng hành động viết.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 77,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "食",
+      "sourceId": "n5-081",
+      "category": "action",
+      "categoryLabel": "Hành động",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko mở hộp cơm, mùi thức ăn thơm đến mức cậu quên cả chụp ảnh. Cậu cầm đũa và bắt đầu ăn. Chữ 食 gắn với bữa ăn và hành động đưa thức ăn vào miệng.",
+      "memoryTip": "Mở hộp cơm và dùng đũa: 食 là ăn.",
+      "exampleWords": [
+        {
+          "word": "食べます",
+          "reading": "たべます"
+        }
+      ],
+      "source": {
+        "meaning": "ăn; thức ăn",
+        "onyomi": "ショク",
+        "kunyomi": "た(べる)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2013/07/12/19/19/chopsticks-154545_1280.png",
+        "alt": "食 – ăn; thức ăn",
+        "sourceUrl": "https://pixabay.com/vectors/chopsticks-rice-sticky-rice-food-154545/",
+        "sourceLabel": "Pixabay · OpenClipart-Vectors",
+        "provider": "Pixabay",
+        "credit": "OpenClipart-Vectors",
+        "width": 1921,
+        "height": 1266,
+        "resolution": "1921 × 1266",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Bát cơm trắng với đôi đũa; liên tưởng trực tiếp đến ăn uống.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 101,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "飲",
+      "sourceId": "n5-082",
+      "category": "action",
+      "categoryLabel": "Hành động",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko khát sau buổi chạy bộ. Cậu cầm chai nước, uống một hơi dài rồi mới thở phào. Chữ 飲 gắn với hành động uống — đưa chất lỏng vào cơ thể.",
+      "memoryTip": "Chai nước vơi đi sau một hơi: 飲 là uống.",
+      "exampleWords": [
+        {
+          "word": "飲みます",
+          "reading": "のみます"
+        }
+      ],
+      "source": {
+        "meaning": "uống",
+        "onyomi": "イン",
+        "kunyomi": "の(む)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2022/02/20/09/40/tea-7024095_1280.png",
+        "alt": "飲 – uống",
+        "sourceUrl": "https://pixabay.com/illustrations/tea-cup-watercolor-art-design-7024095/",
+        "sourceLabel": "Pixabay · SYG_Anime",
+        "provider": "Pixabay",
+        "credit": "SYG_Anime",
+        "width": 5000,
+        "height": 5000,
+        "resolution": "5000 × 5000",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Tách trà vẽ màu nước; hình ảnh gợi việc uống.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 88,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "買",
+      "sourceId": "n5-083",
+      "category": "action",
+      "categoryLabel": "Hành động",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko vào siêu thị chỉ định mua sữa. Nhưng đi qua quầy bánh, quầy snack rồi quầy đồ chơi, giỏ hàng đầy lúc nào không hay. Chữ 買 gắn với việc trả tiền để mang món đồ về.",
+      "memoryTip": "Giỏ hàng đầy sau khi thanh toán: 買 là mua.",
+      "exampleWords": [
+        {
+          "word": "買います",
+          "reading": "かいます"
+        }
+      ],
+      "source": {
+        "meaning": "mua",
+        "onyomi": "バイ",
+        "kunyomi": "か(う)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2019/09/22/08/15/woman-4495395_1280.png",
+        "alt": "買 – mua",
+        "sourceUrl": "https://pixabay.com/vectors/woman-shopping-bags-pose-bag-4495395/",
+        "sourceLabel": "Pixabay · Mohamed_hassan",
+        "provider": "Pixabay",
+        "credit": "Mohamed_hassan",
+        "width": 1672,
+        "height": 1919,
+        "resolution": "1672 × 1919",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Người phụ nữ mang các túi hàng sau khi mua sắm.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 4,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "会",
+      "sourceId": "n5-084",
+      "category": "action",
+      "categoryLabel": "Hành động",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Hai người bạn hẹn nhau ở ga sau nhiều tháng không gặp. Vừa nhìn thấy nhau, cả hai cùng giơ tay chào. Chữ 会 gắn với khoảnh khắc mọi người tụ lại — gặp mặt, hội họp.",
+      "memoryTip": "Hai người cùng có mặt một nơi: 会 là gặp.",
+      "exampleWords": [
+        {
+          "word": "会います",
+          "reading": "あいます"
+        }
+      ],
+      "source": {
+        "meaning": "gặp; hội họp",
+        "onyomi": "カイ",
+        "kunyomi": "あ(う)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2013/07/13/11/47/handshake-158683_1280.png",
+        "alt": "会 – gặp; hội họp",
+        "sourceUrl": "https://pixabay.com/vectors/handshake-man-woman-friends-people-158683/",
+        "sourceLabel": "Pixabay · OpenClipart-Vectors",
+        "provider": "Pixabay",
+        "credit": "OpenClipart-Vectors",
+        "width": 1830,
+        "height": 1920,
+        "resolution": "1830 × 1920",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Hai người bắt tay gặp gỡ; liên tưởng 会 là gặp/hội họp.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 97,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "休",
+      "sourceId": "n5-085",
+      "category": "action",
+      "categoryLabel": "Hành động",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko tựa lưng vào gốc cây sau một buổi đi bộ dài. Cậu không làm gì cả, chỉ ngồi yên nghe lá xào xạc. Chữ 休 gồm 人 là người và 木 là cây — người ngồi nghỉ bên gốc cây.",
+      "memoryTip": "Người tựa vào cây: 休 là nghỉ.",
+      "exampleWords": [
+        {
+          "word": "休み",
+          "reading": "やすみ"
+        }
+      ],
+      "source": {
+        "meaning": "nghỉ ngơi",
+        "onyomi": "キュウ",
+        "kunyomi": "やす(む)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2020/08/12/22/21/cats-5483723_1280.jpg",
+        "alt": "休 – nghỉ ngơi",
+        "sourceUrl": "https://pixabay.com/illustrations/cats-nap-break-night-sleep-5483723/",
+        "sourceLabel": "Pixabay · Edurs34",
+        "provider": "Pixabay",
+        "credit": "Edurs34",
+        "width": 3000,
+        "height": 2233,
+        "resolution": "3000 × 2233",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Hai chú mèo nằm ngủ dưới chăn; liên tưởng trực quan đến nghỉ ngơi.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 34,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "立",
+      "sourceId": "n5-086",
+      "category": "action",
+      "categoryLabel": "Hành động",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko dựng chiếc biển chỉ đường bị đổ. Cậu đặt chân đế xuống đất, kéo thẳng tấm biển cho đứng vững. Chữ 立 gợi một vật được dựng lên và đứng thẳng.",
+      "memoryTip": "Dựng thẳng chiếc biển: 立 là đứng.",
+      "exampleWords": [
+        {
+          "word": "立ちます",
+          "reading": "たちます"
+        }
+      ],
+      "source": {
+        "meaning": "đứng; dựng lên",
+        "onyomi": "リツ",
+        "kunyomi": "た(つ)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2017/02/25/22/04/human-body-2098868_1280.png",
+        "alt": "立 – đứng; dựng lên",
+        "sourceUrl": "https://pixabay.com/illustrations/human-body-person-man-people-2098868/",
+        "sourceLabel": "Pixabay · SergiosInc",
+        "provider": "Pixabay",
+        "credit": "SergiosInc",
+        "width": 1610,
+        "height": 3166,
+        "resolution": "1610 × 3166",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Dáng người đứng thẳng nhìn nghiêng; minh họa nghĩa đứng.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 7,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "大",
+      "sourceId": "n5-087",
+      "category": "describe",
+      "categoryLabel": "Tính chất",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Một chú chó khổng lồ bước vào công viên, che khuất cả chiếc ghế dài. Neko dang hai tay ra để diễn tả kích thước của nó. Chữ 大 giống hình người dang rộng tay chân — lớn.",
+      "memoryTip": "Dang tay chân hết cỡ: 大 là to, lớn.",
+      "exampleWords": [
+        {
+          "word": "大きい",
+          "reading": "おおきい"
+        }
+      ],
+      "source": {
+        "meaning": "to; lớn",
+        "onyomi": "ダイ・タイ",
+        "kunyomi": "おお(きい)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2024/05/23/13/08/elephant-watercolor-8783195_1280.jpg",
+        "alt": "大 – to; lớn",
+        "sourceUrl": "https://pixabay.com/illustrations/elephant-watercolor-elephant-8783195/",
+        "sourceLabel": "Pixabay · popmelon",
+        "provider": "Pixabay",
+        "credit": "popmelon",
+        "width": 4096,
+        "height": 4096,
+        "resolution": "4096 × 4096",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Chú voi to lớn, giúp liên tưởng nghĩa lớn/to.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 48,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "小",
+      "sourceId": "n5-088",
+      "category": "describe",
+      "categoryLabel": "Tính chất",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Một chú mèo con chui vào chiếc cốc giấy, chỉ để lộ đôi tai. Neko nhìn chiếc cốc bé xíu và bật cười. Chữ 小 có nét giữa nhỏ, hai nét bên như những phần li ti tách ra — nhỏ.",
+      "memoryTip": "Một chú mèo lọt vừa chiếc cốc: 小 là nhỏ.",
+      "exampleWords": [
+        {
+          "word": "小さい",
+          "reading": "ちいさい"
+        }
+      ],
+      "source": {
+        "meaning": "nhỏ",
+        "onyomi": "ショウ",
+        "kunyomi": "ちい(さい)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2025/01/14/07/48/kitten-9332083_1280.jpg",
+        "alt": "小 – nhỏ",
+        "sourceUrl": "https://pixabay.com/illustrations/kitten-cat-tabby-cute-watercolor-9332083/",
+        "sourceLabel": "Pixabay · TyliJura",
+        "provider": "Pixabay",
+        "credit": "TyliJura",
+        "width": 4096,
+        "height": 4096,
+        "resolution": "4096 × 4096",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Mèo con nhỏ xinh, liên tưởng nghĩa nhỏ.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 12,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "長",
+      "sourceId": "n5-089",
+      "category": "describe",
+      "categoryLabel": "Tính chất",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko kéo cuộn dây ra để đo căn phòng. Dây cứ dài mãi, đến mức cậu phải cuộn lại thành một bó lớn. Chữ 長 nhắc đến thứ có chiều dài vượt xa điểm bắt đầu.",
+      "memoryTip": "Cuộn dây kéo mãi chưa hết: 長 là dài.",
+      "exampleWords": [
+        {
+          "word": "長い",
+          "reading": "ながい"
+        }
+      ],
+      "source": {
+        "meaning": "dài; trưởng",
+        "onyomi": "チョウ",
+        "kunyomi": "なが(い)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2020/04/12/17/10/tape-measure-5035027_1280.jpg",
+        "alt": "長 – dài; trưởng",
+        "sourceUrl": "https://pixabay.com/photos/tape-measure-length-measure-metric-5035027/",
+        "sourceLabel": "Pixabay · LeoVeo",
+        "provider": "Pixabay",
+        "credit": "LeoVeo",
+        "width": 4032,
+        "height": 3024,
+        "resolution": "4032 × 3024",
+        "license": "Pixabay Content License",
+        "licenseUrl": "https://pixabay.com/service/license-summary/",
+        "licenseStatus": "unverified",
+        "description": "Thước dây được kéo dài theo chiều ngang; minh họa trực quan độ dài (長い).",
+        "usageNote": "Nhúng như một phần của bài học; không phân phối lại ảnh như tài nguyên độc lập."
+      }
+    },
+    {
+      "kanjiId": 37,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "高",
+      "sourceId": "n5-090",
+      "category": "describe",
+      "categoryLabel": "Tính chất",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko đứng dưới một tòa tháp, ngước cổ mãi vẫn chưa thấy đỉnh. Cậu nhìn bảng giá thuê tầng cao nhất và cũng phải ngước mắt lần nữa. Chữ 高 gợi một công trình nhiều tầng — cao, và đôi khi là đắt.",
+      "memoryTip": "Tòa tháp nhiều tầng: 高 là cao, đắt.",
+      "exampleWords": [
+        {
+          "word": "高い",
+          "reading": "たかい"
+        }
+      ],
+      "source": {
+        "meaning": "cao; đắt",
+        "onyomi": "コウ",
+        "kunyomi": "たか(い)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2015/10/09/19/30/city-976276_1280.jpg",
+        "alt": "高 – cao; đắt",
+        "sourceUrl": "https://pixabay.com/illustrations/city-painting-man-tall-buildings-976276/",
+        "sourceLabel": "Pixabay · VintageBlue",
+        "provider": "Pixabay",
+        "credit": "VintageBlue",
+        "width": 1502,
+        "height": 2000,
+        "resolution": "1502 × 2000",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Các tòa nhà cao vươn lên; hình ảnh liên tưởng đến cao.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 53,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "安",
+      "sourceId": "n5-091",
+      "category": "describe",
+      "categoryLabel": "Tính chất",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko tìm được căn phòng nhỏ, giá thuê vừa túi tiền và khu phố rất yên tĩnh. Cậu đặt túi xuống, thở phào vì cuối cùng cũng có chỗ ở ổn. Chữ 安 thường gợi cảm giác yên ổn, an toàn; trong từ 安い còn mang nghĩa rẻ.",
+      "memoryTip": "Tìm được chỗ ở yên ổn, giá hợp lý: 安 là yên, rẻ.",
+      "exampleWords": [
+        {
+          "word": "安い",
+          "reading": "やすい"
+        }
+      ],
+      "source": {
+        "meaning": "rẻ; yên ổn",
+        "onyomi": "アン",
+        "kunyomi": "やす(い)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2018/01/07/17/37/discount-3067848_1280.png",
+        "alt": "安 – rẻ; yên ổn",
+        "sourceUrl": "https://pixabay.com/illustrations/sales-sale-the-price-tag-discount-3067848/",
+        "sourceLabel": "Pixabay · MAKY_OREL",
+        "provider": "Pixabay",
+        "credit": "MAKY_OREL",
+        "width": 1920,
+        "height": 1920,
+        "resolution": "1920 × 1920",
+        "license": "Pixabay Content License",
+        "licenseUrl": "https://pixabay.com/service/license-summary/",
+        "licenseStatus": "unverified",
+        "description": "Nhãn giảm giá thể hiện giá rẻ; dùng cho nghĩa 安い (rẻ).",
+        "usageNote": "Nhúng như một phần của bài học; không phân phối lại ảnh như tài nguyên độc lập."
+      }
+    },
+    {
+      "kanjiId": 30,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "新",
+      "sourceId": "n5-092",
+      "category": "describe",
+      "categoryLabel": "Tính chất",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko thay chiếc bút cũ bằng một cây bút mới tinh. Mùi nhựa mới vẫn còn, đầu bút chưa có vết mực nào. Chữ 新 gắn với thứ vừa xuất hiện, chưa cũ và chưa qua sử dụng.",
+      "memoryTip": "Cây bút chưa có vết mực: 新 là mới.",
+      "exampleWords": [
+        {
+          "word": "新しい",
+          "reading": "あたらしい"
+        }
+      ],
+      "source": {
+        "meaning": "mới",
+        "onyomi": "シン",
+        "kunyomi": "あたら(しい)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2016/05/26/17/13/present-1417619_1280.png",
+        "alt": "新 – mới",
+        "sourceUrl": "https://pixabay.com/illustrations/present-gift-purple-lilac-stars-1417619/",
+        "sourceLabel": "Pixabay · ArtsyBee",
+        "provider": "Pixabay",
+        "credit": "ArtsyBee",
+        "width": 2798,
+        "height": 2307,
+        "resolution": "2798 × 2307",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Món quà mới được mở – mẹo liên tưởng cho nghĩa mới; đây là liên tưởng, không phải từ nguyên.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 86,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "古",
+      "sourceId": "n5-093",
+      "category": "describe",
+      "categoryLabel": "Tính chất",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Trong kho, Neko tìm thấy chiếc radio cũ phủ bụi. Nó vẫn phát được một bài hát từ nhiều năm trước. Chữ 古 gợi thứ đã tồn tại từ lâu — cũ, xưa.",
+      "memoryTip": "Chiếc radio phủ bụi từ nhiều năm trước: 古 là cũ.",
+      "exampleWords": [
+        {
+          "word": "古い",
+          "reading": "ふるい"
+        }
+      ],
+      "source": {
+        "meaning": "cũ; xưa",
+        "onyomi": "コ",
+        "kunyomi": "ふる(い)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2018/09/24/09/23/medieval-3699424_1280.jpg",
+        "alt": "古 – cũ; xưa",
+        "sourceUrl": "https://pixabay.com/illustrations/medieval-old-town-house-flowers-3699424/",
+        "sourceLabel": "Pixabay · ractapopulous",
+        "provider": "Pixabay",
+        "credit": "ractapopulous",
+        "width": 2649,
+        "height": 3500,
+        "resolution": "2649 × 3500",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Khu nhà cổ và con đường đá; gợi nghĩa cũ/xưa.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 52,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "多",
+      "sourceId": "n5-094",
+      "category": "describe",
+      "categoryLabel": "Tính chất",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko đặt một chiếc bánh lên đĩa, rồi thêm chiếc thứ hai, thứ ba… chẳng mấy chốc đĩa đã đầy. Chữ 多 gợi nhiều thứ được đặt cạnh nhau — số lượng vượt quá một vài món.",
+      "memoryTip": "Đĩa bánh đầy lên từng chiếc: 多 là nhiều.",
+      "exampleWords": [
+        {
+          "word": "多い",
+          "reading": "おおい"
+        }
+      ],
+      "source": {
+        "meaning": "nhiều",
+        "onyomi": "タ",
+        "kunyomi": "おお(い)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2015/06/10/19/56/apples-805124_1280.jpg",
+        "alt": "多 – nhiều",
+        "sourceUrl": "https://pixabay.com/photos/apples-basket-fruits-apple-basket-805124/",
+        "sourceLabel": "Pixabay · Larisa-K",
+        "provider": "Pixabay",
+        "credit": "Larisa-K",
+        "width": 3101,
+        "height": 2683,
+        "resolution": "3101 × 2683",
+        "license": "Pixabay Content License",
+        "licenseUrl": "https://pixabay.com/service/license-summary/",
+        "licenseStatus": "unverified",
+        "description": "Giỏ đầy nhiều quả táo; liên tưởng số lượng nhiều (多い).",
+        "usageNote": "Nhúng như một phần của bài học; không phân phối lại ảnh như tài nguyên độc lập."
+      }
+    },
+    {
+      "kanjiId": 70,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "少",
+      "sourceId": "n5-095",
+      "category": "describe",
+      "categoryLabel": "Tính chất",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko mở hộp bánh và chỉ còn đúng một mẩu nhỏ. Cậu nhìn quanh, không ai nhận phần cuối cùng. Chữ 少 nhắc đến lượng ít ỏi — chỉ còn một chút.",
+      "memoryTip": "Trong hộp chỉ còn một mẩu: 少 là ít, một chút.",
+      "exampleWords": [
+        {
+          "word": "少し",
+          "reading": "すこし"
+        }
+      ],
+      "source": {
+        "meaning": "ít; một chút",
+        "onyomi": "ショウ",
+        "kunyomi": "すく(ない)・すこ(し)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2020/04/21/06/17/apples-5071279_1280.jpg",
+        "alt": "少 – ít; một chút",
+        "sourceUrl": "https://pixabay.com/photos/apples-three-black-fruit-nature-5071279/",
+        "sourceLabel": "Pixabay · designjung",
+        "provider": "Pixabay",
+        "credit": "designjung",
+        "width": 3024,
+        "height": 4032,
+        "resolution": "3024 × 4032",
+        "license": "Pixabay Content License",
+        "licenseUrl": "https://pixabay.com/service/license-summary/",
+        "licenseStatus": "unverified",
+        "description": "Chỉ có ba quả táo trong khung hình; đối chiếu trực quan với giỏ nhiều quả ở 多.",
+        "usageNote": "Nhúng như một phần của bài học; không phân phối lại ảnh như tài nguyên độc lập."
+      }
+    },
+    {
+      "kanjiId": 85,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "白",
+      "sourceId": "n5-096",
+      "category": "describe",
+      "categoryLabel": "Tính chất",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko giặt chiếc áo trắng cùng một chiếc tất đỏ. Kết quả: cả mẻ đồ chuyển sang màu hồng nhạt. Chiếc áo trắng ban đầu nổi bật đến mức cậu nhớ mãi chữ 白 — màu trắng.",
+      "memoryTip": "Chiếc áo trước khi bị nhuộm hồng: 白 là trắng.",
+      "exampleWords": [
+        {
+          "word": "白い",
+          "reading": "しろい"
+        }
+      ],
+      "source": {
+        "meaning": "trắng",
+        "onyomi": "ハク",
+        "kunyomi": "しろ・しろ(い)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2025/11/03/11/52/swan-9934284_1280.png",
+        "alt": "白 – trắng",
+        "sourceUrl": "https://pixabay.com/vectors/swan-watercolor-bird-lake-water-9934284/",
+        "sourceLabel": "Pixabay · CreativeCanvasDesign · AI-generated",
+        "provider": "Pixabay",
+        "credit": "CreativeCanvasDesign · AI-generated",
+        "width": 1920,
+        "height": 1280,
+        "resolution": "1920 × 1280",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Thiên nga trắng trên mặt nước; liên tưởng màu trắng.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 10,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "本",
+      "sourceId": "n5-097",
+      "category": "object",
+      "categoryLabel": "Đồ vật",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko mở một cuốn sách để tìm công thức nấu ăn. Cậu đánh dấu trang có món mình thích rồi gấp sách lại. Chữ 本 thường gặp trong 本, nghĩa là sách; nó cũng có nghĩa gốc, nguồn.",
+      "memoryTip": "Mở cuốn sách để tìm thông tin: 本 là sách, gốc.",
+      "exampleWords": [
+        {
+          "word": "本",
+          "reading": "ほん"
+        }
+      ],
+      "source": {
+        "meaning": "sách; gốc",
+        "onyomi": "ホン",
+        "kunyomi": "もと",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2022/02/20/09/42/book-7024102_1280.png",
+        "alt": "本 – sách; gốc",
+        "sourceUrl": "https://pixabay.com/illustrations/book-watercolor-art-design-cute-7024102/",
+        "sourceLabel": "Pixabay · SYG_Anime",
+        "provider": "Pixabay",
+        "credit": "SYG_Anime",
+        "width": 5000,
+        "height": 5000,
+        "resolution": "5000 × 5000",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Cuốn sách bìa cũ, ảnh riêng biệt.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 79,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "何",
+      "sourceId": "n5-098",
+      "category": "object",
+      "categoryLabel": "Đồ vật",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko nhìn chiếc hộp bí ẩn đặt trước cửa. Không nhãn, không người gửi, không lời nhắn. Cậu chỉ còn một câu để hỏi: ‘Trong này là cái gì?’ Chữ 何 xuất hiện trong câu hỏi về điều chưa biết — cái gì, bao nhiêu.",
+      "memoryTip": "Hộp không nhãn: ‘Cái gì ở trong đó?’ 何 là gì.",
+      "exampleWords": [
+        {
+          "word": "何時",
+          "reading": "なんじ"
+        }
+      ],
+      "source": {
+        "meaning": "cái gì; bao nhiêu",
+        "onyomi": "カ",
+        "kunyomi": "なに・なん",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2012/11/02/05/23/question-63916_1280.jpg",
+        "alt": "何 – cái gì; bao nhiêu",
+        "sourceUrl": "https://pixabay.com/illustrations/question-question-mark-request-63916/",
+        "sourceLabel": "Pixabay · geralt",
+        "provider": "Pixabay",
+        "credit": "geralt",
+        "width": 4961,
+        "height": 3508,
+        "resolution": "4961 × 3508",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Dấu hỏi giúp ghi nhớ 何 trong câu hỏi 'cái gì/bao nhiêu'.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 68,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "電",
+      "sourceId": "n5-099",
+      "category": "object",
+      "categoryLabel": "Đồ vật",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Một tia chớp lóe lên, đèn trong phòng bật sáng trở lại. Neko nhìn dây điện chạy dọc tường và nghĩ đến nguồn năng lượng vô hình làm mọi thiết bị hoạt động. Chữ 電 gắn với điện.",
+      "memoryTip": "Tia chớp làm cả căn phòng sáng lên: 電 là điện.",
+      "exampleWords": [
+        {
+          "word": "電車",
+          "reading": "でんしゃ"
+        }
+      ],
+      "source": {
+        "meaning": "điện",
+        "onyomi": "デン",
+        "kunyomi": "—",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2022/09/07/22/46/electricity-7439714_1280.png",
+        "alt": "電 – điện",
+        "sourceUrl": "https://pixabay.com/vectors/electricity-energy-light-bulb-7439714/",
+        "sourceLabel": "Pixabay · NoPixelZone",
+        "provider": "Pixabay",
+        "credit": "NoPixelZone",
+        "width": 1198,
+        "height": 1920,
+        "resolution": "1198 × 1920",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Bóng đèn nối với phích cắm; hình ảnh gợi điện năng.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 78,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "車",
+      "sourceId": "n5-100",
+      "category": "object",
+      "categoryLabel": "Đồ vật",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko đứng bên đường nghe tiếng động cơ rồi thấy một chiếc xe chạy vụt qua. Bốn bánh lăn trên mặt đường, đưa người và hàng hóa đến nơi khác. Chữ 車 gợi một phương tiện có bánh — xe.",
+      "memoryTip": "Bốn bánh lăn trên đường: 車 là xe.",
+      "exampleWords": [
+        {
+          "word": "車",
+          "reading": "くるま"
+        }
+      ],
+      "source": {
+        "meaning": "xe; phương tiện",
+        "onyomi": "シャ",
+        "kunyomi": "くるま",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2020/07/07/14/25/watercolor-5380750_1280.png",
+        "alt": "車 – xe; phương tiện",
+        "sourceUrl": "https://pixabay.com/illustrations/watercolor-car-vehicle-retro-5380750/",
+        "sourceLabel": "Pixabay · Baypicz",
+        "provider": "Pixabay",
+        "credit": "Baypicz",
+        "width": 3000,
+        "height": 2400,
+        "resolution": "3000 × 2400",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Ô tô màu xanh phong cách màu nước.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 72,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "語",
+      "sourceId": "n5-101",
+      "category": "object",
+      "categoryLabel": "Đồ vật",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Trong lớp tiếng Nhật, Neko học một từ mới rồi thử dùng nó trong câu. Từ một từ, cậu ghép thành câu, rồi thành cuộc trò chuyện. Chữ 語 có 言 liên quan đến lời nói — ngôn ngữ được tạo nên từ những từ ngữ.",
+      "memoryTip": "Từ ghép thành câu, câu thành ngôn ngữ: 語 là ngôn ngữ.",
+      "exampleWords": [
+        {
+          "word": "日本語",
+          "reading": "にほんご"
+        }
+      ],
+      "source": {
+        "meaning": "ngôn ngữ; từ ngữ",
+        "onyomi": "ゴ",
+        "kunyomi": "かた(る)",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2022/01/17/13/49/book-stack-6944720_1280.jpg",
+        "alt": "語 – ngôn ngữ; từ ngữ",
+        "sourceUrl": "https://pixabay.com/illustrations/book-stack-books-balloons-stories-6944720/",
+        "sourceLabel": "Pixabay · Alexandra_Koch",
+        "provider": "Pixabay",
+        "credit": "Alexandra_Koch",
+        "width": 7087,
+        "height": 7087,
+        "resolution": "7087 × 7087",
+        "license": "Pixabay Content License",
+        "licenseUrl": "https://pixabay.com/service/license-summary/",
+        "licenseStatus": "unverified",
+        "description": "Sách đi cùng bong bóng hội thoại; gợi ngôn ngữ, từ ngữ và lời nói (語).",
+        "usageNote": "Nhúng như một phần của bài học; không phân phối lại ảnh như tài nguyên độc lập."
+      }
+    },
+    {
+      "kanjiId": 102,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "魚",
+      "sourceId": "n5-102",
+      "category": "nature",
+      "categoryLabel": "Thiên nhiên",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko thả cần câu xuống hồ. Một lúc sau, phao chìm xuống và cậu kéo lên được một con cá đang quẫy. Chữ 魚 có hình dáng cổ gợi thân cá, vây và đuôi — một sinh vật sống dưới nước.",
+      "memoryTip": "Thân, vây, đuôi cùng xuất hiện: 魚 là cá.",
+      "exampleWords": [
+        {
+          "word": "魚",
+          "reading": "さかな"
+        }
+      ],
+      "source": {
+        "meaning": "cá",
+        "onyomi": "ギョ",
+        "kunyomi": "さかな・うお",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2020/11/17/02/38/fish-5751168_1280.jpg",
+        "alt": "魚 – cá",
+        "sourceUrl": "https://pixabay.com/illustrations/fish-watercolor-painting-art-5751168/",
+        "sourceLabel": "Pixabay · RaniRamli",
+        "provider": "Pixabay",
+        "credit": "RaniRamli",
+        "width": 3000,
+        "height": 3000,
+        "resolution": "3000 × 3000",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Cá màu cam được vẽ màu nước trên nền sáng.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    },
+    {
+      "kanjiId": 17,
+      "locale": "vi",
+      "version": 9,
+      "status": "published",
+      "character": "社",
+      "sourceId": "n5-103",
+      "category": "place",
+      "categoryLabel": "Địa điểm",
+      "title": "Chuyện nhớ Kanji",
+      "content": "Neko đến một tòa nhà văn phòng vào ngày đầu đi làm. Bên ngoài có bảng tên công ty, bên trong mọi người đang họp. Chữ 社 thường gặp trong 会社 là công ty; trong ngữ cảnh khác cũng có thể chỉ đền thờ Thần đạo.",
+      "memoryTip": "Bảng tên nơi mọi người cùng làm việc: 社 trong 会社 là công ty.",
+      "exampleWords": [
+        {
+          "word": "会社",
+          "reading": "かいしゃ"
+        }
+      ],
+      "source": {
+        "meaning": "công ty; đền thờ",
+        "onyomi": "シャ",
+        "kunyomi": "やしろ",
+        "imageStatus": "source_verified"
+      },
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2025/01/27/20/50/business-9364114_1280.png",
+        "alt": "社 – công ty; đền thờ",
+        "sourceUrl": "https://pixabay.com/illustrations/business-meeting-teamwork-9364114/",
+        "sourceLabel": "Pixabay · TyliJura · AI-generated",
+        "provider": "Pixabay",
+        "credit": "TyliJura · AI-generated",
+        "width": 4928,
+        "height": 3712,
+        "resolution": "4928 × 3712",
+        "license": "Pixabay Content License",
+        "licenseUrl": "",
+        "licenseStatus": "unverified",
+        "description": "Hai đồng nghiệp trao đổi trong văn phòng; liên tưởng đến công ty/社 trong 会社.",
+        "usageNote": "Embed as part of the NekoNeko learning product; do not redistribute as a standalone stock asset."
+      }
+    }
+  ]
+}

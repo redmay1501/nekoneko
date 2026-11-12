@@ -3,6 +3,7 @@ import type { GameRecords } from '@/features/games/match-game';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { unstable_cache } from 'next/cache';
 import { withReadingPassages } from './reading-passages';
+import { kanjiStoryFromRow, loadSeedKanjiStories, withKanjiStories } from './kanji-stories';
 import { applyContentOverlays, type ContentImageRow, type ContentStatusRow, storagePublicUrl } from './content-overlays';
 import { publicEnv } from '@/config/env';
 import type { ContentType } from '@/features/learning/knowledge-types';
@@ -13,8 +14,9 @@ import { getMemoryStatus } from '@/features/memory/memory-engine';
 import type { MemoryRecord, ReviewEventType } from '@/features/memory/memory-types';
 import { createAnonymousSupabaseClient } from '@/lib/supabase/server';
 import type {
-  LearningSessionRow, MemoryItemRow, ProfileRow, SessionItemRow, UserSettingsRow,
+  KanjiStoryRow, LearningSessionRow, MemoryItemRow, ProfileRow, SessionItemRow, UserSettingsRow,
 } from '@/lib/supabase/database-rows';
+import type { KanjiStory } from '@/types/content';
 import { toIsoDate } from '@/lib/utils/dates';
 import { summarizeActivityEvents } from './activity-summary';
 import { StaleMemoryRecordError } from './data-source';
@@ -58,13 +60,14 @@ const fetchCachedContent = unstable_cache(
         return [key, rows] as const;
       }),
     );
-    const overlays = await fetchAdminOverlays(client);
+    const [overlays, stories] = await Promise.all([fetchAdminOverlays(client), fetchKanjiStories(client)]);
     // Bài đọc hiểu đọc từ repo (có tiêu đề + bản dịch) — xem lib/data/reading-passages.ts.
     const content = withReadingPassages(contentFromRows(Object.fromEntries(entries) as unknown as ContentRows));
-    return applyContentOverlays(content, overlays.statuses, overlays.images,
-      (path) => storagePublicUrl(publicEnv.supabaseUrl, 'content-media', path));
+    // Chuyện gắn SAU lớp phủ: kanji bị admin ẩn thì chuyện của nó cũng không hiện.
+    return withKanjiStories(applyContentOverlays(content, overlays.statuses, overlays.images,
+      (path) => storagePublicUrl(publicEnv.supabaseUrl, 'content-media', path)), stories);
   },
-  ['neko-neko-n5-content-v2'],
+  ['neko-neko-n5-content-v3'],
   { revalidate: CONTENT_CACHE_SECONDS, tags: ['content'] },
 );
 
@@ -85,6 +88,21 @@ async function fetchAdminOverlays(client: SupabaseClient): Promise<{ statuses: C
       return asset ? [{ content_type: row.content_type, content_id: row.content_id, alt_text: row.alt_text, storage_path: asset.storage_path }] : [];
     }),
   };
+}
+
+/**
+ * Câu chuyện ghi nhớ Kanji từ bảng kanji_stories (chỉ dòng published — RLS cũng chỉ cho đọc published).
+ * Bảng chưa có (chưa chạy migration 20261112000001), đọc lỗi hoặc chưa seed → dùng bản trong repo, để trang Kanji
+ * không bao giờ mất chuyện vì thiếu bảng phụ. Có dòng trong bảng → bảng là nguồn sự thật.
+ */
+async function fetchKanjiStories(client: SupabaseClient): Promise<KanjiStory[]> {
+  try {
+    const rows = await selectAllPages<KanjiStoryRow>((from, to) => client.from('kanji_stories').select('*').eq('status', 'published')
+      .order('kanji_id').order('locale').order('version').range(from, to), 'đọc bảng kanji_stories');
+    return rows.length ? rows.map(kanjiStoryFromRow) : loadSeedKanjiStories();
+  } catch {
+    return loadSeedKanjiStories();
+  }
 }
 
 function toMemoryRecord(row: MemoryItemRow): MemoryRecord {

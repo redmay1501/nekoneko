@@ -164,6 +164,63 @@ export interface KanjiRadicalLink {
   position: number;
 }
 
+/**
+ * Câu chuyện ghi nhớ Kanji (content/seed/kanji-stories.json · bảng kanji_stories).
+ * Tách khỏi KanjiContent: đổi / thêm phiên bản chuyện không đụng tới kanji, lộ trình hay tiến độ học.
+ * Mỗi (kanjiId, locale) chỉ một bản được dùng — bản `published` có version cao nhất (lib/data/kanji-stories.ts).
+ * Nghĩa / âm đọc vẫn lấy của KanjiContent; chuyện chỉ mang phần kể, mẹo chốt, từ ứng dụng và ảnh.
+ */
+export type KanjiStoryStatus = 'draft' | 'published' | 'archived';
+/** Có URL nguồn ≠ đã được cấp phép dùng thương mại. 'unverified' cho tới khi có người kiểm tra. */
+export type ImageLicenseStatus = 'unverified' | 'verified' | 'rejected';
+
+export interface KanjiStoryImage {
+  /** URL ảnh gốc của thư viện (Pixabay CDN / Wikimedia) — dùng trực tiếp, không thay, không cắt. */
+  url: string;
+  /**
+   * Bản sao ảnh trên Supabase Storage của app (scripts/host-kanji-story-images.ts). Có thì dùng trước — không phụ thuộc
+   * CDN bên ngoài; tải lỗi thì về `url` gốc. Không có trong dữ liệu repo (demo dùng URL gốc).
+   */
+  hostedUrl?: string;
+  alt: string;
+  /** Trang nguồn của ảnh. */
+  sourceUrl: string;
+  /** Nguyên văn nhãn nguồn, ví dụ "Pixabay · Clker-Free-Vector-Images". */
+  sourceLabel: string;
+  provider: string;
+  credit: string;
+  /** Kích thước gốc (để giữ tỉ lệ khung, tránh nhảy bố cục); null khi nguồn không ghi số đo. */
+  width: number | null;
+  height: number | null;
+  resolution: string;
+  license: string;
+  licenseUrl: string;
+  licenseStatus: ImageLicenseStatus;
+  description: string;
+  usageNote: string;
+}
+
+export interface KanjiStoryExampleWord {
+  word: string;
+  reading: string;
+}
+
+export interface KanjiStory {
+  kanjiId: number;
+  locale: string;
+  version: number;
+  status: KanjiStoryStatus;
+  /** Mã thẻ trong thư viện gốc (n5-001…), để đối chiếu khi nhập phiên bản mới. */
+  sourceId: string;
+  category: string;
+  categoryLabel: string;
+  title: string;
+  content: string;
+  memoryTip: string;
+  exampleWords: KanjiStoryExampleWord[];
+  image: KanjiStoryImage | null;
+}
+
 export interface N5Content {
   journeyDays: JourneyDay[];
   dayTasks: DayTask[];
@@ -179,4 +236,6 @@ export interface N5Content {
   practiceTemplates: PracticeTemplate[];
   exampleSentences: ExampleSentence[];
   kanjiRadicals: KanjiRadicalLink[];
+  /** Mọi phiên bản / ngôn ngữ đã nhập; chọn bản hiển thị bằng kanjiStoryOf(). */
+  kanjiStories: KanjiStory[];
 }

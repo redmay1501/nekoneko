@@ -12,6 +12,7 @@ import { useRescueKnowledge } from '@/features/memory/hooks/useRescueKnowledge';
 import type { RescueView } from '@/features/memory/rescue-view';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
 import { useScrollToAnswerFeedback } from '@/hooks/useScrollToAnswerFeedback';
+import { KanjiStoryHint } from '@/components/learning/KanjiStoryCard';
 
 const STEP_LABELS = ['Sắp quên', 'Gợi ý', 'Nhớ lại', 'Ngữ cảnh', 'Đã cứu'] as const;
 const STEP = { AT_RISK: 0, HINT: 1, RECALL: 2, CONTEXT: 3, RESCUED: 4 } as const;
@@ -65,6 +66,7 @@ export function RescueFlow({ view, returnTo = '/tri-nho/sap-quen', flowId }: { v
               {view.hint.parts.map((part) => <span key={part.face} className="chip jp">{part.face} = {part.label}</span>)}
             </div>
           ) : null}
+          {view.storyHint ? <div className="mt-3" style={{ textAlign: 'left' }}><KanjiStoryHint story={view.storyHint} character={view.face} /></div> : null}
           <NokoMessage state="thinking" className="mt-3" />
           <button type="button" className="btn block mt-3.5" onClick={() => setStep(STEP.RECALL)}>Mình nhớ ra rồi</button>
         </div>

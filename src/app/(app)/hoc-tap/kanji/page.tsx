@@ -3,11 +3,13 @@ import { TestPicker } from '@/components/learning/TestPicker';
 import { itemsOfType } from '@/features/learning/knowledge-catalog';
 import { buildTestGroups } from '@/features/learning/study-actions';
 import { countLearnedOfType, kanjiRows } from '@/features/learning/knowledge-library';
+import { readKanjiStoryIds } from '@/features/learning/kanji-story-progress';
 import { getLearnerContext } from '@/features/learning/learner-context';
 
 /** Kanji N5 dùng lớp học 2D để xem thứ tự nét và luyện viết ngay trên bảng. */
 export default async function KanjiPage() {
-  const { catalog, memoryViews } = await getLearnerContext();
+  const { catalog, memoryViews, settings } = await getLearnerContext();
+  const readStories = readKanjiStoryIds(settings.gameRecords);
   const testGroups = buildTestGroups('kanji', itemsOfType(catalog, 'kanji'), memoryViews);
   const { learned, total } = countLearnedOfType(catalog, memoryViews, 'kanji');
   const rows = kanjiRows(catalog, memoryViews);
@@ -20,6 +22,7 @@ export default async function KanjiPage() {
       romaji: [kanji.onReading, kanji.kunReading].filter(Boolean).join(' ・ '),
       tip: kanji.tip,
       status: row.status,
+      storyRead: readStories.has(kanji.id),
     };
   });
 

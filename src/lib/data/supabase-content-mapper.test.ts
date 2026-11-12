@@ -2,13 +2,16 @@ import { describe, expect, it } from 'vitest';
 import { loadSeedContent } from './seed-content';
 import { CONTENT_TABLES, contentFromRows, rowsFromContent } from './supabase-content-mapper';
 import { withReadingPassages } from './reading-passages';
+import { kanjiStoryFromRow, kanjiStoryToRow, withKanjiStories } from './kanji-stories';
 
 describe('supabase-content-mapper', () => {
   it('ghi rồi đọc lại cho ra đúng nội dung ban đầu (không mất trường nào)', () => {
     const { ...content } = loadSeedContent() as ReturnType<typeof loadSeedContent> & { meta?: unknown };
     delete (content as { meta?: unknown }).meta;
     // Bài đọc hiểu không đọc từ database (bảng chưa có tiêu đề / bản dịch) — app luôn lấy từ repo (withReadingPassages).
-    expect(withReadingPassages(contentFromRows(rowsFromContent(content)))).toEqual(content);
+    // Câu chuyện Kanji đọc riêng từ bảng kanji_stories (kanjiStoryFromRow) rồi gắn bằng withKanjiStories.
+    const stories = content.kanjiStories.map(kanjiStoryToRow).map(kanjiStoryFromRow);
+    expect(withKanjiStories(withReadingPassages(contentFromRows(rowsFromContent(content))), stories)).toEqual(content);
   });
 
   it('mọi nhóm nội dung đều có bảng tương ứng', () => {

@@ -1,4 +1,7 @@
-import type { GrammarContent, KanjiContent, RadicalContent, VocabularyContent } from '@/types/content';
+import type { GrammarContent, KanjiContent, KanjiStory, RadicalContent, VocabularyContent } from '@/types/content';
+import type { GameRecords } from '@/features/games/match-game';
+import { kanjiStoryOf } from '@/lib/data/kanji-stories';
+import { type KanjiStoryProgress, NO_STORY_PROGRESS, kanjiStoryProgressOf } from './kanji-story-progress';
 import { type RadicalExpandableData, toRadicalExpandable } from './radical-view';
 import type { MemoryView } from '@/features/memory/memory-types';
 import { extractLessonNumber } from '@/lib/utils/text';
@@ -28,11 +31,16 @@ export interface KnowledgeDetailView {
   };
   /** Ngữ pháp: "Lỗi thường gặp" — mượn ghi chú của bài Minna (sheet 7, hạng mục Văn bản). */
   commonMistake: string | null;
+  /** Kanji: câu chuyện ghi nhớ đang dùng (dùng chung cho mọi bài có chữ này); null nếu chưa có. */
+  story: KanjiStory | null;
+  /** Người học đã xem / đã đọc chuyện chưa — KHÔNG phải mức nhớ (mức nhớ ở `memory`). */
+  storyProgress: KanjiStoryProgress;
 }
 
 const DEFAULT_MISTAKE_NOTE = 'Đọc kỹ ví dụ và tự đặt một câu của riêng bạn — đó là cách nhớ lâu nhất.';
 
-export function buildKnowledgeDetail(item: KnowledgeItem, memory: MemoryView, catalog: KnowledgeCatalog): KnowledgeDetailView {
+/** `storyRecords`: user_settings.game_records của người học (không có — admin xem trước — thì coi như chưa đọc). */
+export function buildKnowledgeDetail(item: KnowledgeItem, memory: MemoryView, catalog: KnowledgeCatalog, storyRecords?: GameRecords): KnowledgeDetailView {
   const related: KnowledgeDetailView['related'] = { radicals: [], kanji: [], vocabulary: [], grammar: [], radicalDetails: [] };
   let commonMistake: string | null = null;
 
@@ -52,5 +60,7 @@ export function buildKnowledgeDetail(item: KnowledgeItem, memory: MemoryView, ca
     commonMistake = item.content.commonMistake || lesson?.note || DEFAULT_MISTAKE_NOTE;
   }
 
-  return { item, memory, chain: buildKnowledgeChain(item, catalog), related, commonMistake };
+  const story = item.type === 'kanji' ? kanjiStoryOf(catalog.content, item.id) : null;
+  const storyProgress = story && storyRecords ? kanjiStoryProgressOf(storyRecords, item.id) : NO_STORY_PROGRESS;
+  return { item, memory, chain: buildKnowledgeChain(item, catalog), related, commonMistake, story, storyProgress };
 }

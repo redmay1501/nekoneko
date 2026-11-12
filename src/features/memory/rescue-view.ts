@@ -8,6 +8,8 @@ import {
 } from '@/features/learning/knowledge-presenter';
 import type { ContentKey, KnowledgeItem } from '@/features/learning/knowledge-types';
 import { getForgettingRadar } from './memory-engine';
+import { kanjiStoryOf } from '@/lib/data/kanji-stories';
+import type { KanjiStory } from '@/types/content';
 import type { MemoryView } from './memory-types';
 
 /**
@@ -26,6 +28,8 @@ export interface RescueView {
   encounterCount: number;
   scoreBefore: number;
   hint: RescueHint;
+  /** Kanji có câu chuyện: ảnh + câu chốt làm gợi ý ở bước Gợi ý (không phải cả chuyện). */
+  storyHint: Pick<KanjiStory, 'memoryTip' | 'image'> | null;
   meaningOptions: string[];
   context: ContextSentence | null;
   nextAtRisk: { contentKey: ContentKey; face: string } | null;
@@ -46,6 +50,7 @@ export function buildRescueView(
   const sameTypeMeanings = (learnedSameType.length >= 2 ? learnedSameType : sameType).map((other) => other.meaning);
   const nextView = getForgettingRadar([...views.values()]).find((view) => view.contentKey !== item.key);
   const nextItem = nextView ? catalog.byKey.get(nextView.contentKey) : undefined;
+  const story = item.type === 'kanji' ? kanjiStoryOf(catalog.content, item.id) : null;
 
   return {
     contentKey: item.key,
@@ -57,6 +62,7 @@ export function buildRescueView(
     encounterCount: memory.encounterCount,
     scoreBefore: memory.memoryScore,
     hint: buildRescueHint(item, catalog),
+    storyHint: story ? { memoryTip: story.memoryTip, image: story.image } : null,
     meaningOptions: shuffleDeterministic(
       [item.meaning, ...pickDeterministic([...new Set(sameTypeMeanings)], MEANING_DISTRACTORS, `rescue-options:${item.key}`)],
       `rescue-order:${item.key}`,

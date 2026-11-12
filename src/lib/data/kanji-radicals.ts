@@ -12,7 +12,7 @@ export interface KanjiRadicalSource {
  *  - bộ chưa có trong lộ trình được thêm vào bảng radicals với day = null (bộ tham khảo, không xếp lịch học);
  *  - kanjiList của mọi bộ được tính lại từ liên kết, để văn bản và liên kết luôn nói cùng một điều.
  */
-export function withKanjiRadicals(content: Omit<N5Content, 'kanjiRadicals'>, source: KanjiRadicalSource): N5Content {
+export function withKanjiRadicals(content: Omit<N5Content, 'kanjiRadicals' | 'kanjiStories'>, source: KanjiRadicalSource): Omit<N5Content, 'kanjiStories'> {
   let nextId = Math.max(...content.radicals.map((radical) => radical.id)) + 1;
   const supplementary: RadicalContent[] = source.supplementaryRadicals.map((radical) => ({
     id: nextId++, radical: radical.radical, nameJp: radical.nameJp, meaning: radical.meaning, kanjiList: '', tip: radical.tip, day: null,

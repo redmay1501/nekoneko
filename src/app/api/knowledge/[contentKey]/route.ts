@@ -13,6 +13,6 @@ export async function GET(_request: Request, { params }: { params: Promise<{ con
     const item = findKnowledgeItem(context.catalog, contentKey);
     if (!item) throw new NotFoundError(contentKey);
     const memory = context.memoryViews.get(item.key) ?? toMemoryView(item.key, item.type, null, context.now);
-    return buildKnowledgeDetail(item, memory, context.catalog);
+    return buildKnowledgeDetail(item, memory, context.catalog, context.settings.gameRecords);
   });
 }

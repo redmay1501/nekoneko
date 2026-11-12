@@ -8,6 +8,6 @@ import type { N5Content, ReadingPassage } from '@/types/content';
  */
 export const READING_PASSAGES: readonly ReadingPassage[] = (rawReadingPassages as { passages: ReadingPassage[] }).passages;
 
-export function withReadingPassages<T extends Omit<N5Content, 'readingPassages'> & { readingPassages: unknown }>(content: T): T & Pick<N5Content, 'readingPassages'> {
+export function withReadingPassages<T extends Omit<N5Content, 'readingPassages' | 'kanjiStories'> & { readingPassages: unknown }>(content: T): T & Pick<N5Content, 'readingPassages'> {
   return { ...content, readingPassages: [...READING_PASSAGES] };
 }

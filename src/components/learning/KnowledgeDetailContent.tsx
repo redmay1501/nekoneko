@@ -9,6 +9,7 @@ import type { KnowledgeDetailView } from '@/features/learning/knowledge-detail';
 import { toContentKey } from '@/features/learning/knowledge-types';
 import type { ChainNode } from '@/features/learning/knowledge-presenter';
 import { KnowledgeChipButton } from './KnowledgeChipButton';
+import { KanjiStoryCard } from './KanjiStoryCard';
 import { StrokeOrder } from './StrokeOrder';
 import { strokeOrderCharacters } from '@/features/learning/stroke-order';
 import { canRomanize, kanjiReadingRomaji, patternRomaji, sentenceRomaji, vocabularyRomaji } from '@/lib/utils/romaji';
@@ -159,6 +160,11 @@ function DetailBody({ detail }: { detail: KnowledgeDetailView }) {
               {item.content.kunReading ? <p className="romaji sm">{kanjiReadingRomaji('', item.content.kunReading)}</p> : null}
             </div>
           </div>
+          {/* Câu chuyện ghi nhớ (lib/data/kanji-stories.ts) — sau phần thông tin chữ, trước mẹo nhớ & từ ghép đã có. */}
+          {detail.story ? (
+            <KanjiStoryCard key={`${detail.story.kanjiId}:${detail.story.version}`} story={detail.story} character={item.face}
+              initialProgress={detail.storyProgress} />
+          ) : null}
           <TipCard tip={item.content.tip} />
           <div className="sec-h" style={{ margin: '16px 2px 7px' }}><h2 style={{ fontSize: 14 }}>Từ ghép thường gặp</h2></div>
           <p className="jp sm" style={{ lineHeight: 1.9 }}>{item.content.words}</p>

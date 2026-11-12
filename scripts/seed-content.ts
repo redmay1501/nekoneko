@@ -11,6 +11,8 @@
 import { type SupabaseClient, createClient } from '@supabase/supabase-js';
 import { loadSeedContent } from '../src/lib/data/seed-content';
 import { CONTENT_TABLES, rowsFromContent } from '../src/lib/data/supabase-content-mapper';
+import { kanjiStoryToRow } from '../src/lib/data/kanji-stories';
+import type { KanjiStory } from '../src/types/content';
 import { loadLocalEnv, requireEnv } from './load-env';
 
 const BATCH_SIZE = 200;
@@ -20,7 +22,8 @@ async function main() {
   const supabase = createClient(requireEnv('NEXT_PUBLIC_SUPABASE_URL'), requireEnv('SUPABASE_SERVICE_ROLE_KEY'), {
     auth: { persistSession: false },
   });
-  const rows = rowsFromContent(loadSeedContent());
+  const content = loadSeedContent();
+  const rows = rowsFromContent(content);
 
   // Thứ tự trong CONTENT_TABLES đã đúng phụ thuộc khoá ngoại (journey_days trước day_tasks).
   for (const { key, table, conflictKey } of CONTENT_TABLES) {
@@ -36,6 +39,7 @@ async function main() {
   }
   await removeStaleDayTasks(supabase, rows.dayTasks as unknown as { day: number; order_no: number }[]);
   await removeStaleById(supabase, 'vocabulary', rows.vocabulary.map((word) => word.id));
+  await insertMissingKanjiStories(supabase, content.kanjiStories);
   console.log('Xong. Nội dung N5 đã có trong Supabase 🌸');
 }
 
@@ -69,6 +73,27 @@ async function removeStaleById(supabase: SupabaseClient, table: string, keepIds:
   const removal = await supabase.from(table).delete().in('id', stale);
   if (removal.error) throw new Error(`xoá ${table}: ${removal.error.message}`);
   console.log(`✓ đã xoá ${stale.length} dòng ${table} không còn trong nội dung (id: ${stale.join(', ')})`);
+}
+
+/**
+ * Câu chuyện Kanji: CHỈ THÊM (kanji_id, locale, version) chưa có — dòng đã có (có thể đã được sửa tay / đổi trạng thái) giữ nguyên.
+ * Muốn đưa nội dung mới lên → tăng version trong file (scripts/import-kanji-stories.py), không ghi đè version cũ.
+ * Bảng chưa có (chưa chạy migration 20261112000001) → báo và bỏ qua; app vẫn dùng chuyện trong repo.
+ */
+async function insertMissingKanjiStories(supabase: SupabaseClient, stories: readonly KanjiStory[]) {
+  const storyRows = stories.map(kanjiStoryToRow);
+  let inserted = 0;
+  for (let start = 0; start < storyRows.length; start += BATCH_SIZE) {
+    const { data, error } = await supabase.from('kanji_stories')
+      .upsert(storyRows.slice(start, start + BATCH_SIZE), { onConflict: 'kanji_id,locale,version', ignoreDuplicates: true })
+      .select('kanji_id');
+    if (error) {
+      console.warn(`! Bỏ qua kanji_stories: ${error.message} (chạy migration 20261112000001_kanji_stories.sql trước)`);
+      return;
+    }
+    inserted += data?.length ?? 0;
+  }
+  console.log(`✓ ${'kanji_stories'.padEnd(20)} ${inserted} dòng mới · ${storyRows.length - inserted} dòng đã có (giữ nguyên)`);
 }
 
 main().catch((error: unknown) => {

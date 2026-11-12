@@ -17,7 +17,8 @@ export interface ContentRows {
   practiceTemplates: PracticeTemplateRow[]; exampleSentences: ExampleSentenceRow[]; kanjiRadicals: KanjiRadicalRow[];
 }
 
-export function contentFromRows(rows: ContentRows): N5Content {
+/** Câu chuyện Kanji không nằm trong ContentRows — đọc riêng, có dự phòng (supabase-data-source.ts · kanji-stories.ts). */
+export function contentFromRows(rows: ContentRows): Omit<N5Content, 'kanjiStories'> {
   return {
     journeyDays: rows.journeyDays.map((row) => ({
       day: row.day, week: row.week, stage: row.stage, minna: row.minna, title: row.title,
@@ -61,7 +62,7 @@ export function contentFromRows(rows: ContentRows): N5Content {
   };
 }
 
-export function rowsFromContent(content: N5Content): ContentRows {
+export function rowsFromContent(content: Omit<N5Content, 'kanjiStories'>): ContentRows {
   return {
     journeyDays: content.journeyDays.map((day) => ({
       day: day.day, week: day.week, stage: day.stage, minna: day.minna, title: day.title,

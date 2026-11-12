@@ -21,17 +21,19 @@ interface KnowledgeDetailPageProps {
 export async function KnowledgeDetailPage({ contentType, rawId, backHref, backLabel }: KnowledgeDetailPageProps) {
   const id = Number(rawId);
   if (!Number.isInteger(id)) notFound();
-  const { catalog, memoryViews, now } = await getLearnerContext();
+  const { catalog, memoryViews, now, settings, journeyDay } = await getLearnerContext();
   const item = catalog.byKey.get(toContentKey(contentType, id));
   if (!item) notFound();
   const memory = memoryViews.get(item.key) ?? toMemoryView(item.key, item.type, null, now);
   return (
     <div className="session">
       <Link className="link" href={backHref}>← {backLabel}</Link>
-      <div className="card mt-2" data-reveal="light"><KnowledgeDetailContent detail={buildKnowledgeDetail(item, memory, catalog)} /></div>
+      <div className="card mt-2" data-reveal="light"><KnowledgeDetailContent detail={buildKnowledgeDetail(item, memory, catalog, settings.gameRecords)} /></div>
       {item.type === 'kanji' ? (
         <div className="row wrap mt-3" style={{ gap: 8 }}>
           <Link className="btn sm" href={`/luyen-tap/viet?muc=kanji&chu=${encodeURIComponent(item.content.character)}`}>✍️ Luyện viết chữ này</Link>
+          {/* Đọc chuyện xong → quay lại bài của ngày đang học (không đổi tiến độ, không tự hoàn thành ngày). */}
+          <Link className="btn ghost sm" href={`/lo-trinh/ngay/${journeyDay}/hoc?buoc=kanji`}>Tiếp tục học ngày {journeyDay} →</Link>
         </div>
       ) : null}
       {item.type === 'grammar' ? (

@@ -7,6 +7,7 @@ import type { N5Content } from '@/types/content';
 import { type KanjiRadicalSource, withKanjiRadicals } from './kanji-radicals';
 import { type GrammarNotesSource, withGrammarNotes } from './grammar-notes';
 import { withReadingPassages } from './reading-passages';
+import { loadSeedKanjiStories, withKanjiStories } from './kanji-stories';
 
 /**
  * Nội dung N5 dạng seed (sinh từ file Excel lộ trình bằng scripts/convert-roadmap.py).
@@ -19,8 +20,9 @@ import { withReadingPassages } from './reading-passages';
  */
 export function loadSeedContent(): N5Content {
   // Câu ví dụ (Tatoeba), thành phần bộ thủ và ghi chú ngữ pháp nằm file riêng — không sinh từ Excel lộ trình.
-  const raw = rawSeedContent as unknown as Omit<N5Content, 'exampleSentences' | 'kanjiRadicals'>;
+  const raw = rawSeedContent as unknown as Omit<N5Content, 'exampleSentences' | 'kanjiRadicals' | 'kanjiStories'>;
   // Câu Tatoeba + câu NekoNeko tự soạn cho từ vựng chưa có câu (examples-nekoneko.json, id 900001+).
   const base = withGrammarNotes({ ...raw, exampleSentences: [...rawExamples.sentences, ...rawNekoExamples.sentences] }, rawGrammarNotes as GrammarNotesSource);
-  return withReadingPassages(withKanjiRadicals(base, rawKanjiRadicals as KanjiRadicalSource));
+  // Câu chuyện ghi nhớ Kanji: content/seed/kanji-stories.json (scripts/import-kanji-stories.py).
+  return withKanjiStories(withReadingPassages(withKanjiRadicals(base, rawKanjiRadicals as KanjiRadicalSource)), loadSeedKanjiStories());
 }

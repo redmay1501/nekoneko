@@ -1113,10 +1113,12 @@ body:has(.kana-picker-dialog) .topbar{z-index:95}
 .kana-picker-dialog h2{margin:0;font-size:18px;color:#543B32}
 .kana-picker-close{width:36px;height:36px;border:0;border-radius:50%;background:#fff;color:#76584E;font-size:25px;line-height:1;box-shadow:0 2px 8px rgba(120,60,40,.15);cursor:pointer}
 .kana-picker-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
-.kana-picker-cell{aspect-ratio:1/1.05;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px solid #F0E1CE;border-radius:18px;background:linear-gradient(180deg,#fff,#FBF2E6);color:#49352F;cursor:pointer}
+.kana-picker-cell{position:relative;aspect-ratio:1/1.05;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px solid #F0E1CE;border-radius:18px;background:linear-gradient(180deg,#fff,#FBF2E6);color:#49352F;cursor:pointer}
 .kana-picker-cell b{font-family:var(--font-kana);font-size:24px;font-weight:500;line-height:1}
 .kana-picker-cell small{font-size:11.5px;font-weight:700;color:#9A8279}
 .kana-picker-cell[aria-current="true"]{border-color:#F28CA3;background:linear-gradient(180deg,#FFE8EE,#FFCFDA);box-shadow:inset 0 0 0 1px #F28CA3}
+.kana-picker-story{position:absolute;top:5px;right:7px;font-style:normal;font-size:10px;line-height:1;color:#C9821E}
+.kana-picker-story-count{margin-right:auto;padding:2px 9px;border-radius:999px;background:#FFF3DF;color:#9A5B12;font-size:11.5px;font-weight:800;white-space:nowrap}
 @media(max-width:640px){.kana-picker-dialog{max-height:calc(100dvh - 24px - var(--safe-t) - var(--safe-b));padding:12px;border-radius:20px}.kana-picker-grid{gap:6px}.kana-picker-cell{border-radius:14px}.kana-picker-cell b{font-size:22px}}
 .kana-header-copy strong{font-size:18px}.kana-header-copy span{min-height:23px}
 .kana-classroom-toolbar .knowledge-garden-actions{gap:8px}
@@ -2219,3 +2221,34 @@ a.garden-tree:hover .garden-tree-tag{background:#fff;box-shadow:0 0 0 2px #F3B67
 @media (min-width:1200px){.speech-toast{bottom:24px}}
 @keyframes speech-toast-in{from{opacity:0;transform:translate(-50%,8px)}to{opacity:1;transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.speech-toast{animation:none}}
+
+/* ── Câu chuyện ghi nhớ Kanji (components/learning/KanjiStoryCard.tsx) ──
+   Một cột trên điện thoại / khay hẹp; hai cột (ảnh | chữ) khi CHÍNH khung đủ rộng (container query — iPad, desktop),
+   nên khay chi tiết 460px vẫn một cột dù màn hình lớn. Khung ảnh cao cố định → không nhảy bố cục khi ảnh tải / lỗi. */
+.kanji-story{container-type:inline-size;margin-top:14px;padding:14px;border:1px solid var(--line);border-radius:var(--r-m);background:#FFFCF8;text-align:left}
+.kanji-story-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.kanji-story-eyebrow{display:block;font-size:12px;font-weight:800;letter-spacing:.04em;color:var(--sakura-deep)}
+.kanji-story.is-hint .kanji-story-eyebrow{margin-bottom:8px}
+.kanji-story-body{display:grid;gap:12px}
+.kanji-story-figure{margin:0;height:190px;border-radius:var(--r-s);background:#fff;border:1px solid var(--line-2);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.kanji-story-figure img{display:block;width:100%;height:100%;object-fit:contain;padding:8px}
+.kanji-story-figure.is-missing{flex-direction:column;gap:4px;padding:12px;text-align:center;background:var(--bg)}
+.kanji-story-missing-char{font-size:40px;line-height:1;color:var(--ink-3)}
+.kanji-story-text{display:grid;gap:10px;align-content:start;min-width:0}
+.kanji-story-tip{margin:0;padding:10px 12px;border-radius:var(--r-s);background:var(--cream);font-size:14px;line-height:1.55;color:var(--ink)}
+.kanji-story-tip b{display:block;margin-bottom:2px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#9A6A2E}
+.kanji-story-toggle{justify-self:start;padding:6px 0;border:0;background:none;font:inherit;font-size:13px;font-weight:700;color:var(--sakura-deep);cursor:pointer}
+.kanji-story-toggle:focus-visible{outline:2px solid var(--sakura);outline-offset:2px;border-radius:6px}
+.kanji-story-content{margin:0;max-width:62ch;font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.kanji-story-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line-2)}
+.kanji-story-credit{flex:1 1 200px;min-width:0;margin:0;font-size:11px;line-height:1.45;color:var(--ink-3);overflow-wrap:anywhere}
+.kanji-story-credit a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+.kanji-story.is-hint .kanji-story-credit{margin-top:8px}
+.kanji-story.is-compact .kanji-story-figure{height:150px}
+.kanji-story.is-hint{margin-top:0}
+.kanji-story-nudge{margin-top:12px;padding:10px 12px;border-radius:var(--r-s);background:var(--cream);text-align:left}
+@container (min-width:460px){
+  .kanji-story-body.has-image{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:start}
+  .kanji-story-figure{height:210px}
+  .kanji-story.is-compact .kanji-story-figure{height:170px}
+}

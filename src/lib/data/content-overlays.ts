@@ -14,12 +14,12 @@ export interface ContentImageRow { content_type: string; content_id: number; alt
 
 const keyOf = (type: string, id: number) => `${type}:${id}`;
 
-export function applyContentOverlays(
-  content: N5Content,
+export function applyContentOverlays<T extends Omit<N5Content, 'kanjiStories'>>(
+  content: T,
   statuses: readonly ContentStatusRow[],
   images: readonly ContentImageRow[],
   publicUrlOf: (storagePath: string) => string,
-): N5Content {
+): T {
   const hidden = new Set(statuses.filter((row) => (HIDDEN_STATUSES as readonly string[]).includes(row.status))
     .map((row) => keyOf(row.content_type, row.content_id)));
   const imageByKey = new Map<string, ContentImage>(images.map((row) => [

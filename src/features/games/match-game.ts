@@ -36,6 +36,10 @@ export interface GameRecord {
   lastPlayedAt: string;
   /** Neko Streak: chuỗi đúng liên tiếp dài nhất từng đạt (khoá "streak:best"). */
   bestStreak?: number;
+  /** Câu chuyện Kanji (khoá "chuyen-kanji<n>:<id>", kanji-story-progress.ts): lúc người học bấm "Đã đọc". */
+  readAt?: string;
+  /** Câu chuyện Kanji: phiên bản chuyện lúc xem / đọc gần nhất. */
+  storyVersion?: number;
 }
 
 export type GameRecords = Record<string, GameRecord>;

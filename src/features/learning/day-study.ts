@@ -10,7 +10,10 @@ import { kanjiContainingRadical, radicalsOfKanji } from './knowledge-relations';
 import { type ContentKey, toContentKey } from './knowledge-types';
 import { type KanjiWord, kanjiReadingList, parseKanjiWords } from './study-grading';
 import { learnerImageOf } from './vocabulary-images';
-import type { ContentImage } from '@/types/content';
+import type { ContentImage, KanjiStory } from '@/types/content';
+import type { GameRecords } from '@/features/games/match-game';
+import { kanjiStoryOf } from '@/lib/data/kanji-stories';
+import { type KanjiStoryProgress, NO_STORY_PROGRESS, kanjiStoryProgressOf } from './kanji-story-progress';
 
 /**
  * ═══════════════════════════════════════════════════════════════════
@@ -103,6 +106,9 @@ export interface StudyKanjiCard {
   image: ContentImage | null;
   /** "Luyện viết chữ này": trang luyện viết mở đúng chữ (sổ luyện viết / viết tay Kanji); null = chưa có nội dung luyện viết. */
   writingHref: string | null;
+  /** Câu chuyện ghi nhớ — cùng dữ liệu với trang chi tiết Kanji (không sao chép theo bài). Không bắt buộc đọc. */
+  story: KanjiStory | null;
+  storyProgress: KanjiStoryProgress;
 }
 
 /** Đáp án sai hợp lý cho câu hỏi trắc nghiệm (kiến thức của các ngày gần nhất). */
@@ -149,6 +155,8 @@ export function buildDayStudy(
   day: number,
   journey: JourneyPosition,
   memoryViews: ReadonlyMap<ContentKey, MemoryView>,
+  /** user_settings.game_records — chỉ để biết người học đã đọc chuyện Kanji nào. */
+  storyRecords: GameRecords = {},
 ): DayStudyData {
   const plan = buildDayPlan(catalog, day, journey);
   const { knowledge } = plan;
@@ -214,6 +222,8 @@ export function buildDayStudy(
       image: learnerImageOf('kanji', entry),
       // Viết tay Kanji có bảng thứ tự nét + viết đè cho từng chữ N5 → mở thẳng chữ này.
       writingHref: `/luyen-tap/viet?muc=kanji&chu=${entry.id}`,
+      story: kanjiStoryOf(content, entry.id),
+      storyProgress: kanjiStoryOf(content, entry.id) ? kanjiStoryProgressOf(storyRecords, entry.id) : NO_STORY_PROGRESS,
     };
   });
 

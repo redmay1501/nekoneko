@@ -8,6 +8,7 @@ import { createRequestId, postJson } from '@/lib/api/api-client';
 import { compareJapanese } from '@/lib/utils/japanese-text';
 import { fitTextStyle } from '@/lib/utils/fit-text';
 import type { StudyQuestion } from '@/features/learning/day-study-quiz';
+import { KanjiStoryNudge } from '@/components/learning/KanjiStoryNudge';
 
 interface Answered {
   question: StudyQuestion;
@@ -143,6 +144,8 @@ export function StudyQuiz({ questions, unit, isRecorded = true, onRestart, onRet
         <div className={`feedback ${isCorrect ? '' : 'miss'}`}>
           <p>{isCorrect ? 'Đúng rồi! 🎉' : 'Chưa đúng — không sao, nhớ dần nhé.'}</p>
           {!isCorrect ? <p className="sm mt-1">Đáp án: <b className={question.optionsAreJapanese ? 'jp' : ''}>{label(question, question.answer)}</b></p> : null}
+          {/* Sai một Kanji → gợi ý câu chốt của câu chuyện (chỉ gợi ý, không đổi cách chấm). */}
+          {!isCorrect ? <KanjiStoryNudge contentKey={question.contentKey} /> : null}
           <button ref={nextButtonRef} type="button" className="btn block mt-3" onClick={next}>{index + 1 === questions.length ? 'Xem kết quả' : 'Câu tiếp theo'}</button>
         </div>
       ) : null}

@@ -40,7 +40,9 @@ console.log('✓ cài đặt mặc định:', (await db.query(`select daily_minu
 
 // Tham số cuối = số lần gặp server đã đọc trước khi tính (NULL = lúc đọc chưa có bản ghi) — khoá lạc quan.
 const call = (req, encounters = 1, expected = 'null') => db.query(`select apply_memory_update('${uid}','${req}','kanji',1,'recall','x',true,50,64,'learning',${encounters},1,0,0,now(),now(),now()+interval '4 day',now(),null,null,null,${expected}) as r`);
-await db.exec(`insert into journey_days (day, stage, title) values (1,'Kana','x'); insert into kanji (id, character, meaning, day) values (1,'日','Ngày',15);`);
+// Migration có thể đã gieo sẵn lộ trình / nội dung → chỉ thêm khi còn thiếu.
+await db.exec(`insert into journey_days (day, stage, title) values (1,'Kana','x') on conflict (day) do nothing;
+  insert into kanji (id, character, meaning, day) values (1,'日','Ngày',15) on conflict (id) do nothing;`);
 await db.exec('set role service_role');
 console.log('✓ lần 1:', (await call('req-1')).rows[0].r);
 console.log('✓ gửi trùng:', (await call('req-1')).rows[0].r);
@@ -116,6 +118,47 @@ const otherDates = (await db.query(`select count(*)::int c from recall_dates()`)
 expectBlocked(otherDates === 0, `người khác đọc được ngày ôn của Hiền: ${otherDates}`);
 console.log('✓ người khác thấy ngày ôn của Hiền:', otherDates);
 console.log('✓ người khác thấy trí nhớ của Hiền:', (await db.query(`select count(*)::int c from memory_items`)).rows[0].c);
+
+// ── Câu chuyện Kanji: nội dung dùng chung — ai cũng đọc được bản published, không ai ngoài service_role ghi được ──
+await db.exec(`reset role;
+  insert into kanji_stories (kanji_id, locale, version, status, content) values
+    (1,'vi',1,'published','chuyện v1'), (1,'vi',2,'draft','chuyện v2 nháp');`);
+for (const [label, q] of [
+  ['version = 0', `insert into kanji_stories (kanji_id, version, content) values (1, 0, 'x')`],
+  ['nội dung rỗng', `insert into kanji_stories (kanji_id, version, content) values (1, 3, '')`],
+  ['trạng thái lạ', `insert into kanji_stories (kanji_id, version, status, content) values (1, 3, 'live', 'x')`],
+  ['giấy phép lạ', `insert into kanji_stories (kanji_id, version, content, image_license_status) values (1, 3, 'x', 'ok')`],
+  ['example_words không phải mảng', `insert into kanji_stories (kanji_id, version, content, example_words) values (1, 3, 'x', '{}')`],
+  ['trùng (kanji, locale, version)', `insert into kanji_stories (kanji_id, locale, version, content) values (1, 'vi', 1, 'x')`],
+  ['kanji không tồn tại', `insert into kanji_stories (kanji_id, version, content) values (999999, 1, 'x')`],
+]) {
+  try { await db.query(q); expectBlocked(false, `kanji_stories ${label}: KHÔNG bị chặn`); }
+  catch (e) { console.log(`  ✓ kanji_stories ${label}: bị chặn — ${e.message.split('\n')[0]}`); }
+}
+const defaultLicense = (await db.query(`select image_license_status s from kanji_stories where version = 1`)).rows[0].s;
+expectBlocked(defaultLicense === 'unverified', `giấy phép ảnh mặc định phải là unverified, đang là ${defaultLicense}`);
+for (const role of ['anon', 'authenticated']) {
+  await db.exec(`reset role; set role ${role}; select set_config('request.jwt.claim.sub','${uid}',false);`);
+  const visible = (await db.query(`select version from kanji_stories order by version`)).rows.map((row) => row.version);
+  expectBlocked(visible.length === 1 && visible[0] === 1, `${role} chỉ được thấy bản published: ${visible}`);
+  console.log(`✓ ${role} thấy câu chuyện (chỉ bản published):`, visible);
+  for (const [label, q] of [
+    ['thêm chuyện', `insert into kanji_stories (kanji_id, version, content) values (1, 5, 'x')`],
+    ['sửa chuyện', `update kanji_stories set content = 'hack' returning 1`],
+    ['xoá chuyện', `delete from kanji_stories returning 1`],
+  ]) {
+    try { const r = await db.query(q); expectBlocked(r.rows.length === 0, `${role} ${label}: KHÔNG bị chặn (rows ${r.rows.length})`); console.log(`  ✓ ${role} ${label}: không dòng nào bị đổi`); }
+    catch (e) { console.log(`  ✓ ${role} ${label}: bị chặn — ${e.message.split('\n')[0]}`); }
+  }
+}
+await db.exec('reset role');
+const untouched = (await db.query(`select string_agg(content, '|' order by version) c from kanji_stories`)).rows[0].c;
+expectBlocked(untouched === 'chuyện v1|chuyện v2 nháp', `câu chuyện bị người học sửa: ${untouched}`);
+// Rollback của migration (ghi trong file .sql) phải chạy được và không kéo theo bảng nào khác.
+await db.exec(`drop table if exists public.kanji_stories;`);
+const kanjiAfter = (await db.query(`select count(*)::int c from kanji`)).rows[0].c;
+expectBlocked(kanjiAfter > 0, 'rollback kanji_stories làm mất bảng kanji');
+console.log('✓ rollback kanji_stories: bảng kanji còn nguyên', kanjiAfter, 'dòng');
 
 if (failures) { console.log(`\n✗ ${failures} kiểm tra bảo mật thất bại`); process.exit(1); }
 console.log('\nTất cả kiểm tra database đều đạt 🌸');

@@ -21,7 +21,7 @@ export async function GET(request: Request) {
       const item = findKnowledgeItem(context.catalog, key);
       if (!item) return [];
       const memory = context.memoryViews.get(item.key) ?? toMemoryView(item.key, item.type, null, context.now);
-      return [[key, buildKnowledgeDetail(item, memory, context.catalog)]];
+      return [[key, buildKnowledgeDetail(item, memory, context.catalog, context.settings.gameRecords)]];
     }));
     return { details };
   });

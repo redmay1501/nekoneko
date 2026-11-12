@@ -15,8 +15,8 @@ export default async function DayStudyPage({ params, searchParams }: {
   if (!Number.isInteger(day) || day < 1 || day > JOURNEY_TOTAL_DAYS) notFound();
   const { buoc, 'che-do': mode } = await searchParams;
 
-  const { catalog, journey, memoryViews } = await getLearnerContext();
-  const data = buildDayStudy(catalog, day, journey, memoryViews);
+  const { catalog, journey, memoryViews, settings } = await getLearnerContext();
+  const data = buildDayStudy(catalog, day, journey, memoryViews, settings.gameRecords);
   const hasStudy = data.kana.length + data.vocab.length + data.grammar.length + data.kanji.length + data.radicals.length > 0;
   // Không ghi bước → bắt đầu từ bước đầu tiên ngày đó có (chữ cái trước từ vựng).
   const initialStep = (STUDY_STEPS.find((step) => step.id === buoc)?.id ?? null) as StudyStepId | null;

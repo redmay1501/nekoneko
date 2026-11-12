@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { AudioButton } from '@/components/common/AudioButton';
 import { NekoButton } from '@/components/common/NekoButton';
 import { StrokeOrder } from '@/components/learning/StrokeOrder';
+import { KanjiStoryCard } from '@/components/learning/KanjiStoryCard';
 import { MatchGame } from '@/components/games/MatchGame';
 import { MIN_MATCH_POOL } from '@/features/games/match-game';
 import type { DayStudyData, StudyGrammarCard, StudyKanaCard, StudyKanjiCard, StudyRadicalCard, StudyVocabCard } from '@/features/learning/day-study';
@@ -195,7 +196,16 @@ export function DayStudyFlow({ data, initialStep, initialMode }: { data: DayStud
               <Flashcards cards={data.kanji} unit="chữ" marked={marked} onToggleMark={toggleMark} endActions={endActions} {...cardExtras}
                 audioText={(card) => card.words[0]?.reading ?? card.readings[0] ?? card.character}
                 front={(card) => <span className="glyph flashcard-glyph">{card.character}</span>}
-                back={(card) => <KanjiBack card={card} />} footer={(card) => <StrokeToggle key={card.key} character={card.character} />} />
+                back={(card) => <KanjiBack card={card} />} footer={(card) => (
+                  <>
+                    <StrokeToggle key={card.key} character={card.character} />
+                    {/* Câu chuyện ghi nhớ: có sẵn ngay trong bài, không bắt buộc đọc, không ảnh hưởng hoàn thành ngày. */}
+                    {card.story ? (
+                      <KanjiStoryCard key={`${card.key}:story`} story={card.story} character={card.character}
+                        initialProgress={card.storyProgress} variant="compact" />
+                    ) : null}
+                  </>
+                )} />
             ) : null}
           </>
         ) : null}

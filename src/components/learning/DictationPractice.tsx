@@ -1,5 +1,6 @@
 'use client';
 
+import { KanaReading } from '@/components/common/KanaReading';
 import { type FormEvent, useEffect, useRef, useState } from 'react';
 import { AudioButton } from '@/components/common/AudioButton';
 import { useScrollToAnswerFeedback } from '@/hooks/useScrollToAnswerFeedback';
@@ -95,7 +96,7 @@ export function DictationPractice({ words, sentences }: { words: DictationItem[]
             <b className="sm">Xem lại câu chưa đúng</b>
             {results.filter((result) => !result.comparison.isCorrect).map((result) => (
               <div key={result.item.display} className="card tight">
-                <p className="jp">{result.item.display}</p>
+                <p><span className="jp">{result.item.display}</span><KanaReading text={result.item.display} reading={result.item.reading} block /></p>
                 <p className="tiny muted">Bạn gõ: <span className="jp">{result.typed}</span> · {result.comparison.score}%</p>
               </div>
             ))}
@@ -142,7 +143,10 @@ export function DictationPractice({ words, sentences }: { words: DictationItem[]
               <span key={position} className={cell.isMatch ? 'dict-ok' : 'dict-miss'}>{cell.character}</span>
             ))}
           </p>
-          {!current.comparison.isCorrect ? <p className="tiny muted mt-1">Đáp án: <span className="jp">{item.display}</span></p> : null}
+          {current.comparison.isCorrect ? <KanaReading text={item.display} reading={item.reading} block /> : null}
+          {!current.comparison.isCorrect ? (
+            <p className="tiny muted mt-1">Đáp án: <span className="jp">{item.display}</span><KanaReading text={item.display} reading={item.reading} block /></p>
+          ) : null}
           <button ref={nextButtonRef} type="button" className="btn block mt-2.5" onClick={next}>{index + 1 === items.length ? 'Xem kết quả' : 'Câu tiếp'} <span className="tiny muted">(Enter)</span></button>
         </div>
       ) : null}

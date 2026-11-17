@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { DayStudyData } from './day-study';
-import { buildGrammarQuiz, buildKanjiQuiz, buildVocabQuiz, orderTokens, pickOptions } from './day-study-quiz';
+import { buildGrammarQuiz, buildKanjiQuiz, buildVocabQuiz, kanaReadingFor, orderTokens, pickOptions } from './day-study-quiz';
 
 const seeded = (seed = 7) => () => {
   seed = (seed * 16807) % 2147483647;
@@ -63,5 +63,14 @@ describe('day study quizzes', () => {
     expect(orderTokens('わたしは グエンです。')).toEqual(['わたし', 'は', 'グエン', 'です']);
     expect(orderTokens('ミラーさんは アメリカ人ですか。')).toEqual(['ミラーさん', 'は', 'アメリカ人', 'です', 'か']);
     expect(orderTokens('あれは なんですか。')).toEqual(['あれ', 'は', 'なん', 'です', 'か']);
+  });
+});
+
+describe('kanaReadingFor', () => {
+  it('chỉ trả cách đọc khi chữ có Kanji', () => {
+    expect(kanaReadingFor('学生です', 'がくせいです')).toBe('がくせいです');
+    expect(kanaReadingFor('これはペンです', 'これはペンです')).toBeUndefined();
+    expect(kanaReadingFor('すし', 'すし')).toBeUndefined();
+    expect(kanaReadingFor('山', '')).toBeUndefined();
   });
 });

@@ -1,3 +1,4 @@
+import { KanaReading } from '@/components/common/KanaReading';
 import type { StepAnswerFeedback } from '@/features/learning/session-types';
 
 interface AnswerOptionsProps {
@@ -6,11 +7,13 @@ interface AnswerOptionsProps {
   feedback: StepAnswerFeedback | null;
   isDisabled: boolean;
   isJapanese: boolean;
+  /** Cách đọc kana của lựa chọn có Kanji — hiện dưới đáp án đúng / lựa chọn sai sau khi chấm. */
+  readings?: Record<string, string>;
   onChoose: (answer: string) => void;
 }
 
 /** Các lựa chọn trắc nghiệm. Đáp án đúng chỉ được tô sau khi server chấm xong. */
-export function AnswerOptions({ options, chosenAnswer, feedback, isDisabled, isJapanese, onChoose }: AnswerOptionsProps) {
+export function AnswerOptions({ options, chosenAnswer, feedback, isDisabled, isJapanese, readings, onChoose }: AnswerOptionsProps) {
   return (
     <div className="s-opt">
       {options.map((option) => {
@@ -23,6 +26,7 @@ export function AnswerOptions({ options, chosenAnswer, feedback, isDisabled, isJ
             aria-busy={isDisabled && !feedback && option === chosenAnswer}
             onClick={() => onChoose(option)}>
             {option}
+            {isCorrectOption || isWrongChoice ? <KanaReading text={option} reading={readings?.[option]} block /> : null}
             {isCorrectOption ? <span className="sr-only"> — đáp án đúng</span> : null}
           </button>
         );

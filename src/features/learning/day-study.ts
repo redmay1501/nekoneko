@@ -117,7 +117,7 @@ export interface StudyDistractors {
   kana: Array<{ face: string; romaji: string }>;
   vocab: Array<{ face: string; kana: string; meaning: string }>;
   kanji: Array<{ character: string; meaning: string; readings: string[]; words: KanjiWord[] }>;
-  grammar: Array<{ jp: string; vi: string }>;
+  grammar: Array<{ jp: string; reading: string; vi: string }>;
   radicals: Array<{ glyph: string; meaning: string }>;
 }
 
@@ -246,8 +246,8 @@ export function buildDayStudy(
         character: entry.character, meaning: entry.meaning, readings: kanjiReadingList(entry), words: parseKanjiWords(entry.words),
       })),
       grammar: nearest(itemsOfType(catalog, 'grammar'), day, GRAMMAR_DISTRACTORS).flatMap((item) => [
-        { jp: item.content.exampleJp, vi: item.content.exampleVi },
-        ...(item.content.example2Jp ? [{ jp: item.content.example2Jp, vi: item.content.example2Vi }] : []),
+        { jp: item.content.exampleJp, reading: item.content.exampleReading ?? '', vi: item.content.exampleVi },
+        ...(item.content.example2Jp ? [{ jp: item.content.example2Jp, reading: item.content.example2Reading ?? '', vi: item.content.example2Vi }] : []),
       ]),
       radicals: nearest(content.radicals, day, RADICAL_DISTRACTORS).map((radical) => ({ glyph: primaryRadicalGlyph(radical.radical), meaning: radical.meaning })),
     },

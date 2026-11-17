@@ -6,6 +6,7 @@ import { useEnterToContinue } from '@/hooks/useEnterToContinue';
 import { useScrollToAnswerFeedback } from '@/hooks/useScrollToAnswerFeedback';
 import { stopSpeech, useSpeech } from '@/hooks/useSpeech';
 import { useSpeechPreferenceStore } from '@/stores/speech-preference-store';
+import { KanaReading } from '@/components/common/KanaReading';
 import { ListenControls } from './ListenControls';
 
 export interface AssessmentQuestion {
@@ -16,6 +17,10 @@ export interface AssessmentQuestion {
   audioText?: string;
   answer: string;
   options: string[];
+  /** Hiện sau khi trả lời: chữ của câu hỏi (bài nghe không hiện chữ trước) + cách đọc nếu có Kanji. */
+  reveal?: { face: string; reading?: string };
+  /** Cách đọc kana của lựa chọn có Kanji. */
+  optionReadings?: Record<string, string>;
 }
 
 /** Bài nghe/kiểm tra từng câu, có chấm điểm cuối bài và nút làm lại. */
@@ -114,7 +119,9 @@ export function AssessmentQuiz({
                   className={`quiz-option ${question.promptIsJapanese && !question.audioText ? 'jp' : ''} ${isCorrect ? 'is-correct' : ''} ${isWrong ? 'is-wrong' : ''}`}
                   aria-pressed={chosenAnswer === option} onClick={() => choose(option)}>
                   <span className="quiz-option-key" aria-hidden="true">{String.fromCharCode(65 + index)}</span>
-                  <span className="quiz-option-text">{option}</span>
+                  <span className="quiz-option-text">{option}
+                    {chosenAnswer !== null && (isCorrect || isWrong) ? <KanaReading text={option} reading={question.optionReadings?.[option]} block /> : null}
+                  </span>
                 </button>
               );
             })}
@@ -122,7 +129,13 @@ export function AssessmentQuiz({
           {chosenAnswer !== null ? (
             <div className={`feedback ${chosenAnswer === question.answer ? '' : 'miss'}`}>
               <p>{chosenAnswer === question.answer ? 'Đúng rồi, tốt lắm!' : 'Không sao, mình nhớ dần nhé.'}</p>
-              {chosenAnswer !== question.answer ? <p className="sm mt-1">Đáp án: <b>{question.answer}</b></p> : null}
+              {question.reveal ? (
+                <p className="sm mt-1">Từ vừa nghe: <b className="jp">{question.reveal.face}</b>
+                  <KanaReading text={question.reveal.face} reading={question.reveal.reading} /></p>
+              ) : null}
+              {chosenAnswer !== question.answer ? (
+                <p className="sm mt-1">Đáp án: <b>{question.answer}</b><KanaReading text={question.answer} reading={question.optionReadings?.[question.answer]} /></p>
+              ) : null}
               <button ref={nextButtonRef} type="button" className="btn block mt-3" onClick={continueQuiz}>
                 {questionIndex + 1 === questions.length ? 'Xem kết quả' : 'Câu tiếp theo'}
               </button>

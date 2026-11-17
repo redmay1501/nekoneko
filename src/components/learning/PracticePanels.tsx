@@ -61,7 +61,7 @@ function buildQuestions(pools: ListeningPools, keys: readonly string[], seed: st
     const others = distractorPool.filter((other) => other !== key && pools.words[other].meaning !== word.meaning);
     const distractors = isRandom ? sample(others, LISTENING_DISTRACTORS) : others.slice(index, index + LISTENING_DISTRACTORS);
     const options = [word.meaning, ...distractors.map((other) => pools.words[other].meaning)];
-    return { contentKey: key, audioText: word.audioText, answer: word.meaning, options: isRandom ? sample(options, options.length) : rotate(options, seed.length + index) };
+    return { contentKey: key, audioText: word.audioText, answer: word.meaning, reveal: { face: word.face, reading: word.reading }, options: isRandom ? sample(options, options.length) : rotate(options, seed.length + index) };
   });
 }
 

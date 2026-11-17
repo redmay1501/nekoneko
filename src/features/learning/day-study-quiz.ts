@@ -15,6 +15,8 @@ export interface StudyQuestion {
   ask: StudyAsk;
   prompt: string;
   promptIsJapanese: boolean;
+  /** Câu hỏi có Kanji: cách đọc bằng kana hiện dưới câu (chỉ khi cách đọc không phải là đáp án). */
+  promptReading?: string;
   /** Dòng nhỏ dưới câu hỏi (gợi ý, kiểu câu hỏi). */
   hint?: string;
   /** Câu hỏi "từ ghép → cách đọc": từ ghép gửi kèm cho server chấm. */
@@ -24,6 +26,8 @@ export interface StudyQuestion {
   /** Nhãn hiển thị của từng lựa chọn (mặc định là chính giá trị). */
   optionLabels?: Record<string, string>;
   optionsAreJapanese: boolean;
+  /** Lựa chọn có Kanji: cách đọc bằng kana hiện dưới từng lựa chọn. */
+  optionReadings?: Record<string, string>;
   answer: string;
   /** Câu gõ: các đáp án chấp nhận. */
   accepted?: string[];
@@ -73,6 +77,21 @@ export type KanjiQuizId = (typeof KANJI_QUIZZES)[number]['id'];
 
 const OPTION_COUNT = 4;
 
+const HAS_KANJI = /[\u4e00-\u9fff々]/;
+/** Cách đọc chỉ có ý nghĩa khi chữ có Kanji và cách đọc khác chữ gốc. */
+export function kanaReadingFor(text: string, reading: string | undefined): string | undefined {
+  const clean = reading?.trim();
+  return clean && HAS_KANJI.test(text) && clean !== text ? clean : undefined;
+}
+function readingMap(entries: ReadonlyArray<readonly [string, string | undefined]>): Record<string, string> | undefined {
+  const map: Record<string, string> = {};
+  for (const [text, reading] of entries) {
+    const kana = kanaReadingFor(text, reading);
+    if (kana && !map[text]) map[text] = kana;
+  }
+  return Object.keys(map).length ? map : undefined;
+}
+
 /** Đúng + tối đa 3 đáp án sai khác nhau (bỏ những cái `isSame` với đáp án đúng), xáo thứ tự. */
 export function pickOptions(correct: string, candidates: readonly string[], random: () => number, isSame: (value: string) => boolean = (value) => value === correct): string[] {
   const wrong = [...new Set(shuffle(candidates, random))].filter((value) => value && !isSame(value)).slice(0, OPTION_COUNT - 1);
@@ -106,8 +125,10 @@ export function buildGrammarQuiz(data: DayStudyData, kind: 'viet-nhat' | 'nhat-v
     const base = { id: `${kind}:${card.key}:${index}`, contentKey: card.key, hint: `Mẫu ${card.pattern}` };
     return kind === 'viet-nhat'
       ? { ...base, ask: 'vi-to-jp' as const, prompt: example.vi, promptIsJapanese: false,
-        options: pickOptions(example.jp, pool.map((other) => other.jp), random, (value) => own.includes(value)), optionsAreJapanese: true, answer: example.jp }
+        options: pickOptions(example.jp, pool.map((other) => other.jp), random, (value) => own.includes(value)), optionsAreJapanese: true, answer: example.jp,
+        optionReadings: readingMap(pool.map((other) => [other.jp, other.reading] as const)) }
       : { ...base, ask: 'jp-to-vi' as const, prompt: example.jp, promptIsJapanese: true, audioText: example.reading || example.jp,
+        promptReading: kanaReadingFor(example.jp, example.reading),
         options: pickOptions(example.vi, pool.map((other) => other.vi), random, (value) => ownVi.includes(value)), optionsAreJapanese: false, answer: example.vi };
   });
 }
@@ -118,11 +139,13 @@ export function buildKanjiQuiz(data: DayStudyData, kind: KanjiQuizId, cards: rea
     const base = { id: `${kind}:${card.key}`, contentKey: card.key };
     if (kind === 'nghia') {
       return [{ ...base, ask: 'meaning', prompt: card.character, promptIsJapanese: true,
+        promptReading: kanaReadingFor(card.character, card.readingInWord ?? card.readings.join('・')),
         options: pickOptions(card.meaning, pool.map((other) => other.meaning), random), optionsAreJapanese: false, answer: card.meaning }];
     }
     if (kind === 'chu') {
       return [{ ...base, ask: 'face', prompt: card.meaning, promptIsJapanese: false, hint: card.hanViet,
-        options: pickOptions(card.character, pool.map((other) => other.character), random), optionsAreJapanese: true, answer: card.character }];
+        options: pickOptions(card.character, pool.map((other) => other.character), random), optionsAreJapanese: true, answer: card.character,
+        optionReadings: readingMap(pool.map((other) => [other.character, other.readings.join('・')] as const)) }];
     }
     if (kind === 'doc') {
       if (!card.readings.length && !card.readingInWord) return [];

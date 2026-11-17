@@ -241,3 +241,16 @@ export function patternRomaji(pattern: string): string | undefined {
 export function canRomanize(text: string): boolean {
   return hasKana(text) && !/[\u4e00-\u9fff]/.test(text);
 }
+
+/** Romaji cho một cách đọc kana: câu (có khoảng trắng / dấu câu) tách cụm như sentenceRomaji, từ đơn như kanaToRomaji. */
+export function readingRomaji(reading: string): string {
+  const text = reading.trim();
+  if (!hasKana(text)) return '';
+  return /[\s。、？！?!]/.test(text) ? sentenceRomaji(text) : kanaToRomaji(text);
+}
+
+const HAN = /[一-鿿々]/;
+/** Chữ có Kanji (cần hiện cách đọc kana + romaji kèm theo). */
+export function hasKanji(text: string): boolean {
+  return HAN.test(text);
+}

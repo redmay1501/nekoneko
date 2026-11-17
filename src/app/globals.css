@@ -1307,6 +1307,8 @@ button.nav-i{width:100%;font:inherit;color:inherit;background:transparent;border
 .study-options{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .study-option{min-height:52px;padding:10px 12px;border-radius:16px;border:1px solid var(--line);background:#fff;font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.35;transition:transform .12s,border-color .12s}
 .study-option.jp{font-family:var(--font-learn);font-weight:500;font-size:16px}
+.study-option-reading{display:block;margin-top:2px;font-size:12px;font-weight:400;color:var(--ink-3)}
+.study-reading{margin:0 0 4px}
 .study-option:not(:disabled):hover{border-color:#FFC4CE;transform:translateY(-1px)}
 .study-option.quiz-correct{color:#2F6B3C;border-color:#9FD3A8;background:#ECF8EF}
 .study-option.quiz-wrong{color:#A9475A;border-color:#FFC4CE;background:#FFF0F2}
@@ -2252,3 +2254,8 @@ a.garden-tree:hover .garden-tree-tag{background:#fff;box-shadow:0 0 0 2px #F3B67
   .kanji-story-figure{height:210px}
   .kanji-story.is-compact .kanji-story-figure{height:170px}
 }
+
+/* Cách đọc kana + romaji kèm đáp án có Kanji (hiện sau khi trả lời). */
+.kana-reading{font-size:12.5px;font-weight:400;color:var(--ink-3);margin-left:6px}
+.kana-reading.is-block{display:block;margin:2px 0 0}
+.kana-reading-romaji{font-style:italic}

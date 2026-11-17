@@ -1,5 +1,6 @@
 import { pickDeterministic, shuffleDeterministic } from '@/lib/utils/deterministic-random';
 import { realSentenceBlank } from './context-index';
+import { readingLookup, readingsFor } from './reading-lookup';
 import {
   getForgettingRadar,
   getReviewPriority,
@@ -374,7 +375,7 @@ export function buildLearningSession(input: BuildLearningSessionInput): Learning
   // Thứ người học đã biết — nguồn duy nhất cho phương án nhiễu; lớn dần khi phiên giới thiệu thứ mới.
   const known = new Set([...memoryViews.values()].filter((view) => view.isLearned).map((view) => view.contentKey));
   if (mode === SESSION_MODES.FOCUS) {
-    return { mode, steps: buildFocusSteps(input, known).map((step, index) => ({ ...step, stepIndex: index, phase: step.phase ?? phaseOfStep(step) })) };
+    return { mode, steps: withReadings(buildFocusSteps(input, known), catalog) };
   }
 
   if (composition.surprise > 0) {
@@ -409,7 +410,18 @@ export function buildLearningSession(input: BuildLearningSessionInput): Learning
   steps.push(...buildUseSteps(input, composition.use, steps.length, used, known));
 
   // Gặp lại & bất ngờ → chặng review; Dùng trong câu → use (học bù / mới đã gắn chặng ở trên).
-  return { mode, steps: steps.map((step, index) => ({ ...step, stepIndex: index, phase: step.phase ?? phaseOfStep(step) })) };
+  return { mode, steps: withReadings(steps, catalog) };
+}
+
+/** Đánh lại số bước, gắn chặng và cách đọc kana của chữ có Kanji (mặt chữ, lựa chọn, đáp án). */
+function withReadings(steps: SessionStepWithAnswer[], catalog: KnowledgeCatalog): SessionStepWithAnswer[] {
+  const lookup = readingLookup(catalog);
+  return steps.map((step, index) => {
+    const texts = step.type === 'recall' || step.type === 'use' ? [...step.options, step.correctAnswer] : [];
+    if (step.type === 'recall' || step.type === 'surprise') texts.push(step.face);
+    const readings = readingsFor(texts, lookup);
+    return { ...step, stepIndex: index, phase: step.phase ?? phaseOfStep(step), ...(readings ? { readings } : {}) };
+  });
 }
 
 /** Chấm một câu trả lời. null = bước không có đúng/sai (Khám phá). */

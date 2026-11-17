@@ -1,5 +1,6 @@
 'use client';
 
+import { KanaReading } from '@/components/common/KanaReading';
 import { useState } from 'react';
 import { AudioButton } from '@/components/common/AudioButton';
 import type { DialogueDrill, GrammarDrill, ItemDrill } from '@/features/learning/grammar-drills';
@@ -91,11 +92,11 @@ function ItemDrillView({ drill }: { drill: ItemDrill }) {
                       onChange={(event) => update(item.n, { input: event.target.value })} />
                     {status === 'idle' ? <button type="submit" className="btn sm">Kiểm tra</button> : null}
                   </form>
-                  {status === 'correct' ? <p className="sm mt-1.5" style={{ color: 'var(--sage-deep, #4F8F56)' }}>✓ Đúng rồi! <span className="jp">{item.answers[0]}</span></p> : null}
+                  {status === 'correct' ? <p className="sm mt-1.5" style={{ color: 'var(--sage-deep, #4F8F56)' }}>✓ Đúng rồi! <span className="jp">{item.answers[0]}</span><KanaReading text={item.answers[0]} reading={item.readings[0]} block /></p> : null}
                   {status === 'wrong' || status === 'review' ? (
                     <div className="mt-1.5">
                       <p className="sm">{status === 'wrong' ? '✗ Chưa đúng. ' : ''}Đáp án mẫu: <b className="jp">{item.answers[0]}</b> <AudioButton text={item.readings[0] || item.answers[0]} /></p>
-                      <p className="tiny muted jp">{item.readings[0]}</p>
+                      <KanaReading text={item.answers[0]} reading={item.readings[0]} block />
                       {status === 'review' && state?.selfCorrect === undefined ? (
                         <div className="row wrap mt-1.5" style={{ gap: 6 }}>
                           <span className="tiny muted">Độ giống đáp án mẫu ~{Math.round(similarity(state.input, item.answers[0]) * 100)}% · </span>

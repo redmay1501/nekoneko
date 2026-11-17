@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { NokoMessage } from '@/components/common/NokoMessage';
+import { KanaReading } from '@/components/common/KanaReading';
 import type { StepAnswerFeedback } from '@/features/learning/session-types';
 import { AnimatedEmoji } from '@/components/common/EmojiIcon';
 import { useScrollToAnswerFeedback } from '@/hooks/useScrollToAnswerFeedback';
@@ -10,13 +11,15 @@ interface StepFeedbackProps {
   isBusy: boolean;
   onContinue: () => void;
   compact?: boolean;
+  /** Cách đọc kana của các chữ có Kanji trong bước (tra theo đáp án). */
+  readings?: Record<string, string>;
 }
 
 /**
  * Phản hồi sau một câu trả lời — đúng thì vui, sai thì không phạt.
  * Hiện ngay khi bấm (trình duyệt tự chấm); lịch ôn do Memory Engine tự quản lý.
  */
-export function StepFeedback({ kind, feedback, isBusy, onContinue, compact = false }: StepFeedbackProps) {
+export function StepFeedback({ kind, feedback, isBusy, onContinue, compact = false, readings }: StepFeedbackProps) {
   const isCorrect = feedback.isCorrect === true;
   const memory = feedback.memory;
   const nextButtonRef = useRef<HTMLButtonElement>(null);
@@ -27,7 +30,7 @@ export function StepFeedback({ kind, feedback, isBusy, onContinue, compact = fal
         <button ref={nextButtonRef} type="button" className="btn block" onClick={onContinue} disabled={isBusy} aria-busy={isBusy}>Tiếp tục</button>
         <p className="sm mt-2">
           {isCorrect ? 'Đúng rồi, bạn nhớ tốt lắm!' : 'Không sao, mình nhớ dần nhé.'}
-          {feedback.correctAnswer ? <> Đáp án: <b className="jp">{feedback.correctAnswer}</b>.</> : null}
+          {feedback.correctAnswer ? <> Đáp án: <b className="jp">{feedback.correctAnswer}</b><KanaReading text={feedback.correctAnswer} reading={readings?.[feedback.correctAnswer]} />.</> : null}
         </p>
       </div>
     );
@@ -60,7 +63,7 @@ export function StepFeedback({ kind, feedback, isBusy, onContinue, compact = fal
         <>
           <b>{kind === 'practice' ? 'Chưa đúng — mới học lần đầu mà.' : 'Chưa nhớ cũng không sao.'}</b>
           <p className="sm mt-1">
-            {feedback.correctAnswer ? <>Đáp án là <b className="jp">{feedback.correctAnswer}</b>. </> : null}
+            {feedback.correctAnswer ? <>Đáp án là <b className="jp">{feedback.correctAnswer}</b><KanaReading text={feedback.correctAnswer} reading={readings?.[feedback.correctAnswer]} />. </> : null}
             Neko Neko sẽ đưa nó quay lại sớm hơn.
           </p>
         </>

@@ -175,6 +175,8 @@ export interface DictationItem {
   accepted: string[];
   /** Đáp án hiển thị khi xem kết quả. */
   display: string;
+  /** Cách đọc kana khi đáp án có Kanji — hiện kèm romaji sau khi trả lời. */
+  reading?: string;
 }
 
 const DICTATION_WORDS = 10;
@@ -207,7 +209,7 @@ export function buildDictationPractice(catalog: KnowledgeCatalog, views: Views, 
     audioText: item.content.kana,
     hint: item.meaning,
     accepted: [item.content.kana, item.content.kanji].filter(Boolean),
-    display: item.content.kanji ? `${item.content.kanji}（${item.content.kana}）` : item.content.kana,
+    display: item.content.kanji || item.content.kana, reading: item.content.kana,
   }));
   const isSentence = (text: string) => text && !/[→/／]/.test(text);
   const sentencePool = grammarPool(catalog, journeyDay, range).flatMap((pattern) => [
@@ -219,7 +221,7 @@ export function buildDictationPractice(catalog: KnowledgeCatalog, views: Views, 
     audioText: sentence.jp,
     hint: sentence.vi,
     accepted: [sentence.jp, sentence.reading].filter(Boolean),
-    display: sentence.jp,
+    display: sentence.jp, reading: sentence.reading,
   }));
   return { range, ranges: lessonPracticeRanges(), words, sentences };
 }
@@ -241,6 +243,9 @@ export interface ListeningWord {
   key: string;
   audioText: string;
   meaning: string;
+  /** Mặt chữ (Kanji nếu có) — hiện sau khi trả lời, kèm cách đọc. */
+  face: string;
+  reading: string;
 }
 
 export interface ListeningPools {
@@ -276,6 +281,7 @@ export function buildListeningPools(catalog: KnowledgeCatalog, journeyDay: numbe
     ranges,
     words: Object.fromEntries(vocabulary.map((item) => [item.key, {
       key: item.key, audioText: item.type === 'vocabulary' ? item.content.kana : item.face, meaning: item.meaning,
+      face: item.face, reading: item.type === 'vocabulary' ? item.content.kana : item.reading,
     }])),
   };
 }
@@ -310,11 +316,12 @@ export function buildDictationPools(catalog: KnowledgeCatalog, views: Views, jou
     words: Object.fromEntries(vocabulary.map((item) => [item.key, {
       contentKey: item.key, audioText: item.type === 'vocabulary' ? item.content.kana : item.face, hint: item.meaning,
       accepted: item.type === 'vocabulary' ? [item.content.kana, item.content.kanji].filter(Boolean) : [item.face],
-      display: item.type === 'vocabulary' && item.content.kanji ? `${item.content.kanji}（${item.content.kana}）` : item.face,
+      display: item.type === 'vocabulary' && item.content.kanji ? item.content.kanji : item.face,
+      reading: item.type === 'vocabulary' ? item.content.kana : item.reading,
     }])),
     sentences: Object.fromEntries(sentenceEntries.map((sentence) => [sentence.id, {
       contentKey: toContentKey('grammar', sentence.pattern.id), audioText: sentence.jp, hint: sentence.vi,
-      accepted: [sentence.jp, sentence.reading].filter(Boolean), display: sentence.jp,
+      accepted: [sentence.jp, sentence.reading].filter(Boolean), display: sentence.jp, reading: sentence.reading,
     }])),
   };
 }

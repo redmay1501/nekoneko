@@ -38,6 +38,8 @@ interface StepBase {
   contentKey: ContentKey;
   /** Chặng của bước. Phiên lưu trước khi có trường này → suy ra bằng phaseOfStep(). */
   phase?: SessionPhase;
+  /** Cách đọc kana của chữ có Kanji trong bước (mặt chữ, các lựa chọn) — hiện kèm romaji SAU khi trả lời. Phiên cũ có thể thiếu. */
+  readings?: Record<string, string>;
 }
 
 export interface SurpriseStep extends StepBase {

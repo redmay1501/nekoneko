@@ -1,5 +1,6 @@
 'use client';
 
+import { KanaReading } from '@/components/common/KanaReading';
 import { LoadingRunner } from '@/components/common/LoadingRunner';
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
@@ -161,8 +162,11 @@ function TestResult({ answers, testFrom, testKeys, onRetry }: { answers: TestAns
           <ul className="test-result-list mt-1.5">
             {wrong.map((answer, index) => (
               <li key={`${answer.contentKey}:${index}`} className="row" style={{ gap: 8, justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid var(--line, #eee)' }}>
-                <span className="jp">{answer.face}</span>
-                {answer.correctAnswer ? <span className="sm soft">→ <span className="jp">{answer.correctAnswer}</span></span> : null}
+                <span><span className="jp">{answer.face}</span><KanaReading text={answer.face} reading={answer.readings?.[answer.face]} block /></span>
+                {answer.correctAnswer ? (
+                  <span className="sm soft" style={{ textAlign: 'right' }}>→ <span className="jp">{answer.correctAnswer}</span>
+                    <KanaReading text={answer.correctAnswer} reading={answer.readings?.[answer.correctAnswer]} block /></span>
+                ) : null}
               </li>
             ))}
           </ul>

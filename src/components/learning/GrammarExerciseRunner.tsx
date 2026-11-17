@@ -1,5 +1,6 @@
 'use client';
 
+import { KanaReading } from '@/components/common/KanaReading';
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState, type RefObject } from 'react';
 import Link from 'next/link';
 import { AudioButton } from '@/components/common/AudioButton';
@@ -262,7 +263,8 @@ function SentenceLine({ exercise }: { exercise: GrammarExercise }) {
         <b className="jp">{exercise.sentence.jp}</b>
         <AudioButton text={exercise.sentence.reading || exercise.sentence.jp} />
       </div>
-      {exercise.sentence.reading && exercise.sentence.reading !== exercise.sentence.jp ? <p className="jp tiny muted">{exercise.sentence.reading}</p> : null}
+      {/* Câu có Kanji: cách đọc kana + romaji. */}
+      <KanaReading text={exercise.sentence.jp} reading={exercise.sentence.reading} block />
       <p className="sm soft">{exercise.sentence.vi}</p>
     </div>
   );
@@ -277,6 +279,7 @@ function ReviewItem({ exercise, answer, number }: { exercise: GrammarExercise; a
       <p className={`sm mt-1 ${exercise.isPromptJapanese ? 'jp' : ''}`}>{exercise.prompt}</p>
       {!isCorrect ? <p className="sm mt-1">Bạn chọn: <b className={exercise.kind === 'nhat-viet' ? '' : 'jp'}>{answer ?? '(chưa trả lời)'}</b></p> : null}
       <p className="sm mt-1">Đáp án chính xác: <b className={exercise.kind === 'nhat-viet' ? '' : 'jp'}>{exercise.kind === 'sap-xep' ? exercise.sentence.jp : exercise.answer}</b></p>
+      <KanaReading text={exercise.sentence.jp} reading={exercise.sentence.reading} block />
       {reason ? <p className="tiny mt-1">✗ {reason}</p> : null}
       <p className="tiny muted mt-1">✓ {exercise.explanation}</p>
     </li>

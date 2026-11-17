@@ -10,7 +10,7 @@ import { answerSessionStep, finishSession, startSession } from '../session-api';
 import { SESSION_MODE_CONFIG, type SessionMode } from '../session-modes';
 import { gradeAnswer, phaseOfStep, type PublicSessionStep, type SessionPhase, type StepAnswerFeedback } from '../session-types';
 
-export interface TestAnswer { contentKey: string; face: string; isCorrect: boolean; correctAnswer: string | null }
+export interface TestAnswer { contentKey: string; face: string; isCorrect: boolean; correctAnswer: string | null; readings?: Record<string, string> }
 
 /** Chữ hiện ở màn kết quả cho một câu hỏi. */
 function stepFace(step: PublicSessionStep): string {
@@ -136,7 +136,7 @@ export function useLearningSession(mode: SessionMode, focusKeys?: readonly strin
     const isCorrect = gradeAnswer(currentStep, answer);
     setFeedback({ isCorrect, correctAnswer: currentStep.correctAnswer, memory: null });
     if (isCorrect !== null) {
-      setTestAnswers((list) => [...list, { contentKey: currentStep.contentKey, face: stepFace(currentStep), isCorrect, correctAnswer: currentStep.correctAnswer }]);
+      setTestAnswers((list) => [...list, { contentKey: currentStep.contentKey, face: stepFace(currentStep), isCorrect, correctAnswer: currentStep.correctAnswer, readings: currentStep.readings }]);
     }
     recordInBackground(stepIndex, answer);
   }

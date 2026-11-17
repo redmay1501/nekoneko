@@ -20,6 +20,7 @@ import {
   type UseFillBlankStep,
 } from '@/features/learning/session-types';
 import { useSheetStore } from '@/stores/sheet-store';
+import { KanaReading } from '@/components/common/KanaReading';
 import { AnswerOptions } from './AnswerOptions';
 import { StepFeedback } from './StepFeedback';
 import { KanjiStoryNudge } from '@/components/learning/KanjiStoryNudge';
@@ -90,11 +91,13 @@ export function RecallStepView({ step, isDaily = false, ...interaction }: StepIn
         ? <span className="chip mint"><EmojiIcon emoji="✏️" size={16} /> Luyện ngay</span>
         : <p className="sm muted">Bạn còn nhớ cái này không? 🌸</p>}
       <div className="fit-box"><div className="s-big fit-text" style={{ margin: '16px 0 10px', ...fitTextStyle(step.face, 62, 26) }}>{step.face}</div></div>
+      {/* Trả lời xong: mặt chữ có Kanji hiện kèm cách đọc kana + romaji. */}
+      {interaction.feedback && step.readings?.[step.face] ? <p className="center" style={{ marginTop: -4 }}><KanaReading text={step.face} reading={step.readings?.[step.face]} block /></p> : null}
       <p className="sm soft">{step.question}</p>
-      {interaction.feedback && isDaily ? <StepFeedback kind={step.isPractice ? 'practice' : 'recall'} feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} compact /> : null}
+      {interaction.feedback && isDaily ? <StepFeedback kind={step.isPractice ? 'practice' : 'recall'} feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} readings={step.readings} compact /> : null}
       <AnswerOptions options={step.options} chosenAnswer={interaction.chosenAnswer} feedback={interaction.feedback}
-        isDisabled={interaction.isBusy} isJapanese onChoose={interaction.onAnswer} />
-      {interaction.feedback && !isDaily ? <StepFeedback kind={step.isPractice ? 'practice' : 'recall'} feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} /> : null}
+        isDisabled={interaction.isBusy} isJapanese readings={step.readings} onChoose={interaction.onAnswer} />
+      {interaction.feedback && !isDaily ? <StepFeedback kind={step.isPractice ? 'practice' : 'recall'} feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} readings={step.readings} /> : null}
       {interaction.feedback?.isCorrect === false ? <KanjiStoryNudge contentKey={step.contentKey} /> : null}
     </div>
   );
@@ -183,10 +186,10 @@ export function UseStepView({ step, isDaily = false, ...interaction }: StepInter
           <p className="sm soft mt-2.5">{step.promptVi}</p>
         </>
       )}
-      {interaction.feedback && isDaily ? <StepFeedback kind="use" feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} compact /> : null}
+      {interaction.feedback && isDaily ? <StepFeedback kind="use" feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} readings={step.readings} compact /> : null}
       <AnswerOptions options={step.options} chosenAnswer={interaction.chosenAnswer} feedback={interaction.feedback}
-        isDisabled={interaction.isBusy} isJapanese onChoose={interaction.onAnswer} />
-      {interaction.feedback && !isDaily ? <StepFeedback kind="use" feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} /> : null}
+        isDisabled={interaction.isBusy} isJapanese readings={step.readings} onChoose={interaction.onAnswer} />
+      {interaction.feedback && !isDaily ? <StepFeedback kind="use" feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} readings={step.readings} /> : null}
     </div>
   );
 }

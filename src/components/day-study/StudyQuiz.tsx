@@ -9,6 +9,7 @@ import { compareJapanese } from '@/lib/utils/japanese-text';
 import { fitTextStyle } from '@/lib/utils/fit-text';
 import type { StudyQuestion } from '@/features/learning/day-study-quiz';
 import { KanjiStoryNudge } from '@/components/learning/KanjiStoryNudge';
+import { KanaReading } from '@/components/common/KanaReading';
 
 interface Answered {
   question: StudyQuestion;
@@ -119,6 +120,7 @@ export function StudyQuiz({ questions, unit, isRecorded = true, onRestart, onRet
       {question.promptIsJapanese ? (
         <div className="fit-box"><p className="jp study-prompt is-jp fit-text" style={fitTextStyle(question.prompt, 36, 18)}>{question.prompt}</p></div>
       ) : <p className="study-prompt">{question.prompt}</p>}
+      {question.promptReading ? <p className="jp center sm soft study-reading">{question.promptReading}</p> : null}
       {question.hint ? <p className="center tiny muted">{question.hint}</p> : null}
       {question.options.length ? (
         <div className="study-options mt-3">
@@ -128,6 +130,7 @@ export function StudyQuiz({ questions, unit, isRecorded = true, onRestart, onRet
               <button key={option} type="button" disabled={given !== null} onClick={() => submit(option)}
                 className={`study-option ${question.optionsAreJapanese ? 'jp' : ''} ${state}`}>
                 {label(question, option)}
+                {question.optionReadings?.[option] ? <span className="study-option-reading">{question.optionReadings[option]}</span> : null}
               </button>
             );
           })}
@@ -143,7 +146,8 @@ export function StudyQuiz({ questions, unit, isRecorded = true, onRestart, onRet
       {given !== null ? (
         <div className={`feedback ${isCorrect ? '' : 'miss'}`}>
           <p>{isCorrect ? 'Đúng rồi! 🎉' : 'Chưa đúng — không sao, nhớ dần nhé.'}</p>
-          {!isCorrect ? <p className="sm mt-1">Đáp án: <b className={question.optionsAreJapanese ? 'jp' : ''}>{label(question, question.answer)}</b></p> : null}
+          {!isCorrect ? <p className="sm mt-1">Đáp án: <b className={question.optionsAreJapanese ? 'jp' : ''}>{label(question, question.answer)}</b>
+            <KanaReading text={question.answer} reading={question.optionReadings?.[question.answer]} block /></p> : null}
           {/* Sai một Kanji → gợi ý câu chốt của câu chuyện (chỉ gợi ý, không đổi cách chấm). */}
           {!isCorrect ? <KanjiStoryNudge contentKey={question.contentKey} /> : null}
           <button ref={nextButtonRef} type="button" className="btn block mt-3" onClick={next}>{index + 1 === questions.length ? 'Xem kết quả' : 'Câu tiếp theo'}</button>

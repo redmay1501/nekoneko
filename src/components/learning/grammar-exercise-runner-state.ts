@@ -51,5 +51,9 @@ export function selectNewGrammarRound(
   seed: string,
 ): GrammarExercise[] {
   const excluded = new Set([...currentIds, ...seenIds]);
-  return shuffleDeterministic(pool.filter((exercise) => !excluded.has(exercise.id)), `grammar-round:${seed}`).slice(0, count);
+  const fresh = pool.filter((exercise) => !excluded.has(exercise.id));
+  // Câu dùng từ của bài sau (laterWords) chỉ được chọn khi đã hết câu trong phạm vi bài — trộn riêng từng nhóm.
+  const inScope = shuffleDeterministic(fresh.filter((exercise) => !exercise.laterWords?.length), `grammar-round:${seed}`);
+  const later = shuffleDeterministic(fresh.filter((exercise) => exercise.laterWords?.length), `grammar-round:${seed}:later`);
+  return [...inScope, ...later].slice(0, count);
 }

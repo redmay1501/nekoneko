@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ScrollToElementOnChange } from '@/components/common/ScrollToElementOnChange';
 import { GrammarExerciseRunner } from '@/components/learning/GrammarExerciseRunner';
-import { buildGrammarQuestionBank, exercisesFor } from '@/features/learning/grammar-exercises';
+import { buildGrammarQuestionBank, exercisesFor, withVocabularyScope } from '@/features/learning/grammar-exercises';
 import { toContentKey } from '@/features/learning/knowledge-types';
 import { getLearnerContext } from '@/features/learning/learner-context';
 import { lessonNumber } from '@/lib/utils/lesson';
@@ -38,7 +38,9 @@ export default async function GrammarPracticePage({ searchParams }: { searchPara
         ? all.filter((exercise) => learnedIds.has(exercise.grammarId))
         : exercisesFor(all, {});
   const requested = params['so-cau'] === 'tat-ca' ? Infinity : Number(params['so-cau']) || COUNT_OPTIONS[0];
-  const exercises = pool.slice(0, Math.min(requested, pool.length));
+  // Câu dùng từ của bài sau (so với bài của mẫu) xếp cuối và có chú thích — xem features/learning/vocabulary-scope.ts.
+  const scopedPool = withVocabularyScope(pool, catalog);
+  const exercises = scopedPool.slice(0, Math.min(requested, pool.length));
   const onlyPattern = selectedPatterns.length === 1 ? grammar.find((entry) => entry.id === selectedPatterns[0]) : undefined;
   const scopeTitle = scope === 'theo-mau'
     ? onlyPattern ? `Mẫu “${onlyPattern.pattern}”` : `${selectedPatterns.length} mẫu đã chọn`
@@ -157,7 +159,7 @@ export default async function GrammarPracticePage({ searchParams }: { searchPara
           </div>
           {requested !== Infinity && requested > pool.length ? <p className="tiny muted mt-1">Phạm vi này có {pool.length} câu nên bài gồm {pool.length} câu.</p> : null}
           <div className="mt-3"><GrammarExerciseRunner key={`${scopeTitle}:${selectedPatterns.join('.')}:${exercises.length}`} exercises={exercises}
-            pool={pool} questionCount={exercises.length}
+            pool={scopedPool} questionCount={exercises.length}
             scopeKey={`${scope}:${selectedLessons.join('.')}:${selectedPatterns.join('.')}:${exercises.length}`}
             mode="luyen-tap" title={scopeTitle} /></div>
         </>

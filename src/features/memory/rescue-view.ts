@@ -1,3 +1,4 @@
+import { speechTextFor } from '@/features/learning/speech-text';
 import { pickDeterministic, shuffleDeterministic } from '@/lib/utils/deterministic-random';
 import type { KnowledgeCatalog } from '@/features/learning/knowledge-catalog';
 import {
@@ -22,6 +23,8 @@ export interface RescueView {
   contentKey: ContentKey;
   face: string;
   reading: string;
+  /** Chữ Nhật để phát âm (speechTextFor — cùng cách đọc như phiên học). */
+  audioText: string;
   meaning: string;
   reason: string;
   lastEncounterText: string;
@@ -56,6 +59,7 @@ export function buildRescueView(
     contentKey: item.key,
     face: item.face,
     reading: item.reading,
+    audioText: speechTextFor(item),
     meaning: item.meaning,
     reason: memory.reason,
     lastEncounterText: memory.lastEncounterText,

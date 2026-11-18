@@ -4,11 +4,10 @@ import { DayKnowledgeBlock } from '@/components/roadmap/DayKnowledgeBlock';
 import { DayCompletionCard } from '@/components/roadmap/DayCompletionCard';
 import { DayTimeline } from '@/components/roadmap/DayTimeline';
 import { getLearnerContext } from '@/features/learning/learner-context';
-import { buildDayPlan } from '@/features/roadmap/day-plan';
+import { buildDayPlan, dayStudyHref } from '@/features/roadmap/day-plan';
 import { JOURNEY_TOTAL_DAYS } from '@/features/roadmap/journey';
 import { buildDayStatuses, getDayCompletionProgress } from '@/features/roadmap/journey-progress';
 import { DayPicker } from '@/components/roadmap/DayPicker';
-import { focusSessionHref } from '@/features/learning/session-modes';
 import { DayActions } from '@/components/roadmap/DayActions';
 import { DayReviewVocabulary } from '@/components/roadmap/DayReviewVocabulary';
 import { EmojiIcon } from '@/components/common/EmojiIcon';
@@ -24,8 +23,7 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
   const { day, journeyDay: dayInfo, stage } = plan;
   // Ngày có kiến thức (kể cả chữ cái) → trang học của ngày; ngày ôn tuần → phiên ôn kiến thức của tuần; tổng ôn 78–90 → không có.
   const hasDayStudy = plan.hasNewKnowledge;
-  const studyHref = hasDayStudy ? `/lo-trinh/ngay/${day}/hoc`
-    : plan.reviewWindow ? focusSessionHref(plan.reviewWindow.keys) : null;
+  const studyHref = dayStudyHref(plan);
 
   return (
     <>

@@ -9,8 +9,11 @@ import { strokeOrderCharacters } from '@/features/learning/stroke-order';
 const WRITABLE_TYPES = new Set(['hiragana', 'katakana', 'kanji']);
 /** "kanji-12" → "kanji". */
 const contentTypeOf = (contentKey: string) => contentKey.slice(0, contentKey.lastIndexOf('-'));
+import { KNOWLEDGE_TYPE_LABEL } from '@/features/learning/knowledge-origin';
 import {
   DISCOVER_ACKNOWLEDGED,
+  phaseOfStep,
+  type PublicSessionStep,
   SELF_REPORT_ANSWERS,
   type DiscoverStep,
   type RecallStep,
@@ -28,20 +31,54 @@ import { EmojiIcon } from '@/components/common/EmojiIcon';
 
 /** Một kiểu bước = một component. Tất cả chỉ hiển thị và báo lựa chọn lên useLearningSession. */
 
+/** Có chữ Nhật (kana / Kanji) — lựa chọn nghĩa tiếng Việt không dùng font tiếng Nhật (vỡ dấu: "Ky˜sư"). */
+const JAPANESE = /[぀-ヿ一-鿿]/;
+
+const PHASE_VERB = { review: 'Ôn tập', backlog: 'Học bù', new: 'Học mới', use: 'Dùng trong câu' } as const;
+
+/**
+ * Nhãn ngữ cảnh trên đầu mỗi câu: đang làm gì với loại kiến thức nào, thuộc bài nào, ngày nào, mới hay đã học —
+ * "Ôn tập từ vựng · Bài 1 · Ngày 14 · Đã học". Phiên cũ (chưa có origin) thì không hiện.
+ */
+export function StepOrigin({ step }: { step: PublicSessionStep }) {
+  const origin = step.origin;
+  if (!origin) return null;
+  const phase = phaseOfStep(step);
+  const verb = step.type === 'recall' && step.isPractice ? 'Luyện ngay' : PHASE_VERB[phase];
+  const isLearned = phase === 'review' || phase === 'use';
+  const type = KNOWLEDGE_TYPE_LABEL[origin.type];
+  return (
+    <p className="step-origin" aria-label="Kiến thức của câu này">
+      <b>{verb} {type === 'Hiragana' || type === 'Katakana' ? type : type.toLowerCase()}</b>
+      <span>{[origin.lesson ? `Bài ${origin.lesson}` : '', origin.day ? `Ngày ${origin.day}` : ''].filter(Boolean).map((part) => `\u00a0·\u00a0${part}`).join('')}</span>
+      <span className={`step-origin-tag ${isLearned ? 'is-learned' : 'is-new'}`}>{isLearned ? 'Đã học' : step.type === 'discover' ? 'Mới' : 'Vừa học'}</span>
+    </p>
+  );
+}
+
+/** Câu hỏi cách đọc: phát âm trước khi trả lời là lộ đáp án. Phiên cũ không có `ask` → suy từ câu hỏi. */
+function asksReading(step: RecallStep): boolean {
+  if (step.ask) return step.ask === 'reading';
+  return step.question !== '' && !/nghĩa/.test(step.question);
+}
+
 interface StepInteraction {
   feedback: StepAnswerFeedback | null;
   chosenAnswer: string | null;
   isBusy: boolean;
   onAnswer: (answer: string) => void;
   onContinue: () => void;
+  /** Đang chờ tự chuyển câu (công tắc "Tự chuyển câu" bật, trả lời đúng, đã lưu). */
+  isAutoNext?: boolean;
 }
 
-export function SurpriseStepView({ step, feedback, chosenAnswer, isBusy, onAnswer, onContinue, isDaily = false }: StepInteraction & { step: SurpriseStep; isDaily?: boolean }) {
+export function SurpriseStepView({ step, feedback, chosenAnswer, isBusy, onAnswer, onContinue, isAutoNext = false, isDaily = false }: StepInteraction & { step: SurpriseStep; isDaily?: boolean }) {
   const openKnowledge = useSheetStore((store) => store.openKnowledge);
   const wasRemembered = feedback?.isCorrect === true;
   const isSending = (answer: string) => isBusy && !feedback && chosenAnswer === answer;
   return (
     <section className="surprise pop">
+      <StepOrigin step={step} />
       <span className="chip pink"><EmojiIcon emoji="🌸" size={16} /> Gặp lại kiến thức</span>
       <p className="sm soft mt-3">Bạn còn nhớ cái này không?</p>
       <div className="face">{step.face}</div>
@@ -53,7 +90,7 @@ export function SurpriseStepView({ step, feedback, chosenAnswer, isBusy, onAnswe
       </div>
       {feedback ? (
         <>
-          {isDaily ? <button type="button" className="btn block mt-2" onClick={onContinue} disabled={isBusy} aria-busy={isBusy}>Tiếp tục</button> : null}
+          {isDaily ? <button type="button" className={`btn block mt-2 streak-next${isAutoNext ? ' is-auto' : ''}`} onClick={onContinue} disabled={isBusy} aria-busy={isBusy}>{isAutoNext ? 'Tự chuyển… · bấm để sang ngay →' : 'Tiếp tục'}</button> : null}
           <div className={`reveal ${wasRemembered ? 'ok' : 'no'}`} aria-live="polite">
             <div className="row" style={{ gap: 12, alignItems: 'flex-start' }}>
               <div style={{ flex: 1 }}>
@@ -85,19 +122,23 @@ export function SurpriseStepView({ step, feedback, chosenAnswer, isBusy, onAnswe
 }
 
 export function RecallStepView({ step, isDaily = false, ...interaction }: StepInteraction & { step: RecallStep; isDaily?: boolean }) {
+  // Câu hỏi nghĩa: nghe được ngay (không lộ đáp án). Câu hỏi cách đọc: chỉ nghe sau khi trả lời.
+  const canListen = Boolean(interaction.feedback) || !asksReading(step);
+  const audioText = step.audioText || step.face;
+  // Phiên cũ còn lưu "Nó nghĩa là gì?" — không lặp lại cụm này ở mỗi câu.
+  const instruction = /nghĩa là gì/i.test(step.question) ? '' : step.question;
   return (
     <div className="s-card pop">
-      {step.isPractice
-        ? <span className="chip mint"><EmojiIcon emoji="✏️" size={16} /> Luyện ngay</span>
-        : <p className="sm muted">Bạn còn nhớ cái này không? 🌸</p>}
-      <div className="fit-box"><div className="s-big fit-text" style={{ margin: '16px 0 10px', ...fitTextStyle(step.face, 62, 26) }}>{step.face}</div></div>
+      <StepOrigin step={step} />
+      <div className="fit-box"><div className="s-big fit-text" style={{ margin: '12px 0 8px', ...fitTextStyle(step.face, 48, 24) }}>{step.face}</div></div>
+      {canListen ? <div className="center"><AudioButton text={audioText} label="Nghe từ này" /></div> : null}
       {/* Trả lời xong: mặt chữ có Kanji hiện kèm cách đọc kana + romaji. */}
       {interaction.feedback && step.readings?.[step.face] ? <p className="center" style={{ marginTop: -4 }}><KanaReading text={step.face} reading={step.readings?.[step.face]} block /></p> : null}
-      <p className="sm soft">{step.question}</p>
-      {interaction.feedback && isDaily ? <StepFeedback kind={step.isPractice ? 'practice' : 'recall'} feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} readings={step.readings} compact /> : null}
+      {instruction ? <p className="sm soft">{instruction}</p> : null}
+      {interaction.feedback && isDaily ? <StepFeedback kind={step.isPractice ? 'practice' : 'recall'} feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} isAutoNext={interaction.isAutoNext} readings={step.readings} compact /> : null}
       <AnswerOptions options={step.options} chosenAnswer={interaction.chosenAnswer} feedback={interaction.feedback}
-        isDisabled={interaction.isBusy} isJapanese readings={step.readings} onChoose={interaction.onAnswer} />
-      {interaction.feedback && !isDaily ? <StepFeedback kind={step.isPractice ? 'practice' : 'recall'} feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} readings={step.readings} /> : null}
+        isDisabled={interaction.isBusy} isJapanese={step.options.some((option) => JAPANESE.test(option))} readings={step.readings} onChoose={interaction.onAnswer} />
+      {interaction.feedback && !isDaily ? <StepFeedback kind={step.isPractice ? 'practice' : 'recall'} feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} isAutoNext={interaction.isAutoNext} readings={step.readings} /> : null}
       {interaction.feedback?.isCorrect === false ? <KanjiStoryNudge contentKey={step.contentKey} /> : null}
     </div>
   );
@@ -107,6 +148,7 @@ export function DiscoverStepView({ step, isBusy, onAcknowledge }: { step: Discov
   const { card } = step;
   return (
     <div className="s-card pop">
+      <StepOrigin step={step} />
       {step.fromDay ? (
         <span className="chip" style={{ background: 'var(--cream)' }}><EmojiIcon emoji="📦" size={16} /> Học bù · từ ngày {step.fromDay}</span>
       ) : (
@@ -164,8 +206,12 @@ export function DiscoverStepView({ step, isBusy, onAcknowledge }: { step: Discov
 }
 
 export function UseStepView({ step, isDaily = false, ...interaction }: StepInteraction & { step: UseChooseSentenceStep | UseFillBlankStep; isDaily?: boolean }) {
+  // Trả lời xong mới nghe câu đúng (nghe trước là lộ đáp án).
+  const answer = interaction.feedback?.correctAnswer;
+  const fullSentence = answer ? (step.variant === 'fill-blank' ? step.sentenceJp.replace('＿＿', answer) : answer) : null;
   return (
     <div className="s-card pop">
+      <StepOrigin step={step} />
       {step.variant === 'choose-sentence' ? (
         <>
           <span className="chip sky"><EmojiIcon emoji="💬" size={16} /> Dùng thử trong câu</span>
@@ -186,10 +232,11 @@ export function UseStepView({ step, isDaily = false, ...interaction }: StepInter
           <p className="sm soft mt-2.5">{step.promptVi}</p>
         </>
       )}
-      {interaction.feedback && isDaily ? <StepFeedback kind="use" feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} readings={step.readings} compact /> : null}
+      {interaction.feedback && isDaily ? <StepFeedback kind="use" feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} isAutoNext={interaction.isAutoNext} readings={step.readings} compact /> : null}
       <AnswerOptions options={step.options} chosenAnswer={interaction.chosenAnswer} feedback={interaction.feedback}
         isDisabled={interaction.isBusy} isJapanese readings={step.readings} onChoose={interaction.onAnswer} />
-      {interaction.feedback && !isDaily ? <StepFeedback kind="use" feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} readings={step.readings} /> : null}
+      {fullSentence ? <div className="center mt-2"><AudioButton text={fullSentence} label="Nghe câu đúng" showText /></div> : null}
+      {interaction.feedback && !isDaily ? <StepFeedback kind="use" feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} isAutoNext={interaction.isAutoNext} readings={step.readings} /> : null}
     </div>
   );
 }

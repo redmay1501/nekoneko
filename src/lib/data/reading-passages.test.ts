@@ -44,4 +44,19 @@ describe('bài đọc hiểu (Neko soạn)', () => {
       }
     }
   });
+
+  it('bài có chữ Hán có bản kana (không còn chữ Hán, cùng số câu); từ cần chú ý có thật trong bài, cách đọc bằng kana', () => {
+    for (const passage of READING_PASSAGES) {
+      if (/[一-鿿]/.test(passage.textJp)) {
+        expect(passage.textKana, `bài ${passage.id}`).toBeTruthy();
+        expect(/[一-鿿]/.test(passage.textKana!)).toBe(false);
+        expect(passage.textKana!.split('。').length).toBe(passage.textJp.split('。').length);
+      }
+      for (const entry of passage.glossary ?? []) {
+        expect(passage.textJp.includes(entry.word) || passage.textKana?.includes(entry.word), `${passage.id}: ${entry.word}`).toBe(true);
+        expect(/[一-鿿]/.test(entry.reading)).toBe(false);
+        expect(Number(entry.lesson.match(/\d+/)?.[0])).toBeGreaterThan(Number(passage.lesson.match(/\d+/)?.[0]));
+      }
+    }
+  });
 });

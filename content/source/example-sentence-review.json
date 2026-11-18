@@ -1,0 +1,60 @@
+{
+ "_note": "Kiểm duyệt câu ví dụ (2026-11-18) — docs/N5_LEARNING_SYSTEM_IMPROVEMENT_REPORT.md. Áp dụng: python3 scripts/apply_example_review.py",
+ "remove": [
+  {"id": 2733322, "reason": "Ẩn ý tục (アソコ = 'chỗ kín'); không phù hợp ngữ cảnh học N5 — hiện ở thẻ 先生"},
+  {"id": 4765, "reason": "Câu cộc lốc, thiếu lịch sự (だから何？ 'Thì sao?'); không có giá trị cho từ nào"},
+  {"id": 414248, "reason": "Câu thô (ほっといてくれ 'Để tôi yên'); thể mệnh lệnh thân mật ngoài N5"},
+  {"id": 228260, "reason": "Cấm đoán cộc (〜な) ngoài N5; đã có câu lịch sự 嘘をつかないでください"},
+  {"id": 3147338, "reason": "Nội dung định kiến giới ('Cẩn thận với đàn ông'), mệnh lệnh ろ ngoài N5"},
+  {"id": 234611, "reason": "あいつ là cách gọi thô; 小食 ngoài N5"},
+  {"id": 2692844, "reason": "Mệnh lệnh ろ, từ ブレーキ ngoài N5, ngữ cảnh lái xe khẩn cấp không phục vụ bài học"},
+  {"id": 182697, "reason": "Mệnh lệnh kiểu quân đội (休め！) — người học dễ dùng sai"},
+  {"id": 10561332, "reason": "Câu đổ lỗi (あなたのせいです), せい ngoài N5, không có giá trị học"},
+  {"id": 3886922, "reason": "Tiếng lóng (やばい), かも ngoài N5"},
+  {"id": 150162, "reason": "Thành ngữ 耳にたこができる (nghe chán tai) — dạy sai nghĩa của 耳 ở trình độ N5"},
+  {"id": 150169, "reason": "Dịch sai: かぶれる = bị mẩn ngứa / dị ứng da, không phải 'viêm tai'"},
+  {"id": 125923, "reason": "Thành ngữ 長い目で見る ngoài N5; bản dịch không sát"},
+  {"id": 145462, "reason": "Từ すたれる / やがて ngoài N5; câu văn viết trừu tượng"},
+  {"id": 211830, "reason": "Dịch sai chủ ngữ ('Chúng tôi đang bàn bạc' ≠ 'Công ty đó đang tìm cách nâng hình ảnh'); イメージアップをはかる ngoài N5"},
+  {"id": 472753, "reason": "Nội dung lạ (trang web tiếng Tatar), 上 đọc じょう — gây nhầm khi học インターネット"},
+  {"id": 174747, "reason": "Tục ngữ văn cổ (〜ぬ) — dạy sai ngữ pháp hiện đại ở thẻ 言います / 花"},
+  {"id": 823590, "reason": "Tục ngữ văn cổ (しかず) ngoài N5"},
+  {"id": 2825431, "reason": "Tục ngữ văn cổ (なり) ngoài N5"},
+  {"id": 1889539, "reason": "Sai ngữ pháp: 毎日 không đi với に (毎日にここへ来る) — đã thay bằng câu đúng"},
+  {"id": 4632707, "reason": "Câu không tự nhiên ('Lúc nào cũng muốn đọc cuốn đó') — đã thay bằng câu tự nhiên cho いつも"},
+  {"id": 3496821, "reason": "Thể sai khiến + あげなよ ngoài N5"},
+  {"id": 8075110, "reason": "〜てほしかった ngoài N5, câu rối"},
+  {"id": 183287, "reason": "Thành ngữ 気がのらない ngoài N5"},
+  {"id": 1215216, "reason": "Mệnh lệnh thô (来な)"},
+  {"id": 772794, "reason": "お出で — cách nói cũ / nói với trẻ con, không dùng khi học N5"}
+ ],
+ "translations": [
+  {"id": 5257, "vi": "Đã có rất nhiều thời gian.", "reason": "Bản cũ sai thì và chủ ngữ ('Bạn còn…')"},
+  {"id": 229410, "vi": "Tôi đã mua một chiếc máy ảnh tốt.", "reason": "カメラ = máy ảnh"},
+  {"id": 2250471, "vi": "Bạn có để ý không?", "reason": "気づく = nhận ra / để ý, không phải 'nhìn thấy'"},
+  {"id": 9769393, "vi": "Đây là cây chanh xanh (lime).", "reason": "Phân biệt với レモン (chanh vàng)"},
+  {"id": 4913, "vi": "Anh/chị có muốn uống gì không ạ?", "reason": "Kính ngữ お〜になります; sửa viết hoa, dấu câu"},
+  {"id": 224847, "vi": "Anh có uống cà phê không?", "reason": "Sửa dấu câu"},
+  {"id": 8886614, "vi": "Đi thôi!", "reason": "Sửa viết hoa"},
+  {"id": 10042871, "vi": "Quán khai trương khi nào vậy?", "reason": "Bản cũ thêm chủ ngữ 'bạn' không có trong câu"},
+  {"id": 122329, "vi": "Bạn nói được tiếng Nhật không?", "reason": "話せます = nói ĐƯỢC (khả năng)"}
+ ],
+ "nekonekoEdits": [
+  {"id": 900817, "jp": "宿題を しました。そして、寝ました。", "vi": "Tôi làm bài tập. Rồi đi ngủ.", "reason": "そうして không tự nhiên ở N5 — dùng そして"},
+  {"id": 900822, "jp": "きょうは きのうほど 寒くないです。", "reason": "程 viết bằng kana ở trình độ N5"},
+  {"id": 900814, "jp": "どうぞ ここに 座って ください。", "vi": "Mời bạn ngồi đây.", "reason": "どうぞ + 〜ましょう sai sắc thái; mời ngồi dùng 〜てください"}
+ ],
+ "add": [
+  {"jp": "先生、質問が あります。", "vi": "Thưa thầy, em có câu hỏi.", "replaces": 2733322},
+  {"jp": "毎日 ここへ 来ますか。", "vi": "Ngày nào bạn cũng đến đây à?", "replaces": 1889539},
+  {"jp": "いつも 電車で 本を 読みます。", "vi": "Tôi luôn đọc sách trên tàu.", "replaces": 4632707},
+  {"jp": "少し 休みましょう。", "vi": "Mình nghỉ một chút nhé.", "replaces": 182697},
+  {"jp": "パスポートを なくしました。", "vi": "Tôi làm mất hộ chiếu rồi.", "replaces": 3886922},
+  {"jp": "耳が 痛いです。", "vi": "Tôi bị đau tai.", "replaces": 150169},
+  {"jp": "目が 痛いです。", "vi": "Tôi bị đau mắt.", "replaces": 125923},
+  {"jp": "夜は 車に 気を つけて ください。", "vi": "Buổi tối hãy cẩn thận xe cộ.", "replaces": 3147338},
+  {"jp": "ここに 来て ください。", "vi": "Hãy lại đây.", "replaces": 1215216},
+  {"jp": "この 花は 何と 言いますか。", "vi": "Hoa này gọi là gì?", "replaces": 174747},
+  {"jp": "会社は 駅の 近くに あります。", "vi": "Công ty ở gần nhà ga.", "replaces": 211830}
+ ]
+}

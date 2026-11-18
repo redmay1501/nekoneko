@@ -7,6 +7,8 @@ import { useScrollToAnswerFeedback } from '@/hooks/useScrollToAnswerFeedback';
 import { stopSpeech, useSpeech } from '@/hooks/useSpeech';
 import { useSpeechPreferenceStore } from '@/stores/speech-preference-store';
 import { KanaReading } from '@/components/common/KanaReading';
+import { AutoNextToggle } from '@/components/common/AutoNextToggle';
+import { useAutoAdvance } from '@/hooks/useAutoNext';
 import { ListenControls } from './ListenControls';
 
 export interface AssessmentQuestion {
@@ -37,12 +39,14 @@ export function AssessmentQuiz({
   questions: AssessmentQuestion[];
   emptyMessage: string;
   audioLabel?: string;
-  onAnswer?: (question: AssessmentQuestion, answer: string) => void;
+  /** Ghi câu trả lời (trả Promise → tự chuyển câu chờ ghi xong; lỗi thì đứng lại). */
+  onAnswer?: (question: AssessmentQuestion, answer: string) => void | Promise<unknown>;
 }) {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [chosenAnswer, setChosenAnswer] = useState<string | null>(null);
   const [correctCount, setCorrectCount] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
+  const [saveState, setSaveState] = useState<'saving' | 'saved' | 'error'>('saved');
   const question = questions[questionIndex];
   const isListening = Boolean(question?.audioText && !question.prompt);
   const { speak } = useSpeech();
@@ -62,8 +66,18 @@ export function AssessmentQuiz({
     if (!question || chosenAnswer !== null) return;
     setChosenAnswer(answer);
     if (answer === question.answer) setCorrectCount((count) => count + 1);
-    onAnswer?.(question, answer);
+    const saving = onAnswer?.(question, answer);
+    if (saving) {
+      setSaveState('saving');
+      const asked = questionIndex;
+      saving.then(() => { if (questionIndexRef.current === asked) setSaveState('saved'); })
+        .catch(() => { if (questionIndexRef.current === asked) setSaveState('error'); });
+    } else {
+      setSaveState('saved');
+    }
   }
+  const questionIndexRef = useRef(questionIndex);
+  questionIndexRef.current = questionIndex;
 
   function continueQuiz() {
     if (questionIndex + 1 >= questions.length) {
@@ -76,6 +90,12 @@ export function AssessmentQuiz({
 
   // Enter: đã chọn đáp án → câu tiếp / xem kết quả. Chưa chọn thì không bỏ qua câu.
   useEnterToContinue(Boolean(question) && !isComplete && chosenAnswer !== null, continueQuiz);
+  const isAutoNext = useAutoAdvance({
+    answerKey: chosenAnswer !== null && !isComplete ? `${questionIndex}:${chosenAnswer}` : null,
+    isCorrect: question ? chosenAnswer === question.answer : null,
+    isReady: saveState === 'saved',
+    onNext: continueQuiz,
+  });
 
   function reset() {
     setQuestionIndex(0);
@@ -101,12 +121,13 @@ export function AssessmentQuiz({
         <div className="card tight" aria-live="polite">
           <div className="between">
             <span className="tiny muted">Câu {questionIndex + 1}/{questions.length}</span>
+            <AutoNextToggle />
             {question.audioText && !isListening ? <AudioButton text={question.audioText} label={audioLabel} className="btn ghost sm" /> : null}
           </div>
           {isListening && question.audioText ? <ListenControls text={question.audioText} label={audioLabel} /> : null}
           {question.prompt ? (
             <p className={question.promptIsJapanese ? 'jp glyph center' : 'center'}
-              style={{ fontSize: question.promptIsJapanese ? 36 : 18, fontWeight: 600, margin: '14px 0' }}>
+              style={{ fontSize: question.promptIsJapanese ? 30 : 18, fontWeight: 600, margin: '12px 0' }}>
               {question.prompt}
             </p>
           ) : null}
@@ -136,8 +157,9 @@ export function AssessmentQuiz({
               {chosenAnswer !== question.answer ? (
                 <p className="sm mt-1">Đáp án: <b>{question.answer}</b><KanaReading text={question.answer} reading={question.optionReadings?.[question.answer]} /></p>
               ) : null}
-              <button ref={nextButtonRef} type="button" className="btn block mt-3" onClick={continueQuiz}>
-                {questionIndex + 1 === questions.length ? 'Xem kết quả' : 'Câu tiếp theo'}
+              {saveState === 'error' ? <p className="tiny mt-2" role="alert">Chưa lưu được câu này (mạng?) — bài vẫn tiếp tục.</p> : null}
+              <button ref={nextButtonRef} type="button" className={`btn block mt-3 streak-next${isAutoNext ? ' is-auto' : ''}`} onClick={continueQuiz}>
+                {isAutoNext ? 'Tự chuyển… · bấm để sang ngay →' : questionIndex + 1 === questions.length ? 'Xem kết quả' : 'Câu tiếp theo'}
               </button>
             </div>
           ) : null}

@@ -155,6 +155,8 @@ export function realSentenceBlank(catalog: KnowledgeCatalog, item: KnowledgeItem
   const stems = stemsOf(item);
   const sentence = getContextIndex(catalog).sentencesFor(item.key)
     .filter((candidate) => candidate.id.startsWith('tatoeba-'))
+    // Có danh sách đã biết → chỉ câu mà MỌI kiến thức khác trong câu đều đã biết (không đưa từ bài sau vào câu hỏi).
+    .filter((candidate) => !known || candidate.keys.every((key) => key === item.key || known.has(key)))
     .sort((left, right) => left.jp.length - right.jp.length)
     .find((candidate) => stems.some((stem) => candidate.jp.includes(stem)));
   if (!sentence) return null;

@@ -74,10 +74,10 @@ export function RescueFlow({ view, returnTo = '/tri-nho/sap-quen', flowId }: { v
 
       {step === STEP.RECALL ? (
         <div className="s-card pop">
-          <span className="chip pink"><EmojiIcon emoji="🧠" size={16} /> Nhớ lại</span>
-          <div className="fit-box"><div className="s-big fit-text" style={{ margin: '14px 0 4px', ...fitTextStyle(view.face, 56, 26) }}>{view.face}</div></div>
+          <span className="chip pink"><EmojiIcon emoji="🧠" size={16} /> Nhớ lại · chọn nghĩa</span>
+          <div className="fit-box"><div className="s-big fit-text" style={{ margin: '12px 0 4px', ...fitTextStyle(view.face, 46, 24) }}>{view.face}</div></div>
           <p className="jp soft">{view.reading}</p>
-          <p className="sm soft mt-2.5">Nó có nghĩa là gì?</p>
+          <div className="center mt-1"><AudioButton text={view.audioText} label="Nghe từ này" /></div>
           <div className="s-opt">
             {view.meaningOptions.map((option) => {
               const isAnswered = chosenMeaning !== null;

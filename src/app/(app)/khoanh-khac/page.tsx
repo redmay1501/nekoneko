@@ -7,6 +7,7 @@ import { SESSION_MODES } from '@/features/learning/session-modes';
 import { CompleteDayButton } from '@/components/roadmap/CompleteDayButton';
 import { estimateMinutesToFinishDay, getDayCompletionProgress, isDayReadyToComplete, remainingKnowledgeCount } from '@/features/roadmap/journey-progress';
 import { backlogKnowledge } from '@/features/learning/session-engine';
+import { buildDayPlan, dayStudyHref } from '@/features/roadmap/day-plan';
 import { getFinishedSession } from '@/features/learning/session-service';
 import { AnimatedEmoji, EmojiIcon } from '@/components/common/EmojiIcon';
 
@@ -39,6 +40,8 @@ export default async function TinyWinPage({ searchParams }: { searchParams: Prom
   // Gợi ý bước tiếp theo theo ngày đang học: còn kiến thức thì học tiếp; học hết rồi thì mời hoàn thành ngày.
   const dayCompletion = getDayCompletionProgress(context.catalog, context.memoryViews, context.journeyDay);
   const remainingToday = remainingKnowledgeCount(dayCompletion);
+  // "Học lại hôm nay": học / ôn lại đúng kiến thức của ngày đang học — không tính thêm ngày, không đổi trạng thái hoàn thành.
+  const relearnHref = dayStudyHref(buildDayPlan(context.catalog, context.journeyDay, context.journey));
 
   return (
     <div className="session center">
@@ -87,6 +90,9 @@ export default async function TinyWinPage({ searchParams }: { searchParams: Prom
         </Link>
       ) : mode === SESSION_MODES.FLOW ? (
         <Link className="btn block mt-4" href="/hoc/flow">🌊 Tiếp một vòng nữa</Link>
+      ) : null}
+      {relearnHref ? (
+        <Link className={`btn ${remainingToday > 0 ? 'ghost' : ''} block mt-2`} href={relearnHref}>🔁 Học lại hôm nay · ngày {context.journeyDay}</Link>
       ) : null}
       {backlogCount > 0 ? (
         <Link className="btn ghost block mt-2" href="/hoc/backlog">📦 Học bù · còn {backlogCount} kiến thức của ngày trước</Link>

@@ -125,7 +125,7 @@ describe('kiến thức mới đi theo chặng của ngày đang học', () => {
 
   it('ngày đang học (23 — bài 4, phần 1/4) bắt đầu với đủ kiến thức chưa gặp của ngày: từ → (Kanji ngay sau từ chứa nó) → ngữ pháp', () => {
     expect(unmetDay23).toHaveLength(itemsScheduledOn(catalog, 23).length);
-    expect(unmetDay23.length).toBe(23);
+    expect(unmetDay23.length).toBe(21); // 15 từ + 4 Kanji + 2 mẫu câu (sau audit từ vựng Minna)
     const order = ['vocabulary', 'grammar'];
     const ranks = unmetDay23.filter((item) => item.type !== 'kanji').map((item) => order.indexOf(item.type));
     expect(ranks).toEqual([...ranks].sort((left, right) => left - right));
@@ -410,7 +410,8 @@ describe('câu ôn: hỏi Nhật → Việt khi cách đọc không phải là c
           expect({ key: step.contentKey, same: step.correctAnswer === step.face }).toEqual({ key: step.contentKey, same: false });
           if (item.type === 'vocabulary' || item.type === 'radical' || item.type === 'kanji') {
             expect(step.correctAnswer).toBe(item.meaning);
-            expect(step.question).toMatch(/nghĩa/);
+            expect(step.ask).toBe('meaning');
+            expect(step.question).not.toMatch(/nghĩa là gì/i);
           }
         }
       }

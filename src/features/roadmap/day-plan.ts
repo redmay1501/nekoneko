@@ -5,6 +5,7 @@ import { type KanaLesson, buildKanaLesson } from './kana-lesson';
 import { type KanjiContext, type OutsideKanji, kanjiContextOf, outsideCurriculumKanji } from '@/features/learning/kanji-context';
 import { lessonNumber } from '@/lib/utils/lesson';
 import type { ContentKey, ContentType, KnowledgeItem } from '@/features/learning/knowledge-types';
+import { MAX_FOCUS_ITEMS } from '@/features/learning/session-modes';
 import { JOURNEY_STAGES, clampJourneyDay, stageOfDay, type JourneyStage } from './journey';
 import { type JourneyPosition, relationToCurrentDay } from './journey-progress';
 
@@ -332,4 +333,16 @@ function reviewTopicsBefore(catalog: KnowledgeCatalog, day: number): ReviewTopic
 function lessonLabel(prefix: string, lesson: string): string {
   const number = lessonNumber(lesson);
   return Number.isFinite(number) ? `${prefix} bài ${number}` : `${prefix} đã học`;
+}
+
+/**
+ * Học / ôn ĐÚNG kiến thức của một ngày: trang học của ngày (thẻ học + quiz; mỗi mục ghi trí nhớ tối đa một lần mỗi
+ * ngày — học lại không "bơm" điểm, không tạo ngày học mới), hoặc phiên ôn kiến thức của tuần (ngày ôn).
+ * Null khi ngày không gắn kiến thức cụ thể (tổng ôn / thi thử cuối lộ trình).
+ * Dùng cho "Học lại hôm nay" — KHÔNG đụng tới trạng thái hoàn thành ngày (người học tự bấm Hoàn thành ngày).
+ */
+export function dayStudyHref(plan: Pick<DayPlanView, 'day' | 'hasNewKnowledge' | 'reviewWindow'>): string | null {
+  if (plan.hasNewKnowledge) return `/lo-trinh/ngay/${plan.day}/hoc`;
+  if (!plan.reviewWindow?.keys.length) return null;
+  return `/hoc/focus?k=${plan.reviewWindow.keys.slice(0, MAX_FOCUS_ITEMS).join(',')}&back=${encodeURIComponent(`/lo-trinh/ngay/${plan.day}`)}`;
 }

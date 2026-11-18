@@ -32,6 +32,8 @@ export interface StudyQuestion {
   /** Câu gõ: các đáp án chấp nhận. */
   accepted?: string[];
   audioText?: string;
+  /** Phát âm là lộ đáp án (hỏi cách đọc) → nút 🔊 chỉ hiện SAU khi trả lời. */
+  audioRevealsAnswer?: boolean;
 }
 
 /** Bốn bước của luồng học theo ngày, đúng thứ tự học. */
@@ -126,6 +128,7 @@ export function buildGrammarQuiz(data: DayStudyData, kind: 'viet-nhat' | 'nhat-v
     return kind === 'viet-nhat'
       ? { ...base, ask: 'vi-to-jp' as const, prompt: example.vi, promptIsJapanese: false,
         options: pickOptions(example.jp, pool.map((other) => other.jp), random, (value) => own.includes(value)), optionsAreJapanese: true, answer: example.jp,
+        audioText: example.reading || example.jp, audioRevealsAnswer: true,
         optionReadings: readingMap(pool.map((other) => [other.jp, other.reading] as const)) }
       : { ...base, ask: 'jp-to-vi' as const, prompt: example.jp, promptIsJapanese: true, audioText: example.reading || example.jp,
         promptReading: kanaReadingFor(example.jp, example.reading),
@@ -140,10 +143,12 @@ export function buildKanjiQuiz(data: DayStudyData, kind: KanjiQuizId, cards: rea
     if (kind === 'nghia') {
       return [{ ...base, ask: 'meaning', prompt: card.character, promptIsJapanese: true,
         promptReading: kanaReadingFor(card.character, card.readingInWord ?? card.readings.join('・')),
+        audioText: card.words[0]?.reading ?? card.readingInWord ?? card.readings[0],
         options: pickOptions(card.meaning, pool.map((other) => other.meaning), random), optionsAreJapanese: false, answer: card.meaning }];
     }
     if (kind === 'chu') {
       return [{ ...base, ask: 'face', prompt: card.meaning, promptIsJapanese: false, hint: card.hanViet,
+        audioText: card.words[0]?.reading ?? card.readingInWord ?? card.readings[0], audioRevealsAnswer: true,
         options: pickOptions(card.character, pool.map((other) => other.character), random), optionsAreJapanese: true, answer: card.character,
         optionReadings: readingMap(pool.map((other) => [other.character, other.readings.join('・')] as const)) }];
     }
@@ -155,7 +160,7 @@ export function buildKanjiQuiz(data: DayStudyData, kind: KanjiQuizId, cards: rea
       const contextWord = card.readingInWord ? card.words[0]?.word : undefined;
       return [{ ...base, ask: 'reading', prompt: card.character, promptIsJapanese: true, hint: contextWord ? `Trong từ ${contextWord}, chữ này đọc là…` : 'Chữ này đọc là…',
         options: pickOptions(correct, pool.flatMap((other) => other.readings), random, (value) => own.has(readingKey(value))),
-        optionsAreJapanese: true, answer: correct }];
+        optionsAreJapanese: true, answer: correct, audioText: contextWord ? card.words[0]?.reading : correct, audioRevealsAnswer: true }];
     }
     if (!card.words.length) return [];
     // Từ của chính ngày học trước; chỉ khi chữ không nằm trong từ nào của ngày mới dùng từ ví dụ của dữ liệu Kanji.
@@ -163,7 +168,7 @@ export function buildKanjiQuiz(data: DayStudyData, kind: KanjiQuizId, cards: rea
     const word = candidates[Math.floor(random() * candidates.length)];
     const own = new Set(card.words.filter((other) => other.word === word.word).map((other) => readingKey(other.reading)));
     return [{ ...base, id: `${kind}:${card.key}:${word.word}`, ask: 'word-reading', prompt: word.word, promptIsJapanese: true,
-      hint: `${word.meaning} — đọc là…`, wordPrompt: word.word, audioText: word.reading,
+      hint: `${word.meaning} — đọc là…`, wordPrompt: word.word, audioText: word.reading, audioRevealsAnswer: true,
       options: pickOptions(word.reading, pool.flatMap((other) => other.words.map((entry) => entry.reading)), random, (value) => own.has(readingKey(value))),
       optionsAreJapanese: true, answer: word.reading }];
   });
@@ -173,17 +178,17 @@ export function buildKanjiQuiz(data: DayStudyData, kind: KanjiQuizId, cards: rea
 export function buildKanaQuiz(data: DayStudyData, kind: 'doc' | 'chu', cards: readonly StudyKanaCard[] = data.kana, random = Math.random): StudyQuestion[] {
   const pool = [...data.kana, ...data.distractors.kana];
   return shuffle(cards, random).map((card): StudyQuestion => (kind === 'doc'
-    ? { id: `doc:${card.key}`, contentKey: card.key, ask: 'reading', prompt: card.face, promptIsJapanese: true, audioText: card.face,
+    ? { id: `doc:${card.key}`, contentKey: card.key, ask: 'reading', prompt: card.face, promptIsJapanese: true, audioText: card.face, audioRevealsAnswer: true,
       options: pickOptions(card.romaji, pool.map((other) => other.romaji), random), optionsAreJapanese: false, answer: card.romaji }
     : { id: `chu:${card.key}`, contentKey: card.key, ask: 'face', prompt: card.romaji, promptIsJapanese: false, hint: `Chữ ${card.script} nào đọc là…`,
-      audioText: card.face, options: pickOptions(card.face, pool.map((other) => other.face), random), optionsAreJapanese: true, answer: card.face }));
+      audioText: card.face, audioRevealsAnswer: true, options: pickOptions(card.face, pool.map((other) => other.face), random), optionsAreJapanese: true, answer: card.face }));
 }
 
 /** Bộ thủ: nhìn bộ → chọn nghĩa. Ghi vào trí nhớ của BỘ THỦ (không phải Kanji). */
 export function buildRadicalQuiz(data: DayStudyData, cards: readonly StudyRadicalCard[] = data.radicals, random = Math.random): StudyQuestion[] {
   const pool = [...data.radicals, ...data.distractors.radicals];
   return shuffle(cards, random).map((card) => ({
-    id: `bo-thu:${card.key}`, contentKey: card.key, ask: 'meaning' as const, prompt: card.glyph, promptIsJapanese: true, hint: 'Bộ này nghĩa là…',
+    id: `bo-thu:${card.key}`, contentKey: card.key, ask: 'meaning' as const, prompt: card.glyph, promptIsJapanese: true, hint: 'Chọn nghĩa của bộ',
     options: pickOptions(card.meaning, pool.map((other) => other.meaning), random), optionsAreJapanese: false, answer: card.meaning,
   }));
 }

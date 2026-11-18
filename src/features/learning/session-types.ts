@@ -1,6 +1,7 @@
 import type { ContentKey } from './knowledge-types';
 import type { DiscoverCard } from './knowledge-presenter';
 import type { SessionMode } from './session-modes';
+import type { KnowledgeOrigin } from './knowledge-origin';
 
 export const SESSION_STEP_TYPES = {
   SURPRISE: 'surprise',
@@ -40,6 +41,8 @@ interface StepBase {
   phase?: SessionPhase;
   /** Cách đọc kana của chữ có Kanji trong bước (mặt chữ, các lựa chọn) — hiện kèm romaji SAU khi trả lời. Phiên cũ có thể thiếu. */
   readings?: Record<string, string>;
+  /** Kiến thức thuộc loại nào, bài nào, ngày nào — hiện trên đầu mỗi câu ("Ôn tập từ vựng · Bài 1 · Ngày 14"). Phiên cũ có thể thiếu. */
+  origin?: KnowledgeOrigin;
 }
 
 export interface SurpriseStep extends StepBase {
@@ -54,7 +57,10 @@ export interface SurpriseStep extends StepBase {
 export interface RecallStep extends StepBase {
   type: 'recall';
   face: string;
+  /** Hướng dẫn ngắn ("Chọn cách đọc"); rỗng = câu hỏi nghĩa, chỉ hiện từ. */
   question: string;
+  /** Hỏi nghĩa hay cách đọc — câu hỏi cách đọc KHÔNG được phát âm trước khi trả lời (lộ đáp án). Phiên cũ có thể thiếu. */
+  ask?: 'meaning' | 'reading';
   options: string[];
   /** Luyện ngay kiến thức VỪA được giới thiệu trong phiên này (không phải gặp lại thứ cũ). */
   isPractice?: boolean;

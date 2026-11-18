@@ -44,15 +44,17 @@ describe('Kanji của ngày = Kanji giáo trình trong từ của ngày, học l
     expect(gaku.day).toBe(14);
   });
 
-  it('Kanji thuộc ngày khác không lọt vào ngày này (本 học ngày 17, không ở ngày 14)', () => {
-    expect(charsOf(14)).not.toContain('本');
-    expect(charsOf(17)).toContain('本');
+  it('Kanji thuộc ngày khác không lọt vào ngày này (書 học ngày 17 với 辞書, không ở ngày 14)', () => {
+    expect(charsOf(14)).not.toContain('書');
+    expect(charsOf(17)).toContain('書');
   });
 
   it('bộ lọc theo bài: Kanji xếp đúng bài của từ chứa nó', () => {
     const rows = kanjiRows(catalog, new Map());
     expect(rows.find((row) => row.face === '先')?.group).toBe('Bài 1');
-    expect(rows.find((row) => row.face === '本')?.group).toBe('Bài 2');
+    // 本 học cùng 日本 (Minna bài 1 — tên nước), 書 cùng 辞書 (bài 2).
+    expect(rows.find((row) => row.face === '本')?.group).toBe('Bài 1');
+    expect(rows.find((row) => row.face === '書')?.group).toBe('Bài 2');
     // NekoNeko v3: mọi Kanji N5 đều có từ chứa nó trong bài → không còn nhóm "Kanji N5 bổ sung"; 駅 thuộc bài của từ 駅.
     expect(rows.some((row) => row.group === 'Kanji N5 bổ sung')).toBe(false);
     expect(rows.find((row) => row.face === '駅')?.group).toMatch(/^Bài \d+$/);

@@ -1,6 +1,7 @@
 import { pickDeterministic, shuffleDeterministic } from '@/lib/utils/deterministic-random';
 import { realSentenceBlank } from './context-index';
 import { readingLookup, readingsFor } from './reading-lookup';
+import { knowledgeOrigin } from './knowledge-origin';
 import {
   getForgettingRadar,
   getReviewPriority,
@@ -194,12 +195,13 @@ function buildRecallStep(item: KnowledgeItem, catalog: KnowledgeCatalog, stepInd
   // Đáp án "cách đọc" trùng y mặt chữ (từ viết bằng kana: おはよう → おはよう) thì câu hỏi vô nghĩa — hỏi nghĩa tiếng Việt.
   if (item.reading.trim() === item.face.trim()) {
     const step = buildPracticeStep(item, catalog, stepIndex, seed, known);
-    return step.type === 'recall' ? { ...step, isPractice: false, question: 'Nó nghĩa là gì?' } : step;
+    return step.type === 'recall' ? { ...step, isPractice: false } : step;
   }
   const sameType = knownDistractors(item, catalog, known);
   return {
     type: 'recall', stepIndex, contentKey: item.key, face: item.face, audioText: speechTextFor(item),
-    question: item.type === 'vocabulary' || item.type === 'kanji' ? 'Từ này đọc là gì?' : 'Chữ này đọc là gì?',
+    question: item.type === 'vocabulary' || item.type === 'kanji' ? 'Chọn cách đọc' : 'Chọn cách đọc của chữ',
+    ask: 'reading',
     options: buildOptions(item.reading, sameType.map((candidate) => candidate.reading), `${seed}:${item.key}`),
     correctAnswer: item.reading,
   };
@@ -218,7 +220,9 @@ function buildPracticeStep(item: KnowledgeItem, catalog: KnowledgeCatalog, stepI
   const correctAnswer = byReading ? item.reading : item.meaning;
   return {
     type: 'recall', isPractice: true, stepIndex, contentKey: item.key, face: item.face, audioText: speechTextFor(item),
-    question: byReading ? 'Chữ bạn vừa học đọc là gì?' : 'Bạn vừa học — nó nghĩa là gì?',
+    // Câu hỏi nghĩa: chỉ hiện từ — không lặp "Nó nghĩa là gì?" ở mỗi câu (hướng dẫn chung nằm trên nhãn của câu).
+    question: byReading ? 'Chọn cách đọc của chữ' : '',
+    ask: byReading ? 'reading' : 'meaning',
     options: buildOptions(correctAnswer, distractorItems.map((candidate) => (byReading ? candidate.reading : candidate.meaning)), `${seed}:practice:${item.key}`),
     correctAnswer,
   };
@@ -347,7 +351,7 @@ function buildFocusReviewStep(item: KnowledgeItem, input: BuildLearningSessionIn
   if (item.type === 'grammar') return buildGrammarCheckStep(item, input, stepIndex, known);
   if (item.type === 'vocabulary' || item.type === 'radical' || item.type === 'kanji') {
     const step = buildPracticeStep(item, input.catalog, stepIndex, input.seed, known);
-    return step.type === 'recall' ? { ...step, isPractice: false, question: 'Nó nghĩa là gì?' } : step;
+    return step.type === 'recall' ? { ...step, isPractice: false } : step;
   }
   return buildRecallStep(item, input.catalog, stepIndex, input.seed, known);
 }
@@ -358,7 +362,10 @@ function buildGrammarCheckStep(item: KnowledgeItem, input: BuildLearningSessionI
   const isSentence = (sentence: string) => Boolean(sentence) && !/[→/／]/.test(sentence);
   const knownSentences = input.catalog.content.grammar
     .filter((candidate) => known.has(toContentKey('grammar', candidate.id))).map((candidate) => candidate.exampleJp).filter(isSentence);
-  const pool = knownSentences.length > MIN_KNOWN_DISTRACTORS ? knownSentences : input.catalog.content.grammar.map((candidate) => candidate.exampleJp).filter(isSentence);
+  // Chưa đủ câu của mẫu đã biết → mượn câu của mẫu cùng bài / bài trước (theo ngày học), không bao giờ mẫu của bài sau.
+  const scopeDay = Math.max(input.journeyDay, pattern.day ?? 0);
+  const pool = knownSentences.length > MIN_KNOWN_DISTRACTORS ? knownSentences
+    : input.catalog.content.grammar.filter((candidate) => candidate.day !== null && candidate.day <= scopeDay).map((candidate) => candidate.exampleJp).filter(isSentence);
   return {
     type: 'use', variant: 'choose-sentence', stepIndex, contentKey: item.key, promptVi: pattern.exampleVi,
     options: buildOptions(pattern.exampleJp, pool, `${input.seed}:focus-grammar:${pattern.id}`),
@@ -413,14 +420,18 @@ export function buildLearningSession(input: BuildLearningSessionInput): Learning
   return { mode, steps: withReadings(steps, catalog) };
 }
 
-/** Đánh lại số bước, gắn chặng và cách đọc kana của chữ có Kanji (mặt chữ, lựa chọn, đáp án). */
+/** Đánh lại số bước, gắn chặng, nguồn gốc kiến thức (loại · bài · ngày) và cách đọc kana của chữ có Kanji (mặt chữ, lựa chọn, đáp án). */
 function withReadings(steps: SessionStepWithAnswer[], catalog: KnowledgeCatalog): SessionStepWithAnswer[] {
   const lookup = readingLookup(catalog);
   return steps.map((step, index) => {
     const texts = step.type === 'recall' || step.type === 'use' ? [...step.options, step.correctAnswer] : [];
     if (step.type === 'recall' || step.type === 'surprise') texts.push(step.face);
     const readings = readingsFor(texts, lookup);
-    return { ...step, stepIndex: index, phase: step.phase ?? phaseOfStep(step), ...(readings ? { readings } : {}) };
+    const item = catalog.byKey.get(step.contentKey);
+    return {
+      ...step, stepIndex: index, phase: step.phase ?? phaseOfStep(step),
+      ...(readings ? { readings } : {}), ...(item ? { origin: knowledgeOrigin(item, catalog) } : {}),
+    };
   });
 }
 

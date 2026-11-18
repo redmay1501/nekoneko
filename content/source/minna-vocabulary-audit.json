@@ -1,0 +1,4031 @@
+{
+ "_note": "Kết quả audit từ vựng N5 theo Minna no Nihongo — xem docs/N5_VOCABULARY_COMPLETENESS_AUDIT.md. Áp dụng bằng scripts/apply_vocabulary_audit.py.",
+ "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài",
+ "moves": [
+  {
+   "id": 203,
+   "lesson": 1,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "id": 205,
+   "lesson": 1,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "id": 757,
+   "lesson": 1,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "id": 848,
+   "lesson": 2,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 2"
+  },
+  {
+   "id": 906,
+   "lesson": 2,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 2"
+  },
+  {
+   "id": 675,
+   "lesson": 2,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 2"
+  },
+  {
+   "id": 734,
+   "lesson": 2,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 2"
+  },
+  {
+   "id": 774,
+   "lesson": 2,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 2"
+  },
+  {
+   "id": 138,
+   "lesson": 3,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 3"
+  },
+  {
+   "id": 445,
+   "lesson": 3,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 3"
+  },
+  {
+   "id": 747,
+   "lesson": 3,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 3"
+  },
+  {
+   "id": 750,
+   "lesson": 3,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 3"
+  },
+  {
+   "id": 674,
+   "lesson": 3,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 3"
+  },
+  {
+   "id": 589,
+   "lesson": 4,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 4"
+  },
+  {
+   "id": 180,
+   "lesson": 4,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 4"
+  },
+  {
+   "id": 1031,
+   "lesson": 4,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 4"
+  },
+  {
+   "id": 287,
+   "lesson": 4,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 4"
+  },
+  {
+   "id": 121,
+   "lesson": 4,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 4"
+  },
+  {
+   "id": 411,
+   "lesson": 4,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 4"
+  },
+  {
+   "id": 964,
+   "lesson": 5,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 5"
+  },
+  {
+   "id": 206,
+   "lesson": 5,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 5"
+  },
+  {
+   "id": 336,
+   "lesson": 5,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 5"
+  },
+  {
+   "id": 273,
+   "lesson": 5,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 5"
+  },
+  {
+   "id": 421,
+   "lesson": 5,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 5"
+  },
+  {
+   "id": 769,
+   "lesson": 5,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 5"
+  },
+  {
+   "id": 770,
+   "lesson": 5,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 5"
+  },
+  {
+   "id": 265,
+   "lesson": 6,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 6"
+  },
+  {
+   "id": 210,
+   "lesson": 6,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 6"
+  },
+  {
+   "id": 208,
+   "lesson": 6,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 6"
+  },
+  {
+   "id": 962,
+   "lesson": 6,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 6"
+  },
+  {
+   "id": 139,
+   "lesson": 6,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 6"
+  },
+  {
+   "id": 1043,
+   "lesson": 6,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 6"
+  },
+  {
+   "id": 577,
+   "lesson": 6,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 6"
+  },
+  {
+   "id": 724,
+   "lesson": 6,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 6"
+  },
+  {
+   "id": 723,
+   "lesson": 6,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 6"
+  },
+  {
+   "id": 702,
+   "lesson": 6,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 6"
+  },
+  {
+   "id": 374,
+   "lesson": 6,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 6"
+  },
+  {
+   "id": 391,
+   "lesson": 6,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 6"
+  },
+  {
+   "id": 760,
+   "lesson": 7,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "id": 326,
+   "lesson": 7,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "id": 742,
+   "lesson": 7,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "id": 713,
+   "lesson": 7,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "id": 712,
+   "lesson": 7,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "id": 420,
+   "lesson": 7,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "id": 450,
+   "lesson": 7,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "id": 491,
+   "lesson": 7,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "id": 492,
+   "lesson": 7,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "id": 796,
+   "lesson": 7,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "id": 835,
+   "lesson": 7,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "id": 649,
+   "lesson": 8,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "id": 736,
+   "lesson": 8,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "id": 155,
+   "lesson": 8,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "id": 557,
+   "lesson": 8,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "id": 556,
+   "lesson": 8,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "id": 554,
+   "lesson": 8,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "id": 552,
+   "lesson": 8,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "id": 949,
+   "lesson": 8,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "id": 655,
+   "lesson": 8,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "id": 124,
+   "lesson": 8,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "id": 1015,
+   "lesson": 8,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "id": 419,
+   "lesson": 8,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "id": 443,
+   "lesson": 8,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "id": 480,
+   "lesson": 8,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "id": 793,
+   "lesson": 8,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "id": 647,
+   "lesson": 9,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "id": 147,
+   "lesson": 9,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "id": 300,
+   "lesson": 9,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "id": 301,
+   "lesson": 9,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "id": 322,
+   "lesson": 9,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "id": 302,
+   "lesson": 9,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "id": 481,
+   "lesson": 9,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "id": 506,
+   "lesson": 9,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "id": 792,
+   "lesson": 9,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "id": 800,
+   "lesson": 9,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "id": 879,
+   "lesson": 9,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "id": 880,
+   "lesson": 9,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "id": 881,
+   "lesson": 9,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "id": 882,
+   "lesson": 9,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "id": 624,
+   "lesson": 10,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "id": 625,
+   "lesson": 10,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "id": 956,
+   "lesson": 10,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "id": 963,
+   "lesson": 10,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "id": 1079,
+   "lesson": 10,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "id": 1080,
+   "lesson": 10,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "id": 164,
+   "lesson": 10,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "id": 394,
+   "lesson": 10,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "id": 397,
+   "lesson": 10,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "id": 493,
+   "lesson": 10,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "id": 779,
+   "lesson": 10,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "id": 780,
+   "lesson": 10,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "id": 781,
+   "lesson": 10,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "id": 782,
+   "lesson": 10,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "id": 759,
+   "lesson": 11,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 11"
+  },
+  {
+   "id": 691,
+   "lesson": 11,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 11"
+  },
+  {
+   "id": 378,
+   "lesson": 11,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 11"
+  },
+  {
+   "id": 380,
+   "lesson": 11,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 11"
+  },
+  {
+   "id": 392,
+   "lesson": 11,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 11"
+  },
+  {
+   "id": 490,
+   "lesson": 11,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 11"
+  },
+  {
+   "id": 505,
+   "lesson": 11,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 11"
+  },
+  {
+   "id": 859,
+   "lesson": 11,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 11"
+  },
+  {
+   "id": 377,
+   "lesson": 11,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 11"
+  },
+  {
+   "id": 654,
+   "lesson": 12,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "id": 1012,
+   "lesson": 12,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "id": 722,
+   "lesson": 12,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "id": 487,
+   "lesson": 12,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "id": 488,
+   "lesson": 12,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "id": 489,
+   "lesson": 12,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "id": 510,
+   "lesson": 12,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "id": 511,
+   "lesson": 12,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "id": 512,
+   "lesson": 12,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "id": 513,
+   "lesson": 12,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "id": 516,
+   "lesson": 12,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "id": 517,
+   "lesson": 12,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "id": 518,
+   "lesson": 12,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "id": 519,
+   "lesson": 12,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "id": 520,
+   "lesson": 12,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "id": 584,
+   "lesson": 12,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "id": 843,
+   "lesson": 12,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "id": 233,
+   "lesson": 13,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 13"
+  },
+  {
+   "id": 218,
+   "lesson": 13,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 13"
+  },
+  {
+   "id": 219,
+   "lesson": 13,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 13"
+  },
+  {
+   "id": 842,
+   "lesson": 13,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 13"
+  },
+  {
+   "id": 950,
+   "lesson": 13,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 13"
+  },
+  {
+   "id": 198,
+   "lesson": 14,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 14"
+  },
+  {
+   "id": 250,
+   "lesson": 14,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 14"
+  },
+  {
+   "id": 763,
+   "lesson": 14,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 14"
+  },
+  {
+   "id": 643,
+   "lesson": 14,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 14"
+  },
+  {
+   "id": 765,
+   "lesson": 14,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 14"
+  },
+  {
+   "id": 234,
+   "lesson": 14,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 14"
+  },
+  {
+   "id": 334,
+   "lesson": 14,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 14"
+  },
+  {
+   "id": 686,
+   "lesson": 14,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 14"
+  },
+  {
+   "id": 1032,
+   "lesson": 14,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 14"
+  },
+  {
+   "id": 726,
+   "lesson": 14,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 14"
+  },
+  {
+   "id": 658,
+   "lesson": 14,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 14"
+  },
+  {
+   "id": 659,
+   "lesson": 14,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 14"
+  },
+  {
+   "id": 920,
+   "lesson": 14,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 14"
+  },
+  {
+   "id": 274,
+   "lesson": 15,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 15"
+  },
+  {
+   "id": 752,
+   "lesson": 15,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 15"
+  },
+  {
+   "id": 1016,
+   "lesson": 15,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 15"
+  },
+  {
+   "id": 786,
+   "lesson": 15,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 15"
+  },
+  {
+   "id": 251,
+   "lesson": 16,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 16"
+  },
+  {
+   "id": 177,
+   "lesson": 16,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 16"
+  },
+  {
+   "id": 514,
+   "lesson": 16,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 16"
+  },
+  {
+   "id": 515,
+   "lesson": 16,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 16"
+  },
+  {
+   "id": 561,
+   "lesson": 16,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 16"
+  },
+  {
+   "id": 681,
+   "lesson": 16,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 16"
+  },
+  {
+   "id": 813,
+   "lesson": 16,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 16"
+  },
+  {
+   "id": 982,
+   "lesson": 16,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 16"
+  },
+  {
+   "id": 735,
+   "lesson": 17,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 17"
+  },
+  {
+   "id": 739,
+   "lesson": 17,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 17"
+  },
+  {
+   "id": 178,
+   "lesson": 17,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 17"
+  },
+  {
+   "id": 528,
+   "lesson": 17,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 17"
+  },
+  {
+   "id": 653,
+   "lesson": 17,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 17"
+  },
+  {
+   "id": 968,
+   "lesson": 17,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 17"
+  },
+  {
+   "id": 581,
+   "lesson": 18,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 18"
+  },
+  {
+   "id": 629,
+   "lesson": 18,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 18"
+  },
+  {
+   "id": 697,
+   "lesson": 18,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 18"
+  },
+  {
+   "id": 788,
+   "lesson": 18,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 18"
+  },
+  {
+   "id": 789,
+   "lesson": 18,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 18"
+  },
+  {
+   "id": 790,
+   "lesson": 18,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 18"
+  },
+  {
+   "id": 730,
+   "lesson": 19,
+   "direction": "later-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 19"
+  },
+  {
+   "id": 252,
+   "lesson": 19,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 19"
+  },
+  {
+   "id": 714,
+   "lesson": 19,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 19"
+  },
+  {
+   "id": 1004,
+   "lesson": 19,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 19"
+  },
+  {
+   "id": 1026,
+   "lesson": 19,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 19"
+  },
+  {
+   "id": 407,
+   "lesson": 20,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 20"
+  },
+  {
+   "id": 408,
+   "lesson": 20,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 20"
+  },
+  {
+   "id": 409,
+   "lesson": 20,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 20"
+  },
+  {
+   "id": 410,
+   "lesson": 20,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 20"
+  },
+  {
+   "id": 573,
+   "lesson": 20,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 20"
+  },
+  {
+   "id": 701,
+   "lesson": 20,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 20"
+  },
+  {
+   "id": 829,
+   "lesson": 20,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 20"
+  },
+  {
+   "id": 972,
+   "lesson": 20,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 20"
+  },
+  {
+   "id": 266,
+   "lesson": 21,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "id": 279,
+   "lesson": 21,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "id": 449,
+   "lesson": 21,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "id": 900,
+   "lesson": 21,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "id": 914,
+   "lesson": 21,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "id": 1011,
+   "lesson": 21,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "id": 1033,
+   "lesson": 21,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "id": 845,
+   "lesson": 22,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 22"
+  },
+  {
+   "id": 916,
+   "lesson": 22,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 22"
+  },
+  {
+   "id": 216,
+   "lesson": 23,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 23"
+  },
+  {
+   "id": 217,
+   "lesson": 23,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 23"
+  },
+  {
+   "id": 224,
+   "lesson": 23,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 23"
+  },
+  {
+   "id": 412,
+   "lesson": 23,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 23"
+  },
+  {
+   "id": 865,
+   "lesson": 23,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 23"
+  },
+  {
+   "id": 1013,
+   "lesson": 23,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 23"
+  },
+  {
+   "id": 1061,
+   "lesson": 23,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 23"
+  },
+  {
+   "id": 632,
+   "lesson": 24,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 24"
+  },
+  {
+   "id": 1034,
+   "lesson": 24,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 24"
+  },
+  {
+   "id": 283,
+   "lesson": 25,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 25"
+  },
+  {
+   "id": 418,
+   "lesson": 25,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 25"
+  },
+  {
+   "id": 680,
+   "lesson": 25,
+   "direction": "earlier-than-textbook",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 25"
+  }
+ ],
+ "new": [
+  {
+   "lesson": 1,
+   "kana": "わたしたち",
+   "kanji": "私たち",
+   "meaning": "Chúng tôi, chúng ta",
+   "tip": "〜たち = số nhiều: 私 + たち.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "lesson": 1,
+   "kana": "あのひと",
+   "kanji": "あの人",
+   "meaning": "Người kia, người ấy",
+   "tip": "あの (kia) + 人 (người).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "lesson": 1,
+   "kana": "あのかた",
+   "kanji": "あの方",
+   "meaning": "Vị kia (lịch sự của あの人)",
+   "tip": "方 (かた) là cách nói kính trọng của 人.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "lesson": 1,
+   "kana": "きょうし",
+   "kanji": "教師",
+   "meaning": "Giáo viên (nói về nghề của mình)",
+   "tip": "Tự giới thiệu nghề: 教師です. Gọi thầy cô thì dùng 先生.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "lesson": 1,
+   "kana": "しゃいん",
+   "kanji": "社員",
+   "meaning": "Nhân viên (của công ty ~)",
+   "tip": "Đi sau tên công ty: IMCの 社員. 会社員 = nhân viên công ty nói chung.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "lesson": 1,
+   "kana": "エンジニア",
+   "kanji": "",
+   "meaning": "Kỹ sư",
+   "tip": "Từ mượn tiếng Anh “engineer”.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "lesson": 1,
+   "kana": "なんさい",
+   "kanji": "何歳",
+   "meaning": "Mấy tuổi",
+   "tip": "何 (なん) + 歳 (さい). Lịch sự hơn: おいくつ.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "lesson": 1,
+   "kana": "おいくつ",
+   "kanji": "",
+   "meaning": "Bao nhiêu tuổi (lịch sự)",
+   "tip": "Hỏi tuổi lịch sự của 何歳.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "lesson": 1,
+   "kana": "しつれいですが",
+   "kanji": "失礼ですが",
+   "meaning": "Xin lỗi, cho tôi hỏi…",
+   "tip": "Mở đầu trước khi hỏi chuyện riêng (tên, tuổi…).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "lesson": 1,
+   "kana": "おなまえは",
+   "kanji": "お名前は",
+   "meaning": "Tên anh/chị là gì?",
+   "tip": "Hỏi tên lịch sự; câu đầy đủ: お名前は 何ですか.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "lesson": 1,
+   "kana": "こちらは〜さんです",
+   "kanji": "",
+   "meaning": "Đây là anh/chị ~ (giới thiệu người khác)",
+   "tip": "こちら = phía này, lịch sự hơn これ khi giới thiệu người.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "lesson": 1,
+   "kana": "〜からきました",
+   "kanji": "〜から来ました",
+   "meaning": "Đến từ ~",
+   "tip": "Nói quê / nước: ベトナムから 来ました.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "lesson": 1,
+   "kana": "アメリカ",
+   "kanji": "",
+   "meaning": "Nước Mỹ",
+   "tip": "Từ mượn: America.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "lesson": 1,
+   "kana": "イギリス",
+   "kanji": "",
+   "meaning": "Nước Anh",
+   "tip": "Từ mượn (từ tiếng Bồ Đào Nha “Inglês”).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "lesson": 1,
+   "kana": "インド",
+   "kanji": "",
+   "meaning": "Ấn Độ",
+   "tip": "Từ mượn: India.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "lesson": 1,
+   "kana": "インドネシア",
+   "kanji": "",
+   "meaning": "Indonesia",
+   "tip": "Từ mượn: Indonesia.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "lesson": 1,
+   "kana": "かんこく",
+   "kanji": "韓国",
+   "meaning": "Hàn Quốc",
+   "tip": "韓 (Hàn) + 国 (quốc).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "lesson": 1,
+   "kana": "タイ",
+   "kanji": "",
+   "meaning": "Thái Lan",
+   "tip": "Từ mượn: Thai.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "lesson": 1,
+   "kana": "ちゅうごく",
+   "kanji": "中国",
+   "meaning": "Trung Quốc",
+   "tip": "中 (trung) + 国 (quốc).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "lesson": 1,
+   "kana": "ドイツ",
+   "kanji": "",
+   "meaning": "Nước Đức",
+   "tip": "Từ mượn (tiếng Hà Lan “Duits”).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "lesson": 1,
+   "kana": "にほん",
+   "kanji": "日本",
+   "meaning": "Nhật Bản",
+   "tip": "日 (mặt trời) + 本 (gốc) = gốc mặt trời.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "lesson": 1,
+   "kana": "ブラジル",
+   "kanji": "",
+   "meaning": "Brazil",
+   "tip": "Từ mượn: Brazil.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 1"
+  },
+  {
+   "lesson": 1,
+   "kana": "ベトナム",
+   "kanji": "",
+   "meaning": "Việt Nam",
+   "tip": "Từ mượn: Vietnam. Người Việt Nam = ベトナム人.",
+   "source": "Xuất hiện trong bài đọc hiểu của chính NekoNeko (content/seed/reading-passages.json) nhưng chưa có trong danh sách từ"
+  },
+  {
+   "lesson": 2,
+   "kana": "カード",
+   "kanji": "",
+   "meaning": "Thẻ",
+   "tip": "Từ mượn: card.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 2"
+  },
+  {
+   "lesson": 2,
+   "kana": "シャープペンシル",
+   "kanji": "",
+   "meaning": "Bút chì kim",
+   "tip": "Từ mượn: sharp pencil (tên thương hiệu cũ).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 2"
+  },
+  {
+   "lesson": 2,
+   "kana": "コンピューター",
+   "kanji": "",
+   "meaning": "Máy vi tính",
+   "tip": "Từ mượn: computer.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 2"
+  },
+  {
+   "lesson": 2,
+   "kana": "チョコレート",
+   "kanji": "",
+   "meaning": "Sô-cô-la",
+   "tip": "Từ mượn: chocolate.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 2"
+  },
+  {
+   "lesson": 2,
+   "kana": "にほんご",
+   "kanji": "日本語",
+   "meaning": "Tiếng Nhật",
+   "tip": "日本 (Nhật Bản) + 語 (tiếng).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 2"
+  },
+  {
+   "lesson": 2,
+   "kana": "あのう",
+   "kanji": "",
+   "meaning": "À… ờ… (ngập ngừng khi bắt chuyện)",
+   "tip": "Nói nhẹ trước khi hỏi / nhờ ai đó.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 2"
+  },
+  {
+   "lesson": 2,
+   "kana": "そうですか",
+   "kanji": "",
+   "meaning": "Thế à, vậy à",
+   "tip": "Đáp lại khi nhận được thông tin mới (xuống giọng).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 2"
+  },
+  {
+   "lesson": 2,
+   "kana": "これからおせわになります",
+   "kanji": "これからお世話になります",
+   "meaning": "Từ nay mong được anh/chị giúp đỡ",
+   "tip": "Câu chào khi mới chuyển đến / mới vào làm.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 2"
+  },
+  {
+   "lesson": 2,
+   "kana": "こちらこそよろしく",
+   "kanji": "",
+   "meaning": "Chính tôi mới mong được giúp đỡ",
+   "tip": "Đáp lại どうぞ よろしく.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 2"
+  },
+  {
+   "lesson": 3,
+   "kana": "ロビー",
+   "kanji": "",
+   "meaning": "Sảnh (khách sạn, tòa nhà)",
+   "tip": "Từ mượn: lobby.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 3"
+  },
+  {
+   "lesson": 3,
+   "kana": "エスカレーター",
+   "kanji": "",
+   "meaning": "Thang cuốn",
+   "tip": "Từ mượn: escalator.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 3"
+  },
+  {
+   "lesson": 3,
+   "kana": "じどうはんばいき",
+   "kanji": "自動販売機",
+   "meaning": "Máy bán hàng tự động",
+   "tip": "自動 (tự động) + 販売 (bán) + 機 (máy).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 3"
+  },
+  {
+   "lesson": 3,
+   "kana": "ワイン",
+   "kanji": "",
+   "meaning": "Rượu vang",
+   "tip": "Từ mượn: wine.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 3"
+  },
+  {
+   "lesson": 3,
+   "kana": "ちか",
+   "kanji": "地下",
+   "meaning": "Tầng hầm, dưới mặt đất",
+   "tip": "地 (đất) + 下 (dưới).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 3"
+  },
+  {
+   "lesson": 3,
+   "kana": "なんがい",
+   "kanji": "何階",
+   "meaning": "Tầng mấy",
+   "tip": "何 + 階; 階 sau なん đọc là がい.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 3"
+  },
+  {
+   "lesson": 3,
+   "kana": "みせてください",
+   "kanji": "見せてください",
+   "meaning": "Cho tôi xem ~",
+   "tip": "〜を 見せてください: nhờ người bán đưa xem hàng.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 3"
+  },
+  {
+   "lesson": 3,
+   "kana": "イタリア",
+   "kanji": "",
+   "meaning": "Nước Ý",
+   "tip": "Từ mượn: Italia.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 3"
+  },
+  {
+   "lesson": 3,
+   "kana": "スイス",
+   "kanji": "",
+   "meaning": "Thụy Sĩ",
+   "tip": "Từ mượn: Suisse.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 3"
+  },
+  {
+   "lesson": 3,
+   "kana": "フランス",
+   "kanji": "",
+   "meaning": "Nước Pháp",
+   "tip": "Từ mượn: France.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 3"
+  },
+  {
+   "lesson": 4,
+   "kana": "なんじ",
+   "kanji": "何時",
+   "meaning": "Mấy giờ",
+   "tip": "何 + 時.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 4"
+  },
+  {
+   "lesson": 4,
+   "kana": "なんぷん",
+   "kanji": "何分",
+   "meaning": "Mấy phút",
+   "tip": "何 + 分; sau ん đọc là ぷん.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 4"
+  },
+  {
+   "lesson": 4,
+   "kana": "ひるやすみ",
+   "kanji": "昼休み",
+   "meaning": "Giờ nghỉ trưa",
+   "tip": "昼 (trưa) + 休み (nghỉ).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 4"
+  },
+  {
+   "lesson": 4,
+   "kana": "なんようび",
+   "kanji": "何曜日",
+   "meaning": "Thứ mấy",
+   "tip": "何 + 曜日.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 4"
+  },
+  {
+   "lesson": 4,
+   "kana": "たいへんですね",
+   "kanji": "大変ですね",
+   "meaning": "Vất vả nhỉ",
+   "tip": "Câu cảm thông khi nghe ai đó bận, mệt.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 4"
+  },
+  {
+   "lesson": 4,
+   "kana": "なんばん",
+   "kanji": "何番",
+   "meaning": "Số mấy",
+   "tip": "何 + 番 (số thứ tự): 電話番号は 何番ですか.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 4"
+  },
+  {
+   "lesson": 5,
+   "kana": "なんねん",
+   "kanji": "何年",
+   "meaning": "Năm nào; mấy năm",
+   "tip": "何 + 年.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 5"
+  },
+  {
+   "lesson": 5,
+   "kana": "なんがつ",
+   "kanji": "何月",
+   "meaning": "Tháng mấy",
+   "tip": "何 + 月.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 5"
+  },
+  {
+   "lesson": 5,
+   "kana": "じゅうよっか",
+   "kanji": "十四日",
+   "meaning": "Ngày 14",
+   "tip": "Đọc đặc biệt よっか như 四日.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 5"
+  },
+  {
+   "lesson": 5,
+   "kana": "にじゅうよっか",
+   "kanji": "二十四日",
+   "meaning": "Ngày 24",
+   "tip": "Đọc đặc biệt よっか như 四日.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 5"
+  },
+  {
+   "lesson": 5,
+   "kana": "なんにち",
+   "kanji": "何日",
+   "meaning": "Ngày mấy; mấy ngày",
+   "tip": "何 + 日.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 5"
+  },
+  {
+   "lesson": 5,
+   "kana": "〜ばんせん",
+   "kanji": "〜番線",
+   "meaning": "Đường ray / sân ga số ~",
+   "tip": "5番線 = sân ga số 5.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 5"
+  },
+  {
+   "lesson": 5,
+   "kana": "つぎの",
+   "kanji": "次の",
+   "meaning": "~ tiếp theo",
+   "tip": "次の 電車 = chuyến tàu tiếp theo.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 5"
+  },
+  {
+   "lesson": 6,
+   "kana": "ミルク",
+   "kanji": "",
+   "meaning": "Sữa",
+   "tip": "Từ mượn: milk (= 牛乳).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 6"
+  },
+  {
+   "lesson": 6,
+   "kana": "ジュース",
+   "kanji": "",
+   "meaning": "Nước hoa quả",
+   "tip": "Từ mượn: juice.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 6"
+  },
+  {
+   "lesson": 6,
+   "kana": "ビール",
+   "kanji": "",
+   "meaning": "Bia",
+   "tip": "Từ mượn (tiếng Hà Lan “bier”).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 6"
+  },
+  {
+   "lesson": 6,
+   "kana": "レポート",
+   "kanji": "",
+   "meaning": "Báo cáo",
+   "tip": "Từ mượn: report.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 6"
+  },
+  {
+   "lesson": 6,
+   "kana": "ビデオ",
+   "kanji": "",
+   "meaning": "Video",
+   "tip": "Từ mượn: video.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 6"
+  },
+  {
+   "lesson": 6,
+   "kana": "テニス",
+   "kanji": "",
+   "meaning": "Quần vợt",
+   "tip": "Từ mượn: tennis. テニスを します.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 6"
+  },
+  {
+   "lesson": 6,
+   "kana": "サッカー",
+   "kanji": "",
+   "meaning": "Bóng đá",
+   "tip": "Từ mượn: soccer. サッカーを します.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 6"
+  },
+  {
+   "lesson": 6,
+   "kana": "いいですね",
+   "kanji": "",
+   "meaning": "Hay đấy, được đấy",
+   "tip": "Đồng ý khi được rủ.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 6"
+  },
+  {
+   "lesson": 6,
+   "kana": "じゃ、また",
+   "kanji": "",
+   "meaning": "Thế nhé, hẹn gặp lại",
+   "tip": "Chào tạm biệt thân mật; じゃ、また あした = mai gặp lại.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 6"
+  },
+  {
+   "lesson": 6,
+   "kana": "メキシコ",
+   "kanji": "",
+   "meaning": "Mexico",
+   "tip": "Từ mượn: Mexico.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 6"
+  },
+  {
+   "lesson": 7,
+   "kana": "はさみ",
+   "kanji": "",
+   "meaning": "Cái kéo",
+   "tip": "Thường viết bằng kana.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "lesson": 7,
+   "kana": "ケータイ",
+   "kanji": "",
+   "meaning": "Điện thoại di động",
+   "tip": "Viết tắt của 携帯電話 (けいたいでんわ).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "lesson": 7,
+   "kana": "メール",
+   "kanji": "",
+   "meaning": "Thư điện tử, email",
+   "tip": "Từ mượn: mail.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "lesson": 7,
+   "kana": "ねんがじょう",
+   "kanji": "年賀状",
+   "meaning": "Thiệp chúc Tết",
+   "tip": "年 (năm) + 賀 (chúc) + 状 (thư).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "lesson": 7,
+   "kana": "パンチ",
+   "kanji": "",
+   "meaning": "Cái đục lỗ (giấy)",
+   "tip": "Từ mượn: punch.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "lesson": 7,
+   "kana": "ホッチキス",
+   "kanji": "",
+   "meaning": "Cái dập ghim",
+   "tip": "Tên thương hiệu Hotchkiss.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "lesson": 7,
+   "kana": "セロテープ",
+   "kanji": "",
+   "meaning": "Băng dính trong",
+   "tip": "Tên thương hiệu (cellophane tape).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "lesson": 7,
+   "kana": "クリスマス",
+   "kanji": "",
+   "meaning": "Giáng sinh",
+   "tip": "Từ mượn: Christmas.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "lesson": 7,
+   "kana": "すてきですね",
+   "kanji": "",
+   "meaning": "Đẹp quá nhỉ, tuyệt nhỉ",
+   "tip": "Khen đồ vật, quần áo, nơi chốn.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "lesson": 7,
+   "kana": "いらっしゃい",
+   "kanji": "",
+   "meaning": "Mời vào (chào khách đến nhà)",
+   "tip": "Chủ nhà nói khi khách tới.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "lesson": 7,
+   "kana": "しつれいします",
+   "kanji": "失礼します",
+   "meaning": "Xin phép (khi vào / ra về)",
+   "tip": "Nói khi bước vào phòng hoặc khi ra về.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "lesson": 7,
+   "kana": "いかがですか",
+   "kanji": "",
+   "meaning": "Anh/chị dùng ~ nhé? / ~ thế nào ạ?",
+   "tip": "Cách mời lịch sự: コーヒーは いかがですか.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "lesson": 7,
+   "kana": "スペイン",
+   "kanji": "",
+   "meaning": "Tây Ban Nha",
+   "tip": "Từ mượn: Spain.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 7"
+  },
+  {
+   "lesson": 8,
+   "kana": "ハンサム",
+   "kanji": "",
+   "meaning": "Đẹp trai",
+   "tip": "Tính từ な: ハンサムな 人.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "lesson": 8,
+   "kana": "しんせつ",
+   "kanji": "親切",
+   "meaning": "Tốt bụng, tử tế",
+   "tip": "Tính từ な: 親切な 人.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "lesson": 8,
+   "kana": "すてき",
+   "kanji": "素敵",
+   "meaning": "Đẹp, tuyệt",
+   "tip": "Tính từ な: すてきな かばん.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "lesson": 8,
+   "kana": "さくら",
+   "kanji": "桜",
+   "meaning": "Hoa anh đào; cây anh đào",
+   "tip": "Biểu tượng mùa xuân Nhật Bản.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "lesson": 8,
+   "kana": "りょう",
+   "kanji": "寮",
+   "meaning": "Ký túc xá",
+   "tip": "Nơi ở của sinh viên / nhân viên.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "lesson": 8,
+   "kana": "せいかつ",
+   "kanji": "生活",
+   "meaning": "Cuộc sống, sinh hoạt",
+   "tip": "日本の 生活 = cuộc sống ở Nhật.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "lesson": 8,
+   "kana": "おげんきですか",
+   "kanji": "お元気ですか",
+   "meaning": "Anh/chị có khỏe không?",
+   "tip": "Hỏi thăm người lâu ngày không gặp.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "lesson": 8,
+   "kana": "そうですね",
+   "kanji": "",
+   "meaning": "Ừ nhỉ; để xem nào…",
+   "tip": "Đồng tình, hoặc ngập ngừng khi suy nghĩ.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "lesson": 8,
+   "kana": "けっこうです",
+   "kanji": "結構です",
+   "meaning": "Đủ rồi, không cần ạ",
+   "tip": "Từ chối lịch sự khi được mời thêm.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "lesson": 8,
+   "kana": "そろそろしつれいします",
+   "kanji": "そろそろ失礼します",
+   "meaning": "Đã đến lúc tôi xin phép về",
+   "tip": "Nói khi ra về sau khi đến chơi.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 8"
+  },
+  {
+   "lesson": 9,
+   "kana": "やきゅう",
+   "kanji": "野球",
+   "meaning": "Bóng chày",
+   "tip": "野 (đồng) + 球 (bóng).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "lesson": 9,
+   "kana": "ダンス",
+   "kanji": "",
+   "meaning": "Nhảy, khiêu vũ",
+   "tip": "Từ mượn: dance.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "lesson": 9,
+   "kana": "クラシック",
+   "kanji": "",
+   "meaning": "Nhạc cổ điển",
+   "tip": "Từ mượn: classic.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "lesson": 9,
+   "kana": "ジャズ",
+   "kanji": "",
+   "meaning": "Nhạc jazz",
+   "tip": "Từ mượn: jazz.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "lesson": 9,
+   "kana": "コンサート",
+   "kanji": "",
+   "meaning": "Buổi hòa nhạc",
+   "tip": "Từ mượn: concert.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "lesson": 9,
+   "kana": "カラオケ",
+   "kanji": "",
+   "meaning": "Karaoke",
+   "tip": "Từ gốc Nhật: カラ (trống) + オケ (dàn nhạc).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "lesson": 9,
+   "kana": "かぶき",
+   "kanji": "歌舞伎",
+   "meaning": "Kabuki (kịch truyền thống Nhật)",
+   "tip": "歌 (ca) + 舞 (múa) + 伎 (kỹ).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "lesson": 9,
+   "kana": "ローマじ",
+   "kanji": "ローマ字",
+   "meaning": "Chữ La-tinh (romaji)",
+   "tip": "ローマ (La Mã) + 字 (chữ).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "lesson": 9,
+   "kana": "こまかいおかね",
+   "kanji": "細かいお金",
+   "meaning": "Tiền lẻ",
+   "tip": "細かい (nhỏ, vụn) + お金 (tiền).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "lesson": 9,
+   "kana": "チケット",
+   "kanji": "",
+   "meaning": "Vé (xem phim, hòa nhạc…)",
+   "tip": "Từ mượn: ticket. Vé tàu xe thường là 切符.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "lesson": 9,
+   "kana": "しゅじん",
+   "kanji": "主人",
+   "meaning": "Chồng (tôi)",
+   "tip": "Nói về chồng mình; chồng người khác: ご主人.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "lesson": 9,
+   "kana": "だいたい",
+   "kanji": "大体",
+   "meaning": "Đại khái, phần lớn",
+   "tip": "だいたい わかります = hiểu đại khái.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "lesson": 9,
+   "kana": "はやく",
+   "kanji": "早く",
+   "meaning": "Sớm; nhanh (phó từ)",
+   "tip": "早い → 早く: はやく かえります.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "lesson": 9,
+   "kana": "ざんねんです",
+   "kanji": "残念です",
+   "meaning": "Tiếc quá",
+   "tip": "Nói khi không thể nhận lời / không được như ý.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 9"
+  },
+  {
+   "lesson": 10,
+   "kana": "おとこのひと",
+   "kanji": "男の人",
+   "meaning": "Người đàn ông",
+   "tip": "男 (nam) + の + 人.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "lesson": 10,
+   "kana": "おんなのひと",
+   "kanji": "女の人",
+   "meaning": "Người phụ nữ",
+   "tip": "女 (nữ) + の + 人.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "lesson": 10,
+   "kana": "パンダ",
+   "kanji": "",
+   "meaning": "Gấu trúc",
+   "tip": "Từ mượn: panda.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "lesson": 10,
+   "kana": "ぞう",
+   "kanji": "象",
+   "meaning": "Con voi",
+   "tip": "Chữ 象 vẽ con voi có vòi dài.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "lesson": 10,
+   "kana": "でんち",
+   "kanji": "電池",
+   "meaning": "Pin",
+   "tip": "電 (điện) + 池 (ao, chứa).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "lesson": 10,
+   "kana": "スイッチ",
+   "kanji": "",
+   "meaning": "Công tắc",
+   "tip": "Từ mượn: switch.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "lesson": 10,
+   "kana": "たな",
+   "kanji": "棚",
+   "meaning": "Cái giá, kệ",
+   "tip": "本棚 (ほんだな) = giá sách.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "lesson": 10,
+   "kana": "のりば",
+   "kanji": "乗り場",
+   "meaning": "Bến, chỗ lên xe",
+   "tip": "乗ります (lên) + 場 (chỗ): タクシー乗り場.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "lesson": 10,
+   "kana": "けん",
+   "kanji": "県",
+   "meaning": "Tỉnh",
+   "tip": "Đơn vị hành chính: 大阪府, 奈良県…",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 10"
+  },
+  {
+   "lesson": 11,
+   "kana": "みかん",
+   "kanji": "",
+   "meaning": "Quả quýt",
+   "tip": "Loại quýt phổ biến ở Nhật.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 11"
+  },
+  {
+   "lesson": 11,
+   "kana": "アイスクリーム",
+   "kanji": "",
+   "meaning": "Kem",
+   "tip": "Từ mượn: ice cream.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 11"
+  },
+  {
+   "lesson": 11,
+   "kana": "おとうとさん",
+   "kanji": "弟さん",
+   "meaning": "Em trai (của người khác)",
+   "tip": "Gọi em trai người khác: 弟 + さん.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 11"
+  },
+  {
+   "lesson": 11,
+   "kana": "いもうとさん",
+   "kanji": "妹さん",
+   "meaning": "Em gái (của người khác)",
+   "tip": "Gọi em gái người khác: 妹 + さん.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 11"
+  },
+  {
+   "lesson": 11,
+   "kana": "どのくらい",
+   "kanji": "",
+   "meaning": "Khoảng bao lâu, bao nhiêu",
+   "tip": "Hỏi mức độ, thời gian: どのくらい かかりますか.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 11"
+  },
+  {
+   "lesson": 11,
+   "kana": "ぜんぶで",
+   "kanji": "全部で",
+   "meaning": "Tất cả là, tổng cộng",
+   "tip": "ぜんぶで いくらですか = tất cả bao nhiêu tiền.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 11"
+  },
+  {
+   "lesson": 11,
+   "kana": "かしこまりました",
+   "kanji": "",
+   "meaning": "Vâng, tôi hiểu rồi (kính ngữ)",
+   "tip": "Nhân viên nói với khách; lịch sự hơn わかりました.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 11"
+  },
+  {
+   "lesson": 11,
+   "kana": "いってらっしゃい",
+   "kanji": "",
+   "meaning": "Anh/chị đi nhé",
+   "tip": "Người ở nhà nói với người đi ra ngoài.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 11"
+  },
+  {
+   "lesson": 11,
+   "kana": "いってきます",
+   "kanji": "行ってきます",
+   "meaning": "Tôi đi đây",
+   "tip": "Người đi ra ngoài nói; đáp lại いってらっしゃい.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 11"
+  },
+  {
+   "lesson": 11,
+   "kana": "ふなびん",
+   "kanji": "船便",
+   "meaning": "Gửi đường biển",
+   "tip": "船 (thuyền) + 便 (chuyến gửi).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 11"
+  },
+  {
+   "lesson": 11,
+   "kana": "こうくうびん",
+   "kanji": "航空便",
+   "meaning": "Gửi đường hàng không",
+   "tip": "航空 (hàng không) + 便.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 11"
+  },
+  {
+   "lesson": 11,
+   "kana": "エアメール",
+   "kanji": "",
+   "meaning": "Thư máy bay",
+   "tip": "Từ mượn: airmail (= 航空便).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 11"
+  },
+  {
+   "lesson": 11,
+   "kana": "オーストラリア",
+   "kanji": "",
+   "meaning": "Nước Úc",
+   "tip": "Từ mượn: Australia.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 11"
+  },
+  {
+   "lesson": 12,
+   "kana": "せかい",
+   "kanji": "世界",
+   "meaning": "Thế giới",
+   "tip": "世 (thế) + 界 (giới).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "lesson": 12,
+   "kana": "すきやき",
+   "kanji": "",
+   "meaning": "Lẩu sukiyaki (thịt bò nấu ngọt)",
+   "tip": "Món lẩu Nhật.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "lesson": 12,
+   "kana": "さしみ",
+   "kanji": "刺身",
+   "meaning": "Sashimi (cá sống thái lát)",
+   "tip": "刺 (đâm) + 身 (thịt).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "lesson": 12,
+   "kana": "すし",
+   "kanji": "",
+   "meaning": "Sushi",
+   "tip": "Thường viết すし hoặc 寿司.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "lesson": 12,
+   "kana": "てんぷら",
+   "kanji": "",
+   "meaning": "Tempura (đồ chiên tẩm bột)",
+   "tip": "Món chiên Nhật.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "lesson": 12,
+   "kana": "レモン",
+   "kanji": "",
+   "meaning": "Quả chanh vàng",
+   "tip": "Từ mượn: lemon.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "lesson": 12,
+   "kana": "いけばな",
+   "kanji": "生け花",
+   "meaning": "Nghệ thuật cắm hoa Nhật",
+   "tip": "生ける (cắm hoa) + 花.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "lesson": 12,
+   "kana": "もみじ",
+   "kanji": "紅葉",
+   "meaning": "Lá đỏ mùa thu",
+   "tip": "紅 (đỏ) + 葉 (lá).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "lesson": 12,
+   "kana": "どちらも",
+   "kanji": "",
+   "meaning": "Cả hai",
+   "tip": "Trả lời câu hỏi “cái nào hơn”: どちらも すきです.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "lesson": 12,
+   "kana": "ずっと",
+   "kanji": "",
+   "meaning": "Hơn hẳn; suốt",
+   "tip": "ずっと 大きい = lớn hơn hẳn.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "lesson": 12,
+   "kana": "ただいま",
+   "kanji": "",
+   "meaning": "Tôi đã về (khi về nhà)",
+   "tip": "Đáp lại: おかえりなさい.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "lesson": 12,
+   "kana": "おかえりなさい",
+   "kanji": "",
+   "meaning": "Anh/chị đã về đấy à",
+   "tip": "Người ở nhà nói với người vừa về.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "lesson": 12,
+   "kana": "シンガポール",
+   "kanji": "",
+   "meaning": "Singapore",
+   "tip": "Từ mượn: Singapore.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 12"
+  },
+  {
+   "lesson": 13,
+   "kana": "むかえます",
+   "kanji": "迎えます",
+   "meaning": "Đón (ai đó)",
+   "tip": "駅へ 友だちを 迎えに 行きます.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 13"
+  },
+  {
+   "lesson": 13,
+   "kana": "のどがかわきます",
+   "kanji": "",
+   "meaning": "Khát nước",
+   "tip": "のど (họng) + かわきます (khô).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 13"
+  },
+  {
+   "lesson": 13,
+   "kana": "おなかがすきます",
+   "kanji": "",
+   "meaning": "Đói bụng",
+   "tip": "おなか (bụng) + すきます (trống).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 13"
+  },
+  {
+   "lesson": 13,
+   "kana": "そうしましょう",
+   "kanji": "",
+   "meaning": "Làm thế đi, cứ vậy nhé",
+   "tip": "Đồng ý với đề nghị.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 13"
+  },
+  {
+   "lesson": 13,
+   "kana": "びじゅつ",
+   "kanji": "美術",
+   "meaning": "Mỹ thuật",
+   "tip": "美 (đẹp) + 術 (thuật).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 13"
+  },
+  {
+   "lesson": 13,
+   "kana": "つり",
+   "kanji": "釣り",
+   "meaning": "Câu cá",
+   "tip": "釣ります (câu) → 釣り.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 13"
+  },
+  {
+   "lesson": 13,
+   "kana": "スキー",
+   "kanji": "",
+   "meaning": "Trượt tuyết",
+   "tip": "Từ mượn: ski. スキーを します.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 13"
+  },
+  {
+   "lesson": 13,
+   "kana": "しゅうまつ",
+   "kanji": "週末",
+   "meaning": "Cuối tuần",
+   "tip": "週 (tuần) + 末 (cuối).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 13"
+  },
+  {
+   "lesson": 13,
+   "kana": "ていしょく",
+   "kanji": "定食",
+   "meaning": "Cơm suất (set ăn)",
+   "tip": "定 (cố định) + 食 (ăn).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 13"
+  },
+  {
+   "lesson": 13,
+   "kana": "ぎゅうどん",
+   "kanji": "牛どん",
+   "meaning": "Cơm thịt bò",
+   "tip": "牛 (bò) + どん (bát cơm).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 13"
+  },
+  {
+   "lesson": 13,
+   "kana": "べつべつに",
+   "kanji": "別々に",
+   "meaning": "Riêng ra (trả tiền riêng)",
+   "tip": "別々に おねがいします = tính riêng.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 13"
+  },
+  {
+   "lesson": 14,
+   "kana": "エアコン",
+   "kanji": "",
+   "meaning": "Máy điều hòa",
+   "tip": "Viết tắt của air conditioner.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 14"
+  },
+  {
+   "lesson": 14,
+   "kana": "よみかた",
+   "kanji": "読み方",
+   "meaning": "Cách đọc",
+   "tip": "読みます → 読み + 方 (cách).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 14"
+  },
+  {
+   "lesson": 14,
+   "kana": "あとで",
+   "kanji": "",
+   "meaning": "Lát nữa, sau",
+   "tip": "あとで 電話します.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 14"
+  },
+  {
+   "lesson": 14,
+   "kana": "もうすこし",
+   "kanji": "もう少し",
+   "meaning": "Thêm chút nữa",
+   "tip": "もう少し ゆっくり おねがいします.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 14"
+  },
+  {
+   "lesson": 15,
+   "kana": "しりょう",
+   "kanji": "資料",
+   "meaning": "Tài liệu",
+   "tip": "資 (tư liệu) + 料 (liệu).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 15"
+  },
+  {
+   "lesson": 15,
+   "kana": "カタログ",
+   "kanji": "",
+   "meaning": "Ca-ta-lô",
+   "tip": "Từ mượn: catalog.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 15"
+  },
+  {
+   "lesson": 15,
+   "kana": "じこくひょう",
+   "kanji": "時刻表",
+   "meaning": "Bảng giờ tàu xe",
+   "tip": "時刻 (giờ) + 表 (bảng).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 15"
+  },
+  {
+   "lesson": 15,
+   "kana": "せいひん",
+   "kanji": "製品",
+   "meaning": "Sản phẩm",
+   "tip": "製 (chế tạo) + 品 (phẩm).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 15"
+  },
+  {
+   "lesson": 15,
+   "kana": "ソフト",
+   "kanji": "",
+   "meaning": "Phần mềm",
+   "tip": "Viết tắt của software.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 15"
+  },
+  {
+   "lesson": 15,
+   "kana": "でんしじしょ",
+   "kanji": "電子辞書",
+   "meaning": "Từ điển điện tử",
+   "tip": "電子 (điện tử) + 辞書 (từ điển).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 15"
+  },
+  {
+   "lesson": 15,
+   "kana": "けいざい",
+   "kanji": "経済",
+   "meaning": "Kinh tế",
+   "tip": "経 (kinh) + 済 (tế).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 15"
+  },
+  {
+   "lesson": 15,
+   "kana": "しやくしょ",
+   "kanji": "市役所",
+   "meaning": "Tòa thị chính, ủy ban thành phố",
+   "tip": "市 (thành phố) + 役所 (công sở).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 15"
+  },
+  {
+   "lesson": 15,
+   "kana": "おもいだします",
+   "kanji": "思い出します",
+   "meaning": "Nhớ lại",
+   "tip": "思います + 出します.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 15"
+  },
+  {
+   "lesson": 15,
+   "kana": "いらっしゃいます",
+   "kanji": "",
+   "meaning": "Có, ở (kính ngữ của います)",
+   "tip": "先生は いらっしゃいますか.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 15"
+  },
+  {
+   "lesson": 16,
+   "kana": "おろします",
+   "kanji": "下ろします",
+   "meaning": "Rút (tiền); hạ xuống",
+   "tip": "お金を 下ろします = rút tiền.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 16"
+  },
+  {
+   "lesson": 16,
+   "kana": "けんがくします",
+   "kanji": "見学します",
+   "meaning": "Tham quan học hỏi",
+   "tip": "見 (xem) + 学 (học).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 16"
+  },
+  {
+   "lesson": 16,
+   "kana": "サービス",
+   "kanji": "",
+   "meaning": "Dịch vụ",
+   "tip": "Từ mượn: service.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 16"
+  },
+  {
+   "lesson": 16,
+   "kana": "ジョギング",
+   "kanji": "",
+   "meaning": "Chạy bộ",
+   "tip": "Từ mượn: jogging. ジョギングを します.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 16"
+  },
+  {
+   "lesson": 16,
+   "kana": "おてら",
+   "kanji": "お寺",
+   "meaning": "Chùa",
+   "tip": "寺 (tự) = chùa.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 16"
+  },
+  {
+   "lesson": 16,
+   "kana": "どうやって",
+   "kanji": "",
+   "meaning": "Làm thế nào, bằng cách nào",
+   "tip": "どうやって 行きますか.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 16"
+  },
+  {
+   "lesson": 16,
+   "kana": "まず",
+   "kanji": "",
+   "meaning": "Trước hết",
+   "tip": "Dùng khi giải thích các bước: まず…、つぎに….",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 16"
+  },
+  {
+   "lesson": 16,
+   "kana": "つぎに",
+   "kanji": "次に",
+   "meaning": "Tiếp theo",
+   "tip": "次 (tiếp) + に.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 16"
+  },
+  {
+   "lesson": 16,
+   "kana": "キャッシュカード",
+   "kanji": "",
+   "meaning": "Thẻ rút tiền (ATM)",
+   "tip": "Từ mượn: cash card.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 16"
+  },
+  {
+   "lesson": 16,
+   "kana": "あんしょうばんごう",
+   "kanji": "暗証番号",
+   "meaning": "Mã PIN",
+   "tip": "暗証 (mật mã) + 番号 (số).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 16"
+  },
+  {
+   "lesson": 16,
+   "kana": "きんがく",
+   "kanji": "金額",
+   "meaning": "Số tiền",
+   "tip": "金 (tiền) + 額 (mức).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 16"
+  },
+  {
+   "lesson": 16,
+   "kana": "かくにん",
+   "kanji": "確認",
+   "meaning": "Xác nhận, kiểm tra lại",
+   "tip": "確 (chắc) + 認 (nhận).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 16"
+  },
+  {
+   "lesson": 17,
+   "kana": "きんえん",
+   "kanji": "禁煙",
+   "meaning": "Cấm hút thuốc",
+   "tip": "禁 (cấm) + 煙 (khói).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 17"
+  },
+  {
+   "lesson": 17,
+   "kana": "ほけんしょう",
+   "kanji": "保険証",
+   "meaning": "Thẻ bảo hiểm (y tế)",
+   "tip": "保険 (bảo hiểm) + 証 (giấy chứng).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 17"
+  },
+  {
+   "lesson": 17,
+   "kana": "したぎ",
+   "kanji": "下着",
+   "meaning": "Đồ lót",
+   "tip": "下 (dưới) + 着 (mặc).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 17"
+  },
+  {
+   "lesson": 17,
+   "kana": "〜までに",
+   "kanji": "",
+   "meaning": "Trước ~ (hạn chót)",
+   "tip": "金曜日までに = trước thứ Sáu. Khác まで (cho đến).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 17"
+  },
+  {
+   "lesson": 17,
+   "kana": "ですから",
+   "kanji": "",
+   "meaning": "Vì vậy, do đó",
+   "tip": "Nối hai câu chỉ kết quả.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 17"
+  },
+  {
+   "lesson": 17,
+   "kana": "どうしましたか",
+   "kanji": "",
+   "meaning": "Anh/chị bị làm sao vậy?",
+   "tip": "Bác sĩ / người khác hỏi khi thấy có chuyện.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 17"
+  },
+  {
+   "lesson": 17,
+   "kana": "おだいじに",
+   "kanji": "お大事に",
+   "meaning": "Chúc mau khỏe",
+   "tip": "Nói với người ốm.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 17"
+  },
+  {
+   "lesson": 18,
+   "kana": "かえます",
+   "kanji": "換えます",
+   "meaning": "Đổi (tiền, đồ)",
+   "tip": "ドルを 円に 換えます. Khác 変えます (thay đổi).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 18"
+  },
+  {
+   "lesson": 18,
+   "kana": "げんきん",
+   "kanji": "現金",
+   "meaning": "Tiền mặt",
+   "tip": "現 (hiện) + 金 (tiền).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 18"
+  },
+  {
+   "lesson": 18,
+   "kana": "おいのり",
+   "kanji": "お祈り",
+   "meaning": "Sự cầu nguyện",
+   "tip": "祈ります (cầu nguyện) → お祈り.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 18"
+  },
+  {
+   "lesson": 18,
+   "kana": "うま",
+   "kanji": "馬",
+   "meaning": "Con ngựa",
+   "tip": "Chữ 馬 vẽ con ngựa có bờm và bốn chân.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 18"
+  },
+  {
+   "lesson": 18,
+   "kana": "とくに",
+   "kanji": "特に",
+   "meaning": "Đặc biệt là",
+   "tip": "特 (đặc) + に.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 18"
+  },
+  {
+   "lesson": 18,
+   "kana": "へえ",
+   "kanji": "",
+   "meaning": "Ồ, thế à (ngạc nhiên)",
+   "tip": "Cảm thán khi nghe chuyện lạ.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 18"
+  },
+  {
+   "lesson": 18,
+   "kana": "なかなか",
+   "kanji": "",
+   "meaning": "Mãi mà (không)…; khá là",
+   "tip": "なかなか 寝られません; なかなか おもしろい.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 18"
+  },
+  {
+   "lesson": 18,
+   "kana": "ほんとうですか",
+   "kanji": "本当ですか",
+   "meaning": "Thật không?",
+   "tip": "本当 (thật) + ですか.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 18"
+  },
+  {
+   "lesson": 18,
+   "kana": "ぜひ",
+   "kanji": "",
+   "meaning": "Nhất định, rất muốn",
+   "tip": "ぜひ 行きたいです.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 18"
+  },
+  {
+   "lesson": 19,
+   "kana": "すもう",
+   "kanji": "相撲",
+   "meaning": "Sumo (vật Nhật)",
+   "tip": "相 (tương) + 撲 (đánh).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 19"
+  },
+  {
+   "lesson": 19,
+   "kana": "いちども",
+   "kanji": "一度も",
+   "meaning": "Chưa (một) lần nào",
+   "tip": "Đi với phủ định: 一度も 行った ことが ありません.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 19"
+  },
+  {
+   "lesson": 19,
+   "kana": "おかげさまで",
+   "kanji": "",
+   "meaning": "Nhờ trời, nhờ anh/chị (mà tôi khỏe / ổn)",
+   "tip": "Đáp lại khi được hỏi thăm.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 19"
+  },
+  {
+   "lesson": 19,
+   "kana": "かんぱい",
+   "kanji": "乾杯",
+   "meaning": "Cạn chén, nâng ly",
+   "tip": "乾 (khô) + 杯 (chén).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 19"
+  },
+  {
+   "lesson": 19,
+   "kana": "ダイエット",
+   "kanji": "",
+   "meaning": "Ăn kiêng",
+   "tip": "Từ mượn: diet.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 19"
+  },
+  {
+   "lesson": 19,
+   "kana": "からだにいい",
+   "kanji": "体にいい",
+   "meaning": "Tốt cho sức khỏe",
+   "tip": "体 (cơ thể) + に + いい.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 19"
+  },
+  {
+   "lesson": 20,
+   "kana": "しゅうりします",
+   "kanji": "修理します",
+   "meaning": "Sửa chữa (máy móc)",
+   "tip": "修 (tu) + 理 (lý).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 20"
+  },
+  {
+   "lesson": 20,
+   "kana": "ビザ",
+   "kanji": "",
+   "meaning": "Thị thực, visa",
+   "tip": "Từ mượn: visa.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 20"
+  },
+  {
+   "lesson": 20,
+   "kana": "みんなで",
+   "kanji": "",
+   "meaning": "Mọi người cùng nhau",
+   "tip": "みんな + で: みんなで 行こう.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 20"
+  },
+  {
+   "lesson": 20,
+   "kana": "おなかがいっぱい",
+   "kanji": "",
+   "meaning": "No bụng",
+   "tip": "おなか (bụng) + いっぱい (đầy).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 20"
+  },
+  {
+   "lesson": 21,
+   "kana": "やくにたちます",
+   "kanji": "役に立ちます",
+   "meaning": "Có ích",
+   "tip": "役 (vai trò) + に + 立ちます.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "lesson": 21,
+   "kana": "うごきます",
+   "kanji": "動きます",
+   "meaning": "Chuyển động, chạy (máy)",
+   "tip": "時計が 動きません = đồng hồ không chạy.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "lesson": 21,
+   "kana": "やめます",
+   "kanji": "",
+   "meaning": "Bỏ, thôi (việc, thói quen)",
+   "tip": "会社を やめます; たばこを やめます.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "lesson": 21,
+   "kana": "きをつけます",
+   "kanji": "気をつけます",
+   "meaning": "Chú ý, cẩn thận",
+   "tip": "車に 気をつけます.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "lesson": 21,
+   "kana": "りゅうがくします",
+   "kanji": "留学します",
+   "meaning": "Du học",
+   "tip": "留 (lưu) + 学 (học).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "lesson": 21,
+   "kana": "むだ",
+   "kanji": "無駄",
+   "meaning": "Lãng phí, vô ích",
+   "tip": "Tính từ な: むだな お金.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "lesson": 21,
+   "kana": "ぶっか",
+   "kanji": "物価",
+   "meaning": "Vật giá",
+   "tip": "物 (vật) + 価 (giá).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "lesson": 21,
+   "kana": "ほうそう",
+   "kanji": "放送",
+   "meaning": "Phát sóng, truyền thanh",
+   "tip": "放 (phóng) + 送 (tống).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "lesson": 21,
+   "kana": "アニメ",
+   "kanji": "",
+   "meaning": "Phim hoạt hình",
+   "tip": "Viết tắt của animation.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "lesson": 21,
+   "kana": "マンガ",
+   "kanji": "",
+   "meaning": "Truyện tranh",
+   "tip": "Còn viết 漫画.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "lesson": 21,
+   "kana": "デザイン",
+   "kanji": "",
+   "meaning": "Thiết kế",
+   "tip": "Từ mượn: design.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "lesson": 21,
+   "kana": "てんさい",
+   "kanji": "天才",
+   "meaning": "Thiên tài",
+   "tip": "天 (trời) + 才 (tài).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "lesson": 21,
+   "kana": "ちきゅう",
+   "kanji": "地球",
+   "meaning": "Trái đất",
+   "tip": "地 (đất) + 球 (quả cầu).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "lesson": 21,
+   "kana": "ほんとうに",
+   "kanji": "本当に",
+   "meaning": "Thật sự",
+   "tip": "本当 + に.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "lesson": 21,
+   "kana": "そんなに",
+   "kanji": "",
+   "meaning": "(không) đến mức đó",
+   "tip": "Đi với phủ định: そんなに 高くないです.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "lesson": 21,
+   "kana": "〜について",
+   "kanji": "",
+   "meaning": "Về ~",
+   "tip": "日本の 生活について 話します.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "lesson": 21,
+   "kana": "しかたがありません",
+   "kanji": "仕方がありません",
+   "meaning": "Đành chịu, không còn cách nào",
+   "tip": "仕方 (cách làm) + が ありません.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "lesson": 21,
+   "kana": "しばらくですね",
+   "kanji": "",
+   "meaning": "Lâu rồi không gặp nhỉ",
+   "tip": "Chào khi gặp lại sau một thời gian.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "lesson": 21,
+   "kana": "もちろん",
+   "kanji": "",
+   "meaning": "Tất nhiên",
+   "tip": "もちろん 行きます.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 21"
+  },
+  {
+   "lesson": 22,
+   "kana": "スーツ",
+   "kanji": "",
+   "meaning": "Bộ com-lê",
+   "tip": "Từ mượn: suit.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 22"
+  },
+  {
+   "lesson": 22,
+   "kana": "ロボット",
+   "kanji": "",
+   "meaning": "Rô-bốt",
+   "tip": "Từ mượn: robot.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 22"
+  },
+  {
+   "lesson": 22,
+   "kana": "ユーモア",
+   "kanji": "",
+   "meaning": "Sự hài hước",
+   "tip": "Từ mượn: humor.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 22"
+  },
+  {
+   "lesson": 22,
+   "kana": "えーと",
+   "kanji": "",
+   "meaning": "Ờ… để xem nào",
+   "tip": "Nói khi đang nghĩ.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 22"
+  },
+  {
+   "lesson": 22,
+   "kana": "おめでとうございます",
+   "kanji": "",
+   "meaning": "Chúc mừng",
+   "tip": "Dùng cho sinh nhật, kết hôn, năm mới…",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 22"
+  },
+  {
+   "lesson": 22,
+   "kana": "やちん",
+   "kanji": "家賃",
+   "meaning": "Tiền thuê nhà",
+   "tip": "家 (nhà) + 賃 (tiền công).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 22"
+  },
+  {
+   "lesson": 22,
+   "kana": "わしつ",
+   "kanji": "和室",
+   "meaning": "Phòng kiểu Nhật",
+   "tip": "和 (Nhật) + 室 (phòng).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 22"
+  },
+  {
+   "lesson": 22,
+   "kana": "おしいれ",
+   "kanji": "押し入れ",
+   "meaning": "Tủ âm tường kiểu Nhật",
+   "tip": "押す (đẩy) + 入れる (cất): nơi cất chăn đệm.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 22"
+  },
+  {
+   "lesson": 23,
+   "kana": "サイズ",
+   "kanji": "",
+   "meaning": "Cỡ, kích thước",
+   "tip": "Từ mượn: size.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 23"
+  },
+  {
+   "lesson": 23,
+   "kana": "なんかいも",
+   "kanji": "何回も",
+   "meaning": "Nhiều lần",
+   "tip": "何回 + も.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 23"
+  },
+  {
+   "lesson": 24,
+   "kana": "ひっこし",
+   "kanji": "引っ越し",
+   "meaning": "Việc chuyển nhà",
+   "tip": "引っ越します → 引っ越し.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 24"
+  },
+  {
+   "lesson": 24,
+   "kana": "ホームステイ",
+   "kanji": "",
+   "meaning": "Ở nhà người bản xứ (homestay)",
+   "tip": "Từ mượn: homestay.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 24"
+  },
+  {
+   "lesson": 24,
+   "kana": "じぶんで",
+   "kanji": "自分で",
+   "meaning": "Tự mình",
+   "tip": "自分 (bản thân) + で.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 24"
+  },
+  {
+   "lesson": 24,
+   "kana": "ほかに",
+   "kanji": "",
+   "meaning": "Ngoài ra",
+   "tip": "ほかに 何か ありますか.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 24"
+  },
+  {
+   "lesson": 25,
+   "kana": "グループ",
+   "kanji": "",
+   "meaning": "Nhóm",
+   "tip": "Từ mượn: group.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 25"
+  },
+  {
+   "lesson": 25,
+   "kana": "てんきん",
+   "kanji": "転勤",
+   "meaning": "Chuyển công tác",
+   "tip": "転 (chuyển) + 勤 (làm việc).",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 25"
+  },
+  {
+   "lesson": 25,
+   "kana": "こと",
+   "kanji": "",
+   "meaning": "Việc, chuyện",
+   "tip": "わたしの こと = chuyện về tôi.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 25"
+  },
+  {
+   "lesson": 25,
+   "kana": "どうぞおげんきで",
+   "kanji": "どうぞお元気で",
+   "meaning": "Chúc anh/chị mạnh khỏe (khi chia tay)",
+   "tip": "Lời chào khi chia tay lâu dài.",
+   "source": "Minna no Nihongo Shokyu I, bản 2 (3A Corporation, 2012) — danh mục từ mới (語彙) của bài 25"
+  }
+ ],
+ "minnaOrder": {
+  "1": [
+   "わたし|私",
+   "わたしたち|私たち",
+   "あなた",
+   "あのひと|あの人",
+   "あのかた|あの方",
+   "〜さん",
+   "〜ちゃん",
+   "〜じん|〜人",
+   "〜くん|〜君",
+   "せんせい|先生",
+   "きょうし|教師",
+   "がくせい|学生",
+   "かいしゃいん|会社員",
+   "しゃいん|社員",
+   "ぎんこういん|銀行員",
+   "いしゃ|医者",
+   "けんきゅうしゃ|研究者",
+   "エンジニア",
+   "だいがく|大学",
+   "びょういん|病院",
+   "でんき|電気",
+   "だれ|誰",
+   "どなた",
+   "〜さい|〜歳",
+   "なんさい|何歳",
+   "おいくつ",
+   "はい",
+   "いいえ",
+   "しつれいですが|失礼ですが",
+   "おなまえは|お名前は",
+   "はじめまして|初めまして",
+   "どうぞよろしく",
+   "こちらは〜さんです",
+   "〜からきました|〜から来ました",
+   "アメリカ",
+   "イギリス",
+   "インド",
+   "インドネシア",
+   "かんこく|韓国",
+   "タイ",
+   "ちゅうごく|中国",
+   "ドイツ",
+   "にほん|日本",
+   "ブラジル"
+  ],
+  "2": [
+   "これ",
+   "それ",
+   "あれ",
+   "この",
+   "その",
+   "あの",
+   "ほん|本",
+   "じしょ|辞書",
+   "ざっし|雑誌",
+   "しんぶん|新聞",
+   "ノート",
+   "てちょう|手帳",
+   "めいし|名刺",
+   "カード",
+   "えんぴつ|鉛筆",
+   "ボールペン",
+   "シャープペンシル",
+   "かぎ",
+   "とけい|時計",
+   "かさ|傘",
+   "かばん",
+   "テレビ",
+   "ラジオ",
+   "カメラ",
+   "コンピューター",
+   "くるま|車",
+   "つくえ|机",
+   "いす",
+   "チョコレート",
+   "コーヒー",
+   "おみやげ|お土産",
+   "えいご|英語",
+   "にほんご|日本語",
+   "〜ご|〜語",
+   "なん|何",
+   "そう",
+   "あのう",
+   "どうぞ",
+   "ありがとうございます",
+   "そうですか",
+   "ちがいます|違います",
+   "これからおせわになります|これからお世話になります",
+   "こちらこそよろしく"
+  ],
+  "3": [
+   "ここ",
+   "そこ",
+   "あそこ",
+   "どこ",
+   "こちら",
+   "そちら",
+   "あちら",
+   "どちら",
+   "きょうしつ|教室",
+   "しょくどう|食堂",
+   "じむしょ|事務所",
+   "かいぎしつ|会議室",
+   "うけつけ|受付",
+   "ロビー",
+   "へや|部屋",
+   "トイレ",
+   "おてあらい|お手洗い",
+   "かいだん|階段",
+   "エレベーター",
+   "エスカレーター",
+   "じどうはんばいき|自動販売機",
+   "でんわ|電話",
+   "くに|国",
+   "かいしゃ|会社",
+   "うち|家",
+   "くつ|靴",
+   "ネクタイ",
+   "ワイン",
+   "うりば|売り場",
+   "ちか|地下",
+   "〜かい|〜階",
+   "なんがい|何階",
+   "〜えん|〜円",
+   "いくら",
+   "ひゃく|百",
+   "せん|千",
+   "まん|万",
+   "すみません",
+   "みせてください|見せてください",
+   "ください",
+   "イタリア",
+   "スイス",
+   "フランス"
+  ],
+  "4": [
+   "おきます|起きます",
+   "ねます|寝ます",
+   "はたらきます|働きます",
+   "やすみます|休みます",
+   "べんきょうします|勉強します",
+   "おわります|終わります",
+   "デパート",
+   "ぎんこう|銀行",
+   "ゆうびんきょく|郵便局",
+   "としょかん|図書館",
+   "びじゅつかん|美術館",
+   "いま|今",
+   "〜じ|〜時",
+   "〜ふん|〜分",
+   "はん|半",
+   "なんじ|何時",
+   "なんぷん|何分",
+   "ごぜん|午前",
+   "ごご|午後",
+   "あさ|朝",
+   "ひる|昼",
+   "ばん|晩",
+   "よる|夜",
+   "おととい",
+   "きのう|昨日",
+   "きょう|今日",
+   "あした|明日",
+   "あさって",
+   "けさ|今朝",
+   "こんばん|今晩",
+   "やすみ|休み",
+   "ひるやすみ|昼休み",
+   "しけん|試験",
+   "かいぎ|会議",
+   "えいが|映画",
+   "まいあさ|毎朝",
+   "まいばん|毎晩",
+   "まいにち|毎日",
+   "げつようび|月曜日",
+   "かようび|火曜日",
+   "すいようび|水曜日",
+   "もくようび|木曜日",
+   "きんようび|金曜日",
+   "どようび|土曜日",
+   "にちようび|日曜日",
+   "なんようび|何曜日",
+   "たいへんですね|大変ですね",
+   "ばんごう|番号",
+   "なんばん|何番"
+  ],
+  "5": [
+   "いきます|行きます",
+   "きます|来ます",
+   "かえります|帰ります",
+   "がっこう|学校",
+   "スーパー",
+   "えき|駅",
+   "ひこうき|飛行機",
+   "ふね|船",
+   "でんしゃ|電車",
+   "ちかてつ|地下鉄",
+   "しんかんせん|新幹線",
+   "バス",
+   "タクシー",
+   "じてんしゃ|自転車",
+   "あるいて|歩いて",
+   "ひと|人",
+   "ともだち|友達",
+   "かれ|彼",
+   "かのじょ|彼女",
+   "かぞく|家族",
+   "ひとりで|一人で",
+   "せんしゅう|先週",
+   "こんしゅう|今週",
+   "らいしゅう|来週",
+   "せんげつ|先月",
+   "こんげつ|今月",
+   "らいげつ|来月",
+   "きょねん|去年",
+   "ことし|今年",
+   "らいねん|来年",
+   "〜ねん|〜年",
+   "なんねん|何年",
+   "〜がつ|〜月",
+   "なんがつ|何月",
+   "ついたち|一日",
+   "ふつか|二日",
+   "みっか|三日",
+   "よっか|四日",
+   "いつか|五日",
+   "むいか|六日",
+   "なのか|七日",
+   "ようか|八日",
+   "ここのか|九日",
+   "とおか|十日",
+   "じゅうよっか|十四日",
+   "はつか|二十日",
+   "にじゅうよっか|二十四日",
+   "〜にち|〜日",
+   "なんにち|何日",
+   "いつ",
+   "たんじょうび|誕生日",
+   "どういたしまして",
+   "〜ばんせん|〜番線",
+   "つぎの|次の",
+   "ふつう|普通",
+   "きゅうこう|急行",
+   "とっきゅう|特急"
+  ],
+  "6": [
+   "たべます|食べます",
+   "のみます|飲みます",
+   "すいます|吸います",
+   "みます|見ます",
+   "ききます|聞きます",
+   "よみます|読みます",
+   "かきます|書きます",
+   "かいます|買います",
+   "とります|撮ります",
+   "します",
+   "あいます|会います",
+   "ごはん|ご飯",
+   "あさごはん|朝ご飯",
+   "ひるごはん|昼ご飯",
+   "ばんごはん|晩ご飯",
+   "パン",
+   "たまご|卵",
+   "にく|肉",
+   "さかな|魚",
+   "やさい|野菜",
+   "くだもの|果物",
+   "みず|水",
+   "おちゃ|お茶",
+   "こうちゃ|紅茶",
+   "ぎゅうにゅう|牛乳",
+   "ミルク",
+   "ジュース",
+   "ビール",
+   "おさけ|お酒",
+   "たばこ",
+   "てがみ|手紙",
+   "レポート",
+   "しゃしん|写真",
+   "ビデオ",
+   "みせ|店",
+   "にわ|庭",
+   "しゅくだい|宿題",
+   "テニス",
+   "サッカー",
+   "おはなみ|お花見",
+   "なに|何",
+   "いっしょに|一緒に",
+   "ちょっと",
+   "いつも",
+   "ときどき|時々",
+   "それから",
+   "ええ",
+   "いいですね",
+   "わかりました",
+   "じゃ、また",
+   "メキシコ"
+  ],
+  "7": [
+   "きります|切ります",
+   "おくります|送ります",
+   "あげます",
+   "もらいます",
+   "かします|貸します",
+   "かります|借ります",
+   "おしえます|教えます",
+   "ならいます|習います",
+   "かけます",
+   "て|手",
+   "はし",
+   "スプーン",
+   "ナイフ",
+   "フォーク",
+   "はさみ",
+   "パソコン",
+   "ケータイ",
+   "メール",
+   "ねんがじょう|年賀状",
+   "パンチ",
+   "ホッチキス",
+   "セロテープ",
+   "けしゴム|消しゴム",
+   "かみ|紙",
+   "はな|花",
+   "シャツ",
+   "プレゼント",
+   "にもつ|荷物",
+   "おかね|お金",
+   "きっぷ|切符",
+   "クリスマス",
+   "ちち|父",
+   "はは|母",
+   "おとうさん|お父さん",
+   "おかあさん|お母さん",
+   "もう",
+   "まだ",
+   "これから",
+   "すてきですね",
+   "いらっしゃい",
+   "しつれいします|失礼します",
+   "いかがですか",
+   "いただきます",
+   "ごちそうさま",
+   "スペイン"
+  ],
+  "8": [
+   "ハンサム",
+   "きれい",
+   "しずか|静か",
+   "にぎやか",
+   "ゆうめい|有名",
+   "しんせつ|親切",
+   "げんき|元気",
+   "ひま|暇",
+   "べんり|便利",
+   "すてき",
+   "おおきい|大きい",
+   "ちいさい|小さい",
+   "あたらしい|新しい",
+   "ふるい|古い",
+   "いい",
+   "わるい|悪い",
+   "あつい|暑い",
+   "さむい|寒い",
+   "つめたい|冷たい",
+   "むずかしい|難しい",
+   "やさしい|易しい",
+   "たかい|高い",
+   "やすい|安い",
+   "ひくい|低い",
+   "おもしろい|面白い",
+   "おいしい",
+   "いそがしい|忙しい",
+   "たのしい|楽しい",
+   "しろい|白い",
+   "くろい|黒い",
+   "あかい|赤い",
+   "あおい|青い",
+   "さくら|桜",
+   "やま|山",
+   "まち|町",
+   "たべもの|食べ物",
+   "ところ|所",
+   "りょう|寮",
+   "レストラン",
+   "せいかつ|生活",
+   "しごと|仕事",
+   "どう",
+   "どんな",
+   "とても",
+   "あまり",
+   "そして",
+   "おげんきですか|お元気ですか",
+   "そうですね",
+   "けっこうです|結構です",
+   "そろそろしつれいします|そろそろ失礼します"
+  ],
+  "9": [
+   "わかります|分かります",
+   "あります",
+   "すき|好き",
+   "きらい|嫌い",
+   "じょうず|上手",
+   "へた|下手",
+   "のみもの|飲み物",
+   "りょうり|料理",
+   "スポーツ",
+   "やきゅう|野球",
+   "ダンス",
+   "りょこう|旅行",
+   "おんがく|音楽",
+   "うた|歌",
+   "クラシック",
+   "ジャズ",
+   "コンサート",
+   "カラオケ",
+   "かぶき|歌舞伎",
+   "え|絵",
+   "じ|字",
+   "かんじ|漢字",
+   "ひらがな",
+   "かたかな",
+   "ローマじ|ローマ字",
+   "こまかいおかね|細かいお金",
+   "チケット",
+   "じかん|時間",
+   "ようじ|用事",
+   "やくそく|約束",
+   "アルバイト",
+   "ごしゅじん|ご主人",
+   "おっと|夫",
+   "しゅじん|主人",
+   "おくさん|奥さん",
+   "つま|妻",
+   "かない|家内",
+   "こども|子ども",
+   "よく",
+   "だいたい",
+   "たくさん",
+   "すこし|少し",
+   "ぜんぜん|全然",
+   "はやく|早く",
+   "どうして",
+   "ざんねんです|残念です",
+   "だめですか"
+  ],
+  "10": [
+   "あります",
+   "います",
+   "いろいろ",
+   "おとこのひと|男の人",
+   "おんなのひと|女の人",
+   "おとこのこ|男の子",
+   "おんなのこ|女の子",
+   "いぬ|犬",
+   "ねこ|猫",
+   "パンダ",
+   "ぞう|象",
+   "き|木",
+   "もの|物",
+   "でんち|電池",
+   "はこ|箱",
+   "スイッチ",
+   "れいぞうこ|冷蔵庫",
+   "テーブル",
+   "ベッド",
+   "たな|棚",
+   "ドア",
+   "まど|窓",
+   "ポスト",
+   "ビル",
+   "コンビニ",
+   "こうえん|公園",
+   "きっさてん|喫茶店",
+   "〜や|〜屋",
+   "のりば|乗り場",
+   "けん|県",
+   "うえ|上",
+   "した|下",
+   "まえ|前",
+   "うしろ",
+   "みぎ|右",
+   "ひだり|左",
+   "なか|中",
+   "そと|外",
+   "となり|隣",
+   "ちかく|近く",
+   "あいだ|間",
+   "いちばん"
+  ],
+  "11": [
+   "かかります",
+   "ひとつ|一つ",
+   "ふたつ|二つ",
+   "みっつ|三つ",
+   "よっつ|四つ",
+   "いつつ|五つ",
+   "むっつ|六つ",
+   "ななつ|七つ",
+   "やっつ|八つ",
+   "ここのつ|九つ",
+   "とお|十",
+   "いくつ",
+   "ひとり|一人",
+   "ふたり|二人",
+   "〜にん|〜人",
+   "〜だい|〜台",
+   "〜まい|〜枚",
+   "〜かい|〜回",
+   "りんご",
+   "みかん",
+   "サンドイッチ",
+   "カレー",
+   "アイスクリーム",
+   "きって|切手",
+   "はがき",
+   "ふうとう|封筒",
+   "りょうしん|両親",
+   "きょうだい|兄弟",
+   "あに|兄",
+   "おにいさん|お兄さん",
+   "あね|姉",
+   "おねえさん|お姉さん",
+   "おとうと|弟",
+   "おとうとさん|弟さん",
+   "いもうと|妹",
+   "いもうとさん|妹さん",
+   "がいこく|外国",
+   "りゅうがくせい|留学生",
+   "クラス",
+   "〜じかん|〜時間",
+   "〜しゅうかん|〜週間",
+   "〜かげつ|〜か月",
+   "〜ぐらい",
+   "どのくらい",
+   "ぜんぶで|全部で",
+   "みんな",
+   "〜だけ",
+   "かしこまりました",
+   "いってらっしゃい",
+   "いってきます|行ってきます",
+   "ふなびん|船便",
+   "こうくうびん|航空便",
+   "エアメール",
+   "オーストラリア"
+  ],
+  "12": [
+   "かんたん|簡単",
+   "ちかい|近い",
+   "とおい|遠い",
+   "はやい|速い",
+   "おそい|遅い",
+   "おおい|多い",
+   "すくない|少ない",
+   "あたたかい|暖かい",
+   "すずしい|涼しい",
+   "あまい|甘い",
+   "からい|辛い",
+   "おもい|重い",
+   "かるい|軽い",
+   "きせつ|季節",
+   "はる|春",
+   "なつ|夏",
+   "あき|秋",
+   "ふゆ|冬",
+   "てんき|天気",
+   "あめ|雨",
+   "ゆき|雪",
+   "くもり|曇り",
+   "ホテル",
+   "くうこう|空港",
+   "うみ|海",
+   "せかい|世界",
+   "パーティー",
+   "おまつり|お祭り",
+   "すきやき",
+   "さしみ|刺身",
+   "すし",
+   "てんぷら",
+   "ぶたにく|豚肉",
+   "とりにく|とり肉",
+   "ぎゅうにく|牛肉",
+   "レモン",
+   "いけばな|生け花",
+   "もみじ|紅葉",
+   "どちらも",
+   "ずっと",
+   "はじめて|初めて",
+   "ただいま",
+   "おかえりなさい",
+   "つかれました|疲れました",
+   "シンガポール"
+  ],
+  "13": [
+   "あそびます|遊びます",
+   "およぎます|泳ぎます",
+   "むかえます|迎えます",
+   "つかれます|疲れます",
+   "けっこんします|結婚します",
+   "かいものします|買い物します",
+   "しょくじします|食事します",
+   "さんぽします|散歩します",
+   "たいへん|大変",
+   "ほしい|欲しい",
+   "ひろい|広い",
+   "せまい|狭い",
+   "プール",
+   "かわ|川",
+   "びじゅつ|美術",
+   "つり|釣り",
+   "スキー",
+   "しゅうまつ|週末",
+   "しょうがつ|正月",
+   "なにか|何か",
+   "どこか",
+   "のどがかわきます",
+   "おなかがすきます",
+   "そうしましょう",
+   "ていしょく|定食",
+   "ぎゅうどん|牛どん",
+   "べつべつに|別々に"
+  ],
+  "14": [
+   "つけます",
+   "けします|消します",
+   "あけます|開けます",
+   "しめます|閉めます",
+   "いそぎます|急ぎます",
+   "まちます|待ちます",
+   "もちます|持ちます",
+   "とります|取ります",
+   "てつだいます|手伝います",
+   "よびます|呼びます",
+   "はなします|話します",
+   "つかいます|使います",
+   "とめます|止めます",
+   "みせます|見せます",
+   "すわります|座ります",
+   "たちます|立ちます",
+   "はいります|入ります",
+   "でます|出ます",
+   "ふります|降ります",
+   "コピーします",
+   "エアコン",
+   "パスポート",
+   "じゅうしょ|住所",
+   "ちず|地図",
+   "しお|塩",
+   "さとう|砂糖",
+   "もんだい|問題",
+   "こたえ|答え",
+   "よみかた|読み方",
+   "まっすぐ",
+   "ゆっくり",
+   "すぐ",
+   "また",
+   "あとで",
+   "もうすこし|もう少し",
+   "さあ",
+   "しんごう|信号",
+   "まがります|曲がります",
+   "おつり|お釣り"
+  ],
+  "15": [
+   "おきます|置きます",
+   "つくります|作ります",
+   "うります|売ります",
+   "しります|知ります",
+   "すみます|住みます",
+   "けんきゅうします|研究します",
+   "しりょう|資料",
+   "カタログ",
+   "じこくひょう|時刻表",
+   "ふく|服",
+   "せいひん|製品",
+   "ソフト",
+   "でんしじしょ|電子辞書",
+   "けいざい|経済",
+   "しやくしょ|市役所",
+   "こうこう|高校",
+   "はいしゃ|歯医者",
+   "どくしん|独身",
+   "おもいだします|思い出します",
+   "いらっしゃいます"
+  ],
+  "16": [
+   "のります|乗ります",
+   "おります|降ります",
+   "のりかえます|乗り換えます",
+   "あびます|浴びます",
+   "いれます|入れます",
+   "だします|出します",
+   "おろします|下ろします",
+   "おします|押します",
+   "はじめます|始めます",
+   "けんがくします|見学します",
+   "でんわします|電話します",
+   "わかい|若い",
+   "ながい|長い",
+   "みじかい|短い",
+   "あかるい|明るい",
+   "くらい|暗い",
+   "からだ|体",
+   "あたま|頭",
+   "かみ|髪",
+   "かお|顔",
+   "め|目",
+   "みみ|耳",
+   "はな|鼻",
+   "くち|口",
+   "は|歯",
+   "おなか",
+   "あし|足",
+   "せ|背",
+   "サービス",
+   "ジョギング",
+   "シャワー",
+   "みどり|緑",
+   "てら|寺",
+   "じんじゃ|神社",
+   "〜ばん|〜番",
+   "どうやって",
+   "まず",
+   "つぎに|次に",
+   "キャッシュカード",
+   "あんしょうばんごう|暗証番号",
+   "きんがく|金額",
+   "かくにん|確認"
+  ],
+  "17": [
+   "おぼえます|覚えます",
+   "わすれます|忘れます",
+   "なくします",
+   "はらいます|払います",
+   "かえします|返します",
+   "でかけます|出かけます",
+   "ぬぎます|脱ぎます",
+   "もっていきます|持って行きます",
+   "もってきます|持って来ます",
+   "しんぱいします|心配します",
+   "ざんぎょうします|残業します",
+   "しゅっちょうします|出張します",
+   "たいせつ|大切",
+   "だいじょうぶ|大丈夫",
+   "あぶない|危ない",
+   "きんえん|禁煙",
+   "ほけんしょう|保険証",
+   "ねつ|熱",
+   "びょうき|病気",
+   "くすり|薬",
+   "ふろ|風呂",
+   "うわぎ|上着",
+   "したぎ|下着",
+   "〜までに",
+   "ですから",
+   "どうしましたか",
+   "のど",
+   "いたい|痛い",
+   "かぜ|風邪",
+   "おだいじに|お大事に"
+  ],
+  "18": [
+   "できます",
+   "あらいます|洗います",
+   "ひきます|弾きます",
+   "うたいます|歌います",
+   "あつめます|集めます",
+   "すてます|捨てます",
+   "かえます|換えます",
+   "うんてんします|運転します",
+   "よやくします|予約します",
+   "ピアノ",
+   "〜メートル",
+   "げんきん|現金",
+   "しゅみ|趣味",
+   "にっき|日記",
+   "いのり|祈り",
+   "かちょう|課長",
+   "ぶちょう|部長",
+   "しゃちょう|社長",
+   "どうぶつ|動物",
+   "うま|馬",
+   "インターネット",
+   "とくに|特に",
+   "へえ",
+   "なかなか",
+   "ほんとうですか|本当ですか",
+   "ぜひ"
+  ],
+  "19": [
+   "のぼります|登ります",
+   "とまります|泊まります",
+   "そうじします|掃除します",
+   "せんたくします|洗濯します",
+   "なります",
+   "ねむい|眠い",
+   "つよい|強い",
+   "よわい|弱い",
+   "れんしゅう|練習",
+   "ゴルフ",
+   "すもう|相撲",
+   "ちょうし|調子",
+   "いちど|一度",
+   "いちども|一度も",
+   "だんだん",
+   "もうすぐ",
+   "おかげさまで",
+   "でも",
+   "かんぱい|乾杯",
+   "ダイエット",
+   "むり|無理",
+   "からだにいい|体にいい"
+  ],
+  "20": [
+   "いります|要ります",
+   "しらべます|調べます",
+   "なおします|直します",
+   "しゅうりします|修理します",
+   "ぼく|僕",
+   "きみ|君",
+   "うん",
+   "ううん",
+   "ことば",
+   "きもの|着物",
+   "ビザ",
+   "はじめ|初め",
+   "おわり|終わり",
+   "こっち",
+   "そっち",
+   "あっち",
+   "どっち",
+   "みんなで",
+   "〜けど",
+   "おなかがいっぱい"
+  ],
+  "21": [
+   "おもいます|思います",
+   "いいます|言います",
+   "かちます|勝ちます",
+   "まけます|負けます",
+   "やくにたちます|役に立ちます",
+   "うごきます|動きます",
+   "やめます",
+   "きをつけます|気をつけます",
+   "りゅうがくします|留学します",
+   "むだ|無駄",
+   "ふべん|不便",
+   "すごい",
+   "ほんとう|本当",
+   "うそ",
+   "じどうしゃ|自動車",
+   "こうつう|交通",
+   "ぶっか|物価",
+   "ほうそう|放送",
+   "ニュース",
+   "アニメ",
+   "マンガ",
+   "デザイン",
+   "ゆめ|夢",
+   "てんさい|天才",
+   "しあい|試合",
+   "いけん|意見",
+   "はなし|話",
+   "ちきゅう|地球",
+   "つき|月",
+   "さいきん|最近",
+   "たぶん",
+   "きっと",
+   "ほんとうに|本当に",
+   "そんなに",
+   "〜について",
+   "しかたがありません|仕方がありません",
+   "しばらくですね",
+   "もちろん"
+  ],
+  "22": [
+   "きます|着ます",
+   "はきます",
+   "かぶります",
+   "かけます",
+   "うまれます|生まれます",
+   "コート",
+   "セーター",
+   "スーツ",
+   "ぼうし|帽子",
+   "めがね|眼鏡",
+   "ケーキ",
+   "べんとう|弁当",
+   "ロボット",
+   "ユーモア",
+   "つごう|都合",
+   "えーと",
+   "おめでとうございます",
+   "やちん|家賃",
+   "わしつ|和室",
+   "おしいれ|押し入れ",
+   "ふとん|布団"
+  ],
+  "23": [
+   "ききます|聞きます",
+   "まわします|回します",
+   "ひきます|引きます",
+   "かえます|変えます",
+   "さわります|触ります",
+   "でます|出ます",
+   "あるきます|歩きます",
+   "わたります|渡ります",
+   "まがります|曲がります",
+   "さびしい|寂しい",
+   "ゆ|湯",
+   "おと|音",
+   "サイズ",
+   "こしょう|故障",
+   "みち|道",
+   "こうさてん|交差点",
+   "しんごう|信号",
+   "かど|角",
+   "はし|橋",
+   "ちゅうしゃじょう|駐車場",
+   "たてもの|建物",
+   "なんかいも|何回も",
+   "〜め|〜目"
+  ],
+  "24": [
+   "くれます",
+   "なおします|直します",
+   "つれていきます|連れて行きます",
+   "つれてきます|連れて来ます",
+   "おくります|送ります",
+   "しょうかいします|紹介します",
+   "あんないします|案内します",
+   "せつめいします|説明します",
+   "おじいさん",
+   "おばあさん",
+   "じゅんび|準備",
+   "ひっこし|引っ越し",
+   "かし|菓子",
+   "ホームステイ",
+   "ぜんぶ|全部",
+   "じぶんで|自分で",
+   "ほかに"
+  ],
+  "25": [
+   "かんがえます|考えます",
+   "つきます|着きます",
+   "とります|取ります",
+   "たります|足ります",
+   "いなか|田舎",
+   "たいしかん|大使館",
+   "グループ",
+   "チャンス",
+   "おく|億",
+   "もし",
+   "いくら",
+   "てんきん|転勤",
+   "こと",
+   "ひま|暇",
+   "がんばります|頑張ります",
+   "どうぞおげんきで|どうぞお元気で"
+  ]
+ }
+}

@@ -1,6 +1,8 @@
 'use client';
 
 import { KanaReading } from '@/components/common/KanaReading';
+import { AutoNextToggle } from '@/components/common/AutoNextToggle';
+import { useAutoAdvance } from '@/hooks/useAutoNext';
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState, type RefObject } from 'react';
 import Link from 'next/link';
 import { AudioButton } from '@/components/common/AudioButton';
@@ -87,14 +89,26 @@ function GrammarExerciseRun({ exercises, mode, title, onRestart, onNewRound, can
   function setAnswer(value: string | null, reveal = false) {
     dispatch({ type: 'answer', value, reveal });
   }
+  /** Bài kiểm tra: câu vừa được CHỌN ở lần ghé này (quay lại câu đã làm thì không tự chuyển). */
+  const [justChose, setJustChose] = useState<number | null>(null);
   function choose(value: string) {
     if (mode === 'luyen-tap' && isRevealed) return;
     setAnswer(value, mode === 'luyen-tap');
+    setJustChose(index);
   }
   function next() {
+    setJustChose(null);
     dispatch({ type: 'next', length: exercises.length, training: mode === 'luyen-tap' });
   }
   useEnterToContinue(mode === 'luyen-tap' && isRevealed && !isFinished, next);
+  // Tự chuyển câu (cùng cơ chế trò chơi): luyện tập → sau khi chấm ĐÚNG; kiểm tra (chưa chấm từng câu) → ngay sau khi chọn,
+  // trừ câu cuối (để người học tự nộp bài) và câu sắp xếp (còn sửa thứ tự được).
+  const isTestChoice = mode === 'kiem-tra' && justChose === index && answer !== null && exercise?.kind !== 'sap-xep' && index + 1 < exercises.length;
+  const isAutoNext = useAutoAdvance({
+    answerKey: mode === 'luyen-tap' ? (isRevealed && !isFinished ? `${index}` : null) : isTestChoice ? `${index}:${answer}` : null,
+    isCorrect: mode === 'luyen-tap' ? (exercise ? isExerciseCorrect(exercise, answer) : null) : isTestChoice,
+    onNext: next,
+  });
 
   if (!exercises.length) return <p className="card tight sm soft">Phần này chưa có bài tập.</p>;
 
@@ -110,14 +124,23 @@ function GrammarExerciseRun({ exercises, mode, title, onRestart, onNewRound, can
   return (
     <section className="card study-quiz gx-runner" aria-label={title}>
       <div className="between">
-        <span className="tiny muted">Câu {index + 1}/{exercises.length} · {KIND_LABEL[exercise.kind]}</span>
-        <span className="chip lav jp">{exercise.pattern}</span>
+        <span className="tiny muted">Câu {index + 1}/{exercises.length} · <b>{mode === 'kiem-tra' ? 'Kiểm tra' : 'Luyện'} ngữ pháp · Bài {exercise.lesson}</b> · {KIND_LABEL[exercise.kind]}</span>
+        <span className="row" style={{ gap: 6, alignItems: 'center' }}><AutoNextToggle /><span className="chip lav jp">{exercise.pattern}</span></span>
       </div>
       <div className="study-progress" aria-hidden="true"><span style={{ width: `${((index + 1) / exercises.length) * 100}%` }} /></div>
       <p className={`study-prompt ${exercise.isPromptJapanese ? 'jp' : ''}`}>{exercise.prompt}</p>
-      {exercise.kind === 'nhat-viet' || exercise.kind === 'tro-tu' || exercise.kind === 'dien-tu' ? (
-        <div className="center"><AudioButton text={exercise.kind === 'tro-tu' || exercise.kind === 'dien-tu' ? exercise.sentence.reading || exercise.sentence.jp : exercise.sentence.reading || exercise.prompt}
-          label="Nghe câu" className="btn ghost sm" /></div>
+      {exercise.laterWords?.length ? (
+        // Từ của bài sau trong câu: giải nghĩa ngay (không bắt người học đoán từ chưa được giới thiệu).
+        <p className="center tiny muted gx-later-words">
+          Từ chưa học: {exercise.laterWords.map((word, index) => (
+            <span key={word.word}>{index ? ' · ' : ''}<b className="jp">{word.word}</b>{word.reading !== word.word ? <span className="jp">（{word.reading}）</span> : null} {word.meaning} — Bài {word.lesson}</span>
+          ))}
+        </p>
+      ) : null}
+      {/* Chỉ câu Nhật → Việt được nghe trước khi trả lời. Trợ từ / điền từ / Việt → Nhật / sắp xếp: nghe câu đầy đủ là lộ đáp án
+          → nghe ở phần giải thích sau khi chấm. */}
+      {exercise.kind === 'nhat-viet' ? (
+        <div className="center"><AudioButton text={exercise.sentence.reading || exercise.prompt} label="Nghe câu" className="btn ghost sm" /></div>
       ) : null}
 
       {exercise.kind === 'sap-xep' ? (
@@ -142,12 +165,12 @@ function GrammarExerciseRun({ exercises, mode, title, onRestart, onNewRound, can
       )}
 
       {showFeedback ? (
-        <Feedback exercise={exercise} answer={answer} onNext={next} isLast={index + 1 === exercises.length} nextButtonRef={nextButtonRef} />
+        <Feedback exercise={exercise} answer={answer} onNext={next} isLast={index + 1 === exercises.length} nextButtonRef={nextButtonRef} isAutoNext={isAutoNext} />
       ) : null}
 
       {mode === 'kiem-tra' ? (
         <div className="gx-test-nav">
-          <button type="button" className="btn ghost sm" onClick={() => dispatch({ type: 'previous' })} disabled={index === 0}>← Câu trước</button>
+          <button type="button" className="btn ghost sm" onClick={() => { setJustChose(null); dispatch({ type: 'previous' }); }} disabled={index === 0}>← Câu trước</button>
           {index + 1 < exercises.length ? (
             <button type="button" className="btn sm" onClick={next}>Câu sau →</button>
           ) : (
@@ -240,7 +263,7 @@ function OrderPieces({ exercise, value, isLocked, onChange, onComplete }: {
   );
 }
 
-function Feedback({ exercise, answer, onNext, isLast, nextButtonRef }: { exercise: GrammarExercise; answer: string | null; onNext: () => void; isLast: boolean; nextButtonRef: RefObject<HTMLButtonElement | null> }) {
+function Feedback({ exercise, answer, onNext, isLast, nextButtonRef, isAutoNext }: { exercise: GrammarExercise; answer: string | null; onNext: () => void; isLast: boolean; nextButtonRef: RefObject<HTMLButtonElement | null>; isAutoNext: boolean }) {
   const isCorrect = isExerciseCorrect(exercise, answer);
   const wrongReason = answer !== null ? whyWrong(exercise, answer) : null;
   const correctAnswer = exercise.kind === 'sap-xep' ? exercise.sentence.jp : exercise.answer;
@@ -251,7 +274,9 @@ function Feedback({ exercise, answer, onNext, isLast, nextButtonRef }: { exercis
       <SentenceLine exercise={exercise} />
       {wrongReason ? <p className="sm mt-1">✗ {wrongReason}</p> : null}
       <p className="sm mt-1">✓ {exercise.explanation}</p>
-      <button ref={nextButtonRef} type="button" className="btn block mt-3" onClick={onNext}>{isLast ? 'Xem kết quả' : 'Câu tiếp theo'}</button>
+      <button ref={nextButtonRef} type="button" className={`btn block mt-3 streak-next${isAutoNext ? ' is-auto' : ''}`} onClick={onNext}>
+        {isAutoNext ? 'Tự chuyển… · bấm để sang ngay →' : isLast ? 'Xem kết quả' : 'Câu tiếp theo'}
+      </button>
     </div>
   );
 }

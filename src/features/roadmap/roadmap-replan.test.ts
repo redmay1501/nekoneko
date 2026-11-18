@@ -47,16 +47,17 @@ describe('thứ tự giai đoạn', () => {
     }
   });
 
-  it('không mất kiến thức: đủ 1.085 từ (1.063 từ của bài 1–25 + 22 từ giai đoạn chữ cái), 128 mẫu câu, 103 Kanji — mục nào cũng có ngày', () => {
-    expect(content.vocabulary.filter((word) => word.day !== null)).toHaveLength(1085);
-    expect(content.vocabulary.filter((word) => Number.isFinite(lessonNumber(word.lesson)))).toHaveLength(1063);
+  it('không mất kiến thức: đủ 1.322 từ (1.300 từ của bài 1–25 sau audit Minna + 22 từ giai đoạn chữ cái), 128 mẫu câu, 103 Kanji — mục nào cũng có ngày', () => {
+    // docs/N5_VOCABULARY_COMPLETENESS_AUDIT.md: +237 từ của danh mục Minna còn thiếu, không xoá từ nào (1.085 → 1.322).
+    expect(content.vocabulary.filter((word) => word.day !== null)).toHaveLength(1322);
+    expect(content.vocabulary.filter((word) => Number.isFinite(lessonNumber(word.lesson)))).toHaveLength(1300);
     expect(content.grammar.filter((pattern) => pattern.day !== null)).toHaveLength(128);
     expect(content.kanji.filter((kanji) => kanji.day !== null)).toHaveLength(103);
   });
 
-  it('ngày học vừa sức: tối đa 24 từ, 6 Kanji mới, 3 mẫu câu', () => {
+  it('ngày học: tối đa 40 từ (không cắt từ của giáo trình để vừa thời gian — người học tự chia), 6 Kanji mới, 3 mẫu câu', () => {
     for (let day = LESSON_DAYS.from; day <= LESSON_DAYS.to; day++) {
-      expect(wordsOn(day).length).toBeLessThanOrEqual(24);
+      expect(wordsOn(day).length).toBeLessThanOrEqual(40);
       expect(content.kanji.filter((kanji) => kanji.day === day).length).toBeLessThanOrEqual(6);
       expect(content.grammar.filter((pattern) => pattern.day === day).length).toBeLessThanOrEqual(3);
     }
@@ -133,11 +134,30 @@ describe('migration Supabase giữ trí nhớ và tiến độ', () => {
     }
   });
 
-  it('cột day trong migration khớp đúng dữ liệu seed (cùng id)', () => {
-    for (const [table, rows] of [['kana', content.kana], ['kanji', content.kanji], ['grammar', content.grammar], ['vocabulary', content.vocabulary]] as const) {
+  it('cột day trong migration khớp đúng dữ liệu seed (cùng id) — kana, ngữ pháp (từ vựng / Kanji: migration audit Minna bên dưới)', () => {
+    for (const [table, rows] of [['kana', content.kana], ['grammar', content.grammar]] as const) {
       const block = sql.split(`update public.${table} as t set day`)[1].split(') as v(id, day)')[0];
       const days = new Map([...block.matchAll(/\((\d+), (\d+|null)\)/g)].map(([, id, day]) => [Number(id), day === 'null' ? null : Number(day)]));
       for (const row of rows) expect(days.get(row.id)).toBe(row.day);
     }
+  });
+});
+
+describe('migration audit từ vựng Minna (20261118000001)', () => {
+  const sql = readFileSync(join(process.cwd(), 'supabase/migrations/20261118000001_minna_vocabulary_audit.sql'), 'utf8');
+
+  it('ngày của từ vựng và Kanji trong migration khớp đúng dữ liệu seed (cùng id)', () => {
+    const vocabBlock = sql.split('update public.vocabulary as t set lesson')[1].split(') as v(id, lesson, day)')[0];
+    const vocabDays = new Map([...vocabBlock.matchAll(/\((\d+), '(?:[^']|'')*', (\d+|null)\)/g)].map(([, id, day]) => [Number(id), day === 'null' ? null : Number(day)]));
+    for (const word of content.vocabulary) expect(vocabDays.get(word.id)).toBe(word.day);
+    const kanjiBlock = sql.split('update public.kanji as t set day')[1].split(') as v(id, day)')[0];
+    const kanjiDays = new Map([...kanjiBlock.matchAll(/\((\d+), (\d+|null)\)/g)].map(([, id, day]) => [Number(id), day === 'null' ? null : Number(day)]));
+    for (const kanji of content.kanji) expect(kanjiDays.get(kanji.id)).toBe(kanji.day);
+  });
+
+  it('không xoá từ nào, không đụng bảng trí nhớ / tiến độ', () => {
+    const code = sql.split('\n').filter((line) => !line.trimStart().startsWith('--')).join('\n');
+    expect(code).not.toMatch(/delete from public\.vocabulary/);
+    for (const table of ['memory_items', 'review_events', 'learning_sessions', 'session_items', 'profiles', 'journey_day_completions']) expect(code).not.toContain(table);
   });
 });

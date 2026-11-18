@@ -2,6 +2,8 @@ import type { GrammarContent } from '@/types/content';
 import rawQuestionBank from '@content/seed/grammar-question-bank.json';
 import { orderTokens } from './day-study-quiz';
 import { lessonNumber } from '@/lib/utils/lesson';
+import type { KnowledgeCatalog } from './knowledge-catalog';
+import { type LaterLessonWord, laterLessonWords } from './vocabulary-scope';
 
 /**
  * Bài tập ngữ pháp sinh từ DỮ LIỆU THẬT của mỗi mẫu (câu ví dụ + câu ví dụ 2, cách dùng, lỗi hay gặp) — không bịa câu mới.
@@ -63,6 +65,8 @@ export interface GrammarExercise {
   sentence: { jp: string; reading: string; vi: string };
   /** Vì sao đáp án đúng — từ cách dùng của mẫu (+ lỗi hay gặp nếu có). */
   explanation: string;
+  /** Từ trong câu thuộc bài SAU bài của mẫu (vocabulary-scope) — hiện chú thích; đề ưu tiên câu không có từ này. */
+  laterWords?: LaterLessonWord[];
 }
 
 const OPTION_COUNT = 4;
@@ -240,12 +244,15 @@ function explanationOf(grammar: GrammarContent): string {
   return parts.join(' ');
 }
 
-/** Đáp án nhiễu: câu của MẪU KHÁC, ưu tiên cùng bài rồi bài gần nhất — khác hẳn đáp án đúng. */
+/**
+ * Đáp án nhiễu: câu của MẪU KHÁC, cùng bài trước rồi tới các bài TRƯỚC gần nhất — khác hẳn đáp án đúng.
+ * Không lấy câu của bài sau (từ vựng / ngữ pháp người học chưa gặp).
+ */
 function distractorSentences(source: SentenceSource, pool: readonly SentenceSource[], pick: (sentence: SentenceSource) => string, random: () => number): GrammarExerciseOption[] {
   const correct = pick(source);
   const candidates = pool
-    .filter((other) => other.grammar.id !== source.grammar.id && pick(other) !== correct)
-    .map((other) => ({ other, distance: Math.abs(other.lesson - source.lesson) + random() * 0.5 }))
+    .filter((other) => other.grammar.id !== source.grammar.id && other.lesson <= source.lesson && pick(other) !== correct)
+    .map((other) => ({ other, distance: source.lesson - other.lesson + random() * 0.5 }))
     .sort((left, right) => left.distance - right.distance);
   const seen = new Set([correct]);
   const options: GrammarExerciseOption[] = [];
@@ -341,4 +348,22 @@ export function whyWrong(exercise: GrammarExercise, chosen: string): string | nu
   if (exercise.kind === 'sap-xep') return 'Thứ tự các mảnh chưa đúng — so với câu mẫu bên dưới.';
   const option = exercise.options.find((entry) => entry.text === chosen);
   return option?.fromPattern ? `Lựa chọn này là câu của mẫu “${option.fromPattern}” — nghĩa khác câu đang hỏi.` : null;
+}
+
+/**
+ * Gắn từ ngoài phạm vi bài cho từng câu và xếp câu TRONG phạm vi lên trước (giữ thứ tự trộn sẵn trong mỗi nhóm):
+ * lượt 10 / 20 câu của Bài 1 chỉ gồm câu dùng từ Bài 1 (và trước) khi ngân hàng có đủ; câu buộc phải dùng từ bài sau
+ * đứng cuối và luôn có chú thích. Không xoá câu nào khỏi ngân hàng.
+ */
+export function withVocabularyScope(exercises: readonly GrammarExercise[], catalog: KnowledgeCatalog): GrammarExercise[] {
+  const scoped = exercises.map((exercise) => {
+    // Câu điền (trợ từ / từ): chỉ xét câu có chỗ trống + phương án SAI — chú thích không được làm lộ đáp án.
+    const isFill = exercise.kind === 'tro-tu' || exercise.kind === 'dien-tu';
+    const texts = isFill
+      ? [exercise.prompt, ...exercise.options.filter((option) => option.text !== exercise.answer).map((option) => option.text)]
+      : [exercise.prompt, exercise.sentence.jp, ...(exercise.kind === 'nhat-viet' ? [] : exercise.options.map((option) => option.text))];
+    const laterWords = laterLessonWords(texts, exercise.lesson, catalog);
+    return laterWords.length ? { ...exercise, laterWords } : exercise;
+  });
+  return [...scoped.filter((exercise) => !exercise.laterWords), ...scoped.filter((exercise) => exercise.laterWords)];
 }

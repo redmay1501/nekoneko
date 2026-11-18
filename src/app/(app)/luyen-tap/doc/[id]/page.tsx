@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { AudioButton } from '@/components/common/AudioButton';
 import { ReadingQuiz } from '@/components/learning/ReadingQuiz';
+import { ReadingPassageText } from '@/components/learning/ReadingPassageText';
 import { readingRecordOf } from '@/features/games/reading-progress';
 import { getLearnerContext } from '@/features/learning/learner-context';
 import { nextReadingId } from '@/features/learning/reading-list';
@@ -26,10 +26,7 @@ export default async function ReadingPassagePage({ params }: { params: Promise<{
         {record ? <span className="chip">Điểm cao nhất {record.bestAccuracy}%</span> : null}
       </div>
       <h1 className="mt-2" style={{ fontSize: 22 }}>{passage.title}</h1>
-      <div className="card mt-3" style={{ background: '#FFFDF8' }}>
-        <p className="jp reading-text">{passage.textJp}</p>
-        <AudioButton text={passage.textJp} label="Nghe cả đoạn" className="btn ghost sm mt-3" showText />
-      </div>
+      <ReadingPassageText textJp={passage.textJp} textKana={passage.textKana} glossary={passage.glossary} />
       <ReadingQuiz key={passage.id} passageId={passage.id} questions={passage.questions} textVi={passage.textVi}
         nextHref={nextId ? `/luyen-tap/doc/${nextId}` : null} />
     </>

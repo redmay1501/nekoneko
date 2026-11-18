@@ -90,7 +90,11 @@ export function DayStudyFlow({ data, initialStep, initialMode }: { data: DayStud
   const nextStep = steps[stepIndex + 1];
   const quizzes = stepId === 'chu-cai' ? KANA_QUIZZES : stepId === 'tu-vung' ? VOCAB_QUIZZES.filter((quiz) => quiz.id !== 'ghep' || data.vocab.length >= MIN_MATCH_POOL)
     : stepId === 'ngu-phap' ? GRAMMAR_QUIZZES : stepId === 'bo-thu' ? RADICAL_QUIZZES : stepId === 'kanji' ? KANJI_QUIZZES : [];
-  const quizProps = { onRestart: restart, onRetryWrong: retryWrong, onWrong: addWrong };
+  // Nhãn trên mỗi câu: "Ôn tập từ vựng · Bài 1 (1/3) · Ngày 14 · Chữ → nghĩa" — người học luôn biết mình đang ôn gì.
+  const stepLabel = STUDY_STEPS.find((step) => step.id === stepId)?.label ?? '';
+  const quizLabel = quizzes.find((quiz) => quiz.id === mode)?.label;
+  const contextLabel = [`Ôn tập ${stepLabel.toLowerCase()}`, data.minna, `Ngày ${data.day}`, quizLabel].filter(Boolean).join(' · ');
+  const quizProps = { onRestart: restart, onRetryWrong: retryWrong, onWrong: addWrong, contextLabel };
   // Thẻ học: link luyện viết của đúng thẻ + nhớ thẻ đang xem của bước (đi luyện viết rồi quay lại vẫn đúng chỗ).
   const cardExtras = { writingHref: (card: { writingHref: string | null }) => card.writingHref, storageKey: `day-study:${data.day}:${stepId}:the` };
   // Cuối phần thẻ học / bài học của bước: đi thẳng sang bài ôn của bước (đổi đúng ?buoc=&che-do=) hoặc bước sau.
@@ -213,7 +217,7 @@ export function DayStudyFlow({ data, initialStep, initialMode }: { data: DayStud
           <StudyQuiz questions={questions} unit="câu" {...quizProps} />
         ) : null}
 
-        {stepId === 'on-tap' ? <ReviewStep data={data} tracking={tracking} /> : null}
+        {stepId === 'on-tap' ? <ReviewStep data={data} tracking={tracking} onRelearn={() => { updateTracking(() => ({ wrong: [], marked: [] })); goTo(steps[0].id); }} /> : null}
       </div>
 
       {nextStep ? (
@@ -384,7 +388,7 @@ function GrammarTopic({ card, isMarked, onToggleMark }: { card: StudyGrammarCard
   );
 }
 
-function ReviewStep({ data, tracking }: { data: DayStudyData; tracking: Tracking }) {
+function ReviewStep({ data, tracking, onRelearn }: { data: DayStudyData; tracking: Tracking; onRelearn: () => void }) {
   const faces = new Map<string, string>([
     ...data.kana.map((card) => [card.key, card.face] as const),
     ...data.vocab.map((card) => [card.key, card.face] as const),
@@ -409,6 +413,9 @@ function ReviewStep({ data, tracking }: { data: DayStudyData; tracking: Tracking
       {keys.length ? (
         <div className="mt-4"><NekoButton href={focusSessionHref(keys)} size="lg">Bắt đầu ôn {keys.length} mục</NekoButton></div>
       ) : <p className="sm soft mt-3">Ngày này chưa có gì để ôn.</p>}
+      {/* Học lại cả ngày từ bước đầu: không tạo ngày học mới, không đổi trạng thái hoàn thành; trí nhớ mỗi mục chỉ tính một lần mỗi ngày. */}
+      <button type="button" className="btn ghost block mt-2" onClick={onRelearn}>🔁 Học lại hôm nay từ đầu</button>
+      <p className="tiny muted mt-1">Học lại để củng cố — tiến độ và lịch ôn đã có vẫn giữ nguyên.</p>
       <p className="sm mt-3"><Link className="link" href={`/lo-trinh/ngay/${data.day}`}>← Về trang ngày {data.day}</Link></p>
     </section>
   );

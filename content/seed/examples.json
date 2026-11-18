@@ -2,14 +2,6 @@
  "_note": "Câu ví dụ từ Tatoeba (https://tatoeba.org), giấy phép CC BY 2.0 FR. Sinh bằng scripts/fetch-examples.ts.",
  "sentences": [
   {
-   "id": 4765,
-   "jp": "だから何？",
-   "vi": "Thì sao?",
-   "viId": 5694,
-   "owner": "bunbuku",
-   "viOwner": "evaZ"
-  },
-  {
    "id": 4810,
    "jp": "できるよ！",
    "vi": "Được mà!",
@@ -20,10 +12,10 @@
   {
    "id": 4913,
    "jp": "何かお飲みになりますか？",
-   "vi": "bạn có muốn uống cái gì không ?",
-   "viId": 1509590,
+   "vi": "Anh/chị có muốn uống gì không ạ?",
+   "viId": null,
    "owner": "bunbuku",
-   "viOwner": "trieuho"
+   "viOwner": "NekoNeko"
   },
   {
    "id": 5152,
@@ -36,10 +28,10 @@
   {
    "id": 5257,
    "jp": "時間はたっぷりあった。",
-   "vi": "Bạn còn rất nhiều thời gian.",
-   "viId": 5887,
+   "vi": "Đã có rất nhiều thời gian.",
+   "viId": null,
    "owner": "bunbuku",
-   "viOwner": "khoaharp"
+   "viOwner": "NekoNeko"
   },
   {
    "id": 5271,
@@ -84,10 +76,10 @@
   {
    "id": 122329,
    "jp": "日本語が話せますか。",
-   "vi": "Ông có nói tiếng Nhật không?",
-   "viId": 510406,
+   "vi": "Bạn nói được tiếng Nhật không?",
+   "viId": null,
    "owner": "autuno",
-   "viOwner": "autuno"
+   "viOwner": "NekoNeko"
   },
   {
    "id": 122575,
@@ -95,14 +87,6 @@
    "vi": "Dân số Nhật Bản nhiều hơn dân số Canada.",
    "viId": 8973833,
    "owner": "mookeee",
-   "viOwner": "dotheduyet1999"
-  },
-  {
-   "id": 125923,
-   "jp": "長い目で見て下さい。",
-   "vi": "Bạn nên nhìn xa hơn.",
-   "viId": 8947192,
-   "owner": "bunbuku",
    "viOwner": "dotheduyet1999"
   },
   {
@@ -122,14 +106,6 @@
    "viOwner": "letuananh"
   },
   {
-   "id": 145462,
-   "jp": "新しいものはやがてすたれる。",
-   "vi": "Một thứ mới theo thời gian sẽ trở nên lỗi thời.",
-   "viId": 8939488,
-   "owner": null,
-   "viOwner": "dotheduyet1999"
-  },
-  {
    "id": 146867,
    "jp": "少しくたびれた。",
    "vi": "Tôi hơi mệt.",
@@ -146,36 +122,12 @@
    "viOwner": "dotheduyet1999"
   },
   {
-   "id": 150162,
-   "jp": "耳にたこができたよ。",
-   "vi": "Điều đó tôi nghe chán rồi.",
-   "viId": 9165645,
-   "owner": "bunbuku",
-   "viOwner": "dotheduyet1999"
-  },
-  {
-   "id": 150169,
-   "jp": "耳がかぶれています。",
-   "vi": "Tôi bị viêm tai.",
-   "viId": 8939512,
-   "owner": null,
-   "viOwner": "dotheduyet1999"
-  },
-  {
    "id": 174393,
    "jp": "午後はどうやら雨になりそうだ。",
    "vi": "Hình như chiều nay trời sẽ mưa.",
    "viId": 10222712,
    "owner": "bunbuku",
    "viOwner": "dotheduyet1999"
-  },
-  {
-   "id": 174747,
-   "jp": "言わぬが花。",
-   "vi": "Im lặng là vàng.",
-   "viId": 6216749,
-   "owner": "KK_kaku_",
-   "viOwner": "letuananh"
   },
   {
    "id": 175189,
@@ -192,22 +144,6 @@
    "viId": 491940,
    "owner": "bunbuku",
    "viOwner": "khungla"
-  },
-  {
-   "id": 182697,
-   "jp": "休め！",
-   "vi": "Nghỉ đi!",
-   "viId": 8839446,
-   "owner": "tommy__san",
-   "viOwner": "dotheduyet1999"
-  },
-  {
-   "id": 183287,
-   "jp": "気がのらないな。",
-   "vi": "Bây giờ tôi không có hứng.",
-   "viId": 1699144,
-   "owner": "small_snow",
-   "viOwner": "dreznovk"
   },
   {
    "id": 187971,
@@ -322,20 +258,12 @@
    "viOwner": "dotheduyet1999"
   },
   {
-   "id": 211830,
-   "jp": "その会社はイメージアップをはかっている。",
-   "vi": "Chúng tôi đang bàn bạc việc nâng cao hình ảnh của công ty.",
-   "viId": 2639240,
-   "owner": null,
-   "viOwner": "dreznovk"
-  },
-  {
    "id": 224847,
    "jp": "コーヒー飲みますか。",
-   "vi": "Anh uống cà phê không ?",
-   "viId": 2661861,
+   "vi": "Anh có uống cà phê không?",
+   "viId": null,
    "owner": "mookeee",
-   "viOwner": "dreznovk"
+   "viOwner": "NekoNeko"
   },
   {
    "id": 226407,
@@ -370,14 +298,6 @@
    "viOwner": "dotheduyet1999"
   },
   {
-   "id": 228260,
-   "jp": "うそを言うな。",
-   "vi": "Đừng nói dối.",
-   "viId": 8960050,
-   "owner": "mookeee",
-   "viOwner": "dotheduyet1999"
-  },
-  {
    "id": 228369,
    "jp": "インドは人口が多い。",
    "vi": "Ấn Độ là một quốc gia đông dân.",
@@ -388,10 +308,10 @@
   {
    "id": 229410,
    "jp": "いいカメラを買った。",
-   "vi": "Tôi đã mua một chiếc camera tốt.",
-   "viId": 10268293,
+   "vi": "Tôi đã mua một chiếc máy ảnh tốt.",
+   "viId": null,
    "owner": "bunbuku",
-   "viOwner": "dotheduyet1999"
+   "viOwner": "NekoNeko"
   },
   {
    "id": 232511,
@@ -407,14 +327,6 @@
    "vi": "Tôi sẽ gọi lại sau.",
    "viId": 11124680,
    "owner": "small_snow",
-   "viOwner": "dotheduyet1999"
-  },
-  {
-   "id": 234611,
-   "jp": "あいつは小食なんだ。",
-   "vi": "Nó ăn rất ít.",
-   "viId": 8938499,
-   "owner": "tommy__san",
    "viOwner": "dotheduyet1999"
   },
   {
@@ -450,27 +362,11 @@
    "viOwner": "trieuho"
   },
   {
-   "id": 414248,
-   "jp": "ほっといてくれ。",
-   "vi": "Để tôi yên.",
-   "viId": 8890781,
-   "owner": "blay_paul",
-   "viOwner": "dotheduyet1999"
-  },
-  {
    "id": 430408,
    "jp": "今日、一人で来たの？",
    "vi": "Hôm nay bạn đến một mình à?",
    "viId": 8945743,
    "owner": "blay_paul",
-   "viOwner": "dotheduyet1999"
-  },
-  {
-   "id": 472753,
-   "jp": "インターネット上にはタタール語のサイトは少ない。",
-   "vi": "Trên mạng có ít trang web tiếng Tatar.",
-   "viId": 8958094,
-   "owner": "maiya",
    "viOwner": "dotheduyet1999"
   },
   {
@@ -482,27 +378,11 @@
    "viOwner": "letuananh"
   },
   {
-   "id": 772794,
-   "jp": "ここにお出で。",
-   "vi": "Lại đây nào.",
-   "viId": 5759662,
-   "owner": "marloncori",
-   "viOwner": "yippe"
-  },
-  {
    "id": 778577,
    "jp": "今日は。",
    "vi": "Xin chào.",
    "viId": 8965211,
    "owner": "marloncori",
-   "viOwner": "dotheduyet1999"
-  },
-  {
-   "id": 823590,
-   "jp": "百聞は一見にしかず。",
-   "vi": "Trăm nghe không bằng một thấy.",
-   "viId": 8989704,
-   "owner": "Patissier",
    "viOwner": "dotheduyet1999"
   },
   {
@@ -538,14 +418,6 @@
    "viOwner": "letuananh"
   },
   {
-   "id": 1215216,
-   "jp": "ここに来な。",
-   "vi": "Lại đây nào.",
-   "viId": 5759662,
-   "owner": "Scott",
-   "viOwner": "yippe"
-  },
-  {
    "id": 1271557,
    "jp": "先週それを買いました。",
    "vi": "Tuần trước tôi đã mua thứ đó.",
@@ -575,14 +447,6 @@
    "vi": "Đây là một cây chanh.",
    "viId": 9769385,
    "owner": "ari_diary",
-   "viOwner": "dotheduyet1999"
-  },
-  {
-   "id": 1889539,
-   "jp": "あなたは毎日にここへ来る？",
-   "vi": "Mỗi ngày bạn đều đến chỗ này à?",
-   "viId": 9733829,
-   "owner": "sixtynine",
    "viOwner": "dotheduyet1999"
   },
   {
@@ -644,10 +508,10 @@
   {
    "id": 2250471,
    "jp": "気づいてた？",
-   "vi": "Bạn có nhìn thấy không?",
-   "viId": 5759790,
+   "vi": "Bạn có để ý không?",
+   "viId": null,
    "owner": "wool",
-   "viOwner": "yippe"
+   "viOwner": "NekoNeko"
   },
   {
    "id": 2560363,
@@ -658,42 +522,10 @@
    "viOwner": "dotheduyet1999"
   },
   {
-   "id": 2692844,
-   "jp": "ブレーキをかけろ！",
-   "vi": "Bấm phanh đi!",
-   "viId": 10241543,
-   "owner": "tommy__san",
-   "viOwner": "dotheduyet1999"
-  },
-  {
-   "id": 2733322,
-   "jp": "先生、アソコがかゆいんです。",
-   "vi": "Thầy ơi, em bị ngứa \"chỗ đó\".",
-   "viId": 8834881,
-   "owner": "JimBreen",
-   "viOwner": "dotheduyet1999"
-  },
-  {
-   "id": 2825431,
-   "jp": "時は金なり。",
-   "vi": "Thời gian là vàng.",
-   "viId": 8990227,
-   "owner": "tommy_san",
-   "viOwner": "dotheduyet1999"
-  },
-  {
    "id": 3050904,
    "jp": "母は高校の先生です。",
    "vi": "Mẹ tôi là giáo viên dạy cấp 3.",
    "viId": 10146673,
-   "owner": "tommy_san",
-   "viOwner": "dotheduyet1999"
-  },
-  {
-   "id": 3147338,
-   "jp": "男には気をつけろよ。",
-   "vi": "Cẩn thận với đàn ông đấy.",
-   "viId": 8795040,
    "owner": "tommy_san",
    "viOwner": "dotheduyet1999"
   },
@@ -726,14 +558,6 @@
    "jp": "いま二時半。",
    "vi": "Bây giờ là hai giờ rưỡi.",
    "viId": 9734370,
-   "owner": "arnab",
-   "viOwner": "dotheduyet1999"
-  },
-  {
-   "id": 3496821,
-   "jp": "やらせてあげなよ。",
-   "vi": "Để anh ấy làm đi.",
-   "viId": 9037708,
    "owner": "arnab",
    "viOwner": "dotheduyet1999"
   },
@@ -786,14 +610,6 @@
    "viOwner": "angemon"
   },
   {
-   "id": 3886922,
-   "jp": "やばい、パスポートなくしたかも。",
-   "vi": "Chết thật, chắc tớ mất hộ chiếu rồi.",
-   "viId": 4184772,
-   "owner": "tommy_san",
-   "viOwner": "angemon"
-  },
-  {
    "id": 4173963,
    "jp": "セーター後ろ前だよ。",
    "vi": "Bạn đang mặc ngược cái áo len kìa.",
@@ -824,14 +640,6 @@
    "viId": 9712328,
    "owner": "chihiro",
    "viOwner": "dotheduyet1999"
-  },
-  {
-   "id": 4632707,
-   "jp": "いつも、その本を読みたいんです。",
-   "vi": "Lúc nào cũng muốn đọc cuốn đó.",
-   "viId": 4635675,
-   "owner": "verbum",
-   "viOwner": "bluesapphjre"
   },
   {
    "id": 4706155,
@@ -879,14 +687,6 @@
    "vi": "Tom đã tìm thấy gì?",
    "viId": 10233471,
    "owner": "Nishin",
-   "viOwner": "dotheduyet1999"
-  },
-  {
-   "id": 8075110,
-   "jp": "トムにメアリーと駅で会ってほしかった。",
-   "vi": "Tôi muốn Tom gặp Mary ở nhà ga.",
-   "viId": 9734248,
-   "owner": "Ninja",
    "viOwner": "dotheduyet1999"
   },
   {
@@ -1020,10 +820,10 @@
   {
    "id": 8886614,
    "jp": "行こう！",
-   "vi": "đi thôi!",
-   "viId": 5339133,
+   "vi": "Đi thôi!",
+   "viId": null,
    "owner": "moxy",
-   "viOwner": "Leviszta"
+   "viOwner": "NekoNeko"
   },
   {
    "id": 8899493,
@@ -1100,10 +900,10 @@
   {
    "id": 9769393,
    "jp": "これはライムの木です。",
-   "vi": "Đây là một cây chanh.",
-   "viId": 9769385,
+   "vi": "Đây là cây chanh xanh (lime).",
+   "viId": null,
    "owner": "dotheduyet1999",
-   "viOwner": "dotheduyet1999"
+   "viOwner": "NekoNeko"
   },
   {
    "id": 9961079,
@@ -1116,18 +916,10 @@
   {
    "id": 10042871,
    "jp": "お店のオープンはいつだったの？",
-   "vi": "Bạn khai trương quán này từ khi nào thế?",
-   "viId": 11593955,
+   "vi": "Quán khai trương khi nào vậy?",
+   "viId": null,
    "owner": "small_snow",
-   "viOwner": "dotheduyet1999"
-  },
-  {
-   "id": 10561332,
-   "jp": "あなたのせいです。",
-   "vi": "Đây là lỗi của cậu.",
-   "viId": 11153846,
-   "owner": "Anna10",
-   "viOwner": "dotheduyet1999"
+   "viOwner": "NekoNeko"
   }
  ]
 }

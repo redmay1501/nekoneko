@@ -1,5 +1,7 @@
 'use client';
 
+import { AutoNextToggle } from '@/components/common/AutoNextToggle';
+import { useAutoAdvance, useAutoNextPreference } from '@/hooks/useAutoNext';
 import Link from 'next/link';
 import type React from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -47,14 +49,6 @@ type Phase = 'intro' | 'play' | 'exhausted';
 
 const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/** "Tự chuyển câu" — BẬT mặc định; người học tắt thì nhớ trên máy này (localStorage). */
-const AUTO_NEXT_KEY = 'neko-streak-auto-next';
-/** Trả lời ĐÚNG: thấy kết quả bấy nhiêu rồi tự sang câu. Trả lời SAI: không tự chuyển — người học đọc giải thích, tự bấm. */
-const AUTO_NEXT_AFTER_CORRECT_MS = 1000;
-
-function readAutoNext(): boolean {
-  try { return localStorage.getItem(AUTO_NEXT_KEY) !== '0'; } catch { return true; }
-}
 
 /** Cấp "ngọn lửa" theo độ dài chuỗi — chỉ đổi màu / nhãn để khích lệ, không đổi luật chơi. */
 const TIERS = [
@@ -89,17 +83,9 @@ export function NekoStreak({ items, initialBest, journeyDay, sessionKey }: NekoS
   const [position, setPosition] = useState(0);
   const [feedback, setFeedback] = useState<Feedback>(null);
   const [saveError, setSaveError] = useState(false);
-  const [autoNext, setAutoNext] = useState(true);
+  // "Tự chuyển câu": công tắc + hẹn giờ dùng chung với mọi màn kiểm tra (src/hooks/useAutoNext.ts).
+  const [autoNext] = useAutoNextPreference();
   const goNextRef = useRef<() => void>(() => {});
-
-  useEffect(() => { setAutoNext(readAutoNext()); }, []);
-  function toggleAutoNext() {
-    setAutoNext((current) => {
-      const next = !current;
-      try { localStorage.setItem(AUTO_NEXT_KEY, next ? '1' : '0'); } catch { /* chế độ riêng tư */ }
-      return next;
-    });
-  }
   const usedRef = useRef<Set<string>>(new Set());
   const lockedRef = useRef(false);
   const nextRef = useRef<HTMLButtonElement>(null);
@@ -212,12 +198,12 @@ export function NekoStreak({ items, initialBest, journeyDay, sessionKey }: NekoS
 
   // Tự chuyển câu (chỉ khi trả lời ĐÚNG): ~1 giây sau sang câu tiếp. Sai → đứng lại cho người học đọc giải thích và tự bấm.
   // Bấm "Câu tiếp" / tắt công tắc → huỷ.
-  useEffect(() => {
-    if (!feedback?.isCorrect || !autoNext || phase !== 'play') return;
-    const pause = AUTO_NEXT_AFTER_CORRECT_MS + (feedback.isNewBest || feedback.milestone ? 500 : 0);
-    const timer = window.setTimeout(() => goNextRef.current(), pause);
-    return () => window.clearTimeout(timer);
-  }, [feedback, autoNext, phase]);
+  useAutoAdvance({
+    answerKey: feedback && phase === 'play' ? `${position}:${feedback.chosen}` : null,
+    isCorrect: feedback?.isCorrect,
+    onNext: () => goNextRef.current(),
+    extraDelayMs: feedback?.isNewBest || feedback?.milestone ? 500 : 0,
+  });
 
   // Phím tắt: 1–4 chọn đáp án, Enter / Space sang câu tiếp.
   useEffect(() => {
@@ -231,12 +217,7 @@ export function NekoStreak({ items, initialBest, journeyDay, sessionKey }: NekoS
     return () => window.removeEventListener('keydown', onKey);
   });
 
-  const autoToggle = (
-    <button type="button" className={`streak-auto${autoNext ? ' is-on' : ''}`} role="switch" aria-checked={autoNext} onClick={toggleAutoNext}
-      title="Trả lời đúng: tự sang câu tiếp sau 1 giây · trả lời sai: dừng lại để bạn xem giải thích">
-      <span className="streak-auto-knob" aria-hidden="true" /> ⏩ Tự chuyển câu
-    </button>
-  );
+  const autoToggle = <AutoNextToggle />;
   const header = (
     <div className="between mb-2.5 streak-header">
       <Link className="link sm" href={GAMES_HOME}>← Trò chơi</Link>

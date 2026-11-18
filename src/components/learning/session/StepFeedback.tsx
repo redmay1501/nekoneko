@@ -5,12 +5,17 @@ import type { StepAnswerFeedback } from '@/features/learning/session-types';
 import { AnimatedEmoji } from '@/components/common/EmojiIcon';
 import { useScrollToAnswerFeedback } from '@/hooks/useScrollToAnswerFeedback';
 
+/** Đáp án có chữ Nhật mới dùng font tiếng Nhật (nghĩa tiếng Việt trong font Nhật bị vỡ dấu). */
+const JAPANESE = /[぀-ヿ一-鿿]/;
+
 interface StepFeedbackProps {
   kind: 'recall' | 'practice' | 'use';
   feedback: StepAnswerFeedback;
   isBusy: boolean;
   onContinue: () => void;
   compact?: boolean;
+  /** Đang chờ tự chuyển câu — nút hiện thanh chạy. */
+  isAutoNext?: boolean;
   /** Cách đọc kana của các chữ có Kanji trong bước (tra theo đáp án). */
   readings?: Record<string, string>;
 }
@@ -19,7 +24,7 @@ interface StepFeedbackProps {
  * Phản hồi sau một câu trả lời — đúng thì vui, sai thì không phạt.
  * Hiện ngay khi bấm (trình duyệt tự chấm); lịch ôn do Memory Engine tự quản lý.
  */
-export function StepFeedback({ kind, feedback, isBusy, onContinue, compact = false, readings }: StepFeedbackProps) {
+export function StepFeedback({ kind, feedback, isBusy, onContinue, compact = false, isAutoNext = false, readings }: StepFeedbackProps) {
   const isCorrect = feedback.isCorrect === true;
   const memory = feedback.memory;
   const nextButtonRef = useRef<HTMLButtonElement>(null);
@@ -27,10 +32,12 @@ export function StepFeedback({ kind, feedback, isBusy, onContinue, compact = fal
   if (compact) {
     return (
       <div className={`feedback daily-feedback ${isCorrect ? '' : 'miss'}`} aria-live="polite">
-        <button ref={nextButtonRef} type="button" className="btn block" onClick={onContinue} disabled={isBusy} aria-busy={isBusy}>Tiếp tục</button>
+        <button ref={nextButtonRef} type="button" className={`btn block streak-next${isAutoNext ? ' is-auto' : ''}`} onClick={onContinue} disabled={isBusy} aria-busy={isBusy}>
+          {isAutoNext ? 'Tự chuyển… · bấm để sang ngay →' : 'Tiếp tục'}
+        </button>
         <p className="sm mt-2">
           {isCorrect ? 'Đúng rồi, bạn nhớ tốt lắm!' : 'Không sao, mình nhớ dần nhé.'}
-          {feedback.correctAnswer ? <> Đáp án: <b className="jp">{feedback.correctAnswer}</b><KanaReading text={feedback.correctAnswer} reading={readings?.[feedback.correctAnswer]} />.</> : null}
+          {feedback.correctAnswer ? <> Đáp án: <b className={JAPANESE.test(feedback.correctAnswer) ? 'jp' : ''}>{feedback.correctAnswer}</b><KanaReading text={feedback.correctAnswer} reading={readings?.[feedback.correctAnswer]} />.</> : null}
         </p>
       </div>
     );
@@ -63,13 +70,15 @@ export function StepFeedback({ kind, feedback, isBusy, onContinue, compact = fal
         <>
           <b>{kind === 'practice' ? 'Chưa đúng — mới học lần đầu mà.' : 'Chưa nhớ cũng không sao.'}</b>
           <p className="sm mt-1">
-            {feedback.correctAnswer ? <>Đáp án là <b className="jp">{feedback.correctAnswer}</b><KanaReading text={feedback.correctAnswer} reading={readings?.[feedback.correctAnswer]} />. </> : null}
+            {feedback.correctAnswer ? <>Đáp án là <b className={JAPANESE.test(feedback.correctAnswer) ? 'jp' : ''}>{feedback.correctAnswer}</b><KanaReading text={feedback.correctAnswer} reading={readings?.[feedback.correctAnswer]} />. </> : null}
             Neko Neko sẽ đưa nó quay lại sớm hơn.
           </p>
         </>
       ) : null}
       <NokoMessage state={isCorrect ? 'correct' : 'wrong'} className="mt-3" />
-      <button ref={nextButtonRef} type="button" className="btn block mt-3" onClick={onContinue} disabled={isBusy} aria-busy={isBusy}>Tiếp tục</button>
+      <button ref={nextButtonRef} type="button" className={`btn block mt-3 streak-next${isAutoNext ? ' is-auto' : ''}`} onClick={onContinue} disabled={isBusy} aria-busy={isBusy}>
+        {isAutoNext ? 'Tự chuyển… · bấm để sang ngay →' : 'Tiếp tục'}
+      </button>
     </div>
   );
 }

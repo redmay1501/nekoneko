@@ -136,7 +136,20 @@ export interface ReadingPassage {
   textJp: string;
   /** Bản dịch cả đoạn — hiện sau khi làm xong. */
   textVi: string;
+  /** Cả đoạn viết bằng kana (bài có chữ Hán) — người học bật "Xem cách đọc" khi chưa đọc được chữ Hán. */
+  textKana?: string;
+  /** Từ trong bài thuộc bài Minna SAU (chưa học tới) — hiện kèm cách đọc, nghĩa, bài sẽ học. */
+  glossary?: ReadingGlossaryEntry[];
   questions: ReadingQuestion[];
+}
+
+export interface ReadingGlossaryEntry {
+  /** Đúng dạng chữ xuất hiện trong bài. */
+  word: string;
+  reading: string;
+  meaning: string;
+  /** "Bài 10" — bài Minna dạy từ này. */
+  lesson: string;
 }
 
 export interface PracticeTemplate {

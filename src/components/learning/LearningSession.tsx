@@ -10,6 +10,8 @@ import { SkeletonScreen } from '@/components/common/Skeleton';
 import { ErrorState } from '@/components/common/StateViews';
 import { type TestAnswer, useLearningSession } from '@/features/learning/hooks/useLearningSession';
 import { useEnterToContinue } from '@/hooks/useEnterToContinue';
+import { useAutoAdvance } from '@/hooks/useAutoNext';
+import { AutoNextToggle } from '@/components/common/AutoNextToggle';
 import { ScrollToElementOnChange } from '@/components/common/ScrollToElementOnChange';
 import { SESSION_MODES, type SessionMode, focusTestHref } from '@/features/learning/session-modes';
 import type { PublicSessionStep } from '@/features/learning/session-types';
@@ -33,6 +35,14 @@ export function LearningSession({ mode, focusKeys, returnTo, nextBatchHref, batc
   // Enter sang câu tiếp sau khi đã trả lời (không khi đang gõ / chọn chữ IME / mở khay — xem useEnterToContinue).
   const { feedback, isFinishing, isAtCheckpoint, goToNextStep } = learning;
   useEnterToContinue(Boolean(feedback) && !isFinishing && !isAtCheckpoint, goToNextStep);
+  // Tự chuyển câu (cùng cơ chế trò chơi): chỉ khi trả lời ĐÚNG và server đã ghi nhận (feedback.memory có số liệu) —
+  // đang lưu / lưu lỗi thì đứng lại, người học tự bấm "Tiếp tục".
+  const isAutoNext = useAutoAdvance({
+    answerKey: feedback && !isFinishing && !isAtCheckpoint ? `${stepIndex}` : null,
+    isCorrect: feedback?.isCorrect,
+    isReady: Boolean(feedback?.memory),
+    onNext: goToNextStep,
+  });
 
   if (sessionQuery.isLoading) {
     return <div className="session"><SessionHeader mode={mode} returnTo={returnTo} /><SkeletonScreen label="Noko đang chọn bài cho bạn…"><SessionCardSkeleton /></SkeletonScreen></div>;
@@ -66,6 +76,7 @@ export function LearningSession({ mode, focusKeys, returnTo, nextBatchHref, batc
     isBusy: learning.isFinishing,
     onAnswer: learning.submitAnswer,
     onContinue: learning.goToNextStep,
+    isAutoNext,
   };
 
   return (
@@ -78,6 +89,7 @@ export function LearningSession({ mode, focusKeys, returnTo, nextBatchHref, batc
         <SessionPhaseBar steps={session.steps} currentIndex={stepIndex} />
         <SessionProgress steps={session.steps} currentIndex={stepIndex} />
       </>}
+      {learning.testResult ? null : <div className="session-tools"><AutoNextToggle /></div>}
       <SessionAudioNotice />
       {session.resumeFromStep > 0 && stepIndex === session.resumeFromStep && !learning.feedback ? (
         <NokoMessage state="comeback" text="Học tiếp từ chỗ bạn dừng lại 🐾 Những câu trước đã được lưu rồi." className="mb-3" />
@@ -164,7 +176,7 @@ function TestResult({ answers, testFrom, testKeys, onRetry }: { answers: TestAns
               <li key={`${answer.contentKey}:${index}`} className="row" style={{ gap: 8, justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid var(--line, #eee)' }}>
                 <span><span className="jp">{answer.face}</span><KanaReading text={answer.face} reading={answer.readings?.[answer.face]} block /></span>
                 {answer.correctAnswer ? (
-                  <span className="sm soft" style={{ textAlign: 'right' }}>→ <span className="jp">{answer.correctAnswer}</span>
+                  <span className="sm soft" style={{ textAlign: 'right' }}>→ <span className={/[぀-ヿ一-鿿]/.test(answer.correctAnswer) ? 'jp' : ''}>{answer.correctAnswer}</span>
                     <KanaReading text={answer.correctAnswer} reading={answer.readings?.[answer.correctAnswer]} block /></span>
                 ) : null}
               </li>

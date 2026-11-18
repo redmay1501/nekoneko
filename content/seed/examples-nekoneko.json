@@ -6507,8 +6507,8 @@
   },
   {
    "id": 900814,
-   "jp": "どうぞ ここに 座りましょう。",
-   "vi": "Nào, ngồi đây đi.",
+   "jp": "どうぞ ここに 座って ください。",
+   "vi": "Mời bạn ngồi đây.",
    "viId": null,
    "owner": "NekoNeko",
    "viOwner": "NekoNeko"
@@ -6531,8 +6531,8 @@
   },
   {
    "id": 900817,
-   "jp": "宿題を しました。そうして 寝ました。",
-   "vi": "Tôi làm bài tập. Và rồi đi ngủ.",
+   "jp": "宿題を しました。そして、寝ました。",
+   "vi": "Tôi làm bài tập. Rồi đi ngủ.",
    "viId": null,
    "owner": "NekoNeko",
    "viOwner": "NekoNeko"
@@ -6571,7 +6571,7 @@
   },
   {
    "id": 900822,
-   "jp": "きょうは きのう程 寒くないです。",
+   "jp": "きょうは きのうほど 寒くないです。",
    "vi": "Hôm nay không lạnh bằng hôm qua.",
    "viId": null,
    "owner": "NekoNeko",
@@ -6621,6 +6621,94 @@
    "id": 900828,
    "jp": "ドアに 触りました。",
    "vi": "Tôi đã chạm vào cửa.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900829,
+   "jp": "先生、質問が あります。",
+   "vi": "Thưa thầy, em có câu hỏi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900830,
+   "jp": "毎日 ここへ 来ますか。",
+   "vi": "Ngày nào bạn cũng đến đây à?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900831,
+   "jp": "いつも 電車で 本を 読みます。",
+   "vi": "Tôi luôn đọc sách trên tàu.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900832,
+   "jp": "少し 休みましょう。",
+   "vi": "Mình nghỉ một chút nhé.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900833,
+   "jp": "パスポートを なくしました。",
+   "vi": "Tôi làm mất hộ chiếu rồi.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900834,
+   "jp": "耳が 痛いです。",
+   "vi": "Tôi bị đau tai.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900835,
+   "jp": "目が 痛いです。",
+   "vi": "Tôi bị đau mắt.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900836,
+   "jp": "夜は 車に 気を つけて ください。",
+   "vi": "Buổi tối hãy cẩn thận xe cộ.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900837,
+   "jp": "ここに 来て ください。",
+   "vi": "Hãy lại đây.",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900838,
+   "jp": "この 花は 何と 言いますか。",
+   "vi": "Hoa này gọi là gì?",
+   "viId": null,
+   "owner": "NekoNeko",
+   "viOwner": "NekoNeko"
+  },
+  {
+   "id": 900839,
+   "jp": "会社は 駅の 近くに あります。",
+   "vi": "Công ty ở gần nhà ga.",
    "viId": null,
    "owner": "NekoNeko",
    "viOwner": "NekoNeko"

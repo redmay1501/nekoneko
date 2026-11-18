@@ -124,6 +124,8 @@ export interface StudyDistractors {
 export interface DayStudyData {
   day: number;
   title: string;
+  /** Bài Minna của ngày ("Bài 1 (1/3)"); null = giai đoạn chữ cái / ngày ôn. Hiện trên nhãn từng câu quiz. */
+  minna: string | null;
   kana: StudyKanaCard[];
   vocab: StudyVocabCard[];
   grammar: StudyGrammarCard[];
@@ -142,11 +144,14 @@ const GRAMMAR_DISTRACTORS = 14;
 const RADICAL_DISTRACTORS = 12;
 const KANA_DISTRACTORS = 24;
 
-/** Gần ngày `day` nhất trước (ngày đã học quanh đó), loại mục của chính ngày. */
-function nearest<T extends { day: number | null }>(items: readonly T[], day: number, limit: number): T[] {
+/**
+ * Phương án nhiễu: mục của các ngày TRƯỚC `day` (đã học), gần nhất trước; loại mục của chính ngày (đã có sẵn trong bài).
+ * KHÔNG BAO GIỜ lấy ngày sau — trước đây lấy "gần nhất" cả hai phía nên đề Bài 1 (ngày 14) hiện từ / câu của Bài 2.
+ */
+export function nearest<T extends { day: number | null }>(items: readonly T[], day: number, limit: number): T[] {
   return items
-    .filter((item) => item.day !== null && item.day !== day)
-    .sort((left, right) => Math.abs((left.day ?? 0) - day) - Math.abs((right.day ?? 0) - day))
+    .filter((item) => item.day !== null && item.day < day)
+    .sort((left, right) => (right.day ?? 0) - (left.day ?? 0))
     .slice(0, limit);
 }
 
@@ -237,6 +242,7 @@ export function buildDayStudy(
   return {
     day,
     title: plan.journeyDay.title,
+    minna: plan.journeyDay.minna && plan.journeyDay.minna !== '—' ? plan.journeyDay.minna : null,
     kana, vocab, grammar, radicals, kanji,
     distractors: {
       kana: nearest(catalog.items.filter((item) => kanaTypes.has(item.type) && !ownKana.has(item.key)), day, KANA_DISTRACTORS)

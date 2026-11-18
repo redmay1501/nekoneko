@@ -16,11 +16,11 @@ describe('buildDayPlan', () => {
   });
 
   // Lộ trình NekoNeko v3 (scripts/replan_v3.py): chữ cái 1–10, bộ thủ 11–13, bài 14–81 dựng từ dữ liệu + việc tự làm của bài;
-  // tổng ôn 82–90 giữ nguyên. Mỗi ngày đều có việc, tổng 388.
+  // tổng ôn 82–90 giữ nguyên. Mỗi ngày đều có việc, tổng 393 (audit từ vựng Minna: thêm việc Kanji ở vài ngày).
   it('mỗi ngày đều có việc; tổng số đầu việc của 90 ngày khớp dữ liệu', () => {
     const counts = Array.from({ length: 90 }, (_, index) => buildDayPlan(catalog, index + 1, AT_DAY_1).tasks.length);
     expect(counts.every((count) => count > 0)).toBe(true);
-    expect(counts.reduce((sum, count) => sum + count, 0)).toBe(388);
+    expect(counts.reduce((sum, count) => sum + count, 0)).toBe(393);
   });
 
   it('ngày ngoài khoảng 1–90 được kéo về trong khoảng', () => {

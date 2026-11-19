@@ -56,3 +56,12 @@ describe('quiz theo ngày ở Lộ trình: nhiễu chỉ từ ngày trước', (
     }
   });
 });
+
+describe('cách đọc của câu luyện ngữ pháp (hiện sau khi chấm)', () => {
+  it('câu hỏi trong ngân hàng dùng lại câu ví dụ thì có cách đọc; lựa chọn Việt → Nhật có cách đọc', () => {
+    const bank = buildGrammarQuestionBank(catalog.content.grammar);
+    expect(bank.filter((exercise) => exercise.sentence.reading).length).toBeGreaterThan(0);
+    const generated = buildGrammarExercises(catalog.content.grammar).filter((exercise) => exercise.kind === 'viet-nhat');
+    expect(generated.some((exercise) => exercise.optionReadings && Object.keys(exercise.optionReadings).length >= 2)).toBe(true);
+  });
+});

@@ -162,7 +162,10 @@ export function StudyQuiz({ questions, unit, isRecorded = true, onRestart, onRet
               <button key={option} type="button" disabled={given !== null} onClick={() => submit(option)}
                 className={`study-option ${question.optionsAreJapanese ? 'jp' : ''} ${state}`}>
                 {label(question, option)}
-                {question.optionReadings?.[option] ? <span className="study-option-reading">{question.optionReadings[option]}</span> : null}
+                {given === null && question.optionReadings?.[option] ? <span className="study-option-reading">{question.optionReadings[option]}</span> : null}
+                {/* Trả lời xong: đáp án đúng và lựa chọn sai hiện cách đọc + romaji (chữ kana: romaji). */}
+                {given !== null && (option === question.answer || option === given) && question.optionsAreJapanese
+                  ? <KanaReading text={option} reading={question.optionReadings?.[option]} block /> : null}
               </button>
             );
           })}

@@ -85,3 +85,30 @@ describe('tự focus ô nhập', () => {
     expect(shouldFocusAnswerInput({ ...ready, hasInteracted: false, hasFinePointer: true })).toBe(true);
   });
 });
+
+describe('nội dung bổ sung sau khi người học đã hoàn thành ngày', () => {
+  it('mục mới / dời sớm hơn của ngày ĐÃ hoàn thành vẫn vào Học bù; mục cũ của ngày đã hoàn thành thì không', async () => {
+    const { backlogKnowledge } = await import('./session-engine');
+    const { REVISED_KNOWLEDGE_KEYS } = await import('./content-revisions');
+    const day14 = catalog.items.filter((item) => item.day === 14);
+    const added = day14.find((item) => REVISED_KNOWLEDGE_KEYS.has(item.key))!;
+    const original = day14.find((item) => !REVISED_KNOWLEDGE_KEYS.has(item.key))!;
+    expect(added).toBeTruthy();
+    expect(original).toBeTruthy();
+    // Người học đang ở ngày 30, đã hoàn thành ngày 1–29, chưa gặp gì (bảng trí nhớ rỗng).
+    const backlog = backlogKnowledge(catalog, new Map(), 30, Array.from({ length: 29 }, (_, index) => index + 1)).map((item) => item.key);
+    expect(backlog).toContain(added.key);
+    expect(backlog).not.toContain(original.key);
+    // Từ "日本" (thêm vào Bài 1) và Kanji 日 (dời từ ngày 23 về Bài 1) đều được giao.
+    const nihon = catalog.items.find((item) => item.type === 'vocabulary' && item.face === '日本')!;
+    expect(backlog).toContain(nihon.key);
+  });
+
+  it('đã gặp rồi thì không vào Học bù nữa', async () => {
+    const { backlogKnowledge } = await import('./session-engine');
+    const nihon = catalog.items.find((item) => item.type === 'vocabulary' && item.face === '日本')!;
+    const met = new Map([[nihon.key, { encounterCount: 1 } as never]]);
+    const backlog = backlogKnowledge(catalog, met, 30, Array.from({ length: 29 }, (_, index) => index + 1)).map((item) => item.key);
+    expect(backlog).not.toContain(nihon.key);
+  });
+});

@@ -111,7 +111,8 @@ export function buildVocabQuiz(data: DayStudyData, kind: Exclude<VocabQuizId, 'g
     if (kind === 'tu') {
       const labels = Object.fromEntries(pool.map((word) => [word.face, word.face === word.kana ? word.kana : `${word.face}（${word.kana}）`]));
       return { ...base, ask: 'face', prompt: card.meaning, promptIsJapanese: false, audioText: undefined,
-        options: pickOptions(card.face, pool.map((word) => word.face), random), optionLabels: labels, optionsAreJapanese: true, answer: card.face };
+        options: pickOptions(card.face, pool.map((word) => word.face), random), optionLabels: labels, optionsAreJapanese: true, answer: card.face,
+        optionReadings: readingMap(pool.map((word) => [word.face, word.kana] as const)) };
     }
     return { ...base, ask: 'reading', prompt: card.meaning, promptIsJapanese: false, audioText: undefined,
       hint: card.kanji ? `Gõ cách đọc của ${card.kanji} bằng kana` : 'Gõ từ này bằng kana',

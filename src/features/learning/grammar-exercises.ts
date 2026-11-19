@@ -65,6 +65,8 @@ export interface GrammarExercise {
   sentence: { jp: string; reading: string; vi: string };
   /** Vì sao đáp án đúng — từ cách dùng của mẫu (+ lỗi hay gặp nếu có). */
   explanation: string;
+  /** Cách đọc kana của các lựa chọn tiếng Nhật (câu ví dụ có sẵn cách đọc) — hiện SAU khi chấm, kèm romaji. */
+  optionReadings?: Record<string, string>;
   /** Từ trong câu thuộc bài SAU bài của mẫu (vocabulary-scope) — hiện chú thích; đề ưu tiên câu không có từ này. */
   laterWords?: LaterLessonWord[];
 }
@@ -146,6 +148,22 @@ function requiredText(row: Record<string, unknown>, key: string, rowNumber: numb
 }
 
 /** Đọc và kiểm tra toàn bộ JSON chuyển nguyên trạng từ CSV; lỗi nào cũng làm dừng, không âm thầm bỏ dòng. */
+/** Cách đọc của câu ví dụ ngữ pháp, tra theo câu đã bỏ khoảng trắng (câu hỏi dùng lại đúng câu ví dụ). */
+function exampleReadings(grammar: readonly GrammarContent[]): Map<string, string> {
+  const map = new Map<string, string>();
+  for (const point of grammar) {
+    for (const [jp, reading] of [[point.exampleJp, point.exampleReading], [point.example2Jp, point.example2Reading]] as const) {
+      if (jp && reading) map.set(jp.replace(/\s+/g, ''), reading);
+    }
+  }
+  return map;
+}
+const readingOf = (map: ReadonlyMap<string, string>, jp: string) => map.get(jp.replace(/\s+/g, '')) ?? '';
+function optionReadingsOf(map: ReadonlyMap<string, string>, texts: readonly string[]): Record<string, string> | undefined {
+  const entries = texts.map((text) => [text, readingOf(map, text)] as const).filter(([, reading]) => reading);
+  return entries.length ? Object.fromEntries(entries) : undefined;
+}
+
 export function buildGrammarQuestionBank(
   grammar: readonly GrammarContent[],
   sourceRows: readonly unknown[] = rawQuestionBank as unknown[],
@@ -221,6 +239,7 @@ export function buildGrammarQuestionBank(
   }
   if (errors.length) throw new Error(`Ngân hàng câu hỏi ngữ pháp không hợp lệ:\n${errors.slice(0, 40).join('\n')}${errors.length > 40 ? `\n… và ${errors.length - 40} lỗi khác.` : ''}`);
 
+  const readings = exampleReadings(grammar);
   return parsed.map((row) => {
     const point = grammarById.get(row.grammarId)!;
     const kind = row.kind === 'Nhật → Việt' ? 'nhat-viet' : row.kind === 'Việt → Nhật' ? 'viet-nhat' : 'dien-tu';
@@ -233,7 +252,8 @@ export function buildGrammarQuestionBank(
       prompt: row.prompt.replace(/□|＿＿/g, '___'), isPromptJapanese: kind !== 'viet-nhat',
       options: row.options.map((text) => ({ text, fromPattern: '' })), answer: row.answer, tokens: [],
       // After a fill answer, show the completed prompt. Hide the source translation if CSV source sentence differs.
-      sentence: { jp: completedPrompt, reading: '', vi: kind === 'dien-tu' && !sourceMatchesPrompt ? '' : row.sentenceVi }, explanation: row.explanation,
+      sentence: { jp: completedPrompt, reading: readingOf(readings, completedPrompt) || readingOf(readings, row.sentenceJp), vi: kind === 'dien-tu' && !sourceMatchesPrompt ? '' : row.sentenceVi },
+      explanation: row.explanation, optionReadings: kind === 'viet-nhat' ? optionReadingsOf(readings, row.options) : undefined,
     };
   });
 }
@@ -289,6 +309,7 @@ export function blankParticle(sentence: string, particle: string): string | null
 
 export function buildGrammarExercises(grammar: readonly GrammarContent[], seed = 'grammar'): GrammarExercise[] {
   const pool = grammar.flatMap(sentencesOf);
+  const readings = exampleReadings(grammar);
   const exercises: GrammarExercise[] = [];
   for (const source of pool) {
     const { grammar: point } = source;
@@ -307,7 +328,8 @@ export function buildGrammarExercises(grammar: readonly GrammarContent[], seed =
     const jpOptions = distractorSentences(source, pool, (sentence) => sentence.jp, random);
     if (jpOptions.length === OPTION_COUNT - 1) {
       exercises.push({ ...base, id: id('viet-nhat'), kind: 'viet-nhat', prompt: source.vi, isPromptJapanese: false, answer: source.jp,
-        options: shuffled([{ text: source.jp, fromPattern: point.pattern }, ...jpOptions], random) });
+        options: shuffled([{ text: source.jp, fromPattern: point.pattern }, ...jpOptions], random),
+        optionReadings: optionReadingsOf(readings, [source.jp, ...jpOptions.map((option) => option.text)]) });
     }
     for (const particle of patternParticles(point.pattern)) {
       const blanked = blankParticle(source.jp, particle);

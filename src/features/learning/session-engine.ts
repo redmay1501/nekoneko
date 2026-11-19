@@ -1,6 +1,7 @@
 import { pickDeterministic, shuffleDeterministic } from '@/lib/utils/deterministic-random';
 import { realSentenceBlank } from './context-index';
 import { readingLookup, readingsFor } from './reading-lookup';
+import { REVISED_KNOWLEDGE_KEYS } from './content-revisions';
 import { knowledgeOrigin } from './knowledge-origin';
 import {
   getForgettingRadar,
@@ -161,6 +162,8 @@ export function unmetKnowledgeOfDay(
 /**
  * HỌC BÙ (BACKLOG): kiến thức chưa gặp của các ngày trước mà người học CHƯA xác nhận hoàn thành / bỏ qua.
  * Những ngày đã được xác nhận thì không quay lại thành học bù; kiến thức đã học vẫn được Memory Engine nhắc ôn đúng hạn.
+ * Ngoại lệ: mục được THÊM / DỜI VỀ ngày đó sau một lần sửa nội dung (content-revisions) — người học xác nhận ngày khi
+ * mục chưa có mặt, nên chưa gặp thì vẫn được giao ở Học bù.
  */
 export function backlogKnowledge(
   catalog: KnowledgeCatalog,
@@ -170,7 +173,7 @@ export function backlogKnowledge(
 ): KnowledgeItem[] {
   const completed = new Set(completedJourneyDays);
   const unmet = itemsScheduledUpTo(catalog, journeyDay - 1)
-    .filter((item) => !completed.has(item.day ?? 0)
+    .filter((item) => (!completed.has(item.day ?? 0) || REVISED_KNOWLEDGE_KEYS.has(item.key))
       && (memoryViews.get(item.key)?.encounterCount ?? 0) < MIN_ENCOUNTERS_TO_COUNT_AS_MET);
   const days = [...new Set(unmet.map((item) => item.day ?? 0))].sort((left, right) => left - right);
   return days.flatMap((day) => orderDayKnowledge(unmet.filter((item) => (item.day ?? 0) === day)));

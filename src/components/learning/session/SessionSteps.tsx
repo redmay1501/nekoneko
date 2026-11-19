@@ -133,7 +133,7 @@ export function RecallStepView({ step, isDaily = false, ...interaction }: StepIn
       <div className="fit-box"><div className="s-big fit-text" style={{ margin: '12px 0 8px', ...fitTextStyle(step.face, 48, 24) }}>{step.face}</div></div>
       {canListen ? <div className="center"><AudioButton text={audioText} label="Nghe từ này" /></div> : null}
       {/* Trả lời xong: mặt chữ có Kanji hiện kèm cách đọc kana + romaji. */}
-      {interaction.feedback && step.readings?.[step.face] ? <p className="center" style={{ marginTop: -4 }}><KanaReading text={step.face} reading={step.readings?.[step.face]} block /></p> : null}
+      {interaction.feedback ? <p className="center" style={{ marginTop: -4 }}><KanaReading text={step.face} reading={step.readings?.[step.face]} block /></p> : null}
       {instruction ? <p className="sm soft">{instruction}</p> : null}
       {interaction.feedback && isDaily ? <StepFeedback kind={step.isPractice ? 'practice' : 'recall'} feedback={interaction.feedback} isBusy={interaction.isBusy} onContinue={interaction.onContinue} isAutoNext={interaction.isAutoNext} readings={step.readings} compact /> : null}
       <AnswerOptions options={step.options} chosenAnswer={interaction.chosenAnswer} feedback={interaction.feedback}

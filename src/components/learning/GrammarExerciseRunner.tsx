@@ -157,7 +157,11 @@ function GrammarExerciseRun({ exercises, mode, title, onRestart, onNewRound, can
                 className={`quiz-option ${exercise.kind === 'nhat-viet' ? '' : 'jp'} ${isCorrect ? 'is-correct' : ''} ${isWrong ? 'is-wrong' : ''} ${isChosen && !showFeedback ? 'is-chosen' : ''}`}
                 onClick={() => choose(option.text)}>
                 <span className="quiz-option-key" aria-hidden="true">{String.fromCharCode(65 + position)}</span>
-                <span className="quiz-option-text">{option.text}</span>
+                <span className="quiz-option-text">{option.text}
+                  {/* Chấm xong: đáp án đúng / lựa chọn sai tiếng Nhật hiện cách đọc + romaji (câu toàn kana: romaji). */}
+                  {showFeedback && (isCorrect || isWrong) && exercise.kind !== 'nhat-viet'
+                    ? <KanaReading text={option.text} reading={exercise.optionReadings?.[option.text]} isParticle={exercise.kind === 'tro-tu'} block /> : null}
+                </span>
               </button>
             );
           })}

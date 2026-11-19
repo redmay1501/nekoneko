@@ -1,5 +1,6 @@
 'use client';
 
+import { KanaReading } from '@/components/common/KanaReading';
 import { AutoNextToggle } from '@/components/common/AutoNextToggle';
 import { useAutoAdvance, useAutoNextPreference } from '@/hooks/useAutoNext';
 import Link from 'next/link';
@@ -333,6 +334,7 @@ export function NekoStreak({ items, initialBest, journeyDay, sessionKey }: NekoS
           <span className={question.faceIsJapanese ? 'jp' : ''} lang={question.faceIsJapanese ? 'ja' : 'vi'}>{question.face}</span>
           {question.faceIsJapanese && question.audioText ? <AudioButton text={question.audioText} /> : null}
         </div>
+        {feedback && question.faceIsJapanese ? <p className="center"><KanaReading text={question.face} block /></p> : null}
         <div className="streak-options" role="group" aria-label="Bốn đáp án">
           {question.options.map((option, index) => {
             const look = !feedback ? '' : option === question.answer ? ' is-answer' : option === feedback.chosen ? ' is-wrong' : ' is-dim';
@@ -340,7 +342,11 @@ export function NekoStreak({ items, initialBest, journeyDay, sessionKey }: NekoS
               <button key={option} type="button" className={`streak-option key-${index + 1}${look}${question.optionsAreJapanese ? ' jp' : ''}`}
                 lang={question.optionsAreJapanese ? 'ja' : 'vi'} disabled={Boolean(feedback)} onClick={() => choose(option)}>
                 <span className="streak-option-key" aria-hidden="true">{index + 1}</span>
-                <span>{option}</span>
+                <span>{option}
+                  {/* Trả lời xong: đáp án / lựa chọn sai viết bằng kana hiện thêm romaji. */}
+                  {feedback && question.optionsAreJapanese && (option === question.answer || option === feedback.chosen)
+                    ? <KanaReading text={option} block /> : null}
+                </span>
               </button>
             );
           })}

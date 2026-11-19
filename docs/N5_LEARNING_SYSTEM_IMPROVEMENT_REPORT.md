@@ -72,6 +72,14 @@ Bỏ số cố định 8 câu (nghe) / 8 từ + 4 câu (nghe – gõ). Bộ ch�
 
 ---
 
+### Người học đã qua bài có từ mới bổ sung
+
+Học bù bỏ qua những ngày người học đã bấm hoàn thành, nên các mục **thêm mới** hoặc **dời về ngày sớm hơn** trong đợt audit (446 mục: 237 từ mới, 182 từ và 27 Kanji dời sớm hơn — `content/seed/content-revisions.json`, sinh bằng cách so dữ liệu trước / sau) sẽ bị bỏ sót với người đã đi qua ngày đó. Đã sửa:
+
+- `backlogKnowledge` giao các mục này ở **Học bù** dù ngày đã hoàn thành, nếu người học chưa gặp (3 mục mỗi phiên hằng ngày, phiên "Học bù" thì theo chặng 5 mục). Trạng thái hoàn thành ngày và trí nhớ không đổi.
+- Trang ngày đã qua: "✓ Đã xong · có N mục mới bổ sung" và nút "🌱 Học N mục mới bổ sung" (mở trang học của ngày).
+- Từ bị dời về bài **sau** (vd. 社長 → Bài 18): đã học thì trí nhớ giữ nguyên, tiếp tục được ôn; chưa học thì sẽ gặp khi tới bài mới.
+
 ## 2. Từ vựng bổ sung và nguồn
 
 237 từ, nguồn: danh mục từ mới của bài tương ứng trong *Minna no Nihongo Shokyu I, bản 2* (ベトナム: bài đọc NekoNeko). Danh sách đầy đủ kèm cách đọc, nghĩa, bài: [N5_VOCABULARY_COMPLETENESS_AUDIT.md](N5_VOCABULARY_COMPLETENESS_AUDIT.md#danh-sách-từ-đã-bổ-sung).

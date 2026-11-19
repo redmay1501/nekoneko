@@ -157,7 +157,8 @@ function DialogueView({ drill }: { drill: DialogueDrill }) {
           const answered = choice !== undefined;
           return (
             <div key={blank.n}>
-              <p className="sm"><b>Chỗ trống ({blank.n})</b>{answered ? (checkBlank(choice, blank) ? ' — ✓ Đúng' : ` — ✗ Đáp án: ${blank.options[blank.answer_index - 1]}`) : ''}</p>
+              <p className="sm"><b>Chỗ trống ({blank.n})</b>{answered ? (checkBlank(choice, blank) ? ' — ✓ Đúng' : <> — ✗ Đáp án: <span className="jp">{blank.options[blank.answer_index - 1]}</span></>) : ''}
+                {answered ? <KanaReading text={blank.options[blank.answer_index - 1]} isParticle /> : null}</p>
               <div className="row wrap mt-1" style={{ gap: 6 }}>
                 {blank.options.map((option, optionIndex) => {
                   const value = optionIndex + 1;

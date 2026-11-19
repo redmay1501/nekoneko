@@ -15,6 +15,8 @@ interface DayActionsProps {
    * kiến thức của tuần (ngày ôn 21, 28…). Null khi ngày không gắn kiến thức cụ thể (tổng ôn / thi thử 78–90).
    */
   studyHref: string | null;
+  /** Ngày đã qua: số mục được bổ sung vào ngày sau khi người học hoàn thành, chưa gặp. */
+  addedCount?: number;
 }
 
 /**
@@ -23,10 +25,12 @@ interface DayActionsProps {
  *    kèm "Hoàn thành ngày" (nút phụ — hoàn thành ngày là người học tự xác nhận, không phải tự động khi học hết);
  *  - ngày đã qua → "Học lại ngày N" (thẻ học + kiểm tra) / ôn thứ còn mờ; ngày chưa tới → "Học trước ngày N" (nếu ngày có từ, mẫu câu, Kanji).
  */
-export function DayActions({ day, relation, remainingCount, hasNewKnowledge, hasDayStudy, studyHref }: DayActionsProps) {
+export function DayActions({ day, relation, remainingCount, hasNewKnowledge, hasDayStudy, studyHref, addedCount = 0 }: DayActionsProps) {
   if (relation === 'past') {
     return (
       <div className="day-actions">
+        {/* Ngày đã xong nhưng nội dung được bổ sung sau đó → mời học phần mới (không đổi trạng thái hoàn thành). */}
+        {addedCount && studyHref ? <Link className="btn" href={studyHref}>🌱 Học {addedCount} mục mới bổ sung</Link> : null}
         {studyHref ? <Link className="btn ghost" href={studyHref}>📚 Học lại ngày {day}</Link> : null}
         <Link className="btn ghost" href="/hoc/rescue">🔁 Ôn lại những gì còn mờ</Link>
       </div>

@@ -6,7 +6,9 @@ import { DayTimeline } from '@/components/roadmap/DayTimeline';
 import { getLearnerContext } from '@/features/learning/learner-context';
 import { buildDayPlan, dayStudyHref } from '@/features/roadmap/day-plan';
 import { JOURNEY_TOTAL_DAYS } from '@/features/roadmap/journey';
-import { buildDayStatuses, getDayCompletionProgress } from '@/features/roadmap/journey-progress';
+import { MIN_ENCOUNTERS_TO_COUNT_AS_MET, buildDayStatuses, getDayCompletionProgress } from '@/features/roadmap/journey-progress';
+import { itemsScheduledOn } from '@/features/learning/knowledge-catalog';
+import { REVISED_KNOWLEDGE_KEYS } from '@/features/learning/content-revisions';
 import { DayPicker } from '@/components/roadmap/DayPicker';
 import { DayActions } from '@/components/roadmap/DayActions';
 import { DayReviewVocabulary } from '@/components/roadmap/DayReviewVocabulary';
@@ -24,6 +26,9 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
   // Ngày có kiến thức (kể cả chữ cái) → trang học của ngày; ngày ôn tuần → phiên ôn kiến thức của tuần; tổng ôn 78–90 → không có.
   const hasDayStudy = plan.hasNewKnowledge;
   const studyHref = dayStudyHref(plan);
+  // Mục được bổ sung vào ngày này SAU khi người học đã hoàn thành ngày (sửa nội dung) và chưa gặp — nói rõ, mời học.
+  const addedUnmet = itemsScheduledOn(catalog, day).filter((item) => REVISED_KNOWLEDGE_KEYS.has(item.key)
+    && (memoryViews.get(item.key)?.encounterCount ?? 0) < MIN_ENCOUNTERS_TO_COUNT_AS_MET).length;
 
   return (
     <>
@@ -39,7 +44,7 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
             !completedJourneyDays.includes(day) && completion.hasNewKnowledge && completion.metCount < completion.totalCount
               // Đã bấm Hoàn thành nhưng còn kiến thức chưa học → nói thật, phần đó nằm ở Học bù.
               ? <span className="chip">Đã qua · còn {completion.totalCount - completion.metCount} mục học bù</span>
-              : <span className="chip mint">✓ Đã xong</span>
+              : <span className="chip mint">✓ Đã xong{addedUnmet ? ` · có ${addedUnmet} mục mới bổ sung` : ''}</span>
           ) : null}
         </div>
         <h1>Ngày {day}</h1>
@@ -48,7 +53,7 @@ export default async function JourneyDayPage({ params }: { params: Promise<{ day
         <p className="sm soft mt-1.5"><b>Vì sao học hôm nay?</b> {plan.purpose}</p>
         {/* Hành động chính của ngày — ngay đầu trang, theo trạng thái thật (học hết ≠ đã hoàn thành ngày). */}
         <DayActions day={day} relation={plan.relation} remainingCount={completion.totalCount - completion.metCount} hasNewKnowledge={completion.hasNewKnowledge}
-          hasDayStudy={hasDayStudy} studyHref={studyHref} />
+          hasDayStudy={hasDayStudy} studyHref={studyHref} addedCount={plan.relation === 'past' ? addedUnmet : 0} />
       </section>
 
       <div className="daygrid mt-4">

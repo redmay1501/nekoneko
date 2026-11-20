@@ -60,3 +60,16 @@ export function pickJapaneseVoice<TVoice extends VoiceLike>(voices: readonly TVo
   const best = ranked[0];
   return best ? { voice: best.voice, gender: best.gender, matchesPreference: best.gender === preferred } : null;
 }
+
+/**
+ * Giọng tiếng Nhật dự phòng khi giọng vừa dùng bị lỗi: KHÁC giọng đó nhưng CÙNG giới tính (không đổi nam ↔ nữ giữa chừng),
+ * ưu tiên giọng cài sẵn trên máy (không cần mạng). Không có giọng cùng giới tính → giọng "không rõ"; vẫn không có → null.
+ */
+export function pickFallbackVoice<TVoice extends VoiceLike>(voices: readonly TVoice[], failed: TVoice | null): TVoice | null {
+  const gender = failed ? detectVoiceGender(failed) : 'unknown';
+  const candidates = voices.filter((voice) => isJapaneseVoice(voice) && voice !== failed && voice.name !== failed?.name);
+  const allowed = gender === 'unknown'
+    ? candidates
+    : [...candidates.filter((voice) => detectVoiceGender(voice) === gender), ...candidates.filter((voice) => detectVoiceGender(voice) === 'unknown')];
+  return allowed.find((voice) => voice.localService) ?? allowed[0] ?? null;
+}

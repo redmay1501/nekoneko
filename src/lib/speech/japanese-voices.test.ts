@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { detectVoiceGender, pickJapaneseVoice, type VoiceLike } from './japanese-voices';
+import { detectVoiceGender, pickFallbackVoice, pickJapaneseVoice, type VoiceLike } from './japanese-voices';
 
 const voice = (name: string, lang = 'ja-JP'): VoiceLike => ({ name, lang });
 
@@ -49,5 +49,21 @@ describe('pickJapaneseVoice', () => {
 
   it('nhận cả mã ngôn ngữ dạng ja_JP (Android)', () => {
     expect(pickJapaneseVoice([voice('ja-jp-x-htm-local', 'ja_JP')], 'female')?.gender).toBe('unknown');
+  });
+});
+
+describe('pickFallbackVoice', () => {
+  const voices = [
+    { name: 'Google 日本語', lang: 'ja-JP', localService: false },
+    { name: 'Otoya', lang: 'ja-JP', localService: true },
+    { name: 'Kyoko', lang: 'ja-JP', localService: true },
+    { name: 'Samantha', lang: 'en-US', localService: true },
+  ];
+  it('keeps the same gender when the chosen voice fails (no male ↔ female switch)', () => {
+    expect(pickFallbackVoice(voices, voices[0])?.name).toBe('Kyoko');
+    expect(pickFallbackVoice(voices, voices[2])?.name).toBe('Google 日本語');
+  });
+  it('returns null rather than switching gender', () => {
+    expect(pickFallbackVoice([voices[1], voices[2]], voices[1])).toBeNull();
   });
 });

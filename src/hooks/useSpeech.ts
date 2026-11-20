@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useSyncExternalStore } from 'react';
-import { pickJapaneseVoice } from '@/lib/speech/japanese-voices';
+import { pickFallbackVoice, pickJapaneseVoice } from '@/lib/speech/japanese-voices';
 import { useSpeechPreferenceStore } from '@/stores/speech-preference-store';
 
 const JAPANESE_LOCALE = 'ja-JP';
@@ -52,10 +52,9 @@ const CANCEL_GAP_MS = 60;
 const isTouchDevice = () => window.matchMedia?.('(pointer: coarse)').matches || /iP(hone|ad|od)/.test(navigator.userAgent);
 let startWatchdog = 0;
 
-/** Giọng tiếng Nhật dự phòng (khác giọng vừa lỗi), ưu tiên giọng cài sẵn trên máy (không cần mạng). */
+/** Giọng tiếng Nhật dự phòng: khác giọng vừa lỗi, cùng giới tính (không bao giờ đổi nam ↔ nữ). */
 function fallbackVoice(failed: SpeechSynthesisVoice | null): SpeechSynthesisVoice | null {
-  const candidates = window.speechSynthesis.getVoices().filter((voice) => /^ja/i.test(voice.lang.replace('_', '-')) && voice !== failed && voice.name !== failed?.name);
-  return candidates.find((voice) => voice.localService) ?? candidates[0] ?? null;
+  return pickFallbackVoice(window.speechSynthesis.getVoices(), failed);
 }
 
 /** Đọc một câu. Lỗi "not-allowed" = trình duyệt chặn tự phát (iOS / chưa chạm màn hình) → ghi nhớ để phát lại khi chạm. */
@@ -107,7 +106,17 @@ function speakNow(text: string, voice: SpeechSynthesisVoice | null, isSlow = fal
     // interrupted / canceled: do câu mới thay thế hoặc người học bấm dừng — không phải lỗi.
     window.clearTimeout(startWatchdog);
   };
-  startWatchdog = window.setTimeout(() => { if (!started && currentUtterance === utterance) { synth.cancel(); retryOrFail(); } }, START_TIMEOUT_MS);
+  // Quá hạn mà chưa báo "bắt đầu đọc": nếu trình duyệt THẬT SỰ đang đọc (giọng online tải chậm, Safari báo onstart muộn) thì
+  // cứ để đọc tiếp — đổi giọng lúc này sẽ phát chồng HAI giọng (cancel() không dừng được âm thanh giọng online đã tải về).
+  // Chờ thêm tối đa 2 lượt (≈ 7.5 giây tổng) để Chrome kẹt thật (speaking = true mà không bao giờ đọc) vẫn được cứu.
+  let extensions = 0;
+  const watch = () => {
+    if (started || currentUtterance !== utterance) return;
+    if (synth.speaking && !synth.pending && extensions < 2) { extensions += 1; startWatchdog = window.setTimeout(watch, START_TIMEOUT_MS); return; }
+    synth.cancel();
+    retryOrFail();
+  };
+  startWatchdog = window.setTimeout(watch, START_TIMEOUT_MS);
   // Chrome (Mac / Windows) hay "nuốt" câu gọi speak() NGAY sau cancel() — máy tính chờ một nhịp ngắn rồi mới đọc.
   // Thiết bị cảm ứng (Safari iOS) thì phải đọc ngay trong lượt chạm, nên không chờ.
   if (didCancel && !isTouchDevice()) window.setTimeout(() => { if (currentUtterance === utterance) synth.speak(utterance); }, CANCEL_GAP_MS);
